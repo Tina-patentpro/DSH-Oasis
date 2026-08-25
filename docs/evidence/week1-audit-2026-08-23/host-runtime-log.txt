@@ -1,0 +1,6 @@
+command: set DSH_HOME=%TEMP%\oasis-dsh-week1-audit-20260823 && %APPDATA%\npm\dsh.cmd --profile web --no-open --port 18984
+startup: dsh web: http://127.0.0.1:18984
+startup_session_id: 92915
+listener_pid: 62708
+runtime_observation: no additional stdout/stderr was emitted during config, HTTP, API, browser, console, and event probes.
+proof_boundary: proves the isolated Host remained running and served the enabled bundle; does not prove oasis_workbench_status was called by an agent.

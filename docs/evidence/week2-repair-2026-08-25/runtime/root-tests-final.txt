@@ -1,0 +1,166 @@
+TAP version 13
+# Subtest: hashes file content and link target text without traversing the target
+ok 1 - hashes file content and link target text without traversing the target
+  ---
+  duration_ms: 23.5271
+  type: 'test'
+  ...
+# Subtest: writes reproducible content hashes and freshness metadata
+ok 2 - writes reproducible content hashes and freshness metadata
+  ---
+  duration_ms: 19.5453
+  type: 'test'
+  ...
+# Subtest: baseline comparison fails closed except for exact allowlisted paths
+ok 3 - baseline comparison fails closed except for exact allowlisted paths
+  ---
+  duration_ms: 0.488
+  type: 'test'
+  ...
+# Subtest: both historical wrappers use the shared no-follow core and cover build outputs
+ok 4 - both historical wrappers use the shared no-follow core and cover build outputs
+  ---
+  duration_ms: 2.791
+  type: 'test'
+  ...
+# Subtest: DSH_BIN official npm shim resolves to its package Node CLI entry
+ok 5 - DSH_BIN official npm shim resolves to its package Node CLI entry
+  ---
+  duration_ms: 103.2618
+  type: 'test'
+  ...
+# Subtest: PATH fallback resolves an official npm shim without executing the shim shell
+ok 6 - PATH fallback resolves an official npm shim without executing the shim shell
+  ---
+  duration_ms: 156.8025
+  type: 'test'
+  ...
+# Subtest: forwards spaces, Unicode, quotes, trailing slashes and CMD metacharacters as exact argv
+ok 7 - forwards spaces, Unicode, quotes, trailing slashes and CMD metacharacters as exact argv
+  ---
+  duration_ms: 154.6556
+  type: 'test'
+  ...
+# Subtest: does not execute a second CMD command embedded in one argument
+ok 8 - does not execute a second CMD command embedded in one argument
+  ---
+  duration_ms: 148.3157
+  type: 'test'
+  ...
+# Subtest: rejects an arbitrary command shim even when DSH_BIN points to it
+ok 9 - rejects an arbitrary command shim even when DSH_BIN points to it
+  ---
+  duration_ms: 84.2848
+  type: 'test'
+  ...
+# Subtest: supports the project .dsh-test home
+ok 10 - supports the project .dsh-test home
+  ---
+  duration_ms: 86.628
+  type: 'test'
+  ...
+# Subtest: supports a declared oasis-dsh temporary home
+ok 11 - supports a declared oasis-dsh temporary home
+  ---
+  duration_ms: 82.2147
+  type: 'test'
+  ...
+# Subtest: rejects the real DSH home and its ancestors or descendants
+ok 12 - rejects the real DSH home and its ancestors or descendants
+  ---
+  duration_ms: 240.1326
+  type: 'test'
+  ...
+# Subtest: rejects a home whose existing path chain contains a symlink or junction
+ok 13 - rejects a home whose existing path chain contains a symlink or junction
+  ---
+  duration_ms: 85.0289
+  type: 'test'
+  ...
+# Subtest: the cmd convenience wrapper still handles ordinary arguments
+ok 14 - the cmd convenience wrapper still handles ordinary arguments
+  ---
+  duration_ms: 182.5675
+  type: 'test'
+  ...
+# Subtest: fails closed when no official DSH package can be resolved
+ok 15 - fails closed when no official DSH package can be resolved
+  ---
+  duration_ms: 75.8831
+  type: 'test'
+  ...
+# Subtest: HTTP 200 with result.ok=false exits non-zero
+ok 16 - HTTP 200 with result.ok=false exits non-zero
+  ---
+  duration_ms: 120.2508
+  type: 'test'
+  ...
+# Subtest: rejects non-http protocols before fetching
+ok 17 - rejects non-http protocols before fetching
+  ---
+  duration_ms: 60.8857
+  type: 'test'
+  ...
+# Subtest: rejects non-loopback hosts before fetching
+ok 18 - rejects non-loopback hosts before fetching
+  ---
+  duration_ms: 61.6227
+  type: 'test'
+  ...
+# Subtest: rejects endpoints outside the fixed allowlist
+ok 19 - rejects endpoints outside the fixed allowlist
+  ---
+  duration_ms: 60.1347
+  type: 'test'
+  ...
+# Subtest: rejects dot-segment endpoint traversal
+ok 20 - rejects dot-segment endpoint traversal
+  ---
+  duration_ms: 64.0065
+  type: 'test'
+  ...
+# Subtest: fails when the RPC envelope has no boolean result.ok
+ok 21 - fails when the RPC envelope has no boolean result.ok
+  ---
+  duration_ms: 92.4366
+  type: 'test'
+  ...
+# Subtest: accepts a valid skill.list response with expected skills
+ok 22 - accepts a valid skill.list response with expected skills
+  ---
+  duration_ms: 93.7236
+  type: 'test'
+  ...
+# Subtest: accepts the bracketed IPv6 loopback hostname emitted by URL
+ok 23 - accepts the bracketed IPv6 loopback hostname emitted by URL
+  ---
+  duration_ms: 98.3214
+  type: 'test'
+  ...
+# Subtest: the installed DSH filesystem provider discovers the project skill
+ok 24 - the installed DSH filesystem provider discovers the project skill
+  ---
+  duration_ms: 218.5648
+  type: 'test'
+  ...
+# Subtest: publishes a discoverable DSH plugin development skill
+ok 25 - publishes a discoverable DSH plugin development skill
+  ---
+  duration_ms: 3.1235
+  type: 'test'
+  ...
+# Subtest: routes unstable API details to an official-contract reference
+ok 26 - routes unstable API details to an official-contract reference
+  ---
+  duration_ms: 1.8527
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1495.4163

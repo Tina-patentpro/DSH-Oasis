@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: maps a persisted record to UI pages and back without transport metadata
+ok 1 - maps a persisted record to UI pages and back without transport metadata
+  ---
+  duration_ms: 1.5946
+  type: 'test'
+  ...
+# Subtest: creates UUID-backed tasks with all durable defaults before workflow selection
+ok 2 - creates UUID-backed tasks with all durable defaults before workflow selection
+  ---
+  duration_ms: 0.4596
+  type: 'test'
+  ...
+# Subtest: selects a workflow, renames a task, and closes the active task deterministically
+ok 3 - selects a workflow, renames a task, and closes the active task deterministically
+  ---
+  duration_ms: 0.2947
+  type: 'test'
+  ...
+# Subtest: never saves the default state before hydration, then applies the queued open action
+ok 4 - never saves the default state before hydration, then applies the queued open action
+  ---
+  duration_ms: 1.8383
+  type: 'test'
+  ...
+# Subtest: hydrates persisted pages without issuing a replacement
+ok 5 - hydrates persisted pages without issuing a replacement
+  ---
+  duration_ms: 0.406
+  type: 'test'
+  ...
+# Subtest: serializes rapid same-Workspace actions with the revision returned by each write
+ok 6 - serializes rapid same-Workspace actions with the revision returned by each write
+  ---
+  duration_ms: 0.5487
+  type: 'test'
+  ...
+# Subtest: keeps Workspace save queues independent
+ok 7 - keeps Workspace save queues independent
+  ---
+  duration_ms: 1.3393
+  type: 'test'
+  ...
+# Subtest: preserves the local draft on revision conflict and reloads only on explicit request
+ok 8 - preserves the local draft on revision conflict and reloads only on explicit request
+  ---
+  duration_ms: 0.4156
+  type: 'test'
+  ...
+# Subtest: shows transport failure without discarding the unsaved draft
+ok 9 - shows transport failure without discarding the unsaved draft
+  ---
+  duration_ms: 0.6076
+  type: 'test'
+  ...
+# Subtest: uses the dedicated DSH Connection channel for get and replace
+ok 10 - uses the dedicated DSH Connection channel for get and replace
+  ---
+  duration_ms: 1.3434
+  type: 'test'
+  ...
+# Subtest: turns DSH RpcResult errors into typed client errors without losing the code
+ok 11 - turns DSH RpcResult errors into typed client errors without losing the code
+  ---
+  duration_ms: 0.5259
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed Connection results
+ok 12 - fails closed on malformed Connection results
+  ---
+  duration_ms: 0.2776
+  type: 'test'
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 114.8615

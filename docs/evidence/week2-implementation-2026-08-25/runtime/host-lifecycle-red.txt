@@ -1,0 +1,142 @@
+TAP version 13
+# Subtest: real Cordis tools service lists and executes oasis_workbench_status
+not ok 1 - real Cordis tools service lists and executes oasis_workbench_status
+  ---
+  duration_ms: 15.3323
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\host-runtime.integration.test.mjs:60:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'week-1-supplement'
+    - 'week-2'
+            ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'week-2'
+  actual: 'week-1-supplement'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/host-runtime.integration.test.mjs:82:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: registers the week-two Host tool and loopback workbench RPC with owned cleanup
+not ok 2 - registers the week-two Host tool and loopback workbench RPC with owned cleanup
+  ---
+  duration_ms: 3.1414
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\host-tool.test.mjs:56:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        'tools',
+    -   'storageDomain',
+    -   'connection'
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'tools'
+    1: 'storageDomain'
+    2: 'connection'
+  actual:
+    0: 'tools'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/host-tool.test.mjs:61:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: creates the immutable week-two durable state status contract
+not ok 3 - creates the immutable week-two durable state status contract
+  ---
+  duration_ms: 4.1831
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\status.test.mjs:11:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   capabilityLevel: 'panel-shell',
+    -   capabilityLevel: 'durable-workbench-state',
+        externalSystems: 'existing-stable-services',
+        localFirst: true,
+    +   phase: 'week-1-supplement',
+    -   phase: 'week-2',
+        plugin: 'oasis-professional-service',
+        schemaVersion: '1.0.0',
+        supportedWorkTypes: [
+          'technical-rd',
+          'cn-invention-patent'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: '1.0.0'
+    plugin: 'oasis-professional-service'
+    phase: 'week-2'
+    capabilityLevel: 'durable-workbench-state'
+    localFirst: true
+    externalSystems: 'existing-stable-services'
+    supportedWorkTypes:
+      0: 'technical-rd'
+      1: 'cn-invention-patent'
+  actual:
+    schemaVersion: '1.0.0'
+    plugin: 'oasis-professional-service'
+    phase: 'week-1-supplement'
+    capabilityLevel: 'panel-shell'
+    localFirst: true
+    externalSystems: 'existing-stable-services'
+    supportedWorkTypes:
+      0: 'technical-rd'
+      1: 'cn-invention-patent'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/status.test.mjs:18:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: dispatches only the two workbench state endpoints
+ok 4 - dispatches only the two workbench state endpoints
+  ---
+  duration_ms: 3.1436
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 5 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.3575
+  type: 'test'
+  ...
+# Subtest: maps unknown endpoints, extra fields, and injected identity fields to bad-request
+ok 6 - maps unknown endpoints, extra fields, and injected identity fields to bad-request
+  ---
+  duration_ms: 0.6247
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures as business results
+ok 7 - does not disguise repository infrastructure failures as business results
+  ---
+  duration_ms: 0.369
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 4
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 163.8267

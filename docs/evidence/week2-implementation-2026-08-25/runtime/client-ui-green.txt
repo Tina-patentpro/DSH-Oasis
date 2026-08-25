@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: declares one installable DSH bundle with host and web client faces
+ok 1 - declares one installable DSH bundle with host and web client faces
+  ---
+  duration_ms: 2.1761
+  type: 'test'
+  ...
+# Subtest: registers additive entry and panel host slots but never details
+ok 2 - registers additive entry and panel host slots but never details
+  ---
+  duration_ms: 1.3571
+  type: 'test'
+  ...
+# Subtest: fails closed when the DSH Connection service is unavailable
+ok 3 - fails closed when the DSH Connection service is unavailable
+  ---
+  duration_ms: 0.0991
+  type: 'test'
+  ...
+# Subtest: entry opens a visible normal panel directly through the shared store
+ok 4 - entry opens a visible normal panel directly through the shared store
+  ---
+  duration_ms: 3.3747
+  type: 'test'
+  ...
+# Subtest: entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+ok 5 - entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+  ---
+  duration_ms: 0.2222
+  type: 'test'
+  ...
+# Subtest: client no longer uses a window CustomEvent as its open transport
+ok 6 - client no longer uses a window CustomEvent as its open transport
+  ---
+  duration_ms: 0.4446
+  type: 'test'
+  ...
+# Subtest: panel never opens or closes the occupied DSH details modal for geometry
+ok 7 - panel never opens or closes the occupied DSH details modal for geometry
+  ---
+  duration_ms: 0.2988
+  type: 'test'
+  ...
+# Subtest: uses the approved Codex show hide expand and restore SVG paths
+ok 8 - uses the approved Codex show hide expand and restore SVG paths
+  ---
+  duration_ms: 0.1261
+  type: 'test'
+  ...
+# Subtest: renders loading, conflict, and transport failure as distinct accessible states
+ok 9 - renders loading, conflict, and transport failure as distinct accessible states
+  ---
+  duration_ms: 1.6221
+  type: 'test'
+  ...
+# Subtest: exposes task rename and explicit close controls while preserving saving feedback
+ok 10 - exposes task rename and explicit close controls while preserving saving feedback
+  ---
+  duration_ms: 1.2541
+  type: 'test'
+  ...
+# Subtest: disables persistent mutations while conflict resolution is required
+ok 11 - disables persistent mutations while conflict resolution is required
+  ---
+  duration_ms: 0.2519
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 162.0297

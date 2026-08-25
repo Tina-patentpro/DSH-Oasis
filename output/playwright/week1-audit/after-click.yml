@@ -1,0 +1,47 @@
+- generic [ref=f2e4]:
+  - generic [ref=f2e7]:
+    - generic [ref=f2e8]:
+      - button "新建会话" [ref=f2e9] [cursor=pointer]
+      - button "收起侧边栏" [ref=f2e38] [cursor=pointer]
+    - button "新建会话" [ref=f2e41] [cursor=pointer]:
+      - generic [ref=f2e44]: 新会话
+    - generic [ref=f2e47]:
+      - generic [ref=f2e48]:
+        - generic [ref=f2e49]: 工作区
+        - generic [ref=f2e51]:
+          - button "搜索会话" [ref=f2e52] [cursor=pointer]
+          - textbox "搜索会话…"
+        - generic [ref=f2e56]:
+          - button "视图选项" [ref=f2e58] [cursor=pointer]
+          - button "添加工作区" [ref=f2e61] [cursor=pointer]
+      - tree "会话" [ref=f2e67]:
+        - generic [ref=f2e68]:
+          - treeitem "9、绿洲慧写4.0预研" [expanded] [ref=f2e70] [cursor=pointer]
+          - treeitem "新会话" [selected] [ref=f2e78] [cursor=pointer]
+    - button "设置" [ref=f2e84] [cursor=pointer]
+  - generic [ref=f2e98]:
+    - generic [ref=f2e101]:
+      - generic [ref=f2e106]: 探索未至之境
+      - generic [ref=f2e107]: 预览版
+    - generic [ref=f2e108]:
+      - button "选择工作区" [ref=f2e109] [cursor=pointer]:
+        - generic [ref=f2e113]: 9、绿洲慧写4.0预研
+      - button "标准模式" [ref=f2e163] [cursor=pointer]
+    - generic [ref=f2e118]:
+      - textbox "描述你想要构建的内容" [ref=f2e121]
+      - generic [ref=f2e122]:
+        - generic [ref=f2e123]:
+          - button "命令" [ref=f2e124] [cursor=pointer]
+          - button "访问模式，当前：Workspace Write" [ref=f2e129] [cursor=pointer]:
+            - generic [ref=f2e137]: Workspace Write
+        - generic [ref=f2e141]:
+          - button "打开技术研发与中国发明专利工作台" [active] [ref=f2e143]: 研发 / 专利
+          - button "选择模型，当前 DeepSeek-V4-Flash，推理等级 High" [ref=f2e171] [cursor=pointer]:
+            - generic [ref=f2e147]: DeepSeek-V4-Flash
+            - generic [ref=f2e172]: High
+          - button "发送消息" [disabled] [ref=f2e150]
+  - generic [ref=f2e154]:
+    - generic [ref=f2e155]:
+      - generic: 详情
+      - button "关闭详情" [ref=f2e156] [cursor=pointer]
+    - generic [ref=f2e159]: 点击消息流中的工具行查看详情

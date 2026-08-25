@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-08-24T15:25:21+08:00",
+  "dshVersion": "0.1.1-rc.2",
+  "evidenceLevel": "client-runtime",
+  "liveListSubTreeCaptured": true,
+  "rawEvidence": "browser/live-slot-subtrees.json",
+  "queries": {
+    "fullTree": {
+      "status": 200,
+      "rootCount": 1
+    },
+    "exactRoots": [
+      "conversation.input.right",
+      "shell.overlay",
+      "details"
+    ]
+  },
+  "slots": [
+    {
+      "name": "conversation.input.right",
+      "kind": "list",
+      "scope": "session",
+      "currentOccupants": [
+        {
+          "id": "oasis-professional-entry",
+          "order": 80,
+          "active": true
+        }
+      ],
+      "replacementRisk": "none with unique id",
+      "decision": "approved entry"
+    },
+    {
+      "name": "shell.overlay",
+      "kind": "list",
+      "scope": "root",
+      "currentOccupants": [
+        {
+          "id": "oasis-professional-panel",
+          "order": 80,
+          "active": true
+        }
+      ],
+      "replacementRisk": "none with unique id",
+      "decision": "approved panel host"
+    },
+    {
+      "name": "details",
+      "kind": "single",
+      "scope": "session",
+      "currentOccupants": [
+        {
+          "active": true,
+          "oasisIdPresent": false
+        }
+      ],
+      "replacementRisk": "would replace native details surface",
+      "decision": "forbidden"
+    }
+  ]
+}

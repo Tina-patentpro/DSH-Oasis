@@ -1,0 +1,6 @@
+Scenario: after the already-passing panel regression, create a second Session through RPC while the browser page is open, then wait for an inactive Session row.
+Exit: 1
+Observed failure: Playwright timed out after 30000 ms waiting for [role="treeitem"][aria-selected="false"] containing 新会话.
+Root cause: the open browser did not receive the RPC-created Session as a live Workspace list update.
+Repair made: verify-week1-supplement.mjs now pre-creates two Sessions in Workspace A and one Session in Workspace B before starting the browser; the browser test switches only among preloaded rows so no reload destroys the in-memory workbench store.
+Current evidence boundary: the repaired A/B browser scenario was not rerun because the subsequent headless Edge permission-review channel disconnected. Do not mark this repair GREEN.

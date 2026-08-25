@@ -1,0 +1,497 @@
+$ node --test test/*.test.mjs
+TAP version 13
+# Subtest: declares one installable DSH bundle with host and web client faces
+ok 1 - declares one installable DSH bundle with host and web client faces
+  ---
+  duration_ms: 4.6104
+  type: 'test'
+  ...
+# Subtest: builds the browser face as a DSH lazy-CJS module
+ok 2 - builds the browser face as a DSH lazy-CJS module
+  ---
+  duration_ms: 3.6033
+  type: 'test'
+  ...
+# Subtest: cleans stale browser artifacts before each build
+ok 3 - cleans stale browser artifacts before each build
+  ---
+  duration_ms: 0.6174
+  type: 'test'
+  ...
+# Subtest: registers additive entry and panel host slots but never details
+ok 4 - registers additive entry and panel host slots but never details
+  ---
+  duration_ms: 1.6399
+  type: 'test'
+  ...
+# Subtest: fails closed when the DSH Connection service is unavailable
+ok 5 - fails closed when the DSH Connection service is unavailable
+  ---
+  duration_ms: 0.1182
+  type: 'test'
+  ...
+# Subtest: entry opens a visible normal panel directly through the shared store
+ok 6 - entry opens a visible normal panel directly through the shared store
+  ---
+  duration_ms: 7.6674
+  type: 'test'
+  ...
+# Subtest: entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+ok 7 - entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+  ---
+  duration_ms: 0.2547
+  type: 'test'
+  ...
+# Subtest: client no longer uses a window CustomEvent as its open transport
+ok 8 - client no longer uses a window CustomEvent as its open transport
+  ---
+  duration_ms: 0.5358
+  type: 'test'
+  ...
+# Subtest: panel never opens or closes the occupied DSH details modal for geometry
+ok 9 - panel never opens or closes the occupied DSH details modal for geometry
+  ---
+  duration_ms: 0.4133
+  type: 'test'
+  ...
+# Subtest: uses the approved Codex show hide expand and restore SVG paths
+ok 10 - uses the approved Codex show hide expand and restore SVG paths
+  ---
+  duration_ms: 0.2654
+  type: 'test'
+  ...
+# Subtest: real Cordis tools service lists and executes oasis_workbench_status
+ok 11 - real Cordis tools service lists and executes oasis_workbench_status
+  ---
+  duration_ms: 20.0434
+  type: 'test'
+  ...
+# Subtest: registers the week-two Host tool and loopback workbench RPC with owned cleanup
+ok 12 - registers the week-two Host tool and loopback workbench RPC with owned cleanup
+  ---
+  duration_ms: 7.0779
+  type: 'test'
+  ...
+# Subtest: detects the current DSH rc.2 frame without hash classes or positional selectors
+ok 13 - detects the current DSH rc.2 frame without hash classes or positional selectors
+  ---
+  duration_ms: 3.8558
+  type: 'test'
+  ...
+# Subtest: rejects duplicate or structurally unrelated DSH anchors
+ok 14 - rejects duplicate or structurally unrelated DSH anchors
+  ---
+  duration_ms: 0.4044
+  type: 'test'
+  ...
+# Subtest: accepts the current DSH narrow layout when the native sidebar track collapses to zero
+ok 15 - accepts the current DSH narrow layout when the native sidebar track collapses to zero
+  ---
+  duration_ms: 1.281
+  type: 'test'
+  ...
+# Subtest: resolves requested and effective modes without overwriting the request
+ok 16 - resolves requested and effective modes without overwriting the request
+  ---
+  duration_ms: 0.9369
+  type: 'test'
+  ...
+# Subtest: normal owns one namespaced push and expanded or hidden clears it
+ok 17 - normal owns one namespaced push and expanded or hidden clears it
+  ---
+  duration_ms: 0.947
+  type: 'test'
+  ...
+# Subtest: foreign layout ownership fails closed without overwriting it
+ok 18 - foreign layout ownership fails closed without overwriting it
+  ---
+  duration_ms: 0.3384
+  type: 'test'
+  ...
+# Subtest: dispose is idempotent and restores every owned artifact
+ok 19 - dispose is idempotent and restores every owned artifact
+  ---
+  duration_ms: 0.3854
+  type: 'test'
+  ...
+# Subtest: explicit runtime fault and Portal unmount both restore the owned DSH layout
+ok 20 - explicit runtime fault and Portal unmount both restore the owned DSH layout
+  ---
+  duration_ms: 1.4681
+  type: 'test'
+  ...
+# Subtest: a CSS write failure restores the layout and reports a fault
+ok 21 - a CSS write failure restores the layout and reports a fault
+  ---
+  duration_ms: 0.5557
+  type: 'test'
+  ...
+# Subtest: pins the verified development dependency versions
+ok 22 - pins the verified development dependency versions
+  ---
+  duration_ms: 2.7299
+  type: 'test'
+  ...
+# Subtest: declares the Portal runtime as matched React peer dependencies
+ok 23 - declares the Portal runtime as matched React peer dependencies
+  ---
+  duration_ms: 0.2465
+  type: 'test'
+  ...
+# Subtest: keeps the distribution whitelist free of tests and local state
+ok 24 - keeps the distribution whitelist free of tests and local state
+  ---
+  duration_ms: 0.4387
+  type: 'test'
+  ...
+# Subtest: declares repeatable verification scripts
+ok 25 - declares repeatable verification scripts
+  ---
+  duration_ms: 0.2252
+  type: 'test'
+  ...
+# Subtest: normal geometry uses a fixed right rail without opening the DSH details modal
+ok 26 - normal geometry uses a fixed right rail without opening the DSH details modal
+  ---
+  duration_ms: 1.9259
+  type: 'test'
+  ...
+# Subtest: expanded geometry starts after the rendered sidebar
+ok 27 - expanded geometry starts after the rendered sidebar
+  ---
+  duration_ms: 0.2205
+  type: 'test'
+  ...
+# Subtest: hidden geometry has no panel rectangle
+ok 28 - hidden geometry has no panel rectangle
+  ---
+  duration_ms: 0.9488
+  type: 'test'
+  ...
+# Subtest: resolves Arrow, Home, End, and Delete focus targets with wrapping
+ok 29 - resolves Arrow, Home, End, and Delete focus targets with wrapping
+  ---
+  duration_ms: 0.8833
+  type: 'test'
+  ...
+# Subtest: moves DOM focus to the selected tab after render
+ok 30 - moves DOM focus to the selected tab after render
+  ---
+  duration_ms: 1.7046
+  type: 'test'
+  ...
+# Subtest: auto-expanded narrow mode shows restore semantics but disables an impossible restore
+ok 31 - auto-expanded narrow mode shows restore semantics but disables an impossible restore
+  ---
+  duration_ms: 1.387
+  type: 'test'
+  ...
+# Subtest: renders loading, conflict, and transport failure as distinct accessible states
+ok 32 - renders loading, conflict, and transport failure as distinct accessible states
+  ---
+  duration_ms: 2.8912
+  type: 'test'
+  ...
+# Subtest: exposes task rename and explicit close controls while preserving saving feedback
+ok 33 - exposes task rename and explicit close controls while preserving saving feedback
+  ---
+  duration_ms: 2.1664
+  type: 'test'
+  ...
+# Subtest: disables persistent mutations while conflict resolution is required
+ok 34 - disables persistent mutations while conflict resolution is required
+  ---
+  duration_ms: 0.3074
+  type: 'test'
+  ...
+# Subtest: the panel uses a React portal while the layout adapter is the only DSH DOM writer
+ok 35 - the panel uses a React portal while the layout adapter is the only DSH DOM writer
+  ---
+  duration_ms: 2.9931
+  type: 'test'
+  ...
+# Subtest: the package does not depend on better-sidebar or its excluded workbench stack
+ok 36 - the package does not depend on better-sidebar or its excluded workbench stack
+  ---
+  duration_ms: 0.7485
+  type: 'test'
+  ...
+# Subtest: the React error boundary faults the adapter instead of leaving a pushed layout
+ok 37 - the React error boundary faults the adapter instead of leaving a pushed layout
+  ---
+  duration_ms: 0.759
+  type: 'test'
+  ...
+# Subtest: maps the current session only through Workspace sessionIds membership
+ok 38 - maps the current session only through Workspace sessionIds membership
+  ---
+  duration_ms: 1.7829
+  type: 'test'
+  ...
+# Subtest: does not fall back to matching cwd or path
+ok 39 - does not fall back to matching cwd or path
+  ---
+  duration_ms: 0.2062
+  type: 'test'
+  ...
+# Subtest: fails closed for ambiguous or malformed Workspace membership
+ok 40 - fails closed for ambiguous or malformed Workspace membership
+  ---
+  duration_ms: 0.4479
+  type: 'test'
+  ...
+# Subtest: publishes a project-local DSH skill with an explicit scope boundary
+ok 41 - publishes a project-local DSH skill with an explicit scope boundary
+  ---
+  duration_ms: 2.5665
+  type: 'test'
+  ...
+# Subtest: requires a live whole-tree query followed by exact rooted Slot queries
+ok 42 - requires a live whole-tree query followed by exact rooted Slot queries
+  ---
+  duration_ms: 1.7267
+  type: 'test'
+  ...
+# Subtest: forbids guessed options and replacement of DSH structural single slots
+ok 43 - forbids guessed options and replacement of DSH structural single slots
+  ---
+  duration_ms: 0.283
+  type: 'test'
+  ...
+# Subtest: records the approved additive entry and overlay decisions
+ok 44 - records the approved additive entry and overlay decisions
+  ---
+  duration_ms: 0.4151
+  type: 'test'
+  ...
+# Subtest: creates the immutable week-two durable state status contract
+ok 45 - creates the immutable week-two durable state status contract
+  ---
+  duration_ms: 4.7503
+  type: 'test'
+  ...
+# Subtest: declares the fixed DSH domain identity and workspace table
+ok 46 - declares the fixed DSH domain identity and workspace table
+  ---
+  duration_ms: 1.0986
+  type: 'test'
+  ...
+# Subtest: projects a deterministic, deeply frozen revision-zero state without materializing it
+ok 47 - projects a deterministic, deeply frozen revision-zero state without materializing it
+  ---
+  duration_ms: 2.2961
+  type: 'test'
+  ...
+# Subtest: parses a complete record and returns a detached frozen value
+ok 48 - parses a complete record and returns a detached frozen value
+  ---
+  duration_ms: 1.8774
+  type: 'test'
+  ...
+# Subtest: accepts only the client-owned draft fields
+ok 49 - accepts only the client-owned draft fields
+  ---
+  duration_ms: 1.0979
+  type: 'test'
+  ...
+# Subtest: rejects unsupported schema versions and Workspace identity mismatch
+ok 50 - rejects unsupported schema versions and Workspace identity mismatch
+  ---
+  duration_ms: 0.4528
+  type: 'test'
+  ...
+# Subtest: rejects duplicate, missing, orphan, inactive, and map-key-mismatched tasks
+ok 51 - rejects duplicate, missing, orphan, inactive, and map-key-mismatched tasks
+  ---
+  duration_ms: 1.0327
+  type: 'test'
+  ...
+# Subtest: rejects non-JSON form values and unknown record fields
+ok 52 - rejects non-JSON form values and unknown record fields
+  ---
+  duration_ms: 1.3065
+  type: 'test'
+  ...
+# Subtest: rejects lexically ISO-looking timestamps that are not real calendar instants
+ok 53 - rejects lexically ISO-looking timestamps that are not real calendar instants
+  ---
+  duration_ms: 0.2788
+  type: 'test'
+  ...
+# Subtest: maps a persisted record to UI pages and back without transport metadata
+ok 54 - maps a persisted record to UI pages and back without transport metadata
+  ---
+  duration_ms: 2.1936
+  type: 'test'
+  ...
+# Subtest: creates UUID-backed tasks with all durable defaults before workflow selection
+ok 55 - creates UUID-backed tasks with all durable defaults before workflow selection
+  ---
+  duration_ms: 0.6128
+  type: 'test'
+  ...
+# Subtest: selects a workflow, renames a task, and closes the active task deterministically
+ok 56 - selects a workflow, renames a task, and closes the active task deterministically
+  ---
+  duration_ms: 0.7026
+  type: 'test'
+  ...
+# Subtest: never saves the default state before hydration, then applies the queued open action
+ok 57 - never saves the default state before hydration, then applies the queued open action
+  ---
+  duration_ms: 2.7578
+  type: 'test'
+  ...
+# Subtest: hydrates persisted pages without issuing a replacement
+ok 58 - hydrates persisted pages without issuing a replacement
+  ---
+  duration_ms: 0.2821
+  type: 'test'
+  ...
+# Subtest: serializes rapid same-Workspace actions with the revision returned by each write
+ok 59 - serializes rapid same-Workspace actions with the revision returned by each write
+  ---
+  duration_ms: 0.5355
+  type: 'test'
+  ...
+# Subtest: keeps Workspace save queues independent
+ok 60 - keeps Workspace save queues independent
+  ---
+  duration_ms: 1.6722
+  type: 'test'
+  ...
+# Subtest: preserves the local draft on revision conflict and reloads only on explicit request
+ok 61 - preserves the local draft on revision conflict and reloads only on explicit request
+  ---
+  duration_ms: 0.6194
+  type: 'test'
+  ...
+# Subtest: shows transport failure without discarding the unsaved draft
+ok 62 - shows transport failure without discarding the unsaved draft
+  ---
+  duration_ms: 0.5849
+  type: 'test'
+  ...
+# Subtest: uses the dedicated DSH Connection channel for get and replace
+ok 63 - uses the dedicated DSH Connection channel for get and replace
+  ---
+  duration_ms: 1.6406
+  type: 'test'
+  ...
+# Subtest: turns DSH RpcResult errors into typed client errors without losing the code
+ok 64 - turns DSH RpcResult errors into typed client errors without losing the code
+  ---
+  duration_ms: 0.812
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed Connection results
+ok 65 - fails closed on malformed Connection results
+  ---
+  duration_ms: 0.2376
+  type: 'test'
+  ...
+# Subtest: opens the declared Domain and missing reads do not materialize a row
+ok 66 - opens the declared Domain and missing reads do not materialize a row
+  ---
+  duration_ms: 2.1774
+  type: 'test'
+  ...
+# Subtest: first replacement materializes revision one with Host-owned identity and time
+ok 67 - first replacement materializes revision one with Host-owned identity and time
+  ---
+  duration_ms: 2.026
+  type: 'test'
+  ...
+# Subtest: serializes same-Workspace replacements so one revision wins and one receives current
+ok 68 - serializes same-Workspace replacements so one revision wins and one receives current
+  ---
+  duration_ms: 1.0706
+  type: 'test'
+  ...
+# Subtest: keeps revision and state independent across Workspaces
+ok 69 - keeps revision and state independent across Workspaces
+  ---
+  duration_ms: 0.6872
+  type: 'test'
+  ...
+# Subtest: propagates storage failure and leaves the authoritative row unchanged
+ok 70 - propagates storage failure and leaves the authoritative row unchanged
+  ---
+  duration_ms: 0.6166
+  type: 'test'
+  ...
+# Subtest: close rejects new work, drains admitted writes, then closes the Domain once
+ok 71 - close rejects new work, drains admitted writes, then closes the Domain once
+  ---
+  duration_ms: 0.4065
+  type: 'test'
+  ...
+# Subtest: dispatches only the two workbench state endpoints
+ok 72 - dispatches only the two workbench state endpoints
+  ---
+  duration_ms: 3.403
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 73 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.2411
+  type: 'test'
+  ...
+# Subtest: maps unknown endpoints, extra fields, and injected identity fields to bad-request
+ok 74 - maps unknown endpoints, extra fields, and injected identity fields to bad-request
+  ---
+  duration_ms: 0.6982
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures as business results
+ok 75 - does not disguise repository infrastructure failures as business results
+  ---
+  duration_ms: 0.3718
+  type: 'test'
+  ...
+# Subtest: keeps pages when switching sessions inside one Workspace
+ok 76 - keeps pages when switching sessions inside one Workspace
+  ---
+  duration_ms: 5.077
+  type: 'test'
+  ...
+# Subtest: switches to an independent page set when Workspace changes
+ok 77 - switches to an independent page set when Workspace changes
+  ---
+  duration_ms: 0.2021
+  type: 'test'
+  ...
+# Subtest: keeps hidden normal expanded state per Workspace
+ok 78 - keeps hidden normal expanded state per Workspace
+  ---
+  duration_ms: 0.1398
+  type: 'test'
+  ...
+# Subtest: opening an empty Workspace creates one workflow chooser page
+ok 79 - opening an empty Workspace creates one workflow chooser page
+  ---
+  duration_ms: 0.2237
+  type: 'test'
+  ...
+# Subtest: rejects task creation when no Workspace owns the session
+ok 80 - rejects task creation when no Workspace owns the session
+  ---
+  duration_ms: 0.5573
+  type: 'test'
+  ...
+# Subtest: notifies subscribers and preserves page state across panel transitions
+ok 81 - notifies subscribers and preserves page state across panel transitions
+  ---
+  duration_ms: 0.2961
+  type: 'test'
+  ...
+1..81
+# tests 81
+# suites 0
+# pass 81
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 368.4491

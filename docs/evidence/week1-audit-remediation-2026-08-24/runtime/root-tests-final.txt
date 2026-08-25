@@ -1,0 +1,142 @@
+TAP version 13
+# Subtest: DSH_BIN official npm shim resolves to its package Node CLI entry
+ok 1 - DSH_BIN official npm shim resolves to its package Node CLI entry
+  ---
+  duration_ms: 86.9699
+  type: 'test'
+  ...
+# Subtest: PATH fallback resolves an official npm shim without executing the shim shell
+ok 2 - PATH fallback resolves an official npm shim without executing the shim shell
+  ---
+  duration_ms: 136.3812
+  type: 'test'
+  ...
+# Subtest: forwards spaces, Unicode, quotes, trailing slashes and CMD metacharacters as exact argv
+ok 3 - forwards spaces, Unicode, quotes, trailing slashes and CMD metacharacters as exact argv
+  ---
+  duration_ms: 124.915
+  type: 'test'
+  ...
+# Subtest: does not execute a second CMD command embedded in one argument
+ok 4 - does not execute a second CMD command embedded in one argument
+  ---
+  duration_ms: 133.7957
+  type: 'test'
+  ...
+# Subtest: rejects an arbitrary command shim even when DSH_BIN points to it
+ok 5 - rejects an arbitrary command shim even when DSH_BIN points to it
+  ---
+  duration_ms: 76.0477
+  type: 'test'
+  ...
+# Subtest: supports the project .dsh-test home
+ok 6 - supports the project .dsh-test home
+  ---
+  duration_ms: 71.5811
+  type: 'test'
+  ...
+# Subtest: supports a declared oasis-dsh temporary home
+ok 7 - supports a declared oasis-dsh temporary home
+  ---
+  duration_ms: 76.1686
+  type: 'test'
+  ...
+# Subtest: rejects the real DSH home and its ancestors or descendants
+ok 8 - rejects the real DSH home and its ancestors or descendants
+  ---
+  duration_ms: 193.0595
+  type: 'test'
+  ...
+# Subtest: rejects a home whose existing path chain contains a symlink or junction
+ok 9 - rejects a home whose existing path chain contains a symlink or junction
+  ---
+  duration_ms: 79.3762
+  type: 'test'
+  ...
+# Subtest: the cmd convenience wrapper still handles ordinary arguments
+ok 10 - the cmd convenience wrapper still handles ordinary arguments
+  ---
+  duration_ms: 145.511
+  type: 'test'
+  ...
+# Subtest: fails closed when no official DSH package can be resolved
+ok 11 - fails closed when no official DSH package can be resolved
+  ---
+  duration_ms: 65.6629
+  type: 'test'
+  ...
+# Subtest: HTTP 200 with result.ok=false exits non-zero
+ok 12 - HTTP 200 with result.ok=false exits non-zero
+  ---
+  duration_ms: 107.407
+  type: 'test'
+  ...
+# Subtest: rejects non-http protocols before fetching
+ok 13 - rejects non-http protocols before fetching
+  ---
+  duration_ms: 53.2846
+  type: 'test'
+  ...
+# Subtest: rejects non-loopback hosts before fetching
+ok 14 - rejects non-loopback hosts before fetching
+  ---
+  duration_ms: 52.4904
+  type: 'test'
+  ...
+# Subtest: rejects endpoints outside the fixed allowlist
+ok 15 - rejects endpoints outside the fixed allowlist
+  ---
+  duration_ms: 51.7503
+  type: 'test'
+  ...
+# Subtest: rejects dot-segment endpoint traversal
+ok 16 - rejects dot-segment endpoint traversal
+  ---
+  duration_ms: 54.4439
+  type: 'test'
+  ...
+# Subtest: fails when the RPC envelope has no boolean result.ok
+ok 17 - fails when the RPC envelope has no boolean result.ok
+  ---
+  duration_ms: 83.1973
+  type: 'test'
+  ...
+# Subtest: accepts a valid skill.list response with expected skills
+ok 18 - accepts a valid skill.list response with expected skills
+  ---
+  duration_ms: 81.9142
+  type: 'test'
+  ...
+# Subtest: accepts the bracketed IPv6 loopback hostname emitted by URL
+ok 19 - accepts the bracketed IPv6 loopback hostname emitted by URL
+  ---
+  duration_ms: 81.2624
+  type: 'test'
+  ...
+# Subtest: the installed DSH filesystem provider discovers the project skill
+ok 20 - the installed DSH filesystem provider discovers the project skill
+  ---
+  duration_ms: 185.4239
+  type: 'test'
+  ...
+# Subtest: publishes a discoverable DSH plugin development skill
+ok 21 - publishes a discoverable DSH plugin development skill
+  ---
+  duration_ms: 1.2491
+  type: 'test'
+  ...
+# Subtest: routes unstable API details to an official-contract reference
+ok 22 - routes unstable API details to an official-contract reference
+  ---
+  duration_ms: 1.2934
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1261.7945

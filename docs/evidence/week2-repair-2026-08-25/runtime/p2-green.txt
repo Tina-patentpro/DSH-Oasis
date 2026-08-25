@@ -1,0 +1,166 @@
+TAP version 13
+# Subtest: strictly validates complete records including nested task fields and root metadata
+ok 1 - strictly validates complete records including nested task fields and root metadata
+  ---
+  duration_ms: 8.906
+  type: 'test'
+  ...
+# Subtest: strictly validates get and both replace response variants
+ok 2 - strictly validates get and both replace response variants
+  ---
+  duration_ms: 1.4901
+  type: 'test'
+  ...
+# Subtest: declares the fixed DSH domain identity and workspace table
+ok 3 - declares the fixed DSH domain identity and workspace table
+  ---
+  duration_ms: 1.3326
+  type: 'test'
+  ...
+# Subtest: projects a deterministic, deeply frozen revision-zero state without materializing it
+ok 4 - projects a deterministic, deeply frozen revision-zero state without materializing it
+  ---
+  duration_ms: 2.4128
+  type: 'test'
+  ...
+# Subtest: parses a complete record and returns a detached frozen value
+ok 5 - parses a complete record and returns a detached frozen value
+  ---
+  duration_ms: 1.236
+  type: 'test'
+  ...
+# Subtest: accepts only the client-owned draft fields
+ok 6 - accepts only the client-owned draft fields
+  ---
+  duration_ms: 1.129
+  type: 'test'
+  ...
+# Subtest: rejects unsupported schema versions and Workspace identity mismatch
+ok 7 - rejects unsupported schema versions and Workspace identity mismatch
+  ---
+  duration_ms: 0.5433
+  type: 'test'
+  ...
+# Subtest: rejects duplicate, missing, orphan, inactive, and map-key-mismatched tasks
+ok 8 - rejects duplicate, missing, orphan, inactive, and map-key-mismatched tasks
+  ---
+  duration_ms: 1.2508
+  type: 'test'
+  ...
+# Subtest: rejects non-JSON form values and unknown record fields
+ok 9 - rejects non-JSON form values and unknown record fields
+  ---
+  duration_ms: 1.3837
+  type: 'test'
+  ...
+# Subtest: rejects lexically ISO-looking timestamps that are not real calendar instants
+ok 10 - rejects lexically ISO-looking timestamps that are not real calendar instants
+  ---
+  duration_ms: 0.3997
+  type: 'test'
+  ...
+# Subtest: rejects revisions outside the non-negative safe-integer range
+ok 11 - rejects revisions outside the non-negative safe-integer range
+  ---
+  duration_ms: 0.6777
+  type: 'test'
+  ...
+# Subtest: maps a persisted record to UI pages and back without transport metadata
+ok 12 - maps a persisted record to UI pages and back without transport metadata
+  ---
+  duration_ms: 7.2202
+  type: 'test'
+  ...
+# Subtest: fails closed when a persisted record contains malformed nested task data
+ok 13 - fails closed when a persisted record contains malformed nested task data
+  ---
+  duration_ms: 0.7048
+  type: 'test'
+  ...
+# Subtest: creates UUID-backed tasks with all durable defaults before workflow selection
+ok 14 - creates UUID-backed tasks with all durable defaults before workflow selection
+  ---
+  duration_ms: 0.4729
+  type: 'test'
+  ...
+# Subtest: selects a workflow, renames a task, and closes the active task deterministically
+ok 15 - selects a workflow, renames a task, and closes the active task deterministically
+  ---
+  duration_ms: 0.3012
+  type: 'test'
+  ...
+# Subtest: uses the dedicated DSH Connection channel for get and replace
+ok 16 - uses the dedicated DSH Connection channel for get and replace
+  ---
+  duration_ms: 5.1593
+  type: 'test'
+  ...
+# Subtest: turns DSH RpcResult errors into typed client errors without losing the code
+ok 17 - turns DSH RpcResult errors into typed client errors without losing the code
+  ---
+  duration_ms: 0.5013
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed Connection results
+ok 18 - fails closed on malformed Connection results
+  ---
+  duration_ms: 0.7842
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed nested get and replace payloads
+ok 19 - fails closed on malformed nested get and replace payloads
+  ---
+  duration_ms: 2.1356
+  type: 'test'
+  ...
+# Subtest: opens the declared Domain and missing reads do not materialize a row
+ok 20 - opens the declared Domain and missing reads do not materialize a row
+  ---
+  duration_ms: 3.2434
+  type: 'test'
+  ...
+# Subtest: first replacement materializes revision one with Host-owned identity and time
+ok 21 - first replacement materializes revision one with Host-owned identity and time
+  ---
+  duration_ms: 2.1402
+  type: 'test'
+  ...
+# Subtest: serializes same-Workspace replacements so one revision wins and one receives current
+ok 22 - serializes same-Workspace replacements so one revision wins and one receives current
+  ---
+  duration_ms: 1.4068
+  type: 'test'
+  ...
+# Subtest: keeps revision and state independent across Workspaces
+ok 23 - keeps revision and state independent across Workspaces
+  ---
+  duration_ms: 0.9492
+  type: 'test'
+  ...
+# Subtest: propagates storage failure and leaves the authoritative row unchanged
+ok 24 - propagates storage failure and leaves the authoritative row unchanged
+  ---
+  duration_ms: 0.8538
+  type: 'test'
+  ...
+# Subtest: rejects a replacement when the persisted revision is exhausted
+ok 25 - rejects a replacement when the persisted revision is exhausted
+  ---
+  duration_ms: 0.456
+  type: 'test'
+  ...
+# Subtest: close rejects new work, drains admitted writes, then closes the Domain once
+ok 26 - close rejects new work, drains admitted writes, then closes the Domain once
+  ---
+  duration_ms: 0.6967
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 217.447

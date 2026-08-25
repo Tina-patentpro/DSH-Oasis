@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: declares one installable DSH bundle with host and web client faces
+ok 1 - declares one installable DSH bundle with host and web client faces
+  ---
+  duration_ms: 2.1918
+  type: 'test'
+  ...
+# Subtest: builds the browser face as a DSH lazy-CJS module
+ok 2 - builds the browser face as a DSH lazy-CJS module
+  ---
+  duration_ms: 1.1832
+  type: 'test'
+  ...
+# Subtest: registers and executes the week-one Host status tool
+ok 3 - registers and executes the week-one Host status tool
+  ---
+  duration_ms: 2.8479
+  type: 'test'
+  ...
+# Subtest: publishes a project-local DSH skill with an explicit scope boundary
+ok 4 - publishes a project-local DSH skill with an explicit scope boundary
+  ---
+  duration_ms: 0.9208
+  type: 'test'
+  ...
+# Subtest: creates the immutable week-one plugin status contract
+ok 5 - creates the immutable week-one plugin status contract
+  ---
+  duration_ms: 2.4307
+  type: 'test'
+  ...
+# Subtest: the installed DSH filesystem provider discovers the project skill
+ok 6 - the installed DSH filesystem provider discovers the project skill
+  ---
+  duration_ms: 156.4287
+  type: 'test'
+  ...
+# Subtest: publishes a discoverable DSH plugin development skill
+ok 7 - publishes a discoverable DSH plugin development skill
+  ---
+  duration_ms: 1.1745
+  type: 'test'
+  ...
+# Subtest: routes unstable API details to an official-contract reference
+ok 8 - routes unstable API details to an official-contract reference
+  ---
+  duration_ms: 0.5696
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 269.0426

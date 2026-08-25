@@ -1,0 +1,9 @@
+Command: pnpm install --frozen-lockfile --registry=https://registry.npmjs.org --store-dir D:\.pnpm-store --config.verify-deps-before-run=false
+Exit: 0
+Result:
+- Lockfile is up to date, resolution step is skipped.
+- Already up to date.
+- Lockfile passes supply-chain policies: 150 entries.
+- pnpm 11.19.0.
+
+Boundary: this verifies the current package manifest/lock and reused local store; it does not verify a clean-machine download.

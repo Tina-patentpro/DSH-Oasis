@@ -1,0 +1,198 @@
+TAP version 13
+# Subtest: does not expose stale week-one phase labels in current runtime metadata
+not ok 1 - does not expose stale week-one phase labels in current runtime metadata
+  ---
+  duration_ms: 2.9528
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\package-contract.test.mjs:10:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /week[- ]one/i. Input:
+    
+    "import { defineTool } from '@deepseek-ai/dsh-tools'\n" +
+      '\n' +
+      "import { createPluginStatus } from './status.js'\n" +
+      "import { openOasisWorkbenchRepository } from './workbench-repository.js'\n" +
+      "import { createWorkbenchRpcHandler, OASIS_WORKBENCH_RPC_CHANNEL } from './workbench-rpc.js'\n" +
+      '\n' +
+      "export const name = 'oasis-professional-service'\n" +
+      "export const inject = ['tools', 'storageDomain', 'connection']\n" +
+      '\n' +
+      'function registerStatusTool(ctx) {\n' +
+      '  ctx.tools.register(defineTool({\n' +
+      "    name: 'oasis_workbench_status',\n" +
+      "    description: 'Return the local week-one integration status for the Oasis technical R&D and Chinese invention patent workbench.',\n" +
+      '    parameters: {},\n' +
+      '    output: {\n' +
+      '      schema: {\n' +
+      "        type: 'object',\n" +
+      '        additionalProperties: false,\n' +
+      '        properties: {\n' +
+      "          schemaVersion: { type: 'string', required: true },\n" +
+      "          plugin: { type: 'string', required: true },\n" +
+      "          phase: { type: 'string', required: true },\n" +
+      "          capabilityLevel: { type: 'string', required: true },\n" +
+      "          localFirst: { type: 'boolean', required: true },\n" +
+      "          externalSystems: { type: 'string', required: true },\n" +
+      '          supportedWorkTypes: {\n' +
+      "            type: 'array',\n" +
+      '            required: true,\n' +
+      "            items: { type: 'string' },\n" +
+      '          },\n' +
+      '        },\n' +
+      '      },\n' +
+      '      render: (_args, value) => [{\n' +
+      "        type: 'text',\n" +
+      '        text: JSON.stringify(value),\n' +
+      '      }],\n' +
+      '    },\n' +
+      '    async execute() {\n' +
+      '      return createPluginStatus()\n' +
+      '    },\n' +
+      '  }))\n' +
+      '}\n' +
+      '\n' +
+      'export async function apply(ctx) {\n' +
+      '  const repository = await openOasisWorkbenchRepository(ctx.storageDomain)\n' +
+      '  let disposeRpc\n' +
+      '  try {\n' +
+      '    registerStatusTool(ctx)\n' +
+      '    disposeRpc = ctx.connection.rpc.handle(\n' +
+      '      OASIS_WORKBENCH_RPC_CHANNEL,\n' +
+      '      createWorkbenchRpcHandler(repository),\n' +
+      "      { authority: 'loopback' },\n" +
+      '    )\n' +
+      '  } catch (error) {\n' +
+      '    await repository.close()\n' +
+      '    throw error\n' +
+      '  }\n' +
+      '\n' +
+      '  let closePromise\n' +
+      '  return function disposeOasisWorkbenchHost() {\n' +
+      '    closePromise ??= (async () => {\n' +
+      '      try {\n' +
+      '        await disposeRpc()\n' +
+      '      } finally {\n' +
+      '        await repository.close()\n' +
+      '      }\n' +
+      '    })()\n' +
+      '    return closePromise\n' +
+      '  }\n' +
+      '}\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    import { defineTool } from '@deepseek-ai/dsh-tools'
+    
+    import { createPluginStatus } from './status.js'
+    import { openOasisWorkbenchRepository } from './workbench-repository.js'
+    import { createWorkbenchRpcHandler, OASIS_WORKBENCH_RPC_CHANNEL } from './workbench-rpc.js'
+    
+    export const name = 'oasis-professional-service'
+    export const inject = ['tools', 'storageDomain', 'connection']
+    
+    function registerStatusTool(ctx) {
+      ctx.tools.register(defineTool({
+        name: 'oasis_workbench_status',
+        description: 'Return the local week-one integration status for the Oasis technical R&D and Chinese invention patent workbench.',
+        parameters: {},
+        output: {
+          schema: {
+            type: 'object',
+            additionalProperties: false,
+            properties: {
+              schemaVersion: { type: 'string', required: true },
+              plugin: { type: 'string', required: true },
+              phase: { type: 'string', required: true },
+              capabilityLevel: { type: 'string', required: true },
+              localFirst: { type: 'boolean', required: true },
+              externalSystems: { type: 'string', required: true },
+              supportedWorkTypes: {
+                type: 'array',
+                required: true,
+                items: { type: 'string' },
+              },
+            },
+          },
+          render: (_args, value) => [{
+            type: 'text',
+            text: JSON.stringify(value),
+          }],
+        },
+        async execute() {
+          return createPluginStatus()
+        },
+      }))
+    }
+    
+    export async function apply(ctx) {
+      const repository = await openOasisWorkbenchRepository(ctx.storageDomain)
+      let disposeRpc
+      try {
+        registerStatusTool(ctx)
+        disposeRpc = ctx.connection.rpc.handle(
+          OASIS_WORKBENCH_RPC_CHANNEL,
+          createWorkbenchRpcHandler(repository),
+          { authority: 'loopback' },
+        )
+      } catch (error) {
+        await repository.close()
+        throw error
+      }
+    
+      let closePromise
+      return function disposeOasisWorkbenchHost() {
+        closePromise ??= (async () => {
+          try {
+            await disposeRpc()
+          } finally {
+            await repository.close()
+          }
+        })()
+        return closePromise
+      }
+    }
+    
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/package-contract.test.mjs:13:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: pins the verified development dependency versions
+ok 2 - pins the verified development dependency versions
+  ---
+  duration_ms: 0.7625
+  type: 'test'
+  ...
+# Subtest: declares the Portal runtime as matched React peer dependencies
+ok 3 - declares the Portal runtime as matched React peer dependencies
+  ---
+  duration_ms: 0.1286
+  type: 'test'
+  ...
+# Subtest: keeps the distribution whitelist free of tests and local state
+ok 4 - keeps the distribution whitelist free of tests and local state
+  ---
+  duration_ms: 0.1747
+  type: 'test'
+  ...
+# Subtest: declares repeatable verification scripts
+ok 5 - declares repeatable verification scripts
+  ---
+  duration_ms: 0.0866
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 4
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 87.2351

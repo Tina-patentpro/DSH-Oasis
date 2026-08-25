@@ -1,0 +1,82 @@
+import assert from 'node:assert/strict'
+import test from 'node:test'
+
+import { apply, inject, name } from '../src/index.js'
+
+function createHostFixture() {
+  let registered
+  let rpcRegistration
+  const records = new Map()
+  const calls = { domainClose: 0, rpcDispose: 0 }
+  const domain = {
+    table() {
+      return {
+        get(key) {
+          return records.get(key)
+        },
+        async put(key, value) {
+          records.set(key, value)
+        },
+      }
+    },
+    async close() {
+      calls.domainClose += 1
+    },
+  }
+  const ctx = {
+    tools: {
+      register(tool) {
+        registered = tool
+      },
+    },
+    storageDomain: {
+      async open() {
+        return domain
+      },
+    },
+    connection: {
+      rpc: {
+        handle(channel, handler, options) {
+          rpcRegistration = { channel, handler, options }
+          return async () => {
+            calls.rpcDispose += 1
+          }
+        },
+      },
+    },
+  }
+  return {
+    ctx,
+    calls,
+    get registered() { return registered },
+    get rpcRegistration() { return rpcRegistration },
+  }
+}
+
+test('registers the week-two Host tool and loopback workbench RPC with owned cleanup', async () => {
+  const fixture = createHostFixture()
+  const dispose = await apply(fixture.ctx)
+
+  assert.equal(name, 'oasis-professional-service')
+  assert.deepEqual(inject, ['tools', 'storageDomain', 'connection'])
+  assert.equal(fixture.registered?.name, 'oasis_workbench_status')
+  assert.equal(fixture.rpcRegistration.channel, '/oasis-workbench')
+  assert.deepEqual(fixture.rpcRegistration.options, { authority: 'loopback' })
+
+  const stateResult = await fixture.rpcRegistration.handler('state/get', { workspaceId: 'workspace-a' })
+  assert.equal(stateResult.ok, true)
+  assert.equal(stateResult.value.revision, 0)
+
+  const value = await fixture.registered.execute({}, {
+    signal: new AbortController().signal,
+  })
+  assert.equal(value.plugin, 'oasis-professional-service')
+  assert.equal(value.phase, 'week-2')
+  assert.equal(value.capabilityLevel, 'durable-workbench-state')
+  assert.deepEqual(value.supportedWorkTypes, ['technical-rd', 'cn-invention-patent'])
+  assert.equal('workspaceState' in value, false)
+  assert.equal(value.externalSystems, 'existing-stable-services')
+
+  await dispose()
+  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 1 })
+})

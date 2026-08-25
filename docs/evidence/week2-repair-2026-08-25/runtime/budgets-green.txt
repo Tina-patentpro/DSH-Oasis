@@ -1,0 +1,76 @@
+TAP version 13
+# Subtest: strictly validates complete records including nested task fields and root metadata
+ok 1 - strictly validates complete records including nested task fields and root metadata
+  ---
+  duration_ms: 6.8212
+  type: 'test'
+  ...
+# Subtest: strictly validates get and both replace response variants
+ok 2 - strictly validates get and both replace response variants
+  ---
+  duration_ms: 1.3962
+  type: 'test'
+  ...
+# Subtest: publishes immutable fixed Beta resource budgets
+ok 3 - publishes immutable fixed Beta resource budgets
+  ---
+  duration_ms: 0.1294
+  type: 'test'
+  ...
+# Subtest: enforces task and input-reference cardinality at the boundary
+ok 4 - enforces task and input-reference cardinality at the boundary
+  ---
+  duration_ms: 2.3811
+  type: 'test'
+  ...
+# Subtest: enforces JSON depth, collection, key, and UTF-8 string budgets at the boundary
+ok 5 - enforces JSON depth, collection, key, and UTF-8 string budgets at the boundary
+  ---
+  duration_ms: 13.3102
+  type: 'test'
+  ...
+# Subtest: enforces the serialized draft byte budget
+ok 6 - enforces the serialized draft byte budget
+  ---
+  duration_ms: 14.9603
+  type: 'test'
+  ...
+# Subtest: dispatches only the two workbench state endpoints
+ok 7 - dispatches only the two workbench state endpoints
+  ---
+  duration_ms: 4.2074
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 8 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.3647
+  type: 'test'
+  ...
+# Subtest: maps unknown endpoints, extra fields, and injected identity fields to bad-request
+ok 9 - maps unknown endpoints, extra fields, and injected identity fields to bad-request
+  ---
+  duration_ms: 0.8494
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures as business results
+ok 10 - does not disguise repository infrastructure failures as business results
+  ---
+  duration_ms: 0.4894
+  type: 'test'
+  ...
+# Subtest: rejects over-budget workspace drafts before calling the repository
+ok 11 - rejects over-budget workspace drafts before calling the repository
+  ---
+  duration_ms: 3.1696
+  type: 'test'
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 186.7474

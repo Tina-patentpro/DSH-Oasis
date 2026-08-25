@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: declares the fixed DSH domain identity and workspace table
+ok 1 - declares the fixed DSH domain identity and workspace table
+  ---
+  duration_ms: 1.0339
+  type: 'test'
+  ...
+# Subtest: projects a deterministic, deeply frozen revision-zero state without materializing it
+ok 2 - projects a deterministic, deeply frozen revision-zero state without materializing it
+  ---
+  duration_ms: 2.3853
+  type: 'test'
+  ...
+# Subtest: parses a complete record and returns a detached frozen value
+ok 3 - parses a complete record and returns a detached frozen value
+  ---
+  duration_ms: 1.2445
+  type: 'test'
+  ...
+# Subtest: accepts only the client-owned draft fields
+ok 4 - accepts only the client-owned draft fields
+  ---
+  duration_ms: 1.0124
+  type: 'test'
+  ...
+# Subtest: rejects unsupported schema versions and Workspace identity mismatch
+ok 5 - rejects unsupported schema versions and Workspace identity mismatch
+  ---
+  duration_ms: 0.6336
+  type: 'test'
+  ...
+# Subtest: rejects duplicate, missing, orphan, inactive, and map-key-mismatched tasks
+ok 6 - rejects duplicate, missing, orphan, inactive, and map-key-mismatched tasks
+  ---
+  duration_ms: 0.9915
+  type: 'test'
+  ...
+# Subtest: rejects non-JSON form values and unknown record fields
+ok 7 - rejects non-JSON form values and unknown record fields
+  ---
+  duration_ms: 1.1703
+  type: 'test'
+  ...
+# Subtest: rejects lexically ISO-looking timestamps that are not real calendar instants
+ok 8 - rejects lexically ISO-looking timestamps that are not real calendar instants
+  ---
+  duration_ms: 0.243
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 143.9599

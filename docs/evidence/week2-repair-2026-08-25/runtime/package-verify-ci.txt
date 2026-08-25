@@ -1,0 +1,614 @@
+$ tsdown --config tsdown.config.mjs && node --test test/*.test.mjs && npm pack --dry-run --json
+ℹ tsdown v0.22.14 powered by rolldown v1.2.5
+ℹ config file: D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\packages\oasis-professional-service\tsdown.config.mjs 
+ℹ [oasis-professional-service/client] entry: src/client.js
+ℹ [oasis-professional-service/client] target: es2022
+ℹ Build start
+ℹ Cleaning 3 files
+ℹ [oasis-professional-service/client] Hint: consider adding deps.onlyBundle option to avoid unintended bundling of dependencies, or set deps.onlyBundle: false to disable this hint.
+See more at https://tsdown.dev/options/dependencies#deps-onlybundle
+Detected dependencies in bundle:
+- zod
+ℹ [oasis-professional-service/client] lib\client.js      211.08 kB │ gzip: 43.79 kB
+ℹ [oasis-professional-service/client] lib\client.js.map  488.45 kB │ gzip: 92.99 kB
+ℹ [oasis-professional-service/client] 2 files, total: 699.53 kB
+✔ [oasis-professional-service/client] Build complete in 88ms
+TAP version 13
+# Subtest: declares one installable DSH bundle with host and web client faces
+ok 1 - declares one installable DSH bundle with host and web client faces
+  ---
+  duration_ms: 3.3437
+  type: 'test'
+  ...
+# Subtest: builds the browser face as a DSH lazy-CJS module
+ok 2 - builds the browser face as a DSH lazy-CJS module
+  ---
+  duration_ms: 4.1253
+  type: 'test'
+  ...
+# Subtest: cleans stale browser artifacts before each build
+ok 3 - cleans stale browser artifacts before each build
+  ---
+  duration_ms: 1.4777
+  type: 'test'
+  ...
+# Subtest: registers additive entry and panel host slots but never details
+ok 4 - registers additive entry and panel host slots but never details
+  ---
+  duration_ms: 1.6738
+  type: 'test'
+  ...
+# Subtest: fails closed when the DSH Connection service is unavailable
+ok 5 - fails closed when the DSH Connection service is unavailable
+  ---
+  duration_ms: 0.1189
+  type: 'test'
+  ...
+# Subtest: entry opens a visible normal panel directly through the shared store
+ok 6 - entry opens a visible normal panel directly through the shared store
+  ---
+  duration_ms: 4.375
+  type: 'test'
+  ...
+# Subtest: entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+ok 7 - entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+  ---
+  duration_ms: 0.2499
+  type: 'test'
+  ...
+# Subtest: client no longer uses a window CustomEvent as its open transport
+ok 8 - client no longer uses a window CustomEvent as its open transport
+  ---
+  duration_ms: 0.5352
+  type: 'test'
+  ...
+# Subtest: panel never opens or closes the occupied DSH details modal for geometry
+ok 9 - panel never opens or closes the occupied DSH details modal for geometry
+  ---
+  duration_ms: 0.3541
+  type: 'test'
+  ...
+# Subtest: uses the approved Codex show hide expand and restore SVG paths
+ok 10 - uses the approved Codex show hide expand and restore SVG paths
+  ---
+  duration_ms: 0.1466
+  type: 'test'
+  ...
+# Subtest: real Cordis tools service lists and executes oasis_workbench_status
+ok 11 - real Cordis tools service lists and executes oasis_workbench_status
+  ---
+  duration_ms: 18.4546
+  type: 'test'
+  ...
+# Subtest: registers the week-two Host tool and loopback workbench RPC with owned cleanup
+ok 12 - registers the week-two Host tool and loopback workbench RPC with owned cleanup
+  ---
+  duration_ms: 6.457
+  type: 'test'
+  ...
+# Subtest: detects the current DSH rc.2 frame without hash classes or positional selectors
+ok 13 - detects the current DSH rc.2 frame without hash classes or positional selectors
+  ---
+  duration_ms: 2.6498
+  type: 'test'
+  ...
+# Subtest: rejects duplicate or structurally unrelated DSH anchors
+ok 14 - rejects duplicate or structurally unrelated DSH anchors
+  ---
+  duration_ms: 0.2959
+  type: 'test'
+  ...
+# Subtest: accepts the current DSH narrow layout when the native sidebar track collapses to zero
+ok 15 - accepts the current DSH narrow layout when the native sidebar track collapses to zero
+  ---
+  duration_ms: 0.746
+  type: 'test'
+  ...
+# Subtest: resolves requested and effective modes without overwriting the request
+ok 16 - resolves requested and effective modes without overwriting the request
+  ---
+  duration_ms: 0.7032
+  type: 'test'
+  ...
+# Subtest: normal owns one namespaced push and expanded or hidden clears it
+ok 17 - normal owns one namespaced push and expanded or hidden clears it
+  ---
+  duration_ms: 0.7208
+  type: 'test'
+  ...
+# Subtest: foreign layout ownership fails closed without overwriting it
+ok 18 - foreign layout ownership fails closed without overwriting it
+  ---
+  duration_ms: 0.242
+  type: 'test'
+  ...
+# Subtest: dispose is idempotent and restores every owned artifact
+ok 19 - dispose is idempotent and restores every owned artifact
+  ---
+  duration_ms: 0.2728
+  type: 'test'
+  ...
+# Subtest: explicit runtime fault and Portal unmount both restore the owned DSH layout
+ok 20 - explicit runtime fault and Portal unmount both restore the owned DSH layout
+  ---
+  duration_ms: 1.5032
+  type: 'test'
+  ...
+# Subtest: a CSS write failure restores the layout and reports a fault
+ok 21 - a CSS write failure restores the layout and reports a fault
+  ---
+  duration_ms: 0.7273
+  type: 'test'
+  ...
+# Subtest: does not expose stale week-one phase labels in current runtime metadata
+ok 22 - does not expose stale week-one phase labels in current runtime metadata
+  ---
+  duration_ms: 2.8545
+  type: 'test'
+  ...
+# Subtest: pins the verified development dependency versions
+ok 23 - pins the verified development dependency versions
+  ---
+  duration_ms: 0.9459
+  type: 'test'
+  ...
+# Subtest: declares the Portal runtime as matched React peer dependencies
+ok 24 - declares the Portal runtime as matched React peer dependencies
+  ---
+  duration_ms: 0.2394
+  type: 'test'
+  ...
+# Subtest: keeps the distribution whitelist free of tests and local state
+ok 25 - keeps the distribution whitelist free of tests and local state
+  ---
+  duration_ms: 0.506
+  type: 'test'
+  ...
+# Subtest: declares repeatable verification scripts
+ok 26 - declares repeatable verification scripts
+  ---
+  duration_ms: 0.3103
+  type: 'test'
+  ...
+# Subtest: normal geometry uses a fixed right rail without opening the DSH details modal
+ok 27 - normal geometry uses a fixed right rail without opening the DSH details modal
+  ---
+  duration_ms: 2.1648
+  type: 'test'
+  ...
+# Subtest: expanded geometry starts after the rendered sidebar
+ok 28 - expanded geometry starts after the rendered sidebar
+  ---
+  duration_ms: 0.3147
+  type: 'test'
+  ...
+# Subtest: hidden geometry has no panel rectangle
+ok 29 - hidden geometry has no panel rectangle
+  ---
+  duration_ms: 1.192
+  type: 'test'
+  ...
+# Subtest: resolves Arrow, Home, End, and Delete focus targets with wrapping
+ok 30 - resolves Arrow, Home, End, and Delete focus targets with wrapping
+  ---
+  duration_ms: 1.0119
+  type: 'test'
+  ...
+# Subtest: moves DOM focus to the selected tab after render
+ok 31 - moves DOM focus to the selected tab after render
+  ---
+  duration_ms: 2.5213
+  type: 'test'
+  ...
+# Subtest: auto-expanded narrow mode shows restore semantics but disables an impossible restore
+ok 32 - auto-expanded narrow mode shows restore semantics but disables an impossible restore
+  ---
+  duration_ms: 1.117
+  type: 'test'
+  ...
+# Subtest: renders loading, conflict, and transport failure as distinct accessible states
+ok 33 - renders loading, conflict, and transport failure as distinct accessible states
+  ---
+  duration_ms: 1.9906
+  type: 'test'
+  ...
+# Subtest: exposes task rename and explicit close controls while preserving saving feedback
+ok 34 - exposes task rename and explicit close controls while preserving saving feedback
+  ---
+  duration_ms: 2.2032
+  type: 'test'
+  ...
+# Subtest: disables persistent mutations while conflict resolution is required
+ok 35 - disables persistent mutations while conflict resolution is required
+  ---
+  duration_ms: 0.3352
+  type: 'test'
+  ...
+# Subtest: the panel uses a React portal while the layout adapter is the only DSH DOM writer
+ok 36 - the panel uses a React portal while the layout adapter is the only DSH DOM writer
+  ---
+  duration_ms: 2.2542
+  type: 'test'
+  ...
+# Subtest: the package does not depend on better-sidebar or its excluded workbench stack
+ok 37 - the package does not depend on better-sidebar or its excluded workbench stack
+  ---
+  duration_ms: 0.6656
+  type: 'test'
+  ...
+# Subtest: the React error boundary faults the adapter instead of leaving a pushed layout
+ok 38 - the React error boundary faults the adapter instead of leaving a pushed layout
+  ---
+  duration_ms: 1.1608
+  type: 'test'
+  ...
+# Subtest: maps the current session only through Workspace sessionIds membership
+ok 39 - maps the current session only through Workspace sessionIds membership
+  ---
+  duration_ms: 1.0992
+  type: 'test'
+  ...
+# Subtest: does not fall back to matching cwd or path
+ok 40 - does not fall back to matching cwd or path
+  ---
+  duration_ms: 0.1749
+  type: 'test'
+  ...
+# Subtest: fails closed for ambiguous or malformed Workspace membership
+ok 41 - fails closed for ambiguous or malformed Workspace membership
+  ---
+  duration_ms: 0.1365
+  type: 'test'
+  ...
+# Subtest: publishes a project-local DSH skill with an explicit scope boundary
+ok 42 - publishes a project-local DSH skill with an explicit scope boundary
+  ---
+  duration_ms: 4.9774
+  type: 'test'
+  ...
+# Subtest: requires a live whole-tree query followed by exact rooted Slot queries
+ok 43 - requires a live whole-tree query followed by exact rooted Slot queries
+  ---
+  duration_ms: 4.2275
+  type: 'test'
+  ...
+# Subtest: forbids guessed options and replacement of DSH structural single slots
+ok 44 - forbids guessed options and replacement of DSH structural single slots
+  ---
+  duration_ms: 1.617
+  type: 'test'
+  ...
+# Subtest: records the approved additive entry and overlay decisions
+ok 45 - records the approved additive entry and overlay decisions
+  ---
+  duration_ms: 0.4196
+  type: 'test'
+  ...
+# Subtest: creates the immutable week-two durable state status contract
+ok 46 - creates the immutable week-two durable state status contract
+  ---
+  duration_ms: 4.7755
+  type: 'test'
+  ...
+# Subtest: strictly validates complete records including nested task fields and root metadata
+ok 47 - strictly validates complete records including nested task fields and root metadata
+  ---
+  duration_ms: 8.5738
+  type: 'test'
+  ...
+# Subtest: strictly validates get and both replace response variants
+ok 48 - strictly validates get and both replace response variants
+  ---
+  duration_ms: 1.7156
+  type: 'test'
+  ...
+# Subtest: publishes immutable fixed Beta resource budgets
+ok 49 - publishes immutable fixed Beta resource budgets
+  ---
+  duration_ms: 0.2603
+  type: 'test'
+  ...
+# Subtest: enforces task and input-reference cardinality at the boundary
+ok 50 - enforces task and input-reference cardinality at the boundary
+  ---
+  duration_ms: 4.1743
+  type: 'test'
+  ...
+# Subtest: enforces JSON depth, collection, key, and UTF-8 string budgets at the boundary
+ok 51 - enforces JSON depth, collection, key, and UTF-8 string budgets at the boundary
+  ---
+  duration_ms: 16.3182
+  type: 'test'
+  ...
+# Subtest: enforces the serialized draft byte budget
+ok 52 - enforces the serialized draft byte budget
+  ---
+  duration_ms: 16.7634
+  type: 'test'
+  ...
+# Subtest: declares the fixed DSH domain identity and workspace table
+ok 53 - declares the fixed DSH domain identity and workspace table
+  ---
+  duration_ms: 1.8942
+  type: 'test'
+  ...
+# Subtest: projects a deterministic, deeply frozen revision-zero state without materializing it
+ok 54 - projects a deterministic, deeply frozen revision-zero state without materializing it
+  ---
+  duration_ms: 4.6023
+  type: 'test'
+  ...
+# Subtest: parses a complete record and returns a detached frozen value
+ok 55 - parses a complete record and returns a detached frozen value
+  ---
+  duration_ms: 1.3929
+  type: 'test'
+  ...
+# Subtest: accepts only the client-owned draft fields
+ok 56 - accepts only the client-owned draft fields
+  ---
+  duration_ms: 1.2356
+  type: 'test'
+  ...
+# Subtest: rejects unsupported schema versions and Workspace identity mismatch
+ok 57 - rejects unsupported schema versions and Workspace identity mismatch
+  ---
+  duration_ms: 0.5481
+  type: 'test'
+  ...
+# Subtest: rejects duplicate, missing, orphan, inactive, and map-key-mismatched tasks
+ok 58 - rejects duplicate, missing, orphan, inactive, and map-key-mismatched tasks
+  ---
+  duration_ms: 2.3846
+  type: 'test'
+  ...
+# Subtest: rejects non-JSON form values and unknown record fields
+ok 59 - rejects non-JSON form values and unknown record fields
+  ---
+  duration_ms: 1.0679
+  type: 'test'
+  ...
+# Subtest: rejects lexically ISO-looking timestamps that are not real calendar instants
+ok 60 - rejects lexically ISO-looking timestamps that are not real calendar instants
+  ---
+  duration_ms: 0.611
+  type: 'test'
+  ...
+# Subtest: rejects revisions outside the non-negative safe-integer range
+ok 61 - rejects revisions outside the non-negative safe-integer range
+  ---
+  duration_ms: 1.2045
+  type: 'test'
+  ...
+# Subtest: maps a persisted record to UI pages and back without transport metadata
+ok 62 - maps a persisted record to UI pages and back without transport metadata
+  ---
+  duration_ms: 9.03
+  type: 'test'
+  ...
+# Subtest: fails closed when a persisted record contains malformed nested task data
+ok 63 - fails closed when a persisted record contains malformed nested task data
+  ---
+  duration_ms: 1.2109
+  type: 'test'
+  ...
+# Subtest: creates UUID-backed tasks with all durable defaults before workflow selection
+ok 64 - creates UUID-backed tasks with all durable defaults before workflow selection
+  ---
+  duration_ms: 0.46
+  type: 'test'
+  ...
+# Subtest: selects a workflow, renames a task, and closes the active task deterministically
+ok 65 - selects a workflow, renames a task, and closes the active task deterministically
+  ---
+  duration_ms: 0.3227
+  type: 'test'
+  ...
+# Subtest: never saves the default state before hydration, then applies the queued open action
+ok 66 - never saves the default state before hydration, then applies the queued open action
+  ---
+  duration_ms: 8.8063
+  type: 'test'
+  ...
+# Subtest: hydrates persisted pages without issuing a replacement
+ok 67 - hydrates persisted pages without issuing a replacement
+  ---
+  duration_ms: 0.5671
+  type: 'test'
+  ...
+# Subtest: serializes rapid same-Workspace actions with the revision returned by each write
+ok 68 - serializes rapid same-Workspace actions with the revision returned by each write
+  ---
+  duration_ms: 1.0189
+  type: 'test'
+  ...
+# Subtest: keeps Workspace save queues independent
+ok 69 - keeps Workspace save queues independent
+  ---
+  duration_ms: 2.2316
+  type: 'test'
+  ...
+# Subtest: preserves the local draft on revision conflict and reloads only on explicit request
+ok 70 - preserves the local draft on revision conflict and reloads only on explicit request
+  ---
+  duration_ms: 0.8573
+  type: 'test'
+  ...
+# Subtest: shows transport failure without discarding the unsaved draft
+ok 71 - shows transport failure without discarding the unsaved draft
+  ---
+  duration_ms: 0.7769
+  type: 'test'
+  ...
+# Subtest: uses the dedicated DSH Connection channel for get and replace
+ok 72 - uses the dedicated DSH Connection channel for get and replace
+  ---
+  duration_ms: 9.6473
+  type: 'test'
+  ...
+# Subtest: turns DSH RpcResult errors into typed client errors without losing the code
+ok 73 - turns DSH RpcResult errors into typed client errors without losing the code
+  ---
+  duration_ms: 0.6482
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed Connection results
+ok 74 - fails closed on malformed Connection results
+  ---
+  duration_ms: 0.2055
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed nested get and replace payloads
+ok 75 - fails closed on malformed nested get and replace payloads
+  ---
+  duration_ms: 2.5353
+  type: 'test'
+  ...
+# Subtest: opens the declared Domain and missing reads do not materialize a row
+ok 76 - opens the declared Domain and missing reads do not materialize a row
+  ---
+  duration_ms: 3.599
+  type: 'test'
+  ...
+# Subtest: first replacement materializes revision one with Host-owned identity and time
+ok 77 - first replacement materializes revision one with Host-owned identity and time
+  ---
+  duration_ms: 2.0417
+  type: 'test'
+  ...
+# Subtest: serializes same-Workspace replacements so one revision wins and one receives current
+ok 78 - serializes same-Workspace replacements so one revision wins and one receives current
+  ---
+  duration_ms: 1.4643
+  type: 'test'
+  ...
+# Subtest: keeps revision and state independent across Workspaces
+ok 79 - keeps revision and state independent across Workspaces
+  ---
+  duration_ms: 1.0207
+  type: 'test'
+  ...
+# Subtest: propagates storage failure and leaves the authoritative row unchanged
+ok 80 - propagates storage failure and leaves the authoritative row unchanged
+  ---
+  duration_ms: 0.875
+  type: 'test'
+  ...
+# Subtest: rejects a replacement when the persisted revision is exhausted
+ok 81 - rejects a replacement when the persisted revision is exhausted
+  ---
+  duration_ms: 0.4848
+  type: 'test'
+  ...
+# Subtest: close rejects new work, drains admitted writes, then closes the Domain once
+ok 82 - close rejects new work, drains admitted writes, then closes the Domain once
+  ---
+  duration_ms: 0.6834
+  type: 'test'
+  ...
+# Subtest: dispatches only the two workbench state endpoints
+ok 83 - dispatches only the two workbench state endpoints
+  ---
+  duration_ms: 4.8862
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 84 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.5019
+  type: 'test'
+  ...
+# Subtest: maps unknown endpoints, extra fields, and injected identity fields to bad-request
+ok 85 - maps unknown endpoints, extra fields, and injected identity fields to bad-request
+  ---
+  duration_ms: 1.0722
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures as business results
+ok 86 - does not disguise repository infrastructure failures as business results
+  ---
+  duration_ms: 0.7481
+  type: 'test'
+  ...
+# Subtest: rejects over-budget workspace drafts before calling the repository
+ok 87 - rejects over-budget workspace drafts before calling the repository
+  ---
+  duration_ms: 3.5666
+  type: 'test'
+  ...
+# Subtest: keeps pages when switching sessions inside one Workspace
+ok 88 - keeps pages when switching sessions inside one Workspace
+  ---
+  duration_ms: 5.7502
+  type: 'test'
+  ...
+# Subtest: switches to an independent page set when Workspace changes
+ok 89 - switches to an independent page set when Workspace changes
+  ---
+  duration_ms: 0.198
+  type: 'test'
+  ...
+# Subtest: keeps hidden normal expanded state per Workspace
+ok 90 - keeps hidden normal expanded state per Workspace
+  ---
+  duration_ms: 0.2123
+  type: 'test'
+  ...
+# Subtest: opening an empty Workspace creates one workflow chooser page
+ok 91 - opening an empty Workspace creates one workflow chooser page
+  ---
+  duration_ms: 0.1567
+  type: 'test'
+  ...
+# Subtest: rejects task creation when no Workspace owns the session
+ok 92 - rejects task creation when no Workspace owns the session
+  ---
+  duration_ms: 0.5438
+  type: 'test'
+  ...
+# Subtest: notifies subscribers and preserves page state across panel transitions
+ok 93 - notifies subscribers and preserves page state across panel transitions
+  ---
+  duration_ms: 0.337
+  type: 'test'
+  ...
+1..93
+# tests 93
+# suites 0
+# pass 93
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 565.4443
+npm error code EPERM
+npm error syscall mkdir
+npm error path C:\Users\TinaD\AppData\Local\npm-cache\_cacache\tmp
+npm error errno -4048
+npm error Error: EPERM: operation not permitted, mkdir 'C:\Users\TinaD\AppData\Local\npm-cache\_cacache\tmp'
+npm error     at async Object.mkdir (node:internal/fs/promises:860:10)
+npm error     at async makeTmp (C:\Users\TinaD\AppData\Roaming\npm\node_modules\npm\node_modules\cacache\lib\content\write.js:156:3)
+npm error     at async handleContent (C:\Users\TinaD\AppData\Roaming\npm\node_modules\npm\node_modules\cacache\lib\content\write.js:103:15) {
+npm error   errno: -4048,
+npm error   code: 'EPERM',
+npm error   syscall: 'mkdir',
+npm error   path: 'C:\\Users\\TinaD\\AppData\\Local\\npm-cache\\_cacache\\tmp'
+npm error }
+npm error
+npm error The operation was rejected by your operating system.
+npm error It's possible that the file was already in use (by a text editor or antivirus),
+npm error or that you lack permissions to access it.
+npm error
+npm error If you believe this might be a permissions issue, please double-check the
+npm error permissions of the file and its containing directories, or try running
+npm error the command again as root/Administrator.
+{
+  "error": {
+    "code": "EPERM",
+    "summary": "Error: EPERM: operation not permitted, mkdir 'C:\\Users\\TinaD\\AppData\\Local\\npm-cache\\_cacache\\tmp'",
+    "detail": "The operation was rejected by your operating system.\nIt's possible that the file was already in use (by a text editor or antivirus),\nor that you lack permissions to access it.\n\nIf you believe this might be a permissions issue, please double-check the\npermissions of the file and its containing directories, or try running\nthe command again as root/Administrator."
+  }
+}
+npm error Log files were not written due to an error writing to the directory: C:\Users\TinaD\AppData\Local\npm-cache\_logs
+npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal
+[ELIFECYCLE] Command failed with exit code 4294963248.

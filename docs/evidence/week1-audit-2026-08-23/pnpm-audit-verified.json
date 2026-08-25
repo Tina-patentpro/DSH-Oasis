@@ -1,0 +1,22 @@
+{
+  "command": "pnpm --config.registry=https://registry.npmjs.org audit --json",
+  "exitCode": 0,
+  "advisories": {},
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0
+    },
+    "dependencies": 0,
+    "devDependencies": 150,
+    "optionalDependencies": 39,
+    "totalDependencies": 150
+  },
+  "notes": [
+    "The configured npmmirror endpoint returned ERR_PNPM_AUDIT_ENDPOINT_NOT_EXISTS.",
+    "The successful command used a one-command official npm registry override and did not change persistent configuration."
+  ]
+}

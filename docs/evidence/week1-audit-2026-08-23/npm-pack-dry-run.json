@@ -1,0 +1,30 @@
+npm error code EPERM
+npm error syscall mkdir
+npm error path C:\Users\TinaD\AppData\Local\npm-cache\_cacache\tmp
+npm error errno -4048
+npm error Error: EPERM: operation not permitted, mkdir 'C:\Users\TinaD\AppData\Local\npm-cache\_cacache\tmp'
+npm error     at async Object.mkdir (node:internal/fs/promises:860:10)
+npm error     at async makeTmp (C:\Users\TinaD\AppData\Roaming\npm\node_modules\npm\node_modules\cacache\lib\content\write.js:156:3)
+npm error     at async handleContent (C:\Users\TinaD\AppData\Roaming\npm\node_modules\npm\node_modules\cacache\lib\content\write.js:103:15) {
+npm error   errno: -4048,
+npm error   code: 'EPERM',
+npm error   syscall: 'mkdir',
+npm error   path: 'C:\\Users\\TinaD\\AppData\\Local\\npm-cache\\_cacache\\tmp'
+npm error }
+npm error
+npm error The operation was rejected by your operating system.
+npm error It's possible that the file was already in use (by a text editor or antivirus),
+npm error or that you lack permissions to access it.
+npm error
+npm error If you believe this might be a permissions issue, please double-check the
+npm error permissions of the file and its containing directories, or try running
+npm error the command again as root/Administrator.
+{
+  "error": {
+    "code": "EPERM",
+    "summary": "Error: EPERM: operation not permitted, mkdir 'C:\\Users\\TinaD\\AppData\\Local\\npm-cache\\_cacache\\tmp'",
+    "detail": "The operation was rejected by your operating system.\nIt's possible that the file was already in use (by a text editor or antivirus),\nor that you lack permissions to access it.\n\nIf you believe this might be a permissions issue, please double-check the\npermissions of the file and its containing directories, or try running\nthe command again as root/Administrator."
+  }
+}
+npm error Log files were not written due to an error writing to the directory: C:\Users\TinaD\AppData\Local\npm-cache\_logs
+npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal

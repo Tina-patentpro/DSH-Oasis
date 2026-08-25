@@ -1,0 +1,10 @@
+Command: set npm_config_cache=.tmp-npm-cache&& pnpm --config.verify-deps-before-run=false run verify
+Exit: 0
+Result:
+- clean tsdown build: client.js 24.94 kB; client.js.map 37.73 kB.
+- Full verify当时的Node test runner：29 passed, 0 failed。
+- 补充加入“不得调用openDetails/closeDetails”合同后，当前测试集复验：30 passed, 0 failed。
+- npm pack --dry-run --json: exit 0; entryCount 15; no bundled dependencies.
+- package id: oasis-professional-service@0.0.1.
+
+Boundary: package verification does not prove live DSH Slot metadata or production deployment.

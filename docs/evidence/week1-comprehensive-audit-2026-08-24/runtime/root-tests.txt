@@ -1,0 +1,107 @@
+TAP version 13
+# Subtest: DSH_BIN override has highest precedence
+ok 1 - DSH_BIN override has highest precedence
+  ---
+  duration_ms: 197.6721
+  type: 'test'
+  ...
+# Subtest: prints the resolved DSH_BIN override
+ok 2 - prints the resolved DSH_BIN override
+  ---
+  duration_ms: 127.1143
+  type: 'test'
+  ...
+# Subtest: falls back to dsh.cmd on PATH
+ok 3 - falls back to dsh.cmd on PATH
+  ---
+  duration_ms: 184.7369
+  type: 'test'
+  ...
+# Subtest: supports an explicit isolated home
+ok 4 - supports an explicit isolated home
+  ---
+  duration_ms: 126.1831
+  type: 'test'
+  ...
+# Subtest: keeps resolving the wrapper directory after --home shifts arguments
+ok 5 - keeps resolving the wrapper directory after --home shifts arguments
+  ---
+  duration_ms: 180.6853
+  type: 'test'
+  ...
+# Subtest: fails closed when no DSH executable can be resolved
+ok 6 - fails closed when no DSH executable can be resolved
+  ---
+  duration_ms: 108.9233
+  type: 'test'
+  ...
+# Subtest: HTTP 200 with result.ok=false exits non-zero
+ok 7 - HTTP 200 with result.ok=false exits non-zero
+  ---
+  duration_ms: 154.1769
+  type: 'test'
+  ...
+# Subtest: rejects non-http protocols before fetching
+ok 8 - rejects non-http protocols before fetching
+  ---
+  duration_ms: 79.8551
+  type: 'test'
+  ...
+# Subtest: rejects non-loopback hosts before fetching
+ok 9 - rejects non-loopback hosts before fetching
+  ---
+  duration_ms: 77.9046
+  type: 'test'
+  ...
+# Subtest: rejects endpoints outside the fixed allowlist
+ok 10 - rejects endpoints outside the fixed allowlist
+  ---
+  duration_ms: 85.261
+  type: 'test'
+  ...
+# Subtest: rejects dot-segment endpoint traversal
+ok 11 - rejects dot-segment endpoint traversal
+  ---
+  duration_ms: 93.9297
+  type: 'test'
+  ...
+# Subtest: fails when the RPC envelope has no boolean result.ok
+ok 12 - fails when the RPC envelope has no boolean result.ok
+  ---
+  duration_ms: 123.6012
+  type: 'test'
+  ...
+# Subtest: accepts a valid skill.list response with expected skills
+ok 13 - accepts a valid skill.list response with expected skills
+  ---
+  duration_ms: 129.0324
+  type: 'test'
+  ...
+# Subtest: the installed DSH filesystem provider discovers the project skill
+ok 14 - the installed DSH filesystem provider discovers the project skill
+  ---
+  duration_ms: 280.38
+  type: 'test'
+  ...
+# Subtest: publishes a discoverable DSH plugin development skill
+ok 15 - publishes a discoverable DSH plugin development skill
+  ---
+  duration_ms: 1.7296
+  type: 'test'
+  ...
+# Subtest: routes unstable API details to an official-contract reference
+ok 16 - routes unstable API details to an official-contract reference
+  ---
+  duration_ms: 0.6625
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1027.1846
+EXIT_CODE=0

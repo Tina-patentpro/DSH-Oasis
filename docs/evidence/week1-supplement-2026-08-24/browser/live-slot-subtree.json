@@ -1,0 +1,95 @@
+{
+  "status": 200,
+  "body": {
+    "requestedRoot": {
+      "name": "conversation.input.right",
+      "available": true
+    },
+    "trees": [
+      {
+        "name": "conversation.input.right",
+        "kind": "list",
+        "scope": "session",
+        "purpose": "The right end of the same tool row, before the primary send button — the seat for a control the user reaches on the way to sending (the model select sits in its own named seat just left of here).",
+        "replaceRisk": "none",
+        "registration": [
+          {
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "order",
+            "type": "number",
+            "required": false
+          },
+          {
+            "name": "label",
+            "type": "string | (() => string)",
+            "required": false
+          }
+        ],
+        "children": []
+      }
+    ],
+    "selected": {
+      "name": "conversation.input.right",
+      "kind": "list",
+      "scope": "session",
+      "declaredBy": "an entry in \"conversation\" (z5)",
+      "occupants": [
+        {
+          "registrant": "z5",
+          "id": "oasis-professional-entry",
+          "order": 80,
+          "priority": 0,
+          "active": true
+        }
+      ],
+      "catalog": {
+        "description": "The right end of the same tool row, before the primary send button —\nthe seat for a control the user reaches on the way to sending (the\nmodel select sits in its own named seat just left of here). Same\nInputZone owner share and the same one-row height budget as\n`conversation.input.left`.",
+        "registration": [
+          {
+            "name": "id",
+            "type": "string",
+            "required": true,
+            "description": "Your cell key. Use an id of your own: a fresh id is added beside the shipped entries, while reusing a shipped id puts you in THAT cell and replaces it. Owners that filter by id address you by it."
+          },
+          {
+            "name": "order",
+            "type": "number",
+            "required": false,
+            "description": "Position among the entries, ascending (default 0)."
+          },
+          {
+            "name": "label",
+            "type": "string | (() => string)",
+            "required": false,
+            "description": "Display text where the owner projects one (nav rows, tabs). A thunk is re-read on every projection, so localized text follows the active locale without re-registering."
+          }
+        ],
+        "ownerProps": [
+          "/**\n * The input-region slot currency: dock/left/right entries read\n * the conversation snapshot and the live input state as owner props (both\n * are point-in-time snapshots — the dispatching skeleton re-renders on\n * either store's change, so entries stay current without subscribing).\n */\nexport interface InputZone {\n  readonly session: ConversationSnapshot\n  readonly input: InputState\n}"
+        ],
+        "ownerPropsReferences": [
+          "ConversationSnapshot",
+          "InputState"
+        ],
+        "standardProps": [
+          "useSessions: SnapshotSelectorHook<SessionListState>",
+          "useWorkspaces: SnapshotSelectorHook<import('./workspaces/service.ts').WorkspaceListState>",
+          "useSession: SnapshotSelectorHook<ConversationSnapshot>",
+          "sessionId: SessionId",
+          "useProjection: UseProjection",
+          "useInput: SnapshotSelectorHook<InputState>",
+          "inputActions: InputActions"
+        ],
+        "keyDomain": "",
+        "hookContext": "",
+        "slotInject": "",
+        "replaceRisk": "none"
+      }
+    },
+    "referencedTypes": []
+  }
+}

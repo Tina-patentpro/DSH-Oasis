@@ -1,0 +1,293 @@
+$ tsdown --config tsdown.config.mjs && node --test test/*.test.mjs && npm pack --dry-run --json
+ℹ tsdown v0.22.14 powered by rolldown v1.2.5
+ℹ config file: D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\packages\oasis-professional-service\tsdown.config.mjs 
+ℹ [oasis-professional-service/client] entry: src/client.js
+ℹ [oasis-professional-service/client] target: es2022
+ℹ Build start
+ℹ Cleaning 3 files
+ℹ [oasis-professional-service/client] lib\client.js      24.94 kB │ gzip:  7.49 kB
+ℹ [oasis-professional-service/client] lib\client.js.map  37.73 kB │ gzip: 10.86 kB
+ℹ [oasis-professional-service/client] 2 files, total: 62.67 kB
+✔ [oasis-professional-service/client] Build complete in 41ms
+TAP version 13
+# Subtest: declares one installable DSH bundle with host and web client faces
+ok 1 - declares one installable DSH bundle with host and web client faces
+  ---
+  duration_ms: 5.8813
+  type: 'test'
+  ...
+# Subtest: builds the browser face as a DSH lazy-CJS module
+ok 2 - builds the browser face as a DSH lazy-CJS module
+  ---
+  duration_ms: 4.609
+  type: 'test'
+  ...
+# Subtest: cleans stale browser artifacts before each build
+ok 3 - cleans stale browser artifacts before each build
+  ---
+  duration_ms: 1.0558
+  type: 'test'
+  ...
+# Subtest: registers additive entry and panel host slots but never details
+ok 4 - registers additive entry and panel host slots but never details
+  ---
+  duration_ms: 2.109
+  type: 'test'
+  ...
+# Subtest: entry opens a visible normal panel directly through the shared store
+ok 5 - entry opens a visible normal panel directly through the shared store
+  ---
+  duration_ms: 1.2106
+  type: 'test'
+  ...
+# Subtest: client no longer uses a window CustomEvent as its open transport
+ok 6 - client no longer uses a window CustomEvent as its open transport
+  ---
+  duration_ms: 0.8898
+  type: 'test'
+  ...
+# Subtest: panel never opens or closes the occupied DSH details modal for geometry
+ok 7 - panel never opens or closes the occupied DSH details modal for geometry
+  ---
+  duration_ms: 0.4781
+  type: 'test'
+  ...
+# Subtest: uses the approved Codex show hide expand and restore SVG paths
+ok 8 - uses the approved Codex show hide expand and restore SVG paths
+  ---
+  duration_ms: 0.3655
+  type: 'test'
+  ...
+# Subtest: real Cordis tools service lists and executes oasis_workbench_status
+ok 9 - real Cordis tools service lists and executes oasis_workbench_status
+  ---
+  duration_ms: 28.8581
+  type: 'test'
+  ...
+# Subtest: registers and executes the week-one Host status tool
+ok 10 - registers and executes the week-one Host status tool
+  ---
+  duration_ms: 5.8805
+  type: 'test'
+  ...
+# Subtest: pins the verified development dependency versions
+ok 11 - pins the verified development dependency versions
+  ---
+  duration_ms: 3.1976
+  type: 'test'
+  ...
+# Subtest: keeps the distribution whitelist free of tests and local state
+ok 12 - keeps the distribution whitelist free of tests and local state
+  ---
+  duration_ms: 1.8623
+  type: 'test'
+  ...
+# Subtest: declares repeatable verification scripts
+ok 13 - declares repeatable verification scripts
+  ---
+  duration_ms: 0.1438
+  type: 'test'
+  ...
+# Subtest: normal geometry uses a fixed right rail without opening the DSH details modal
+ok 14 - normal geometry uses a fixed right rail without opening the DSH details modal
+  ---
+  duration_ms: 3.0507
+  type: 'test'
+  ...
+# Subtest: expanded geometry starts after the rendered sidebar
+ok 15 - expanded geometry starts after the rendered sidebar
+  ---
+  duration_ms: 0.3283
+  type: 'test'
+  ...
+# Subtest: hidden geometry has no panel rectangle
+ok 16 - hidden geometry has no panel rectangle
+  ---
+  duration_ms: 1.737
+  type: 'test'
+  ...
+# Subtest: maps the current session only through Workspace sessionIds membership
+ok 17 - maps the current session only through Workspace sessionIds membership
+  ---
+  duration_ms: 1.2967
+  type: 'test'
+  ...
+# Subtest: does not fall back to matching cwd or path
+ok 18 - does not fall back to matching cwd or path
+  ---
+  duration_ms: 0.2084
+  type: 'test'
+  ...
+# Subtest: fails closed for ambiguous or malformed Workspace membership
+ok 19 - fails closed for ambiguous or malformed Workspace membership
+  ---
+  duration_ms: 0.1077
+  type: 'test'
+  ...
+# Subtest: publishes a project-local DSH skill with an explicit scope boundary
+ok 20 - publishes a project-local DSH skill with an explicit scope boundary
+  ---
+  duration_ms: 2.3969
+  type: 'test'
+  ...
+# Subtest: requires a live whole-tree query followed by exact rooted Slot queries
+ok 21 - requires a live whole-tree query followed by exact rooted Slot queries
+  ---
+  duration_ms: 2.1927
+  type: 'test'
+  ...
+# Subtest: forbids guessed options and replacement of DSH structural single slots
+ok 22 - forbids guessed options and replacement of DSH structural single slots
+  ---
+  duration_ms: 0.3663
+  type: 'test'
+  ...
+# Subtest: records the approved additive entry and overlay decisions
+ok 23 - records the approved additive entry and overlay decisions
+  ---
+  duration_ms: 0.4702
+  type: 'test'
+  ...
+# Subtest: creates the immutable week-one supplement status contract
+ok 24 - creates the immutable week-one supplement status contract
+  ---
+  duration_ms: 5.1414
+  type: 'test'
+  ...
+# Subtest: keeps pages when switching sessions inside one Workspace
+ok 25 - keeps pages when switching sessions inside one Workspace
+  ---
+  duration_ms: 1.6133
+  type: 'test'
+  ...
+# Subtest: switches to an independent page set when Workspace changes
+ok 26 - switches to an independent page set when Workspace changes
+  ---
+  duration_ms: 0.2083
+  type: 'test'
+  ...
+# Subtest: keeps hidden normal expanded state per Workspace
+ok 27 - keeps hidden normal expanded state per Workspace
+  ---
+  duration_ms: 0.1888
+  type: 'test'
+  ...
+# Subtest: opening an empty Workspace creates one workflow chooser page
+ok 28 - opening an empty Workspace creates one workflow chooser page
+  ---
+  duration_ms: 0.2325
+  type: 'test'
+  ...
+# Subtest: rejects task creation when no Workspace owns the session
+ok 29 - rejects task creation when no Workspace owns the session
+  ---
+  duration_ms: 0.8201
+  type: 'test'
+  ...
+# Subtest: notifies subscribers and preserves page state across panel transitions
+ok 30 - notifies subscribers and preserves page state across panel transitions
+  ---
+  duration_ms: 0.2849
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 291.9774
+[
+  {
+    "id": "oasis-professional-service@0.0.1",
+    "name": "oasis-professional-service",
+    "version": "0.0.1",
+    "size": 21838,
+    "unpackedSize": 90594,
+    "shasum": "6456dbfc969e5b8dcd150f98ca1edbef2d43818e",
+    "integrity": "sha512-L+C3I0ApyWVqBuHoVVBo+GjwEVVNLei5ZoS1yEfqWecX1klGSgetEhL/h40vwlQoGrsHUi6ZMRinhOz4ko4IpQ==",
+    "filename": "oasis-professional-service-0.0.1.tgz",
+    "files": [
+      {
+        "path": "cordis.patch.yml",
+        "size": 238,
+        "mode": 420
+      },
+      {
+        "path": "lib/client.js",
+        "size": 24940,
+        "mode": 420
+      },
+      {
+        "path": "lib/client.js.map",
+        "size": 37731,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 1566,
+        "mode": 420
+      },
+      {
+        "path": "src/client.js",
+        "size": 1217,
+        "mode": 420
+      },
+      {
+        "path": "src/client/codex-icons.js",
+        "size": 4750,
+        "mode": 420
+      },
+      {
+        "path": "src/client/OasisPanelHost.js",
+        "size": 3231,
+        "mode": 420
+      },
+      {
+        "path": "src/client/panel-geometry.js",
+        "size": 1284,
+        "mode": 420
+      },
+      {
+        "path": "src/client/PanelChrome.js",
+        "size": 3892,
+        "mode": 420
+      },
+      {
+        "path": "src/client/PanelPages.js",
+        "size": 3738,
+        "mode": 420
+      },
+      {
+        "path": "src/client/project-resolution.js",
+        "size": 483,
+        "mode": 420
+      },
+      {
+        "path": "src/client/workbench-store.js",
+        "size": 4536,
+        "mode": 420
+      },
+      {
+        "path": "src/client/WorkbenchEntry.js",
+        "size": 1326,
+        "mode": 420
+      },
+      {
+        "path": "src/index.js",
+        "size": 1244,
+        "mode": 420
+      },
+      {
+        "path": "src/status.js",
+        "size": 418,
+        "mode": 420
+      }
+    ],
+    "entryCount": 15,
+    "bundled": []
+  }
+]
+EXIT_CODE=0

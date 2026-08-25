@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-08-25T05:08:36.551Z",
+  "commands": {
+    "install": "set CI=true&& pnpm install --frozen-lockfile --offline --registry=https://registry.npmjs.org",
+    "packageVerify": "set npm_config_cache=../../output/npm-cache-week2-audit&& set CI=true&& pnpm run verify",
+    "rootTests": "node --test tests/scripts/dsh-isolated.test.mjs tests/scripts/dsh-local-api-smoke.test.mjs tests/skills/dsh-plugin-development-discovery.test.mjs tests/skills/dsh-plugin-development.test.mjs",
+    "negativeProbe": "node --test docs/evidence/week2-audit-2026-08-25/verification/client-response-validation-probe.test.mjs"
+  },
+  "results": {
+    "frozenOfflineInstall": true,
+    "packageTests": {
+      "total": 81,
+      "pass": 81,
+      "fail": 0,
+      "observed": true
+    },
+    "rootTests": {
+      "total": 22,
+      "pass": 22,
+      "fail": 0,
+      "observed": true
+    },
+    "packEntryCount": 23,
+    "staticScanOk": true,
+    "toolchainOk": true,
+    "negativeProbeConfirmed": true,
+    "productBaselineUnchanged": true,
+    "realProfileUnchanged": true
+  },
+  "evidenceSha256": {
+    "frozenInstall": "00D015F7D65330C1D43DBFDF144EC6311B1CFC9E546A00F2CAD0BA55116C4C03",
+    "packageVerify": "AEA44A06A3F05D27729C0C2D4C02E802F27485DD0BC99D6B8C4DB511F8096194",
+    "rootTests": "8E8990F171C3322E3B2004DADDFE2AA4B1631E95643670AD6D197F77D66C27A3",
+    "pack": "971120E51C1EA40C5ECF836F42FDC631931512119ACE4B336892717D3F510255",
+    "staticScan": "1D39C3F86993C560B86EE6DAF4A97455F3DD50CBDBFCE7C79D84DCA8C1BC81B3",
+    "toolchain": "59ADA56C11D9B060565433F31A0D6E6EE67C9B372A9ECFF31AAEF59E18ACFA99",
+    "negativeProbe": "4A83E9D7D0F590F22866EF27C13053D1CE2C4A5A1A981384FECE4D29926D0AE3",
+    "productBefore": "D4EF5E630F8C5BBE9C528DCD04EB31019BAE0AE2BCC0680ADF891FE7F55F89C4",
+    "productAfter": "D4EF5E630F8C5BBE9C528DCD04EB31019BAE0AE2BCC0680ADF891FE7F55F89C4",
+    "profileBefore": "6A5AFCDDFD2E0D777BBF1F38E4BE315BA52A656ABFB41B1252A7478E52C10A52",
+    "profileAfter": "6A5AFCDDFD2E0D777BBF1F38E4BE315BA52A656ABFB41B1252A7478E52C10A52"
+  }
+}

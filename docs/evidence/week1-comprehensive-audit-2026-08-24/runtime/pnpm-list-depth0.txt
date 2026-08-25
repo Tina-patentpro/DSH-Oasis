@@ -1,0 +1,14 @@
+[ERR_SQLITE_ERROR] unable to open database file
+
+pnpm: unable to open database file
+    at file:///C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs:100554:19
+    at sqliteRetry (file:///C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs:100464:14)
+    at StoreIndex.openDatabase (file:///C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs:100553:9)
+    at new StoreIndex (file:///C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs:100538:14)
+    at buildDependenciesTree (file:///C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs:195735:33)
+    at async list (file:///C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs:196946:12)
+    at async file:///C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs:314767:19
+    at async main4 (file:///C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs:314735:30)
+    at async runPnpm (file:///C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs:315030:5)
+    at async file:///C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs:315023:3
+EXIT_CODE=1

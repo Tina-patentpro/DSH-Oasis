@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: real Cordis tools service lists and executes oasis_workbench_status
+ok 1 - real Cordis tools service lists and executes oasis_workbench_status
+  ---
+  duration_ms: 18.6627
+  type: 'test'
+  ...
+# Subtest: registers the week-two Host tool and loopback workbench RPC with owned cleanup
+ok 2 - registers the week-two Host tool and loopback workbench RPC with owned cleanup
+  ---
+  duration_ms: 5.9676
+  type: 'test'
+  ...
+# Subtest: creates the immutable week-two durable state status contract
+ok 3 - creates the immutable week-two durable state status contract
+  ---
+  duration_ms: 3.5705
+  type: 'test'
+  ...
+# Subtest: dispatches only the two workbench state endpoints
+ok 4 - dispatches only the two workbench state endpoints
+  ---
+  duration_ms: 3.5832
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 5 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.2705
+  type: 'test'
+  ...
+# Subtest: maps unknown endpoints, extra fields, and injected identity fields to bad-request
+ok 6 - maps unknown endpoints, extra fields, and injected identity fields to bad-request
+  ---
+  duration_ms: 0.7127
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures as business results
+ok 7 - does not disguise repository infrastructure failures as business results
+  ---
+  duration_ms: 0.8589
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 191.5476
