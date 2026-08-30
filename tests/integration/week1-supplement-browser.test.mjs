@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { access, mkdir, writeFile } from 'node:fs/promises'
+import { access, mkdir, realpath, stat, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -7,15 +7,16 @@ import test from 'node:test'
 
 const DEFAULT_PLAYWRIGHT = join(homedir(), '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs')
 const DEFAULT_BROWSERS = [
-  join(homedir(), 'AppData/Local/Google/Chrome/Application/chrome.exe'),
   'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+  join(homedir(), 'AppData/Local/Google/Chrome/Application/chrome.exe'),
 ]
 
 async function firstExisting(paths) {
   for (const path of paths) {
     try {
-      await access(path)
-      return path
+      const info = await stat(path)
+      if (!info.isFile()) continue
+      return await realpath(path)
     } catch {}
   }
   return null
@@ -114,8 +115,10 @@ function assertNoOwnedPush(layout, label) {
 test('isolated DSH preserves native layout while operating the project-bound Oasis panel', async () => {
   const baseUrl = process.env.OASIS_DSH_BASE_URL
   const sessionA1Id = process.env.OASIS_SESSION_A1_ID
+  const workspaceDisplayName = process.env.OASIS_WORKSPACE_DISPLAY_NAME?.trim()
   assert.ok(baseUrl, 'OASIS_DSH_BASE_URL is required; the integration test never starts or targets an implicit Host')
   assert.ok(sessionA1Id, 'OASIS_SESSION_A1_ID is required for the live Client Slot query')
+  assert.ok(workspaceDisplayName, 'OASIS_WORKSPACE_DISPLAY_NAME is required for project Workspace selection')
   const parsedBaseUrl = new URL(baseUrl)
   const normalizedHostname = parsedBaseUrl.hostname.replace(/^\[|\]$/g, '')
   assert.equal(parsedBaseUrl.protocol, 'http:')
@@ -161,7 +164,7 @@ test('isolated DSH preserves native layout while operating the project-bound Oas
       }
     }
 
-    const workspaceARow = page.getByRole('treeitem').filter({ hasText: '9、绿洲慧写4.0预研' }).first()
+    const workspaceARow = page.getByRole('treeitem').filter({ hasText: workspaceDisplayName }).first()
     await workspaceARow.waitFor({ state: 'visible' })
     if (await workspaceARow.getAttribute('aria-expanded') !== 'true') await workspaceARow.click()
     await save(resolve(outputDirectory, 'treeitems.json'), `${JSON.stringify(await page.getByRole('treeitem').evaluateAll((items) => items.map((item) => ({
@@ -238,11 +241,15 @@ test('isolated DSH preserves native layout while operating the project-bound Oas
     assert.equal(await tabs.nth(0).evaluate((element) => document.activeElement === element), true)
     await tabs.nth(1).click()
     await page.getByTestId('oasis-workflow-technical-rd').click()
-    await page.getByRole('region', { name: '输入材料' }).waitFor()
-    await page.getByRole('region', { name: '生成结果预览' }).waitFor()
+    await panel.getByRole('heading', { name: '工作流输入' }).waitFor()
+    await panel.getByRole('heading', { name: '生成与结果' }).waitFor()
+    await panel.locator('[data-field-id]').nth(4).waitFor({ state: 'attached' })
+    assert.equal(await panel.locator('[data-field-id]').count(), 5)
     await tabs.nth(0).click()
     await page.getByTestId('oasis-workflow-cn-invention-patent').click()
-    await page.getByRole('heading', { name: '中国发明专利撰写' }).waitFor()
+    assert.equal(await panel.getByRole('textbox', { name: '任务名称' }).inputValue(), '中国发明专利撰写')
+    await panel.locator('[data-field-id]').nth(5).waitFor({ state: 'attached' })
+    assert.equal(await panel.locator('[data-field-id]').count(), 6)
 
     await page.screenshot({ path: resolve(outputDirectory, 'oasis-panel-normal.png'), fullPage: true })
     await page.getByTestId('oasis-panel-expand').click()

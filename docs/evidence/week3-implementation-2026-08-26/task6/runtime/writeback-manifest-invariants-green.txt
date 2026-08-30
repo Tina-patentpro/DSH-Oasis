@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: strictly validates complete v2 records and both response variants
+ok 1 - strictly validates complete v2 records and both response variants
+  ---
+  duration_ms: 11.0146
+  type: 'test'
+  ...
+# Subtest: publishes immutable fixed Week 3 resource budgets
+ok 2 - publishes immutable fixed Week 3 resource budgets
+  ---
+  duration_ms: 0.1386
+  type: 'test'
+  ...
+# Subtest: editable drafts reject Host-owned material, run, and writeback evidence
+ok 3 - editable drafts reject Host-owned material, run, and writeback evidence
+  ---
+  duration_ms: 1.6411
+  type: 'test'
+  ...
+# Subtest: enforces material and run ownership invariants in complete records
+ok 4 - enforces material and run ownership invariants in complete records
+  ---
+  duration_ms: 4.2042
+  type: 'test'
+  ...
+# Subtest: enforces task, input-reference, and run cardinality
+ok 5 - enforces task, input-reference, and run cardinality
+  ---
+  duration_ms: 5.497
+  type: 'test'
+  ...
+# Subtest: enforces JSON and serialized draft budgets
+ok 6 - enforces JSON and serialized draft budgets
+  ---
+  duration_ms: 18.8605
+  type: 'test'
+  ...
+# Subtest: enforces artifact bytes and review-note limits
+ok 7 - enforces artifact bytes and review-note limits
+  ---
+  duration_ms: 6.4488
+  type: 'test'
+  ...
+# Subtest: keeps absolute paths and confirmation tokens out of persisted and recovery writeback contracts
+ok 8 - keeps absolute paths and confirmation tokens out of persisted and recovery writeback contracts
+  ---
+  duration_ms: 8.1543
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 231.2842

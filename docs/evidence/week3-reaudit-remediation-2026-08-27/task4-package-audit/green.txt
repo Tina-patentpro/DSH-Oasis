@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: package audit reports only static package scope and explicit limitations
+ok 1 - package audit reports only static package scope and explicit limitations
+  ---
+  duration_ms: 301.3184
+  type: 'test'
+  ...
+# Subtest: package audit source contains no positive source-marker claims or V4.1 verdict words
+ok 2 - package audit source contains no positive source-marker claims or V4.1 verdict words
+  ---
+  duration_ms: 0.9779
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 369.8336

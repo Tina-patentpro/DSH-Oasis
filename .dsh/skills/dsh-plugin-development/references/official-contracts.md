@@ -1,7 +1,7 @@
 # DSH插件官方接口参考
 
-核验日期：2026-08-24  
-本机基线：`@deepseek-ai/dsh 0.1.1-rc.2`、Node.js `22.19.0`、pnpm `11.19.0`
+核验日期：2026-08-25
+本机基线：`@deepseek-ai/dsh 0.1.1-rc.2`、`@deepseek-ai/dsh-workspace 0.1.1-rc.2`、Node.js `22.19.0`、pnpm `11.19.0`
 
 ## 证据优先级
 
@@ -68,6 +68,23 @@ Host插件导出`apply(ctx)`，需要工具注册表时导出`inject = ['tools']
 Web Profile由DSH组合JSON backend。该backend为每个unit写人类可读JSON，并通过临时文件、fsync和原子rename提交；插件不得绕过Domain直接读写该文件。backend不提供跨进程锁或CAS，本项目只承诺单一DSH Host进程；禁止两个Host共享同一Storage根。
 
 Host可用`ctx.connection.rpc.handle(channel, handler, { authority })`注册logical RPC channel，Client用`ctx.connection.rpc.call(channel, endpoint, payload, signal)`调用。本项目固定专用channel`/oasis-workbench`和`authority: 'loopback'`，不修改`@deepseek-ai/dsh-api-remotes`的固定能力集合。`RpcError`只使用DSH闭合集合；revision冲突属于成功响应中的业务union，不伪造新的transport错误码。payload必须在Host端严格校验，未知endpoint和额外字段返回`bad-request`。
+
+## Workspace Registry合同
+
+当前`@deepseek-ai/dsh-workspace 0.1.1-rc.2`通过`ctx.workspaceRegistry`提供Host侧Workspace实体。插件必须直接注入`workspaceRegistry`并按显式`workspaceId`调用`get(WorkspaceId(id))`，不得按Client传入的绝对路径、Host `cwd`、项目标题或同名目录猜测归属。
+
+`Workspace.path`是在创建时经`fs.realpath`得到且保持稳定的canonical现有目录；`Workspace.status()`每次实时检查该目录，返回`ok`或`missing-dir`，不修改Workspace记录。`Workspace.sessionIds`由注册表按session header canonical cwd过滤。插件只能把`Workspace.path`作为项目文件安全检查的起点，仍须对每个用户相对路径执行越界、symlink/junction、文件类型和TOCTOU复检。
+
+本机冻结证据：
+
+| 文件 | SHA-256 |
+|---|---|
+| `node_modules/@deepseek-ai/dsh-workspace/package.json` | `0DBF7F622E4B7D930734135368907ED8256A707FAB6F990582444772A78E790F` |
+| `node_modules/@deepseek-ai/dsh-workspace/lib/types/index.d.ts` | `E0C43056B485B269A62E30FFD1921BB54565686A6A106A7BE717753378462AE1` |
+| `node_modules/@deepseek-ai/dsh-workspace/lib/types/types.d.ts` | `099BF994F6A09CDE62FD31249CA5DC126CB34128ECB7D8DCEC713044FFCC1FB4` |
+| `node_modules/@deepseek-ai/dsh-workspace/README.zh.md` | `08A909818269EE759919F5EA21C987F1841E98A7573ECDAC80395260C6BA1697` |
+
+该包仅向Host消费者提供Workspace记录，不注册工具、不注入提示词、不写Session事件。Week 3不得为了项目文件功能把Workspace路径或材料正文放入模型上下文。
 
 ## Client合同
 

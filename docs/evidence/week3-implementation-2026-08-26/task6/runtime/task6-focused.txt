@@ -1,0 +1,335 @@
+TAP version 13
+# Subtest: strictly validates complete v2 records and both response variants
+ok 1 - strictly validates complete v2 records and both response variants
+  ---
+  duration_ms: 13.1308
+  type: 'test'
+  ...
+# Subtest: publishes immutable fixed Week 3 resource budgets
+ok 2 - publishes immutable fixed Week 3 resource budgets
+  ---
+  duration_ms: 0.1897
+  type: 'test'
+  ...
+# Subtest: editable drafts reject Host-owned material, run, and writeback evidence
+ok 3 - editable drafts reject Host-owned material, run, and writeback evidence
+  ---
+  duration_ms: 2.495
+  type: 'test'
+  ...
+# Subtest: enforces material and run ownership invariants in complete records
+ok 4 - enforces material and run ownership invariants in complete records
+  ---
+  duration_ms: 6.935
+  type: 'test'
+  ...
+# Subtest: enforces task, input-reference, and run cardinality
+ok 5 - enforces task, input-reference, and run cardinality
+  ---
+  duration_ms: 9.7332
+  type: 'test'
+  ...
+# Subtest: enforces JSON and serialized draft budgets
+ok 6 - enforces JSON and serialized draft budgets
+  ---
+  duration_ms: 23.9126
+  type: 'test'
+  ...
+# Subtest: enforces artifact bytes and review-note limits
+ok 7 - enforces artifact bytes and review-note limits
+  ---
+  duration_ms: 6.0347
+  type: 'test'
+  ...
+# Subtest: keeps absolute paths and confirmation tokens out of persisted and recovery writeback contracts
+ok 8 - keeps absolute paths and confirmation tokens out of persisted and recovery writeback contracts
+  ---
+  duration_ms: 4.7274
+  type: 'test'
+  ...
+# Subtest: uses the dedicated DSH Connection channel for schema-v2 get and replace
+ok 9 - uses the dedicated DSH Connection channel for schema-v2 get and replace
+  ---
+  duration_ms: 8.9289
+  type: 'test'
+  ...
+# Subtest: turns DSH RpcResult errors into typed Client errors
+ok 10 - turns DSH RpcResult errors into typed Client errors
+  ---
+  duration_ms: 0.8411
+  type: 'test'
+  ...
+# Subtest: loads and strictly validates the Host workflow catalog
+ok 11 - loads and strictly validates the Host workflow catalog
+  ---
+  duration_ms: 2.4543
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed Connection and nested v2 results
+ok 12 - fails closed on malformed Connection and nested v2 results
+  ---
+  duration_ms: 6.9257
+  type: 'test'
+  ...
+# Subtest: calls strict material endpoints and validates their authoritative replacement results
+ok 13 - calls strict material endpoints and validates their authoritative replacement results
+  ---
+  duration_ms: 2.9281
+  type: 'test'
+  ...
+# Subtest: calls task create and review endpoints and validates authoritative replacement results
+ok 14 - calls task create and review endpoints and validates authoritative replacement results
+  ---
+  duration_ms: 2.0521
+  type: 'test'
+  ...
+# Subtest: calls two-phase writeback endpoints and fails closed on malformed manifests
+ok 15 - calls two-phase writeback endpoints and fails closed on malformed manifests
+  ---
+  duration_ms: 4.0085
+  type: 'test'
+  ...
+# Subtest: dispatches state endpoints with a schema-v2 editable replacement
+ok 16 - dispatches state endpoints with a schema-v2 editable replacement
+  ---
+  duration_ms: 6.4076
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 17 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.6549
+  type: 'test'
+  ...
+# Subtest: rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+ok 18 - rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+  ---
+  duration_ms: 1.891
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures
+ok 19 - does not disguise repository infrastructure failures
+  ---
+  duration_ms: 1.7712
+  type: 'test'
+  ...
+# Subtest: rejects over-budget editable drafts before calling the repository
+ok 20 - rejects over-budget editable drafts before calling the repository
+  ---
+  duration_ms: 2.2252
+  type: 'test'
+  ...
+# Subtest: dispatches a strictly validated workflow catalog endpoint
+ok 21 - dispatches a strictly validated workflow catalog endpoint
+  ---
+  duration_ms: 0.5231
+  type: 'test'
+  ...
+# Subtest: dispatches strictly validated material commands without accepting Host evidence
+ok 22 - dispatches strictly validated material commands without accepting Host evidence
+  ---
+  duration_ms: 1.5591
+  type: 'test'
+  ...
+# Subtest: serializes known material failures but still propagates infrastructure failures
+ok 23 - serializes known material failures but still propagates infrastructure failures
+  ---
+  duration_ms: 0.3923
+  type: 'test'
+  ...
+# Subtest: dispatches strict task create and review commands without accepting Client evidence
+ok 24 - dispatches strict task create and review commands without accepting Client evidence
+  ---
+  duration_ms: 1.5827
+  type: 'test'
+  ...
+# Subtest: serializes known run-domain failures and propagates runner infrastructure faults
+ok 25 - serializes known run-domain failures and propagates runner infrastructure faults
+  ---
+  duration_ms: 0.772
+  type: 'test'
+  ...
+# Subtest: dispatches strict two-phase writeback commands and commit accepts only a token
+ok 26 - dispatches strict two-phase writeback commands and commit accepts only a token
+  ---
+  duration_ms: 1.4854
+  type: 'test'
+  ...
+# Subtest: serializes committed-index failure with only a relative recovery manifest
+ok 27 - serializes committed-index failure with only a relative recovery manifest
+  ---
+  duration_ms: 1.7057
+  type: 'test'
+  ...
+# Subtest: keeps state orchestration behind the service boundary
+ok 28 - keeps state orchestration behind the service boundary
+  ---
+  duration_ms: 2.6535
+  type: 'test'
+  ...
+# Subtest: creates a run only from authoritative validated draft and rechecked materials
+ok 29 - creates a run only from authoritative validated draft and rechecked materials
+  ---
+  duration_ms: 3.1656
+  type: 'test'
+  ...
+# Subtest: makes request keys idempotent for one snapshot and conflicts after draft change
+ok 30 - makes request keys idempotent for one snapshot and conflicts after draft change
+  ---
+  duration_ms: 2.2376
+  type: 'test'
+  ...
+# Subtest: rejects the ninth run without changing the first eight snapshots
+ok 31 - rejects the ninth run without changing the first eight snapshots
+  ---
+  duration_ms: 1.1642
+  type: 'test'
+  ...
+# Subtest: new runs preserve old bytes and review changes only the selected run
+ok 32 - new runs preserve old bytes and review changes only the selected run
+  ---
+  duration_ms: 1.5571
+  type: 'test'
+  ...
+# Subtest: publishes catalog through the service without leaking the repository
+ok 33 - publishes catalog through the service without leaking the repository
+  ---
+  duration_ms: 0.2323
+  type: 'test'
+  ...
+# Subtest: requires the complete repository and material-manager boundaries
+ok 34 - requires the complete repository and material-manager boundaries
+  ---
+  duration_ms: 0.4465
+  type: 'test'
+  ...
+# Subtest: adds a confirmed material through the repository Workspace queue
+ok 35 - adds a confirmed material through the repository Workspace queue
+  ---
+  duration_ms: 1.06
+  type: 'test'
+  ...
+# Subtest: refreshes or removes only the current reference and preserves historical run snapshots
+ok 36 - refreshes or removes only the current reference and preserves historical run snapshots
+  ---
+  duration_ms: 0.8774
+  type: 'test'
+  ...
+# Subtest: rechecks task materials without mutating authoritative state
+ok 37 - rechecks task materials without mutating authoritative state
+  ---
+  duration_ms: 0.6345
+  type: 'test'
+  ...
+# Subtest: returns revision conflict before inspecting any file
+ok 38 - returns revision conflict before inspecting any file
+  ---
+  duration_ms: 0.2957
+  type: 'test'
+  ...
+# Subtest: prepares writeback only from the authoritative approved run artifact
+ok 39 - prepares writeback only from the authoritative approved run artifact
+  ---
+  duration_ms: 0.5218
+  type: 'test'
+  ...
+# Subtest: rejects stale, unapproved, blocked, foreign-artifact, and over-limit prepare requests
+ok 40 - rejects stale, unapproved, blocked, foreign-artifact, and over-limit prepare requests
+  ---
+  duration_ms: 1.0198
+  type: 'test'
+  ...
+# Subtest: commits a consumed plan through one Host mutation and appends only a relative WritebackRecord
+ok 41 - commits a consumed plan through one Host mutation and appends only a relative WritebackRecord
+  ---
+  duration_ms: 8.4879
+  type: 'test'
+  ...
+# Subtest: commit consumes the token but does not publish on revision conflict or stale plan identity
+ok 42 - commit consumes the token but does not publish on revision conflict or stale plan identity
+  ---
+  duration_ms: 0.5227
+  type: 'test'
+  ...
+# Subtest: reports committed files separately when the Domain index write fails and keeps a safe recovery manifest
+ok 43 - reports committed files separately when the Domain index write fails and keeps a safe recovery manifest
+  ---
+  duration_ms: 0.4166
+  type: 'test'
+  ...
+# Subtest: prepare returns a two-file transient manifest without creating the target
+ok 44 - prepare returns a two-file transient manifest without creating the target
+  ---
+  duration_ms: 19.9294
+  type: 'test'
+  ...
+# Subtest: prepare rejects unsafe, missing, redirecting, existing, and overlong targets before writing
+ok 45 - prepare rejects unsafe, missing, redirecting, existing, and overlong targets before writing
+  ---
+  duration_ms: 24.3685
+  type: 'test'
+  ...
+# Subtest: confirmation tokens are bounded, single-use, expire after ten minutes, and do not survive restart
+ok 46 - confirmation tokens are bounded, single-use, expire after ten minutes, and do not survive restart
+  ---
+  duration_ms: 15.9193
+  type: 'test'
+  ...
+# Subtest: prepare never embeds token, absolute paths, artifact body, or pricing data in the planned metadata
+ok 47 - prepare never embeds token, absolute paths, artifact body, or pricing data in the planned metadata
+  ---
+  duration_ms: 8.6161
+  type: 'test'
+  ...
+# Subtest: publish fsyncs and hard-links exactly two verified files into a new target
+ok 48 - publish fsyncs and hard-links exactly two verified files into a new target
+  ---
+  duration_ms: 50.365
+  type: 'test'
+  ...
+# Subtest: publish rechecks prepare assumptions and preserves a target created in between
+ok 49 - publish rechecks prepare assumptions and preserves a target created in between
+  ---
+  duration_ms: 24.0465
+  type: 'test'
+  ...
+# Subtest: serializes concurrent plans for one target so at most one can publish
+ok 50 - serializes concurrent plans for one target so at most one can publish
+  ---
+  duration_ms: 30.6741
+  type: 'test'
+  ...
+# Subtest: staging and hard-link failures clean only operation-owned paths and preserve adjacent bytes
+    # Subtest: main staging write
+    ok 1 - main staging write
+      ---
+      duration_ms: 15.4424
+      type: 'test'
+      ...
+    # Subtest: metadata staging write
+    ok 2 - metadata staging write
+      ---
+      duration_ms: 22.0744
+      type: 'test'
+      ...
+    # Subtest: metadata hard-link
+    ok 3 - metadata hard-link
+      ---
+      duration_ms: 25.9331
+      type: 'test'
+      ...
+    1..3
+ok 51 - staging and hard-link failures clean only operation-owned paths and preserve adjacent bytes
+  ---
+  duration_ms: 64.5599
+  type: 'test'
+  ...
+1..51
+# tests 54
+# suites 0
+# pass 54
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 404.103

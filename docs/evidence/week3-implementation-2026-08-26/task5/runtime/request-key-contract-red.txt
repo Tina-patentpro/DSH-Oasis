@@ -1,0 +1,67 @@
+TAP version 13
+# Subtest: strictly validates complete v2 records and both response variants
+ok 1 - strictly validates complete v2 records and both response variants
+  ---
+  duration_ms: 12.7073
+  type: 'test'
+  ...
+# Subtest: publishes immutable fixed Week 3 resource budgets
+ok 2 - publishes immutable fixed Week 3 resource budgets
+  ---
+  duration_ms: 0.1347
+  type: 'test'
+  ...
+# Subtest: editable drafts reject Host-owned material, run, and writeback evidence
+ok 3 - editable drafts reject Host-owned material, run, and writeback evidence
+  ---
+  duration_ms: 1.4337
+  type: 'test'
+  ...
+# Subtest: enforces material and run ownership invariants in complete records
+not ok 4 - enforces material and run ownership invariants in complete records
+  ---
+  duration_ms: 3.4752
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-contract.test.mjs:97:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-contract.test.mjs:118:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: enforces task, input-reference, and run cardinality
+ok 5 - enforces task, input-reference, and run cardinality
+  ---
+  duration_ms: 6.2244
+  type: 'test'
+  ...
+# Subtest: enforces JSON and serialized draft budgets
+ok 6 - enforces JSON and serialized draft budgets
+  ---
+  duration_ms: 19.8291
+  type: 'test'
+  ...
+# Subtest: enforces artifact bytes and review-note limits
+ok 7 - enforces artifact bytes and review-note limits
+  ---
+  duration_ms: 4.4211
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 6
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 218.2454

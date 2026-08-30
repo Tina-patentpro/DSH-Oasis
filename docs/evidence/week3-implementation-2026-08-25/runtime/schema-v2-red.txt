@@ -1,0 +1,12 @@
+Week 3 Task 2 RED summary (captured from the active execution transcript)
+Date: 2026-08-25
+Workdir: packages/oasis-professional-service
+Command: node --test test\workbench-migration.test.mjs test\workbench-contract.test.mjs test\workbench-domain.test.mjs test\workbench-repository.test.mjs test\workbench-model.test.mjs test\workbench-rpc.test.mjs test\workbench-remote.test.mjs
+Result: exit 1; tests 23; pass 6; fail 17.
+Expected failure boundary: missing schema-v2 exports, v1 migration, editable/full record split, repository replaceEditable behavior, and schema-v2 wire/model support.
+This file is a factual transcript summary, not a replay of RED after implementation.
+
+Supplemental migration RED:
+Command: node --test test\workbench-migration.test.mjs test\workbench-repository.test.mjs
+Result: exit 1; tests 14; pass 12; fail 2.
+Expected failure boundary: legal v1 partial workflow identity was rejected before the compatibility correction.

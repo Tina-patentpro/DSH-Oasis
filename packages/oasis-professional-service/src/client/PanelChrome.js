@@ -72,6 +72,7 @@ export function focusTabAfterUpdate(tabList, pageId, schedule = scheduleAfterRen
 }
 
 export function PanelChrome({
+  hostMode = 'standalone',
   state,
   titleRef,
   onActivatePage,
@@ -82,7 +83,9 @@ export function PanelChrome({
 }) {
   const effectiveExpanded = state.effectiveMode === 'expanded'
   const autoExpanded = state.panelMode === 'normal' && effectiveExpanded
-  const canPersist = ['ready', 'saving'].includes(state.syncStatus)
+  const operationInFlight = Object.values(state.pageOperations ?? {})
+    .some((operation) => operation.activeOperation !== null)
+  const canPersist = ['ready', 'saving'].includes(state.syncStatus) && !operationInFlight
 
   function moveTab(event, pageId) {
     if (!canPersist) return
@@ -127,19 +130,23 @@ export function PanelChrome({
       'aria-live': 'polite',
       style: { marginTop: 2, color: 'var(--dsw-alias-text-secondary, #6b7280)', fontSize: 11 },
     }, `与当前DSH项目关联 · ${syncStatusLabel(state.syncStatus)}`)),
-  createElement(IconButton, {
-    label: autoExpanded ? '窗口过窄，右栏已自动展开' : effectiveExpanded ? '恢复右栏宽度' : '展开右栏',
-    icon: effectiveExpanded ? 'restore' : 'expand',
-    testId: effectiveExpanded ? 'oasis-panel-restore' : 'oasis-panel-expand',
-    onClick: onToggleExpanded,
-    disabled: autoExpanded || !canPersist,
-  }),
-  createElement(IconButton, {
-    label: '隐藏右栏',
-    icon: 'showHide',
-    testId: 'oasis-panel-hide',
-    onClick: onHide,
-  })),
+  ...(hostMode === 'embedded' ? [] : [
+    createElement(IconButton, {
+      key: 'expand',
+      label: autoExpanded ? '窗口过窄，右栏已自动展开' : effectiveExpanded ? '恢复右栏宽度' : '展开右栏',
+      icon: effectiveExpanded ? 'restore' : 'expand',
+      testId: effectiveExpanded ? 'oasis-panel-restore' : 'oasis-panel-expand',
+      onClick: onToggleExpanded,
+      disabled: autoExpanded || !canPersist,
+    }),
+    createElement(IconButton, {
+      key: 'hide',
+      label: '隐藏右栏',
+      icon: 'showHide',
+      testId: 'oasis-panel-hide',
+      onClick: onHide,
+    }),
+  ])),
   createElement('div', {
     role: 'tablist',
     'aria-label': '绿洲任务页',

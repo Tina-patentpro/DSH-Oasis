@@ -7,11 +7,14 @@ import { fileURLToPath } from 'node:url'
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const manifest = JSON.parse(readFileSync(resolve(packageRoot, 'package.json'), 'utf8'))
 
-test('does not expose stale week-one phase labels in current runtime metadata', () => {
+test('does not expose stale week-one or week-two phase labels in current runtime metadata', () => {
   const hostEntry = readFileSync(resolve(packageRoot, 'src/index.js'), 'utf8')
+  const status = readFileSync(resolve(packageRoot, 'src/status.js'), 'utf8')
   const patch = readFileSync(resolve(packageRoot, 'cordis.patch.yml'), 'utf8')
-  assert.doesNotMatch(hostEntry, /week[- ]one/i)
-  assert.doesNotMatch(patch, /week[- ]one/i)
+  const stalePhase = /week[- ](?:one|two)|week-[12]/i
+  assert.doesNotMatch(hostEntry, stalePhase)
+  assert.doesNotMatch(status, stalePhase)
+  assert.doesNotMatch(patch, stalePhase)
 })
 
 test('pins the verified development dependency versions', () => {
@@ -22,6 +25,7 @@ test('pins the verified development dependency versions', () => {
     '@deepseek-ai/dsh-client-ui-layout': '0.1.1-rc.2',
     '@deepseek-ai/dsh-storage-domain': '0.1.1-rc.2',
     '@deepseek-ai/dsh-tools': '0.1.1-rc.2',
+    '@deepseek-ai/dsh-workspace': '0.1.1-rc.2',
     react: '18.2.0',
     'react-dom': '18.2.0',
     tsdown: '0.22.14',

@@ -1,0 +1,330 @@
+{
+  "generatedAt": "2026-08-26T08:09:12.379Z",
+  "command": "node scripts/audit-week3-closure.mjs docs\\evidence\\week3-implementation-2026-08-26\\task9\\package\\oasis-professional-service-0.0.1.tgz docs\\evidence\\week3-implementation-2026-08-26\\task9\\package\\closure-audit.json",
+  "tarball": {
+    "path": "docs/evidence/week3-implementation-2026-08-26/task9/package/oasis-professional-service-0.0.1.tgz",
+    "sizeBytes": 218809,
+    "sha256": "cd31c361324810f5f7ebafda1a1c5a139689b8ff288225d80f7e33897654603c",
+    "entryCount": 33
+  },
+  "checks": [
+    {
+      "id": "package-root-allowlist",
+      "passed": true,
+      "details": []
+    },
+    {
+      "id": "no-private-or-test-entries",
+      "passed": true,
+      "details": []
+    },
+    {
+      "id": "required-package-contract",
+      "passed": true,
+      "details": [
+        "package/cordis.patch.yml",
+        "package/lib/client.js",
+        "package/lib/client.js.map",
+        "package/package.json",
+        "package/src/client.js",
+        "package/src/client/MaterialReferences.js",
+        "package/src/client/OasisPanelBoundary.js",
+        "package/src/client/OasisPanelHost.js",
+        "package/src/client/OasisPanelPortal.js",
+        "package/src/client/PanelChrome.js",
+        "package/src/client/PanelPages.js",
+        "package/src/client/RunPreview.js",
+        "package/src/client/WorkbenchEntry.js",
+        "package/src/client/WorkflowForm.js",
+        "package/src/client/WritebackPanel.js",
+        "package/src/client/codex-icons.js",
+        "package/src/client/layout-adapter.js",
+        "package/src/client/panel-geometry.js",
+        "package/src/client/project-resolution.js",
+        "package/src/client/workbench-model.js",
+        "package/src/client/workbench-remote.js",
+        "package/src/client/workbench-store.js",
+        "package/src/index.js",
+        "package/src/local-mock-runner.js",
+        "package/src/status.js",
+        "package/src/workbench-contract.js",
+        "package/src/workbench-domain.js",
+        "package/src/workbench-repository.js",
+        "package/src/workbench-rpc.js",
+        "package/src/workbench-service.js",
+        "package/src/workflow-catalog.js",
+        "package/src/workspace-materials.js",
+        "package/src/writeback-service.js"
+      ]
+    },
+    {
+      "id": "content-private-key",
+      "passed": true,
+      "details": "-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"
+    },
+    {
+      "id": "content-github-token",
+      "passed": true,
+      "details": "\\bgh[pousr]_[A-Za-z0-9]{20,}\\b"
+    },
+    {
+      "id": "content-provider-api-key",
+      "passed": true,
+      "details": "\\b(?:sk-[A-Za-z0-9_-]{20,}|AIza[0-9A-Za-z_-]{30,})\\b"
+    },
+    {
+      "id": "content-hardcoded-secret",
+      "passed": true,
+      "details": "\\b(?:api[_-]?key|password|client[_-]?secret)\\s*[:=]\\s*['\"][^'\"]{8,}['\"]"
+    },
+    {
+      "id": "content-personal-absolute-path",
+      "passed": true,
+      "details": "(?:C:[\\\\/]Users[\\\\/]TinaD|D:[\\\\/]OneDrive[\\\\/])"
+    },
+    {
+      "id": "content-fixture-body",
+      "passed": true,
+      "details": "(?:WEEK3-[A-Z-]*DO-NOT-READ|CONFIDENTIAL-SENTINEL|Local persistence marker)"
+    },
+    {
+      "id": "host-owned-persistence-only",
+      "passed": true,
+      "details": "\\b(?:localStorage|sessionStorage|indexedDB)\\b"
+    },
+    {
+      "id": "no-html-injection",
+      "passed": true,
+      "details": "dangerouslySetInnerHTML|\\.innerHTML\\s*="
+    },
+    {
+      "id": "no-excluded-business-scope",
+      "passed": true,
+      "details": "\\b(?:dify|billing|pricing|payment)\\b|收费|计费"
+    },
+    {
+      "id": "no-network-listener",
+      "passed": true,
+      "details": "\\b0\\.0\\.0\\.0\\b|\\bcreateServer\\s*\\(|\\bserver\\.listen\\s*\\("
+    },
+    {
+      "id": "no-recursive-delete",
+      "passed": true,
+      "details": "\\brm\\s*\\([^)]*recursive\\s*:\\s*true"
+    },
+    {
+      "id": "no-install-lifecycle-script",
+      "passed": true,
+      "details": [
+        "build",
+        "test",
+        "test:unit",
+        "test:integration",
+        "verify"
+      ]
+    },
+    {
+      "id": "package-files-explicit",
+      "passed": true,
+      "details": [
+        "src",
+        "lib",
+        "cordis.patch.yml"
+      ]
+    },
+    {
+      "id": "package-private",
+      "passed": true,
+      "details": true
+    },
+    {
+      "id": "materials-metadata-only",
+      "passed": true,
+      "details": "metadata-only plus before/after/path identity checks"
+    },
+    {
+      "id": "writeback-new-path-only",
+      "passed": true,
+      "details": "exclusive files, non-recursive directories, pre-publish revalidation"
+    },
+    {
+      "id": "writeback-no-wide-cleanup",
+      "passed": true,
+      "details": "only operation-owned file and directory cleanup helpers"
+    },
+    {
+      "id": "writeback-token-ephemeral",
+      "passed": true,
+      "details": "in-memory confirmation tokens"
+    }
+  ],
+  "findings": [],
+  "manifest": [
+    {
+      "path": "package/cordis.patch.yml",
+      "sizeBytes": 229,
+      "sha256": "ddd8f6b2ea4c114fc532da926d8b6d8162bb2a908fed0ee051808adc5c71949d"
+    },
+    {
+      "path": "package/lib/client.js",
+      "sizeBytes": 273494,
+      "sha256": "55aa19f161d0fdc9cb5ca3ba106b3989552d7feada6844f0e47de09d66afd546"
+    },
+    {
+      "path": "package/lib/client.js.map",
+      "sizeBytes": 589660,
+      "sha256": "96ff2f8cdd47517c1f0b4e04500d167a2d5dfe21e6ff25319970ee706c5ac4d7"
+    },
+    {
+      "path": "package/package.json",
+      "sizeBytes": 2043,
+      "sha256": "7952e4c2e5aa8ef86ce899f63a64a288409eb131e190339fc81cc0eefec658c3"
+    },
+    {
+      "path": "package/src/client.js",
+      "sizeBytes": 1606,
+      "sha256": "d075c8c410eccf46bd2f0ee5646495dc66db246a1e9ce2a9e024c5b537b9fa92"
+    },
+    {
+      "path": "package/src/client/MaterialReferences.js",
+      "sizeBytes": 4940,
+      "sha256": "7a317a5f3432a20e60464e7c3c6326502f2a671dea06b598e9ac6ceadd50db54"
+    },
+    {
+      "path": "package/src/client/OasisPanelBoundary.js",
+      "sizeBytes": 465,
+      "sha256": "837bccd061c8e4da4029c1a7f1153c7af08de25ac80dd709aecfff1d80242686"
+    },
+    {
+      "path": "package/src/client/OasisPanelHost.js",
+      "sizeBytes": 7003,
+      "sha256": "190a2a345fea57955f27f7ae93357c8966914e560616921526702b33300cbd74"
+    },
+    {
+      "path": "package/src/client/OasisPanelPortal.js",
+      "sizeBytes": 905,
+      "sha256": "fc12af328bea234653d1c0aa54c7ad2361681be20e6fe1fd5da5a34b56e10424"
+    },
+    {
+      "path": "package/src/client/PanelChrome.js",
+      "sizeBytes": 6973,
+      "sha256": "01368eb6ac34f03aa862077e17311889f1a0b42b9bbc012cff605e1c7d218d26"
+    },
+    {
+      "path": "package/src/client/PanelPages.js",
+      "sizeBytes": 10106,
+      "sha256": "f5759169c47e9be622d210915206ffb0c186a0dd68b31e25c74abc579a8796f0"
+    },
+    {
+      "path": "package/src/client/RunPreview.js",
+      "sizeBytes": 8088,
+      "sha256": "bd16541cde68fcdd492eae63c629086826c8411fd42ce089fb0058a1e238b0aa"
+    },
+    {
+      "path": "package/src/client/WorkbenchEntry.js",
+      "sizeBytes": 1746,
+      "sha256": "42a21c420c13f4f4dca31442f46619ccfea724cb2bba7548d200b54d8a183dfd"
+    },
+    {
+      "path": "package/src/client/WorkflowForm.js",
+      "sizeBytes": 5446,
+      "sha256": "c53bd12c4f5c885cd30c282af54af6ed30f9b9caf8dcd0ef064cc7d2c928e2a9"
+    },
+    {
+      "path": "package/src/client/WritebackPanel.js",
+      "sizeBytes": 4224,
+      "sha256": "3245677439566881e069ce60588f99948f327b61ae1b852f77966f0fcbdebc0f"
+    },
+    {
+      "path": "package/src/client/codex-icons.js",
+      "sizeBytes": 4750,
+      "sha256": "a3fbb63d856b49e88bf545fb2700a0de6f1af5673d596a1719c5a9e43bca2aa9"
+    },
+    {
+      "path": "package/src/client/layout-adapter.js",
+      "sizeBytes": 14767,
+      "sha256": "9a17fdbcfd61c3941f6e8a9b6b9d3414f99a7cbc2c481d9de54c69c45f4de03c"
+    },
+    {
+      "path": "package/src/client/panel-geometry.js",
+      "sizeBytes": 1284,
+      "sha256": "d48f866809f115aff2ce9b4290e115594f05fadbe384e2a9b1fe4b2a3e6f8e28"
+    },
+    {
+      "path": "package/src/client/project-resolution.js",
+      "sizeBytes": 483,
+      "sha256": "c4224b4e5b303fbb4870558c2de7251c79fce93e3ea111b34f2a9f7bb59a036c"
+    },
+    {
+      "path": "package/src/client/workbench-model.js",
+      "sizeBytes": 7518,
+      "sha256": "295a65a2649a0afb2c13bf536cc6fb7df3a10d03cafb01a5ce02096b7b19a3d7"
+    },
+    {
+      "path": "package/src/client/workbench-remote.js",
+      "sizeBytes": 3716,
+      "sha256": "4ff52273d34da2fcab360f6584ffbb40d12a4c888124f7bb5563615ee7d31c28"
+    },
+    {
+      "path": "package/src/client/workbench-store.js",
+      "sizeBytes": 27892,
+      "sha256": "14694141846e6bcb8fc58ad8c1e670b55ae9724d998867f9e5f16bf545a24df7"
+    },
+    {
+      "path": "package/src/index.js",
+      "sizeBytes": 2263,
+      "sha256": "e4c0d6e920893a50921b393002895f342d4ab3aca2783e83c6956c718a925ba8"
+    },
+    {
+      "path": "package/src/local-mock-runner.js",
+      "sizeBytes": 13541,
+      "sha256": "943cfdfd83cdcdf8499cef22fd664e1987ddd9634ae66d1a5718425bd393483f"
+    },
+    {
+      "path": "package/src/status.js",
+      "sizeBytes": 419,
+      "sha256": "78d40ecfd903ed5953cdede1483e9a652991dc41a588ef69b1d4576a829a3b45"
+    },
+    {
+      "path": "package/src/workbench-contract.js",
+      "sizeBytes": 18636,
+      "sha256": "da831c9733a33411a0ed85fa25f37863bb30801cb1db4fceac8574f1e7e003a2"
+    },
+    {
+      "path": "package/src/workbench-domain.js",
+      "sizeBytes": 3217,
+      "sha256": "8b8c5b1b39faf7d19f6bc2f5b2b9d72782510141a6c52612b58424e7aa75caba"
+    },
+    {
+      "path": "package/src/workbench-repository.js",
+      "sizeBytes": 5929,
+      "sha256": "1ac54c0b6f3ddc302eebeb86f808ac4a133997979cf5d4f2e060dfd842f95725"
+    },
+    {
+      "path": "package/src/workbench-rpc.js",
+      "sizeBytes": 6411,
+      "sha256": "7f5d62c0df274eec2863e8fd0f58acf588badf3fac2ae9d634644232655dd670"
+    },
+    {
+      "path": "package/src/workbench-service.js",
+      "sizeBytes": 14178,
+      "sha256": "f6799d62dd8cd79c00cd18288db310d8fd387bc2951b10a9943fac4efb8ddb3f"
+    },
+    {
+      "path": "package/src/workflow-catalog.js",
+      "sizeBytes": 6219,
+      "sha256": "825f708ead5f901e815cfd34d783bb6a97e89bf0b9b999150c908a7c0fcf435c"
+    },
+    {
+      "path": "package/src/workspace-materials.js",
+      "sizeBytes": 10592,
+      "sha256": "545148dfc29ef684341e80a6c97fdda9b39c87d0e8252001e538227105579b3d"
+    },
+    {
+      "path": "package/src/writeback-service.js",
+      "sizeBytes": 19534,
+      "sha256": "fbf921bcae67a8500e466ef4b67ab6fed032104777ee1fb00c3e006af138f335"
+    }
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,75 @@
+TAP version 13
+# Subtest: normalizes only bounded relative Windows paths and rejects dangerous spellings
+not ok 1 - normalizes only bounded relative Windows paths and rejects dangerous spellings
+  ---
+  duration_ms: 2.507
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workspace-materials.test.mjs:65:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception: CON .txt'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workspace-materials.test.mjs:76:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: fails closed for unknown or currently missing Workspaces
+ok 2 - fails closed for unknown or currently missing Workspaces
+  ---
+  duration_ms: 15.5291
+  type: 'test'
+  ...
+# Subtest: rejects directories, unsupported extensions, oversized files, and junction traversal
+ok 3 - rejects directories, unsupported extensions, oversized files, and junction traversal
+  ---
+  duration_ms: 19.4403
+  type: 'test'
+  ...
+# Subtest: streams SHA-256 and returns only normalized metadata
+ok 4 - streams SHA-256 and returns only normalized metadata
+  ---
+  duration_ms: 19.0872
+  type: 'test'
+  ...
+# Subtest: detects a file changing during streaming and never returns partial evidence
+ok 5 - detects a file changing during streaming and never returns partial evidence
+  ---
+  duration_ms: 7.515
+  type: 'test'
+  ...
+# Subtest: bounds the hash stream when a file grows after its initial stat
+not ok 6 - bounds the hash stream when a file grows after its initial stat
+  ---
+  duration_ms: 6.2924
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workspace-materials.test.mjs:178:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async expectCode (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workspace-materials.test.mjs:58:3)
+    async TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workspace-materials.test.mjs:206:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: rechecks confirmed evidence without mutating it and blocks legacy references
+ok 7 - rechecks confirmed evidence without mutating it and blocks legacy references
+  ---
+  duration_ms: 22.3201
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 5
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 185.1316

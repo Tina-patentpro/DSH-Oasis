@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-08-29T04:45:49.117Z",
+  "audit": "Week 3 comprehensive independent audit",
+  "gitHead": "02b3eb7e40ff230689be8cae4218180869de836e",
+  "status": "FAIL",
+  "findings": [
+    {
+      "id": "W3A-01",
+      "severity": "P1",
+      "title": "Persisted result gate and preview fields are not integrity-bound",
+      "evidence": "probes/result-integrity-output-v2.json"
+    },
+    {
+      "id": "W3A-02",
+      "severity": "P1",
+      "title": "The intentional target better-sidebar bundle deterministically hides the Oasis panel",
+      "evidence": "probes/better-sidebar-compatibility-output.json"
+    },
+    {
+      "id": "W3A-03",
+      "severity": "P2",
+      "title": "Client store disposal waits for remote flush before triggering its abort signal",
+      "evidence": "probes/store-dispose-output.json"
+    },
+    {
+      "id": "W3A-04",
+      "severity": "P2",
+      "title": "Browser verification is coupled to the current Chinese project basename",
+      "evidence": "runtime/week1-verifier.txt"
+    }
+  ],
+  "verification": {
+    "packageTests": { "tests": 176, "passed": 176, "failed": 0, "evidence": "runtime/package-verify-attempt3.txt" },
+    "rootTests": { "tests": 34, "passed": 34, "failed": 0, "evidence": "runtime/root-tests-attempt2.txt" },
+    "week1": { "passed": true, "evidence": "runtime/week1-verifier-attempt2.txt" },
+    "week2": { "passed": true, "evidence": "runtime/week2-verifier.txt" },
+    "week3": { "passed": true, "evidence": "runtime/week3-verifier.txt" },
+    "browser": { "requests": 198, "nonLoopback": 0, "consoleProblems": 0, "pageErrors": 0 },
+    "tarball": {
+      "entryCount": 33,
+      "sha256": "b921f576bd1d3611d287e9d82c0ee043d203e536e0e5df650dab7bfe7eca95f8",
+      "staticAudit": "CLEAN",
+      "semanticProof": false,
+      "evidence": "package-original/package-audit.json"
+    },
+    "preservation": {
+      "productChanges": 0,
+      "profileChanges": 0,
+      "historicalEvidenceChanges": 0,
+      "workspaceContractsEqual": true,
+      "gitHeadEqual": true,
+      "evidence": "baseline/closing-comparison.json"
+    }
+  }
+}

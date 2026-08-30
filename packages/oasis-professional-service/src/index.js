@@ -3,12 +3,13 @@ import { defineTool } from '@deepseek-ai/dsh-tools'
 import { createPluginStatus } from './status.js'
 import { openOasisWorkbenchRepository } from './workbench-repository.js'
 import { createWorkbenchRpcHandler, OASIS_WORKBENCH_RPC_CHANNEL } from './workbench-rpc.js'
+import { createWorkbenchService } from './workbench-service.js'
 
 export const name = 'oasis-professional-service'
-export const inject = ['tools', 'storageDomain', 'connection']
+export const inject = ['tools', 'storageDomain', 'connection', 'workspaceRegistry']
 
 function registerStatusTool(ctx) {
-  ctx.tools.register(defineTool({
+  return ctx.tools.register(defineTool({
     name: 'oasis_workbench_status',
     description: 'Return the current local integration status for the Oasis technical R&D and Chinese invention patent workbench.',
     parameters: {},
@@ -43,16 +44,22 @@ function registerStatusTool(ctx) {
 
 export async function apply(ctx) {
   const repository = await openOasisWorkbenchRepository(ctx.storageDomain)
+  const service = createWorkbenchService({ repository, workspaceRegistry: ctx.workspaceRegistry })
+  let disposeTool
   let disposeRpc
   try {
-    registerStatusTool(ctx)
+    disposeTool = registerStatusTool(ctx)
     disposeRpc = ctx.connection.rpc.handle(
       OASIS_WORKBENCH_RPC_CHANNEL,
-      createWorkbenchRpcHandler(repository),
+      createWorkbenchRpcHandler(service),
       { authority: 'loopback' },
     )
   } catch (error) {
-    await repository.close()
+    try {
+      disposeTool?.()
+    } finally {
+      await repository.close()
+    }
     throw error
   }
 
@@ -62,7 +69,11 @@ export async function apply(ctx) {
       try {
         await disposeRpc()
       } finally {
-        await repository.close()
+        try {
+          disposeTool()
+        } finally {
+          await repository.close()
+        }
       }
     })()
     return closePromise

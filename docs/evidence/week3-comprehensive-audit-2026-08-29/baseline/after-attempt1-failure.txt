@@ -1,0 +1,4 @@
+Command: node docs\evidence\week3-comprehensive-audit-2026-08-29\baseline\capture-audit-baseline.mjs after
+Result: exit 1
+Failure: the audit-only driver requested baseline-summary-before.json, while the shared capture core emitted summary-before.json.
+Boundary: product, Profile, historical-evidence and Workspace-contract reads completed before the comparison-stage ENOENT; no protected content was written.

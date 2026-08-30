@@ -1,0 +1,50 @@
+TAP version 13
+# Subtest: stored record rejects an artifact body that no longer matches its declared hash
+not ok 1 - stored record rejects an artifact body that no longer matches its declared hash
+  ---
+  duration_ms: 6.5959
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\docs\\evidence\\week3-comprehensive-reaudit-2026-08-26\\findings\\stored-evidence-integrity-probe.test.mjs:40:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/docs/evidence/week3-comprehensive-reaudit-2026-08-26/findings/stored-evidence-integrity-probe.test.mjs:44:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: stored record rejects form values that no longer match the input snapshot hash
+not ok 2 - stored record rejects form values that no longer match the input snapshot hash
+  ---
+  duration_ms: 0.7946
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\docs\\evidence\\week3-comprehensive-reaudit-2026-08-26\\findings\\stored-evidence-integrity-probe.test.mjs:47:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/docs/evidence/week3-comprehensive-reaudit-2026-08-26/findings/stored-evidence-integrity-probe.test.mjs:51:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 141.6475

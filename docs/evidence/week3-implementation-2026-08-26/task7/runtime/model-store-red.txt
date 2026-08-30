@@ -1,0 +1,7 @@
+TDD RED observation (interactive command output)
+date=2026-08-26
+command=node --test test\workbench-model.test.mjs test\workbench-store.test.mjs test\workbench-persistence.test.mjs
+exit_code=1
+expected_failures=6
+observed_missing_behaviors=remote workflow definition; update-form-value; catalog loader; 400ms coalescing; updateFormValue; flushWorkspace
+boundary=Recorded before implementation; this summary does not replace the later fresh GREEN output.

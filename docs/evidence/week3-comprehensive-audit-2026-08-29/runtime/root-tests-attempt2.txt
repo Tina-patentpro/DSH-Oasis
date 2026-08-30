@@ -1,0 +1,214 @@
+TAP version 13
+# Subtest: hashes file content and link target text without traversing the target
+ok 1 - hashes file content and link target text without traversing the target
+  ---
+  duration_ms: 19.1629
+  type: 'test'
+  ...
+# Subtest: writes reproducible content hashes and freshness metadata
+ok 2 - writes reproducible content hashes and freshness metadata
+  ---
+  duration_ms: 13.6061
+  type: 'test'
+  ...
+# Subtest: baseline comparison fails closed except for exact allowlisted paths
+ok 3 - baseline comparison fails closed except for exact allowlisted paths
+  ---
+  duration_ms: 0.3565
+  type: 'test'
+  ...
+# Subtest: both historical wrappers use the shared no-follow core and cover build outputs
+ok 4 - both historical wrappers use the shared no-follow core and cover build outputs
+  ---
+  duration_ms: 2.2295
+  type: 'test'
+  ...
+# Subtest: browser integrations resolve only real executable files
+ok 5 - browser integrations resolve only real executable files
+  ---
+  duration_ms: 6.1472
+  type: 'test'
+  ...
+# Subtest: DSH_BIN official npm shim resolves to its package Node CLI entry
+ok 6 - DSH_BIN official npm shim resolves to its package Node CLI entry
+  ---
+  duration_ms: 578.159
+  type: 'test'
+  ...
+# Subtest: PATH fallback resolves an official npm shim without executing the shim shell
+ok 7 - PATH fallback resolves an official npm shim without executing the shim shell
+  ---
+  duration_ms: 570.1756
+  type: 'test'
+  ...
+# Subtest: forwards spaces, Unicode, quotes, trailing slashes and CMD metacharacters as exact argv
+ok 8 - forwards spaces, Unicode, quotes, trailing slashes and CMD metacharacters as exact argv
+  ---
+  duration_ms: 129.8039
+  type: 'test'
+  ...
+# Subtest: does not execute a second CMD command embedded in one argument
+ok 9 - does not execute a second CMD command embedded in one argument
+  ---
+  duration_ms: 122.3157
+  type: 'test'
+  ...
+# Subtest: rejects an arbitrary command shim even when DSH_BIN points to it
+ok 10 - rejects an arbitrary command shim even when DSH_BIN points to it
+  ---
+  duration_ms: 60.8867
+  type: 'test'
+  ...
+# Subtest: supports the project .dsh-test home
+ok 11 - supports the project .dsh-test home
+  ---
+  duration_ms: 67.6106
+  type: 'test'
+  ...
+# Subtest: supports a declared oasis-dsh temporary home
+ok 12 - supports a declared oasis-dsh temporary home
+  ---
+  duration_ms: 67.1823
+  type: 'test'
+  ...
+# Subtest: rejects the real DSH home and its ancestors or descendants
+ok 13 - rejects the real DSH home and its ancestors or descendants
+  ---
+  duration_ms: 178.7651
+  type: 'test'
+  ...
+# Subtest: rejects a home whose existing path chain contains a symlink or junction
+ok 14 - rejects a home whose existing path chain contains a symlink or junction
+  ---
+  duration_ms: 73.3094
+  type: 'test'
+  ...
+# Subtest: the cmd convenience wrapper still handles ordinary arguments
+ok 15 - the cmd convenience wrapper still handles ordinary arguments
+  ---
+  duration_ms: 140.4494
+  type: 'test'
+  ...
+# Subtest: fails closed when no official DSH package can be resolved
+ok 16 - fails closed when no official DSH package can be resolved
+  ---
+  duration_ms: 59.8191
+  type: 'test'
+  ...
+# Subtest: HTTP 200 with result.ok=false exits non-zero
+ok 17 - HTTP 200 with result.ok=false exits non-zero
+  ---
+  duration_ms: 1020.0807
+  type: 'test'
+  ...
+# Subtest: rejects non-http protocols before fetching
+ok 18 - rejects non-http protocols before fetching
+  ---
+  duration_ms: 48.0055
+  type: 'test'
+  ...
+# Subtest: rejects non-loopback hosts before fetching
+ok 19 - rejects non-loopback hosts before fetching
+  ---
+  duration_ms: 49.2956
+  type: 'test'
+  ...
+# Subtest: rejects endpoints outside the fixed allowlist
+ok 20 - rejects endpoints outside the fixed allowlist
+  ---
+  duration_ms: 51.5969
+  type: 'test'
+  ...
+# Subtest: rejects dot-segment endpoint traversal
+ok 21 - rejects dot-segment endpoint traversal
+  ---
+  duration_ms: 50.875
+  type: 'test'
+  ...
+# Subtest: fails when the RPC envelope has no boolean result.ok
+ok 22 - fails when the RPC envelope has no boolean result.ok
+  ---
+  duration_ms: 74.5873
+  type: 'test'
+  ...
+# Subtest: accepts a valid skill.list response with expected skills
+ok 23 - accepts a valid skill.list response with expected skills
+  ---
+  duration_ms: 71.6444
+  type: 'test'
+  ...
+# Subtest: accepts the bracketed IPv6 loopback hostname emitted by URL
+ok 24 - accepts the bracketed IPv6 loopback hostname emitted by URL
+  ---
+  duration_ms: 75.4381
+  type: 'test'
+  ...
+# Subtest: all Week verifiers default to the whole real Profile and reuse the no-follow baseline core
+ok 25 - all Week verifiers default to the whole real Profile and reuse the no-follow baseline core
+  ---
+  duration_ms: 6.2974
+  type: 'test'
+  ...
+# Subtest: the shared traversal records a link and hashes target text without visiting its contents
+ok 26 - the shared traversal records a link and hashes target text without visiting its contents
+  ---
+  duration_ms: 7.2611
+  type: 'test'
+  ...
+# Subtest: the remediation closing baseline gates on the confirmed Task 6 Profile and records earlier drift separately
+ok 27 - the remediation closing baseline gates on the confirmed Task 6 Profile and records earlier drift separately
+  ---
+  duration_ms: 1.0183
+  type: 'test'
+  ...
+# Subtest: Week 2 verifier constructs drafts through the current editable contract
+ok 28 - Week 2 verifier constructs drafts through the current editable contract
+  ---
+  duration_ms: 3.346
+  type: 'test'
+  ...
+# Subtest: all long-running DSH verifiers stop the owned Host with a bounded portable lifecycle
+ok 29 - all long-running DSH verifiers stop the owned Host with a bounded portable lifecycle
+  ---
+  duration_ms: 5.5149
+  type: 'test'
+  ...
+# Subtest: package audit reports only static package scope and explicit limitations
+ok 30 - package audit reports only static package scope and explicit limitations
+  ---
+  duration_ms: 1168.6473
+  type: 'test'
+  ...
+# Subtest: package audit source contains no positive source-marker claims or V4.1 verdict words
+ok 31 - package audit source contains no positive source-marker claims or V4.1 verdict words
+  ---
+  duration_ms: 1.2825
+  type: 'test'
+  ...
+# Subtest: the installed DSH filesystem provider discovers the project skill
+ok 32 - the installed DSH filesystem provider discovers the project skill
+  ---
+  duration_ms: 151.7133
+  type: 'test'
+  ...
+# Subtest: publishes a discoverable DSH plugin development skill
+ok 33 - publishes a discoverable DSH plugin development skill
+  ---
+  duration_ms: 1.72
+  type: 'test'
+  ...
+# Subtest: routes unstable API details to an official-contract reference
+ok 34 - routes unstable API details to an official-contract reference
+  ---
+  duration_ms: 1.7233
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2132.2218

@@ -1,0 +1,52 @@
+TAP version 13
+# Subtest: normalizes only bounded relative Windows paths and rejects dangerous spellings
+ok 1 - normalizes only bounded relative Windows paths and rejects dangerous spellings
+  ---
+  duration_ms: 1.7848
+  type: 'test'
+  ...
+# Subtest: fails closed for unknown or currently missing Workspaces
+ok 2 - fails closed for unknown or currently missing Workspaces
+  ---
+  duration_ms: 11.3006
+  type: 'test'
+  ...
+# Subtest: rejects directories, unsupported extensions, oversized files, and junction traversal
+ok 3 - rejects directories, unsupported extensions, oversized files, and junction traversal
+  ---
+  duration_ms: 17.4715
+  type: 'test'
+  ...
+# Subtest: streams SHA-256 and returns only normalized metadata
+ok 4 - streams SHA-256 and returns only normalized metadata
+  ---
+  duration_ms: 20.2067
+  type: 'test'
+  ...
+# Subtest: detects a file changing during streaming and never returns partial evidence
+ok 5 - detects a file changing during streaming and never returns partial evidence
+  ---
+  duration_ms: 9.8038
+  type: 'test'
+  ...
+# Subtest: bounds the hash stream when a file grows after its initial stat
+ok 6 - bounds the hash stream when a file grows after its initial stat
+  ---
+  duration_ms: 6.1695
+  type: 'test'
+  ...
+# Subtest: rechecks confirmed evidence without mutating it and blocks legacy references
+ok 7 - rechecks confirmed evidence without mutating it and blocks legacy references
+  ---
+  duration_ms: 35.2255
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 198.3017

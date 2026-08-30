@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-08-29",
+  "phase": "RED",
+  "productionCodeModified": false,
+  "tests": [
+    {
+      "finding": "W3A-01",
+      "command": "node --test --test-name-pattern=\"rejects every persisted\" test/workbench-domain.test.mjs",
+      "exitCode": 1,
+      "expectedFailure": "Missing expected exception: must reject corrupted contentStatus",
+      "evidence": "red-result-integrity.txt"
+    },
+    {
+      "finding": "W3A-03",
+      "command": "node --test --test-name-pattern=\"dispose finishes\" test/workbench-store.test.mjs",
+      "exitCode": 1,
+      "expectedFailure": "actual timeout, expected disposed",
+      "evidence": "red-dispose-deadline.txt"
+    },
+    {
+      "finding": "W3A-02",
+      "command": "node --test --test-name-pattern=\"public Better Sidebar\" test/client-panel-contract.test.mjs",
+      "exitCode": 1,
+      "expectedFailure": "no nested betterSidebar injection or native tab registration",
+      "evidence": "red-better-sidebar-service.txt"
+    },
+    {
+      "finding": "W3A-04",
+      "command": "node --test --test-name-pattern=\"workspace display name\" tests/scripts/verification-fixture-compatibility.test.mjs",
+      "exitCode": 1,
+      "expectedFailure": "verifier does not pass OASIS_WORKSPACE_DISPLAY_NAME",
+      "evidence": "red-portable-workspace-name.txt"
+    }
+  ],
+  "interpretation": "Each test parsed and executed, then failed at the assertion for its audited missing behavior rather than at setup or syntax. Product fixes have not started."
+}

@@ -1,0 +1,204 @@
+TAP version 13
+# Subtest: missing and legacy reads publish v2 without materializing a row
+ok 1 - missing and legacy reads publish v2 without materializing a row
+  ---
+  duration_ms: 4.2863
+  type: 'test'
+  ...
+# Subtest: first editable replacement materializes schema v2 with Host identity and time
+ok 2 - first editable replacement materializes schema v2 with Host identity and time
+  ---
+  duration_ms: 2.002
+  type: 'test'
+  ...
+# Subtest: editable replacement preserves Host-owned evidence byte-for-byte
+ok 3 - editable replacement preserves Host-owned evidence byte-for-byte
+  ---
+  duration_ms: 2.9245
+  type: 'test'
+  ...
+# Subtest: a Host mutation can append evidence only through full-record validation
+ok 4 - a Host mutation can append evidence only through full-record validation
+  ---
+  duration_ms: 3.2525
+  type: 'test'
+  ...
+# Subtest: a Host no-op mutation returns the current record without a revision or storage write
+not ok 5 - a Host no-op mutation returns the current record without a revision or storage write
+  ---
+  duration_ms: 1.3922
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-repository.test.mjs:133:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-repository.test.mjs:141:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: serializes same-Workspace replacements and isolates Workspaces
+ok 6 - serializes same-Workspace replacements and isolates Workspaces
+  ---
+  duration_ms: 0.9662
+  type: 'test'
+  ...
+# Subtest: explicit editable mutation upgrades a stored v1 row to v2
+ok 7 - explicit editable mutation upgrades a stored v1 row to v2
+  ---
+  duration_ms: 0.6272
+  type: 'test'
+  ...
+# Subtest: round-trips a migrated partial workflow identity but never creates or changes one
+ok 8 - round-trips a migrated partial workflow identity but never creates or changes one
+  ---
+  duration_ms: 1.2614
+  type: 'test'
+  ...
+# Subtest: storage failure leaves authoritative state unchanged
+ok 9 - storage failure leaves authoritative state unchanged
+  ---
+  duration_ms: 0.6427
+  type: 'test'
+  ...
+# Subtest: rejects exhausted revision and closes only after admitted writes settle
+ok 10 - rejects exhausted revision and closes only after admitted writes settle
+  ---
+  duration_ms: 1.5498
+  type: 'test'
+  ...
+# Subtest: keeps state orchestration behind the service boundary
+ok 11 - keeps state orchestration behind the service boundary
+  ---
+  duration_ms: 1.387
+  type: 'test'
+  ...
+# Subtest: creates a run only from authoritative validated draft and rechecked materials
+not ok 12 - creates a run only from authoritative validated draft and rechecked materials
+  ---
+  duration_ms: 0.362
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-service.test.mjs:97:1'
+  failureType: 'testCodeFailure'
+  error: 'service.createRun is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-service.test.mjs:113:32)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: makes request keys idempotent for one snapshot and conflicts after draft change
+not ok 13 - makes request keys idempotent for one snapshot and conflicts after draft change
+  ---
+  duration_ms: 0.2184
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-service.test.mjs:131:1'
+  failureType: 'testCodeFailure'
+  error: 'service.createRun is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-service.test.mjs:149:31)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: rejects the ninth run without changing the first eight snapshots
+not ok 14 - rejects the ninth run without changing the first eight snapshots
+  ---
+  duration_ms: 0.52
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-service.test.mjs:171:1'
+  failureType: 'testCodeFailure'
+  error: 'service.createRun is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-service.test.mjs:185:35)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: new runs preserve old bytes and review changes only the selected run
+not ok 15 - new runs preserve old bytes and review changes only the selected run
+  ---
+  duration_ms: 0.3262
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-service.test.mjs:194:1'
+  failureType: 'testCodeFailure'
+  error: 'service.createRun is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-service.test.mjs:210:33)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: publishes catalog through the service without leaking the repository
+ok 16 - publishes catalog through the service without leaking the repository
+  ---
+  duration_ms: 0.2084
+  type: 'test'
+  ...
+# Subtest: requires the complete repository and material-manager boundaries
+ok 17 - requires the complete repository and material-manager boundaries
+  ---
+  duration_ms: 0.4428
+  type: 'test'
+  ...
+# Subtest: adds a confirmed material through the repository Workspace queue
+ok 18 - adds a confirmed material through the repository Workspace queue
+  ---
+  duration_ms: 0.683
+  type: 'test'
+  ...
+# Subtest: refreshes or removes only the current reference and preserves historical run snapshots
+ok 19 - refreshes or removes only the current reference and preserves historical run snapshots
+  ---
+  duration_ms: 0.6828
+  type: 'test'
+  ...
+# Subtest: rechecks task materials without mutating authoritative state
+ok 20 - rechecks task materials without mutating authoritative state
+  ---
+  duration_ms: 0.51
+  type: 'test'
+  ...
+# Subtest: returns revision conflict before inspecting any file
+ok 21 - returns revision conflict before inspecting any file
+  ---
+  duration_ms: 0.2714
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 16
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 177.0524

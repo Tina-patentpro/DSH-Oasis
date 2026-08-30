@@ -1,0 +1,93 @@
+TAP version 13
+# Subtest: dispatches state endpoints with a schema-v2 editable replacement
+ok 1 - dispatches state endpoints with a schema-v2 editable replacement
+  ---
+  duration_ms: 4.9342
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 2 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.3723
+  type: 'test'
+  ...
+# Subtest: rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+ok 3 - rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+  ---
+  duration_ms: 1.1099
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures
+ok 4 - does not disguise repository infrastructure failures
+  ---
+  duration_ms: 0.3954
+  type: 'test'
+  ...
+# Subtest: rejects over-budget editable drafts before calling the repository
+ok 5 - rejects over-budget editable drafts before calling the repository
+  ---
+  duration_ms: 2.2554
+  type: 'test'
+  ...
+# Subtest: dispatches a strictly validated workflow catalog endpoint
+ok 6 - dispatches a strictly validated workflow catalog endpoint
+  ---
+  duration_ms: 0.4094
+  type: 'test'
+  ...
+# Subtest: dispatches strictly validated material commands without accepting Host evidence
+ok 7 - dispatches strictly validated material commands without accepting Host evidence
+  ---
+  duration_ms: 1.137
+  type: 'test'
+  ...
+# Subtest: serializes known material failures but still propagates infrastructure failures
+ok 8 - serializes known material failures but still propagates infrastructure failures
+  ---
+  duration_ms: 0.3006
+  type: 'test'
+  ...
+# Subtest: dispatches strict task create and review commands without accepting Client evidence
+ok 9 - dispatches strict task create and review commands without accepting Client evidence
+  ---
+  duration_ms: 1.1135
+  type: 'test'
+  ...
+# Subtest: serializes known run-domain failures and propagates runner infrastructure faults
+ok 10 - serializes known run-domain failures and propagates runner infrastructure faults
+  ---
+  duration_ms: 0.4666
+  type: 'test'
+  ...
+# Subtest: dispatches strict two-phase writeback commands and commit accepts only a token
+ok 11 - dispatches strict two-phase writeback commands and commit accepts only a token
+  ---
+  duration_ms: 0.9229
+  type: 'test'
+  ...
+# Subtest: serializes committed-index failure with only a relative recovery manifest
+not ok 12 - serializes committed-index failure with only a relative recovery manifest
+  ---
+  duration_ms: 0.5974
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-rpc.test.mjs:301:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-rpc.test.mjs:343:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 11
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 196.0344

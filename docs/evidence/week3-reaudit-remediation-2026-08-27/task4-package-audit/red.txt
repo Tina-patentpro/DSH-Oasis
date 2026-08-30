@@ -1,0 +1,55 @@
+TAP version 13
+# Subtest: package audit reports only static package scope and explicit limitations
+not ok 1 - package audit reports only static package scope and explicit limitations
+  ---
+  duration_ms: 315.4882
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\tests\\scripts\\week3-package-audit-scope.test.mjs:10:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    week-3 closure package audit FAIL; entries=4; findings=4
+    
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/tests/scripts/week3-package-audit-scope.test.mjs:44:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: package audit source contains no positive source-marker claims or V4.1 verdict words
+not ok 2 - package audit source contains no positive source-marker claims or V4.1 verdict words
+  ---
+  duration_ms: 1.3441
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\tests\\scripts\\week3-package-audit-scope.test.mjs:72:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    materials-metadata-only
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/tests/scripts/week3-package-audit-scope.test.mjs:80:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 384.8922

@@ -1,0 +1,138 @@
+{
+  "migratedA": {
+    "schemaVersion": 2,
+    "panelMode": "normal",
+    "activeTaskId": "task-a",
+    "taskOrder": [
+      "task-a"
+    ],
+    "tasks": {
+      "task-a": {
+        "taskId": "task-a",
+        "title": "Host1 技术闭环",
+        "workType": "technical-rd",
+        "workflowId": "technical-rd",
+        "workflowVersion": "1",
+        "formValues": {},
+        "inputRefs": [],
+        "activeRunId": null,
+        "runOrder": [],
+        "runs": {},
+        "createdAt": "2026-08-26T07:00:00.000Z",
+        "updatedAt": "2026-08-26T07:00:00.000Z"
+      }
+    },
+    "workspaceId": "88190843-863e-4bce-8be7-0d002ccafd71",
+    "revision": 0,
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "migratedB": {
+    "schemaVersion": 2,
+    "panelMode": "normal",
+    "activeTaskId": "task-b",
+    "taskOrder": [
+      "task-b"
+    ],
+    "tasks": {
+      "task-b": {
+        "taskId": "task-b",
+        "title": "Host1 专利闭环",
+        "workType": "cn-invention-patent",
+        "workflowId": "cn-invention-patent",
+        "workflowVersion": "1",
+        "formValues": {},
+        "inputRefs": [],
+        "activeRunId": null,
+        "runOrder": [],
+        "runs": {},
+        "createdAt": "2026-08-26T07:00:00.000Z",
+        "updatedAt": "2026-08-26T07:00:00.000Z"
+      }
+    },
+    "workspaceId": "b4e0e848-f65f-4c56-a7b6-5861f578ba46",
+    "revision": 0,
+    "updatedAt": "1970-01-01T00:00:00.000Z"
+  },
+  "initialA": {
+    "committed": true,
+    "current": {
+      "schemaVersion": 2,
+      "panelMode": "normal",
+      "activeTaskId": "task-a",
+      "taskOrder": [
+        "task-a"
+      ],
+      "tasks": {
+        "task-a": {
+          "taskId": "task-a",
+          "title": "Host1 技术闭环",
+          "workType": "technical-rd",
+          "workflowId": "technical-rd",
+          "workflowVersion": "1",
+          "formValues": {
+            "objective": "验证隔离 Host 下的技术研发闭环",
+            "currentState": "已建立临时 Workspace、强基线与 local-mock",
+            "constraints": [
+              "不得覆盖既有文件",
+              "不得访问外部业务系统"
+            ],
+            "evidenceStatus": "verified",
+            "expectedDeliverable": "可复核的 Markdown 与元数据"
+          },
+          "inputRefs": [],
+          "activeRunId": null,
+          "runOrder": [],
+          "runs": {},
+          "createdAt": "2026-08-26T07:00:00.000Z",
+          "updatedAt": "2026-08-26T07:00:00.000Z"
+        }
+      },
+      "workspaceId": "88190843-863e-4bce-8be7-0d002ccafd71",
+      "revision": 1,
+      "updatedAt": "2026-08-29T01:44:06.330Z"
+    }
+  },
+  "initialB": {
+    "committed": true,
+    "current": {
+      "schemaVersion": 2,
+      "panelMode": "normal",
+      "activeTaskId": "task-b",
+      "taskOrder": [
+        "task-b"
+      ],
+      "tasks": {
+        "task-b": {
+          "taskId": "task-b",
+          "title": "Host1 专利闭环",
+          "workType": "cn-invention-patent",
+          "workflowId": "cn-invention-patent",
+          "workflowVersion": "1",
+          "formValues": {
+            "technicalDisclosure": "一种在隔离工作区内组织技术材料、生成草稿并经人工审核后回写的方法。",
+            "inventiveConcept": "以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。",
+            "knownPriorArt": "已知方案缺少项目级隔离和回写冲突证明。",
+            "terms": [
+              "项目绑定",
+              "运行快照",
+              "无覆盖提交"
+            ],
+            "unconfirmedFacts": [
+              "关键性能参数尚未确认"
+            ],
+            "desiredScope": "方法、系统及存储介质。"
+          },
+          "inputRefs": [],
+          "activeRunId": null,
+          "runOrder": [],
+          "runs": {},
+          "createdAt": "2026-08-26T07:00:00.000Z",
+          "updatedAt": "2026-08-26T07:00:00.000Z"
+        }
+      },
+      "workspaceId": "b4e0e848-f65f-4c56-a7b6-5861f578ba46",
+      "revision": 1,
+      "updatedAt": "2026-08-29T01:44:06.338Z"
+    }
+  }
+}

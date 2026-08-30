@@ -1,10 +1,30 @@
-import { createElement } from 'react'
+import { createElement, useSyncExternalStore } from 'react'
 
 import { resolveWorkspaceId } from './project-resolution.js'
 
-export function WorkbenchEntry({ sessionId, store, focusTargets, useWorkspaces }) {
+const STANDALONE_HOST_SNAPSHOT = Object.freeze({ mode: 'standalone' })
+const subscribeStandaloneHost = () => () => {}
+const getStandaloneHostSnapshot = () => STANDALONE_HOST_SNAPSHOT
+
+function useLivePanelHostSnapshot(coordinator) {
+  return useSyncExternalStore(
+    coordinator === null ? subscribeStandaloneHost : coordinator.subscribe,
+    coordinator === null ? getStandaloneHostSnapshot : coordinator.getSnapshot,
+    coordinator === null ? getStandaloneHostSnapshot : coordinator.getSnapshot,
+  )
+}
+
+export function WorkbenchEntry({
+  sessionId,
+  store,
+  focusTargets,
+  useWorkspaces,
+  coordinator = null,
+  usePanelHostSnapshot = useLivePanelHostSnapshot,
+}) {
   const workspaceItems = useWorkspaces((snapshot) => snapshot.items)
   const workspaceId = resolveWorkspaceId(sessionId, workspaceItems)
+  const hostSnapshot = usePanelHostSnapshot(coordinator)
   let mountedTarget = null
 
   function registerFocusTarget(node) {
@@ -24,16 +44,34 @@ export function WorkbenchEntry({ sessionId, store, focusTargets, useWorkspaces }
     if (workspaceId === null) return
     store.syncWorkspaces(workspaceItems)
     focusTargets.set(workspaceId, event.currentTarget)
+    if (coordinator?.getSnapshot?.().mode === 'better-sidebar') {
+      coordinator.openBetterSidebar(sessionId)
+      return
+    }
+    if (coordinator && coordinator.getSnapshot().mode !== 'standalone') return
     store.openPanel(workspaceId)
   }
+
+  const hostMode = hostSnapshot.mode
+  const hostUnavailable = ['integrating', 'releasing', 'blocked'].includes(hostMode)
+  const disabled = workspaceId === null || hostUnavailable
+  const unavailableTitle = hostMode === 'blocked'
+    ? '侧栏宿主冲突，绿洲工作台已安全阻断'
+    : '绿洲工作台正在切换侧栏宿主'
 
   return createElement('button', {
     type: 'button',
     ref: registerFocusTarget,
     'data-testid': 'oasis-workbench-entry',
-    disabled: workspaceId === null,
-    title: workspaceId === null ? '当前会话尚未关联项目' : '打开技术研发与中国发明专利工作台',
-    'aria-label': workspaceId === null ? '当前会话尚未关联项目' : '打开技术研发与中国发明专利工作台',
+    disabled,
+    'data-oasis-host-mode': hostMode,
+    'data-oasis-host-version': hostSnapshot.serviceVersion ?? undefined,
+    title: workspaceId === null
+      ? '当前会话尚未关联项目'
+      : hostUnavailable ? unavailableTitle : '打开技术研发与中国发明专利工作台',
+    'aria-label': workspaceId === null
+      ? '当前会话尚未关联项目'
+      : hostUnavailable ? unavailableTitle : '打开技术研发与中国发明专利工作台',
     onClick: openWorkbench,
     style: {
       border: '1px solid var(--dsw-alias-border-l2, #d9d9dc)',
@@ -42,8 +80,8 @@ export function WorkbenchEntry({ sessionId, store, focusTargets, useWorkspaces }
       color: 'var(--dsw-alias-text-primary, #202123)',
       padding: '5px 9px',
       fontSize: 12,
-      cursor: workspaceId === null ? 'not-allowed' : 'pointer',
-      opacity: workspaceId === null ? 0.5 : 1,
+      cursor: disabled ? 'not-allowed' : 'pointer',
+      opacity: disabled ? 0.5 : 1,
     },
   }, '研发 / 专利')
 }

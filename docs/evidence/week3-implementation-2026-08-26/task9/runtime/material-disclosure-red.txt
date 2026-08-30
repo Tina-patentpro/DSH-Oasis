@@ -1,0 +1,272 @@
+TAP version 13
+# Subtest: canonical JSON and input hashes are stable across object key order
+ok 1 - canonical JSON and input hashes are stable across object key order
+  ---
+  duration_ms: 1.9738
+  type: 'test'
+  ...
+# Subtest: technical mock is deterministic, warning-only, eight-section Markdown with five result categories
+not ok 2 - technical mock is deterministic, warning-only, eight-section Markdown with five result categories
+  ---
+  duration_ms: 3.3463
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\local-mock-runner.test.mjs:78:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成/. Input:
+    
+    '## 文档信息\n' +
+      '\n' +
+      '- workflow: `technical-rd@1`\n' +
+      '- mode: `local-mock`\n' +
+      '- mock_version: `1`\n' +
+      '- input_sha256: `9f7ebeb00303584152d9a743cd33ee8b8c0c313bb411364b828d600d12b346af`\n' +
+      '\n' +
+      '本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；未读取材料正文，不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。\n' +
+      '\n' +
+      '## 核心结论\n' +
+      '\n' +
+      '结构化演练已完成，但只能作为待人工复核的 warning 草稿。\n' +
+      '\n' +
+      '    研发目标：降低装置能耗\n' +
+      '    证据状态：partial\n' +
+      '\n' +
+      '## 核心结果\n' +
+      '\n' +
+      '### 问题分解\n' +
+      '\n' +
+      '    研发目标：降低装置能耗\n' +
+      '    当前状态：&lt;script&gt;alert(1)&lt;/script&gt;\n' +
+      '    ## 伪造章节\n' +
+      '    ![跟踪](https://example.invalid/pixel)\n' +
+      '\n' +
+      '### 候选方案空间\n' +
+      '\n' +
+      '    参数优化；控制逻辑调整；结构或流程替代。以上仅为待评估方向。\n' +
+      '\n' +
+      '### 风险\n' +
+      '\n' +
+      '    1. 本地 mock 未读取或理解材料正文，所有技术判断均需人工复核。\n' +
+      '    2. 当前证据状态为 partial，关键事实尚未全部核验。\n' +
+      '\n' +
+      '### 验证计划\n' +
+      '\n' +
+      '    确认基线与指标；逐项验证约束；记录数据、偏差和复核结论。\n' +
+      '\n' +
+      '### 交付清单\n' +
+      '\n' +
+      '    验证计划与交付清单\n' +
+      '\n' +
+      '### 约束条件\n' +
+      '\n' +
+      '    1. 不得改变现有设备接口\n' +
+      '\n' +
+      '## 下游读取区\n' +
+      '\n' +
+      '- content_status: `warning`\n' +
+      '- workflow: `technical-rd@1`\n' +
+      '- input_sha256: `9f7ebeb00303584152d9a743cd33ee8b8c0c313bb411364b828d600d12b346af`\n' +
+      '- downstream_action: 人工复核后决定是否批准导出此 mock 草稿。\n' +
+      '\n' +
+      '## 来源与附件\n' +
+      '\n' +
+      '    1. technical.md\n' +
+      '    relative_path: materials\\technical.md\n' +
+      '    media_type: text/markdown\n' +
+      '    size_bytes: 128\n' +
+      '    sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n' +
+      '\n' +
+      '仅使用上述文件名、类型、大小和哈希；未读取材料正文。\n' +
+      '\n' +
+      '## 质量状态\n' +
+      '\n' +
+      '- content_status: `warning`\n' +
+      '- review_status: `not-reviewed`\n' +
+      '\n' +
+      '本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；未读取材料正文，不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。\n' +
+      '\n' +
+      '## 风险与待确认事项\n' +
+      '\n' +
+      '### 风险\n' +
+      '\n' +
+      '    1. 本地 mock 未读取或理解材料正文，所有技术判断均需人工复核。\n' +
+      '    2. 当前证据状态为 partial，关键事实尚未全部核验。\n' +
+      '\n' +
+      '### 待确认事项\n' +
+      '\n' +
+      '    1. 哪些关键事实、参数或实验结果仍需补充核验？\n' +
+      '\n' +
+      '## 辅助文档\n' +
+      '\n' +
+      '无。Week 3 `local-mock` 不生成独立辅助文件。\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    ## 文档信息
+    
+    - workflow: `technical-rd@1`
+    - mode: `local-mock`
+    - mock_version: `1`
+    - input_sha256: `9f7ebeb00303584152d9a743cd33ee8b8c0c313bb411364b828d600d12b346af`
+    
+    本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；未读取材料正文，不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。
+    
+    ## 核心结论
+    
+    结构化演练已完成，但只能作为待人工复核的 warning 草稿。
+    
+        研发目标：降低装置能耗
+        证据状态：partial
+    
+    ## 核心结果
+    
+    ### 问题分解
+    
+        研发目标：降低装置能耗
+        当前状态：&lt;script&gt;alert(1)&lt;/script&gt;
+        ## 伪造章节
+        ![跟踪](https://example.invalid/pixel)
+    
+    ### 候选方案空间
+    
+        参数优化；控制逻辑调整；结构或流程替代。以上仅为待评估方向。
+    
+    ### 风险
+    
+        1. 本地 mock 未读取或理解材料正文，所有技术判断均需人工复核。
+        2. 当前证据状态为 partial，关键事实尚未全部核验。
+    
+    ### 验证计划
+    
+        确认基线与指标；逐项验证约束；记录数据、偏差和复核结论。
+    
+    ### 交付清单
+    
+        验证计划与交付清单
+    
+    ### 约束条件
+    
+        1. 不得改变现有设备接口
+    
+    ## 下游读取区
+    
+    - content_status: `warning`
+    - workflow: `technical-rd@1`
+    - input_sha256: `9f7ebeb00303584152d9a743cd33ee8b8c0c313bb411364b828d600d12b346af`
+    - downstream_action: 人工复核后决定是否批准导出此 mock 草稿。
+    
+    ## 来源与附件
+    
+        1. technical.md
+        relative_path: materials\technical.md
+        media_type: text/markdown
+        size_bytes: 128
+        sha256: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    
+    仅使用上述文件名、类型、大小和哈希；未读取材料正文。
+    
+    ## 质量状态
+    
+    - content_status: `warning`
+    - review_status: `not-reviewed`
+    
+    本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；未读取材料正文，不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。
+    
+    ## 风险与待确认事项
+    
+    ### 风险
+    
+        1. 本地 mock 未读取或理解材料正文，所有技术判断均需人工复核。
+        2. 当前证据状态为 partial，关键事实尚未全部核验。
+    
+    ### 待确认事项
+    
+        1. 哪些关键事实、参数或实验结果仍需补充核验？
+    
+    ## 辅助文档
+    
+    无。Week 3 `local-mock` 不生成独立辅助文件。
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/local-mock-runner.test.mjs:105:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: patent mock includes required drafting structures and blocks unconfirmed facts
+ok 3 - patent mock includes required drafting structures and blocks unconfirmed facts
+  ---
+  duration_ms: 0.8427
+  type: 'test'
+  ...
+# Subtest: bounds the artifact and result lists for maximum legal patent inputs
+ok 4 - bounds the artifact and result lists for maximum legal patent inputs
+  ---
+  duration_ms: 7.2813
+  type: 'test'
+  ...
+# Subtest: validates and renders all four schema controls with accessible field errors
+ok 5 - validates and renders all four schema controls with accessible field errors
+  ---
+  duration_ms: 2.9567
+  type: 'test'
+  ...
+# Subtest: shows confirmed material metadata without claiming the body was read
+not ok 6 - shows confirmed material metadata without claiming the body was read
+  ---
+  duration_ms: 1.1036
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\panel-local-loop-ui.test.mjs:113:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /文件在本机流式读取以计算哈希，正文不提取、不持久化且不用于生成/. Input:
+    
+    '项目材料 仅登记元数据与哈希，不读取正文。支持 .md。 Workspace 内相对路径 我确认该相对路径属于当前项目，并同意登记文件元数据与 SHA-256。 登记材料 technical.md materials\\technical.md · 128 B · SHA-256 aaaaaaaa… 刷新证据 移除登记  '
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '项目材料 仅登记元数据与哈希，不读取正文。支持 .md。 Workspace 内相对路径 我确认该相对路径属于当前项目，并同意登记文件元数据与 SHA-256。 登记材料 technical.md materials\\technical.md · 128 B · SHA-256 aaaaaaaa… 刷新证据 移除登记  '
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/panel-local-loop-ui.test.mjs:129:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: disables generation for each unsafe state and keeps old snapshots immutable in the preview
+ok 7 - disables generation for each unsafe state and keeps old snapshots immutable in the preview
+  ---
+  duration_ms: 0.9087
+  type: 'test'
+  ...
+# Subtest: blocks approval/writeback for blocked output and requires a second writeback confirmation
+ok 8 - blocks approval/writeback for blocked output and requires a second writeback confirmation
+  ---
+  duration_ms: 0.6171
+  type: 'test'
+  ...
+# Subtest: uses the remote catalog in the chooser and one business tree for normal/expanded layouts
+ok 9 - uses the remote catalog in the chooser and one business tree for normal/expanded layouts
+  ---
+  duration_ms: 5.5204
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 7
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 155.9468

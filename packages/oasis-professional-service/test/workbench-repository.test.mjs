@@ -2,33 +2,15 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 
 import { openOasisWorkbenchRepository } from '../src/workbench-repository.js'
-
-const NOW = '2026-08-25T01:02:03.000Z'
-
-function createDraft(taskId = 'task-a') {
-  return {
-    schemaVersion: 1,
-    panelMode: 'normal',
-    activeTaskId: taskId,
-    taskOrder: [taskId],
-    tasks: {
-      [taskId]: {
-        taskId,
-        title: '技术研发任务',
-        workType: 'technical-rd',
-        workflowId: 'workflow-a',
-        workflowVersion: '1',
-        inputRefs: [],
-        formValues: {},
-        run: null,
-        preview: null,
-        review: 'not-reviewed',
-        createdAt: NOW,
-        updatedAt: NOW,
-      },
-    },
-  }
-}
+import {
+  NOW,
+  createEditableDraft,
+  createLegacyRecord,
+  createMaterialReference,
+  createRunSnapshot,
+  createV2Record,
+  recordToEditableDraft,
+} from './workbench-fixtures.mjs'
 
 function deferred() {
   let resolve
@@ -66,124 +48,213 @@ function createStorageFixture({ beforePut } = {}) {
     async open(spec) {
       calls.open += 1
       assert.equal(spec.name, 'oasis_workbench')
+      assert.equal(spec.version, 1)
       return domain
     },
   }
   return { storageDomain, records, calls }
 }
 
-test('opens the declared Domain and missing reads do not materialize a row', async () => {
+test('missing and legacy reads publish v2 without materializing a row', async () => {
   const fixture = createStorageFixture()
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
-
-  const state = repository.get('workspace-a')
-
-  assert.equal(state.revision, 0)
-  assert.equal(state.workspaceId, 'workspace-a')
-  assert.equal(fixture.calls.open, 1)
+  assert.equal(repository.get('workspace-a').schemaVersion, 2)
   assert.equal(fixture.calls.put.length, 0)
-  assert.equal(fixture.records.size, 0)
+
+  fixture.records.set('workspace-b', createLegacyRecord('workspace-b'))
+  const migrated = repository.get('workspace-b')
+  assert.equal(migrated.schemaVersion, 2)
+  assert.equal(fixture.records.get('workspace-b').schemaVersion, 1)
+  assert.equal(fixture.calls.put.length, 0)
   await repository.close()
 })
 
-test('first replacement materializes revision one with Host-owned identity and time', async () => {
+test('first editable replacement materializes schema v2 with Host identity and time', async () => {
   const fixture = createStorageFixture()
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
-
-  const result = await repository.replace('workspace-a', 0, createDraft())
+  const result = await repository.replaceEditable('workspace-a', 0, createEditableDraft())
 
   assert.equal(result.committed, true)
+  assert.equal(result.current.schemaVersion, 2)
   assert.equal(result.current.workspaceId, 'workspace-a')
   assert.equal(result.current.revision, 1)
   assert.equal(result.current.updatedAt, NOW)
-  assert.equal(fixture.records.get('workspace-a').revision, 1)
-  assert.equal(Object.isFrozen(result.current.tasks['task-a']), true)
+  assert.deepEqual(result.current.tasks['task-a'].inputRefs, [])
+  assert.deepEqual(result.current.tasks['task-a'].runs, {})
+  assert.equal(fixture.records.get('workspace-a').schemaVersion, 2)
   await repository.close()
 })
 
-test('serializes same-Workspace replacements so one revision wins and one receives current', async () => {
+test('editable replacement preserves Host-owned evidence byte-for-byte', async () => {
   const fixture = createStorageFixture()
+  const current = createV2Record('workspace-a', 4, { withEvidence: true })
+  fixture.records.set('workspace-a', current)
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
-
-  const [first, second] = await Promise.all([
-    repository.replace('workspace-a', 0, createDraft('task-a')),
-    repository.replace('workspace-a', 0, createDraft('task-b')),
-  ])
-
-  assert.equal(first.committed, true)
-  assert.deepEqual(second, {
-    committed: false,
-    reason: 'revision-conflict',
-    current: first.current,
+  const evidence = structuredClone({
+    inputRefs: current.tasks['task-a'].inputRefs,
+    runOrder: current.tasks['task-a'].runOrder,
+    runs: current.tasks['task-a'].runs,
   })
-  assert.equal(fixture.calls.put.length, 1)
+  const draft = recordToEditableDraft(current)
+  draft.tasks['task-a'].title = '用户修改标题'
+  draft.tasks['task-a'].formValues = { objective: '新的草稿目标' }
+
+  const result = await repository.replaceEditable('workspace-a', 4, draft)
+  assert.equal(result.committed, true)
+  assert.equal(result.current.tasks['task-a'].title, '用户修改标题')
+  assert.deepEqual({
+    inputRefs: result.current.tasks['task-a'].inputRefs,
+    runOrder: result.current.tasks['task-a'].runOrder,
+    runs: result.current.tasks['task-a'].runs,
+  }, evidence)
   await repository.close()
 })
 
-test('keeps revision and state independent across Workspaces', async () => {
+test('a Host mutation can append evidence only through full-record validation', async () => {
   const fixture = createStorageFixture()
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
+  await repository.replaceEditable('workspace-a', 0, createEditableDraft())
 
-  const writeA = await repository.replace('workspace-a', 0, createDraft('task-a'))
-  const writeB = await repository.replace('workspace-b', 0, createDraft('task-b'))
+  const result = await repository.mutate('workspace-a', 1, (current) => {
+    const next = structuredClone(current)
+    next.tasks['task-a'].inputRefs.push(createMaterialReference())
+    return next
+  })
+  assert.equal(result.committed, true)
+  assert.deepEqual(result.current.tasks['task-a'].inputRefs, [createMaterialReference()])
 
-  assert.equal(writeA.committed, true)
-  assert.equal(writeB.committed, true)
+  await assert.rejects(repository.mutate('workspace-a', 2, (current) => ({
+    ...structuredClone(current),
+    extra: true,
+  })), /unrecognized|extra/i)
+  assert.equal(repository.get('workspace-a').revision, 2)
+  await repository.close()
+})
+
+test('a Host no-op mutation returns the current record without a revision or storage write', async () => {
+  const fixture = createStorageFixture()
+  const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
+  const created = await repository.replaceEditable('workspace-a', 0, createEditableDraft())
+  const putsBefore = fixture.calls.put.length
+
+  const result = await repository.mutate('workspace-a', created.current.revision, (current) => current)
+  assert.equal(result.committed, true)
+  assert.equal(result.current.revision, created.current.revision)
+  assert.equal(fixture.calls.put.length, putsBefore)
+  assert.deepEqual(repository.get('workspace-a'), created.current)
+  await repository.close()
+})
+
+test('persists immutable run and review evidence across repository reopen', async () => {
+  const fixture = createStorageFixture()
+  const first = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
+  const created = await first.replaceEditable('workspace-a', 0, createEditableDraft())
+  const withRun = await first.mutate('workspace-a', created.current.revision, (current) => {
+    const next = structuredClone(current)
+    const run = createRunSnapshot()
+    next.tasks['task-a'].runs[run.runId] = run
+    next.tasks['task-a'].runOrder.push(run.runId)
+    next.tasks['task-a'].activeRunId = run.runId
+    return next
+  })
+  const reviewed = await first.mutate('workspace-a', withRun.current.revision, (current) => {
+    const next = structuredClone(current)
+    next.tasks['task-a'].runs['run-a'].review = {
+      status: 'approved', note: '已人工检查结构', updatedAt: NOW,
+    }
+    return next
+  })
+  const expectedBytes = JSON.stringify(reviewed.current.tasks['task-a'].runs['run-a'])
+  await first.close()
+
+  const reopened = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
+  assert.equal(JSON.stringify(reopened.get('workspace-a').tasks['task-a'].runs['run-a']), expectedBytes)
+  await reopened.close()
+})
+
+test('serializes same-Workspace replacements and isolates Workspaces', async () => {
+  const fixture = createStorageFixture()
+  const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
+  const [first, second] = await Promise.all([
+    repository.replaceEditable('workspace-a', 0, createEditableDraft('task-a')),
+    repository.replaceEditable('workspace-a', 0, createEditableDraft('task-b')),
+  ])
+  assert.equal(first.committed, true)
+  assert.deepEqual(second, { committed: false, reason: 'revision-conflict', current: first.current })
+
+  const writeB = await repository.replaceEditable('workspace-b', 0, createEditableDraft('task-b'))
   assert.equal(writeB.current.workspaceId, 'workspace-b')
   assert.equal(repository.get('workspace-a').activeTaskId, 'task-a')
   assert.equal(repository.get('workspace-b').activeTaskId, 'task-b')
   await repository.close()
 })
 
-test('propagates storage failure and leaves the authoritative row unchanged', async () => {
-  const fixture = createStorageFixture({
-    async beforePut() {
-      throw new Error('durability failed')
-    },
-  })
+test('explicit editable mutation upgrades a stored v1 row to v2', async () => {
+  const fixture = createStorageFixture()
+  fixture.records.set('workspace-a', createLegacyRecord())
+  const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
+  const current = repository.get('workspace-a')
+  const result = await repository.replaceEditable('workspace-a', current.revision, recordToEditableDraft(current))
+  assert.equal(result.current.schemaVersion, 2)
+  assert.equal(fixture.records.get('workspace-a').schemaVersion, 2)
+  await repository.close()
+})
+
+test('round-trips a migrated partial workflow identity but never creates or changes one', async () => {
+  const fixture = createStorageFixture()
+  const legacy = createLegacyRecord()
+  legacy.tasks['task-a'].workflowVersion = null
+  fixture.records.set('workspace-a', legacy)
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
 
-  await assert.rejects(repository.replace('workspace-a', 0, createDraft()), /durability failed/)
+  const current = repository.get('workspace-a')
+  const preserved = await repository.replaceEditable('workspace-a', current.revision, recordToEditableDraft(current))
+  assert.equal(preserved.committed, true)
+  assert.equal(preserved.current.tasks['task-a'].workflowVersion, null)
+
+  const changedLegacy = recordToEditableDraft(preserved.current)
+  changedLegacy.tasks['task-a'].workflowVersion = '1'
+  await assert.rejects(
+    repository.replaceEditable('workspace-a', preserved.current.revision, changedLegacy),
+    /workflow identity.*immutable/i,
+  )
+
+  const newPartial = createEditableDraft('task-new')
+  newPartial.tasks['task-new'].workflowVersion = null
+  await assert.rejects(
+    repository.replaceEditable('workspace-b', 0, newPartial),
+    /workflow identity.*complete|partial workflow/i,
+  )
+  await repository.close()
+})
+
+test('storage failure leaves authoritative state unchanged', async () => {
+  const fixture = createStorageFixture({ async beforePut() { throw new Error('durability failed') } })
+  const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
+  await assert.rejects(repository.replaceEditable('workspace-a', 0, createEditableDraft()), /durability failed/)
   assert.equal(repository.get('workspace-a').revision, 0)
   assert.equal(fixture.records.size, 0)
   await repository.close()
 })
 
-test('rejects a replacement when the persisted revision is exhausted', async () => {
-  const fixture = createStorageFixture()
-  fixture.records.set('workspace-a', {
-    ...createDraft(),
-    workspaceId: 'workspace-a',
-    revision: Number.MAX_SAFE_INTEGER,
-    updatedAt: NOW,
-  })
-  const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
-
+test('rejects exhausted revision and closes only after admitted writes settle', async () => {
+  const exhaustedFixture = createStorageFixture()
+  exhaustedFixture.records.set('workspace-a', createV2Record('workspace-a', Number.MAX_SAFE_INTEGER))
+  const exhausted = await openOasisWorkbenchRepository(exhaustedFixture.storageDomain, { clock: () => NOW })
   await assert.rejects(
-    repository.replace('workspace-a', Number.MAX_SAFE_INTEGER, createDraft()),
+    exhausted.replaceEditable('workspace-a', Number.MAX_SAFE_INTEGER, recordToEditableDraft(exhausted.get('workspace-a'))),
     /revision.*exhausted/i,
   )
-  assert.equal(fixture.calls.put.length, 0)
-  await repository.close()
-})
+  await exhausted.close()
 
-test('close rejects new work, drains admitted writes, then closes the Domain once', async () => {
   const release = deferred()
   const started = deferred()
-  const fixture = createStorageFixture({
-    async beforePut() {
-      started.resolve()
-      await release.promise
-    },
-  })
+  const fixture = createStorageFixture({ async beforePut() { started.resolve(); await release.promise } })
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
-
-  const admitted = repository.replace('workspace-a', 0, createDraft())
+  const admitted = repository.replaceEditable('workspace-a', 0, createEditableDraft())
   await started.promise
   const closing = repository.close()
-  await assert.rejects(repository.replace('workspace-b', 0, createDraft('task-b')), /closed/i)
-  assert.equal(fixture.calls.close, 0)
-
+  await assert.rejects(repository.replaceEditable('workspace-b', 0, createEditableDraft('task-b')), /closed/i)
   release.resolve()
   assert.equal((await admitted).committed, true)
   await closing

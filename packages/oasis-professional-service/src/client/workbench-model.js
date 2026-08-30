@@ -12,12 +12,6 @@ function detached(value) {
   return structuredClone(value)
 }
 
-function workflowTitle(workflowId) {
-  if (workflowId === 'technical-rd') return '技术研发辅助'
-  if (workflowId === 'cn-invention-patent') return '中国发明专利撰写'
-  throw new Error(`unknown workflow: ${workflowId}`)
-}
-
 function assertRecord(record) {
   const parsed = workbenchRecordSchema.safeParse(record)
   if (!parsed.success) throw new TypeError(`invalid workbench record: ${parsed.error.message}`)
@@ -32,27 +26,24 @@ function taskToPage(task) {
     workflowVersion: task.workflowVersion,
     inputRefs: detached(task.inputRefs),
     formValues: detached(task.formValues),
-    run: task.run,
-    preview: task.preview,
-    review: task.review,
+    activeRunId: task.activeRunId,
+    runOrder: detached(task.runOrder),
+    runs: detached(task.runs),
     createdAt: task.createdAt,
     updatedAt: task.updatedAt,
     view: task.workflowId === null ? 'chooser' : 'workspace',
   }
 }
 
-function pageToTask(page) {
+function pageToEditableTask(page) {
   return {
     taskId: page.pageId,
     title: page.title,
     workType: page.workType,
     workflowId: page.workflowId,
     workflowVersion: page.workflowVersion,
-    inputRefs: detached(page.inputRefs),
     formValues: detached(page.formValues),
-    run: page.run,
-    preview: page.preview,
-    review: page.review,
+    activeRunId: page.activeRunId,
     createdAt: page.createdAt,
     updatedAt: page.updatedAt,
   }
@@ -68,6 +59,10 @@ export function createInitialWorkspaceState(workspaceId, syncStatus = 'idle') {
     panelMode: 'hidden',
     activePageId: null,
     pages: [],
+    catalogStatus: 'idle',
+    catalogError: null,
+    workflows: [],
+    pageOperations: {},
   })
 }
 
@@ -82,14 +77,18 @@ export function recordToWorkspaceState(record) {
     panelMode: record.panelMode,
     activePageId: record.activeTaskId,
     pages: record.taskOrder.map((taskId) => taskToPage(record.tasks[taskId])),
+    catalogStatus: 'idle',
+    catalogError: null,
+    workflows: [],
+    pageOperations: {},
   })
 }
 
 export function workspaceStateToDraft(state) {
   const tasks = {}
-  for (const page of state.pages) tasks[page.pageId] = pageToTask(page)
+  for (const page of state.pages) tasks[page.pageId] = pageToEditableTask(page)
   return deepFreeze({
-    schemaVersion: 1,
+    schemaVersion: 2,
     panelMode: state.panelMode,
     activeTaskId: state.activePageId,
     taskOrder: state.pages.map((page) => page.pageId),
@@ -110,14 +109,25 @@ function createPage(state, env) {
     workflowVersion: null,
     inputRefs: [],
     formValues: {},
-    run: null,
-    preview: null,
-    review: 'not-reviewed',
+    activeRunId: null,
+    runOrder: [],
+    runs: {},
     createdAt: timestamp,
     updatedAt: timestamp,
     view: 'chooser',
   }
   return { ...state, activePageId: pageId, pages: [...state.pages, page] }
+}
+
+function initialFormValues(workflow) {
+  if (!workflow || typeof workflow !== 'object' || !Array.isArray(workflow.form?.fields)) {
+    throw new TypeError('select-workflow requires a workflow catalog definition')
+  }
+  const values = {}
+  for (const field of workflow.form.fields) {
+    values[field.fieldId] = field.control === 'string-list' ? [] : ''
+  }
+  return values
 }
 
 export function reduceWorkspaceState(state, action, env) {
@@ -131,7 +141,8 @@ export function reduceWorkspaceState(state, action, env) {
   } else if (action.type === 'create-page') {
     next = createPage(state, env)
   } else if (action.type === 'select-workflow') {
-    const title = workflowTitle(action.workflowId)
+    const workflow = action.workflow
+    const formValues = initialFormValues(workflow)
     if (!state.pages.some((page) => page.pageId === action.pageId)) throw new Error('unknown page')
     next = {
       ...state,
@@ -139,14 +150,31 @@ export function reduceWorkspaceState(state, action, env) {
       pages: state.pages.map((page) => page.pageId === action.pageId
         ? {
             ...page,
-            title,
-            workType: action.workflowId,
-            workflowId: action.workflowId,
-            workflowVersion: '1',
+            title: workflow.title,
+            workType: workflow.workType,
+            workflowId: workflow.workflowId,
+            workflowVersion: workflow.workflowVersion,
+            formValues,
             updatedAt: env.now(),
             view: 'workspace',
           }
         : page),
+    }
+  } else if (action.type === 'update-form-value') {
+    const page = state.pages.find((item) => item.pageId === action.pageId)
+    if (!page) throw new Error('unknown page')
+    if (page.workflowId === null || !Object.hasOwn(page.formValues, action.fieldId)) {
+      throw new Error('unknown workflow form field')
+    }
+    next = {
+      ...state,
+      pages: state.pages.map((item) => item.pageId === action.pageId
+        ? {
+            ...item,
+            formValues: { ...item.formValues, [action.fieldId]: detached(action.value) },
+            updatedAt: env.now(),
+          }
+        : item),
     }
   } else if (action.type === 'rename-page') {
     const title = String(action.title).trim()
@@ -161,15 +189,28 @@ export function reduceWorkspaceState(state, action, env) {
   } else if (action.type === 'activate-page') {
     if (!state.pages.some((page) => page.pageId === action.pageId)) throw new Error('unknown page')
     next = state.activePageId === action.pageId ? state : { ...state, activePageId: action.pageId }
+  } else if (action.type === 'activate-run') {
+    const page = state.pages.find((item) => item.pageId === action.pageId)
+    if (!page) throw new Error('unknown page')
+    if (!Object.hasOwn(page.runs, action.runId)) throw new Error('unknown run')
+    next = page.activeRunId === action.runId ? state : {
+      ...state,
+      pages: state.pages.map((item) => item.pageId === action.pageId
+        ? { ...item, activeRunId: action.runId, updatedAt: env.now() }
+        : item),
+    }
   } else if (action.type === 'close-page') {
     const index = state.pages.findIndex((page) => page.pageId === action.pageId)
     if (index < 0) return state
     const pages = state.pages.filter((page) => page.pageId !== action.pageId)
     const fallback = pages[Math.min(index, pages.length - 1)]?.pageId ?? null
+    const pageOperations = { ...state.pageOperations }
+    delete pageOperations[action.pageId]
     next = {
       ...state,
       activePageId: state.activePageId === action.pageId ? fallback : state.activePageId,
       pages,
+      pageOperations,
     }
   } else {
     throw new Error(`unknown workbench action: ${action.type}`)

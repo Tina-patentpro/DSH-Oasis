@@ -1,0 +1,262 @@
+TAP version 13
+# Subtest: registers additive entry and panel host slots but never details
+ok 1 - registers additive entry and panel host slots but never details
+  ---
+  duration_ms: 3.099
+  type: 'test'
+  ...
+# Subtest: fails closed when the DSH Connection service is unavailable
+ok 2 - fails closed when the DSH Connection service is unavailable
+  ---
+  duration_ms: 0.2346
+  type: 'test'
+  ...
+# Subtest: entry opens a visible normal panel directly through the shared store
+ok 3 - entry opens a visible normal panel directly through the shared store
+  ---
+  duration_ms: 5.4982
+  type: 'test'
+  ...
+# Subtest: entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+ok 4 - entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+  ---
+  duration_ms: 0.4188
+  type: 'test'
+  ...
+# Subtest: client no longer uses a window CustomEvent as its open transport
+ok 5 - client no longer uses a window CustomEvent as its open transport
+  ---
+  duration_ms: 0.5793
+  type: 'test'
+  ...
+# Subtest: panel never opens or closes the occupied DSH details modal for geometry
+ok 6 - panel never opens or closes the occupied DSH details modal for geometry
+  ---
+  duration_ms: 1.7292
+  type: 'test'
+  ...
+# Subtest: uses the approved Codex show hide expand and restore SVG paths
+ok 7 - uses the approved Codex show hide expand and restore SVG paths
+  ---
+  duration_ms: 0.2876
+  type: 'test'
+  ...
+# Subtest: flushes drafts before task switch, confirmed history close, and panel hide
+ok 8 - flushes drafts before task switch, confirmed history close, and panel hide
+  ---
+  duration_ms: 0.4613
+  type: 'test'
+  ...
+# Subtest: panel Host loads persisted state and remote workflow catalog for each resolved Workspace
+ok 9 - panel Host loads persisted state and remote workflow catalog for each resolved Workspace
+  ---
+  duration_ms: 0.8715
+  type: 'test'
+  ...
+# Subtest: validates and renders all four schema controls with accessible field errors
+ok 10 - validates and renders all four schema controls with accessible field errors
+  ---
+  duration_ms: 4.2316
+  type: 'test'
+  ...
+# Subtest: shows confirmed material metadata without claiming the body was read
+ok 11 - shows confirmed material metadata without claiming the body was read
+  ---
+  duration_ms: 1.3702
+  type: 'test'
+  ...
+# Subtest: disables generation for each unsafe state and keeps old snapshots immutable in the preview
+ok 12 - disables generation for each unsafe state and keeps old snapshots immutable in the preview
+  ---
+  duration_ms: 3.0954
+  type: 'test'
+  ...
+# Subtest: blocks approval/writeback for blocked output and requires a second writeback confirmation
+ok 13 - blocks approval/writeback for blocked output and requires a second writeback confirmation
+  ---
+  duration_ms: 1.7666
+  type: 'test'
+  ...
+# Subtest: uses the remote catalog in the chooser and one business tree for normal/expanded layouts
+ok 14 - uses the remote catalog in the chooser and one business tree for normal/expanded layouts
+  ---
+  duration_ms: 10.4989
+  type: 'test'
+  ...
+# Subtest: renders loading, conflict, and transport failure as distinct accessible states
+ok 15 - renders loading, conflict, and transport failure as distinct accessible states
+  ---
+  duration_ms: 2.8341
+  type: 'test'
+  ...
+# Subtest: exposes task rename and explicit close controls while preserving saving feedback
+ok 16 - exposes task rename and explicit close controls while preserving saving feedback
+  ---
+  duration_ms: 2.0097
+  type: 'test'
+  ...
+# Subtest: disables persistent mutations while conflict resolution is required
+ok 17 - disables persistent mutations while conflict resolution is required
+  ---
+  duration_ms: 0.4801
+  type: 'test'
+  ...
+# Subtest: maps Host evidence to pages but excludes it from editable replacement drafts
+ok 18 - maps Host evidence to pages but excludes it from editable replacement drafts
+  ---
+  duration_ms: 9.8435
+  type: 'test'
+  ...
+# Subtest: fails closed when a persisted record contains malformed evidence
+ok 19 - fails closed when a persisted record contains malformed evidence
+  ---
+  duration_ms: 1.5527
+  type: 'test'
+  ...
+# Subtest: creates tasks with durable schema-v2 defaults before workflow selection
+ok 20 - creates tasks with durable schema-v2 defaults before workflow selection
+  ---
+  duration_ms: 0.5772
+  type: 'test'
+  ...
+# Subtest: selects a remote workflow definition in place, updates form values, renames, and closes deterministically
+ok 21 - selects a remote workflow definition in place, updates form values, renames, and closes deterministically
+  ---
+  duration_ms: 0.5146
+  type: 'test'
+  ...
+# Subtest: does not mutate immutable run snapshots when the editable form diverges
+ok 22 - does not mutate immutable run snapshots when the editable form diverges
+  ---
+  duration_ms: 0.6274
+  type: 'test'
+  ...
+# Subtest: activates an existing historical run without changing its snapshot
+ok 23 - activates an existing historical run without changing its snapshot
+  ---
+  duration_ms: 1.6676
+  type: 'test'
+  ...
+# Subtest: never saves the default state before hydration, then applies the queued open action
+ok 24 - never saves the default state before hydration, then applies the queued open action
+  ---
+  duration_ms: 7.9814
+  type: 'test'
+  ...
+# Subtest: hydrates persisted pages without issuing a replacement
+ok 25 - hydrates persisted pages without issuing a replacement
+  ---
+  duration_ms: 0.6018
+  type: 'test'
+  ...
+# Subtest: coalesces rapid same-Workspace actions into the latest draft
+ok 26 - coalesces rapid same-Workspace actions into the latest draft
+  ---
+  duration_ms: 0.8449
+  type: 'test'
+  ...
+# Subtest: updates form state immediately, saves after 400 ms, and flushes before the deadline
+ok 27 - updates form state immediately, saves after 400 ms, and flushes before the deadline
+  ---
+  duration_ms: 1.4676
+  type: 'test'
+  ...
+# Subtest: keeps Workspace save queues independent
+ok 28 - keeps Workspace save queues independent
+  ---
+  duration_ms: 1.7429
+  type: 'test'
+  ...
+# Subtest: preserves the local draft on revision conflict and reloads only on explicit request
+ok 29 - preserves the local draft on revision conflict and reloads only on explicit request
+  ---
+  duration_ms: 1.2498
+  type: 'test'
+  ...
+# Subtest: shows transport failure without discarding the unsaved draft
+ok 30 - shows transport failure without discarding the unsaved draft
+  ---
+  duration_ms: 0.9337
+  type: 'test'
+  ...
+# Subtest: keeps pages when switching sessions inside one Workspace
+ok 31 - keeps pages when switching sessions inside one Workspace
+  ---
+  duration_ms: 5.1945
+  type: 'test'
+  ...
+# Subtest: loads the chooser catalog from the Host and fails closed for an unknown workflow
+ok 32 - loads the chooser catalog from the Host and fails closed for an unknown workflow
+  ---
+  duration_ms: 0.6516
+  type: 'test'
+  ...
+# Subtest: switches to an independent page set when Workspace changes
+ok 33 - switches to an independent page set when Workspace changes
+  ---
+  duration_ms: 0.2677
+  type: 'test'
+  ...
+# Subtest: keeps hidden normal expanded state per Workspace
+ok 34 - keeps hidden normal expanded state per Workspace
+  ---
+  duration_ms: 0.1748
+  type: 'test'
+  ...
+# Subtest: opening an empty Workspace creates one workflow chooser page
+ok 35 - opening an empty Workspace creates one workflow chooser page
+  ---
+  duration_ms: 0.2814
+  type: 'test'
+  ...
+# Subtest: rejects task creation when no Workspace owns the session
+ok 36 - rejects task creation when no Workspace owns the session
+  ---
+  duration_ms: 0.2582
+  type: 'test'
+  ...
+# Subtest: notifies subscribers and preserves page state across panel transitions
+ok 37 - notifies subscribers and preserves page state across panel transitions
+  ---
+  duration_ms: 0.3059
+  type: 'test'
+  ...
+# Subtest: keeps material drafts isolated and applies Host-authoritative material evidence
+ok 38 - keeps material drafts isolated and applies Host-authoritative material evidence
+  ---
+  duration_ms: 6.7225
+  type: 'test'
+  ...
+# Subtest: retains one requestKey across a failed generation retry and clears it after success
+ok 39 - retains one requestKey across a failed generation retry and clears it after success
+  ---
+  duration_ms: 3.867
+  type: 'test'
+  ...
+# Subtest: enforces review and two-phase writeback confirmations before calling the Host
+ok 40 - enforces review and two-phase writeback confirmations before calling the Host
+  ---
+  duration_ms: 1.3753
+  type: 'test'
+  ...
+# Subtest: stores prepared absolute paths and hashes, then distinguishes successful writeback feedback
+ok 41 - stores prepared absolute paths and hashes, then distinguishes successful writeback feedback
+  ---
+  duration_ms: 1.8571
+  type: 'test'
+  ...
+# Subtest: distinguishes committed index warnings and discards the consumed writeback plan
+ok 42 - distinguishes committed index warnings and discards the consumed writeback plan
+  ---
+  duration_ms: 2.336
+  type: 'test'
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 42
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 333.8655

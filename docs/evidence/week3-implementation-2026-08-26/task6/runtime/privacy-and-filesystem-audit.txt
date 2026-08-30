@@ -1,0 +1,19 @@
+====console====  
+====logger====  
+====recursive====  
+450:      await fileSystem.mkdir(stageDirectory, { recursive: false })
+456:      await fileSystem.mkdir(target, { recursive: false })
+====rename====  
+====token====  
+packages\oasis-professional-service\src\workbench-contract.js:248:  confirmationToken: z.string().min(1).max(512),
+packages\oasis-professional-service\src\workbench-rpc.js:75:  confirmationToken: z.string().min(1).max(512),
+packages\oasis-professional-service\src\writeback-service.js:288:    const confirmationToken = tokenFactory()
+packages\oasis-professional-service\src\writeback-service.js:289:    if (typeof confirmationToken !== 'string' || confirmationToken.length === 0 || tokens.has(confirmationToken)) {
+packages\oasis-professional-service\src\writeback-service.js:339:    tokens.set(confirmationToken, { status: 'active', expiresAtMs, plan })
+packages\oasis-professional-service\src\writeback-service.js:340:    return Object.freeze({ confirmationToken, manifest })
+packages\oasis-professional-service\src\writeback-service.js:343:  function consume(confirmationToken) {
+packages\oasis-professional-service\src\writeback-service.js:344:    const entry = tokens.get(confirmationToken)
+packages\oasis-professional-service\src\workbench-service.js:343:    async commitWriteback({ confirmationToken }) {
+packages\oasis-professional-service\src\workbench-service.js:345:      const plan = manager.consume(confirmationToken)
+packages\oasis-professional-service\src\client\workbench-remote.js:128:    async commitWriteback(confirmationToken, signal) {
+packages\oasis-professional-service\src\client\workbench-remote.js:132:        { confirmationToken },

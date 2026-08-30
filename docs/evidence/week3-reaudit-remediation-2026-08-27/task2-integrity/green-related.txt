@@ -1,0 +1,316 @@
+TAP version 13
+# Subtest: canonical JSON and input hashes are stable across object key order
+ok 1 - canonical JSON and input hashes are stable across object key order
+  ---
+  duration_ms: 1.7785
+  type: 'test'
+  ...
+# Subtest: technical mock is deterministic, warning-only, eight-section Markdown with five result categories
+ok 2 - technical mock is deterministic, warning-only, eight-section Markdown with five result categories
+  ---
+  duration_ms: 2.769
+  type: 'test'
+  ...
+# Subtest: patent mock includes required drafting structures and blocks unconfirmed facts
+ok 3 - patent mock includes required drafting structures and blocks unconfirmed facts
+  ---
+  duration_ms: 0.8637
+  type: 'test'
+  ...
+# Subtest: bounds the artifact and result lists for maximum legal patent inputs
+ok 4 - bounds the artifact and result lists for maximum legal patent inputs
+  ---
+  duration_ms: 5.6207
+  type: 'test'
+  ...
+# Subtest: keeps the fixed DSH Domain identity while the record schema advances
+ok 5 - keeps the fixed DSH Domain identity while the record schema advances
+  ---
+  duration_ms: 1.3462
+  type: 'test'
+  ...
+# Subtest: projects a deterministic deeply frozen schema-v2 revision-zero state
+ok 6 - projects a deterministic deeply frozen schema-v2 revision-zero state
+  ---
+  duration_ms: 3.7836
+  type: 'test'
+  ...
+# Subtest: parses complete and stored records into detached frozen schema-v2 values
+ok 7 - parses complete and stored records into detached frozen schema-v2 values
+  ---
+  duration_ms: 4.1432
+  type: 'test'
+  ...
+# Subtest: accepts only the Client-owned editable projection
+ok 8 - accepts only the Client-owned editable projection
+  ---
+  duration_ms: 2.1153
+  type: 'test'
+  ...
+# Subtest: rejects unknown versions, identity mismatch, invalid calendar times, and unsafe revisions
+ok 9 - rejects unknown versions, identity mismatch, invalid calendar times, and unsafe revisions
+  ---
+  duration_ms: 1.1059
+  type: 'test'
+  ...
+# Subtest: rejects task-order and map inconsistencies after migration
+ok 10 - rejects task-order and map inconsistencies after migration
+  ---
+  duration_ms: 1.1581
+  type: 'test'
+  ...
+# Subtest: rejects stored runs whose canonical input or artifact body no longer matches its digest
+ok 11 - rejects stored runs whose canonical input or artifact body no longer matches its digest
+  ---
+  duration_ms: 4.4793
+  type: 'test'
+  ...
+# Subtest: migrates an exact legal v1 record to schema v2 without inventing run evidence
+ok 12 - migrates an exact legal v1 record to schema v2 without inventing run evidence
+  ---
+  duration_ms: 5.3113
+  type: 'test'
+  ...
+# Subtest: preserves arbitrary legal v1 inputRefs as isolated legacy values without fake path or hash
+ok 13 - preserves arbitrary legal v1 inputRefs as isolated legacy values without fake path or hash
+  ---
+  duration_ms: 2.4858
+  type: 'test'
+  ...
+# Subtest: preserves a legal v1 partial workflow identity without inventing missing values
+ok 14 - preserves a legal v1 partial workflow identity without inventing missing values
+  ---
+  duration_ms: 0.5581
+  type: 'test'
+  ...
+# Subtest: accepts v1 or v2 storage rows and always publishes detached frozen v2 records
+ok 15 - accepts v1 or v2 storage rows and always publishes detached frozen v2 records
+  ---
+  duration_ms: 0.9019
+  type: 'test'
+  ...
+# Subtest: rejects unknown storage versions instead of guessing a migration
+ok 16 - rejects unknown storage versions instead of guessing a migration
+  ---
+  duration_ms: 0.5915
+  type: 'test'
+  ...
+# Subtest: never saves the default state before hydration, then applies the queued open action
+ok 17 - never saves the default state before hydration, then applies the queued open action
+  ---
+  duration_ms: 7.5817
+  type: 'test'
+  ...
+# Subtest: hydrates persisted pages without issuing a replacement
+ok 18 - hydrates persisted pages without issuing a replacement
+  ---
+  duration_ms: 0.4599
+  type: 'test'
+  ...
+# Subtest: coalesces rapid same-Workspace actions into the latest draft
+ok 19 - coalesces rapid same-Workspace actions into the latest draft
+  ---
+  duration_ms: 0.672
+  type: 'test'
+  ...
+# Subtest: updates form state immediately, saves after 400 ms, and flushes before the deadline
+ok 20 - updates form state immediately, saves after 400 ms, and flushes before the deadline
+  ---
+  duration_ms: 1.3287
+  type: 'test'
+  ...
+# Subtest: dispose flushes a pending debounced draft before aborting the remote
+ok 21 - dispose flushes a pending debounced draft before aborting the remote
+  ---
+  duration_ms: 0.8067
+  type: 'test'
+  ...
+# Subtest: keeps Workspace save queues independent
+ok 22 - keeps Workspace save queues independent
+  ---
+  duration_ms: 1.0534
+  type: 'test'
+  ...
+# Subtest: preserves the local draft on revision conflict and reloads only on explicit request
+ok 23 - preserves the local draft on revision conflict and reloads only on explicit request
+  ---
+  duration_ms: 0.4773
+  type: 'test'
+  ...
+# Subtest: shows transport failure without discarding the unsaved draft
+ok 24 - shows transport failure without discarding the unsaved draft
+  ---
+  duration_ms: 0.4786
+  type: 'test'
+  ...
+# Subtest: missing and legacy reads publish v2 without materializing a row
+ok 25 - missing and legacy reads publish v2 without materializing a row
+  ---
+  duration_ms: 5.7094
+  type: 'test'
+  ...
+# Subtest: first editable replacement materializes schema v2 with Host identity and time
+ok 26 - first editable replacement materializes schema v2 with Host identity and time
+  ---
+  duration_ms: 2.9582
+  type: 'test'
+  ...
+# Subtest: editable replacement preserves Host-owned evidence byte-for-byte
+ok 27 - editable replacement preserves Host-owned evidence byte-for-byte
+  ---
+  duration_ms: 4.4308
+  type: 'test'
+  ...
+# Subtest: a Host mutation can append evidence only through full-record validation
+ok 28 - a Host mutation can append evidence only through full-record validation
+  ---
+  duration_ms: 2.1844
+  type: 'test'
+  ...
+# Subtest: a Host no-op mutation returns the current record without a revision or storage write
+ok 29 - a Host no-op mutation returns the current record without a revision or storage write
+  ---
+  duration_ms: 0.6443
+  type: 'test'
+  ...
+# Subtest: persists immutable run and review evidence across repository reopen
+ok 30 - persists immutable run and review evidence across repository reopen
+  ---
+  duration_ms: 1.5568
+  type: 'test'
+  ...
+# Subtest: serializes same-Workspace replacements and isolates Workspaces
+ok 31 - serializes same-Workspace replacements and isolates Workspaces
+  ---
+  duration_ms: 0.9478
+  type: 'test'
+  ...
+# Subtest: explicit editable mutation upgrades a stored v1 row to v2
+ok 32 - explicit editable mutation upgrades a stored v1 row to v2
+  ---
+  duration_ms: 0.6871
+  type: 'test'
+  ...
+# Subtest: round-trips a migrated partial workflow identity but never creates or changes one
+ok 33 - round-trips a migrated partial workflow identity but never creates or changes one
+  ---
+  duration_ms: 1.1633
+  type: 'test'
+  ...
+# Subtest: storage failure leaves authoritative state unchanged
+ok 34 - storage failure leaves authoritative state unchanged
+  ---
+  duration_ms: 0.6039
+  type: 'test'
+  ...
+# Subtest: rejects exhausted revision and closes only after admitted writes settle
+ok 35 - rejects exhausted revision and closes only after admitted writes settle
+  ---
+  duration_ms: 0.7877
+  type: 'test'
+  ...
+# Subtest: keeps state orchestration behind the service boundary
+ok 36 - keeps state orchestration behind the service boundary
+  ---
+  duration_ms: 2.0171
+  type: 'test'
+  ...
+# Subtest: creates a run only from authoritative validated draft and rechecked materials
+ok 37 - creates a run only from authoritative validated draft and rechecked materials
+  ---
+  duration_ms: 2.0412
+  type: 'test'
+  ...
+# Subtest: makes request keys idempotent for one snapshot and conflicts after draft change
+ok 38 - makes request keys idempotent for one snapshot and conflicts after draft change
+  ---
+  duration_ms: 2.3184
+  type: 'test'
+  ...
+# Subtest: rejects the ninth run without changing the first eight snapshots
+ok 39 - rejects the ninth run without changing the first eight snapshots
+  ---
+  duration_ms: 0.8731
+  type: 'test'
+  ...
+# Subtest: new runs preserve old bytes and review changes only the selected run
+ok 40 - new runs preserve old bytes and review changes only the selected run
+  ---
+  duration_ms: 1.5675
+  type: 'test'
+  ...
+# Subtest: publishes catalog through the service without leaking the repository
+ok 41 - publishes catalog through the service without leaking the repository
+  ---
+  duration_ms: 0.2213
+  type: 'test'
+  ...
+# Subtest: requires the complete repository and material-manager boundaries
+ok 42 - requires the complete repository and material-manager boundaries
+  ---
+  duration_ms: 0.2417
+  type: 'test'
+  ...
+# Subtest: adds a confirmed material through the repository Workspace queue
+ok 43 - adds a confirmed material through the repository Workspace queue
+  ---
+  duration_ms: 0.7349
+  type: 'test'
+  ...
+# Subtest: refreshes or removes only the current reference and preserves historical run snapshots
+ok 44 - refreshes or removes only the current reference and preserves historical run snapshots
+  ---
+  duration_ms: 0.7758
+  type: 'test'
+  ...
+# Subtest: rechecks task materials without mutating authoritative state
+ok 45 - rechecks task materials without mutating authoritative state
+  ---
+  duration_ms: 0.5472
+  type: 'test'
+  ...
+# Subtest: returns revision conflict before inspecting any file
+ok 46 - returns revision conflict before inspecting any file
+  ---
+  duration_ms: 0.2377
+  type: 'test'
+  ...
+# Subtest: prepares writeback only from the authoritative approved run artifact
+ok 47 - prepares writeback only from the authoritative approved run artifact
+  ---
+  duration_ms: 0.4188
+  type: 'test'
+  ...
+# Subtest: rejects stale, unapproved, blocked, foreign-artifact, and over-limit prepare requests
+ok 48 - rejects stale, unapproved, blocked, foreign-artifact, and over-limit prepare requests
+  ---
+  duration_ms: 0.7854
+  type: 'test'
+  ...
+# Subtest: commits a consumed plan through one Host mutation and appends only a relative WritebackRecord
+ok 49 - commits a consumed plan through one Host mutation and appends only a relative WritebackRecord
+  ---
+  duration_ms: 5.1688
+  type: 'test'
+  ...
+# Subtest: commit consumes the token but does not publish on revision conflict or stale plan identity
+ok 50 - commit consumes the token but does not publish on revision conflict or stale plan identity
+  ---
+  duration_ms: 0.3504
+  type: 'test'
+  ...
+# Subtest: reports committed files separately when the Domain index write fails and keeps a safe recovery manifest
+ok 51 - reports committed files separately when the Domain index write fails and keeps a safe recovery manifest
+  ---
+  duration_ms: 0.2777
+  type: 'test'
+  ...
+1..51
+# tests 51
+# suites 0
+# pass 51
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 248.981

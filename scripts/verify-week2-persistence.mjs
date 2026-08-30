@@ -3,13 +3,15 @@ import { spawn } from 'node:child_process'
 import { createConnection, createServer } from 'node:net'
 import { lstat, mkdir, mkdtemp, realpath, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
-import { dirname, isAbsolute, join, resolve, sep } from 'node:path'
+import { basename, dirname, isAbsolute, join, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { collectTree, sha256, writeBaselineTsv } from './baseline-capture-core.mjs'
 import { resolveDshLaunch, validateIsolatedHome } from './dsh-isolated.mjs'
+import { parseWorkbenchEditableDraft } from '../packages/oasis-professional-service/src/workbench-domain.js'
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const workspaceDisplayName = basename(projectRoot)
 const packageRoot = resolve(projectRoot, 'packages/oasis-professional-service')
 const clientLayoutProbe = resolve(projectRoot, 'tests/fixtures/oasis-client-layout-probe')
 const slotEvidenceProbe = resolve(projectRoot, 'tests/fixtures/oasis-slot-evidence-probe')
@@ -195,19 +197,16 @@ function createTask(taskId, title, workType) {
     workType,
     workflowId: workType,
     workflowVersion: '1',
-    inputRefs: [],
     formValues: {},
-    run: null,
-    preview: null,
-    review: 'not-reviewed',
+    activeRunId: null,
     createdAt: NOW,
     updatedAt: NOW,
   }
 }
 
 function draftA(firstTitle) {
-  return {
-    schemaVersion: 1,
+  return parseWorkbenchEditableDraft({
+    schemaVersion: 2,
     panelMode: 'normal',
     activeTaskId: 'task-a1',
     taskOrder: ['task-a1', 'task-a2'],
@@ -215,19 +214,19 @@ function draftA(firstTitle) {
       'task-a1': createTask('task-a1', firstTitle, 'cn-invention-patent'),
       'task-a2': createTask('task-a2', 'Host1 A 研发任务', 'technical-rd'),
     },
-  }
+  })
 }
 
 function draftB() {
-  return {
-    schemaVersion: 1,
+  return parseWorkbenchEditableDraft({
+    schemaVersion: 2,
     panelMode: 'hidden',
     activeTaskId: 'task-b1',
     taskOrder: ['task-b1'],
     tasks: {
       'task-b1': createTask('task-b1', 'Host1 B 专利任务', 'cn-invention-patent'),
     },
-  }
+  })
 }
 
 async function strongProfileSnapshot(outputPath) {
@@ -381,6 +380,7 @@ async function main() {
         OASIS_BROWSER_OUTPUT: browserEvidence,
         OASIS_WORKSPACE_A_ID: workspaceAId,
         OASIS_WORKSPACE_B_ID: workspaceBId,
+        OASIS_WORKSPACE_DISPLAY_NAME: workspaceDisplayName,
         OASIS_EXPECTED_A_TITLE: restoredA.tasks['task-a1'].title,
       },
     })

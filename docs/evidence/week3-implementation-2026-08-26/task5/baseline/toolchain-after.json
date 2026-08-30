@@ -1,0 +1,50 @@
+[
+  {
+    "command": "git.exe status --short --branch",
+    "exitCode": 0,
+    "stdout": "## main...origin/main\n M .dsh/skills/dsh-plugin-development/references/official-contracts.md\n M packages/oasis-professional-service/lib/client.js\n M packages/oasis-professional-service/lib/client.js.map\n M packages/oasis-professional-service/package.json\n M packages/oasis-professional-service/pnpm-lock.yaml\n M packages/oasis-professional-service/src/client/workbench-model.js\n M packages/oasis-professional-service/src/client/workbench-remote.js\n M packages/oasis-professional-service/src/index.js\n M packages/oasis-professional-service/src/workbench-contract.js\n M packages/oasis-professional-service/src/workbench-domain.js\n M packages/oasis-professional-service/src/workbench-repository.js\n M packages/oasis-professional-service/src/workbench-rpc.js\n M packages/oasis-professional-service/test/host-runtime.integration.test.mjs\n M packages/oasis-professional-service/test/host-tool.test.mjs\n M packages/oasis-professional-service/test/package-contract.test.mjs\n M packages/oasis-professional-service/test/workbench-contract.test.mjs\n M packages/oasis-professional-service/test/workbench-domain.test.mjs\n M packages/oasis-professional-service/test/workbench-model.test.mjs\n M packages/oasis-professional-service/test/workbench-persistence.test.mjs\n M packages/oasis-professional-service/test/workbench-remote.test.mjs\n M packages/oasis-professional-service/test/workbench-repository.test.mjs\n M packages/oasis-professional-service/test/workbench-rpc.test.mjs\n?? docs/evidence/week3-implementation-2026-08-25/\n?? docs/evidence/week3-implementation-2026-08-26/\n?? docs/plans/2026-08-25-week3-design.md\n?? docs/plans/2026-08-25-week3-implementation.md\n?? packages/oasis-professional-service/src/local-mock-runner.js\n?? packages/oasis-professional-service/src/workbench-service.js\n?? packages/oasis-professional-service/src/workflow-catalog.js\n?? packages/oasis-professional-service/src/workspace-materials.js\n?? packages/oasis-professional-service/test/local-mock-runner.test.mjs\n?? packages/oasis-professional-service/test/workbench-fixtures.mjs\n?? packages/oasis-professional-service/test/workbench-migration.test.mjs\n?? packages/oasis-professional-service/test/workbench-service.test.mjs\n?? packages/oasis-professional-service/test/workflow-catalog.test.mjs\n?? packages/oasis-professional-service/test/workspace-materials.test.mjs",
+    "stderr": "warning: unable to access 'C:\\Users\\TinaD/.config/git/ignore': Permission denied\nwarning: unable to access 'C:\\Users\\TinaD/.config/git/ignore': Permission denied"
+  },
+  {
+    "command": "git.exe rev-parse HEAD",
+    "exitCode": 0,
+    "stdout": "02b3eb7e40ff230689be8cae4218180869de836e",
+    "stderr": ""
+  },
+  {
+    "command": "node.exe --version",
+    "exitCode": 0,
+    "stdout": "v22.19.0",
+    "stderr": ""
+  },
+  {
+    "command": "pnpm.cmd --version",
+    "exitCode": 0,
+    "stdout": "11.19.0",
+    "stderr": ""
+  },
+  {
+    "command": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\scripts\\dsh-isolated.cmd --print-bin",
+    "exitCode": 0,
+    "stdout": "C:\\Users\\TinaD\\AppData\\Roaming\\npm\\node_modules\\@deepseek-ai\\dsh\\lib\\bin.js",
+    "stderr": ""
+  },
+  {
+    "command": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\scripts\\dsh-isolated.cmd --print-home",
+    "exitCode": 0,
+    "stdout": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\.dsh-test",
+    "stderr": ""
+  },
+  {
+    "command": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\scripts\\dsh-isolated.cmd --version",
+    "exitCode": 0,
+    "stdout": "0.1.1-rc.2",
+    "stderr": ""
+  },
+  {
+    "command": "node.exe -e import('./packages/oasis-professional-service/node_modules/@deepseek-ai/dsh-workspace/package.json',{with:{type:'json'}}).then(m=>console.log(m.default.version))",
+    "exitCode": 0,
+    "stdout": "0.1.1-rc.2",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,481 @@
+TAP version 13
+# Subtest: uses the dedicated DSH Connection channel for schema-v2 get and replace
+ok 1 - uses the dedicated DSH Connection channel for schema-v2 get and replace
+  ---
+  duration_ms: 7.5204
+  type: 'test'
+  ...
+# Subtest: turns DSH RpcResult errors into typed Client errors
+ok 2 - turns DSH RpcResult errors into typed Client errors
+  ---
+  duration_ms: 0.4915
+  type: 'test'
+  ...
+# Subtest: loads and strictly validates the Host workflow catalog
+ok 3 - loads and strictly validates the Host workflow catalog
+  ---
+  duration_ms: 1.7313
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed Connection and nested v2 results
+ok 4 - fails closed on malformed Connection and nested v2 results
+  ---
+  duration_ms: 4.1207
+  type: 'test'
+  ...
+# Subtest: calls strict material endpoints and validates their authoritative replacement results
+ok 5 - calls strict material endpoints and validates their authoritative replacement results
+  ---
+  duration_ms: 1.6062
+  type: 'test'
+  ...
+# Subtest: calls task create and review endpoints and validates authoritative replacement results
+ok 6 - calls task create and review endpoints and validates authoritative replacement results
+  ---
+  duration_ms: 0.9997
+  type: 'test'
+  ...
+# Subtest: calls two-phase writeback endpoints and fails closed on malformed manifests
+not ok 7 - calls two-phase writeback endpoints and fails closed on malformed manifests
+  ---
+  duration_ms: 0.43
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-remote.test.mjs:175:1'
+  failureType: 'testCodeFailure'
+  error: 'remote.prepareWriteback is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-remote.test.mjs:215:33)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: dispatches state endpoints with a schema-v2 editable replacement
+ok 8 - dispatches state endpoints with a schema-v2 editable replacement
+  ---
+  duration_ms: 4.977
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 9 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.5061
+  type: 'test'
+  ...
+# Subtest: rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+ok 10 - rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+  ---
+  duration_ms: 1.1622
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures
+ok 11 - does not disguise repository infrastructure failures
+  ---
+  duration_ms: 0.4491
+  type: 'test'
+  ...
+# Subtest: rejects over-budget editable drafts before calling the repository
+ok 12 - rejects over-budget editable drafts before calling the repository
+  ---
+  duration_ms: 1.5758
+  type: 'test'
+  ...
+# Subtest: dispatches a strictly validated workflow catalog endpoint
+ok 13 - dispatches a strictly validated workflow catalog endpoint
+  ---
+  duration_ms: 0.491
+  type: 'test'
+  ...
+# Subtest: dispatches strictly validated material commands without accepting Host evidence
+ok 14 - dispatches strictly validated material commands without accepting Host evidence
+  ---
+  duration_ms: 1.5053
+  type: 'test'
+  ...
+# Subtest: serializes known material failures but still propagates infrastructure failures
+ok 15 - serializes known material failures but still propagates infrastructure failures
+  ---
+  duration_ms: 1.2162
+  type: 'test'
+  ...
+# Subtest: dispatches strict task create and review commands without accepting Client evidence
+ok 16 - dispatches strict task create and review commands without accepting Client evidence
+  ---
+  duration_ms: 1.3801
+  type: 'test'
+  ...
+# Subtest: serializes known run-domain failures and propagates runner infrastructure faults
+ok 17 - serializes known run-domain failures and propagates runner infrastructure faults
+  ---
+  duration_ms: 0.5195
+  type: 'test'
+  ...
+# Subtest: dispatches strict two-phase writeback commands and commit accepts only a token
+not ok 18 - dispatches strict two-phase writeback commands and commit accepts only a token
+  ---
+  duration_ms: 1.7961
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-rpc.test.mjs:242:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   error: {
+    +     code: 'bad-request',
+    +     details: {
+    +       issues: [
+    -   ok: true,
+    -   value: {
+    -     confirmationToken: 'secret-token',
+    -     manifest: {
+    -       absoluteTarget: 'D:\\workspace\\outputs\\run-a',
+    -       artifactId: 'sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc',
+    -       expiresAt: '2026-08-26T01:12:03.000Z',
+    -       files: [
+              {
+    +           code: 'custom',
+    +           message: 'Unknown endpoint: artifact/prepare-writeback',
+    +           path: [
+    +             'endpoint'
+    +           ]
+    -           absolutePath: 'D:\\workspace\\outputs\\run-a\\result.md',
+    -           mediaType: 'text/markdown',
+    -           relativePath: 'outputs\\run-a\\result.md',
+    -           sha256: 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc',
+    -           sizeBytes: 24
+              },
+    -         {
+    -           absolutePath: 'D:\\workspace\\outputs\\run-a\\result.oasis.json',
+    -           mediaType: 'application/json',
+    -           relativePath: 'outputs\\run-a\\result.oasis.json',
+    -           sha256: 'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
+    -           sizeBytes: 128
+    -         }
+            ],
+    -       relativeDirectory: 'outputs\\run-a',
+    -       runId: 'run-a',
+    -       schemaVersion: 1,
+    -       taskId: 'task-a',
+    -       workspaceId: 'workspace-a'
+          },
+    +     message: 'Unknown Oasis workbench RPC endpoint'
+        },
+    +   ok: false
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    ok: true
+    value:
+      confirmationToken: 'secret-token'
+      manifest:
+        schemaVersion: 1
+        workspaceId: 'workspace-a'
+        taskId: 'task-a'
+        runId: 'run-a'
+        artifactId: 'sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc'
+        relativeDirectory: 'outputs\\run-a'
+        absoluteTarget: 'D:\\workspace\\outputs\\run-a'
+        files:
+          0:
+            relativePath: 'outputs\\run-a\\result.md'
+            absolutePath: 'D:\\workspace\\outputs\\run-a\\result.md'
+            sizeBytes: 24
+            sha256: 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc'
+            mediaType: 'text/markdown'
+          1:
+            relativePath: 'outputs\\run-a\\result.oasis.json'
+            absolutePath: 'D:\\workspace\\outputs\\run-a\\result.oasis.json'
+            sizeBytes: 128
+            sha256: 'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'
+            mediaType: 'application/json'
+        expiresAt: '2026-08-26T01:12:03.000Z'
+  actual:
+    ok: false
+    error:
+      code: 'bad-request'
+      message: 'Unknown Oasis workbench RPC endpoint'
+      details:
+        issues:
+          0:
+            code: 'custom'
+            path:
+              0: 'endpoint'
+            message: 'Unknown endpoint: artifact/prepare-writeback'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-rpc.test.mjs:283:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: serializes committed-index failure with only a relative recovery manifest
+not ok 19 - serializes committed-index failure with only a relative recovery manifest
+  ---
+  duration_ms: 0.4682
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-rpc.test.mjs:301:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        error: {
+    +     code: 'bad-request',
+    -     code: 'WRITEBACK_COMMITTED_INDEX_FAILED',
+          details: {
+    +       issues: [
+    +         {
+    +           code: 'custom',
+    +           message: 'Unknown endpoint: artifact/commit-writeback',
+    +           path: [
+    +             'endpoint'
+    +           ]
+    +         }
+    +       ]
+    -       manifest: {
+    -         artifactId: 'sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc',
+    -         files: [
+    -           {
+    -             mediaType: 'text/markdown',
+    -             relativePath: 'outputs\\run-a\\result.md',
+    -             sha256: 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc'
+    -           },
+    -           {
+    -             mediaType: 'application/json',
+    -             relativePath: 'outputs\\run-a\\result.oasis.json',
+    -             sha256: 'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'
+    -           }
+    -         ],
+    -         relativeDirectory: 'outputs\\run-a',
+    -         runId: 'run-a',
+    -         schemaVersion: 1,
+    -         taskId: 'task-a',
+    -         workspaceId: 'workspace-a'
+    -       }
+          },
+    +     message: 'Unknown Oasis workbench RPC endpoint'
+    -     message: 'Files committed but Domain index failed'
+        },
+        ok: false
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    ok: false
+    error:
+      code: 'WRITEBACK_COMMITTED_INDEX_FAILED'
+      message: 'Files committed but Domain index failed'
+      details:
+        manifest:
+          schemaVersion: 1
+          workspaceId: 'workspace-a'
+          taskId: 'task-a'
+          runId: 'run-a'
+          artifactId: 'sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc'
+          relativeDirectory: 'outputs\\run-a'
+          files:
+            0:
+              relativePath: 'outputs\\run-a\\result.md'
+              sha256: 'cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc'
+              mediaType: 'text/markdown'
+            1:
+              relativePath: 'outputs\\run-a\\result.oasis.json'
+              sha256: 'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'
+              mediaType: 'application/json'
+  actual:
+    ok: false
+    error:
+      code: 'bad-request'
+      message: 'Unknown Oasis workbench RPC endpoint'
+      details:
+        issues:
+          0:
+            code: 'custom'
+            path:
+              0: 'endpoint'
+            message: 'Unknown endpoint: artifact/commit-writeback'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-rpc.test.mjs:325:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: keeps state orchestration behind the service boundary
+ok 20 - keeps state orchestration behind the service boundary
+  ---
+  duration_ms: 1.887
+  type: 'test'
+  ...
+# Subtest: creates a run only from authoritative validated draft and rechecked materials
+ok 21 - creates a run only from authoritative validated draft and rechecked materials
+  ---
+  duration_ms: 2.8103
+  type: 'test'
+  ...
+# Subtest: makes request keys idempotent for one snapshot and conflicts after draft change
+ok 22 - makes request keys idempotent for one snapshot and conflicts after draft change
+  ---
+  duration_ms: 1.4086
+  type: 'test'
+  ...
+# Subtest: rejects the ninth run without changing the first eight snapshots
+ok 23 - rejects the ninth run without changing the first eight snapshots
+  ---
+  duration_ms: 0.9375
+  type: 'test'
+  ...
+# Subtest: new runs preserve old bytes and review changes only the selected run
+ok 24 - new runs preserve old bytes and review changes only the selected run
+  ---
+  duration_ms: 1.7854
+  type: 'test'
+  ...
+# Subtest: publishes catalog through the service without leaking the repository
+ok 25 - publishes catalog through the service without leaking the repository
+  ---
+  duration_ms: 0.1852
+  type: 'test'
+  ...
+# Subtest: requires the complete repository and material-manager boundaries
+ok 26 - requires the complete repository and material-manager boundaries
+  ---
+  duration_ms: 0.3486
+  type: 'test'
+  ...
+# Subtest: adds a confirmed material through the repository Workspace queue
+ok 27 - adds a confirmed material through the repository Workspace queue
+  ---
+  duration_ms: 1.6108
+  type: 'test'
+  ...
+# Subtest: refreshes or removes only the current reference and preserves historical run snapshots
+ok 28 - refreshes or removes only the current reference and preserves historical run snapshots
+  ---
+  duration_ms: 0.7277
+  type: 'test'
+  ...
+# Subtest: rechecks task materials without mutating authoritative state
+ok 29 - rechecks task materials without mutating authoritative state
+  ---
+  duration_ms: 0.5401
+  type: 'test'
+  ...
+# Subtest: returns revision conflict before inspecting any file
+ok 30 - returns revision conflict before inspecting any file
+  ---
+  duration_ms: 0.2641
+  type: 'test'
+  ...
+# Subtest: prepares writeback only from the authoritative approved run artifact
+not ok 31 - prepares writeback only from the authoritative approved run artifact
+  ---
+  duration_ms: 0.4799
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-service.test.mjs:428:1'
+  failureType: 'testCodeFailure'
+  error: 'service.prepareWriteback is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-service.test.mjs:436:31)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: rejects stale, unapproved, blocked, foreign-artifact, and over-limit prepare requests
+not ok 32 - rejects stale, unapproved, blocked, foreign-artifact, and over-limit prepare requests
+  ---
+  duration_ms: 0.4552
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-service.test.mjs:450:1'
+  failureType: 'testCodeFailure'
+  error: 'service.prepareWriteback is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-service.test.mjs:489:37)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: commits a consumed plan through one Host mutation and appends only a relative WritebackRecord
+not ok 33 - commits a consumed plan through one Host mutation and appends only a relative WritebackRecord
+  ---
+  duration_ms: 0.2093
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-service.test.mjs:499:1'
+  failureType: 'testCodeFailure'
+  error: 'service.commitWriteback is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-service.test.mjs:507:31)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: commit consumes the token but does not publish on revision conflict or stale plan identity
+not ok 34 - commit consumes the token but does not publish on revision conflict or stale plan identity
+  ---
+  duration_ms: 0.198
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-service.test.mjs:517:1'
+  failureType: 'testCodeFailure'
+  error: 'conflictService.commitWriteback is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-service.test.mjs:524:42)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: reports committed files separately when the Domain index write fails and keeps a safe recovery manifest
+not ok 35 - reports committed files separately when the Domain index write fails and keeps a safe recovery manifest
+  ---
+  duration_ms: 0.1722
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-service.test.mjs:549:1'
+  failureType: 'testCodeFailure'
+  error: 'service.commitWriteback is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-service.test.mjs:568:32)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..35
+# tests 35
+# suites 0
+# pass 27
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 245.2815

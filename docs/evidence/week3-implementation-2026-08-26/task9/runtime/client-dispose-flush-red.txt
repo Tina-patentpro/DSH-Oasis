@@ -1,0 +1,496 @@
+TAP version 13
+# Subtest: registers additive entry and panel host slots but never details
+ok 1 - registers additive entry and panel host slots but never details
+  ---
+  duration_ms: 1.6488
+  type: 'test'
+  ...
+# Subtest: fails closed when the DSH Connection service is unavailable
+ok 2 - fails closed when the DSH Connection service is unavailable
+  ---
+  duration_ms: 0.1053
+  type: 'test'
+  ...
+# Subtest: entry opens a visible normal panel directly through the shared store
+ok 3 - entry opens a visible normal panel directly through the shared store
+  ---
+  duration_ms: 3.1722
+  type: 'test'
+  ...
+# Subtest: entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+ok 4 - entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+  ---
+  duration_ms: 0.1854
+  type: 'test'
+  ...
+# Subtest: client no longer uses a window CustomEvent as its open transport
+ok 5 - client no longer uses a window CustomEvent as its open transport
+  ---
+  duration_ms: 0.4668
+  type: 'test'
+  ...
+# Subtest: panel never opens or closes the occupied DSH details modal for geometry
+ok 6 - panel never opens or closes the occupied DSH details modal for geometry
+  ---
+  duration_ms: 0.3593
+  type: 'test'
+  ...
+# Subtest: uses the approved Codex show hide expand and restore SVG paths
+ok 7 - uses the approved Codex show hide expand and restore SVG paths
+  ---
+  duration_ms: 0.191
+  type: 'test'
+  ...
+# Subtest: flushes drafts before task switch, confirmed history close, and panel hide
+ok 8 - flushes drafts before task switch, confirmed history close, and panel hide
+  ---
+  duration_ms: 1.6397
+  type: 'test'
+  ...
+# Subtest: panel Host loads persisted state and remote workflow catalog for each resolved Workspace
+not ok 9 - panel Host loads persisted state and remote workflow catalog for each resolved Workspace
+  ---
+  duration_ms: 1.6065
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\client-panel-contract.test.mjs:153:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /return async \(\) =>/. Input:
+    
+    "import { createElement, useEffect, useLayoutEffect, useRef, useSyncExternalStore } from 'react'\n" +
+      '\n' +
+      "import { PanelChrome } from './PanelChrome.js'\n" +
+      "import { PanelPages } from './PanelPages.js'\n" +
+      "import { resolveWorkspaceId } from './project-resolution.js'\n" +
+      '\n' +
+      'const reducedMotionCss = `\n' +
+      '  [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }\n' +
+      '  @media (prefers-reduced-motion: reduce) { [data-oasis-panel] { transition: none; } }\n' +
+      '  @media (max-width: 760px) {\n' +
+      '    [data-oasis-panel] [data-workspace-layout] { grid-template-columns: minmax(0, 1fr) !important; }\n' +
+      '  }\n' +
+      '`\n' +
+      '\n' +
+      'export function createPanelActions({\n' +
+      '  store,\n' +
+      '  workspaceId,\n' +
+      '  focusTargets,\n' +
+      '  confirmClose = (message) => globalThis.confirm?.(message) === true,\n' +
+      '}) {\n' +
+      '  return Object.freeze({\n' +
+      '    async activatePage(pageId) {\n' +
+      '      await store.flushWorkspace(workspaceId)\n' +
+      '      store.activatePage(workspaceId, pageId)\n' +
+      '    },\n' +
+      '    async closePage(pageId) {\n' +
+      '      const page = store.getWorkspaceState(workspaceId).pages.find((item) => item.pageId === pageId)\n' +
+      '      if (!page) return false\n' +
+      '      if (page.runOrder.length > 0 && !confirmClose(\n' +
+      '        `任务“${page.title}”包含 ${page.runOrder.length} 个运行记录。确认关闭此任务页？`,\n' +
+      '      )) return false\n' +
+      '      await store.flushWorkspace(workspaceId)\n' +
+      '      store.closePage(workspaceId, pageId)\n' +
+      '      return true\n' +
+      '    },\n' +
+      '    async hidePanel() {\n' +
+      '      await store.flushWorkspace(workspaceId)\n' +
+      '      const current = store.getWorkspaceState(workspaceId)\n' +
+      "      if (['ready', 'saving'].includes(current.syncStatus)) {\n" +
+      "        store.setPanelMode(workspaceId, 'hidden')\n" +
+      '      } else {\n' +
+      "        store.setLocalPanelMode(workspaceId, 'hidden')\n" +
+      '      }\n' +
+      '      focusTargets.get(workspaceId)?.focus?.()\n' +
+      '    },\n' +
+      '  })\n' +
+      '}\n' +
+      '\n' +
+      'export function OasisPanelHost({ store, focusTargets, layoutAdapter, useSessions, useWorkspaces }) {\n' +
+      '  const currentSessionId = useSessions((snapshot) => snapshot.current)\n' +
+      '  const workspaceItems = useWorkspaces((snapshot) => snapshot.items)\n' +
+      '  const workspaceId = resolveWorkspaceId(currentSessionId, workspaceItems)\n' +
+      '  const state = useSyncExternalStore(\n' +
+      '    store.subscribe,\n' +
+      '    () => store.peekWorkspaceState(workspaceId),\n' +
+      '    () => store.peekWorkspaceState(workspaceId),\n' +
+      '  )\n' +
+      '  const panelRef = useRef(null)\n' +
+      '  const titleRef = useRef(null)\n' +
+      '  const layout = useSyncExternalStore(\n' +
+      '    layoutAdapter.subscribe,\n' +
+      '    layoutAdapter.getSnapshot,\n' +
+      '    layoutAdapter.getSnapshot,\n' +
+      '  )\n' +
+      '\n' +
+      '  useEffect(() => {\n' +
+      '    store.syncWorkspaces(workspaceItems)\n' +
+      '    if (workspaceId !== null) {\n' +
+      '      void Promise.all([\n' +
+      '        store.hydrateWorkspace(workspaceId),\n' +
+      '        store.loadWorkflowCatalog(workspaceId),\n' +
+      '      ]).catch(() => {})\n' +
+      '    }\n' +
+      '  }, [store, workspaceId, workspaceItems])\n' +
+      '\n' +
+      '  useEffect(() => () => {\n' +
+      '    if (workspaceId !== null) void store.flushWorkspace(workspaceId).catch(() => {})\n' +
+      '  }, [store, workspaceId])\n' +
+      '\n' +
+      '  useLayoutEffect(() => {\n' +
+      '    layoutAdapter.apply({\n' +
+      "      requestedMode: workspaceId === null ? 'hidden' : state.panelMode,\n" +
+      '      panelWidth: 360,\n' +
+      '      panelElement: panelRef.current,\n' +
+      '    })\n' +
+      '  }, [layoutAdapter, state.panelMode, workspaceId])\n' +
+      '\n' +
+      '  useEffect(() => {\n' +
+      "    if (layout.effectiveMode !== 'hidden') titleRef.current?.focus()\n" +
+      '  }, [layout.effectiveMode, workspaceId])\n' +
+      '\n' +
+      "  const layoutBlocked = state.panelMode !== 'hidden'\n" +
+      '    && layout.requestedMode === state.panelMode\n' +
+      "    && layout.effectiveMode === 'hidden'\n" +
+      "    && ['incompatible', 'conflict', 'faulted'].includes(layout.status)\n" +
+      "  if (workspaceId === null || state.panelMode === 'hidden' || layoutBlocked) return null\n" +
+      '\n' +
+      '  const effectiveMode = layout.requestedMode === state.panelMode ? layout.effectiveMode : state.panelMode\n' +
+      "  const resolvedGeometry = effectiveMode === 'normal'\n" +
+      '    ? { right: 0, width: 360 }\n' +
+      '    : { left: layout.panelLeft ?? 72, right: 0 }\n' +
+      '\n' +
+      '  const actions = createPanelActions({ store, workspaceId, focusTargets })\n' +
+      '\n' +
+      "  return createElement('section', {\n" +
+      '    ref: panelRef,\n' +
+      "    'data-oasis-panel': true,\n" +
+      "    'data-testid': 'oasis-panel',\n" +
+      "    'data-mode': effectiveMode,\n" +
+      "    'data-requested-mode': state.panelMode,\n" +
+      "    'data-layout-status': layout.status,\n" +
+      "    'data-workspace-id': workspaceId,\n" +
+      "    'aria-label': '绿洲专业工作台',\n" +
+      '    style: {\n' +
+      "      position: 'fixed',\n" +
+      '      top: 0,\n' +
+      '      bottom: 0,\n' +
+      '      zIndex: 1,\n' +
+      "      display: 'flex',\n" +
+      "      flexDirection: 'column',\n" +
+      '      minWidth: 0,\n' +
+      "      overflow: 'hidden',\n" +
+      "      borderLeft: '1px solid var(--dsw-alias-border-l2, #dedee1)',\n" +
+      "      boxShadow: '-10px 0 28px rgba(0, 0, 0, 0.08)',\n" +
+      "      background: 'var(--dsw-alias-bg-base, #fff)',\n" +
+      "      color: 'var(--dsw-alias-text-primary, #202123)',\n" +
+      '      ...resolvedGeometry,\n' +
+      '    },\n' +
+      '  },\n' +
+      "  createElement('style', null, reducedMotionCss),\n" +
+      '  createElement(PanelChrome, {\n' +
+      '    state: { ...state, effectiveMode, layoutStatus: layout.status },\n' +
+      '    titleRef,\n' +
+      '    onActivatePage: (pageId) => { void actions.activatePage(pageId).catch(() => {}) },\n' +
+      '    onClosePage: (pageId) => { void actions.closePage(pageId).catch(() => {}) },\n' +
+      '    onCreatePage: () => store.createPage(workspaceId),\n' +
+      '    onHide: () => { void actions.hidePanel().catch(() => {}) },\n' +
+      '    onToggleExpanded: () => store.setPanelMode(\n' +
+      '      workspaceId,\n' +
+      "      state.panelMode === 'expanded' ? 'normal' : 'expanded',\n" +
+      '    ),\n' +
+      '  }),\n' +
+      '  createElement(PanelPages, {\n' +
+      '    state,\n' +
+      '    effectiveMode,\n' +
+      '    onSelectWorkflow: (pageId, workflowId) => store.selectWorkflow(workspaceId, pageId, workflowId),\n' +
+      '    onRenamePage: (pageId, title) => store.renamePage(workspaceId, pageId, title),\n' +
+      '    onReload: () => store.reloadWorkspace(workspaceId),\n' +
+      '    onUpdateForm: (pageId, fieldId, value) => store.updateFormValue(workspaceId, pageId, fieldId, value),\n' +
+      '    onMaterialDraft: (pageId, path, confirmed) => store.setMaterialDraft(workspaceId, pageId, path, confirmed),\n' +
+      '    onAddMaterial: (pageId) => { void store.addMaterial(workspaceId, pageId).catch(() => {}) },\n' +
+      '    onRefreshMaterial: (pageId, referenceId) => {\n' +
+      '      void store.refreshMaterial(workspaceId, pageId, referenceId).catch(() => {})\n' +
+      '    },\n' +
+      '    onRemoveMaterial: (pageId, referenceId, confirmed) => {\n' +
+      '      if (confirmed) void store.removeMaterial(workspaceId, pageId, referenceId, true).catch(() => {})\n' +
+      '    },\n' +
+      '    onGenerate: (pageId) => { void store.createRun(workspaceId, pageId).catch(() => {}) },\n' +
+      '    onActivateRun: (pageId, runId) => store.activateRun(workspaceId, pageId, runId),\n' +
+      '    onReviewNote: (pageId, note) => store.setReviewNote(workspaceId, pageId, note),\n' +
+      '    onReview: (pageId, runId, status, note) => {\n' +
+      '      void store.reviewRun(workspaceId, pageId, runId, status, note).catch(() => {})\n' +
+      '    },\n' +
+      '    onWritebackDraft: (pageId, directory, confirmed) => {\n' +
+      '      store.setWritebackDraft(workspaceId, pageId, directory, confirmed)\n' +
+      '    },\n' +
+      '    onPrepareWriteback: (pageId, runId) => {\n' +
+      '      void store.prepareWriteback(workspaceId, pageId, runId).catch(() => {})\n' +
+      '    },\n' +
+      '    onWritebackConfirm: (pageId, confirmed) => store.setWritebackConfirmation(workspaceId, pageId, confirmed),\n' +
+      '    onCommitWriteback: (pageId) => { void store.commitWriteback(workspaceId, pageId).catch(() => {}) },\n' +
+      '  }))\n' +
+      '}\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    import { createElement, useEffect, useLayoutEffect, useRef, useSyncExternalStore } from 'react'
+    
+    import { PanelChrome } from './PanelChrome.js'
+    import { PanelPages } from './PanelPages.js'
+    import { resolveWorkspaceId } from './project-resolution.js'
+    
+    const reducedMotionCss = `
+      [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
+      @media (prefers-reduced-motion: reduce) { [data-oasis-panel] { transition: none; } }
+      @media (max-width: 760px) {
+        [data-oasis-panel] [data-workspace-layout] { grid-template-columns: minmax(0, 1fr) !important; }
+      }
+    `
+    
+    export function createPanelActions({
+      store,
+      workspaceId,
+      focusTargets,
+      confirmClose = (message) => globalThis.confirm?.(message) === true,
+    }) {
+      return Object.freeze({
+        async activatePage(pageId) {
+          await store.flushWorkspace(workspaceId)
+          store.activatePage(workspaceId, pageId)
+        },
+        async closePage(pageId) {
+          const page = store.getWorkspaceState(workspaceId).pages.find((item) => item.pageId === pageId)
+          if (!page) return false
+          if (page.runOrder.length > 0 && !confirmClose(
+            `任务“${page.title}”包含 ${page.runOrder.length} 个运行记录。确认关闭此任务页？`,
+          )) return false
+          await store.flushWorkspace(workspaceId)
+          store.closePage(workspaceId, pageId)
+          return true
+        },
+        async hidePanel() {
+          await store.flushWorkspace(workspaceId)
+          const current = store.getWorkspaceState(workspaceId)
+          if (['ready', 'saving'].includes(current.syncStatus)) {
+            store.setPanelMode(workspaceId, 'hidden')
+          } else {
+            store.setLocalPanelMode(workspaceId, 'hidden')
+          }
+          focusTargets.get(workspaceId)?.focus?.()
+        },
+      })
+    }
+    
+    export function OasisPanelHost({ store, focusTargets, layoutAdapter, useSessions, useWorkspaces }) {
+      const currentSessionId = useSessions((snapshot) => snapshot.current)
+      const workspaceItems = useWorkspaces((snapshot) => snapshot.items)
+      const workspaceId = resolveWorkspaceId(currentSessionId, workspaceItems)
+      const state = useSyncExternalStore(
+        store.subscribe,
+        () => store.peekWorkspaceState(workspaceId),
+        () => store.peekWorkspaceState(workspaceId),
+      )
+      const panelRef = useRef(null)
+      const titleRef = useRef(null)
+      const layout = useSyncExternalStore(
+        layoutAdapter.subscribe,
+        layoutAdapter.getSnapshot,
+        layoutAdapter.getSnapshot,
+      )
+    
+      useEffect(() => {
+        store.syncWorkspaces(workspaceItems)
+        if (workspaceId !== null) {
+          void Promise.all([
+            store.hydrateWorkspace(workspaceId),
+            store.loadWorkflowCatalog(workspaceId),
+          ]).catch(() => {})
+        }
+      }, [store, workspaceId, workspaceItems])
+    
+      useEffect(() => () => {
+        if (workspaceId !== null) void store.flushWorkspace(workspaceId).catch(() => {})
+      }, [store, workspaceId])
+    
+      useLayoutEffect(() => {
+        layoutAdapter.apply({
+          requestedMode: workspaceId === null ? 'hidden' : state.panelMode,
+          panelWidth: 360,
+          panelElement: panelRef.current,
+        })
+      }, [layoutAdapter, state.panelMode, workspaceId])
+    
+      useEffect(() => {
+        if (layout.effectiveMode !== 'hidden') titleRef.current?.focus()
+      }, [layout.effectiveMode, workspaceId])
+    
+      const layoutBlocked = state.panelMode !== 'hidden'
+        && layout.requestedMode === state.panelMode
+        && layout.effectiveMode === 'hidden'
+        && ['incompatible', 'conflict', 'faulted'].includes(layout.status)
+      if (workspaceId === null || state.panelMode === 'hidden' || layoutBlocked) return null
+    
+      const effectiveMode = layout.requestedMode === state.panelMode ? layout.effectiveMode : state.panelMode
+      const resolvedGeometry = effectiveMode === 'normal'
+        ? { right: 0, width: 360 }
+        : { left: layout.panelLeft ?? 72, right: 0 }
+    
+      const actions = createPanelActions({ store, workspaceId, focusTargets })
+    
+      return createElement('section', {
+        ref: panelRef,
+        'data-oasis-panel': true,
+        'data-testid': 'oasis-panel',
+        'data-mode': effectiveMode,
+        'data-requested-mode': state.panelMode,
+        'data-layout-status': layout.status,
+        'data-workspace-id': workspaceId,
+        'aria-label': '绿洲专业工作台',
+        style: {
+          position: 'fixed',
+          top: 0,
+          bottom: 0,
+          zIndex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          minWidth: 0,
+          overflow: 'hidden',
+          borderLeft: '1px solid var(--dsw-alias-border-l2, #dedee1)',
+          boxShadow: '-10px 0 28px rgba(0, 0, 0, 0.08)',
+          background: 'var(--dsw-alias-bg-base, #fff)',
+          color: 'var(--dsw-alias-text-primary, #202123)',
+          ...resolvedGeometry,
+        },
+      },
+      createElement('style', null, reducedMotionCss),
+      createElement(PanelChrome, {
+        state: { ...state, effectiveMode, layoutStatus: layout.status },
+        titleRef,
+        onActivatePage: (pageId) => { void actions.activatePage(pageId).catch(() => {}) },
+        onClosePage: (pageId) => { void actions.closePage(pageId).catch(() => {}) },
+        onCreatePage: () => store.createPage(workspaceId),
+        onHide: () => { void actions.hidePanel().catch(() => {}) },
+        onToggleExpanded: () => store.setPanelMode(
+          workspaceId,
+          state.panelMode === 'expanded' ? 'normal' : 'expanded',
+        ),
+      }),
+      createElement(PanelPages, {
+        state,
+        effectiveMode,
+        onSelectWorkflow: (pageId, workflowId) => store.selectWorkflow(workspaceId, pageId, workflowId),
+        onRenamePage: (pageId, title) => store.renamePage(workspaceId, pageId, title),
+        onReload: () => store.reloadWorkspace(workspaceId),
+        onUpdateForm: (pageId, fieldId, value) => store.updateFormValue(workspaceId, pageId, fieldId, value),
+        onMaterialDraft: (pageId, path, confirmed) => store.setMaterialDraft(workspaceId, pageId, path, confirmed),
+        onAddMaterial: (pageId) => { void store.addMaterial(workspaceId, pageId).catch(() => {}) },
+        onRefreshMaterial: (pageId, referenceId) => {
+          void store.refreshMaterial(workspaceId, pageId, referenceId).catch(() => {})
+        },
+        onRemoveMaterial: (pageId, referenceId, confirmed) => {
+          if (confirmed) void store.removeMaterial(workspaceId, pageId, referenceId, true).catch(() => {})
+        },
+        onGenerate: (pageId) => { void store.createRun(workspaceId, pageId).catch(() => {}) },
+        onActivateRun: (pageId, runId) => store.activateRun(workspaceId, pageId, runId),
+        onReviewNote: (pageId, note) => store.setReviewNote(workspaceId, pageId, note),
+        onReview: (pageId, runId, status, note) => {
+          void store.reviewRun(workspaceId, pageId, runId, status, note).catch(() => {})
+        },
+        onWritebackDraft: (pageId, directory, confirmed) => {
+          store.setWritebackDraft(workspaceId, pageId, directory, confirmed)
+        },
+        onPrepareWriteback: (pageId, runId) => {
+          void store.prepareWriteback(workspaceId, pageId, runId).catch(() => {})
+        },
+        onWritebackConfirm: (pageId, confirmed) => store.setWritebackConfirmation(workspaceId, pageId, confirmed),
+        onCommitWriteback: (pageId) => { void store.commitWriteback(workspaceId, pageId).catch(() => {}) },
+      }))
+    }
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/client-panel-contract.test.mjs:157:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: never saves the default state before hydration, then applies the queued open action
+ok 10 - never saves the default state before hydration, then applies the queued open action
+  ---
+  duration_ms: 5.9244
+  type: 'test'
+  ...
+# Subtest: hydrates persisted pages without issuing a replacement
+ok 11 - hydrates persisted pages without issuing a replacement
+  ---
+  duration_ms: 0.519
+  type: 'test'
+  ...
+# Subtest: coalesces rapid same-Workspace actions into the latest draft
+ok 12 - coalesces rapid same-Workspace actions into the latest draft
+  ---
+  duration_ms: 0.8288
+  type: 'test'
+  ...
+# Subtest: updates form state immediately, saves after 400 ms, and flushes before the deadline
+ok 13 - updates form state immediately, saves after 400 ms, and flushes before the deadline
+  ---
+  duration_ms: 1.2467
+  type: 'test'
+  ...
+# Subtest: dispose flushes a pending debounced draft before aborting the remote
+not ok 14 - dispose flushes a pending debounced draft before aborting the remote
+  ---
+  duration_ms: 1.032
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\workbench-persistence.test.mjs:209:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/workbench-persistence.test.mjs:228:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: keeps Workspace save queues independent
+ok 15 - keeps Workspace save queues independent
+  ---
+  duration_ms: 1.2319
+  type: 'test'
+  ...
+# Subtest: preserves the local draft on revision conflict and reloads only on explicit request
+ok 16 - preserves the local draft on revision conflict and reloads only on explicit request
+  ---
+  duration_ms: 0.4384
+  type: 'test'
+  ...
+# Subtest: shows transport failure without discarding the unsaved draft
+ok 17 - shows transport failure without discarding the unsaved draft
+  ---
+  duration_ms: 0.445
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 15
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 333.0727

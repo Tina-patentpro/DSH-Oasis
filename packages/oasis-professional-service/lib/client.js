@@ -385,14 +385,26 @@ window.__ModuleLoader__.load({
 					portalHost = null;
 				}
 			}
-			function dispose() {
-				if (disposed) return;
+			function releaseStandalone(reasonCode = "standalone-released") {
+				if (disposed) return snapshot;
 				stopGuards();
 				clearPush();
 				portalHost?.remove?.();
 				portalHost = null;
 				styleElement?.remove?.();
 				styleElement = null;
+				lastRequest = null;
+				return publish({
+					requestedMode: "hidden",
+					effectiveMode: "hidden",
+					status: "idle",
+					reasonCode,
+					panelLeft: null
+				});
+			}
+			function dispose() {
+				if (disposed) return;
+				releaseStandalone("adapter-disposed");
 				listeners.clear();
 				disposed = true;
 			}
@@ -418,26 +430,10 @@ window.__ModuleLoader__.load({
 				fault,
 				mountPortal,
 				unmountPortal,
+				releaseStandalone,
 				dispose
 			});
 		}
-		//#endregion
-		//#region src/client/OasisPanelBoundary.js
-		var OasisPanelBoundary = class extends react.Component {
-			constructor(props) {
-				super(props);
-				this.state = { failed: false };
-			}
-			static getDerivedStateFromError() {
-				return { failed: true };
-			}
-			componentDidCatch(error) {
-				this.props.layoutAdapter.fault(`panel-render-error:${error instanceof Error ? error.message : String(error)}`);
-			}
-			render() {
-				return this.state.failed ? null : this.props.children;
-			}
-		};
 		//#endregion
 		//#region src/client/codex-icons.js
 		const CODEX_PANEL_ICONS = Object.freeze({
@@ -539,10 +535,11 @@ window.__ModuleLoader__.load({
 				[...tabList?.querySelectorAll("[role=\"tab\"]") ?? []].find((tab) => tab.id === targetId)?.focus();
 			});
 		}
-		function PanelChrome({ state, titleRef, onActivatePage, onClosePage, onCreatePage, onHide, onToggleExpanded }) {
+		function PanelChrome({ hostMode = "standalone", state, titleRef, onActivatePage, onClosePage, onCreatePage, onHide, onToggleExpanded }) {
 			const effectiveExpanded = state.effectiveMode === "expanded";
 			const autoExpanded = state.panelMode === "normal" && effectiveExpanded;
-			const canPersist = ["ready", "saving"].includes(state.syncStatus);
+			const operationInFlight = Object.values(state.pageOperations ?? {}).some((operation) => operation.activeOperation !== null);
+			const canPersist = ["ready", "saving"].includes(state.syncStatus) && !operationInFlight;
 			function moveTab(event, pageId) {
 				if (!canPersist) return;
 				if (![
@@ -589,18 +586,20 @@ window.__ModuleLoader__.load({
 					color: "var(--dsw-alias-text-secondary, #6b7280)",
 					fontSize: 11
 				}
-			}, `与当前DSH项目关联 · ${syncStatusLabel(state.syncStatus)}`)), (0, react.createElement)(IconButton, {
+			}, `与当前DSH项目关联 · ${syncStatusLabel(state.syncStatus)}`)), ...hostMode === "embedded" ? [] : [(0, react.createElement)(IconButton, {
+				key: "expand",
 				label: autoExpanded ? "窗口过窄，右栏已自动展开" : effectiveExpanded ? "恢复右栏宽度" : "展开右栏",
 				icon: effectiveExpanded ? "restore" : "expand",
 				testId: effectiveExpanded ? "oasis-panel-restore" : "oasis-panel-expand",
 				onClick: onToggleExpanded,
 				disabled: autoExpanded || !canPersist
 			}), (0, react.createElement)(IconButton, {
+				key: "hide",
 				label: "隐藏右栏",
 				icon: "showHide",
 				testId: "oasis-panel-hide",
 				onClick: onHide
-			})), (0, react.createElement)("div", {
+			})]), (0, react.createElement)("div", {
 				role: "tablist",
 				"aria-label": "绿洲任务页",
 				style: {
@@ -673,102 +672,665 @@ window.__ModuleLoader__.load({
 			}, "+")));
 		}
 		//#endregion
-		//#region src/client/PanelPages.js
-		const cardStyle = {
-			width: "100%",
-			textAlign: "left",
-			border: "1px solid var(--dsw-alias-border-l2, #dedee1)",
-			borderRadius: 12,
-			padding: 16,
+		//#region src/client/MaterialReferences.js
+		function shortHash$1(hash) {
+			return typeof hash === "string" && hash.length >= 8 ? `${hash.slice(0, 8)}…` : "—";
+		}
+		function formatBytes(bytes) {
+			if (!Number.isFinite(bytes)) return "—";
+			if (bytes < 1024) return `${bytes} B`;
+			if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
+			return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+		}
+		const actionStyle = {
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 7,
+			padding: "6px 9px",
 			background: "var(--dsw-alias-bg-base, #fff)",
-			color: "var(--dsw-alias-text-primary, #202123)",
-			cursor: "pointer"
+			color: "var(--dsw-alias-text-primary, #1f2623)"
 		};
-		const skeletonStyle = {
-			border: "1px solid var(--dsw-alias-border-l2, #dedee1)",
+		function MaterialReferences({ page, workflow, operation, disabled, onMaterialDraft, onAdd, onRefresh, onRemove, confirmRemove = (message) => globalThis.confirm?.(message) === true }) {
+			const addDisabled = disabled || !operation.materialConfirmed || operation.materialPath.trim().length === 0;
+			return (0, react.createElement)("section", { "aria-labelledby": `oasis-material-title-${page.pageId}` }, (0, react.createElement)("h4", {
+				id: `oasis-material-title-${page.pageId}`,
+				style: {
+					margin: "0 0 5px",
+					fontSize: 15
+				}
+			}, "项目材料"), (0, react.createElement)("p", { style: {
+				margin: "0 0 12px",
+				color: "var(--dsw-alias-text-secondary, #66706b)",
+				fontSize: 12
+			} }, `仅登记元数据与哈希；文件在本机流式读取以计算哈希，正文不提取、不持久化且不用于生成。支持 ${workflow.materialPolicy.acceptedExtensions.join("、")}。`), (0, react.createElement)("div", { style: {
+				display: "grid",
+				gap: 8,
+				marginBottom: 12
+			} }, (0, react.createElement)("label", {
+				htmlFor: `oasis-material-path-${page.pageId}`,
+				style: {
+					fontSize: 13,
+					fontWeight: 650
+				}
+			}, "Workspace 内相对路径"), (0, react.createElement)("input", {
+				id: `oasis-material-path-${page.pageId}`,
+				"aria-label": "Workspace 内材料相对路径",
+				value: operation.materialPath,
+				disabled,
+				onChange: (event) => onMaterialDraft(event.currentTarget.value, false),
+				style: {
+					...actionStyle,
+					width: "100%",
+					boxSizing: "border-box",
+					padding: "9px 10px"
+				}
+			}), (0, react.createElement)("label", { style: {
+				display: "flex",
+				gap: 8,
+				alignItems: "flex-start",
+				fontSize: 12
+			} }, (0, react.createElement)("input", {
+				type: "checkbox",
+				checked: operation.materialConfirmed,
+				disabled,
+				onChange: (event) => onMaterialDraft(operation.materialPath, event.currentTarget.checked)
+			}), (0, react.createElement)("span", null, "我确认该相对路径属于当前项目，并同意登记文件元数据与 SHA-256。")), (0, react.createElement)("button", {
+				type: "button",
+				disabled: addDisabled,
+				onClick: onAdd,
+				style: actionStyle,
+				title: addDisabled ? "填写路径并勾选确认后才可登记" : void 0
+			}, "登记材料")), (0, react.createElement)("div", { style: {
+				display: "grid",
+				gap: 8
+			} }, ...page.inputRefs.map((reference) => (0, react.createElement)("article", {
+				key: reference.referenceId,
+				style: {
+					border: "1px solid var(--dsw-alias-border-l2, #dfe2e0)",
+					borderRadius: 9,
+					padding: 11,
+					display: "grid",
+					gap: 7
+				}
+			}, (0, react.createElement)("strong", { style: {
+				fontSize: 13,
+				overflowWrap: "anywhere"
+			} }, reference.displayName ?? reference.relativePath ?? "旧版材料"), reference.kind === "project-file" ? (0, react.createElement)("div", { style: {
+				fontSize: 12,
+				color: "var(--dsw-alias-text-secondary, #66706b)"
+			} }, `${reference.relativePath} · ${formatBytes(reference.sizeBytes)} · SHA-256 ${shortHash$1(reference.sha256)}`) : (0, react.createElement)("div", { style: {
+				fontSize: 12,
+				color: "#9b3d2f"
+			} }, "旧版材料需移除后重新确认。"), (0, react.createElement)("div", { style: {
+				display: "flex",
+				gap: 7
+			} }, (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabled || reference.kind !== "project-file",
+				"data-testid": `oasis-material-refresh-${reference.referenceId}`,
+				onClick: () => onRefresh(reference.referenceId),
+				style: actionStyle
+			}, "刷新证据"), (0, react.createElement)("button", {
+				type: "button",
+				disabled,
+				"data-testid": `oasis-material-remove-${reference.referenceId}`,
+				onClick: () => onRemove(reference.referenceId, confirmRemove(`确认从任务中移除材料“${reference.displayName ?? reference.referenceId}”？不会删除项目文件。`)),
+				style: actionStyle
+			}, "移除登记"))))), operation.error ? (0, react.createElement)("div", {
+				role: "alert",
+				tabIndex: -1,
+				style: {
+					marginTop: 10,
+					color: "#9b3d2f",
+					fontSize: 12
+				}
+			}, `操作失败（${operation.errorCode ?? "unknown"}）。本地项目文件未被删除或覆盖。`) : null, (0, react.createElement)("div", {
+				role: "status",
+				"aria-live": "polite",
+				style: {
+					marginTop: 8,
+					fontSize: 12,
+					color: "#2f6653"
+				}
+			}, operation.feedback === "material-added" ? "材料证据已登记。" : "", operation.materialsChanged ? "材料已发生变化，请刷新证据后再生成。" : ""));
+		}
+		//#endregion
+		//#region src/client/RunPreview.js
+		function materialIdentity(reference) {
+			return reference?.kind === "project-file" ? [
+				reference.referenceId,
+				reference.relativePath,
+				reference.sha256,
+				reference.sizeBytes
+			] : [reference?.referenceId, reference?.kind];
+		}
+		function hasDraftDiverged(page, run) {
+			if (!run) return false;
+			return JSON.stringify(page.formValues) !== JSON.stringify(run.inputSnapshot.formValues) || JSON.stringify(page.inputRefs.map(materialIdentity)) !== JSON.stringify(run.inputSnapshot.inputRefs.map(materialIdentity));
+		}
+		function generationDisabledReason({ syncStatus, validation, operation }) {
+			if (syncStatus !== "ready") return syncStatus === "saving" ? "正在保存草稿" : "工作区尚未就绪";
+			if (!validation.valid) return "请先修正表单错误";
+			if (operation.materialsChanged) return "材料已变化，请先刷新";
+			if (operation.activeOperation !== null) return "任务正在处理中";
+			return null;
+		}
+		function statusText(status) {
+			if (status === "blocked") return "阻断";
+			return "需人工复核";
+		}
+		const buttonStyle$1 = {
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 7,
+			padding: "7px 10px",
+			background: "var(--dsw-alias-bg-base, #fff)",
+			color: "inherit"
+		};
+		function RunPreview({ page, operation, validation, syncStatus, onGenerate, onActivateRun, onReviewNote, onReview }) {
+			const disabledReason = generationDisabledReason({
+				syncStatus,
+				validation,
+				operation
+			});
+			const run = page.activeRunId === null ? null : page.runs[page.activeRunId];
+			const blocked = run?.result.contentStatus === "blocked";
+			return (0, react.createElement)("section", { "aria-labelledby": `oasis-run-title-${page.pageId}` }, (0, react.createElement)("div", { style: {
+				display: "flex",
+				alignItems: "flex-start",
+				justifyContent: "space-between",
+				gap: 12,
+				marginBottom: 12
+			} }, (0, react.createElement)("div", null, (0, react.createElement)("h4", {
+				id: `oasis-run-title-${page.pageId}`,
+				style: {
+					margin: 0,
+					fontSize: 15
+				}
+			}, "生成与结果"), (0, react.createElement)("p", { style: {
+				margin: "5px 0 0",
+				fontSize: 12,
+				color: "var(--dsw-alias-text-secondary, #66706b)"
+			} }, "本地确定性演练；结果必须经过人工审核。")), (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabledReason !== null,
+				onClick: onGenerate,
+				title: disabledReason ?? "基于已保存表单和已确认材料生成",
+				"aria-describedby": disabledReason ? `oasis-generate-reason-${page.pageId}` : void 0,
+				style: {
+					...buttonStyle$1,
+					background: "#245d47",
+					color: "#fff",
+					borderColor: "#245d47",
+					whiteSpace: "nowrap"
+				}
+			}, operation.activeOperation === "run-create" ? "生成中…" : "生成新运行")), (0, react.createElement)("div", {
+				id: `oasis-generate-reason-${page.pageId}`,
+				role: "status",
+				"aria-live": "polite",
+				style: {
+					minHeight: 18,
+					fontSize: 12,
+					color: "#8a4b2f"
+				}
+			}, disabledReason ?? (operation.feedback === "run-completed" ? "新运行已完成。" : ""), !validation.valid && validation.firstInvalidFieldId ? (0, react.createElement)("button", {
+				type: "button",
+				onClick: () => globalThis.document?.getElementById(`oasis-field-${page.pageId}-${validation.firstInvalidFieldId}`)?.focus(),
+				style: {
+					...buttonStyle$1,
+					marginLeft: 8,
+					padding: "3px 7px",
+					fontSize: 11
+				}
+			}, "定位首个错误") : null), operation.error ? (0, react.createElement)("div", {
+				role: "alert",
+				tabIndex: -1,
+				style: {
+					marginBottom: 10,
+					color: "#8b2f24",
+					fontSize: 12
+				}
+			}, `操作失败（${operation.errorCode ?? "unknown"}）。草稿与既有运行仍保留。`) : null, page.runOrder.length > 0 ? (0, react.createElement)("nav", {
+				"aria-label": "运行历史",
+				style: {
+					display: "flex",
+					gap: 6,
+					overflowX: "auto",
+					padding: "4px 0 12px"
+				}
+			}, ...[...page.runOrder].reverse().map((runId, index) => (0, react.createElement)("button", {
+				key: runId,
+				type: "button",
+				onClick: () => onActivateRun(runId),
+				"aria-current": runId === page.activeRunId ? "true" : void 0,
+				style: {
+					...buttonStyle$1,
+					background: runId === page.activeRunId ? "#e7f0eb" : buttonStyle$1.background,
+					whiteSpace: "nowrap"
+				}
+			}, `运行 ${page.runOrder.length - index}`))) : null, run ? (0, react.createElement)("article", { style: {
+				display: "grid",
+				gap: 12
+			} }, (0, react.createElement)("div", { style: {
+				display: "flex",
+				gap: 8,
+				alignItems: "center",
+				flexWrap: "wrap",
+				fontSize: 12
+			} }, (0, react.createElement)("strong", null, statusText(run.result.contentStatus)), (0, react.createElement)("span", null, run.completedAt), hasDraftDiverged(page, run) ? (0, react.createElement)("span", { style: { color: "#8a4b2f" } }, "草稿已偏离此运行；旧运行快照保持不变。") : (0, react.createElement)("span", { style: { color: "#2f6653" } }, "当前草稿与此运行输入一致。")), ...run.result.sections.map((section) => (0, react.createElement)("section", {
+				key: section.sectionId,
+				style: {
+					borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
+					paddingTop: 10
+				}
+			}, (0, react.createElement)("h5", { style: {
+				margin: "0 0 6px",
+				fontSize: 13
+			} }, section.title), (0, react.createElement)("pre", { style: {
+				margin: 0,
+				whiteSpace: "pre-wrap",
+				overflowWrap: "anywhere",
+				font: "inherit",
+				fontSize: 13,
+				lineHeight: 1.65
+			} }, section.body))), run.result.risks.length > 0 ? (0, react.createElement)("div", null, (0, react.createElement)("strong", { style: { fontSize: 13 } }, "风险"), (0, react.createElement)("ul", null, ...run.result.risks.map((risk, index) => (0, react.createElement)("li", { key: index }, risk)))) : null, (0, react.createElement)("p", { style: {
+				margin: 0,
+				fontSize: 12,
+				color: "var(--dsw-alias-text-secondary, #66706b)"
+			} }, run.result.disclaimer), blocked ? (0, react.createElement)("div", {
+				role: "alert",
+				style: {
+					border: "1px solid #d7a69d",
+					borderRadius: 8,
+					padding: 10,
+					color: "#8b2f24"
+				}
+			}, "该运行包含阻断结果；阻断结果不能批准或回写。请补充信息后生成新运行。") : (0, react.createElement)("div", { style: {
+				borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
+				paddingTop: 12,
+				display: "grid",
+				gap: 8
+			} }, (0, react.createElement)("label", {
+				htmlFor: `oasis-review-note-${page.pageId}`,
+				style: {
+					fontWeight: 650,
+					fontSize: 13
+				}
+			}, "审核意见"), (0, react.createElement)("textarea", {
+				id: `oasis-review-note-${page.pageId}`,
+				value: operation.reviewNote,
+				rows: 3,
+				disabled: operation.activeOperation !== null,
+				onChange: (event) => onReviewNote(event.currentTarget.value),
+				style: {
+					width: "100%",
+					boxSizing: "border-box",
+					border: "1px solid #d7d9d8",
+					borderRadius: 8,
+					padding: 9
+				}
+			}), (0, react.createElement)("div", { style: {
+				display: "flex",
+				gap: 8,
+				flexWrap: "wrap"
+			} }, (0, react.createElement)("button", {
+				type: "button",
+				disabled: operation.reviewNote.trim().length === 0 || operation.activeOperation !== null,
+				onClick: () => onReview("changes-requested", operation.reviewNote),
+				style: buttonStyle$1
+			}, "要求修改"), (0, react.createElement)("button", {
+				type: "button",
+				"data-testid": "oasis-review-approve",
+				disabled: operation.activeOperation !== null,
+				onClick: () => onReview("approved", operation.reviewNote),
+				style: buttonStyle$1
+			}, "批准此运行")), run.review.status === "approved" ? (0, react.createElement)("p", { style: {
+				margin: 0,
+				color: "#2f6653",
+				fontSize: 12
+			} }, "已记录人工批准；此状态不代表专业、技术或法律结论。") : run.review.status === "changes-requested" ? (0, react.createElement)("p", { style: {
+				margin: 0,
+				color: "#8a4b2f",
+				fontSize: 12
+			} }, `已要求修改：${run.review.note}`) : null)) : (0, react.createElement)("div", { style: {
+				border: "1px dashed #c8ceca",
+				borderRadius: 10,
+				padding: 18,
+				color: "var(--dsw-alias-text-secondary, #66706b)",
+				fontSize: 13
+			} }, "保存有效表单并确认材料后，可生成第一个本地运行。"));
+		}
+		//#endregion
+		//#region src/client/WorkflowForm.js
+		const fieldShellStyle = {
+			display: "grid",
+			gap: 6,
+			padding: "0 0 16px"
+		};
+		const controlStyle = {
+			width: "100%",
+			boxSizing: "border-box",
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 8,
+			padding: "9px 10px",
+			background: "var(--dsw-alias-bg-base, #fff)",
+			color: "var(--dsw-alias-text-primary, #1f2623)",
+			font: "inherit",
+			lineHeight: 1.5
+		};
+		function fieldError(field, value) {
+			if (field.control === "short-text" || field.control === "long-text") {
+				if (typeof value !== "string") return "字段值格式不正确。";
+				if (field.required && value.trim().length === 0) return "此项为必填项。";
+				if (value.length > field.maxChars) return `最多输入 ${field.maxChars} 个字符。`;
+				return null;
+			}
+			if (field.control === "string-list") {
+				if (!Array.isArray(value)) return "列表格式不正确。";
+				if (field.required && value.length === 0) return "请至少填写一项。";
+				if (value.length > field.maxItems) return `最多填写 ${field.maxItems} 项。`;
+				if (value.some((item) => typeof item !== "string" || item.trim().length === 0)) return "列表项不能为空。";
+				if (value.some((item) => item.length > field.itemMaxChars)) return `每项最多 ${field.itemMaxChars} 个字符。`;
+				return null;
+			}
+			if (field.control === "select") {
+				if (field.required && (typeof value !== "string" || value.length === 0)) return "请选择一个选项。";
+				if (value !== "" && !field.options.some((option) => option.value === value)) return "请选择目录中提供的选项。";
+				return null;
+			}
+			return "不支持的字段控件。";
+		}
+		function validateWorkflowFormValues(workflow, values) {
+			const errors = {};
+			for (const field of workflow?.form?.fields ?? []) {
+				const error = fieldError(field, values?.[field.fieldId]);
+				if (error !== null) errors[field.fieldId] = error;
+			}
+			const firstInvalidFieldId = Object.keys(errors)[0] ?? null;
+			return Object.freeze({
+				valid: firstInvalidFieldId === null,
+				errors: Object.freeze(errors),
+				firstInvalidFieldId
+			});
+		}
+		function controlFor({ pageId, field, value, error, firstInvalidFieldId, disabled, onChange }) {
+			const id = `oasis-field-${pageId}-${field.fieldId}`;
+			const describedBy = `${id}-description${error ? ` ${id}-error` : ""}`;
+			const shared = {
+				id,
+				name: field.fieldId,
+				disabled,
+				"data-control": field.control,
+				"aria-invalid": Boolean(error),
+				"aria-describedby": describedBy,
+				"data-first-error": firstInvalidFieldId === field.fieldId || void 0,
+				style: {
+					...controlStyle,
+					borderColor: error ? "var(--dsw-alias-color-danger, #b42318)" : "var(--dsw-alias-border-l2, #d7d9d8)"
+				}
+			};
+			if (field.control === "short-text") return (0, react.createElement)("input", {
+				...shared,
+				type: "text",
+				value: value ?? "",
+				maxLength: field.maxChars,
+				onChange: (event) => onChange(field.fieldId, event.currentTarget.value)
+			});
+			if (field.control === "long-text") return (0, react.createElement)("textarea", {
+				...shared,
+				value: value ?? "",
+				maxLength: field.maxChars,
+				rows: 5,
+				onChange: (event) => onChange(field.fieldId, event.currentTarget.value)
+			});
+			if (field.control === "string-list") return (0, react.createElement)("textarea", {
+				...shared,
+				value: Array.isArray(value) ? value.join("\n") : "",
+				rows: 4,
+				onChange: (event) => onChange(field.fieldId, event.currentTarget.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean))
+			});
+			return (0, react.createElement)("select", {
+				...shared,
+				value: value ?? "",
+				onChange: (event) => onChange(field.fieldId, event.currentTarget.value)
+			}, (0, react.createElement)("option", { value: "" }, "请选择"), ...field.options.map((option) => (0, react.createElement)("option", {
+				key: option.value,
+				value: option.value
+			}, option.label)));
+		}
+		function WorkflowForm({ pageId, workflow, values, validation, disabled, onChange }) {
+			return (0, react.createElement)("section", { "aria-labelledby": `oasis-form-title-${pageId}` }, (0, react.createElement)("div", { style: { marginBottom: 16 } }, (0, react.createElement)("h4", {
+				id: `oasis-form-title-${pageId}`,
+				style: {
+					margin: 0,
+					fontSize: 15
+				}
+			}, "工作流输入"), (0, react.createElement)("p", { style: {
+				margin: "5px 0 0",
+				color: "var(--dsw-alias-text-secondary, #66706b)",
+				fontSize: 12
+			} }, `字段来自 Host 工作流目录 · ${workflow.workflowId}@${workflow.workflowVersion}`)), ...workflow.form.fields.map((field) => {
+				const id = `oasis-field-${pageId}-${field.fieldId}`;
+				const error = validation.errors[field.fieldId];
+				return (0, react.createElement)("div", {
+					key: field.fieldId,
+					style: fieldShellStyle,
+					"data-field-id": field.fieldId
+				}, (0, react.createElement)("label", {
+					htmlFor: id,
+					style: {
+						fontWeight: 650,
+						fontSize: 13
+					}
+				}, field.label, field.required ? (0, react.createElement)("span", {
+					"aria-hidden": true,
+					style: {
+						color: "#9b3d2f",
+						marginLeft: 4
+					}
+				}, "＊") : null), (0, react.createElement)("span", {
+					id: `${id}-description`,
+					style: {
+						color: "var(--dsw-alias-text-secondary, #66706b)",
+						fontSize: 12
+					}
+				}, field.description), controlFor({
+					pageId,
+					field,
+					value: values[field.fieldId],
+					error,
+					firstInvalidFieldId: validation.firstInvalidFieldId,
+					disabled,
+					onChange
+				}), error ? (0, react.createElement)("span", {
+					id: `${id}-error`,
+					style: {
+						color: "var(--dsw-alias-color-danger, #b42318)",
+						fontSize: 12
+					}
+				}, error) : null);
+			}));
+		}
+		//#endregion
+		//#region src/client/WritebackPanel.js
+		function shortHash(hash) {
+			return typeof hash === "string" ? `${hash.slice(0, 8)}…` : "—";
+		}
+		const buttonStyle = {
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 7,
+			padding: "7px 10px",
+			background: "var(--dsw-alias-bg-base, #fff)",
+			color: "inherit"
+		};
+		function WritebackPanel({ run, operation, disabled, onDraft, onPrepare, onConfirm, onCommit }) {
+			if (!run || run.result.contentStatus === "blocked" || run.review.status !== "approved") return null;
+			const prepared = operation.writebackPlan;
+			const commitDisabled = disabled || !prepared || !operation.writebackConfirmed;
+			return (0, react.createElement)("section", {
+				"aria-label": "项目回写",
+				style: {
+					borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
+					paddingTop: 14,
+					display: "grid",
+					gap: 10
+				}
+			}, (0, react.createElement)("h4", { style: {
+				margin: 0,
+				fontSize: 15
+			} }, "项目回写"), (0, react.createElement)("p", { style: {
+				margin: 0,
+				fontSize: 12,
+				color: "var(--dsw-alias-text-secondary, #66706b)"
+			} }, "仅可创建全新目录；不会覆盖既有路径。人工批准与回写均不构成专业或法律结论。"), (0, react.createElement)("label", {
+				htmlFor: "oasis-writeback-directory",
+				style: {
+					fontSize: 13,
+					fontWeight: 650
+				}
+			}, "Workspace 内新目录"), (0, react.createElement)("input", {
+				id: "oasis-writeback-directory",
+				value: operation.writebackDirectory,
+				disabled,
+				onChange: (event) => onDraft(event.currentTarget.value, false),
+				style: {
+					width: "100%",
+					boxSizing: "border-box",
+					border: "1px solid #d7d9d8",
+					borderRadius: 8,
+					padding: 9
+				}
+			}), (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabled || operation.writebackDirectory.trim().length === 0,
+				onClick: onPrepare,
+				style: buttonStyle
+			}, operation.activeOperation === "writeback-prepare" ? "正在准备…" : "准备回写清单"), prepared ? (0, react.createElement)("div", { style: {
+				border: "1px solid #cbd7d0",
+				borderRadius: 9,
+				padding: 11,
+				display: "grid",
+				gap: 7
+			} }, (0, react.createElement)("strong", { style: { fontSize: 13 } }, "待确认目标"), (0, react.createElement)("code", { style: {
+				overflowWrap: "anywhere",
+				fontSize: 12
+			} }, prepared.manifest.absoluteTarget), ...prepared.manifest.files.map((file) => (0, react.createElement)("div", {
+				key: file.absolutePath,
+				style: { fontSize: 12 }
+			}, (0, react.createElement)("code", { style: { overflowWrap: "anywhere" } }, file.absolutePath), (0, react.createElement)("span", null, ` · SHA-256 ${shortHash(file.sha256)}`))), (0, react.createElement)("label", { style: {
+				display: "flex",
+				gap: 8,
+				alignItems: "flex-start",
+				fontSize: 12,
+				marginTop: 4
+			} }, (0, react.createElement)("input", {
+				type: "checkbox",
+				checked: operation.writebackConfirmed,
+				disabled,
+				onChange: (event) => onConfirm(event.currentTarget.checked)
+			}), (0, react.createElement)("span", null, "我已复核绝对目标路径和两份文件哈希，同意创建该全新目录。")), (0, react.createElement)("button", {
+				type: "button",
+				"data-testid": "oasis-writeback-commit",
+				disabled: commitDisabled,
+				onClick: onCommit,
+				style: {
+					...buttonStyle,
+					background: "#245d47",
+					color: "#fff",
+					borderColor: "#245d47"
+				}
+			}, operation.activeOperation === "writeback-commit" ? "正在提交…" : "确认创建新目录")) : null, (0, react.createElement)("div", {
+				role: operation.feedback === "index-warning" ? "alert" : "status",
+				"aria-live": "polite",
+				style: { fontSize: 12 }
+			}, operation.feedback === "writeback-success" ? "回写成功：新目录和索引均已提交。" : "", operation.feedback === "conflict" ? "版本或目标路径冲突：未执行覆盖，请重新准备。" : "", operation.feedback === "index-warning" ? "文件已创建，但任务索引更新失败；请按恢复清单人工核对。" : ""), operation.indexWarningManifest ? (0, react.createElement)("div", { style: {
+				border: "1px solid #d7a69d",
+				borderRadius: 8,
+				padding: 9,
+				fontSize: 12
+			} }, (0, react.createElement)("strong", null, "恢复清单"), (0, react.createElement)("div", null, operation.indexWarningManifest.relativeDirectory), ...operation.indexWarningManifest.files.map((file) => (0, react.createElement)("div", { key: file.relativePath }, (0, react.createElement)("code", null, file.relativePath), ` · ${shortHash(file.sha256)}`))) : null);
+		}
+		//#endregion
+		//#region src/client/PanelPages.js
+		const surfaceStyle = {
+			border: "1px solid var(--dsw-alias-border-l2, #dfe2e0)",
 			borderRadius: 12,
 			padding: 16,
 			background: "var(--dsw-alias-bg-base, #fff)"
 		};
-		function WorkflowChooser({ onSelect }) {
-			return (0, react.createElement)("div", { style: { padding: 20 } }, (0, react.createElement)("h3", { style: {
-				margin: "0 0 6px",
-				fontSize: 18
-			} }, "选择工作流"), (0, react.createElement)("p", { style: {
-				margin: "0 0 18px",
-				color: "var(--dsw-alias-text-secondary, #6b7280)",
-				fontSize: 13
-			} }, "选择后，本页将在原位转为材料输入与结果预览骨架。"), (0, react.createElement)("div", { style: {
-				display: "grid",
-				gap: 12
-			} }, ...[{
-				id: "technical-rd",
-				title: "技术研发辅助",
-				description: "整理研发目标、技术材料与阶段性成果。"
-			}, {
-				id: "cn-invention-patent",
-				title: "中国发明专利撰写",
-				description: "组织技术交底材料与发明专利文稿骨架。"
-			}].map((workflow) => (0, react.createElement)("button", {
-				key: workflow.id,
-				type: "button",
-				"data-testid": `oasis-workflow-${workflow.id}`,
-				onClick: () => onSelect(workflow.id),
-				style: cardStyle
-			}, (0, react.createElement)("strong", { style: {
-				display: "block",
-				marginBottom: 5,
-				fontSize: 15
-			} }, workflow.title), (0, react.createElement)("span", { style: {
-				display: "block",
-				color: "var(--dsw-alias-text-secondary, #6b7280)",
-				fontSize: 13
-			} }, workflow.description)))));
-		}
-		function WorkspaceSkeleton({ page }) {
-			return (0, react.createElement)("div", { style: {
-				padding: 20,
-				display: "grid",
-				gap: 14
-			} }, (0, react.createElement)("div", null, (0, react.createElement)("h3", { style: {
+		const cardStyle = {
+			width: "100%",
+			textAlign: "left",
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 12,
+			padding: 16,
+			background: "var(--dsw-alias-bg-base, #fff)",
+			color: "var(--dsw-alias-text-primary, #1f2623)",
+			cursor: "pointer"
+		};
+		function WorkflowChooser({ state, onSelect }) {
+			if (state.catalogStatus === "idle" || state.catalogStatus === "loading") return (0, react.createElement)("div", {
+				role: "status",
+				"aria-live": "polite",
+				style: { padding: 20 }
+			}, "正在读取 Host 工作流目录…");
+			if (state.catalogStatus === "error") return (0, react.createElement)("div", {
+				role: "alert",
+				tabIndex: -1,
+				style: {
+					padding: 20,
+					color: "#8b2f24"
+				}
+			}, "工作流目录读取失败。不会使用 Client 内置卡片替代 Host 定义。");
+			return (0, react.createElement)("div", { style: { padding: 20 } }, (0, react.createElement)("div", { style: { marginBottom: 18 } }, (0, react.createElement)("p", { style: {
 				margin: 0,
-				fontSize: 18
-			} }, page.title), (0, react.createElement)("p", { style: {
-				margin: "5px 0 0",
-				color: "var(--dsw-alias-text-secondary, #6b7280)",
-				fontSize: 13
-			} }, "第二周已接入项目状态持久化；专业生成服务尚未接入。")), (0, react.createElement)("section", {
-				style: skeletonStyle,
-				"aria-label": "输入材料"
-			}, (0, react.createElement)("h4", { style: {
-				margin: "0 0 8px",
-				fontSize: 14
-			} }, "输入材料"), (0, react.createElement)("div", { style: {
-				minHeight: 92,
-				borderRadius: 8,
-				background: "var(--dsw-alias-bg-subtle, #f5f5f6)",
-				padding: 12,
-				color: "#777"
-			} }, "材料输入区域骨架（第三周接入专业工作流）")), (0, react.createElement)("section", {
-				style: skeletonStyle,
-				"aria-label": "生成结果预览"
-			}, (0, react.createElement)("h4", { style: {
-				margin: "0 0 8px",
-				fontSize: 14
-			} }, "生成结果预览"), (0, react.createElement)("div", { style: {
-				minHeight: 180,
-				borderRadius: 8,
-				background: "var(--dsw-alias-bg-subtle, #f5f5f6)",
-				padding: 12,
-				color: "#777"
-			} }, "结果预览区域骨架（第三周接入专业工作流）")));
+				color: "#2f6653",
+				fontSize: 11,
+				letterSpacing: ".08em",
+				fontWeight: 700
+			} }, "OASIS PROFESSIONAL LOOP"), (0, react.createElement)("h3", { style: {
+				margin: "6px 0",
+				fontSize: 19
+			} }, "选择工作流"), (0, react.createElement)("p", { style: {
+				margin: 0,
+				color: "var(--dsw-alias-text-secondary, #66706b)",
+				fontSize: 13,
+				lineHeight: 1.6
+			} }, "选择后，本任务页将在原位转为 schema 驱动的材料、生成、审核与回写工作区。")), (0, react.createElement)("div", { style: {
+				display: "grid",
+				gap: 10
+			} }, ...state.workflows.map((workflow) => (0, react.createElement)("button", {
+				key: `${workflow.workflowId}@${workflow.workflowVersion}`,
+				type: "button",
+				"data-testid": `oasis-workflow-${workflow.workflowId}`,
+				onClick: () => onSelect(workflow.workflowId),
+				style: cardStyle
+			}, (0, react.createElement)("span", { style: {
+				display: "flex",
+				justifyContent: "space-between",
+				gap: 12,
+				alignItems: "baseline"
+			} }, (0, react.createElement)("strong", { style: { fontSize: 15 } }, workflow.title), (0, react.createElement)("code", { style: {
+				fontSize: 10,
+				color: "#607068"
+			} }, `v${workflow.workflowVersion}`)), (0, react.createElement)("span", { style: {
+				display: "block",
+				marginTop: 6,
+				color: "var(--dsw-alias-text-secondary, #66706b)",
+				fontSize: 12,
+				lineHeight: 1.55
+			} }, workflow.description)))), state.workflows.length === 0 ? (0, react.createElement)("div", {
+				role: "status",
+				style: {
+					color: "#66706b",
+					fontSize: 13
+				}
+			}, "Host 当前未提供可用工作流。") : null);
 		}
 		const syncNoticeStyle = {
 			margin: 20,
-			border: "1px solid var(--dsw-alias-border-l2, #dedee1)",
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
 			borderRadius: 12,
 			padding: 16,
-			color: "var(--dsw-alias-text-primary, #202123)",
+			color: "var(--dsw-alias-text-primary, #1f2623)",
 			background: "var(--dsw-alias-bg-base, #fff)"
 		};
 		function reloadButton(onReload, label) {
@@ -777,16 +1339,18 @@ window.__ModuleLoader__.load({
 				onClick: onReload,
 				style: {
 					marginTop: 12,
-					border: "1px solid var(--dsw-alias-border-l2, #dedee1)",
+					border: "1px solid #d7d9d8",
 					borderRadius: 8,
 					padding: "7px 10px",
-					background: "var(--dsw-alias-bg-base, #fff)",
-					color: "var(--dsw-alias-text-primary, #202123)",
-					cursor: "pointer"
+					background: "#fff",
+					color: "inherit"
 				}
 			}, label);
 		}
-		function PanelPages({ state, onSelectWorkflow, onRenamePage, onReload }) {
+		function activeRun(page) {
+			return page.activeRunId === null ? null : page.runs[page.activeRunId];
+		}
+		function PanelPages({ state, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {} }) {
 			if (state.syncStatus === "idle" || state.syncStatus === "loading") return (0, react.createElement)("div", {
 				role: "status",
 				"aria-live": "polite",
@@ -796,6 +1360,7 @@ window.__ModuleLoader__.load({
 				const currentRevision = state.conflictCurrent?.revision ?? "未知";
 				return (0, react.createElement)("div", {
 					role: "alert",
+					tabIndex: -1,
 					style: syncNoticeStyle
 				}, (0, react.createElement)("strong", null, "检测到版本冲突"), (0, react.createElement)("div", { style: {
 					marginTop: 6,
@@ -804,6 +1369,7 @@ window.__ModuleLoader__.load({
 			}
 			if (state.syncStatus === "error") return (0, react.createElement)("div", {
 				role: "alert",
+				tabIndex: -1,
 				style: syncNoticeStyle
 			}, (0, react.createElement)("strong", null, "保存或读取失败"), (0, react.createElement)("div", { style: {
 				marginTop: 6,
@@ -812,28 +1378,19 @@ window.__ModuleLoader__.load({
 			const page = state.pages.find((item) => item.pageId === state.activePageId);
 			if (!page) return (0, react.createElement)("div", { style: {
 				padding: 20,
-				color: "#777"
+				color: "#66706b"
 			} }, "请新建任务页。");
-			return (0, react.createElement)("main", {
-				id: `oasis-panel-${page.pageId}`,
-				role: "tabpanel",
-				"aria-labelledby": `oasis-tab-${page.pageId}`,
-				style: {
-					flex: 1,
-					minHeight: 0,
-					overflow: "auto"
-				}
-			}, (0, react.createElement)("div", { style: {
-				padding: "14px 20px 0",
+			const titleEditor = (0, react.createElement)("div", { style: {
+				padding: "14px 20px",
 				display: "grid",
 				gap: 5,
-				borderBottom: "1px solid var(--dsw-alias-border-l2, #ececef)",
-				paddingBottom: 14
+				borderBottom: "1px solid var(--dsw-alias-border-l2, #eceeec)"
 			} }, (0, react.createElement)("label", {
 				htmlFor: `oasis-task-title-${page.pageId}`,
 				style: {
-					fontSize: 12,
-					color: "var(--dsw-alias-text-secondary, #6b7280)"
+					fontSize: 11,
+					color: "#66706b",
+					fontWeight: 650
 				}
 			}, "任务名称"), (0, react.createElement)("input", {
 				key: `${page.pageId}:${page.title}`,
@@ -841,26 +1398,563 @@ window.__ModuleLoader__.load({
 				"aria-label": "任务名称",
 				defaultValue: page.title,
 				maxLength: 200,
+				disabled: !["ready", "saving"].includes(state.syncStatus),
 				onBlur: (event) => {
 					const title = event.currentTarget.value.trim();
-					if (title.length === 0) {
-						event.currentTarget.value = page.title;
-						return;
-					}
+					if (title.length === 0) return void (event.currentTarget.value = page.title);
 					if (title !== page.title) onRenamePage(page.pageId, title);
 				},
 				style: {
 					width: "100%",
 					boxSizing: "border-box",
-					border: "1px solid var(--dsw-alias-border-l2, #dedee1)",
-					borderRadius: 8,
-					padding: "8px 10px",
-					background: "var(--dsw-alias-bg-base, #fff)",
-					color: "var(--dsw-alias-text-primary, #202123)",
-					fontSize: 14
+					border: 0,
+					padding: 0,
+					background: "transparent",
+					color: "inherit",
+					fontSize: 16,
+					fontWeight: 680
 				}
-			})), page.view === "chooser" ? (0, react.createElement)(WorkflowChooser, { onSelect: (workflowId) => onSelectWorkflow(page.pageId, workflowId) }) : (0, react.createElement)(WorkspaceSkeleton, { page }));
+			}));
+			let content;
+			if (page.view === "chooser") content = (0, react.createElement)(WorkflowChooser, {
+				state,
+				onSelect: (workflowId) => onSelectWorkflow(page.pageId, workflowId)
+			});
+			else {
+				const workflow = state.workflows.find((item) => item.workflowId === page.workflowId && item.workflowVersion === page.workflowVersion);
+				if (!workflow) content = (0, react.createElement)("div", {
+					role: "alert",
+					tabIndex: -1,
+					style: syncNoticeStyle
+				}, "当前任务引用的工作流版本不在 Host 目录中。为避免错误解释，已停止编辑和生成。");
+				else {
+					const operation = state.pageOperations[page.pageId] ?? {
+						materialPath: "",
+						materialConfirmed: false,
+						reviewNote: "",
+						writebackDirectory: "",
+						writebackConfirmed: false,
+						writebackPlan: null,
+						requestKey: null,
+						activeOperation: null,
+						error: null,
+						errorCode: null,
+						feedback: null,
+						materialsChanged: false,
+						indexWarningManifest: null
+					};
+					const validation = validateWorkflowFormValues(workflow, page.formValues);
+					const operationDisabled = operation.activeOperation !== null;
+					const run = activeRun(page);
+					content = (0, react.createElement)("div", {
+						"data-workspace-layout": true,
+						"data-mode": effectiveMode,
+						style: {
+							display: "grid",
+							gridTemplateColumns: effectiveMode === "expanded" ? "minmax(300px, .9fr) minmax(360px, 1.1fr)" : "minmax(0, 1fr)",
+							gap: 14,
+							padding: 14,
+							alignItems: "start"
+						}
+					}, (0, react.createElement)("div", { style: {
+						display: "grid",
+						gap: 14,
+						minWidth: 0
+					} }, (0, react.createElement)("div", { style: surfaceStyle }, (0, react.createElement)(WorkflowForm, {
+						pageId: page.pageId,
+						workflow,
+						values: page.formValues,
+						validation,
+						disabled: operationDisabled,
+						onChange: (fieldId, value) => onUpdateForm(page.pageId, fieldId, value)
+					})), (0, react.createElement)("div", { style: surfaceStyle }, (0, react.createElement)(MaterialReferences, {
+						page,
+						workflow,
+						operation,
+						disabled: operationDisabled,
+						onMaterialDraft: (path, confirmed) => onMaterialDraft(page.pageId, path, confirmed),
+						onAdd: () => onAddMaterial(page.pageId),
+						onRefresh: (referenceId) => onRefreshMaterial(page.pageId, referenceId),
+						onRemove: (referenceId, confirmed) => onRemoveMaterial(page.pageId, referenceId, confirmed)
+					}))), (0, react.createElement)("div", { style: {
+						...surfaceStyle,
+						display: "grid",
+						gap: 16,
+						minWidth: 0
+					} }, (0, react.createElement)(RunPreview, {
+						page,
+						operation,
+						workflow,
+						validation,
+						syncStatus: state.syncStatus,
+						onGenerate: () => onGenerate(page.pageId),
+						onActivateRun: (runId) => onActivateRun(page.pageId, runId),
+						onReviewNote: (note) => onReviewNote(page.pageId, note),
+						onReview: (status, note) => onReview(page.pageId, page.activeRunId, status, note)
+					}), (0, react.createElement)(WritebackPanel, {
+						run,
+						operation,
+						disabled: operationDisabled,
+						onDraft: (directory, confirmed) => onWritebackDraft(page.pageId, directory, confirmed),
+						onPrepare: () => onPrepareWriteback(page.pageId, page.activeRunId),
+						onConfirm: (confirmed) => onWritebackConfirm(page.pageId, confirmed),
+						onCommit: () => onCommitWriteback(page.pageId)
+					})));
+				}
+			}
+			return (0, react.createElement)("main", {
+				key: page.pageId,
+				id: `oasis-panel-${page.pageId}`,
+				role: "tabpanel",
+				"aria-labelledby": `oasis-tab-${page.pageId}`,
+				style: {
+					flex: 1,
+					minHeight: 0,
+					overflow: "auto",
+					background: "var(--dsw-alias-bg-subtle, #f5f7f5)"
+				}
+			}, titleEditor, content);
 		}
+		//#endregion
+		//#region src/client/OasisWorkbenchSurface.js
+		const reducedMotionCss = `
+  [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
+  @media (prefers-reduced-motion: reduce) { [data-oasis-panel] { transition: none; } }
+  @media (max-width: 760px) {
+    [data-oasis-panel] [data-workspace-layout] { grid-template-columns: minmax(0, 1fr) !important; }
+  }
+`;
+		function createPanelActions({ store, workspaceId, focusTargets, confirmClose = (message) => globalThis.confirm?.(message) === true }) {
+			return Object.freeze({
+				async activatePage(pageId) {
+					await store.flushWorkspace(workspaceId);
+					store.activatePage(workspaceId, pageId);
+				},
+				async closePage(pageId) {
+					const page = store.getWorkspaceState(workspaceId).pages.find((item) => item.pageId === pageId);
+					if (!page) return false;
+					if (page.runOrder.length > 0 && !confirmClose(`任务“${page.title}”包含 ${page.runOrder.length} 个运行记录。确认关闭此任务页？`)) return false;
+					await store.flushWorkspace(workspaceId);
+					store.closePage(workspaceId, pageId);
+					return true;
+				},
+				async hidePanel() {
+					await store.flushWorkspace(workspaceId);
+					const current = store.getWorkspaceState(workspaceId);
+					if (["ready", "saving"].includes(current.syncStatus)) store.setPanelMode(workspaceId, "hidden");
+					else store.setLocalPanelMode(workspaceId, "hidden");
+					focusTargets.get(workspaceId)?.focus?.();
+				}
+			});
+		}
+		async function ensureEmbeddedWorkspaceHidden({ store, workspaceId, workspaceItems }) {
+			store.syncWorkspaces(workspaceItems);
+			await Promise.all([store.hydrateWorkspace(workspaceId), store.loadWorkflowCatalog(workspaceId)]);
+			const current = store.getWorkspaceState(workspaceId);
+			if (current.panelMode === "hidden") return true;
+			if (["ready", "saving"].includes(current.syncStatus)) {
+				store.setPanelMode(workspaceId, "hidden");
+				await store.flushWorkspace(workspaceId);
+				return true;
+			}
+			store.setLocalPanelMode(workspaceId, "hidden");
+			return false;
+		}
+		async function hydrateSurface({ store, workspaceId, workspaceItems, hostMode }) {
+			if (hostMode === "embedded") return ensureEmbeddedWorkspaceHidden({
+				store,
+				workspaceId,
+				workspaceItems
+			});
+			store.syncWorkspaces(workspaceItems);
+			await Promise.all([store.hydrateWorkspace(workspaceId), store.loadWorkflowCatalog(workspaceId)]);
+			return true;
+		}
+		function sectionStyle(hostMode, layout, effectiveMode) {
+			if (hostMode === "embedded") return {
+				position: "relative",
+				width: "100%",
+				height: "100%",
+				minHeight: 0,
+				minWidth: 0,
+				display: "flex",
+				flexDirection: "column",
+				overflow: "hidden",
+				background: "var(--dsw-alias-bg-base, #fff)",
+				color: "var(--dsw-alias-text-primary, #202123)"
+			};
+			return {
+				position: "fixed",
+				top: 0,
+				bottom: 0,
+				zIndex: 1,
+				display: "flex",
+				flexDirection: "column",
+				minWidth: 0,
+				boxSizing: "border-box",
+				overflow: "hidden",
+				borderLeft: "1px solid var(--dsw-alias-border-l2, #dedee1)",
+				boxShadow: "-10px 0 28px rgba(0, 0, 0, 0.08)",
+				background: "var(--dsw-alias-bg-base, #fff)",
+				color: "var(--dsw-alias-text-primary, #202123)",
+				...effectiveMode === "normal" ? {
+					right: 0,
+					width: 360
+				} : {
+					left: layout.panelLeft ?? 72,
+					right: 0
+				}
+			};
+		}
+		function OasisWorkbenchSurface({ store, focusTargets, layoutAdapter, workspaceId, workspaceItems, hostMode = "standalone", visible = true }) {
+			const state = (0, react.useSyncExternalStore)(store.subscribe, () => store.peekWorkspaceState(workspaceId), () => store.peekWorkspaceState(workspaceId));
+			const panelRef = (0, react.useRef)(null);
+			const titleRef = (0, react.useRef)(null);
+			const layout = (0, react.useSyncExternalStore)(layoutAdapter.subscribe, layoutAdapter.getSnapshot, layoutAdapter.getSnapshot);
+			(0, react.useEffect)(() => {
+				if (workspaceId !== null) hydrateSurface({
+					store,
+					workspaceId,
+					workspaceItems,
+					hostMode
+				}).catch(() => {
+					if (hostMode === "embedded") try {
+						store.setLocalPanelMode(workspaceId, "hidden");
+					} catch {}
+				});
+				else store.syncWorkspaces(workspaceItems);
+			}, [
+				hostMode,
+				store,
+				workspaceId,
+				workspaceItems
+			]);
+			(0, react.useEffect)(() => () => {
+				if (workspaceId !== null) store.flushWorkspace(workspaceId).catch(() => {});
+			}, [store, workspaceId]);
+			(0, react.useLayoutEffect)(() => {
+				if (hostMode === "embedded") {
+					layoutAdapter.releaseStandalone("embedded-surface-active");
+					return;
+				}
+				layoutAdapter.apply({
+					requestedMode: workspaceId === null ? "hidden" : state.panelMode,
+					panelWidth: 360,
+					panelElement: panelRef.current
+				});
+			}, [
+				hostMode,
+				layoutAdapter,
+				state.panelMode,
+				workspaceId
+			]);
+			(0, react.useEffect)(() => {
+				if (hostMode === "embedded" && visible || layout.effectiveMode !== "hidden") titleRef.current?.focus();
+			}, [
+				hostMode,
+				layout.effectiveMode,
+				visible,
+				workspaceId
+			]);
+			const layoutBlocked = hostMode === "standalone" && state.panelMode !== "hidden" && layout.requestedMode === state.panelMode && layout.effectiveMode === "hidden" && [
+				"incompatible",
+				"conflict",
+				"faulted"
+			].includes(layout.status);
+			if (workspaceId === null || hostMode === "standalone" && state.panelMode === "hidden" || layoutBlocked) return null;
+			const effectiveMode = hostMode === "embedded" ? "embedded" : layout.requestedMode === state.panelMode ? layout.effectiveMode : state.panelMode;
+			const actions = createPanelActions({
+				store,
+				workspaceId,
+				focusTargets
+			});
+			return (0, react.createElement)("section", {
+				ref: panelRef,
+				"data-oasis-panel": true,
+				"data-testid": hostMode === "embedded" ? "oasis-embedded-workbench" : "oasis-panel",
+				"data-host-mode": hostMode,
+				"data-mode": effectiveMode,
+				"data-requested-mode": state.panelMode,
+				"data-layout-status": hostMode === "embedded" ? "better-sidebar-owned" : layout.status,
+				"data-workspace-id": workspaceId,
+				"data-visible": visible ? "true" : "false",
+				"aria-label": "绿洲专业工作台",
+				style: sectionStyle(hostMode, layout, effectiveMode)
+			}, (0, react.createElement)("style", null, reducedMotionCss), (0, react.createElement)(PanelChrome, {
+				hostMode,
+				state: {
+					...state,
+					effectiveMode,
+					layoutStatus: hostMode === "embedded" ? "better-sidebar-owned" : layout.status
+				},
+				titleRef,
+				onActivatePage: (pageId) => {
+					actions.activatePage(pageId).catch(() => {});
+				},
+				onClosePage: (pageId) => {
+					actions.closePage(pageId).catch(() => {});
+				},
+				onCreatePage: () => store.createPage(workspaceId),
+				onHide: () => {
+					if (hostMode === "standalone") actions.hidePanel().catch(() => {});
+				},
+				onToggleExpanded: () => {
+					if (hostMode === "standalone") store.setPanelMode(workspaceId, state.panelMode === "expanded" ? "normal" : "expanded");
+				}
+			}), (0, react.createElement)(PanelPages, {
+				state,
+				effectiveMode,
+				onSelectWorkflow: (pageId, workflowId) => store.selectWorkflow(workspaceId, pageId, workflowId),
+				onRenamePage: (pageId, title) => store.renamePage(workspaceId, pageId, title),
+				onReload: () => store.reloadWorkspace(workspaceId),
+				onUpdateForm: (pageId, fieldId, value) => store.updateFormValue(workspaceId, pageId, fieldId, value),
+				onMaterialDraft: (pageId, path, confirmed) => store.setMaterialDraft(workspaceId, pageId, path, confirmed),
+				onAddMaterial: (pageId) => {
+					store.addMaterial(workspaceId, pageId).catch(() => {});
+				},
+				onRefreshMaterial: (pageId, referenceId) => {
+					store.refreshMaterial(workspaceId, pageId, referenceId).catch(() => {});
+				},
+				onRemoveMaterial: (pageId, referenceId, confirmed) => {
+					if (confirmed) store.removeMaterial(workspaceId, pageId, referenceId, true).catch(() => {});
+				},
+				onGenerate: (pageId) => {
+					store.createRun(workspaceId, pageId).catch(() => {});
+				},
+				onActivateRun: (pageId, runId) => store.activateRun(workspaceId, pageId, runId),
+				onReviewNote: (pageId, note) => store.setReviewNote(workspaceId, pageId, note),
+				onReview: (pageId, runId, status, note) => {
+					store.reviewRun(workspaceId, pageId, runId, status, note).catch(() => {});
+				},
+				onWritebackDraft: (pageId, directory, confirmed) => {
+					store.setWritebackDraft(workspaceId, pageId, directory, confirmed);
+				},
+				onPrepareWriteback: (pageId, runId) => {
+					store.prepareWriteback(workspaceId, pageId, runId).catch(() => {});
+				},
+				onWritebackConfirm: (pageId, confirmed) => store.setWritebackConfirmation(workspaceId, pageId, confirmed),
+				onCommitWriteback: (pageId) => {
+					store.commitWriteback(workspaceId, pageId).catch(() => {});
+				}
+			}));
+		}
+		//#endregion
+		//#region src/client/panel-host-coordinator.js
+		const OASIS_BETTER_SIDEBAR_TAB_ID = "oasis-professional-service:workbench";
+		const HOST_MODES = Object.freeze([
+			"standalone",
+			"integrating",
+			"better-sidebar",
+			"releasing",
+			"blocked"
+		]);
+		function pendingWorkspaceContext(generation = 0) {
+			return Object.freeze({
+				status: "pending",
+				reasonCode: "workspace-bridge-pending",
+				generation,
+				currentSessionId: null,
+				workspaceItems: Object.freeze([])
+			});
+		}
+		function hasBetterSidebarMarker(document = globalThis.document) {
+			try {
+				return (document?.querySelectorAll?.("[data-dsh-better-sidebar]")?.length ?? 0) > 0;
+			} catch {
+				return true;
+			}
+		}
+		function validService(service) {
+			return service !== null && typeof service === "object" && typeof service.registerTab === "function" && typeof service.openTab === "function";
+		}
+		function validDescriptor(descriptor) {
+			return descriptor !== null && typeof descriptor === "object" && descriptor.id === "oasis-professional-service:workbench" && descriptor.single === true && typeof descriptor.component === "function";
+		}
+		function createPanelHostCoordinator({ layoutAdapter, hasBetterSidebarMarker: markerPresent = () => hasBetterSidebarMarker() } = {}) {
+			if (!layoutAdapter || typeof layoutAdapter.releaseStandalone !== "function") throw new TypeError("layoutAdapter.releaseStandalone is required");
+			if (typeof markerPresent !== "function") throw new TypeError("hasBetterSidebarMarker must be a function");
+			const listeners = /* @__PURE__ */ new Set();
+			let disposed = false;
+			let service = null;
+			let registrationDisposer = null;
+			let currentDetach = null;
+			const initialMarker = markerPresent();
+			let snapshot = Object.freeze({
+				mode: initialMarker ? "blocked" : "standalone",
+				reasonCode: initialMarker ? "better-sidebar-marker-without-service" : null,
+				serviceVersion: null,
+				serviceFeatures: Object.freeze([]),
+				workspaceContext: pendingWorkspaceContext()
+			});
+			function publish(next) {
+				if (disposed) return snapshot;
+				const normalized = Object.freeze({
+					...snapshot,
+					...next
+				});
+				if (!HOST_MODES.includes(normalized.mode)) throw new Error(`invalid panel host mode: ${normalized.mode}`);
+				if (!Object.keys(normalized).some((key) => normalized[key] !== snapshot[key])) return snapshot;
+				snapshot = normalized;
+				for (const listener of [...listeners]) listener();
+				return snapshot;
+			}
+			function block(reasonCode) {
+				layoutAdapter.releaseStandalone(reasonCode);
+				return publish({
+					mode: "blocked",
+					reasonCode,
+					serviceVersion: service === null ? null : snapshot.serviceVersion,
+					serviceFeatures: service === null ? Object.freeze([]) : snapshot.serviceFeatures
+				});
+			}
+			function reconcileExternalState() {
+				if (disposed) return snapshot;
+				if (service !== null && registrationDisposer !== null) {
+					if (snapshot.mode === "blocked") return snapshot;
+					return publish({
+						mode: "better-sidebar",
+						reasonCode: null
+					});
+				}
+				const marker = markerPresent();
+				return publish({
+					mode: marker ? "blocked" : "standalone",
+					reasonCode: marker ? "better-sidebar-marker-without-service" : null,
+					serviceVersion: null,
+					serviceFeatures: Object.freeze([])
+				});
+			}
+			function attachBetterSidebar(nextService, descriptor) {
+				if (disposed) return () => {};
+				if (!validService(nextService)) {
+					block("better-sidebar-service-invalid");
+					return () => {};
+				}
+				if (!validDescriptor(descriptor)) {
+					block("better-sidebar-descriptor-invalid");
+					return () => {};
+				}
+				if (service === nextService && currentDetach !== null) return currentDetach;
+				if (service !== null || registrationDisposer !== null) {
+					block("better-sidebar-service-replaced-without-release");
+					return currentDetach ?? (() => {});
+				}
+				publish({
+					mode: "integrating",
+					reasonCode: null
+				});
+				layoutAdapter.releaseStandalone("better-sidebar-integrating");
+				let disposer;
+				try {
+					disposer = nextService.registerTab(descriptor);
+				} catch {
+					block("better-sidebar-registration-failed");
+					return () => {};
+				}
+				if (typeof disposer !== "function") {
+					block("better-sidebar-registration-disposer-invalid");
+					return () => {};
+				}
+				service = nextService;
+				registrationDisposer = disposer;
+				const features = Array.isArray(nextService.features) ? Object.freeze(nextService.features.filter((value) => typeof value === "string")) : Object.freeze([]);
+				publish({
+					mode: "better-sidebar",
+					reasonCode: null,
+					serviceVersion: typeof nextService.version === "string" ? nextService.version : "unknown",
+					serviceFeatures: features
+				});
+				let detached = false;
+				currentDetach = () => {
+					if (detached) return;
+					detached = true;
+					publish({
+						mode: "releasing",
+						reasonCode: null
+					});
+					layoutAdapter.releaseStandalone("better-sidebar-releasing");
+					const registeredDisposer = registrationDisposer;
+					service = null;
+					registrationDisposer = null;
+					currentDetach = null;
+					try {
+						registeredDisposer();
+					} catch {
+						publish({
+							mode: "blocked",
+							reasonCode: "better-sidebar-registration-dispose-failed",
+							serviceVersion: null,
+							serviceFeatures: Object.freeze([])
+						});
+						return;
+					}
+					reconcileExternalState();
+				};
+				return currentDetach;
+			}
+			function openBetterSidebar(sessionId) {
+				if (disposed || snapshot.mode !== "better-sidebar" || !validService(service)) return false;
+				if (typeof sessionId !== "string" || sessionId.length === 0) return false;
+				layoutAdapter.releaseStandalone("better-sidebar-open");
+				try {
+					const seed = {
+						type: OASIS_BETTER_SIDEBAR_TAB_ID,
+						path: ".oasis/professional-workbench"
+					};
+					if (snapshot.serviceFeatures.includes("targetedOpen")) service.openTab(seed, { sessionId });
+					else service.openTab(seed);
+					return true;
+				} catch {
+					currentDetach?.();
+					block("better-sidebar-open-failed");
+					return false;
+				}
+			}
+			return Object.freeze({
+				subscribe(listener) {
+					listeners.add(listener);
+					return () => listeners.delete(listener);
+				},
+				getSnapshot() {
+					return snapshot;
+				},
+				attachBetterSidebar,
+				openBetterSidebar,
+				reconcileExternalState,
+				updateWorkspaceContext(context) {
+					if (!context || typeof context !== "object") throw new TypeError("workspace context is required");
+					return publish({ workspaceContext: context });
+				},
+				clearWorkspaceContext() {
+					return publish({ workspaceContext: pendingWorkspaceContext(snapshot.workspaceContext.generation + 1) });
+				},
+				block,
+				dispose() {
+					if (disposed) return;
+					currentDetach?.();
+					layoutAdapter.releaseStandalone("panel-host-coordinator-disposed");
+					listeners.clear();
+					disposed = true;
+				}
+			});
+		}
+		//#endregion
+		//#region src/client/OasisPanelBoundary.js
+		var OasisPanelBoundary = class extends react.Component {
+			constructor(props) {
+				super(props);
+				this.state = { failed: false };
+			}
+			static getDerivedStateFromError() {
+				return { failed: true };
+			}
+			componentDidCatch(error) {
+				this.props.layoutAdapter.fault(`panel-render-error:${error instanceof Error ? error.message : String(error)}`);
+			}
+			render() {
+				return this.state.failed ? null : this.props.children;
+			}
+		};
 		//#endregion
 		//#region src/client/project-resolution.js
 		function resolveWorkspaceId(currentSessionId, workspaceItems) {
@@ -871,101 +1965,19 @@ window.__ModuleLoader__.load({
 		}
 		//#endregion
 		//#region src/client/OasisPanelHost.js
-		const reducedMotionCss = `
-  [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
-  @media (prefers-reduced-motion: reduce) { [data-oasis-panel] { transition: none; } }
-`;
 		function OasisPanelHost({ store, focusTargets, layoutAdapter, useSessions, useWorkspaces }) {
 			const currentSessionId = useSessions((snapshot) => snapshot.current);
 			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
 			const workspaceId = resolveWorkspaceId(currentSessionId, workspaceItems);
-			const state = (0, react.useSyncExternalStore)(store.subscribe, () => store.peekWorkspaceState(workspaceId), () => store.peekWorkspaceState(workspaceId));
-			const panelRef = (0, react.useRef)(null);
-			const titleRef = (0, react.useRef)(null);
-			const layout = (0, react.useSyncExternalStore)(layoutAdapter.subscribe, layoutAdapter.getSnapshot, layoutAdapter.getSnapshot);
-			(0, react.useEffect)(() => {
-				store.syncWorkspaces(workspaceItems);
-				if (workspaceId !== null) store.hydrateWorkspace(workspaceId);
-			}, [
+			return (0, react.createElement)(OasisWorkbenchSurface, {
 				store,
-				workspaceId,
-				workspaceItems
-			]);
-			(0, react.useLayoutEffect)(() => {
-				layoutAdapter.apply({
-					requestedMode: workspaceId === null ? "hidden" : state.panelMode,
-					panelWidth: 360,
-					panelElement: panelRef.current
-				});
-			}, [
+				focusTargets,
 				layoutAdapter,
-				state.panelMode,
-				workspaceId
-			]);
-			(0, react.useEffect)(() => {
-				if (layout.effectiveMode !== "hidden") titleRef.current?.focus();
-			}, [layout.effectiveMode, workspaceId]);
-			const layoutBlocked = state.panelMode !== "hidden" && layout.requestedMode === state.panelMode && layout.effectiveMode === "hidden" && [
-				"incompatible",
-				"conflict",
-				"faulted"
-			].includes(layout.status);
-			if (workspaceId === null || state.panelMode === "hidden" || layoutBlocked) return null;
-			const effectiveMode = layout.requestedMode === state.panelMode ? layout.effectiveMode : state.panelMode;
-			const resolvedGeometry = effectiveMode === "normal" ? {
-				right: 0,
-				width: 360
-			} : {
-				left: layout.panelLeft ?? 72,
-				right: 0
-			};
-			function hidePanel() {
-				if (["ready", "saving"].includes(state.syncStatus)) store.setPanelMode(workspaceId, "hidden");
-				else store.setLocalPanelMode(workspaceId, "hidden");
-				focusTargets.get(workspaceId)?.focus?.();
-			}
-			return (0, react.createElement)("section", {
-				ref: panelRef,
-				"data-oasis-panel": true,
-				"data-testid": "oasis-panel",
-				"data-mode": effectiveMode,
-				"data-requested-mode": state.panelMode,
-				"data-layout-status": layout.status,
-				"data-workspace-id": workspaceId,
-				"aria-label": "绿洲专业工作台",
-				style: {
-					position: "fixed",
-					top: 0,
-					bottom: 0,
-					zIndex: 1,
-					display: "flex",
-					flexDirection: "column",
-					minWidth: 0,
-					overflow: "hidden",
-					borderLeft: "1px solid var(--dsw-alias-border-l2, #dedee1)",
-					boxShadow: "-10px 0 28px rgba(0, 0, 0, 0.08)",
-					background: "var(--dsw-alias-bg-base, #fff)",
-					color: "var(--dsw-alias-text-primary, #202123)",
-					...resolvedGeometry
-				}
-			}, (0, react.createElement)("style", null, reducedMotionCss), (0, react.createElement)(PanelChrome, {
-				state: {
-					...state,
-					effectiveMode,
-					layoutStatus: layout.status
-				},
-				titleRef,
-				onActivatePage: (pageId) => store.activatePage(workspaceId, pageId),
-				onClosePage: (pageId) => store.closePage(workspaceId, pageId),
-				onCreatePage: () => store.createPage(workspaceId),
-				onHide: hidePanel,
-				onToggleExpanded: () => store.setPanelMode(workspaceId, state.panelMode === "expanded" ? "normal" : "expanded")
-			}), (0, react.createElement)(PanelPages, {
-				state,
-				onSelectWorkflow: (pageId, workflowId) => store.selectWorkflow(workspaceId, pageId, workflowId),
-				onRenamePage: (pageId, title) => store.renamePage(workspaceId, pageId, title),
-				onReload: () => store.reloadWorkspace(workspaceId)
-			}));
+				workspaceId,
+				workspaceItems,
+				hostMode: "standalone",
+				visible: true
+			});
 		}
 		//#endregion
 		//#region src/client/OasisPanelPortal.js
@@ -988,10 +2000,237 @@ window.__ModuleLoader__.load({
 			return (0, react_dom.createPortal)((0, react.createElement)(OasisPanelBoundary, { layoutAdapter }, (0, react.createElement)(OasisPanelHost, props)), portalHost);
 		}
 		//#endregion
+		//#region src/client/WorkspaceContextBridge.js
+		function blockedWorkspaceContext(generation) {
+			return Object.freeze({
+				status: "blocked",
+				reasonCode: "workspace-context-invalid",
+				generation,
+				currentSessionId: null,
+				workspaceItems: Object.freeze([])
+			});
+		}
+		function createWorkspaceContextSnapshot({ currentSessionId, workspaceItems, generation }) {
+			if (!Number.isSafeInteger(generation) || generation < 0) return blockedWorkspaceContext(0);
+			if (currentSessionId !== null && (typeof currentSessionId !== "string" || currentSessionId.length === 0)) return blockedWorkspaceContext(generation);
+			if (!Array.isArray(workspaceItems)) return blockedWorkspaceContext(generation);
+			const projected = [];
+			for (const workspace of workspaceItems) {
+				if (typeof workspace?.workspaceId !== "string" || workspace.workspaceId.length === 0 || !Array.isArray(workspace.sessionIds) || workspace.sessionIds.some((sessionId) => typeof sessionId !== "string" || sessionId.length === 0)) return blockedWorkspaceContext(generation);
+				projected.push(Object.freeze({
+					workspaceId: workspace.workspaceId,
+					sessionIds: Object.freeze([...workspace.sessionIds])
+				}));
+			}
+			return Object.freeze({
+				status: "ready",
+				reasonCode: null,
+				generation,
+				currentSessionId,
+				workspaceItems: Object.freeze(projected)
+			});
+		}
+		function resolveWorkspaceBinding({ context, sessionId, visible }) {
+			const generation = Number.isSafeInteger(context?.generation) ? context.generation : 0;
+			if (context?.status === "blocked") return Object.freeze({
+				status: "blocked",
+				reasonCode: context.reasonCode ?? "workspace-context-invalid",
+				workspaceId: null,
+				generation
+			});
+			if (context?.status !== "ready") return Object.freeze({
+				status: "pending",
+				reasonCode: "workspace-bridge-pending",
+				workspaceId: null,
+				generation
+			});
+			if (visible === true && context.currentSessionId !== sessionId) return Object.freeze({
+				status: "pending",
+				reasonCode: "workspace-generation-not-current",
+				workspaceId: null,
+				generation
+			});
+			const workspaceId = resolveWorkspaceId(sessionId, context.workspaceItems);
+			return Object.freeze({
+				status: workspaceId === null ? "unbound" : "ready",
+				reasonCode: workspaceId === null ? "workspace-not-resolved" : null,
+				workspaceId,
+				generation
+			});
+		}
+		function BridgeStatus({ mode, reasonCode }) {
+			const blocked = mode === "blocked";
+			return (0, react.createElement)("div", {
+				role: blocked ? "alert" : "status",
+				"data-oasis-host-state": mode,
+				"data-oasis-host-reason": reasonCode ?? void 0,
+				style: {
+					position: "fixed",
+					right: 12,
+					bottom: 12,
+					zIndex: 41,
+					maxWidth: 320,
+					padding: "8px 10px",
+					border: "1px solid var(--dsw-alias-border-l2, #d9d9dc)",
+					borderRadius: 8,
+					background: "var(--dsw-alias-bg-base, #fff)",
+					color: "var(--dsw-alias-text-primary, #202123)",
+					fontSize: 12,
+					boxShadow: "0 8px 24px rgba(0, 0, 0, 0.12)"
+				}
+			}, blocked ? "绿洲工作台暂不可用：检测到侧栏宿主冲突。" : "正在切换绿洲工作台侧栏宿主…");
+		}
+		function WorkspaceContextBridge(props) {
+			const { coordinator, useSessions, useWorkspaces } = props;
+			const currentSessionId = useSessions((snapshot) => snapshot.current);
+			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
+			const generationRef = (0, react.useRef)(0);
+			const hostSnapshot = (0, react.useSyncExternalStore)(coordinator.subscribe, coordinator.getSnapshot, coordinator.getSnapshot);
+			(0, react.useLayoutEffect)(() => {
+				generationRef.current += 1;
+				coordinator.updateWorkspaceContext(createWorkspaceContextSnapshot({
+					currentSessionId: currentSessionId ?? null,
+					workspaceItems,
+					generation: generationRef.current
+				}));
+				coordinator.reconcileExternalState();
+				return () => coordinator.clearWorkspaceContext();
+			}, [
+				coordinator,
+				currentSessionId,
+				workspaceItems
+			]);
+			(0, react.useLayoutEffect)(() => {
+				const MutationObserverClass = globalThis.MutationObserver;
+				const body = globalThis.document?.body;
+				if (typeof MutationObserverClass !== "function" || !body) return void 0;
+				const observer = new MutationObserverClass(() => coordinator.reconcileExternalState());
+				observer.observe(body, {
+					childList: true,
+					subtree: true,
+					attributes: true,
+					attributeFilter: ["data-dsh-better-sidebar"]
+				});
+				return () => observer.disconnect();
+			}, [coordinator]);
+			(0, react.useEffect)(() => {
+				if (hostSnapshot.mode !== "better-sidebar") return;
+				const binding = resolveWorkspaceBinding({
+					context: hostSnapshot.workspaceContext,
+					sessionId: currentSessionId,
+					visible: true
+				});
+				if (binding.status !== "ready") return;
+				ensureEmbeddedWorkspaceHidden({
+					store: props.store,
+					workspaceId: binding.workspaceId,
+					workspaceItems: hostSnapshot.workspaceContext.workspaceItems
+				}).catch(() => {
+					try {
+						props.store.setLocalPanelMode(binding.workspaceId, "hidden");
+					} catch {}
+				});
+			}, [
+				currentSessionId,
+				hostSnapshot.mode,
+				hostSnapshot.workspaceContext,
+				props.store
+			]);
+			if (hostSnapshot.mode === "standalone") return (0, react.createElement)(OasisPanelPortal, props);
+			if ([
+				"integrating",
+				"releasing",
+				"blocked"
+			].includes(hostSnapshot.mode)) return (0, react.createElement)(BridgeStatus, {
+				mode: hostSnapshot.mode,
+				reasonCode: hostSnapshot.reasonCode
+			});
+			return null;
+		}
+		//#endregion
+		//#region src/client/OasisBetterSidebarTab.js
+		function EmbeddedStatus({ status, reasonCode }) {
+			const messages = {
+				pending: "正在关联当前 DSH 项目…",
+				unbound: "当前会话尚未关联唯一的 DSH 项目。请先在中栏切换到一个有效项目。",
+				blocked: "绿洲工作台已阻断：项目上下文或侧栏宿主不可安全使用。"
+			};
+			return (0, react.createElement)("section", {
+				role: status === "blocked" ? "alert" : "status",
+				"data-oasis-embedded-state": status,
+				"data-oasis-embedded-reason": reasonCode ?? void 0,
+				style: {
+					height: "100%",
+					minHeight: 0,
+					padding: 20,
+					display: "grid",
+					alignContent: "start",
+					gap: 8,
+					background: "var(--dsw-alias-bg-base, #fff)",
+					color: "var(--dsw-alias-text-primary, #202123)"
+				}
+			}, (0, react.createElement)("strong", null, "绿洲专业工作台"), (0, react.createElement)("span", { style: {
+				color: "var(--dsw-alias-text-secondary, #6b7280)",
+				fontSize: 13,
+				lineHeight: 1.5
+			} }, messages[status] ?? messages.blocked));
+		}
+		function OasisBetterSidebarTab({ scope, visible, coordinator, store, focusTargets, layoutAdapter }) {
+			const hostSnapshot = (0, react.useSyncExternalStore)(coordinator.subscribe, coordinator.getSnapshot, coordinator.getSnapshot);
+			const sessionId = scope?.sessionId;
+			if (hostSnapshot.mode !== "better-sidebar") {
+				const status = hostSnapshot.mode === "blocked" ? "blocked" : "pending";
+				return (0, react.createElement)(EmbeddedStatus, {
+					status,
+					reasonCode: hostSnapshot.reasonCode
+				});
+			}
+			const binding = resolveWorkspaceBinding({
+				context: hostSnapshot.workspaceContext,
+				sessionId,
+				visible: visible === true
+			});
+			if (binding.status !== "ready") return (0, react.createElement)(EmbeddedStatus, {
+				status: binding.status,
+				reasonCode: binding.reasonCode
+			});
+			return (0, react.createElement)(OasisWorkbenchSurface, {
+				store,
+				focusTargets,
+				layoutAdapter,
+				workspaceId: binding.workspaceId,
+				workspaceItems: hostSnapshot.workspaceContext.workspaceItems,
+				hostMode: "embedded",
+				visible: visible === true
+			});
+		}
+		function createOasisBetterSidebarDescriptor({ coordinator, store, focusTargets, layoutAdapter }) {
+			return Object.freeze({
+				id: OASIS_BETTER_SIDEBAR_TAB_ID,
+				title: "绿洲专业工作台",
+				order: 60,
+				single: true,
+				component: (props) => (0, react.createElement)(OasisBetterSidebarTab, {
+					...props,
+					coordinator,
+					store,
+					focusTargets,
+					layoutAdapter
+				})
+			});
+		}
+		//#endregion
 		//#region src/client/WorkbenchEntry.js
-		function WorkbenchEntry({ sessionId, store, focusTargets, useWorkspaces }) {
+		const STANDALONE_HOST_SNAPSHOT = Object.freeze({ mode: "standalone" });
+		const subscribeStandaloneHost = () => () => {};
+		const getStandaloneHostSnapshot = () => STANDALONE_HOST_SNAPSHOT;
+		function useLivePanelHostSnapshot(coordinator) {
+			return (0, react.useSyncExternalStore)(coordinator === null ? subscribeStandaloneHost : coordinator.subscribe, coordinator === null ? getStandaloneHostSnapshot : coordinator.getSnapshot, coordinator === null ? getStandaloneHostSnapshot : coordinator.getSnapshot);
+		}
+		function WorkbenchEntry({ sessionId, store, focusTargets, useWorkspaces, coordinator = null, usePanelHostSnapshot = useLivePanelHostSnapshot }) {
 			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
 			const workspaceId = resolveWorkspaceId(sessionId, workspaceItems);
+			const hostSnapshot = usePanelHostSnapshot(coordinator);
 			let mountedTarget = null;
 			function registerFocusTarget(node) {
 				if (workspaceId === null) return;
@@ -1007,15 +2246,30 @@ window.__ModuleLoader__.load({
 				if (workspaceId === null) return;
 				store.syncWorkspaces(workspaceItems);
 				focusTargets.set(workspaceId, event.currentTarget);
+				if (coordinator?.getSnapshot?.().mode === "better-sidebar") {
+					coordinator.openBetterSidebar(sessionId);
+					return;
+				}
+				if (coordinator && coordinator.getSnapshot().mode !== "standalone") return;
 				store.openPanel(workspaceId);
 			}
+			const hostMode = hostSnapshot.mode;
+			const hostUnavailable = [
+				"integrating",
+				"releasing",
+				"blocked"
+			].includes(hostMode);
+			const disabled = workspaceId === null || hostUnavailable;
+			const unavailableTitle = hostMode === "blocked" ? "侧栏宿主冲突，绿洲工作台已安全阻断" : "绿洲工作台正在切换侧栏宿主";
 			return (0, react.createElement)("button", {
 				type: "button",
 				ref: registerFocusTarget,
 				"data-testid": "oasis-workbench-entry",
-				disabled: workspaceId === null,
-				title: workspaceId === null ? "当前会话尚未关联项目" : "打开技术研发与中国发明专利工作台",
-				"aria-label": workspaceId === null ? "当前会话尚未关联项目" : "打开技术研发与中国发明专利工作台",
+				disabled,
+				"data-oasis-host-mode": hostMode,
+				"data-oasis-host-version": hostSnapshot.serviceVersion ?? void 0,
+				title: workspaceId === null ? "当前会话尚未关联项目" : hostUnavailable ? unavailableTitle : "打开技术研发与中国发明专利工作台",
+				"aria-label": workspaceId === null ? "当前会话尚未关联项目" : hostUnavailable ? unavailableTitle : "打开技术研发与中国发明专利工作台",
 				onClick: openWorkbench,
 				style: {
 					border: "1px solid var(--dsw-alias-border-l2, #d9d9dc)",
@@ -1024,8 +2278,8 @@ window.__ModuleLoader__.load({
 					color: "var(--dsw-alias-text-primary, #202123)",
 					padding: "5px 9px",
 					fontSize: 12,
-					cursor: workspaceId === null ? "not-allowed" : "pointer",
-					opacity: workspaceId === null ? .5 : 1
+					cursor: disabled ? "not-allowed" : "pointer",
+					opacity: disabled ? .5 : 1
 				}
 			}, "研发 / 专利");
 		}
@@ -5355,6 +6609,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		const WORKBENCH_LIMITS = Object.freeze({
 			maxTasksPerWorkspace: 32,
 			maxInputRefsPerTask: 64,
+			maxRunsPerTask: 8,
+			maxWritebacksPerRun: 8,
+			maxResultItems: 64,
+			maxWritebackFiles: 2,
+			maxReviewNoteChars: 2e3,
+			maxArtifactBytes: 262144,
 			maxJsonDepth: 8,
 			maxJsonArrayItems: 1024,
 			maxJsonObjectKeys: 256,
@@ -5371,6 +6631,69 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const epoch = Date.parse(value);
 			return !Number.isNaN(epoch) && new Date(epoch).toISOString() === value;
 		}, "must be an ISO-8601 UTC timestamp with millisecond precision");
+		const sha256Schema = string().regex(/^[a-f0-9]{64}$/, "must be a lowercase SHA-256 hex digest");
+		const workTypeSchema = _enum(["technical-rd", "cn-invention-patent"]);
+		const workflowFieldBase = {
+			fieldId: identifierSchema,
+			label: string().min(1).max(200),
+			description: string().max(1e3),
+			required: boolean()
+		};
+		const workflowFormFieldSchema = union([
+			object({
+				...workflowFieldBase,
+				control: _enum(["short-text", "long-text"]),
+				maxChars: number().int().positive().max(262144)
+			}).strict(),
+			object({
+				...workflowFieldBase,
+				control: literal("string-list"),
+				maxItems: number().int().positive().max(256),
+				itemMaxChars: number().int().positive().max(16384)
+			}).strict(),
+			object({
+				...workflowFieldBase,
+				control: literal("select"),
+				options: array(object({
+					value: identifierSchema,
+					label: string().min(1).max(200)
+				}).strict()).min(1).max(64)
+			}).strict()
+		]);
+		const workflowDefinitionSchema = object({
+			workflowId: identifierSchema,
+			workflowVersion: identifierSchema,
+			workType: workTypeSchema,
+			title: string().min(1).max(200),
+			description: string().min(1).max(1e3),
+			executionMode: literal("local-mock"),
+			materialPolicy: object({
+				acceptedExtensions: array(string().regex(/^\.[a-z0-9]+$/)).max(32),
+				maxFiles: number().int().positive().max(256),
+				maxFileBytes: number().int().positive().max(Number.MAX_SAFE_INTEGER),
+				contentReadMode: literal("metadata-only")
+			}).strict(),
+			outputSections: array(identifierSchema).min(1).max(64),
+			form: object({ fields: array(workflowFormFieldSchema).max(64) }).strict().superRefine((value, ctx) => {
+				const seen = /* @__PURE__ */ new Set();
+				for (const [index, field] of value.fields.entries()) {
+					if (seen.has(field.fieldId)) ctx.addIssue({
+						code: "custom",
+						path: [
+							"fields",
+							index,
+							"fieldId"
+						],
+						message: `duplicate field id: ${field.fieldId}`
+					});
+					seen.add(field.fieldId);
+				}
+			})
+		}).strict();
+		const workflowCatalogResponseSchema = object({
+			schemaVersion: literal(1),
+			workflows: array(workflowDefinitionSchema).max(16)
+		}).strict();
 		const jsonStringSchema = string().refine((value) => utf8Bytes(value) <= WORKBENCH_LIMITS.maxJsonStringBytes, `JSON strings must not exceed ${WORKBENCH_LIMITS.maxJsonStringBytes} UTF-8 bytes`);
 		const jsonPrimitiveSchema = union([
 			jsonStringSchema,
@@ -5396,32 +6719,277 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			]);
 		}
 		const jsonRootObjectSchema = jsonObjectSchema(createJsonValueSchema(WORKBENCH_LIMITS.maxJsonDepth));
-		const workbenchTaskSchema = object({
+		const projectMaterialReferenceSchema = object({
+			referenceId: identifierSchema,
+			kind: literal("project-file"),
+			relativePath: string().min(1).max(1024),
+			displayName: string().min(1).max(255),
+			mediaType: string().min(1).max(128),
+			sizeBytes: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			sha256: sha256Schema,
+			observedAt: timestampSchema,
+			confirmedAt: timestampSchema
+		}).strict();
+		const materialReferenceSchema = discriminatedUnion("kind", [projectMaterialReferenceSchema, object({
+			referenceId: identifierSchema,
+			kind: literal("legacy-v1"),
+			legacyValue: jsonRootObjectSchema
+		}).strict()]);
+		const writebackRelativePathSchema = string().min(1).max(1024).refine((value) => {
+			if (value.includes("\0") || value.includes("/") || value.startsWith("\\") || /^[a-z]:/i.test(value)) return false;
+			return value.split("\\").every((segment) => {
+				const stem = segment.split(".")[0].replace(/[ .]+$/, "");
+				return segment.length > 0 && segment.length <= 255 && segment !== "." && segment !== ".." && !/[\x00-\x1f<>:"|?*]/.test(segment) && !/[ .]$/.test(segment) && !/^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])$/i.test(stem);
+			});
+		}, "must be a normalized safe relative Windows path");
+		const writebackFileSchema = object({
+			relativePath: writebackRelativePathSchema,
+			sha256: sha256Schema,
+			mediaType: string().min(1).max(128)
+		}).strict();
+		const writebackRecordSchema = object({
+			writebackId: identifierSchema,
+			artifactId: identifierSchema,
+			relativeDirectory: writebackRelativePathSchema,
+			files: array(writebackFileSchema).length(WORKBENCH_LIMITS.maxWritebackFiles),
+			reviewStatus: literal("approved"),
+			committedAt: timestampSchema
+		}).strict().superRefine((value, ctx) => {
+			const prefix = `${value.relativeDirectory.toLocaleLowerCase("en-US")}\\`;
+			const paths = /* @__PURE__ */ new Set();
+			const mediaTypes = /* @__PURE__ */ new Set();
+			for (const [index, file] of value.files.entries()) {
+				const path = file.relativePath.toLocaleLowerCase("en-US");
+				if (!path.startsWith(prefix)) ctx.addIssue({
+					code: "custom",
+					path: [
+						"files",
+						index,
+						"relativePath"
+					],
+					message: "writeback file must be inside its relative directory"
+				});
+				if (paths.has(path)) ctx.addIssue({
+					code: "custom",
+					path: [
+						"files",
+						index,
+						"relativePath"
+					],
+					message: "writeback file paths must be unique"
+				});
+				paths.add(path);
+				mediaTypes.add(file.mediaType);
+			}
+			if (!mediaTypes.has("text/markdown") || !mediaTypes.has("application/json")) ctx.addIssue({
+				code: "custom",
+				path: ["files"],
+				message: "writeback must contain Markdown and JSON files"
+			});
+		});
+		const writebackAbsolutePathSchema = string().min(1).max(32768).refine((value) => /^(?:[a-z]:\\|\\\\[^\\]+\\[^\\]+\\)/i.test(value), "must be an absolute Windows path");
+		const transientWritebackFileSchema = writebackFileSchema.extend({
+			absolutePath: writebackAbsolutePathSchema,
+			sizeBytes: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER)
+		}).strict();
+		const writebackTransientManifestSchema = object({
+			schemaVersion: literal(1),
+			workspaceId: identifierSchema,
+			taskId: identifierSchema,
+			runId: identifierSchema,
+			artifactId: identifierSchema,
+			relativeDirectory: writebackRelativePathSchema,
+			files: array(writebackFileSchema).length(WORKBENCH_LIMITS.maxWritebackFiles)
+		}).strict().extend({
+			absoluteTarget: writebackAbsolutePathSchema,
+			files: array(transientWritebackFileSchema).length(WORKBENCH_LIMITS.maxWritebackFiles),
+			expiresAt: timestampSchema
+		}).strict().superRefine((value, ctx) => {
+			const prefix = `${value.absoluteTarget.toLocaleLowerCase("en-US")}\\`;
+			for (const [index, file] of value.files.entries()) if (!file.absolutePath.toLocaleLowerCase("en-US").startsWith(prefix)) ctx.addIssue({
+				code: "custom",
+				path: [
+					"files",
+					index,
+					"absolutePath"
+				],
+				message: "manifest file must be inside its absolute target"
+			});
+		});
+		const writebackPrepareResponseSchema = object({
+			confirmationToken: string().min(1).max(512),
+			manifest: writebackTransientManifestSchema
+		}).strict();
+		const resultSectionSchema = object({
+			sectionId: identifierSchema,
+			title: string().min(1).max(200),
+			body: jsonStringSchema
+		}).strict();
+		const artifactBodySchema = string().refine((value) => utf8Bytes(value) <= WORKBENCH_LIMITS.maxArtifactBytes, `artifact body must not exceed ${WORKBENCH_LIMITS.maxArtifactBytes} UTF-8 bytes`);
+		const artifactSchema = object({
+			artifactId: string().regex(/^sha256:[a-f0-9]{64}$/, "artifactId must be content-addressed"),
+			suggestedFileName: string().min(1).max(255),
+			mediaType: literal("text/markdown"),
+			body: artifactBodySchema,
+			sha256: sha256Schema
+		}).strict().superRefine((value, ctx) => {
+			if (value.artifactId !== `sha256:${value.sha256}`) ctx.addIssue({
+				code: "custom",
+				path: ["artifactId"],
+				message: "artifactId must match artifact sha256"
+			});
+		});
+		const runSnapshotSchema = object({
+			runId: identifierSchema,
+			requestKey: identifierSchema,
+			mode: literal("local-mock"),
+			mockVersion: literal("1"),
+			status: literal("completed"),
+			workflowId: identifierSchema,
+			workflowVersion: identifierSchema,
+			inputSnapshot: object({
+				formValues: jsonRootObjectSchema,
+				inputRefs: array(projectMaterialReferenceSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+				sha256: sha256Schema,
+				capturedAt: timestampSchema
+			}).strict(),
+			result: object({
+				contentStatus: _enum(["warning", "blocked"]),
+				sections: array(resultSectionSchema).min(1).max(WORKBENCH_LIMITS.maxResultItems),
+				risks: array(jsonStringSchema).max(WORKBENCH_LIMITS.maxResultItems),
+				questions: array(jsonStringSchema).max(WORKBENCH_LIMITS.maxResultItems),
+				disclaimer: string().min(1).max(4e3),
+				artifact: artifactSchema
+			}).strict(),
+			review: object({
+				status: _enum([
+					"not-reviewed",
+					"changes-requested",
+					"approved"
+				]),
+				note: string().max(WORKBENCH_LIMITS.maxReviewNoteChars),
+				updatedAt: timestampSchema
+			}).strict(),
+			writebacks: array(writebackRecordSchema).max(WORKBENCH_LIMITS.maxWritebacksPerRun),
+			createdAt: timestampSchema,
+			completedAt: timestampSchema
+		}).strict().superRefine((value, ctx) => {
+			if (value.result.contentStatus === "blocked" && value.review.status === "approved") ctx.addIssue({
+				code: "custom",
+				path: ["review", "status"],
+				message: "blocked results cannot be approved"
+			});
+			if (value.review.status === "changes-requested" && value.review.note.trim().length === 0) ctx.addIssue({
+				code: "custom",
+				path: ["review", "note"],
+				message: "changes-requested review requires a note"
+			});
+			for (const [index, writeback] of value.writebacks.entries()) if (writeback.artifactId !== value.result.artifact.artifactId) ctx.addIssue({
+				code: "custom",
+				path: [
+					"writebacks",
+					index,
+					"artifactId"
+				],
+				message: "writeback artifactId must belong to the run artifact"
+			});
+		});
+		const workbenchEditableTaskSchema = object({
 			taskId: identifierSchema,
 			title: string().min(1).max(200),
-			workType: _enum(["technical-rd", "cn-invention-patent"]).nullable(),
+			workType: workTypeSchema.nullable(),
 			workflowId: identifierSchema.nullable(),
 			workflowVersion: identifierSchema.nullable(),
-			inputRefs: array(jsonRootObjectSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
 			formValues: jsonRootObjectSchema,
-			run: _null(),
-			preview: _null(),
-			review: literal("not-reviewed"),
+			activeRunId: identifierSchema.nullable(),
 			createdAt: timestampSchema,
 			updatedAt: timestampSchema
 		}).strict();
-		const stateFields = {
-			schemaVersion: literal(1),
-			panelMode: _enum([
-				"hidden",
-				"normal",
-				"expanded"
-			]),
-			activeTaskId: identifierSchema.nullable(),
-			taskOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
-			tasks: record(identifierSchema, workbenchTaskSchema)
-		};
-		function enforceTaskInvariants(value, ctx) {
+		const workbenchTaskSchema = object({
+			taskId: identifierSchema,
+			title: string().min(1).max(200),
+			workType: workTypeSchema.nullable(),
+			workflowId: identifierSchema.nullable(),
+			workflowVersion: identifierSchema.nullable(),
+			formValues: jsonRootObjectSchema,
+			inputRefs: array(materialReferenceSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+			activeRunId: identifierSchema.nullable(),
+			runOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxRunsPerTask),
+			runs: record(identifierSchema, runSnapshotSchema),
+			createdAt: timestampSchema,
+			updatedAt: timestampSchema
+		}).strict().superRefine((value, ctx) => {
+			const referenceIds = /* @__PURE__ */ new Set();
+			for (const [index, reference] of value.inputRefs.entries()) {
+				if (referenceIds.has(reference.referenceId)) ctx.addIssue({
+					code: "custom",
+					path: ["inputRefs", index],
+					message: `duplicate reference id: ${reference.referenceId}`
+				});
+				referenceIds.add(reference.referenceId);
+			}
+			const seen = /* @__PURE__ */ new Set();
+			for (const [index, runId] of value.runOrder.entries()) {
+				if (seen.has(runId)) ctx.addIssue({
+					code: "custom",
+					path: ["runOrder", index],
+					message: `duplicate run id: ${runId}`
+				});
+				seen.add(runId);
+				if (!(runId in value.runs)) ctx.addIssue({
+					code: "custom",
+					path: ["runOrder", index],
+					message: `missing run record: ${runId}`
+				});
+			}
+			const requestKeys = /* @__PURE__ */ new Set();
+			for (const [mapKey, run] of Object.entries(value.runs)) {
+				if (!seen.has(mapKey)) ctx.addIssue({
+					code: "custom",
+					path: ["runs", mapKey],
+					message: `orphan run record: ${mapKey}`
+				});
+				if (run.runId !== mapKey) ctx.addIssue({
+					code: "custom",
+					path: [
+						"runs",
+						mapKey,
+						"runId"
+					],
+					message: `run map key does not match runId: ${mapKey}`
+				});
+				if (value.workflowId !== run.workflowId || value.workflowVersion !== run.workflowVersion) ctx.addIssue({
+					code: "custom",
+					path: [
+						"runs",
+						mapKey,
+						"workflowId"
+					],
+					message: "run workflow must match task workflow"
+				});
+				if (requestKeys.has(run.requestKey)) ctx.addIssue({
+					code: "custom",
+					path: [
+						"runs",
+						mapKey,
+						"requestKey"
+					],
+					message: `duplicate run request key: ${run.requestKey}`
+				});
+				requestKeys.add(run.requestKey);
+			}
+			if (value.activeRunId !== null && !seen.has(value.activeRunId)) ctx.addIssue({
+				code: "custom",
+				path: ["activeRunId"],
+				message: "activeRunId must reference runOrder"
+			});
+		});
+		const panelModeSchema = _enum([
+			"hidden",
+			"normal",
+			"expanded"
+		]);
+		function enforceWorkspaceInvariants(value, ctx) {
 			const seen = /* @__PURE__ */ new Set();
 			for (const [index, taskId] of value.taskOrder.entries()) {
 				if (seen.has(taskId)) ctx.addIssue({
@@ -5462,25 +7030,56 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				path: ["tasks"],
 				message: `workspace tasks must not exceed ${WORKBENCH_LIMITS.maxTasksPerWorkspace}`
 			});
-			const draft = {
-				schemaVersion: value.schemaVersion,
-				panelMode: value.panelMode,
-				activeTaskId: value.activeTaskId,
-				taskOrder: value.taskOrder,
-				tasks: value.tasks
-			};
-			if (utf8Bytes(JSON.stringify(draft)) > WORKBENCH_LIMITS.maxDraftBytes) ctx.addIssue({
+			if (utf8Bytes(JSON.stringify(value)) > WORKBENCH_LIMITS.maxDraftBytes) ctx.addIssue({
 				code: "custom",
-				message: `workspace draft must not exceed ${WORKBENCH_LIMITS.maxDraftBytes} UTF-8 bytes`
+				message: `workspace data must not exceed ${WORKBENCH_LIMITS.maxDraftBytes} UTF-8 bytes`
 			});
 		}
-		object(stateFields).strict().superRefine(enforceTaskInvariants);
+		const editableStateFields = {
+			schemaVersion: literal(2),
+			panelMode: panelModeSchema,
+			activeTaskId: identifierSchema.nullable(),
+			taskOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
+			tasks: record(identifierSchema, workbenchEditableTaskSchema)
+		};
+		const recordStateFields = {
+			schemaVersion: literal(2),
+			panelMode: panelModeSchema,
+			activeTaskId: identifierSchema.nullable(),
+			taskOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
+			tasks: record(identifierSchema, workbenchTaskSchema)
+		};
+		object(editableStateFields).strict().superRefine(enforceWorkspaceInvariants);
 		const workbenchRecordSchema = object({
-			...stateFields,
+			...recordStateFields,
 			workspaceId: identifierSchema,
 			revision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
 			updatedAt: timestampSchema
-		}).strict().superRefine(enforceTaskInvariants);
+		}).strict().superRefine(enforceWorkspaceInvariants);
+		const legacyTaskSchema = object({
+			taskId: identifierSchema,
+			title: string().min(1).max(200),
+			workType: workTypeSchema.nullable(),
+			workflowId: identifierSchema.nullable(),
+			workflowVersion: identifierSchema.nullable(),
+			inputRefs: array(jsonRootObjectSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+			formValues: jsonRootObjectSchema,
+			run: _null(),
+			preview: _null(),
+			review: literal("not-reviewed"),
+			createdAt: timestampSchema,
+			updatedAt: timestampSchema
+		}).strict();
+		union([object({
+			schemaVersion: literal(1),
+			workspaceId: identifierSchema,
+			revision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			panelMode: panelModeSchema,
+			activeTaskId: identifierSchema.nullable(),
+			taskOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
+			tasks: record(identifierSchema, legacyTaskSchema),
+			updatedAt: timestampSchema
+		}).strict().superRefine(enforceWorkspaceInvariants), workbenchRecordSchema]);
 		const workbenchGetResponseSchema = workbenchRecordSchema;
 		const workbenchReplaceResponseSchema = discriminatedUnion("committed", [object({
 			committed: literal(true),
@@ -5490,6 +7089,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			reason: literal("revision-conflict"),
 			current: workbenchRecordSchema
 		}).strict()]);
+		const writebackCommitResponseSchema = workbenchReplaceResponseSchema;
 		//#endregion
 		//#region src/client/workbench-remote.js
 		const CHANNEL = "/oasis-workbench";
@@ -5522,6 +7122,31 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						expectedRevision,
 						state
 					}, signal), workbenchReplaceResponseSchema);
+				},
+				async getWorkflowCatalog(workType, signal) {
+					const payload = workType === void 0 ? {} : { workType };
+					return unwrap(await connection.rpc.call(CHANNEL, "workflow/catalog", payload, signal), workflowCatalogResponseSchema);
+				},
+				async addMaterial(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "material/add", payload, signal), workbenchReplaceResponseSchema);
+				},
+				async refreshMaterial(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "material/refresh", payload, signal), workbenchReplaceResponseSchema);
+				},
+				async removeMaterial(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "material/remove", payload, signal), workbenchReplaceResponseSchema);
+				},
+				async createRun(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "task/create", payload, signal), workbenchReplaceResponseSchema);
+				},
+				async reviewRun(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "task/review", payload, signal), workbenchReplaceResponseSchema);
+				},
+				async prepareWriteback(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "artifact/prepare-writeback", payload, signal), writebackPrepareResponseSchema);
+				},
+				async commitWriteback(confirmationToken, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "artifact/commit-writeback", { confirmationToken }, signal), writebackCommitResponseSchema);
 				}
 			});
 		}
@@ -5540,11 +7165,6 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function detached(value) {
 			return structuredClone(value);
 		}
-		function workflowTitle(workflowId) {
-			if (workflowId === "technical-rd") return "技术研发辅助";
-			if (workflowId === "cn-invention-patent") return "中国发明专利撰写";
-			throw new Error(`unknown workflow: ${workflowId}`);
-		}
 		function assertRecord(record) {
 			const parsed = workbenchRecordSchema.safeParse(record);
 			if (!parsed.success) throw new TypeError(`invalid workbench record: ${parsed.error.message}`);
@@ -5558,26 +7178,23 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				workflowVersion: task.workflowVersion,
 				inputRefs: detached(task.inputRefs),
 				formValues: detached(task.formValues),
-				run: task.run,
-				preview: task.preview,
-				review: task.review,
+				activeRunId: task.activeRunId,
+				runOrder: detached(task.runOrder),
+				runs: detached(task.runs),
 				createdAt: task.createdAt,
 				updatedAt: task.updatedAt,
 				view: task.workflowId === null ? "chooser" : "workspace"
 			};
 		}
-		function pageToTask(page) {
+		function pageToEditableTask(page) {
 			return {
 				taskId: page.pageId,
 				title: page.title,
 				workType: page.workType,
 				workflowId: page.workflowId,
 				workflowVersion: page.workflowVersion,
-				inputRefs: detached(page.inputRefs),
 				formValues: detached(page.formValues),
-				run: page.run,
-				preview: page.preview,
-				review: page.review,
+				activeRunId: page.activeRunId,
 				createdAt: page.createdAt,
 				updatedAt: page.updatedAt
 			};
@@ -5591,7 +7208,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				conflictCurrent: null,
 				panelMode: "hidden",
 				activePageId: null,
-				pages: []
+				pages: [],
+				catalogStatus: "idle",
+				catalogError: null,
+				workflows: [],
+				pageOperations: {}
 			});
 		}
 		function recordToWorkspaceState(record) {
@@ -5604,14 +7225,18 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				conflictCurrent: null,
 				panelMode: record.panelMode,
 				activePageId: record.activeTaskId,
-				pages: record.taskOrder.map((taskId) => taskToPage(record.tasks[taskId]))
+				pages: record.taskOrder.map((taskId) => taskToPage(record.tasks[taskId])),
+				catalogStatus: "idle",
+				catalogError: null,
+				workflows: [],
+				pageOperations: {}
 			});
 		}
 		function workspaceStateToDraft(state) {
 			const tasks = {};
-			for (const page of state.pages) tasks[page.pageId] = pageToTask(page);
+			for (const page of state.pages) tasks[page.pageId] = pageToEditableTask(page);
 			return deepFreeze({
-				schemaVersion: 1,
+				schemaVersion: 2,
 				panelMode: state.panelMode,
 				activeTaskId: state.activePageId,
 				taskOrder: state.pages.map((page) => page.pageId),
@@ -5631,9 +7256,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				workflowVersion: null,
 				inputRefs: [],
 				formValues: {},
-				run: null,
-				preview: null,
-				review: "not-reviewed",
+				activeRunId: null,
+				runOrder: [],
+				runs: {},
 				createdAt: timestamp,
 				updatedAt: timestamp,
 				view: "chooser"
@@ -5643,6 +7268,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				activePageId: pageId,
 				pages: [...state.pages, page]
 			};
+		}
+		function initialFormValues(workflow) {
+			if (!workflow || typeof workflow !== "object" || !Array.isArray(workflow.form?.fields)) throw new TypeError("select-workflow requires a workflow catalog definition");
+			const values = {};
+			for (const field of workflow.form.fields) values[field.fieldId] = field.control === "string-list" ? [] : "";
+			return values;
 		}
 		function reduceWorkspaceState(state, action, env) {
 			let next;
@@ -5660,20 +7291,37 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				};
 			} else if (action.type === "create-page") next = createPage(state, env);
 			else if (action.type === "select-workflow") {
-				const title = workflowTitle(action.workflowId);
+				const workflow = action.workflow;
+				const formValues = initialFormValues(workflow);
 				if (!state.pages.some((page) => page.pageId === action.pageId)) throw new Error("unknown page");
 				next = {
 					...state,
 					activePageId: action.pageId,
 					pages: state.pages.map((page) => page.pageId === action.pageId ? {
 						...page,
-						title,
-						workType: action.workflowId,
-						workflowId: action.workflowId,
-						workflowVersion: "1",
+						title: workflow.title,
+						workType: workflow.workType,
+						workflowId: workflow.workflowId,
+						workflowVersion: workflow.workflowVersion,
+						formValues,
 						updatedAt: env.now(),
 						view: "workspace"
 					} : page)
+				};
+			} else if (action.type === "update-form-value") {
+				const page = state.pages.find((item) => item.pageId === action.pageId);
+				if (!page) throw new Error("unknown page");
+				if (page.workflowId === null || !Object.hasOwn(page.formValues, action.fieldId)) throw new Error("unknown workflow form field");
+				next = {
+					...state,
+					pages: state.pages.map((item) => item.pageId === action.pageId ? {
+						...item,
+						formValues: {
+							...item.formValues,
+							[action.fieldId]: detached(action.value)
+						},
+						updatedAt: env.now()
+					} : item)
 				};
 			} else if (action.type === "rename-page") {
 				const title = String(action.title).trim();
@@ -5693,15 +7341,30 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					...state,
 					activePageId: action.pageId
 				};
+			} else if (action.type === "activate-run") {
+				const page = state.pages.find((item) => item.pageId === action.pageId);
+				if (!page) throw new Error("unknown page");
+				if (!Object.hasOwn(page.runs, action.runId)) throw new Error("unknown run");
+				next = page.activeRunId === action.runId ? state : {
+					...state,
+					pages: state.pages.map((item) => item.pageId === action.pageId ? {
+						...item,
+						activeRunId: action.runId,
+						updatedAt: env.now()
+					} : item)
+				};
 			} else if (action.type === "close-page") {
 				const index = state.pages.findIndex((page) => page.pageId === action.pageId);
 				if (index < 0) return state;
 				const pages = state.pages.filter((page) => page.pageId !== action.pageId);
 				const fallback = pages[Math.min(index, pages.length - 1)]?.pageId ?? null;
+				const pageOperations = { ...state.pageOperations };
+				delete pageOperations[action.pageId];
 				next = {
 					...state,
 					activePageId: state.activePageId === action.pageId ? fallback : state.activePageId,
-					pages
+					pages,
+					pageOperations
 				};
 			} else throw new Error(`unknown workbench action: ${action.type}`);
 			return next === state ? state : deepFreeze(next);
@@ -5709,6 +7372,21 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		//#endregion
 		//#region src/client/workbench-store.js
 		const EMPTY_WORKSPACE_STATE = createInitialWorkspaceState(null);
+		const EMPTY_PAGE_OPERATION = Object.freeze({
+			materialPath: "",
+			materialConfirmed: false,
+			reviewNote: "",
+			writebackDirectory: "",
+			writebackConfirmed: false,
+			writebackPlan: null,
+			requestKey: null,
+			activeOperation: null,
+			error: null,
+			errorCode: null,
+			feedback: null,
+			materialsChanged: false,
+			indexWarningManifest: null
+		});
 		function defaultCreateId() {
 			if (typeof globalThis.crypto?.randomUUID !== "function") throw new Error("crypto.randomUUID is required to create an Oasis task");
 			return globalThis.crypto.randomUUID();
@@ -5716,7 +7394,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function errorMessage(error) {
 			return error instanceof Error ? error.message : String(error);
 		}
-		function createWorkbenchStore({ remote = null, createId = defaultCreateId, clock = () => (/* @__PURE__ */ new Date()).toISOString() } = {}) {
+		function createWorkbenchStore({ remote = null, createId = defaultCreateId, createRequestKey = defaultCreateId, clock = () => (/* @__PURE__ */ new Date()).toISOString(), workflowCatalog = null, saveDelayMs = 400, disposeDrainMs = 1e3, scheduler = globalThis } = {}) {
+			if (!Number.isInteger(saveDelayMs) || saveDelayMs < 0) throw new TypeError("saveDelayMs must be a non-negative integer");
+			if (typeof createRequestKey !== "function") throw new TypeError("createRequestKey must be a function");
+			if (!Number.isSafeInteger(disposeDrainMs) || disposeDrainMs < 0) throw new TypeError("disposeDrainMs must be a non-negative safe integer");
+			if (typeof scheduler?.setTimeout !== "function" || typeof scheduler?.clearTimeout !== "function") throw new TypeError("scheduler must provide setTimeout and clearTimeout");
 			const knownWorkspaceIds = /* @__PURE__ */ new Set();
 			const states = /* @__PURE__ */ new Map();
 			const runtimes = /* @__PURE__ */ new Map();
@@ -5726,7 +7408,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				createId,
 				now: clock
 			};
+			let closing = false;
 			let disposed = false;
+			let disposePromise;
+			function assertOpen() {
+				if (closing || disposed) throw new Error(disposed ? "workbench store is disposed" : "workbench store is closing");
+			}
 			function assertKnown(workspaceId) {
 				if (typeof workspaceId !== "string" || !knownWorkspaceIds.has(workspaceId)) throw new Error("action requires a known Workspace");
 			}
@@ -5735,20 +7422,24 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				if (!runtime) {
 					runtime = {
 						hydrationPromise: null,
+						catalogPromise: null,
 						drainPromise: null,
 						pendingActions: [],
-						saveQueue: []
+						pendingDraft: null,
+						saveTimer: null,
+						saveGeneration: 0
 					};
 					runtimes.set(workspaceId, runtime);
 				}
 				return runtime;
 			}
 			function publish() {
-				if (disposed) return;
+				if (closing || disposed) return;
 				for (const listener of [...listeners]) listener();
 			}
 			function setState(workspaceId, next) {
 				const current = states.get(workspaceId);
+				if (disposed) return current ?? EMPTY_WORKSPACE_STATE;
 				if (current === next) return current;
 				const frozen = Object.isFrozen(next) ? next : Object.freeze(next);
 				states.set(workspaceId, frozen);
@@ -5762,23 +7453,77 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				});
 			}
 			function getCurrent(workspaceId) {
-				return states.get(workspaceId) ?? createInitialWorkspaceState(workspaceId, remote === null ? "ready" : "idle");
+				return states.get(workspaceId) ?? initialState(workspaceId);
+			}
+			function initialState(workspaceId) {
+				const state = createInitialWorkspaceState(workspaceId, remote === null ? "ready" : "idle");
+				if (workflowCatalog === null) return state;
+				return stateWith(state, {
+					catalogStatus: "ready",
+					catalogError: null,
+					workflows: workflowCatalog.workflows
+				});
+			}
+			function preserveClientState(recordState, current) {
+				return stateWith(recordState, {
+					catalogStatus: current.catalogStatus,
+					catalogError: current.catalogError,
+					workflows: current.workflows,
+					pageOperations: current.pageOperations
+				});
+			}
+			function pageFor(workspaceId, pageId) {
+				const page = getCurrent(workspaceId).pages.find((item) => item.pageId === pageId);
+				if (!page) throw new Error("unknown page");
+				return page;
+			}
+			function operationFor(state, pageId) {
+				return state.pageOperations[pageId] ?? EMPTY_PAGE_OPERATION;
+			}
+			function updatePageOperation(workspaceId, pageId, changes) {
+				assertOpen();
+				assertKnown(workspaceId);
+				pageFor(workspaceId, pageId);
+				const current = getCurrent(workspaceId);
+				const operation = Object.freeze({
+					...operationFor(current, pageId),
+					...changes
+				});
+				return setState(workspaceId, stateWith(current, { pageOperations: Object.freeze({
+					...current.pageOperations,
+					[pageId]: operation
+				}) }));
+			}
+			function operationErrorFeedback(error) {
+				const code = typeof error?.code === "string" ? error.code : null;
+				if (code === "WRITEBACK_COMMITTED_INDEX_FAILED") return "index-warning";
+				if (code === "MATERIAL_CHANGED") return "material-changed";
+				if (code?.includes("CONFLICT") || code === "revision-conflict") return "conflict";
+				return "operation-error";
 			}
 			function ensureRecordIdentity(workspaceId, state) {
 				if (state.workspaceId !== workspaceId) throw new Error(`Workspace response identity mismatch: expected ${workspaceId}`);
 				return state;
 			}
+			function clearScheduledSave(runtime) {
+				runtime.saveGeneration += 1;
+				if (runtime.saveTimer !== null) {
+					scheduler.clearTimeout(runtime.saveTimer);
+					runtime.saveTimer = null;
+				}
+			}
 			function drainWorkspace(workspaceId) {
 				const runtime = runtimeFor(workspaceId);
 				if (runtime.drainPromise || remote === null || disposed) return runtime.drainPromise;
 				runtime.drainPromise = (async () => {
-					while (runtime.saveQueue.length > 0 && !disposed) {
+					while (runtime.pendingDraft !== null && !disposed) {
 						const current = getCurrent(workspaceId);
 						if (current.syncStatus === "conflict" || current.syncStatus === "error") {
-							runtime.saveQueue.length = 0;
+							runtime.pendingDraft = null;
 							break;
 						}
-						const draft = runtime.saveQueue.shift();
+						const draft = runtime.pendingDraft;
+						runtime.pendingDraft = null;
 						try {
 							const result = await remote.replace(workspaceId, getCurrent(workspaceId).revision, draft, controller.signal);
 							if (disposed) break;
@@ -5786,7 +7531,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								const committed = ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current));
 								setState(workspaceId, stateWith(getCurrent(workspaceId), {
 									revision: committed.revision,
-									syncStatus: runtime.saveQueue.length > 0 ? "saving" : "ready",
+									syncStatus: runtime.pendingDraft !== null ? "saving" : "ready",
 									syncError: null,
 									conflictCurrent: null
 								}));
@@ -5794,7 +7539,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							}
 							if (result?.committed === false && result.reason === "revision-conflict") {
 								const conflictCurrent = ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current));
-								runtime.saveQueue.length = 0;
+								runtime.pendingDraft = null;
+								clearScheduledSave(runtime);
 								setState(workspaceId, stateWith(getCurrent(workspaceId), {
 									syncStatus: "conflict",
 									syncError: null,
@@ -5805,7 +7551,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							throw new Error("Malformed Oasis workbench replacement result");
 						} catch (error) {
 							if (disposed || controller.signal.aborted) break;
-							runtime.saveQueue.length = 0;
+							runtime.pendingDraft = null;
+							clearScheduledSave(runtime);
 							setState(workspaceId, stateWith(getCurrent(workspaceId), {
 								syncStatus: "error",
 								syncError: errorMessage(error),
@@ -5819,7 +7566,100 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				});
 				return runtime.drainPromise;
 			}
+			function scheduleWorkspaceSave(workspaceId, draft) {
+				if (closing || disposed) return;
+				const runtime = runtimeFor(workspaceId);
+				runtime.pendingDraft = draft;
+				clearScheduledSave(runtime);
+				const generation = runtime.saveGeneration;
+				const startDrain = () => {
+					if (disposed || generation !== runtime.saveGeneration) return;
+					runtime.saveTimer = null;
+					drainWorkspace(workspaceId);
+				};
+				if (saveDelayMs === 0) queueMicrotask(startDrain);
+				else runtime.saveTimer = scheduler.setTimeout(startDrain, saveDelayMs);
+			}
+			async function flushWorkspaceInternal(workspaceId) {
+				assertKnown(workspaceId);
+				const runtime = runtimeFor(workspaceId);
+				clearScheduledSave(runtime);
+				while (runtime.hydrationPromise) await runtime.hydrationPromise;
+				if (runtime.pendingDraft !== null) drainWorkspace(workspaceId);
+				while (runtime.drainPromise) await runtime.drainPromise;
+				return getCurrent(workspaceId);
+			}
+			async function flushWorkspace(workspaceId) {
+				assertOpen();
+				return flushWorkspaceInternal(workspaceId);
+			}
+			function applyAuthoritativeReplacement(workspaceId, result) {
+				if (result?.committed === true) {
+					const current = getCurrent(workspaceId);
+					const authoritative = preserveClientState(ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current)), current);
+					setState(workspaceId, authoritative);
+					return authoritative;
+				}
+				if (result?.committed === false && result.reason === "revision-conflict") {
+					const conflictCurrent = ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current));
+					setState(workspaceId, stateWith(getCurrent(workspaceId), {
+						syncStatus: "conflict",
+						syncError: null,
+						conflictCurrent
+					}));
+					const error = /* @__PURE__ */ new Error("Workspace revision conflict");
+					error.code = "revision-conflict";
+					throw error;
+				}
+				throw new Error("Malformed Oasis workbench mutation result");
+			}
+			async function runPageOperation(workspaceId, pageId, operationName, operation, onSuccess) {
+				assertOpen();
+				assertKnown(workspaceId);
+				pageFor(workspaceId, pageId);
+				if (remote === null || typeof operation !== "function") throw new Error(`${operationName} requires the Oasis Host`);
+				if (operationFor(getCurrent(workspaceId), pageId).activeOperation !== null) throw new Error("another page operation is already in progress");
+				updatePageOperation(workspaceId, pageId, {
+					activeOperation: operationName,
+					error: null,
+					errorCode: null,
+					feedback: null,
+					indexWarningManifest: null
+				});
+				try {
+					await flushWorkspace(workspaceId);
+					const current = getCurrent(workspaceId);
+					if (current.syncStatus !== "ready") throw new Error(`Workspace is not ready for ${operationName}`);
+					const result = await operation(current);
+					if (closing || disposed || controller.signal.aborted) return getCurrent(workspaceId);
+					const applied = applyAuthoritativeReplacement(workspaceId, result);
+					updatePageOperation(workspaceId, pageId, {
+						activeOperation: null,
+						error: null,
+						errorCode: null,
+						...onSuccess ? onSuccess(applied) : {}
+					});
+					return applied;
+				} catch (error) {
+					if (!closing && !disposed && getCurrent(workspaceId).pages.some((page) => page.pageId === pageId)) {
+						const feedback = operationErrorFeedback(error);
+						const discardWritebackPlan = feedback === "index-warning" || operationName === "writeback-commit";
+						updatePageOperation(workspaceId, pageId, {
+							activeOperation: null,
+							error: errorMessage(error),
+							errorCode: typeof error?.code === "string" ? error.code : null,
+							feedback,
+							materialsChanged: feedback === "material-changed" ? true : operationFor(getCurrent(workspaceId), pageId).materialsChanged,
+							writebackPlan: discardWritebackPlan ? null : operationFor(getCurrent(workspaceId), pageId).writebackPlan,
+							writebackConfirmed: discardWritebackPlan ? false : operationFor(getCurrent(workspaceId), pageId).writebackConfirmed,
+							indexWarningManifest: feedback === "index-warning" ? error?.details?.manifest ?? null : null
+						});
+					}
+					throw error;
+				}
+			}
 			function persistReadyAction(workspaceId, action) {
+				assertOpen();
 				const current = getCurrent(workspaceId);
 				const next = reduceWorkspaceState(current, action, reducerEnvironment);
 				if (next === current) return current;
@@ -5829,13 +7669,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					conflictCurrent: null
 				});
 				setState(workspaceId, saving);
-				if (remote !== null) {
-					runtimeFor(workspaceId).saveQueue.push(workspaceStateToDraft(saving));
-					drainWorkspace(workspaceId);
-				}
+				if (remote !== null) scheduleWorkspaceSave(workspaceId, workspaceStateToDraft(saving));
 				return saving;
 			}
 			async function hydrateWorkspace(workspaceId, { force = false } = {}) {
+				assertOpen();
 				assertKnown(workspaceId);
 				if (remote === null) {
 					const current = getCurrent(workspaceId);
@@ -5855,7 +7693,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					try {
 						const record = await remote.get(workspaceId, controller.signal);
 						if (disposed) return getCurrent(workspaceId);
-						let hydrated = ensureRecordIdentity(workspaceId, recordToWorkspaceState(record));
+						let hydrated = preserveClientState(ensureRecordIdentity(workspaceId, recordToWorkspaceState(record)), getCurrent(workspaceId));
 						const pendingActions = runtime.pendingActions.splice(0);
 						for (const action of pendingActions) hydrated = reduceWorkspaceState(hydrated, action, reducerEnvironment);
 						if (pendingActions.length === 0) {
@@ -5864,11 +7702,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						}
 						const saving = stateWith(hydrated, { syncStatus: "saving" });
 						setState(workspaceId, saving);
-						runtime.saveQueue.push(workspaceStateToDraft(saving));
-						drainWorkspace(workspaceId);
+						const draft = workspaceStateToDraft(saving);
+						if (closing) runtime.pendingDraft = draft;
+						else scheduleWorkspaceSave(workspaceId, draft);
 						return saving;
 					} catch (error) {
-						if (disposed || controller.signal.aborted) return getCurrent(workspaceId);
+						if (closing || disposed || controller.signal.aborted) return getCurrent(workspaceId);
 						runtime.pendingActions.length = 0;
 						return setState(workspaceId, stateWith(getCurrent(workspaceId), {
 							syncStatus: "error",
@@ -5882,6 +7721,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return runtime.hydrationPromise;
 			}
 			function dispatch(workspaceId, action) {
+				assertOpen();
 				assertKnown(workspaceId);
 				const current = getCurrent(workspaceId);
 				if (remote === null || ["ready", "saving"].includes(current.syncStatus)) return persistReadyAction(workspaceId, action);
@@ -5903,14 +7743,16 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}
 			return Object.freeze({
 				syncWorkspaces(workspaceItems) {
+					assertOpen();
 					const nextIds = new Set(Array.isArray(workspaceItems) ? workspaceItems.map((item) => item?.workspaceId).filter((id) => typeof id === "string") : []);
 					knownWorkspaceIds.clear();
 					for (const id of nextIds) {
 						knownWorkspaceIds.add(id);
-						if (!states.has(id)) states.set(id, createInitialWorkspaceState(id, remote === null ? "ready" : "idle"));
+						if (!states.has(id)) states.set(id, initialState(id));
 					}
 				},
 				subscribe(listener) {
+					if (closing || disposed) return () => {};
 					listeners.add(listener);
 					return () => listeners.delete(listener);
 				},
@@ -5922,22 +7764,60 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					return getCurrent(workspaceId);
 				},
 				hydrateWorkspace,
+				async loadWorkflowCatalog(workspaceId) {
+					assertOpen();
+					assertKnown(workspaceId);
+					const current = getCurrent(workspaceId);
+					if (current.catalogStatus === "ready") return current.workflows;
+					if (remote === null || typeof remote.getWorkflowCatalog !== "function") throw new Error("workflow catalog is unavailable");
+					const runtime = runtimeFor(workspaceId);
+					if (runtime.catalogPromise) return runtime.catalogPromise;
+					setState(workspaceId, stateWith(current, {
+						catalogStatus: "loading",
+						catalogError: null
+					}));
+					runtime.catalogPromise = (async () => {
+						try {
+							const response = await remote.getWorkflowCatalog(void 0, controller.signal);
+							if (closing || disposed) return [];
+							const workflows = Array.isArray(response?.workflows) ? response.workflows : null;
+							if (workflows === null) throw new Error("Malformed workflow catalog response");
+							setState(workspaceId, stateWith(getCurrent(workspaceId), {
+								catalogStatus: "ready",
+								catalogError: null,
+								workflows
+							}));
+							return workflows;
+						} catch (error) {
+							if (!closing && !disposed && !controller.signal.aborted) setState(workspaceId, stateWith(getCurrent(workspaceId), {
+								catalogStatus: "error",
+								catalogError: errorMessage(error),
+								workflows: []
+							}));
+							throw error;
+						} finally {
+							runtime.catalogPromise = null;
+						}
+					})();
+					return runtime.catalogPromise;
+				},
 				async reloadWorkspace(workspaceId) {
+					assertOpen();
 					assertKnown(workspaceId);
 					const runtime = runtimeFor(workspaceId);
 					runtime.pendingActions.length = 0;
-					runtime.saveQueue.length = 0;
+					runtime.pendingDraft = null;
+					clearScheduledSave(runtime);
 					return hydrateWorkspace(workspaceId, { force: true });
 				},
 				async whenSettled(workspaceId) {
+					assertOpen();
 					assertKnown(workspaceId);
 					const runtime = runtimeFor(workspaceId);
-					while (runtime.hydrationPromise || runtime.drainPromise) {
-						if (runtime.hydrationPromise) await runtime.hydrationPromise;
-						if (runtime.drainPromise) await runtime.drainPromise;
-					}
-					return getCurrent(workspaceId);
+					while (runtime.hydrationPromise) await runtime.hydrationPromise;
+					return flushWorkspace(workspaceId);
 				},
+				flushWorkspace,
 				setPanelMode(workspaceId, panelMode) {
 					return dispatch(workspaceId, {
 						type: "set-panel-mode",
@@ -5945,6 +7825,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					});
 				},
 				setLocalPanelMode(workspaceId, panelMode) {
+					assertOpen();
 					assertKnown(workspaceId);
 					if (!["hidden", "normal"].includes(panelMode)) throw new Error("local panel mode must be hidden or normal");
 					return setState(workspaceId, stateWith(getCurrent(workspaceId), { panelMode }));
@@ -5960,11 +7841,187 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					return pageCreatedBy(action, before, dispatch(workspaceId, action));
 				},
 				selectWorkflow(workspaceId, pageId, workflowId) {
+					assertKnown(workspaceId);
+					const current = getCurrent(workspaceId);
+					if (current.catalogStatus !== "ready") throw new Error("workflow catalog is not ready");
+					const workflow = current.workflows.find((item) => item.workflowId === workflowId);
+					if (!workflow) throw new Error(`workflow catalog does not contain ${workflowId}`);
 					return dispatch(workspaceId, {
 						type: "select-workflow",
 						pageId,
-						workflowId
+						workflow
 					});
+				},
+				updateFormValue(workspaceId, pageId, fieldId, value) {
+					return dispatch(workspaceId, {
+						type: "update-form-value",
+						pageId,
+						fieldId,
+						value
+					});
+				},
+				setMaterialDraft(workspaceId, pageId, materialPath, confirmed) {
+					return updatePageOperation(workspaceId, pageId, {
+						materialPath: String(materialPath),
+						materialConfirmed: confirmed === true,
+						error: null,
+						errorCode: null,
+						feedback: null
+					});
+				},
+				async addMaterial(workspaceId, pageId) {
+					const operation = operationFor(getCurrent(workspaceId), pageId);
+					if (operation.materialConfirmed !== true) throw new Error("Material confirmation is required");
+					if (operation.materialPath.trim().length === 0) throw new Error("Material path is required");
+					return runPageOperation(workspaceId, pageId, "material-add", (current) => remote.addMaterial({
+						workspaceId,
+						taskId: pageId,
+						expectedRevision: current.revision,
+						relativePath: operation.materialPath.trim(),
+						confirmed: true
+					}, controller.signal), () => ({
+						materialPath: "",
+						materialConfirmed: false,
+						materialsChanged: false,
+						feedback: "material-added"
+					}));
+				},
+				async refreshMaterial(workspaceId, pageId, referenceId) {
+					return runPageOperation(workspaceId, pageId, "material-refresh", (current) => remote.refreshMaterial({
+						workspaceId,
+						taskId: pageId,
+						referenceId,
+						expectedRevision: current.revision
+					}, controller.signal), () => ({
+						materialsChanged: false,
+						feedback: "material-refreshed"
+					}));
+				},
+				async removeMaterial(workspaceId, pageId, referenceId, confirmed) {
+					if (confirmed !== true) throw new Error("Material removal confirmation is required");
+					return runPageOperation(workspaceId, pageId, "material-remove", (current) => remote.removeMaterial({
+						workspaceId,
+						taskId: pageId,
+						referenceId,
+						expectedRevision: current.revision
+					}, controller.signal), () => ({
+						materialsChanged: false,
+						feedback: "material-removed"
+					}));
+				},
+				async createRun(workspaceId, pageId) {
+					if (pageFor(workspaceId, pageId).workflowId === null) throw new Error("A workflow must be selected before generation");
+					const requestKey = operationFor(getCurrent(workspaceId), pageId).requestKey ?? createRequestKey();
+					if (typeof requestKey !== "string" || requestKey.length === 0) throw new Error("createRequestKey must return a non-empty string");
+					updatePageOperation(workspaceId, pageId, { requestKey });
+					return runPageOperation(workspaceId, pageId, "run-create", (current) => remote.createRun({
+						workspaceId,
+						taskId: pageId,
+						expectedRevision: current.revision,
+						requestKey
+					}, controller.signal), () => ({
+						requestKey: null,
+						materialsChanged: false,
+						feedback: "run-completed"
+					}));
+				},
+				setReviewNote(workspaceId, pageId, note) {
+					return updatePageOperation(workspaceId, pageId, {
+						reviewNote: String(note),
+						error: null,
+						errorCode: null,
+						feedback: null
+					});
+				},
+				async reviewRun(workspaceId, pageId, runId, status, note) {
+					const run = pageFor(workspaceId, pageId).runs[runId];
+					if (!run) throw new Error("unknown run");
+					const reviewNote = String(note);
+					if (status === "approved" && run.result.contentStatus === "blocked") throw new Error("Blocked results cannot be approved");
+					if (status === "changes-requested" && reviewNote.trim().length === 0) throw new Error("Changes-requested review requires a note");
+					return runPageOperation(workspaceId, pageId, "run-review", (current) => remote.reviewRun({
+						workspaceId,
+						taskId: pageId,
+						runId,
+						expectedRevision: current.revision,
+						status,
+						note: reviewNote
+					}, controller.signal), () => ({ feedback: status === "approved" ? "review-approved" : "review-changes-requested" }));
+				},
+				setWritebackDraft(workspaceId, pageId, relativeDirectory, confirmed) {
+					return updatePageOperation(workspaceId, pageId, {
+						writebackDirectory: String(relativeDirectory),
+						writebackConfirmed: confirmed === true,
+						writebackPlan: null,
+						error: null,
+						errorCode: null,
+						feedback: null
+					});
+				},
+				setWritebackConfirmation(workspaceId, pageId, confirmed) {
+					return updatePageOperation(workspaceId, pageId, {
+						writebackConfirmed: confirmed === true,
+						error: null,
+						errorCode: null
+					});
+				},
+				async prepareWriteback(workspaceId, pageId, runId) {
+					const run = pageFor(workspaceId, pageId).runs[runId];
+					if (!run) throw new Error("unknown run");
+					if (run.result.contentStatus === "blocked") throw new Error("Blocked results cannot be written back");
+					if (run.review.status !== "approved") throw new Error("An approved run is required before writeback");
+					const operation = operationFor(getCurrent(workspaceId), pageId);
+					const relativeDirectory = operation.writebackDirectory.trim();
+					if (relativeDirectory.length === 0) throw new Error("Writeback directory is required");
+					if (operation.activeOperation !== null) throw new Error("another page operation is already in progress");
+					updatePageOperation(workspaceId, pageId, {
+						activeOperation: "writeback-prepare",
+						error: null,
+						errorCode: null,
+						feedback: null,
+						writebackPlan: null,
+						writebackConfirmed: false
+					});
+					try {
+						await flushWorkspace(workspaceId);
+						const current = getCurrent(workspaceId);
+						if (current.syncStatus !== "ready") throw new Error("Workspace is not ready for writeback preparation");
+						const prepared = await remote.prepareWriteback({
+							workspaceId,
+							taskId: pageId,
+							runId,
+							artifactId: run.result.artifact.artifactId,
+							expectedRevision: current.revision,
+							relativeDirectory
+						}, controller.signal);
+						if (closing || disposed || controller.signal.aborted) return prepared;
+						updatePageOperation(workspaceId, pageId, {
+							activeOperation: null,
+							writebackPlan: prepared,
+							writebackConfirmed: false,
+							feedback: "writeback-prepared"
+						});
+						return prepared;
+					} catch (error) {
+						if (!closing && !disposed) updatePageOperation(workspaceId, pageId, {
+							activeOperation: null,
+							error: errorMessage(error),
+							errorCode: typeof error?.code === "string" ? error.code : null,
+							feedback: operationErrorFeedback(error)
+						});
+						throw error;
+					}
+				},
+				async commitWriteback(workspaceId, pageId) {
+					const operation = operationFor(getCurrent(workspaceId), pageId);
+					if (!operation.writebackPlan) throw new Error("Writeback must be prepared before commit");
+					if (operation.writebackConfirmed !== true) throw new Error("Writeback confirmation is required");
+					const confirmationToken = operation.writebackPlan.confirmationToken;
+					return runPageOperation(workspaceId, pageId, "writeback-commit", () => remote.commitWriteback(confirmationToken, controller.signal), () => ({
+						writebackPlan: null,
+						writebackConfirmed: false,
+						feedback: "writeback-success"
+					}));
 				},
 				renamePage(workspaceId, pageId, title) {
 					return dispatch(workspaceId, {
@@ -5979,6 +8036,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						pageId
 					});
 				},
+				activateRun(workspaceId, pageId, runId) {
+					return dispatch(workspaceId, {
+						type: "activate-run",
+						pageId,
+						runId
+					});
+				},
 				closePage(workspaceId, pageId) {
 					return dispatch(workspaceId, {
 						type: "close-page",
@@ -5986,14 +8050,36 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					});
 				},
 				dispose() {
-					if (disposed) return;
-					disposed = true;
-					controller.abort();
-					for (const runtime of runtimes.values()) {
-						runtime.pendingActions.length = 0;
-						runtime.saveQueue.length = 0;
-					}
-					listeners.clear();
+					if (disposePromise) return disposePromise;
+					closing = true;
+					const bestEffortDrains = Promise.all([...knownWorkspaceIds].map((workspaceId) => flushWorkspaceInternal(workspaceId))).catch(() => void 0);
+					let deadlineTimer = null;
+					const deadline = new Promise((resolveDeadline) => {
+						deadlineTimer = scheduler.setTimeout(resolveDeadline, disposeDrainMs);
+					});
+					disposePromise = (async () => {
+						try {
+							await Promise.race([bestEffortDrains, deadline]);
+						} finally {
+							if (deadlineTimer !== null) scheduler.clearTimeout(deadlineTimer);
+							deadlineTimer = null;
+							controller.abort();
+							disposed = true;
+							for (const runtime of runtimes.values()) {
+								runtime.pendingActions.length = 0;
+								runtime.pendingDraft = null;
+								clearScheduledSave(runtime);
+								runtime.hydrationPromise = null;
+								runtime.catalogPromise = null;
+								runtime.drainPromise = null;
+							}
+							knownWorkspaceIds.clear();
+							states.clear();
+							runtimes.clear();
+							listeners.clear();
+						}
+					})();
+					return disposePromise;
 				}
 			});
 		}
@@ -6009,6 +8095,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const store = createWorkbenchStore({ remote: createWorkbenchRemote(connection) });
 			const focusTargets = /* @__PURE__ */ new Map();
 			const layoutAdapter = createLayoutAdapter();
+			const coordinator = createPanelHostCoordinator({ layoutAdapter });
+			const betterSidebarDescriptor = createOasisBetterSidebarDescriptor({
+				coordinator,
+				store,
+				focusTargets,
+				layoutAdapter
+			});
 			const disposeEntry = slots.inject("conversation.input.right", () => slots.register({
 				name: "conversation.input.right",
 				id: ENTRY_ID,
@@ -6018,24 +8111,54 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				...props,
 				store,
 				focusTargets,
-				layoutAdapter
+				layoutAdapter,
+				coordinator
 			})));
-			const disposePanel = slots.inject("shell.overlay", () => slots.register({
+			const disposeBridge = slots.inject("shell.overlay", () => slots.register({
 				name: "shell.overlay",
 				id: PANEL_ID,
 				order: 80,
 				label: "Oasis professional panel"
-			}, (props) => (0, react.createElement)(OasisPanelPortal, {
+			}, (props) => (0, react.createElement)(WorkspaceContextBridge, {
 				...props,
 				store,
 				focusTargets,
-				layoutAdapter
+				layoutAdapter,
+				coordinator
 			})));
-			return () => {
-				disposePanel();
-				disposeEntry();
-				layoutAdapter.dispose();
-				store.dispose();
+			let betterSidebarFiber = null;
+			if (typeof ctx.inject === "function") try {
+				betterSidebarFiber = ctx.inject(["betterSidebar"], (injectedCtx) => {
+					const betterSidebar = injectedCtx.get?.("betterSidebar") ?? injectedCtx.betterSidebar;
+					return coordinator.attachBetterSidebar(betterSidebar, betterSidebarDescriptor);
+				});
+				if (typeof betterSidebarFiber?.dispose !== "function") coordinator.block("better-sidebar-injection-disposer-invalid");
+			} catch {
+				coordinator.block("better-sidebar-injection-failed");
+			}
+			else coordinator.reconcileExternalState();
+			return async () => {
+				try {
+					await disposeBridge();
+				} finally {
+					try {
+						await disposeEntry();
+					} finally {
+						try {
+							await betterSidebarFiber?.dispose?.();
+						} finally {
+							try {
+								coordinator.dispose();
+							} finally {
+								try {
+									layoutAdapter.dispose();
+								} finally {
+									await store.dispose();
+								}
+							}
+						}
+					}
+				}
 			};
 		}
 		//#endregion

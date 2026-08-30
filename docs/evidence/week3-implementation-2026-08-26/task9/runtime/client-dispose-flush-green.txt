@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: registers additive entry and panel host slots but never details
+ok 1 - registers additive entry and panel host slots but never details
+  ---
+  duration_ms: 1.8697
+  type: 'test'
+  ...
+# Subtest: fails closed when the DSH Connection service is unavailable
+ok 2 - fails closed when the DSH Connection service is unavailable
+  ---
+  duration_ms: 0.089
+  type: 'test'
+  ...
+# Subtest: entry opens a visible normal panel directly through the shared store
+ok 3 - entry opens a visible normal panel directly through the shared store
+  ---
+  duration_ms: 3.419
+  type: 'test'
+  ...
+# Subtest: entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+ok 4 - entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+  ---
+  duration_ms: 0.224
+  type: 'test'
+  ...
+# Subtest: client no longer uses a window CustomEvent as its open transport
+ok 5 - client no longer uses a window CustomEvent as its open transport
+  ---
+  duration_ms: 0.3992
+  type: 'test'
+  ...
+# Subtest: panel never opens or closes the occupied DSH details modal for geometry
+ok 6 - panel never opens or closes the occupied DSH details modal for geometry
+  ---
+  duration_ms: 0.3036
+  type: 'test'
+  ...
+# Subtest: uses the approved Codex show hide expand and restore SVG paths
+ok 7 - uses the approved Codex show hide expand and restore SVG paths
+  ---
+  duration_ms: 0.1578
+  type: 'test'
+  ...
+# Subtest: flushes drafts before task switch, confirmed history close, and panel hide
+ok 8 - flushes drafts before task switch, confirmed history close, and panel hide
+  ---
+  duration_ms: 1.9572
+  type: 'test'
+  ...
+# Subtest: panel Host loads persisted state and remote workflow catalog for each resolved Workspace
+ok 9 - panel Host loads persisted state and remote workflow catalog for each resolved Workspace
+  ---
+  duration_ms: 0.6282
+  type: 'test'
+  ...
+# Subtest: never saves the default state before hydration, then applies the queued open action
+ok 10 - never saves the default state before hydration, then applies the queued open action
+  ---
+  duration_ms: 6.4337
+  type: 'test'
+  ...
+# Subtest: hydrates persisted pages without issuing a replacement
+ok 11 - hydrates persisted pages without issuing a replacement
+  ---
+  duration_ms: 0.4961
+  type: 'test'
+  ...
+# Subtest: coalesces rapid same-Workspace actions into the latest draft
+ok 12 - coalesces rapid same-Workspace actions into the latest draft
+  ---
+  duration_ms: 0.6786
+  type: 'test'
+  ...
+# Subtest: updates form state immediately, saves after 400 ms, and flushes before the deadline
+ok 13 - updates form state immediately, saves after 400 ms, and flushes before the deadline
+  ---
+  duration_ms: 1.2447
+  type: 'test'
+  ...
+# Subtest: dispose flushes a pending debounced draft before aborting the remote
+ok 14 - dispose flushes a pending debounced draft before aborting the remote
+  ---
+  duration_ms: 0.8059
+  type: 'test'
+  ...
+# Subtest: keeps Workspace save queues independent
+ok 15 - keeps Workspace save queues independent
+  ---
+  duration_ms: 1.1261
+  type: 'test'
+  ...
+# Subtest: preserves the local draft on revision conflict and reloads only on explicit request
+ok 16 - preserves the local draft on revision conflict and reloads only on explicit request
+  ---
+  duration_ms: 0.5206
+  type: 'test'
+  ...
+# Subtest: shows transport failure without discarding the unsaved draft
+ok 17 - shows transport failure without discarding the unsaved draft
+  ---
+  duration_ms: 0.4819
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 230.6345

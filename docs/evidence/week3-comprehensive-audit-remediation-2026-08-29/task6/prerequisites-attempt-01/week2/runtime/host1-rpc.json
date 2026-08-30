@@ -1,0 +1,211 @@
+{
+  "workspaceAId": "eff50a46-818d-4435-8bda-d2175231af17",
+  "workspaceBId": "82b04d58-3efd-41ae-8fc4-d017a7ad7867",
+  "initialA": {
+    "committed": true,
+    "current": {
+      "schemaVersion": 2,
+      "panelMode": "normal",
+      "activeTaskId": "task-a1",
+      "taskOrder": [
+        "task-a1",
+        "task-a2"
+      ],
+      "tasks": {
+        "task-a1": {
+          "taskId": "task-a1",
+          "title": "Host1 A 基线任务",
+          "workType": "cn-invention-patent",
+          "workflowId": "cn-invention-patent",
+          "workflowVersion": "1",
+          "formValues": {},
+          "inputRefs": [],
+          "activeRunId": null,
+          "runOrder": [],
+          "runs": {},
+          "createdAt": "2026-08-25T06:00:00.000Z",
+          "updatedAt": "2026-08-25T06:00:00.000Z"
+        },
+        "task-a2": {
+          "taskId": "task-a2",
+          "title": "Host1 A 研发任务",
+          "workType": "technical-rd",
+          "workflowId": "technical-rd",
+          "workflowVersion": "1",
+          "formValues": {},
+          "inputRefs": [],
+          "activeRunId": null,
+          "runOrder": [],
+          "runs": {},
+          "createdAt": "2026-08-25T06:00:00.000Z",
+          "updatedAt": "2026-08-25T06:00:00.000Z"
+        }
+      },
+      "workspaceId": "eff50a46-818d-4435-8bda-d2175231af17",
+      "revision": 1,
+      "updatedAt": "2026-08-30T04:32:30.556Z"
+    }
+  },
+  "concurrent": [
+    {
+      "committed": true,
+      "current": {
+        "schemaVersion": 2,
+        "panelMode": "normal",
+        "activeTaskId": "task-a1",
+        "taskOrder": [
+          "task-a1",
+          "task-a2"
+        ],
+        "tasks": {
+          "task-a1": {
+            "taskId": "task-a1",
+            "title": "Host1 A 并发甲任务",
+            "workType": "cn-invention-patent",
+            "workflowId": "cn-invention-patent",
+            "workflowVersion": "1",
+            "formValues": {},
+            "inputRefs": [],
+            "activeRunId": null,
+            "runOrder": [],
+            "runs": {},
+            "createdAt": "2026-08-25T06:00:00.000Z",
+            "updatedAt": "2026-08-25T06:00:00.000Z"
+          },
+          "task-a2": {
+            "taskId": "task-a2",
+            "title": "Host1 A 研发任务",
+            "workType": "technical-rd",
+            "workflowId": "technical-rd",
+            "workflowVersion": "1",
+            "formValues": {},
+            "inputRefs": [],
+            "activeRunId": null,
+            "runOrder": [],
+            "runs": {},
+            "createdAt": "2026-08-25T06:00:00.000Z",
+            "updatedAt": "2026-08-25T06:00:00.000Z"
+          }
+        },
+        "workspaceId": "eff50a46-818d-4435-8bda-d2175231af17",
+        "revision": 2,
+        "updatedAt": "2026-08-30T04:32:30.567Z"
+      }
+    },
+    {
+      "committed": false,
+      "reason": "revision-conflict",
+      "current": {
+        "schemaVersion": 2,
+        "panelMode": "normal",
+        "activeTaskId": "task-a1",
+        "taskOrder": [
+          "task-a1",
+          "task-a2"
+        ],
+        "tasks": {
+          "task-a1": {
+            "taskId": "task-a1",
+            "title": "Host1 A 并发甲任务",
+            "workType": "cn-invention-patent",
+            "workflowId": "cn-invention-patent",
+            "workflowVersion": "1",
+            "formValues": {},
+            "inputRefs": [],
+            "activeRunId": null,
+            "runOrder": [],
+            "runs": {},
+            "createdAt": "2026-08-25T06:00:00.000Z",
+            "updatedAt": "2026-08-25T06:00:00.000Z"
+          },
+          "task-a2": {
+            "taskId": "task-a2",
+            "title": "Host1 A 研发任务",
+            "workType": "technical-rd",
+            "workflowId": "technical-rd",
+            "workflowVersion": "1",
+            "formValues": {},
+            "inputRefs": [],
+            "activeRunId": null,
+            "runOrder": [],
+            "runs": {},
+            "createdAt": "2026-08-25T06:00:00.000Z",
+            "updatedAt": "2026-08-25T06:00:00.000Z"
+          }
+        },
+        "workspaceId": "eff50a46-818d-4435-8bda-d2175231af17",
+        "revision": 2,
+        "updatedAt": "2026-08-30T04:32:30.567Z"
+      }
+    }
+  ],
+  "host1GetA": {
+    "schemaVersion": 2,
+    "panelMode": "normal",
+    "activeTaskId": "task-a1",
+    "taskOrder": [
+      "task-a1",
+      "task-a2"
+    ],
+    "tasks": {
+      "task-a1": {
+        "taskId": "task-a1",
+        "title": "Host1 A 并发甲任务",
+        "workType": "cn-invention-patent",
+        "workflowId": "cn-invention-patent",
+        "workflowVersion": "1",
+        "formValues": {},
+        "inputRefs": [],
+        "activeRunId": null,
+        "runOrder": [],
+        "runs": {},
+        "createdAt": "2026-08-25T06:00:00.000Z",
+        "updatedAt": "2026-08-25T06:00:00.000Z"
+      },
+      "task-a2": {
+        "taskId": "task-a2",
+        "title": "Host1 A 研发任务",
+        "workType": "technical-rd",
+        "workflowId": "technical-rd",
+        "workflowVersion": "1",
+        "formValues": {},
+        "inputRefs": [],
+        "activeRunId": null,
+        "runOrder": [],
+        "runs": {},
+        "createdAt": "2026-08-25T06:00:00.000Z",
+        "updatedAt": "2026-08-25T06:00:00.000Z"
+      }
+    },
+    "workspaceId": "eff50a46-818d-4435-8bda-d2175231af17",
+    "revision": 2,
+    "updatedAt": "2026-08-30T04:32:30.567Z"
+  },
+  "host1GetB": {
+    "schemaVersion": 2,
+    "panelMode": "hidden",
+    "activeTaskId": "task-b1",
+    "taskOrder": [
+      "task-b1"
+    ],
+    "tasks": {
+      "task-b1": {
+        "taskId": "task-b1",
+        "title": "Host1 B 专利任务",
+        "workType": "cn-invention-patent",
+        "workflowId": "cn-invention-patent",
+        "workflowVersion": "1",
+        "formValues": {},
+        "inputRefs": [],
+        "activeRunId": null,
+        "runOrder": [],
+        "runs": {},
+        "createdAt": "2026-08-25T06:00:00.000Z",
+        "updatedAt": "2026-08-25T06:00:00.000Z"
+      }
+    },
+    "workspaceId": "82b04d58-3efd-41ae-8fc4-d017a7ad7867",
+    "revision": 1,
+    "updatedAt": "2026-08-30T04:32:30.579Z"
+  }
+}

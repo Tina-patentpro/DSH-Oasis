@@ -1,0 +1,1279 @@
+{
+  "workspace": {
+    "type": "server-response",
+    "rpcId": "week1-verifier-workspace-create",
+    "result": {
+      "ok": true,
+      "value": {
+        "workspace": {
+          "workspaceId": "bf8dead5-0aab-4452-a26d-06521c6dbe16",
+          "path": "C:\\Users\\TinaD\\AppData\\Local\\Temp\\oasis-portability-copy-20260830-renamed",
+          "title": "oasis-portability-copy-20260830-renamed",
+          "sessionIds": [],
+          "createdAt": "2026-08-30T02:46:18.132Z",
+          "updatedAt": "2026-08-30T02:46:18.132Z"
+        },
+        "created": true
+      }
+    }
+  },
+  "session": {
+    "type": "server-response",
+    "rpcId": "week1-verifier-session-create",
+    "result": {
+      "ok": true,
+      "value": {
+        "sessionId": "session-607a3186-4a23-4073-bfb7-68840aeb37d3",
+        "agentPreset": "standard"
+      }
+    }
+  },
+  "sessionA2": {
+    "type": "server-response",
+    "rpcId": "week1-verifier-session-a2-create",
+    "result": {
+      "ok": true,
+      "value": {
+        "sessionId": "session-129e411a-3bb8-4ce9-ab12-337b92fd7b4e",
+        "agentPreset": "standard"
+      }
+    }
+  },
+  "workspaceB": {
+    "type": "server-response",
+    "rpcId": "week1-verifier-workspace-b-create",
+    "result": {
+      "ok": true,
+      "value": {
+        "workspace": {
+          "workspaceId": "33857558-16c5-4d9d-98dc-9c63fa409e4e",
+          "path": "C:\\Users\\TinaD\\AppData\\Local\\Temp\\oasis-portability-copy-20260830-renamed\\packages\\oasis-professional-service",
+          "title": "oasis-professional-service",
+          "sessionIds": [],
+          "createdAt": "2026-08-30T02:46:18.668Z",
+          "updatedAt": "2026-08-30T02:46:18.668Z"
+        },
+        "created": true
+      }
+    }
+  },
+  "sessionB": {
+    "type": "server-response",
+    "rpcId": "week1-verifier-session-b-create",
+    "result": {
+      "ok": true,
+      "value": {
+        "sessionId": "session-bb81cc86-9996-4344-b831-340e4627dfc3",
+        "agentPreset": "standard"
+      }
+    }
+  },
+  "seeds": {
+    "sessionA1": {
+      "renamed": {
+        "type": "server-response",
+        "rpcId": "week1-verifier-session-a1-rename",
+        "result": {
+          "ok": true,
+          "value": {
+            "title": "Oasis 验证 A-1",
+            "seq": 3
+          }
+        }
+      },
+      "prompted": {
+        "type": "server-response",
+        "rpcId": "week1-verifier-session-a1-prompt",
+        "result": {
+          "ok": true,
+          "value": {
+            "accepted": true
+          }
+        }
+      }
+    },
+    "sessionA2": {
+      "renamed": {
+        "type": "server-response",
+        "rpcId": "week1-verifier-session-a2-rename",
+        "result": {
+          "ok": true,
+          "value": {
+            "title": "Oasis 验证 A-2",
+            "seq": 3
+          }
+        }
+      },
+      "prompted": {
+        "type": "server-response",
+        "rpcId": "week1-verifier-session-a2-prompt",
+        "result": {
+          "ok": true,
+          "value": {
+            "accepted": true
+          }
+        }
+      }
+    },
+    "sessionB": {
+      "renamed": {
+        "type": "server-response",
+        "rpcId": "week1-verifier-session-b1-rename",
+        "result": {
+          "ok": true,
+          "value": {
+            "title": "Oasis 验证 B-1",
+            "seq": 3
+          }
+        }
+      },
+      "prompted": {
+        "type": "server-response",
+        "rpcId": "week1-verifier-session-b1-prompt",
+        "result": {
+          "ok": true,
+          "value": {
+            "accepted": true
+          }
+        }
+      }
+    }
+  },
+  "visibleSessions": {
+    "type": "server-response",
+    "rpcId": "week1-verifier-session-list-0",
+    "result": {
+      "ok": true,
+      "value": {
+        "items": [
+          {
+            "sessionId": "session-bb81cc86-9996-4344-b831-340e4627dfc3",
+            "updatedAt": 1788057978704,
+            "running": true,
+            "blank": false,
+            "cwd": "C:\\Users\\TinaD\\AppData\\Local\\Temp\\oasis-portability-copy-20260830-renamed\\packages\\oasis-professional-service",
+            "agentPreset": "standard",
+            "projections": {
+              "asOfSeq": 6,
+              "values": {
+                "sessionStats": {
+                  "turns": 0,
+                  "steps": 0,
+                  "llmMs": 0,
+                  "toolMs": 0,
+                  "ttftMs": 0,
+                  "ttftSteps": 0,
+                  "decodeMs": 0,
+                  "decodeTokens": 0
+                },
+                "title": "Oasis 验证 B-1",
+                "goal": null,
+                "tokenUsage": {
+                  "uncachedInputTokens": 0,
+                  "outputTokens": 0,
+                  "cacheReadTokens": 0,
+                  "cacheWriteTokens": 0
+                },
+                "contextPressure": {},
+                "contextBreakdown": {
+                  "systemTokens": 0,
+                  "toolsTokens": 0,
+                  "messageTokens": 0
+                },
+                "subagentTiming": {
+                  "settledMs": 0
+                },
+                "subagent": null,
+                "permissions": {
+                  "options": [
+                    {
+                      "value": "read-only",
+                      "name": "read-only"
+                    },
+                    {
+                      "value": "workspace-write",
+                      "name": "workspace-write"
+                    },
+                    {
+                      "value": "danger-full-access",
+                      "name": "danger-full-access"
+                    }
+                  ],
+                  "currentValue": "workspace-write"
+                },
+                "sessionListMetadata": {
+                  "blank": false,
+                  "lastPromptAt": null
+                },
+                "imageLimits": {
+                  "maxImageBytes": 20971520,
+                  "maxImagesPerMessage": 20,
+                  "maxMessageImageBytes": 209715200,
+                  "maxImagePixels": 64000000,
+                  "maxImageDimension": 8192,
+                  "mediaTypes": [
+                    "image/png",
+                    "image/jpeg",
+                    "image/webp",
+                    "image/gif"
+                  ]
+                },
+                "todos": null,
+                "plan": {
+                  "active": false,
+                  "pending": false
+                }
+              }
+            }
+          },
+          {
+            "sessionId": "session-129e411a-3bb8-4ce9-ab12-337b92fd7b4e",
+            "updatedAt": 1788057978643,
+            "running": true,
+            "blank": false,
+            "cwd": "C:\\Users\\TinaD\\AppData\\Local\\Temp\\oasis-portability-copy-20260830-renamed",
+            "agentPreset": "standard",
+            "projections": {
+              "asOfSeq": 6,
+              "values": {
+                "sessionStats": {
+                  "turns": 0,
+                  "steps": 0,
+                  "llmMs": 0,
+                  "toolMs": 0,
+                  "ttftMs": 0,
+                  "ttftSteps": 0,
+                  "decodeMs": 0,
+                  "decodeTokens": 0
+                },
+                "title": "Oasis 验证 A-2",
+                "goal": null,
+                "tokenUsage": {
+                  "uncachedInputTokens": 0,
+                  "outputTokens": 0,
+                  "cacheReadTokens": 0,
+                  "cacheWriteTokens": 0
+                },
+                "contextPressure": {},
+                "contextBreakdown": {
+                  "systemTokens": 0,
+                  "toolsTokens": 0,
+                  "messageTokens": 0
+                },
+                "subagentTiming": {
+                  "settledMs": 0
+                },
+                "subagent": null,
+                "permissions": {
+                  "options": [
+                    {
+                      "value": "read-only",
+                      "name": "read-only"
+                    },
+                    {
+                      "value": "workspace-write",
+                      "name": "workspace-write"
+                    },
+                    {
+                      "value": "danger-full-access",
+                      "name": "danger-full-access"
+                    }
+                  ],
+                  "currentValue": "workspace-write"
+                },
+                "sessionListMetadata": {
+                  "blank": false,
+                  "lastPromptAt": null
+                },
+                "imageLimits": {
+                  "maxImageBytes": 20971520,
+                  "maxImagesPerMessage": 20,
+                  "maxMessageImageBytes": 209715200,
+                  "maxImagePixels": 64000000,
+                  "maxImageDimension": 8192,
+                  "mediaTypes": [
+                    "image/png",
+                    "image/jpeg",
+                    "image/webp",
+                    "image/gif"
+                  ]
+                },
+                "todos": null,
+                "plan": {
+                  "active": false,
+                  "pending": false
+                }
+              }
+            }
+          },
+          {
+            "sessionId": "session-607a3186-4a23-4073-bfb7-68840aeb37d3",
+            "updatedAt": 1788057978196,
+            "running": true,
+            "blank": false,
+            "cwd": "C:\\Users\\TinaD\\AppData\\Local\\Temp\\oasis-portability-copy-20260830-renamed",
+            "agentPreset": "standard",
+            "projections": {
+              "asOfSeq": 6,
+              "values": {
+                "sessionStats": {
+                  "turns": 0,
+                  "steps": 0,
+                  "llmMs": 0,
+                  "toolMs": 0,
+                  "ttftMs": 0,
+                  "ttftSteps": 0,
+                  "decodeMs": 0,
+                  "decodeTokens": 0
+                },
+                "title": "Oasis 验证 A-1",
+                "goal": null,
+                "tokenUsage": {
+                  "uncachedInputTokens": 0,
+                  "outputTokens": 0,
+                  "cacheReadTokens": 0,
+                  "cacheWriteTokens": 0
+                },
+                "contextPressure": {},
+                "contextBreakdown": {
+                  "systemTokens": 0,
+                  "toolsTokens": 0,
+                  "messageTokens": 0
+                },
+                "subagentTiming": {
+                  "settledMs": 0
+                },
+                "subagent": null,
+                "permissions": {
+                  "options": [
+                    {
+                      "value": "read-only",
+                      "name": "read-only"
+                    },
+                    {
+                      "value": "workspace-write",
+                      "name": "workspace-write"
+                    },
+                    {
+                      "value": "danger-full-access",
+                      "name": "danger-full-access"
+                    }
+                  ],
+                  "currentValue": "workspace-write"
+                },
+                "sessionListMetadata": {
+                  "blank": false,
+                  "lastPromptAt": null
+                },
+                "imageLimits": {
+                  "maxImageBytes": 20971520,
+                  "maxImagesPerMessage": 20,
+                  "maxMessageImageBytes": 209715200,
+                  "maxImagePixels": 64000000,
+                  "maxImageDimension": 8192,
+                  "mediaTypes": [
+                    "image/png",
+                    "image/jpeg",
+                    "image/webp",
+                    "image/gif"
+                  ]
+                },
+                "todos": null,
+                "plan": {
+                  "active": false,
+                  "pending": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "skills": {
+    "type": "server-response",
+    "rpcId": "week1-verifier-skill-list",
+    "result": {
+      "ok": true,
+      "value": {
+        "skills": [
+          {
+            "name": "algorithmic-art",
+            "description": "Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Use this when users request creating art using code, generative art, algorithmic art, flow fields, or particle systems. Create original algorithmic art rather than copying existing artists' work to avoid copyright violations.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-aes-sysom-os-diagnosis",
+            "description": "Perform SysOM deep OS-level diagnosis on Alibaba Cloud ECS instances to identify\nroot causes of performance issues (CPU spikes, memory leaks, IO latency, etc.).\nUse when users report ECS instance performance problems, need kernel-level\ntroubleshooting, or want to set up continuous automated diagnosis with instance\nenrollment and DingTalk alert notifications.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-agentbay-aio-skills",
+            "description": "Execute code in a secure cloud sandbox via AgentBay SDK. Use this skill whenever users request to run, execute, or evaluate code (Python, JavaScript, R, Java), including plotting charts, running scripts, or viewing code output. Covers requests like \"run this code\", \"execute script\", \"plot with Python\", \"run data analysis\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-analyticdb-mysql-copilot",
+            "description": "Alibaba Cloud AnalyticDB for MySQL Operations & Diagnosis Assistant. Supports cluster info queries, performance monitoring, slow query diagnosis, running SQL analysis, table-level optimization suggestions, etc.\nTriggers: \"ADB MySQL\", \"AnalyticDB\", \"cluster list\", \"slow query\", \"BadSQL\", \"data skew\", \"idle index\", \"SQL Pattern\", \"space diagnosis\", \"table diagnosis\", \"performance monitoring\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-analyticdb-postgresql-ai-coaching-best-practice",
+            "description": "Implement AI Coaching best practices on AnalyticDB for PostgreSQL (ADBPG): Leverage Supabase projects (training data management) + ADBPG instances with vector optimization to build RAG-driven coaching systems that guide users through domain-specific workflows, decision-making, or skill development.\nUse when: User wants to create Supabase projects (spb-xxx), ADBPG instances (gp-xxx), vector knowledge bases, or RAG-driven coaching systems on ADBPG.\nTriggers: \"Supabase\", \"ADBPG\", \"vector database\", \"knowledge base\", \"RAG\", \"AI coaching\", \"coaching system\", \"spb-xxx\", \"gp-xxx\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-analyticdb-postgresql-knowledgebase-ops",
+            "description": "ADBPG Knowledge Base Management: Create knowledge bases, upload documents, search, Q&A.\nTriggers: \"knowledge base\", \"document library\", \"document upload\", \"knowledge search\", \"RAG\", \"Q&A\", \"embedding\", \"ADBPG\", \"AnalyticDB PostgreSQL\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-analyticdb-postgresql-supabase-ops",
+            "description": "Manage the full lifecycle of ADBPG Supabase projects.\nUse for listing/querying projects, create, pause/resume, reset password, API Keys, and security IP management.\nTriggers: \"Supabase\", \"supabase project\", \"spb-xxx\", \"ADBPG Supabase\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-avatar-video",
+            "description": "Use Alibaba Cloud DashScope API and LingMou to generate AI video and speech. Seven capabilities — (1) LivePortrait talking-head (image + audio → video, two-step), (2) EMO talking-head, (3) AA/AnimateAnyone full-body animation (three-step), (4) T2I text-to-image (Wan 2.x, default wan2.2-t2i-flash), (5) I2V image-to-video (Wan 2.x, default wan2.7-i2v-flash, supports T2I→I2V pipeline), (6) Qwen TTS (auto model/voice by scene, default qwen3-tts-vd-realtime-2026-01-15), (7) LingMou digital-human template video with random template, public-template copy, and script confirmation. Trigger when the user needs talking-head, portrait, full-body animation, text-to-image, text-to-video, or speech synthesis.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-bailian-rag-knowledgebase",
+            "description": "Alibaba Cloud Bailian Knowledge Base Retrieval Tool. Use Alibaba Cloud Bailian SDK to query and retrieve knowledge base content. Use when: User needs to query knowledge base, retrieve document content, or answer questions based on knowledge base. Prerequisites: (1) Install npm packages (2) Configure Alibaba Cloud credentials (via Alibaba Cloud CLI or environment variables). (3) Need to activate Bailian service.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-bailian-videoanalysis",
+            "description": "Alibaba Cloud Bailian Video Analysis Skill. Use for intelligent video comprehension and analysis via the Bailian (QuanMiaoLightApp) API.\n**Required API Product**: QuanMiaoLightApp (version 2024-08-01)\n**Required API Actions**: SubmitVideoAnalysisTask, GetVideoAnalysisTask\n**DO NOT use**: videorecog, Mts, or any other product for video analysis\nTriggers: \"analyze video\", \"understand video\", \"analyze the local video /temp/xxx.mp4\", \"analyze the local video https://xxx.com/temp/xxx.mp4\", \"what is this video about\", \"summarize this video\", \"split video into shots\", \"video comprehension\", \"extract video insights\", \"transcribe video\", \"extract video captions\", \"generate video title\", \"generate video outline\", \"video mindmap\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-bailian-voice-creator",
+            "description": "AI voice creation skill supporting speech recognition (ASR) and text-to-speech (TTS). Uses qwen3-asr-flash-filetrans, qwen-tts and other models. Use this skill when users need speech-to-text, text-to-speech, or audio processing.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-cfw-exposure-detection",
+            "description": "Query and analyze Alibaba Cloud public network exposure, identify unnecessary exposed assets and ports, assess exposure risks, and generate remediation recommendations. Triggers when user mentions public network exposure, exposed assets, exposed ports, public IP security, port scan results, attack surface analysis, internet reachability, high-risk port detection. Also triggers when user asks about \"which IPs/ports are exposed to the internet\", \"public asset inventory\", \"security baseline check\", even without explicitly saying \"exposure\".",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-cfw-ips-event",
+            "description": "Query and analyze security events and alerts detected by Alibaba Cloud Firewall IPS (Intrusion Prevention System), helping quickly locate threats and provide remediation recommendations. Triggers when user mentions IPS alerts, intrusion detection, intrusion prevention, attack events, security alerts, threat detection, attack analysis, IDS/IPS, being attacked, any attacks, security incidents, security warnings, server under attack, machine alarms. Also triggers when user asks about \"any recent attacks\", \"which assets were attacked\", \"does this IP have attack behavior\", \"security alerts for a specific server/machine\", \"which IPs attacked a specific IP\", even without explicitly saying \"IPS\".",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-cfw-status-overview",
+            "description": "Alibaba Cloud Firewall Status Overview Skill. One-click query of overall cloud firewall status including asset management, border firewall switch status, and traffic overview.\nTriggers: \"cloud firewall status\", \"firewall overview\", \"firewall status overview\", \"asset management\", \"protection coverage\", \"what is the overall cloud firewall status\", \"how many assets are not managed\", \"what is the protection coverage for each boundary\", \"CFW status\", \"cloud firewall overview\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-cksync-plan",
+            "description": "ClickHouse cluster migration planner. Use when planning data migration between ClickHouse clusters, including cross-cluster migrations, horizontal scaling, disk downgrade, availability zone changes, or migrating from self-built/non-Alibaba Cloud ClickHouse to Alibaba Cloud ClickHouse (Community or Enterprise Edition). Helps analyze migration conditions, select appropriate migration methods, and generate detailed migration plans.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-cli-guidance",
+            "description": "Guide users to manage Alibaba Cloud resources using the Aliyun CLI command-line tool. Covers CLI installation, credential configuration, plugin management, command construction, and error troubleshooting. Use this skill when the user wants to operate Alibaba Cloud services from the terminal — including ECS (云服务器, cloud servers), Function Compute (函数计算, serverless), RDS (云数据库, databases), OSS (对象存储, object storage), SLS (日志服务, log service), VPC (专有网络, networking), ESS (弹性伸缩, auto scaling), and any other Alibaba Cloud product. Also use when the user mentions \"aliyun\", \"阿里云\", \"阿里云CLI\", \"命令行\", asks about CLI plugin installation, encounters Aliyun CLI errors (InvalidAccessKeyId, SignatureDoesNotMatch, Throttling), or needs help constructing aliyun commands with correct parameter syntax.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-cloudbackup-ecs-file-backup-essential-edition",
+            "description": "Alibaba Cloud ECS File Backup Essential Edition (ECS文件备份基础版). One-click activation, daily automatic backup, 30-day file recovery, 100 GiB free quota.\nTrigger words: ECS file backup, HBR essential edition, Cloud Backup essential, file deletion recovery, free backup quota, ECS data protection, lightweight backup, affordable ECS backup\nRedirect words: ECS database backup, ECS full-machine backup, full-machine clone, cross-region backup, cross-account backup, KMS encrypted backup\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-cms-alert-rule-create",
+            "description": "Create and query Alibaba Cloud alert rules via CLI. Supports CMS 1.0 cloud resource \nmonitoring (ECS, RDS, SLB, etc.) and CMS 2.0 advanced monitoring (Prometheus, APM, UModel).\nIntent routing automatically selects the correct workflow based on alert type.\nUse this skill when users mention: create alert, setup monitoring, configure alarm, \nECS/RDS/SLB alert, Prometheus alert, PromQL, K8s monitoring, APM alert, UModel alert,\nlist alerts, query rules, 告警规则, 创建告警, 监控报警, Prometheus告警, 应用监控, 查看告警.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-das-agent",
+            "description": "Diagnose and manage Alibaba Cloud databases through natural language. Use when users need to troubleshoot database performance issues (high CPU, slow queries, abnormal connections, lock waits), check instance status, analyze disk space, optimize SQL, run health inspections, or detect security baseline violations. Supports RDS (MySQL/PostgreSQL/SQL Server), PolarDB, MongoDB, Redis (Tair), and Lindorm. Trigger this skill even for casual descriptions like \"my database is slow\", \"can't connect to the database\", \"help me check this SQL\", or \"database disk is almost full\". Also suitable for consulting Alibaba Cloud-specific database features (e.g., PolarDB Serverless, DAS autonomy capabilities) and comparing product differences (RDS vs PolarDB). Do NOT use this skill for general SQL tutorials, non-Alibaba Cloud databases, or local database administration.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-data-agent-skill",
+            "description": "Invoke Alibaba Cloud Apsara Data Agent for Analytics via CLI to perform natural language-driven data analysis on enterprise databases.\nData Agent for Analytics is an intelligent data analysis agent developed by Alibaba Cloud Database team for enterprise users. It automatically completes requirement analysis, data understanding, analysis insights, and report generation based on natural language descriptions.\nThis tool supports: discovering data resources (instances/databases/tables) managed in DMS, initiating query or deep analysis sessions, real-time progress tracking, and retrieving analysis conclusions and generated reports.\nUse this Skill when users need to query databases, analyze data trends, generate data reports, ask questions in natural language, or mention \"Data Agent\", \"data analysis\", \"database query\", \"SQL analysis\", \"data insights\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-dataworks-data-ops",
+            "description": "DataWorks Operations Center assistant for task and workflow operations, alert rule creation and management.\nCovers troubleshooting, failure recovery, baseline assurance, monitoring and alerting.\nSupports periodic, manual, and triggered tasks/workflows (excludes real-time/streaming tasks).\nUses aliyun CLI to call dataworks-public OpenAPI (2024-05-18).\nTrigger keywords: query task, task instance, instance log, workflow, workflow instance, alert rule,\noperations center, task failure, instance status, upstream/downstream dependency, rerun,\nmonitoring alert, custom monitoring, alert rule, task instance, workflow instance, operation log,\nbaseline assurance, failure recovery, DataWorks operations.\nDo NOT trigger: data source management, compute resources, resource groups, data development,\nMaxCompute table management, ECS/RDS/OSS operations, workspace member management,\ndata quality, data lineage, data preview.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-dataworks-datastudio-develop",
+            "description": "DataWorks data development Skill. Create, configure, validate, deploy, update, move, and rename nodes and workflows.\nManage components, file resources, and UDF functions. Covers 150+ node types: Shell, SQL, Python, DI, Flink, EMR, etc.\nSupports scheduled and manual workflow orchestration via aliyun CLI or Python SDK.\nWARNING: Supports mutating operations (Move, Rename) requiring explicit user confirmation. Delete operations are NOT supported by this skill.\nTriggers: DataWorks, data development nodes, workflows, FlowSpec, scheduling tasks, data integration, ETL pipelines, .spec.json.\nAlso triggers for Alibaba Cloud data development, scheduling node configuration, FlowSpec format, or DI task orchestration.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-dataworks-infra-manage",
+            "description": "DataWorks Infrastructure Management: Create and query operations for Data Sources (50 types), Compute Resources, and Serverless Resource Groups, plus connectivity testing and resource group binding/unbinding.\nUses aliyun CLI to call dataworks-public OpenAPI (2024-05-18).\nTrigger keywords: DataWorks data source, compute resource, resource group, datasource, data source, compute resource, resource group,\nmysql/hologres/maxcompute data source, holo/mc/flink resource, Serverless resource group, DataWorks infra, create/list datasource,\nDW environment config, infrastructure initialization, connect database to DataWorks, database connection failure, configure holo/mc resource.\nNot triggered: data development tasks, scheduling configuration, MaxCompute table management, data integration tasks, ECS/RDS/OSS operations, workspace member management, data quality monitoring, data lineage, data preview.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-dataworks-workspace-manage",
+            "description": "DataWorks Workspace Lifecycle Management Skill. Used for creating workspaces, querying workspace information, and adding workspace members with role authorization.\nTriggers: \"DataWorks\", \"workspace management\", \"workspace\", \"member authorization\", \"role assignment\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-ddoscoo-intercept-query",
+            "description": "Query Alibaba Cloud DDoS Pro (ddoscoo) block/intercept reasons via SLS full logs and ddoscoo CLI. Analyzes detailed information about intercepted requests including CC protection rules, precise access control rules, region blocking, and IP blacklist policies.\nUse when users report being blocked by DDoS Pro, encounter block pages, or need to investigate and remediate DDoS protection rules.\nTrigger words: \"DDoS block query\", \"blocked by DDoS Pro\", \"DDoS intercept\", \"ddoscoo intercept query\", \"CC block\", \"precise access control block\", \"高防拦截查询\", \"request blocked by anti-ddos\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-dms-skill",
+            "description": "Alibaba Cloud DMS Database Read/Write Skill. Use this skill to search for target databases in DMS and execute SQL queries and data modifications.\nTriggers: \"DMS query\", \"database query\", \"execute SQL\", \"search database\", \"DMS SQL\", \"insert data\", \"update data\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-domain-manage",
+            "description": "Query Alibaba Cloud domain information: domain details, domain list, advanced search, and instance ID lookup.\n查询阿里云域名信息：域名详情、域名列表、高级搜索、按实例ID查询。\nTriggers: \"domain info\", \"domain query\", \"domain details\", \"domain list\", \"domain search\",\n\"域名查询\", \"查询域名\", \"域名信息\", \"域名详情\", \"域名列表\", \"查看域名\", \"搜索域名\",\n\"domain status\", \"域名状态\", \"到期时间\", \"expiration date\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-dsc-audit",
+            "description": "Query and handle security risk events from Alibaba Cloud Data Security Center. Supports viewing the list of unprocessed risk events and performing manual handling operations on risk events.\nTrigger words: \"Data Security Center\", \"security risk events\", \"DSC\", \"risk handling\", \"DescribeRiskRules\", \"PreHandleAuditRisk\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-dts-task-manager",
+            "description": "Create, view, and manage Alibaba Cloud DTS data migration/synchronization tasks interactively. Automatically triggered when the user mentions keywords such as \"DTS task\", \"DTS migration\", \"DTS sync\", \"data migration task\", \"data sync task\", \"create migration\", \"create DTS\", \"new DTS\", \"DTS status\", \"migration status\", \"sync status\", \"stop migration\", \"suspend DTS\", \"release DTS\".",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-ecs-diagnose",
+            "description": "Comprehensive Alibaba Cloud ECS instance diagnostics skill. Performs systematic troubleshooting\nincluding cloud platform status checks and GuestOS internal diagnostics via Cloud Assistant.\nUse when users report server connectivity issues, SSH timeout, instance lag, website unavailability,\ndisk full, CPU/memory alerts, system event notifications, or abnormal instance status.\nTriggers: \"ECS\", \"instance\", \"server\", \"cannot connect\", \"SSH\", \"timeout\", \"slow\", \"disk full\",\n\"network\", \"CPU high\", \"memory high\", \"status check\", \"system event\", \"diagnose\", \"troubleshoot\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-ecs-install-extension",
+            "description": "Alibaba Cloud ECS extension installation skill. Supports querying available extension lists, checking if a specific extension is available,\nand one-click installation of extensions (e.g., OpenClaw, BT Panel, Python environments, etc.). Extensions are officially provided by Alibaba Cloud\nwith verified installation packages and scripts.\nTriggers: \"extension\", \"install\", \"BT Panel\",\n\"OpenClaw\", \"Python\", \"Node.js\", \"package\", \"one-click install\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-ecs-reboot-or-crash-diagnosis",
+            "description": "Diagnose ECS instance reboot or crash issues. First checks for abnormal maintenance events, then uses Cloud Assistant to check for internal restarts or kernel panics. Use this skill when users report ECS instance unexpected reboot, crash, abnormal shutdown, kernel panic, or OOM. Supports vmcore file analysis, kdump configuration, system log analysis, and Windows crash dump analysis.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-elasticsearch-instance-diagnose",
+            "description": "Alibaba Cloud Elasticsearch instance diagnosis skill. Use for cluster health checks, troubleshooting, and performance analysis on Elasticsearch instances.\n\nTriggers (English): Elasticsearch diagnosis, ES instance issues, slow search, write failures, cluster Red/Yellow, unassigned shards, node disconnected, load imbalance, thread pool 429, JVM/OOM/circuit breaker, disk watermark / read-only index, instance activating / change stuck, service avalanche / all shards failed.\n\n触发词（中文）: ES诊断、阿里云ES、Elasticsearch诊断、ES集群/实例故障排查、ES健康检查、集群红灯/变红/黄灯/变黄、集群异常、分片未分配、主分片未分配、节点掉线/离线、负载不均衡、搜索/查询变慢、慢查询、写入失败/变慢/拒绝、线程池打满、HTTP 429、内存过高、OOM、断路器、磁盘满/水位、索引只读、实例激活中/activating、变更卡住/未完成、雪崩、服务不可用、all shards failed。\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-elasticsearch-instance-manage",
+            "description": "Alibaba Cloud Elasticsearch Instance Management Skill. Use for creating, querying, listing, restarting, and upgrading/downgrading Elasticsearch instances on Alibaba Cloud.\nTriggers: \"elasticsearch\", \"ES instance\", \"elasticsearch instance\", \"create ES\", \"query ES instance\", \"restart ES\", \"ES node\", \"cluster node\", \"upgrade ES\", \"downgrade ES\", \"scale ES\", \"resize ES\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-elasticsearch-network-manage",
+            "description": "Alibaba Cloud Elasticsearch Instance Network Management Skill. Use for managing ES instance network configurations including triggering network, Kibana PVL network, white IP list, HTTPS settings, and Kibana SSO authentication.\nTriggers: \"elasticsearch network\", \"ES network\", \"kibana pvl\", \"white ip\", \"https\", \"trigger network\", \"modify white ips\", \"kibana sso\", \"kibana authentication\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-emas-apm-query",
+            "description": "Alibaba Cloud EMAS APM (mobile Application Performance Monitoring) issue\ntroubleshooting skill. Covers the 4 read-only OpenAPIs exposed by the\n`aliyun emas-appmonitor` plugin: `get-issues` / `get-issue` / `get-errors`\n/ `get-error`. Capabilities: Top-N aggregation, sample stack drill-down and\ndimension breakdowns for 6 issue types (crash / anr / lag / custom /\nmemory_leak / memory_alloc), combined with the user's source code (Java /\nKotlin / Objective-C / Swift / ArkTS / Dart / C# / JS) to produce root cause\nanalysis and fix suggestions.\nClient coverage: native Android / iOS / HarmonyOS, Flutter, Unity\n(bundled to android / iphoneos / harmony; H5 is out of scope).\nTriggers: analyze app crash, troubleshoot ANR, APM crash investigation,\nlist top issues, \"what is this digestHash\", iOS ANR Top 5, Android memory\nleak analysis, Flutter custom exception stacks, pull lag samples,\nemas appmonitor usage, sort issues by error rate, map stack to source,\nappKey problem, EMAS APM issue analysis, analyze APM issues.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-emr-cluster-manage",
+            "description": "Manage the full lifecycle of Alibaba Cloud E-MapReduce (EMR) ECS clusters—creation, scaling, renewal, and status queries. Use this Skill when users want to set up big data clusters, view cluster status, add nodes, release nodes, configure auto-scaling, check cluster and node states, or diagnose creation failures. Also applicable for scenarios like \"create a Hadoop cluster\", \"data lake cluster\", \"running out of resources\", \"check my cluster\", \"renew\", etc. NOTE: This Skill does NOT support cluster deletion, release, or termination under any circumstances. Any request to delete or terminate a cluster will be refused and redirected to the EMR console.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-emr-spark-manage",
+            "description": "Manage the full lifecycle of Alibaba Cloud EMR Serverless Spark workspaces—create workspaces, submit jobs, Kyuubi interactive queries, resource queue scaling, and status queries. Use this Skill when users want to create Spark workspaces, submit Spark jobs, view job status and logs, execute SQL via Kyuubi, scale resource queues, or view workspace status. Also applicable when users say \"create a Spark workspace\", \"submit Spark job\", \"run PySpark\", \"execute SQL via Kyuubi\", \"scale resource queue\", \"view job logs\", etc.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-emr-starrocks-manage",
+            "description": "Manage the full lifecycle of Alibaba Cloud EMR Serverless StarRocks instances — create, scale, configure, maintain and diagnose. Use this Skill when operations engineers, SREs, or architects need to manage StarRocks instances. Typical scenarios include: \"create a StarRocks\", \"check instance status\", \"scale up CU\", \"modify configuration\", \"restart instance\", \"diagnose issues\", etc. Not applicable for: writing SQL/DDL, data import/export, query tuning, materialized view configuration, or managing non-StarRocks products (EMR clusters, Spark, Milvus, ClickHouse, Doris, RDS, ECS).\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-esa-pages-deploy",
+            "description": "Deploy HTML pages, static directories, or custom edge functions to Alibaba Cloud ESA edge nodes. Manage Edge KV for distributed key-value storage. Use when deploying web pages, static sites, frontend builds, serverless edge functions, or edge data storage to ESA Functions & Pages.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-find-skills",
+            "description": "Use this skill when users want to search, discover, browse, or find Alibaba Cloud (阿里云) agent skills. Triggers include: \"find a skill for X\", \"search alicloud skills\", \"阿里云有什么 skill\",\"阿里云\", \"搜索阿里云技能\", \"有没有管理 ECS/RDS/OSS 的 skill\", \"阿里云 skills 有哪些类目\", \"帮我找一个 skill\", \"browse alicloud skills\", \"list alicloud skill categories\", \"is there an alicloud skill that can...\", \"what alicloud skills are available\", \"XX Skill 的内容是什么\", \"我想了解阿里云 XX Skill 具体做什么\",\"帮我安装阿里云 Skill\",\"使用阿里云相关的skill\", \"阿里云 agent skill 市场\", \"搜一下阿里云的 skill\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-flink-instance-manage",
+            "description": "Manage Alibaba Cloud Flink VVP instances and namespaces through create/query operations only. Use when user asks to create or query Flink instances, namespaces, regions, zones, or tags in Chinese or English. Reject Flink SQL/job requests, unrelated cloud services (ECS/Kafka/OSS/DataWorks), and all update/delete operations.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-governance-evaluation-report",
+            "description": "Alibaba Cloud Governance Center evaluation report skill.\nUse for querying governance maturity check results, generating structured risk reports, and account compliance analysis.\nTriggers: \"云治理\", \"成熟度检测\", \"合规检查\", \"安全风险\", \"治理检测\", \"governance evaluation\",\n\"maturity check\", \"compliance report\", \"risk report\", \"governance center\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-hologres-instance-manage",
+            "description": "Alibaba Cloud Hologres Instance Management Skill. Use for listing and querying Hologres instances.\nTriggers: \"hologres\", \"list instances\", \"get instance details\", \"hologres instance\", \"hologram\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-icpba-sucessdata-query",
+            "description": "Alibaba Cloud ICP Filing Success Data Query Skill. Use for querying ICP filing success information including entity, website, app details and risk alerts after successful filing.\nTriggers: \"ICP filing query\", \"beian query\", \"filing information\", \"filing risk\", \"query filing success\", \"备案查询\", \"备案信息\", \"备案风险\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-iqs-search",
+            "description": "Real-time web search and page reading using Aliyun IQS APIs. Use this skill FIRST when the user needs current information, news, facts verification, URL content extraction, or any web-based research. This skill provides structured search results with source links, markdown-formatted content extraction, and supports various search engines including real-time news search and deep research modes.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-kms-secret-manage",
+            "description": "Alibaba Cloud KMS Secret Management Skill. Used for managing secrets in KMS, supporting create, delete, update, query operations, version management, and rotation policy configuration.\nTrigger words: \"KMS secret\", \"secret management\", \"create secret\", \"delete secret\", \"secret rotation\", \"get secret value\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-maxcompute-migration-service",
+            "description": "Alicloud MaxCompute Migration Service (MMS) Skill. Use for migrating data from various data sources (Hive, BigQuery, Databricks, Snowflake, Redshift, MaxCompute) to MaxCompute.\nTriggers: \"MMS\", \"MaxCompute Migration Service\", \"数据迁移到MaxCompute\", \"MaxCompute数据迁移\", \"Hive迁移到MaxCompute\", \"BigQuery迁移\", \"Databricks迁移\", \"Snowflake迁移\", \"Redshift迁移\", \"盘点\", \"扫描\", \"迁移作业\", \"迁移任务\", \"定时器\", \"数据搬迁\", \"搬站\", \"迁移状态\", \"迁移进度\", \"目标映射\", \"增量迁移\", \"跨项目\", \"跨地域\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-milvus-manage",
+            "description": "Alibaba Cloud Milvus full-stack Skill for two planes: control-plane instance management via aliyun CLI, and data-plane Milvus operations via pymilvus. Use when users want to create, inspect, scale, configure, network-enable, or whitelist Alibaba Cloud Milvus instances; or connect to Milvus and perform collection management, vector insert/search, hybrid search, full-text search, index management, partition/database management, or RBAC with Python.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-mongodb-instances-manage",
+            "description": "Alibaba Cloud MongoDB full lifecycle management: create/query/scale/delete standalone, replica set, sharded cluster instances.\nCovers node management, security (whitelist/security group), public & SRV address, password reset, renewal, billing conversion, cloud disk reconfiguration, maintenance window.\nTriggers: \"MongoDB\", \"create MongoDB\", \"dds instance\", \"list instances\", \"MongoDB scaling\", \"add Mongos/Shard node\",\n\"MongoDB whitelist\", \"reset password\", \"allocate public address\", \"SRV address\", \"MongoDB renewal\",\n\"billing type conversion\", \"cloud disk reconfiguration\", \"delete MongoDB instance\", \"maintenance window\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-network-reachability-analysis",
+            "description": "Perform Alibaba Cloud NIS (Network Intelligence Service) network path reachability analysis with forward/reverse path diagnosis, topology visualization, and resource monitoring. Use when analyzing network connectivity, diagnosing unreachable paths, checking security groups or route tables, or visualizing network topology between cloud resources. Triggers: \"reachability analysis\", \"network path analysis\", \"NIS analysis\", \"connectivity diagnosis\", \"path reachable\", \"network troubleshooting\", \"可达性分析\", \"网络路径分析\", \"NIS分析\", \"连通性诊断\", \"路径可达\", \"网络排障\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-nginx-ingress-to-api-gateway",
+            "description": "Alibaba Cloud APIG Migration Skill. Migrate Kubernetes nginx Ingress resources to Alibaba Cloud API Gateway (APIG, ingressClass: apig).\nUsers provide Ingress YAML (paste, file, or directory) — no cluster access required for analysis.\nCovers annotation compatibility classification, Higress native mapping, built-in plugin selection, custom WasmPlugin development, migrated Ingress YAML generation, and migration report with deployment guide.\nTriggers: \"nginx ingress migration\", \"APIG compatibility\", \"gateway migration\", \"ingress-nginx to APIG\", \"nginx迁移\", \"网关迁移\", \"Ingress兼容性分析\", \"APIG迁移\", \"迁移评估\", \"annotation兼容性\", \"WasmPlugin开发\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-odps-cost-analysis",
+            "description": "Alibaba Cloud MaxCompute Cost Analysis Skill. Analyze MaxCompute pay-as-you-go costs including billing, storage metrics, and compute metrics.\nTriggers: \"maxcompute cost\", \"odps cost\", \"maxcompute billing\", \"maxcompute费用\", \"成本分析\", \"费用分析\", \"存储用量\", \"计算用量\", \"费用突增\", \"SQL签名\", \"SQL signature\", \"重复SQL\", \"扫描量最大\", \"daily billing details\", \"每日账单明细\", \"按计费项\", \"billing by fee item\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-odps-maxframe-coding",
+            "description": "Use this skill for MaxFrame SDK development on Alibaba Cloud MaxCompute (ODPS). Helps create data processing programs, read/write MaxCompute tables, debug jobs (remote or local), and build custom DPE runtime images. Trigger when users mention MaxFrame, MaxCompute, ODPS, DPE runtime, or need to work with ODPS tables, DataFrame operations, Tensor operations, or GPU runtime setup. Works for both English and Chinese queries about Alibaba Cloud data processing with MaxFrame.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-odps-project-manage",
+            "description": "Alibaba Cloud MaxCompute Project Management Skill. Use for creating, querying, and listing MaxCompute projects.\nTriggers: \"maxcompute project\", \"odps project\", \"create maxcompute project\", \"manage maxcompute project\", \"list maxcompute project\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-odps-quota-manage",
+            "description": "MaxCompute Quota Management Skill. Use for managing MaxCompute/ODPS quota resources including pay-as-you-go quota creation, query, and listing operations.\nTriggers: \"MaxCompute quota\", \"ODPS quota\", \"create quota\", \"list quotas\", \"quota management\", \"CU management\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-openclaw-ecs-dingtalk",
+            "description": "Deploy OpenClaw AI agent platform on Alibaba Cloud ECS and integrate with DingTalk bot. OpenClaw (formerly Clawdbot/Moltbot, 中文名\"龙虾\") is an open-source AI assistant and automation platform supporting natural language-driven task automation with multi-channel chat integration. This Skill covers the full workflow from ECS instance creation, public network configuration, base environment setup, one-click OpenClaw deployment to DingTalk bot verification. End users can chat with the AI assistant by @mentioning the bot in a DingTalk group.\nTriggers: \"OpenClaw\", \"龙虾\", \"Clawdbot\", \"Moltbot\", \"DingTalk bot\", \"DingTalk AI\", \"deploy OpenClaw on ECS\", \"AI agent platform\", \"DingTalk integration\", \"openclaw dingtalk\", \"openclaw deploy\", \"DingTalk AI employee\", \"Alibaba Cloud OpenClaw\", \"Bailian + DingTalk\", \"DingTalk group AI\", \"DingTalk smart assistant\", \"部署龙虾\", \"龙虾机器人\", \"龙虾钉钉\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-opensearch-app-manage",
+            "description": "Alibaba Cloud OpenSearch instance management skill. Create and query OpenSearch instances.\nNote: OpenSearch instance and OpenSearch app group are synonymous terms.\nTriggers: \"opensearch\", \"search instance\", \"create search instance\", \"app group\", \"instance management\", \"create instance\", \"query instance\", \"list instances\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-oss-manage-cron-upload",
+            "description": "Alibaba Cloud OSS scheduled local-folder sync skill using aliyun CLI, including integrated ossutil commands for incremental upload.\nUse when the user wants to schedule recurring local-to-OSS uploads, validate OSS backup prerequisites,\nset up cron or Task Scheduler for OSS sync, or clearly separate what stays on aliyun CLI\nfrom what remains OS-local or manual.\nConditional write operations: creates the target bucket (PutBucket) only when the user confirms the bucket does not exist yet;\noptionally deletes test objects (DeleteObject) only when the user explicitly requests cleanup after verification.\nTriggers: \"OSS scheduled sync\", \"定时同步到OSS\", \"aliyun ossutil cp --max-age\", \"aliyun ossutil cp -u\",\n\"cron upload to OSS\", \"Task Scheduler OSS upload\", \"aliyun CLI OSS sync\", \"本地目录增量上传 OSS\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-oss-manage-metaquery",
+            "description": "Alicloud OSS AI Content Awareness Skill. Use for enabling and querying OSS semantic search with AI-powered content understanding.\nTriggers: \"OSS AI Content Awareness\", \"OSS semantic search\", \"OSS vector search\", \"search by text\", \"text-to-image search\", \"text-to-video search\", \"OSS MetaQuery\", \"OSS data index\", \"OSS AI内容感知\", \"OSS语义检索\", \"OSS向量检索\", \"以文搜图\", \"以文搜视频\", \"OSS数据索引\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-oss-manage-network-probe",
+            "description": "Alicloud Service Scenario-Based Skill. Use for diagnosing local-to-OSS network state,\nupload/download bandwidth, download time, and local symlink issues with `aliyun ossutil probe`.\nTriggers: \"aliyun ossutil probe\", \"OSS 网络探测\", \"OSS 带宽探测\", \"OSS 下载时间探测\", \"OSS 软链接探测\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-pai-dsw-manage",
+            "description": "Manage the full lifecycle of Alibaba Cloud PAI DSW (Data Science Workshop) instances — create, update, query, list, start, stop, and look up ECS specs.\nTriggers: PAI DSW, DSW instance, create instance, start instance, stop instance, update instance, query instance, instance list, ECS spec, CreateInstance, UpdateInstance, GetInstance, ListInstances, StartInstance, StopInstance, ListEcsSpecs\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-pai-feature-store-featuredb-usage-query",
+            "description": "Query FeatureDB read/write usage data from PAI-FeatureStore. Use for analyzing consumption, usage trends, and cost estimation by official pricing. Supports date range queries with breakdowns.\nTriggers: \"FeatureDB read/write volume\", \"PAI-FeatureStore usage\", \"FeatureDB usage\", \"FeatureDB statistics\", \"Feature View usage\", \"PAI-FeatureStore billing\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-pai-workspace-manage",
+            "description": "Alibaba Cloud PAI Workspace Management Skill. Create, query, and list workspaces on the Platform for AI (PAI).\nTriggers: \"create PAI workspace\", \"query PAI workspace\", \"list workspaces\", \"PAI workspace\", \"create workspace\", \"get workspace\", \"list workspaces\", \"AIWorkSpace CreateWorkspace\", \"AIWorkSpace GetWorkspace\", \"AIWorkSpace ListWorkspaces\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-pds-intelligent-workspace",
+            "description": "Implements file upload, file download, document analysis, video analysis, and image editing features. Image editing supports scaling, cropping, rotation, segmentation, removal, watermark, and other operations with save-as to PDS. Access cloud drive storage via mount app. The mount app installation process involves driver installation and creating scheduled tasks/launchd.\nTriggers: \"upload file to PDS drive\", \"download file from PDS drive\", \"PDS drive document analysis\", \"PDS drive video analysis\", \"PDS image editing\", \"PDS image processing\", \"mount PDS drive\", \"install mount app\", \"uninstall mount app\", \"PDS drive mount access\", \"stop mount app\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-pds-multimodal-search",
+            "description": "Implements exact filename search, fuzzy filename search, semantic file search, and image-based image search\nTriggers: \"PDS drive file search\", \"PDS image search by image\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-polardb-ai-assistant",
+            "description": "Alibaba Cloud PolarDB Database AI Assistant. For PolarDB MySQL/PostgreSQL cluster management, performance diagnostics, parameter tuning, slow SQL analysis, backup recovery, connection session analysis, primary-standby switchover diagnostics, security configuration audit, and other O&M operations.\nUse when user questions involve PolarDB, cluster IDs starting with pc-, kernel parameters, primary-standby switchover, IMCI columnar storage, etc.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-polardbx-ai-assistant",
+            "description": "Alibaba Cloud PolarDB-X Distributed Database AI Assistant. Use for PolarDB-X cluster management,\ntopology inspection, performance diagnostics, SQL optimization, data distribution analysis,\nelastic scaling diagnostics, connection/session analysis, security audit, backup/restore,\nparameter tuning, and other O&M operations.\nTriggers: \"PolarDB-X\", \"distributed database\", \"pxc-\", \"DN/CN nodes\", \"data sharding\",\n\"PolarDB-X diagnostics\", \"PolarDB-X performance\", \"PolarDB-X slow SQL\", \"YaoChi Agent\",\n\"PolarDB-X topology\", \"PolarDB-X backup\", \"PolarDB-X security audit\", \"PolarDB-X scaling\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-polardbx-sql",
+            "description": "Design partition schemes, select partition keys, create GSI, and write SQL for PolarDB-X 2.0 Enterprise Edition AUTO mode databases, handling PolarDB-X vs MySQL differences (partitioned tables, GSI, CCI, Sequence, table groups, TTL, pagination, etc.).\nUse when designing partition schemes, selecting partition keys, converting single tables to partitioned tables, creating GSI/CCI indexes, writing or migrating SQL for PolarDB-X, or diagnosing slow queries on PolarDB-X.\nTriggers: \"PolarDB-X SQL\", \"PolarDB-X create table\", \"partitioned table\", \"partition design\", \"partition scheme\", \"partition key\", \"GSI\", \"CCI\", \"Sequence\", \"MySQL migrate to PolarDB-X\", \"PolarDB-X compatibility\", \"single table to partitioned table\", \"convert to partitioned table\", \"large table\", \"table sharding\", \"distributed table\", \"AUTO mode\", \"pagination query\", \"Keyset pagination\", \"Range partition\", \"auto add partition\", \"PolarDB-X slow query\", \"full-shard scan\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-pts-ops",
+            "description": "Alibaba Cloud PTS (Performance Testing Service) scenario-based skill for creating and managing stress testing scenarios.\nSupports both PTS native HTTP/HTTPS stress testing and JMeter-based stress testing.\nTriggers: \"PTS\", \"压测\", \"性能测试\", \"stress testing\", \"performance testing\", \"JMeter\", \"load testing\", \"创建压测场景\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-quickbi-smartq",
+            "description": "Quick BI-SmartQ skill with multiple data analysis capabilities:\n1. **File Q&A**: Upload Excel/CSV files for intelligent analysis via Quick BI API\n2. **Dataset Q&A**: Natural language queries on Quick BI platform datasets, with automatic intelligent table selection and matching\n3. **Document Parsing**: Parse PDF/Word/Excel/CSV/images, extract text, and support extracting key fields to generate structured Excel\n4. **Dashboard Skill Generation**: Auto-convert QuickBI dashboards into data query skills\n5. **Data Insight**: Deep data insight analysis on Quick BI datasets\n6. **Data Report**: Auto-generate professional data reports based on analysis results\nUse when users mention data analysis, smart Q&A, querying data, file analysis,\ndocument parsing, dashboard skills, data insight, or data reports.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-ram-permission-diagnose",
+            "description": "Alibaba Cloud RAM permission diagnosis and repair assistant. When an agent encounters any permission-related error while operating Alibaba Cloud resources (403, NoPermission, Forbidden, AccessDenied, InvalidSecurityToken, etc.), or when the user describes an Alibaba Cloud RAM permission issue, use this skill immediately. Do not wait for the user to explicitly request it — proactively start the diagnostic process whenever a permission error appears. Also applies when: a developer encounters permission issues while writing Alibaba Cloud SDK code, the user asks how to configure minimum permissions for an operation, or the user wants to know which permissions the current identity is missing.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-rds-copilot",
+            "description": "Alibaba Cloud RDS Copilot intelligent operations assistant skill. Used for RDS-related intelligent Q&A, SQL optimization, instance operations, and troubleshooting.\nCalls RdsAi OpenAPI through Alibaba Cloud CLI to get real-time RDS Copilot responses.\nTriggers: \"RDS Copilot\", \"RDS Assistant\", \"SQL optimization\", \"RDS troubleshooting\", \"RDS operations\", \"database diagnosis\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-resourcecenter-search",
+            "description": "Alibaba Cloud Resource Center - Global Resource Inventory, Search & Statistics Skill.\nProvides cross-region, cross-product, and cross-account resource inventory, search, and statistical analysis capabilities.\nAlso supports enabling and disabling Resource Center service.\nTriggers: \"resource center\", \"resource search\", \"resource inventory\", \"resource statistics\", \"cross-account resource\", \"global resource\", \"resource count\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-sas-alert-handler",
+            "description": "Alibaba Cloud Security Center (SAS) CWPP host security alert handling skill. Used for querying, analyzing, and handling security alerts from Cloud Security Center.\nTriggers: \"security alert\", \"alert handling\", \"CWPP alert\", \"Cloud Security Center alert\", \"SAS alert\", \"Aegis alert\", \"view alerts\", \"handle alerts\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-sas-incident-manage",
+            "description": "Alibaba Cloud Security Center incident management skill. Query security incidents, threat trends, and incident details.\nTriggers: \"云安全中心\", \"安全事件\", \"事件查询\", \"安全态势\", \"威胁事件\", \"cloud-siem\", \"Agentic-soc\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-sas-multiaccount-manage",
+            "description": "Manage multiple Alibaba Cloud accounts and batch-export Security Center (SAS) baseline and vulnerability reports via the aliyun CLI and Python scripts. Supports account list refresh, enable/disable, concurrent batch export of cloud platform configuration check (baselineCspm), system baseline risk (exportHcWarning), Linux/Windows/application/emergency vulnerability results across all managed accounts. Use this skill when users need to manage SAS multi-account settings, export baseline or vulnerability compliance data, or merge multi-account security reports into a single file.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-sas-openclaw-security",
+            "description": "Perform security operations on OpenClaw environments by calling Alibaba Cloud Security Center (SAS) and ECS APIs via the aliyun CLI. Supports asset queries, vulnerability detection, baseline checks, alert analysis, daily security report generation, and Cloud Assistant command execution. Use this skill when users need to query OpenClaw security status, handle security alerts, check vulnerability risks, execute emergency commands, or generate security reports.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-sas-overview",
+            "description": "Alibaba Cloud Security Center (SAS) Overview Data Query Skill.\nRetrieves security score, asset status, risk governance, asset risk trends, and billing info.\nSupports flexible scope: query a single data item, a specific module, or the full overview based on user intent.\nTriggers: \"SAS overview\", \"security center overview\", \"SAS 总览\", \"云安全中心总览\",\n  \"security score\", \"安全评分\", \"安全分\",\n  \"vulnerability fix\", \"baseline risk\", \"handled alerts\",\n  \"host assets\", \"uninstalled clients\",\n  \"risk governance\", \"WAF blocks\", \"asset risk trend\",\n  \"SAS billing\", \"订阅状态\", \"账单\"\nOut of scope: This Skill only covers SAS overview data queries. It does not perform remediation, modify configurations, or manage non-SAS services.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-sls-index-config-management",
+            "description": "Alibaba Cloud SLS (Simple Log Service) index configuration manager skill. Use this skill to help users inspect, create, update, or delete a Logstore index, generate an index configuration from user-provided structured log samples, and optimize an existing index configuration for given query/SQL workloads, write throughput, and storage cost — all through the aliyun CLI.\nTriggers: \"SLS 索引\", \"索引配置\", \"create index\", \"update index\", \"delete index\", \"generate index\", \"optimize index\", \"全文索引\", \"字段索引\", \"log index config\", \"aliyun sls index\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-sls-query",
+            "description": "Alibaba Cloud SLS (Simple Log Service) log query & analysis skill. Use this skill to help users write, explain, optimize, execute, or troubleshoot SLS index search, SQL analytics, and SPL scan/pipeline statements through the aliyun CLI.\nTriggers: \"SLS 查询\", \"SLS 分析\", \"日志查询\", \"日志分析\", \"log query\", \"analyze sls logs\", \"aliyun log query\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-solution-deploy",
+            "description": "Deploy Alibaba Cloud official tech solutions. Trigger when the user mentions an Alibaba Cloud solution, pastes a solution URL (aliyun.com/solution/tech-solution/...), or wants to deploy an official solution template. Covers both Terraform module deployment and CLI step-by-step execution paths.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-sysom-diagnosis",
+            "description": "Perform deep Linux diagnostics for memory, network, IO, and load issues. Use when symptoms include high/insufficient memory, OOM/oom-killer, Java memory pressure, and memory panorama analysis (including socket queue and TCP memory views); packet loss or latency jitter (complements memgraph); disk statistics and slow IO; scheduling delay and system load. Outputs a structured diagnostic envelope for automated follow-up runs.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-tablestore-agent-storage",
+            "description": "Alibaba Cloud Tablestore Agent Storage Skill. Use for building and managing Tablestore-based knowledge bases with the `tablestore-agent-storage` Python SDK.\nTriggers: \"知识库\", \"tablestore\", \"ots\", \"表格存储\", \"agent storage\", \"knowledge base\", \"向量检索\", \"文档上传\", \"文档导入\", \"知识库同步\", \"tablestore-agent-storage\", \"AgentStorageClient\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-tablestore-openclaw-memory",
+            "description": "This skill installs and configures the **Tablestore Mem0** plugin for OpenClaw.\nTablestore Mem0 uses Alibaba Cloud Tablestore as the vector store backend for mem0, providing persistent long-term memory for AI agents.\nUse this skill when the user wants OpenClaw to persist or manage long-term memory using Alibaba Cloud Tablestore as the backend.\nTriggers: \"set up tablestore memory\", \"install tablestore mem0 plugin\", \"configure long-term memory with tablestore\", \"remember this\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-tablestore-ops",
+            "description": "Alibaba Cloud Tablestore (OTS) Read-Only Operations Skill. Use for querying Tablestore instances and data tables via Aliyun CLI.\nTriggers: \"tablestore\", \"ots\", \"表格存储\", \"list instance\", \"describe instance\", \"list table\", \"describe table\", \"aliyun otsutil\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-tair-ai-assistant",
+            "description": "Alibaba Cloud Tair (Redis OSS-Compatible) Database AI Assistant. For Tair/Redis instance management, performance diagnostics, memory analysis, hotspot key detection, latency troubleshooting, parameter tuning, connection session analysis.\nUse when user questions involve Tair, Redis, instance IDs starting with r-, memory analysis, hotspot keys, eviction policy, big key detection, etc.\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-tair-devtoolset",
+            "description": "Alicloud Service Scenario-Based Skill. Create Tair Enterprise Edition instance and configure public network access using Aliyun CLI.\nTriggers: \"tair\", \"create tair instance\", \"tair instance\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-tech-solution-animation-creation-auto-deploy",
+            "description": "Alicloud Service Scenario-Based Skill. Use for auto-deploying the \"Build AI Animation Story Creation App\" solution.\nAutomatically creates OSS Bucket, deploys FC application via Devs template, and stops at the experience page.\nTriggers: \"AI动画创作\", \"animation creation\", \"动画故事部署\", \"deploy animation story app\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-video-editor",
+            "description": "Video editing tool that requires no ffmpeg installation. All video processing is executed in the cloud - no local ffmpeg installation needed. If both input and output are URLs or Alibaba Cloud OSS, this skill is the preferred choice. Can generate Timeline configuration based on editing requirements and material information, submit Alibaba Cloud editing tasks, wait for task completion, and output the final video URL. Use when the user wants to edit videos, mentions video editing, clipping, 剪辑，视频制作，视频拼接，视频合成，or needs to process media files into videos.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-video-forge",
+            "description": "Alibaba Cloud Media Processing Service (MPS) one-stop video processing skill. Use when users need video processing, transcoding, snapshot generation, content moderation, or video upload. For video distribution scenarios, complete video upload, snapshot, multi-resolution transcoding, and content moderation in a single workflow for efficient standardized video asset production.",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-video-translation",
+            "description": "Alibaba Cloud IMS (Intelligent Media Services) based video translation Skill. Supports subtitle extraction (ASR/OCR), translation, and speech synthesis translation modes.\nTrigger words: \"视频翻译\", \"translate video\", \"翻译视频\", \"字幕翻译\", \"video translation\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-waf-checkresponse-intercept-query",
+            "description": "Query Alibaba Cloud WAF block reasons via SLS logs and WAF CLI. Analyzes detailed information about blocked requests. Optionally supports disabling WAF rules (ModifyDefenseRuleStatus) and managing log service settings (ModifyUserWafLogStatus, ModifyResourceLogStatus).\nUse when users report being blocked by WAF, encounter 405/block error pages, or need to investigate and remediate WAF security rules.\nTrigger words: \"WAF block query\", \"blocked by WAF\", \"405 troubleshooting\", \"request blocked\", \"checkresponse\", \"intercept query\", \"disable WAF rule\", \"enable WAF log\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-waf-quick-showcase",
+            "description": "Solution skill for using WAF to protect web applications on ECS. Used for quickly deploying network environments including VPC, security groups, and ECS instances, and integrating WAF for web application protection.\nTrigger words: \"WAF protection\", \"ECS web protection\", \"Web Application Firewall\", \"website security\"\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "alibabacloud-yike-storyboard",
+            "description": "Yike Storyboard Creation Skill - Complete AI video creation workflow from novel/script to storyboard via conversational interface.\nUse this skill when users want to create storyboards, produce videos, convert novels/scripts to videos, or generate shot scripts.\nTrigger scenarios: \"storyboard\", \"novel to video\", \"shot script\", \"script parsing\", \"video creation\", \"convert novel to video\", \"generate storyboard\".\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "artifacts-builder",
+            "description": "Suite of tools for creating elaborate, multi-component Codex.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts.",
+            "modelInvocable": true
+          },
+          {
+            "name": "brainstorming",
+            "description": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation.",
+            "modelInvocable": true
+          },
+          {
+            "name": "brand-guidelines",
+            "description": "Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply.",
+            "modelInvocable": true
+          },
+          {
+            "name": "canvas-design",
+            "description": "Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations.",
+            "modelInvocable": true
+          },
+          {
+            "name": "changelog-generator",
+            "description": "Automatically creates user-facing changelogs from git commits by analyzing commit history, categorizing changes, and transforming technical commits into clear, customer-friendly release notes. Turns hours of manual changelog writing into minutes of automated generation.",
+            "modelInvocable": true
+          },
+          {
+            "name": "competitive-ads-extractor",
+            "description": "Extracts and analyzes competitors' ads from ad libraries (Facebook, LinkedIn, etc.) to understand what messaging, problems, and creative approaches are working. Helps inspire and improve your own ad campaigns.",
+            "modelInvocable": true
+          },
+          {
+            "name": "connect",
+            "description": "Connect Codex to any app. Send emails, create issues, post messages, update databases - take real actions across Gmail, Slack, GitHub, Notion, and 1000+ services.",
+            "modelInvocable": true
+          },
+          {
+            "name": "connect-apps",
+            "description": "Connect Codex to external apps like Gmail, Slack, GitHub. Use this skill when the user wants to send emails, create issues, post messages, or take actions in external services.",
+            "modelInvocable": true
+          },
+          {
+            "name": "content-research-writer",
+            "description": "Assists in writing high-quality content by conducting research, adding citations, improving hooks, iterating on outlines, and providing real-time feedback on each section. Transforms your writing process from solo effort to collaborative partnership.",
+            "modelInvocable": true
+          },
+          {
+            "name": "developer-growth-analysis",
+            "description": "Analyzes your recent Codex chat history to identify coding patterns, development gaps, and areas for improvement, curates relevant learning resources from HackerNews, and automatically sends a personalized growth report to your Slack DMs.",
+            "modelInvocable": true
+          },
+          {
+            "name": "dify-dsl-generator",
+            "description": "专业的 Dify 工作流 DSL/YML 文件生成器，根据用户业务需求自动生成完整的 Dify 工作流配置文件，支持各种节点类型和复杂工作流逻辑",
+            "modelInvocable": true
+          },
+          {
+            "name": "dispatching-parallel-agents",
+            "description": "Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies",
+            "modelInvocable": true
+          },
+          {
+            "name": "doc-coauthoring",
+            "description": "Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.",
+            "modelInvocable": true
+          },
+          {
+            "name": "docx",
+            "description": "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. When Codex needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks",
+            "modelInvocable": true
+          },
+          {
+            "name": "domain-name-brainstormer",
+            "description": "Generates creative domain name ideas for your project and checks availability across multiple TLDs (.com, .io, .dev, .ai, etc.). Saves hours of brainstorming and manual checking.",
+            "modelInvocable": true
+          },
+          {
+            "name": "dsh-plugin-development",
+            "description": "Use when creating, updating, packaging, installing, or validating a DeepSeek Harness plugin, bundle, client extension, profile composition, or project-local DSH skill.",
+            "modelInvocable": true
+          },
+          {
+            "name": "excel-report-generator",
+            "description": "Automatically generate Excel reports from data sources including CSV, databases, or Python data structures. Supports data analysis reports, business reports, data export, and template-based report generation using pandas and openpyxl. Activate when users mention Excel, spreadsheet, report generation, data export, or business reporting.",
+            "modelInvocable": true
+          },
+          {
+            "name": "executing-plans",
+            "description": "Use when you have a written implementation plan to execute in a separate session with review checkpoints",
+            "modelInvocable": true
+          },
+          {
+            "name": "file-organizer",
+            "description": "Intelligently organizes your files and folders across your computer by understanding context, finding duplicates, suggesting better structures, and automating cleanup tasks. Reduces cognitive load and keeps your digital workspace tidy without manual effort.",
+            "modelInvocable": true
+          },
+          {
+            "name": "finishing-a-development-branch",
+            "description": "Use when implementation is complete, all tests pass, and you need to decide how to integrate the work - guides completion of development work by presenting structured options for merge, PR, or cleanup",
+            "modelInvocable": true
+          },
+          {
+            "name": "frontend-design",
+            "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.",
+            "modelInvocable": true
+          },
+          {
+            "name": "image-enhancer",
+            "description": "Improves the quality of images, especially screenshots, by enhancing resolution, sharpness, and clarity. Perfect for preparing images for presentations, documentation, or social media posts.",
+            "modelInvocable": true
+          },
+          {
+            "name": "internal-comms",
+            "description": "A set of resources to help me write all kinds of internal communications, using the formats that my company likes to use. Codex should use this skill whenever asked to write some sort of internal communications (status reports, leadership updates, 3P updates, company newsletters, FAQs, incident reports, project updates, etc.).",
+            "modelInvocable": true
+          },
+          {
+            "name": "invoice-organizer",
+            "description": "Automatically organizes invoices and receipts for tax preparation by reading messy files, extracting key information, renaming them consistently, and sorting them into logical folders. Turns hours of manual bookkeeping into minutes of automated organization.",
+            "modelInvocable": true
+          },
+          {
+            "name": "langsmith-fetch",
+            "description": "Debug LangChain and LangGraph agents by fetching execution traces from LangSmith Studio. Use when debugging agent behavior, investigating errors, analyzing tool calls, checking memory operations, or examining agent performance. Automatically fetches recent traces and analyzes execution patterns. Requires langsmith-fetch CLI installed.",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-approval",
+            "description": "飞书审批 API：审批实例、审批任务管理。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-attendance",
+            "description": "飞书考勤打卡：查询自己的考勤打卡记录",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-base",
+            "description": "当需要用 lark-cli 操作飞书多维表格（Base）时调用：搜索 Base、建表、字段管理、记录读写、记录分享链接、视图配置、历史查询，以及角色/表单/仪表盘管理/工作流；也适用于把旧的 +table / +field / +record 写法改成当前命令写法。涉及字段设计、公式字段、查找引用、跨表计算、行级派生指标、数据分析需求时也必须使用本 skill。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-calendar",
+            "description": "飞书日历（calendar）：提供日历与日程（会议）的全面管理能力。核心场景包括：查看/搜索日程、创建/更新日程、管理参会人、查询忙闲状态及推荐空闲时段、查询/搜索与预定会议室。注意：涉及【预约日程/会议】或【查询/预定会议室】时，必须先读取 references/lark-calendar-schedule-meeting.md 工作流！高频操作请优先使用 Shortcuts：+agenda（快速概览今日/近期行程）、+create（创建日程并按需邀请参会人及预定会议室）、+update（更新既有日程字段，或独立增删参会人/会议室）、+freebusy（查询用户主日历的忙闲信息和rsvp的状态）、+rsvp（回复日程邀请）",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-contact",
+            "description": "飞书 / Lark 通讯录,用于按姓名 / 邮箱把员工解析成 open_id,以及按 open_id 反查员工的姓名 / 部门 / 邮箱 / 联系方式。当用户说出某人姓名而下一步需要发消息 / 加群 / 排日程时,先用本 skill 把姓名换成 ID;当输出里出现 open_id 需要展示成姓名给用户看,或用户直接询问某人的部门 / 邮箱 / 联系方式时,用本 skill 查。不负责部门树遍历、按部门列员工、组织架构图,这类需求走原生 OpenAPI。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-doc",
+            "description": "飞书云文档（v2）：创建和编辑飞书文档。使用本 skill 时，docs +create、docs +fetch、docs +update 必须携带 --api-version v2；默认使用 DocxXML 格式（也支持 Markdown）。创建文档、获取文档内容（支持 simple/with-ids/full 三种导出详细度，以及 full/outline/range/keyword/section 五种局部读取模式，可按目录、block id 区间、关键词或标题自动成节只拉部分内容以节省上下文）、更新文档（八种指令：str_replace/block_insert_after/block_copy_insert_after/block_replace/block_delete/block_move_after/overwrite/append）、上传和下载文档中的图片和文件、搜索云空间文档。当用户需要创建或编辑飞书文档、读取文档内容、在文档中插入图片、搜索云空间文档时使用；如果用户是想按名称或关键词先定位电子表格、报表等云空间对象，也优先使用本 skill 的 docs +search 做资源发现。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-drive",
+            "description": "飞书云空间：管理云空间中的文件和文件夹。上传和下载文件、创建文件夹、复制/移动/删除文件、查看文件元数据、管理文档评论、管理文档权限、订阅用户评论变更事件、修改文件标题（docx、sheet、bitable、file、folder、wiki）；也负责把本地 Word/Markdown/Excel/CSV 以及 Base 快照（.base）导入为飞书在线云文档（docx、sheet、bitable）。当用户需要上传或下载文件、整理云空间目录、查看文件详情、管理评论、管理文档权限、修改文件标题、订阅用户评论变更事件，或要把本地文件导入成新版文档、电子表格、多维表格/Base 时使用。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-event",
+            "description": "Lark/Feishu real-time event listening / subscribing / consuming: stream events as NDJSON via `lark-cli event consume <EventKey>` (covers IM message receive, reactions, chat member changes, etc.). Use for Lark bots, real-time message processing, long-running subscribers, streaming webhook/push handlers. Supports `--max-events` / `--timeout` bounded runs and a stderr ready-marker contract — designed for AI agents running as subprocesses.",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-im",
+            "description": "飞书即时通讯：收发消息和管理群聊。发送和回复消息、搜索聊天记录、管理群聊成员、上传下载图片和文件（支持大文件分片下载）、管理表情回复。当用户需要发消息、查看或搜索聊天记录、下载聊天中的文件、查看群成员时使用。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-mail",
+            "description": "飞书邮箱 — draft, compose, send, reply, forward, read, and search emails; manage drafts, folders, labels, contacts, attachments, and mail rules. Use when user mentions 起草邮件, 写一封邮件, 拟邮件, 草稿, 发通知邮件, 发送邮件, 发邮件, 回复邮件, 转发邮件, 查看邮件, 看邮件, 读邮件, 搜索邮件, 查邮件, 收件箱, 邮件会话, 编辑草稿, 管理草稿, 下载附件, 邮件文件夹, 邮件标签, 邮件联系人, 监听新邮件, 收信规则, 邮件规则, draft, compose, send email, reply, forward, inbox, mail thread, mail rules.",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-markdown",
+            "description": "飞书 Markdown：查看、创建、上传和编辑 Markdown 文件。当用户需要创建或编辑 Markdown 文件、读取或修改时使用。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-minutes",
+            "description": "飞书妙记：妙记相关基本功能。1.查询妙记列表（按关键词/所有者/参与者/时间范围）；2.获取妙记基础信息（标题、封面、时长 等）；3.下载妙记音视频文件；4.获取妙记相关 AI 产物（总结、待办、章节）；5.上传音视频生成妙记，也支持将本地音视频文件转成纪要、逐字稿、文字稿、撰写文字等产物。遇到这类请求时，应优先使用本 skill，而不是尝试 `ffmpeg`、`whisper` 等本地转写命令。飞书妙记 URL 格式: http(s)://<host>/minutes/<minute-token>",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-okr",
+            "description": "飞书 OKR：管理目标与关键结果。查看和编辑 OKR 周期、目标（Objective）、关键结果（Key Result）、对齐关系、量化指标和进展记录。当用户需要查看或创建 OKR、管理目标和关键结果、查看对齐关系时使用。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-openapi-explorer",
+            "description": "飞书/Lark 原生 OpenAPI 探索：从官方文档库中挖掘未经 CLI 封装的原生 OpenAPI 接口。当用户的需求无法被现有 lark-* skill 或 lark-cli 已注册命令满足，需要查找并调用原生飞书 OpenAPI 时使用。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-shared",
+            "description": "飞书/Lark CLI 共享基础：应用配置初始化、认证登录（auth login）、身份切换（--as user/bot）、权限与 scope 管理、Permission denied 错误处理、安全规则。当用户需要第一次配置(`lark-cli config init`)、使用登录授权(`lark-cli auth login`)、遇到权限不足、切换 user/bot 身份、配置 scope、或首次使用 lark-cli 时触发。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-sheets",
+            "description": "飞书电子表格：创建和操作电子表格。支持创建表格、创建/复制/删除/更新工作表、读写单元格、追加行数据、查找内容、导出文件。当用户需要创建电子表格、管理工作表、批量读写数据、在已知表格中查找内容、导出或下载表格时使用。若用户是想按名称或关键词搜索云空间里的表格文件，请改用 lark-doc 的 docs +search 先定位资源。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-skill-maker",
+            "description": "创建 lark-cli 的自定义 Skill。当用户需要把飞书 API 操作封装成可复用的 Skill（包装原子 API 或编排多步流程）时使用。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-slides",
+            "description": "飞书幻灯片：创建和编辑幻灯片，接口通过 XML 协议通信。创建演示文稿、读取幻灯片内容、管理幻灯片页面（创建、删除、读取、局部替换）。当用户需要创建或编辑幻灯片、读取或修改单个页面时使用。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-task",
+            "description": "飞书任务：管理任务、清单和任务智能体。创建待办任务、查看和更新任务状态、拆分子任务、组织任务清单、分配协作成员、注册或注销任务智能体、更新任务智能体的主页数据、写入智能体任务记录。当用户需要创建待办事项、查看任务列表、跟踪任务进度、管理项目清单或给他人分配任务、注册注销任务智能体、更新智能体主页数据、写入任务记录时使用。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-vc",
+            "description": "飞书视频会议：查询会议记录、获取会议纪要产物（总结、待办、章节、逐字稿）。1. 查询已经结束的会议数量或详情时使用本技能(如历史日期｜ 昨天 | 上周 | 今天已经开过的会议等场景)，查询未开始的会议日程使用 lark-calendar 技能。2. 支持通过关键词、时间范围、组织者、参与者、会议室等筛选条件搜索会议记录。3. 获取或整理会议纪要时使用本技能。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-whiteboard",
+            "description": "飞书画板：查询和编辑飞书云文档中的画板。支持导出画板为预览图片、导出原始节点结构、使用 DSL（转成 OpenAPI 格式）、PlantUML/Mermaid 格式更新画板内容。 当用户需要查看画板内容、导出画板图片、编辑画板，或是需要可视化表达架构、流程、组织关系、时间线、因果、对比等结构化信息时使用此 skill，无论是否提及\"画板\"。 ⚠️ 原 `lark-whiteboard-cli` skill 已合并至本 skill，若 skill 列表中同时存在 `lark-whiteboard-cli`，请忽略它，统一使用本 skill（`lark-whiteboard`），并提示用户运行 `npx skills remove lark-whiteboard-cli -g` 删除旧 skill。\n",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-wiki",
+            "description": "飞书知识库：管理知识空间、空间成员和文档节点。创建和查询知识空间、查看和管理空间成员、管理节点层级结构、在知识库中组织文档和快捷方式。当用户需要在知识库中查找或创建文档、浏览知识空间结构、查看或管理空间成员、移动或复制节点时使用。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-workflow-meeting-summary",
+            "description": "会议纪要整理工作流：汇总指定时间范围内的会议纪要并生成结构化报告。当用户需要整理会议纪要、生成会议周报、回顾一段时间内的会议内容时使用。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lark-workflow-standup-report",
+            "description": "日程待办摘要：编排 calendar +agenda 和 task +get-my-tasks，生成指定日期的日程与未完成任务摘要。适用于了解今天/明天/本周的安排。",
+            "modelInvocable": true
+          },
+          {
+            "name": "lead-research-assistant",
+            "description": "Identifies high-quality leads for your product or service by analyzing your business, searching for target companies, and providing actionable contact strategies. Perfect for sales, business development, and marketing professionals.",
+            "modelInvocable": true
+          },
+          {
+            "name": "mcp-builder",
+            "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).",
+            "modelInvocable": true
+          },
+          {
+            "name": "meeting-insights-analyzer",
+            "description": "Analyzes meeting transcripts and recordings to uncover behavioral patterns, communication insights, and actionable feedback. Identifies when you avoid conflict, use filler words, dominate conversations, or miss opportunities to listen. Perfect for professionals seeking to improve their communication and leadership skills.",
+            "modelInvocable": true
+          },
+          {
+            "name": "oasis-rd-intake",
+            "description": "Use when beginning a technical R&D task, a Chinese invention patent drafting task, or a mixed project that first needs a structured evidence and deliverable intake.",
+            "modelInvocable": true
+          },
+          {
+            "name": "pdf",
+            "description": "Comprehensive PDF manipulation toolkit for extracting text and tables, creating new PDFs, merging/splitting documents, and handling forms. When Codex needs to fill in a PDF form or programmatically process, generate, or analyze PDF documents at scale.",
+            "modelInvocable": true
+          },
+          {
+            "name": "pptx",
+            "description": "Presentation creation, editing, and analysis. When Codex needs to work with presentations (.pptx files) for: (1) Creating new presentations, (2) Modifying or editing content, (3) Working with layouts, (4) Adding comments or speaker notes, or any other presentation tasks",
+            "modelInvocable": true
+          },
+          {
+            "name": "raffle-winner-picker",
+            "description": "Picks random winners from lists, spreadsheets, or Google Sheets for giveaways, raffles, and contests. Ensures fair, unbiased selection with transparency.",
+            "modelInvocable": true
+          },
+          {
+            "name": "receiving-code-review",
+            "description": "Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation",
+            "modelInvocable": true
+          },
+          {
+            "name": "requesting-code-review",
+            "description": "Use when completing tasks, implementing major features, or before merging to verify work meets requirements",
+            "modelInvocable": true
+          },
+          {
+            "name": "siliconflow-api-skills",
+            "description": "硅基流动（SiliconFlow）云服务平台文档。用于大语言模型 API 调用、图片生成、向量模型、在 Codex 中使用硅基流动、Chat Completions API、Stream 模式等。",
+            "modelInvocable": true
+          },
+          {
+            "name": "skill-creator",
+            "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations.",
+            "modelInvocable": true
+          },
+          {
+            "name": "skill-share",
+            "description": "A skill that creates new Codex skills and automatically shares them on Slack using Rube for seamless team collaboration and skill discovery.",
+            "modelInvocable": true
+          },
+          {
+            "name": "slack-gif-creator",
+            "description": "Knowledge and utilities for creating animated GIFs optimized for Slack. Provides constraints, validation tools, and animation concepts. Use when users request animated GIFs for Slack like \"make me a GIF of X doing Y for Slack.\"",
+            "modelInvocable": true
+          },
+          {
+            "name": "subagent-driven-development",
+            "description": "Use when executing implementation plans with independent tasks in the current session",
+            "modelInvocable": true
+          },
+          {
+            "name": "systematic-debugging",
+            "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes",
+            "modelInvocable": true
+          },
+          {
+            "name": "tailored-resume-generator",
+            "description": "Analyzes job descriptions and generates tailored resumes that highlight relevant experience, skills, and achievements to maximize interview chances",
+            "modelInvocable": true
+          },
+          {
+            "name": "template-skill",
+            "description": "Replace with description of the skill and when Codex should use it.",
+            "modelInvocable": true
+          },
+          {
+            "name": "test-driven-development",
+            "description": "Use when implementing any feature or bugfix, before writing implementation code",
+            "modelInvocable": true
+          },
+          {
+            "name": "theme-factory",
+            "description": "Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-the-fly.",
+            "modelInvocable": true
+          },
+          {
+            "name": "using-git-worktrees",
+            "description": "Use when starting feature work that needs isolation from current workspace or before executing implementation plans - creates isolated git worktrees with smart directory selection and safety verification",
+            "modelInvocable": true
+          },
+          {
+            "name": "using-superpowers",
+            "description": "Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions",
+            "modelInvocable": true
+          },
+          {
+            "name": "verification-before-completion",
+            "description": "Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always",
+            "modelInvocable": true
+          },
+          {
+            "name": "web-artifacts-builder",
+            "description": "Suite of tools for creating elaborate, multi-component Codex.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts.",
+            "modelInvocable": true
+          },
+          {
+            "name": "webapp-testing",
+            "description": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.",
+            "modelInvocable": true
+          },
+          {
+            "name": "wechat-article-extractor",
+            "description": "Extract metadata and content from WeChat Official Account articles. Use when user needs to parse WeChat article URLs (mp.weixin.qq.com), extract article info (title, author, content, publish time, cover image), or convert WeChat articles to structured data. Supports various article types including posts, videos, images, voice messages, and reposts.",
+            "modelInvocable": true
+          },
+          {
+            "name": "writing-plans",
+            "description": "Use when you have a spec or requirements for a multi-step task, before touching code",
+            "modelInvocable": true
+          },
+          {
+            "name": "writing-skills",
+            "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment",
+            "modelInvocable": true
+          },
+          {
+            "name": "xiaohuihui-dify-tech-article",
+            "description": "专为Dify工作流案例分享设计的公众号文章生成器,遵循小灰灰公众号写作规范,自动生成包含前言、工作流制作、总结的完整Dify案例文章,配有详细的节点配置、插件安装步骤、代码示例,并支持自动生成图片上传到腾讯云COS图床",
+            "modelInvocable": true
+          },
+          {
+            "name": "xiaohuihui-tech-article",
+            "description": "专为技术实战教程设计的公众号文章生成器,遵循小灰灰公众号写作规范,自动生成包含前言、项目介绍、部署实战、总结的完整技术文章,配有详细操作步骤、代码示例,并通过即梦AI生成配图上传至腾讯云COS图床",
+            "modelInvocable": true
+          },
+          {
+            "name": "xlsx",
+            "description": "Comprehensive spreadsheet creation, editing, and analysis with support for formulas, formatting, data analysis, and visualization. When Codex needs to work with spreadsheets (.xlsx, .xlsm, .csv, .tsv, etc) for: (1) Creating new spreadsheets with formulas and formatting, (2) Reading or analyzing data, (3) Modify existing spreadsheets while preserving formulas, (4) Data analysis and visualization in spreadsheets, or (5) Recalculating formulas",
+            "modelInvocable": true
+          },
+          {
+            "name": "youtube-downloader",
+            "description": "Download YouTube videos with customizable quality and format options. Use this skill when the user asks to download, save, or grab YouTube videos. Supports various quality settings (best, 1080p, 720p, 480p, 360p), multiple formats (mp4, webm, mkv), and audio-only downloads as MP3.",
+            "modelInvocable": true
+          }
+        ]
+      }
+    }
+  }
+}

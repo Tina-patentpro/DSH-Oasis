@@ -1,0 +1,47 @@
+file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-app-boot/lib/index.js:1187
+		throw new Error(`${binName}: ${stage}: ${detail}${stack}`, { cause });
+		      ^
+
+Error: dsh: plugin tree failed to load: failed to apply loader entry include (cordis:include): failed to import loader entry oasis-professional-service (oasis-professional-service): Cannot find package '@deepseek-ai/dsh-tools' imported from C:\Users\TinaD\AppData\Local\Temp\oasis-dsh-week3-RkiZG5\packages\oasis-professional-service\src\index.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@deepseek-ai/dsh-tools' imported from C:\Users\TinaD\AppData\Local\Temp\oasis-dsh-week3-RkiZG5\packages\oasis-professional-service\src\index.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:266:9)
+    at packageResolve (node:internal/modules/esm/resolve:767:81)
+    at moduleResolve (node:internal/modules/esm/resolve:853:18)
+    at defaultResolve (node:internal/modules/esm/resolve:983:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:717:20)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:694:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:308:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:183:49)
+    at boot (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-app-boot/lib/index.js:1187:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async runProfile (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/lib/profile-boot-DG5t9aNs.js:247:14)
+    at async file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/lib/bin.js:133:3 {
+  [cause]: Error: failed to apply loader entry include (cordis:include): failed to import loader entry oasis-professional-service (oasis-professional-service): Cannot find package '@deepseek-ai/dsh-tools' imported from C:\Users\TinaD\AppData\Local\Temp\oasis-dsh-week3-RkiZG5\packages\oasis-professional-service\src\index.js
+      at updateError (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/cordis-plugin-loader/lib/index.js:299:9)
+      at Entry._init (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/cordis-plugin-loader/lib/index.js:519:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+    [cause]: Error: failed to import loader entry oasis-professional-service (oasis-professional-service): Cannot find package '@deepseek-ai/dsh-tools' imported from C:\Users\TinaD\AppData\Local\Temp\oasis-dsh-week3-RkiZG5\packages\oasis-professional-service\src\index.js
+        at updateError (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/cordis-plugin-loader/lib/index.js:299:9)
+        at Entry._init (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/cordis-plugin-loader/lib/index.js:514:10)
+        at async Entry.init (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/cordis-plugin-loader/lib/index.js:495:4)
+        at async Entry.update (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/cordis-plugin-loader/lib/index.js:416:37)
+        at async EntryGroup.create (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/cordis-plugin-loader/lib/index.js:55:4)
+        at async Promise.allSettled (index 135)
+        at async EntryGroup.update (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/cordis-plugin-loader/lib/index.js:87:21)
+        at async Include._apply (file:///C:/Users/TinaD/AppData/Roaming/npm/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai/dsh-app-boot/lib/index.js:238:3) {
+      [cause]: Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@deepseek-ai/dsh-tools' imported from C:\Users\TinaD\AppData\Local\Temp\oasis-dsh-week3-RkiZG5\packages\oasis-professional-service\src\index.js
+          at Object.getPackageJSONURL (node:internal/modules/package_json_reader:266:9)
+          at packageResolve (node:internal/modules/esm/resolve:767:81)
+          at moduleResolve (node:internal/modules/esm/resolve:853:18)
+          at defaultResolve (node:internal/modules/esm/resolve:983:11)
+          at #cachedDefaultResolve (node:internal/modules/esm/loader:717:20)
+          at ModuleLoader.resolve (node:internal/modules/esm/loader:694:38)
+          at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:308:38)
+          at ModuleJob._link (node:internal/modules/esm/module_job:183:49) {
+        code: 'ERR_MODULE_NOT_FOUND'
+      }
+    }
+  }
+}
+
+Node.js v22.19.0

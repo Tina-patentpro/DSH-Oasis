@@ -1,8 +1,10 @@
 import { createElement } from 'react'
 
 import { createLayoutAdapter } from './client/layout-adapter.js'
-import { OasisPanelPortal } from './client/OasisPanelPortal.js'
+import { createOasisBetterSidebarDescriptor } from './client/OasisBetterSidebarTab.js'
+import { createPanelHostCoordinator } from './client/panel-host-coordinator.js'
 import { WorkbenchEntry } from './client/WorkbenchEntry.js'
+import { WorkspaceContextBridge } from './client/WorkspaceContextBridge.js'
 import { createWorkbenchRemote } from './client/workbench-remote.js'
 import { createWorkbenchStore } from './client/workbench-store.js'
 
@@ -19,6 +21,13 @@ export function apply(ctx) {
   const store = createWorkbenchStore({ remote: createWorkbenchRemote(connection) })
   const focusTargets = new Map()
   const layoutAdapter = createLayoutAdapter()
+  const coordinator = createPanelHostCoordinator({ layoutAdapter })
+  const betterSidebarDescriptor = createOasisBetterSidebarDescriptor({
+    coordinator,
+    store,
+    focusTargets,
+    layoutAdapter,
+  })
   const disposeEntry = slots.inject('conversation.input.right', () => slots.register(
     {
       name: 'conversation.input.right',
@@ -26,22 +35,68 @@ export function apply(ctx) {
       order: 80,
       label: 'Oasis professional workbench',
     },
-    (props) => createElement(WorkbenchEntry, { ...props, store, focusTargets, layoutAdapter }),
+    (props) => createElement(WorkbenchEntry, {
+      ...props,
+      store,
+      focusTargets,
+      layoutAdapter,
+      coordinator,
+    }),
   ))
-  const disposePanel = slots.inject('shell.overlay', () => slots.register(
+  const disposeBridge = slots.inject('shell.overlay', () => slots.register(
     {
       name: 'shell.overlay',
       id: PANEL_ID,
       order: 80,
       label: 'Oasis professional panel',
     },
-    (props) => createElement(OasisPanelPortal, { ...props, store, focusTargets, layoutAdapter }),
+    (props) => createElement(WorkspaceContextBridge, {
+      ...props,
+      store,
+      focusTargets,
+      layoutAdapter,
+      coordinator,
+    }),
   ))
 
-  return () => {
-    disposePanel()
-    disposeEntry()
-    layoutAdapter.dispose()
-    store.dispose()
+  let betterSidebarFiber = null
+  if (typeof ctx.inject === 'function') {
+    try {
+      betterSidebarFiber = ctx.inject(['betterSidebar'], (injectedCtx) => {
+        const betterSidebar = injectedCtx.get?.('betterSidebar') ?? injectedCtx.betterSidebar
+        return coordinator.attachBetterSidebar(betterSidebar, betterSidebarDescriptor)
+      })
+      if (typeof betterSidebarFiber?.dispose !== 'function') {
+        coordinator.block('better-sidebar-injection-disposer-invalid')
+      }
+    } catch {
+      coordinator.block('better-sidebar-injection-failed')
+    }
+  } else {
+    coordinator.reconcileExternalState()
+  }
+
+  return async () => {
+    try {
+      await disposeBridge()
+    } finally {
+      try {
+        await disposeEntry()
+      } finally {
+        try {
+          await betterSidebarFiber?.dispose?.()
+        } finally {
+          try {
+            coordinator.dispose()
+          } finally {
+            try {
+              layoutAdapter.dispose()
+            } finally {
+              await store.dispose()
+            }
+          }
+        }
+      }
+    }
   }
 }

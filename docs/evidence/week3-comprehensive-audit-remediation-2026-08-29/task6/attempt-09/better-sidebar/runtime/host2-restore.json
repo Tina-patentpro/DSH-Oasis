@@ -1,0 +1,771 @@
+{
+  "restoredA": {
+    "schemaVersion": 2,
+    "panelMode": "normal",
+    "activeTaskId": "task-a",
+    "taskOrder": [
+      "task-a"
+    ],
+    "tasks": {
+      "task-a": {
+        "taskId": "task-a",
+        "title": "Host1 技术闭环",
+        "workType": "technical-rd",
+        "workflowId": "technical-rd",
+        "workflowVersion": "1",
+        "formValues": {
+          "objective": "验证表单编辑后的第二次技术运行",
+          "currentState": "已建立临时 Workspace、强基线与 local-mock",
+          "constraints": [
+            "不得覆盖既有文件",
+            "不得访问外部业务系统"
+          ],
+          "evidenceStatus": "verified",
+          "expectedDeliverable": "可复核的 Markdown 与元数据"
+        },
+        "inputRefs": [
+          {
+            "referenceId": "material-4498c2fc-fcbd-4b52-a1ed-a398ffe486ac",
+            "kind": "project-file",
+            "relativePath": "materials\\technical.md",
+            "displayName": "technical.md",
+            "mediaType": "text/markdown",
+            "sizeBytes": 222,
+            "sha256": "b9860ebfbc32529643817da6a5c1630de6cf3d9616c0d7350d2af81b38b7d01f",
+            "observedAt": "2026-08-30T04:25:17.030Z",
+            "confirmedAt": "2026-08-30T04:25:17.025Z"
+          }
+        ],
+        "activeRunId": "run-1c2283a6-ca14-4e9b-81b7-cd0d42b652f3",
+        "runOrder": [
+          "run-a85dd22c-0cfc-43d7-8af1-9b914802aeba",
+          "run-1c2283a6-ca14-4e9b-81b7-cd0d42b652f3"
+        ],
+        "runs": {
+          "run-a85dd22c-0cfc-43d7-8af1-9b914802aeba": {
+            "runId": "run-a85dd22c-0cfc-43d7-8af1-9b914802aeba",
+            "requestKey": "week3-host1-a-run-1",
+            "mode": "local-mock",
+            "mockVersion": "1",
+            "status": "completed",
+            "workflowId": "technical-rd",
+            "workflowVersion": "1",
+            "inputSnapshot": {
+              "formValues": {
+                "objective": "验证隔离 Host 下的技术研发闭环",
+                "currentState": "已建立临时 Workspace、强基线与 local-mock",
+                "constraints": [
+                  "不得覆盖既有文件",
+                  "不得访问外部业务系统"
+                ],
+                "evidenceStatus": "verified",
+                "expectedDeliverable": "可复核的 Markdown 与元数据"
+              },
+              "inputRefs": [
+                {
+                  "referenceId": "material-4498c2fc-fcbd-4b52-a1ed-a398ffe486ac",
+                  "kind": "project-file",
+                  "relativePath": "materials\\technical.md",
+                  "displayName": "technical.md",
+                  "mediaType": "text/markdown",
+                  "sizeBytes": 222,
+                  "sha256": "b9860ebfbc32529643817da6a5c1630de6cf3d9616c0d7350d2af81b38b7d01f",
+                  "observedAt": "2026-08-30T04:25:17.043Z",
+                  "confirmedAt": "2026-08-30T04:25:17.025Z"
+                }
+              ],
+              "sha256": "cdfcb13a0c0e8ec261baf68ed612bf649241fc4446b7aecfd33d75948b92d0ca",
+              "capturedAt": "2026-08-30T04:25:17.043Z"
+            },
+            "result": {
+              "contentStatus": "warning",
+              "sections": [
+                {
+                  "sectionId": "problem-decomposition",
+                  "title": "问题分解",
+                  "body": "研发目标：验证隔离 Host 下的技术研发闭环\n当前状态：已建立临时 Workspace、强基线与 local-mock"
+                },
+                {
+                  "sectionId": "candidate-solutions",
+                  "title": "候选方案空间",
+                  "body": "仅给出待评估方向：参数优化、控制逻辑调整、结构或流程替代；不补写外部事实。"
+                },
+                {
+                  "sectionId": "risks",
+                  "title": "风险",
+                  "body": "本地 mock 未提取、未持久化或理解材料正文，所有技术判断均需人工复核。"
+                },
+                {
+                  "sectionId": "verification-plan",
+                  "title": "验证计划",
+                  "body": "确认基线与指标；逐项验证约束；记录数据、偏差和复核结论。"
+                },
+                {
+                  "sectionId": "deliverables",
+                  "title": "交付清单",
+                  "body": "可复核的 Markdown 与元数据"
+                }
+              ],
+              "risks": [
+                "本地 mock 未提取、未持久化或理解材料正文，所有技术判断均需人工复核。"
+              ],
+              "questions": [],
+              "disclaimer": "本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。",
+              "artifact": {
+                "artifactId": "sha256:d24599d5cd92324a484b9030e062cb28e40587a5373fca0f6162d835eb1e19a0",
+                "suggestedFileName": "technical-rd-v1-local-mock.md",
+                "mediaType": "text/markdown",
+                "body": "## 文档信息\n\n- workflow: `technical-rd@1`\n- mode: `local-mock`\n- mock_version: `1`\n- input_sha256: `cdfcb13a0c0e8ec261baf68ed612bf649241fc4446b7aecfd33d75948b92d0ca`\n\n本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。\n\n## 核心结论\n\n结构化演练已完成，但只能作为待人工复核的 warning 草稿。\n\n    研发目标：验证隔离 Host 下的技术研发闭环\n    证据状态：verified\n\n## 核心结果\n\n### 问题分解\n\n    研发目标：验证隔离 Host 下的技术研发闭环\n    当前状态：已建立临时 Workspace、强基线与 local-mock\n\n### 候选方案空间\n\n    参数优化；控制逻辑调整；结构或流程替代。以上仅为待评估方向。\n\n### 风险\n\n    1. 本地 mock 未提取、未持久化或理解材料正文，所有技术判断均需人工复核。\n\n### 验证计划\n\n    确认基线与指标；逐项验证约束；记录数据、偏差和复核结论。\n\n### 交付清单\n\n    可复核的 Markdown 与元数据\n\n### 约束条件\n\n    1. 不得覆盖既有文件\n    2. 不得访问外部业务系统\n\n## 下游读取区\n\n- content_status: `warning`\n- workflow: `technical-rd@1`\n- input_sha256: `cdfcb13a0c0e8ec261baf68ed612bf649241fc4446b7aecfd33d75948b92d0ca`\n- downstream_action: 人工复核后决定是否批准导出此 mock 草稿。\n\n## 来源与附件\n\n    1. technical.md\n    relative_path: materials\\technical.md\n    media_type: text/markdown\n    size_bytes: 222\n    sha256: b9860ebfbc32529643817da6a5c1630de6cf3d9616c0d7350d2af81b38b7d01f\n\n仅使用上述文件名、类型、大小和哈希；哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。\n\n## 质量状态\n\n- content_status: `warning`\n- review_status: `not-reviewed`\n\n本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。\n\n## 风险与待确认事项\n\n### 风险\n\n    1. 本地 mock 未提取、未持久化或理解材料正文，所有技术判断均需人工复核。\n\n### 待确认事项\n\n    无阻断问题；仍需人工复核。\n\n## 辅助文档\n\n无。Week 3 `local-mock` 不生成独立辅助文件。\n",
+                "sha256": "d24599d5cd92324a484b9030e062cb28e40587a5373fca0f6162d835eb1e19a0"
+              }
+            },
+            "review": {
+              "status": "not-reviewed",
+              "note": "",
+              "updatedAt": "2026-08-30T04:25:17.043Z"
+            },
+            "writebacks": [],
+            "createdAt": "2026-08-30T04:25:17.043Z",
+            "completedAt": "2026-08-30T04:25:17.043Z"
+          },
+          "run-1c2283a6-ca14-4e9b-81b7-cd0d42b652f3": {
+            "runId": "run-1c2283a6-ca14-4e9b-81b7-cd0d42b652f3",
+            "requestKey": "week3-host1-a-run-2",
+            "mode": "local-mock",
+            "mockVersion": "1",
+            "status": "completed",
+            "workflowId": "technical-rd",
+            "workflowVersion": "1",
+            "inputSnapshot": {
+              "formValues": {
+                "objective": "验证表单编辑后的第二次技术运行",
+                "currentState": "已建立临时 Workspace、强基线与 local-mock",
+                "constraints": [
+                  "不得覆盖既有文件",
+                  "不得访问外部业务系统"
+                ],
+                "evidenceStatus": "verified",
+                "expectedDeliverable": "可复核的 Markdown 与元数据"
+              },
+              "inputRefs": [
+                {
+                  "referenceId": "material-4498c2fc-fcbd-4b52-a1ed-a398ffe486ac",
+                  "kind": "project-file",
+                  "relativePath": "materials\\technical.md",
+                  "displayName": "technical.md",
+                  "mediaType": "text/markdown",
+                  "sizeBytes": 222,
+                  "sha256": "b9860ebfbc32529643817da6a5c1630de6cf3d9616c0d7350d2af81b38b7d01f",
+                  "observedAt": "2026-08-30T04:25:17.064Z",
+                  "confirmedAt": "2026-08-30T04:25:17.025Z"
+                }
+              ],
+              "sha256": "940e4abac4558a2ebba9f82566b1e5565ad6a2ebea4aa2e810726c760f166ee4",
+              "capturedAt": "2026-08-30T04:25:17.064Z"
+            },
+            "result": {
+              "contentStatus": "warning",
+              "sections": [
+                {
+                  "sectionId": "problem-decomposition",
+                  "title": "问题分解",
+                  "body": "研发目标：验证表单编辑后的第二次技术运行\n当前状态：已建立临时 Workspace、强基线与 local-mock"
+                },
+                {
+                  "sectionId": "candidate-solutions",
+                  "title": "候选方案空间",
+                  "body": "仅给出待评估方向：参数优化、控制逻辑调整、结构或流程替代；不补写外部事实。"
+                },
+                {
+                  "sectionId": "risks",
+                  "title": "风险",
+                  "body": "本地 mock 未提取、未持久化或理解材料正文，所有技术判断均需人工复核。"
+                },
+                {
+                  "sectionId": "verification-plan",
+                  "title": "验证计划",
+                  "body": "确认基线与指标；逐项验证约束；记录数据、偏差和复核结论。"
+                },
+                {
+                  "sectionId": "deliverables",
+                  "title": "交付清单",
+                  "body": "可复核的 Markdown 与元数据"
+                }
+              ],
+              "risks": [
+                "本地 mock 未提取、未持久化或理解材料正文，所有技术判断均需人工复核。"
+              ],
+              "questions": [],
+              "disclaimer": "本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。",
+              "artifact": {
+                "artifactId": "sha256:cbbba83801c3227ad241e9d37ab246d356d4c60f1947f915b9595a51c801188f",
+                "suggestedFileName": "technical-rd-v1-local-mock.md",
+                "mediaType": "text/markdown",
+                "body": "## 文档信息\n\n- workflow: `technical-rd@1`\n- mode: `local-mock`\n- mock_version: `1`\n- input_sha256: `940e4abac4558a2ebba9f82566b1e5565ad6a2ebea4aa2e810726c760f166ee4`\n\n本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。\n\n## 核心结论\n\n结构化演练已完成，但只能作为待人工复核的 warning 草稿。\n\n    研发目标：验证表单编辑后的第二次技术运行\n    证据状态：verified\n\n## 核心结果\n\n### 问题分解\n\n    研发目标：验证表单编辑后的第二次技术运行\n    当前状态：已建立临时 Workspace、强基线与 local-mock\n\n### 候选方案空间\n\n    参数优化；控制逻辑调整；结构或流程替代。以上仅为待评估方向。\n\n### 风险\n\n    1. 本地 mock 未提取、未持久化或理解材料正文，所有技术判断均需人工复核。\n\n### 验证计划\n\n    确认基线与指标；逐项验证约束；记录数据、偏差和复核结论。\n\n### 交付清单\n\n    可复核的 Markdown 与元数据\n\n### 约束条件\n\n    1. 不得覆盖既有文件\n    2. 不得访问外部业务系统\n\n## 下游读取区\n\n- content_status: `warning`\n- workflow: `technical-rd@1`\n- input_sha256: `940e4abac4558a2ebba9f82566b1e5565ad6a2ebea4aa2e810726c760f166ee4`\n- downstream_action: 人工复核后决定是否批准导出此 mock 草稿。\n\n## 来源与附件\n\n    1. technical.md\n    relative_path: materials\\technical.md\n    media_type: text/markdown\n    size_bytes: 222\n    sha256: b9860ebfbc32529643817da6a5c1630de6cf3d9616c0d7350d2af81b38b7d01f\n\n仅使用上述文件名、类型、大小和哈希；哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。\n\n## 质量状态\n\n- content_status: `warning`\n- review_status: `not-reviewed`\n\n本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。\n\n## 风险与待确认事项\n\n### 风险\n\n    1. 本地 mock 未提取、未持久化或理解材料正文，所有技术判断均需人工复核。\n\n### 待确认事项\n\n    无阻断问题；仍需人工复核。\n\n## 辅助文档\n\n无。Week 3 `local-mock` 不生成独立辅助文件。\n",
+                "sha256": "cbbba83801c3227ad241e9d37ab246d356d4c60f1947f915b9595a51c801188f"
+              }
+            },
+            "review": {
+              "status": "approved",
+              "note": "Host1 人工闭环演练批准。",
+              "updatedAt": "2026-08-30T04:25:17.072Z"
+            },
+            "writebacks": [
+              {
+                "writebackId": "writeback-999609c1-6e55-4587-ba02-cfacde69b158",
+                "artifactId": "sha256:cbbba83801c3227ad241e9d37ab246d356d4c60f1947f915b9595a51c801188f",
+                "relativeDirectory": "host1-export",
+                "files": [
+                  {
+                    "relativePath": "host1-export\\technical-rd-v1-local-mock.md",
+                    "sha256": "cbbba83801c3227ad241e9d37ab246d356d4c60f1947f915b9595a51c801188f",
+                    "mediaType": "text/markdown"
+                  },
+                  {
+                    "relativePath": "host1-export\\technical-rd-v1-local-mock.oasis.json",
+                    "sha256": "011ab63f2acff34b0b7ccefe945531269b41ea145ae9df970e8c3ad81ab82d82",
+                    "mediaType": "application/json"
+                  }
+                ],
+                "reviewStatus": "approved",
+                "committedAt": "2026-08-30T04:25:17.096Z"
+              },
+              {
+                "writebackId": "writeback-7e222c7c-f518-45e0-8ebc-c2228aa5ee4d",
+                "artifactId": "sha256:cbbba83801c3227ad241e9d37ab246d356d4c60f1947f915b9595a51c801188f",
+                "relativeDirectory": "host1-concurrent",
+                "files": [
+                  {
+                    "relativePath": "host1-concurrent\\technical-rd-v1-local-mock.md",
+                    "sha256": "cbbba83801c3227ad241e9d37ab246d356d4c60f1947f915b9595a51c801188f",
+                    "mediaType": "text/markdown"
+                  },
+                  {
+                    "relativePath": "host1-concurrent\\technical-rd-v1-local-mock.oasis.json",
+                    "sha256": "011ab63f2acff34b0b7ccefe945531269b41ea145ae9df970e8c3ad81ab82d82",
+                    "mediaType": "application/json"
+                  }
+                ],
+                "reviewStatus": "approved",
+                "committedAt": "2026-08-30T04:25:17.138Z"
+              }
+            ],
+            "createdAt": "2026-08-30T04:25:17.064Z",
+            "completedAt": "2026-08-30T04:25:17.064Z"
+          }
+        },
+        "createdAt": "2026-08-26T07:00:00.000Z",
+        "updatedAt": "2026-08-30T04:25:17.138Z"
+      }
+    },
+    "workspaceId": "89b1964e-30f2-4ce3-9572-bf13ad619853",
+    "revision": 8,
+    "updatedAt": "2026-08-30T04:25:17.139Z"
+  },
+  "restoredB": {
+    "schemaVersion": 2,
+    "panelMode": "normal",
+    "activeTaskId": "task-b",
+    "taskOrder": [
+      "task-b"
+    ],
+    "tasks": {
+      "task-b": {
+        "taskId": "task-b",
+        "title": "Host1 专利闭环",
+        "workType": "cn-invention-patent",
+        "workflowId": "cn-invention-patent",
+        "workflowVersion": "1",
+        "formValues": {
+          "technicalDisclosure": "一种在隔离工作区内组织技术材料、生成草稿并经人工审核后回写的方法。",
+          "inventiveConcept": "以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。",
+          "knownPriorArt": "已知方案缺少项目级隔离和回写冲突证明。",
+          "terms": [
+            "项目绑定",
+            "运行快照",
+            "无覆盖提交"
+          ],
+          "unconfirmedFacts": [],
+          "desiredScope": "方法、系统及存储介质。"
+        },
+        "inputRefs": [
+          {
+            "referenceId": "material-aedca635-8d1c-47b4-9380-d8f99b333926",
+            "kind": "project-file",
+            "relativePath": "materials\\patent-disclosure.txt",
+            "displayName": "patent-disclosure.txt",
+            "mediaType": "text/plain",
+            "sizeBytes": 172,
+            "sha256": "8511b38cc0e57592fd2133caf220a6581ee1bfebc2c0203517874053f9582991",
+            "observedAt": "2026-08-30T04:25:17.157Z",
+            "confirmedAt": "2026-08-30T04:25:17.153Z"
+          }
+        ],
+        "activeRunId": "run-bc35b523-e78a-4bda-a61e-71069521fb4b",
+        "runOrder": [
+          "run-0f9c8766-3c7d-42ae-85ec-241f9aaaa2b9",
+          "run-bc35b523-e78a-4bda-a61e-71069521fb4b"
+        ],
+        "runs": {
+          "run-0f9c8766-3c7d-42ae-85ec-241f9aaaa2b9": {
+            "runId": "run-0f9c8766-3c7d-42ae-85ec-241f9aaaa2b9",
+            "requestKey": "week3-host1-b-run-1",
+            "mode": "local-mock",
+            "mockVersion": "1",
+            "status": "completed",
+            "workflowId": "cn-invention-patent",
+            "workflowVersion": "1",
+            "inputSnapshot": {
+              "formValues": {
+                "technicalDisclosure": "一种在隔离工作区内组织技术材料、生成草稿并经人工审核后回写的方法。",
+                "inventiveConcept": "以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。",
+                "knownPriorArt": "已知方案缺少项目级隔离和回写冲突证明。",
+                "terms": [
+                  "项目绑定",
+                  "运行快照",
+                  "无覆盖提交"
+                ],
+                "unconfirmedFacts": [
+                  "关键性能参数尚未确认"
+                ],
+                "desiredScope": "方法、系统及存储介质。"
+              },
+              "inputRefs": [
+                {
+                  "referenceId": "material-aedca635-8d1c-47b4-9380-d8f99b333926",
+                  "kind": "project-file",
+                  "relativePath": "materials\\patent-disclosure.txt",
+                  "displayName": "patent-disclosure.txt",
+                  "mediaType": "text/plain",
+                  "sizeBytes": 172,
+                  "sha256": "8511b38cc0e57592fd2133caf220a6581ee1bfebc2c0203517874053f9582991",
+                  "observedAt": "2026-08-30T04:25:17.166Z",
+                  "confirmedAt": "2026-08-30T04:25:17.153Z"
+                }
+              ],
+              "sha256": "beb78b5f9cfd44a43442999e055552f2da795e68ac80cb7d13e6934cbd32af0e",
+              "capturedAt": "2026-08-30T04:25:17.166Z"
+            },
+            "result": {
+              "contentStatus": "blocked",
+              "sections": [
+                {
+                  "sectionId": "terminology",
+                  "title": "术语表",
+                  "body": "项目绑定\n运行快照\n无覆盖提交"
+                },
+                {
+                  "sectionId": "support-matrix",
+                  "title": "支持关系矩阵",
+                  "body": "逐项核对发明构思、技术交底段落和拟保护技术特征；缺口标记为待确认。"
+                },
+                {
+                  "sectionId": "claim-strategy",
+                  "title": "权利要求策略骨架",
+                  "body": "围绕发明构思组织独立权利要求：以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。"
+                },
+                {
+                  "sectionId": "claims-outline",
+                  "title": "权利要求书骨架",
+                  "body": "独立权利要求：主题、必要技术特征、关系；从属权利要求：参数、结构、步骤和备选限定。"
+                },
+                {
+                  "sectionId": "specification-outline",
+                  "title": "说明书骨架",
+                  "body": "技术领域、背景技术、发明内容、附图说明、具体实施方式。"
+                },
+                {
+                  "sectionId": "questions",
+                  "title": "问题清单",
+                  "body": "关键性能参数尚未确认"
+                }
+              ],
+              "risks": [
+                "本地 mock 不提供授权前景、侵权或有效性判断，权利要求及说明书必须由专业人员复核。",
+                "存在尚未确认的事实，当前草稿禁止批准或写回。"
+              ],
+              "questions": [
+                "关键性能参数尚未确认"
+              ],
+              "disclaimer": "本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。",
+              "artifact": {
+                "artifactId": "sha256:85a07ebb8e2cae5636d501ad62230ebc866c1d042f5869a96198bacb8b9947f7",
+                "suggestedFileName": "cn-invention-patent-v1-local-mock.md",
+                "mediaType": "text/markdown",
+                "body": "## 文档信息\n\n- workflow: `cn-invention-patent@1`\n- mode: `local-mock`\n- mock_version: `1`\n- input_sha256: `beb78b5f9cfd44a43442999e055552f2da795e68ac80cb7d13e6934cbd32af0e`\n\n本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。\n\n## 核心结论\n\n存在未确认事实，当前结果被阻断。\n\n    发明构思：以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。\n    待确认事实数：1\n\n## 核心结果\n\n### 术语表\n\n    1. 项目绑定\n    2. 运行快照\n    3. 无覆盖提交\n\n### 支持关系矩阵\n\n    发明构思：以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。\n    技术交底：一种在隔离工作区内组织技术材料、生成草稿并经人工审核后回写的方法。\n    已知现有技术：已知方案缺少项目级隔离和回写冲突证明。\n\n### 权利要求策略骨架\n\n    围绕以下发明构思组织独立权利要求，并用从属权利要求承接备选限定：以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。\n\n### 权利要求书骨架\n\n    独立权利要求：主题、必要技术特征、技术特征关系。\n    从属权利要求：参数、结构、步骤和备选限定。\n\n### 说明书骨架\n\n    技术领域；背景技术；发明内容；附图说明；具体实施方式。\n\n### 问题清单\n\n    1. 关键性能参数尚未确认\n\n### 期望保护范围\n\n    方法、系统及存储介质。\n\n## 下游读取区\n\n- content_status: `blocked`\n- workflow: `cn-invention-patent@1`\n- input_sha256: `beb78b5f9cfd44a43442999e055552f2da795e68ac80cb7d13e6934cbd32af0e`\n- downstream_action: 人工复核后决定是否批准导出此 mock 草稿。\n\n## 来源与附件\n\n    1. patent-disclosure.txt\n    relative_path: materials\\patent-disclosure.txt\n    media_type: text/plain\n    size_bytes: 172\n    sha256: 8511b38cc0e57592fd2133caf220a6581ee1bfebc2c0203517874053f9582991\n\n仅使用上述文件名、类型、大小和哈希；哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。\n\n## 质量状态\n\n- content_status: `blocked`\n- review_status: `not-reviewed`\n\n本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。\n\n## 风险与待确认事项\n\n### 风险\n\n    1. 本地 mock 不提供授权前景、侵权或有效性判断，权利要求及说明书必须由专业人员复核。\n    2. 存在尚未确认的事实，当前草稿禁止批准或写回。\n\n### 待确认事项\n\n    1. 关键性能参数尚未确认\n\n## 辅助文档\n\n无。Week 3 `local-mock` 不生成独立辅助文件。\n",
+                "sha256": "85a07ebb8e2cae5636d501ad62230ebc866c1d042f5869a96198bacb8b9947f7"
+              }
+            },
+            "review": {
+              "status": "not-reviewed",
+              "note": "",
+              "updatedAt": "2026-08-30T04:25:17.166Z"
+            },
+            "writebacks": [],
+            "createdAt": "2026-08-30T04:25:17.166Z",
+            "completedAt": "2026-08-30T04:25:17.166Z"
+          },
+          "run-bc35b523-e78a-4bda-a61e-71069521fb4b": {
+            "runId": "run-bc35b523-e78a-4bda-a61e-71069521fb4b",
+            "requestKey": "week3-host1-b-run-2",
+            "mode": "local-mock",
+            "mockVersion": "1",
+            "status": "completed",
+            "workflowId": "cn-invention-patent",
+            "workflowVersion": "1",
+            "inputSnapshot": {
+              "formValues": {
+                "technicalDisclosure": "一种在隔离工作区内组织技术材料、生成草稿并经人工审核后回写的方法。",
+                "inventiveConcept": "以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。",
+                "knownPriorArt": "已知方案缺少项目级隔离和回写冲突证明。",
+                "terms": [
+                  "项目绑定",
+                  "运行快照",
+                  "无覆盖提交"
+                ],
+                "unconfirmedFacts": [],
+                "desiredScope": "方法、系统及存储介质。"
+              },
+              "inputRefs": [
+                {
+                  "referenceId": "material-aedca635-8d1c-47b4-9380-d8f99b333926",
+                  "kind": "project-file",
+                  "relativePath": "materials\\patent-disclosure.txt",
+                  "displayName": "patent-disclosure.txt",
+                  "mediaType": "text/plain",
+                  "sizeBytes": 172,
+                  "sha256": "8511b38cc0e57592fd2133caf220a6581ee1bfebc2c0203517874053f9582991",
+                  "observedAt": "2026-08-30T04:25:17.183Z",
+                  "confirmedAt": "2026-08-30T04:25:17.153Z"
+                }
+              ],
+              "sha256": "91e7071858a808e40ffa7a40df2197efd81b81f76e4c7fce9157ef4fe45b08b4",
+              "capturedAt": "2026-08-30T04:25:17.183Z"
+            },
+            "result": {
+              "contentStatus": "warning",
+              "sections": [
+                {
+                  "sectionId": "terminology",
+                  "title": "术语表",
+                  "body": "项目绑定\n运行快照\n无覆盖提交"
+                },
+                {
+                  "sectionId": "support-matrix",
+                  "title": "支持关系矩阵",
+                  "body": "逐项核对发明构思、技术交底段落和拟保护技术特征；缺口标记为待确认。"
+                },
+                {
+                  "sectionId": "claim-strategy",
+                  "title": "权利要求策略骨架",
+                  "body": "围绕发明构思组织独立权利要求：以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。"
+                },
+                {
+                  "sectionId": "claims-outline",
+                  "title": "权利要求书骨架",
+                  "body": "独立权利要求：主题、必要技术特征、关系；从属权利要求：参数、结构、步骤和备选限定。"
+                },
+                {
+                  "sectionId": "specification-outline",
+                  "title": "说明书骨架",
+                  "body": "技术领域、背景技术、发明内容、附图说明、具体实施方式。"
+                },
+                {
+                  "sectionId": "questions",
+                  "title": "问题清单",
+                  "body": "无阻断问题，仍需人工专业复核。"
+                }
+              ],
+              "risks": [
+                "本地 mock 不提供授权前景、侵权或有效性判断，权利要求及说明书必须由专业人员复核。"
+              ],
+              "questions": [],
+              "disclaimer": "本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。",
+              "artifact": {
+                "artifactId": "sha256:809172f1fe02cc37d0fd731ce75b32409762ea55fee2cd492519798d73fcf4ed",
+                "suggestedFileName": "cn-invention-patent-v1-local-mock.md",
+                "mediaType": "text/markdown",
+                "body": "## 文档信息\n\n- workflow: `cn-invention-patent@1`\n- mode: `local-mock`\n- mock_version: `1`\n- input_sha256: `91e7071858a808e40ffa7a40df2197efd81b81f76e4c7fce9157ef4fe45b08b4`\n\n本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。\n\n## 核心结论\n\n结构化演练已完成，但只能作为待人工复核的 warning 草稿。\n\n    发明构思：以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。\n    待确认事实数：0\n\n## 核心结果\n\n### 术语表\n\n    1. 项目绑定\n    2. 运行快照\n    3. 无覆盖提交\n\n### 支持关系矩阵\n\n    发明构思：以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。\n    技术交底：一种在隔离工作区内组织技术材料、生成草稿并经人工审核后回写的方法。\n    已知现有技术：已知方案缺少项目级隔离和回写冲突证明。\n\n### 权利要求策略骨架\n\n    围绕以下发明构思组织独立权利要求，并用从属权利要求承接备选限定：以项目绑定、不可变运行快照和无覆盖提交形成可审计闭环。\n\n### 权利要求书骨架\n\n    独立权利要求：主题、必要技术特征、技术特征关系。\n    从属权利要求：参数、结构、步骤和备选限定。\n\n### 说明书骨架\n\n    技术领域；背景技术；发明内容；附图说明；具体实施方式。\n\n### 问题清单\n\n    无阻断问题，仍需人工专业复核。\n\n### 期望保护范围\n\n    方法、系统及存储介质。\n\n## 下游读取区\n\n- content_status: `warning`\n- workflow: `cn-invention-patent@1`\n- input_sha256: `91e7071858a808e40ffa7a40df2197efd81b81f76e4c7fce9157ef4fe45b08b4`\n- downstream_action: 人工复核后决定是否批准导出此 mock 草稿。\n\n## 来源与附件\n\n    1. patent-disclosure.txt\n    relative_path: materials\\patent-disclosure.txt\n    media_type: text/plain\n    size_bytes: 172\n    sha256: 8511b38cc0e57592fd2133caf220a6581ee1bfebc2c0203517874053f9582991\n\n仅使用上述文件名、类型、大小和哈希；哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。\n\n## 质量状态\n\n- content_status: `warning`\n- review_status: `not-reviewed`\n\n本结果为本地确定性 local-mock 演练草稿，仅重组用户输入和材料元数据；材料哈希在本机通过流式读取计算，正文未提取、未持久化且未用于生成。本结果不构成技术、专利或法律专业结论，必须由具备相应资质的人员复核。\n\n## 风险与待确认事项\n\n### 风险\n\n    1. 本地 mock 不提供授权前景、侵权或有效性判断，权利要求及说明书必须由专业人员复核。\n\n### 待确认事项\n\n    无阻断问题；仍需人工复核。\n\n## 辅助文档\n\n无。Week 3 `local-mock` 不生成独立辅助文件。\n",
+                "sha256": "809172f1fe02cc37d0fd731ce75b32409762ea55fee2cd492519798d73fcf4ed"
+              }
+            },
+            "review": {
+              "status": "approved",
+              "note": "已人工复核补充信息。",
+              "updatedAt": "2026-08-30T04:25:17.189Z"
+            },
+            "writebacks": [],
+            "createdAt": "2026-08-30T04:25:17.183Z",
+            "completedAt": "2026-08-30T04:25:17.183Z"
+          }
+        },
+        "createdAt": "2026-08-26T07:00:00.000Z",
+        "updatedAt": "2026-08-30T04:25:17.183Z"
+      }
+    },
+    "workspaceId": "013366df-e26b-4056-9891-1b8090efd200",
+    "revision": 6,
+    "updatedAt": "2026-08-30T04:25:17.189Z"
+  },
+  "invalidHost1Token": {
+    "code": "WRITEBACK_TOKEN_INVALID",
+    "message": "Writeback confirmation token is invalid",
+    "details": {}
+  },
+  "sessionA1": {
+    "sessionId": "session-6f990330-6d82-4147-ad6a-76fae7cbd760",
+    "agentPreset": "standard"
+  },
+  "sessionA2": {
+    "sessionId": "session-6aabda34-c820-48e9-8928-fb37d5a3dd1d",
+    "agentPreset": "standard"
+  },
+  "sessionB": {
+    "sessionId": "session-bd99b1fc-aef8-4f35-ba3a-9b2244cde1ec",
+    "agentPreset": "standard"
+  },
+  "visibleSessions": {
+    "items": [
+      {
+        "sessionId": "session-bd99b1fc-aef8-4f35-ba3a-9b2244cde1ec",
+        "updatedAt": 1788063923712,
+        "running": false,
+        "blank": false,
+        "cwd": "C:\\Users\\TinaD\\AppData\\Local\\Temp\\oasis-dsh-week3-srzVH1\\oasis-week3-workspace-b",
+        "agentPreset": "standard",
+        "projections": {
+          "asOfSeq": 5,
+          "values": {
+            "sessionStats": {
+              "turns": 0,
+              "steps": 0,
+              "llmMs": 0,
+              "toolMs": 0,
+              "ttftMs": 0,
+              "ttftSteps": 0,
+              "decodeMs": 0,
+              "decodeTokens": 0
+            },
+            "title": "Oasis Week3 B-1",
+            "goal": null,
+            "tokenUsage": {
+              "uncachedInputTokens": 0,
+              "outputTokens": 0,
+              "cacheReadTokens": 0,
+              "cacheWriteTokens": 0
+            },
+            "contextPressure": {},
+            "contextBreakdown": {
+              "systemTokens": 0,
+              "toolsTokens": 0,
+              "messageTokens": 0
+            },
+            "subagentTiming": {
+              "settledMs": 0
+            },
+            "subagent": null,
+            "permissions": {
+              "options": [
+                {
+                  "value": "read-only",
+                  "name": "read-only"
+                },
+                {
+                  "value": "workspace-write",
+                  "name": "workspace-write"
+                },
+                {
+                  "value": "danger-full-access",
+                  "name": "danger-full-access"
+                }
+              ],
+              "currentValue": "workspace-write"
+            },
+            "sessionListMetadata": {
+              "blank": false,
+              "lastPromptAt": null
+            },
+            "imageLimits": {
+              "maxImageBytes": 20971520,
+              "maxImagesPerMessage": 20,
+              "maxMessageImageBytes": 209715200,
+              "maxImagePixels": 64000000,
+              "maxImageDimension": 8192,
+              "mediaTypes": [
+                "image/png",
+                "image/jpeg",
+                "image/webp",
+                "image/gif"
+              ]
+            },
+            "todos": null,
+            "plan": {
+              "active": false,
+              "pending": false
+            }
+          }
+        }
+      },
+      {
+        "sessionId": "session-6aabda34-c820-48e9-8928-fb37d5a3dd1d",
+        "updatedAt": 1788063923684,
+        "running": false,
+        "blank": false,
+        "cwd": "C:\\Users\\TinaD\\AppData\\Local\\Temp\\oasis-dsh-week3-srzVH1\\oasis-week3-workspace-a",
+        "agentPreset": "standard",
+        "projections": {
+          "asOfSeq": 5,
+          "values": {
+            "sessionStats": {
+              "turns": 0,
+              "steps": 0,
+              "llmMs": 0,
+              "toolMs": 0,
+              "ttftMs": 0,
+              "ttftSteps": 0,
+              "decodeMs": 0,
+              "decodeTokens": 0
+            },
+            "title": "Oasis Week3 A-2",
+            "goal": null,
+            "tokenUsage": {
+              "uncachedInputTokens": 0,
+              "outputTokens": 0,
+              "cacheReadTokens": 0,
+              "cacheWriteTokens": 0
+            },
+            "contextPressure": {},
+            "contextBreakdown": {
+              "systemTokens": 0,
+              "toolsTokens": 0,
+              "messageTokens": 0
+            },
+            "subagentTiming": {
+              "settledMs": 0
+            },
+            "subagent": null,
+            "permissions": {
+              "options": [
+                {
+                  "value": "read-only",
+                  "name": "read-only"
+                },
+                {
+                  "value": "workspace-write",
+                  "name": "workspace-write"
+                },
+                {
+                  "value": "danger-full-access",
+                  "name": "danger-full-access"
+                }
+              ],
+              "currentValue": "workspace-write"
+            },
+            "sessionListMetadata": {
+              "blank": false,
+              "lastPromptAt": null
+            },
+            "imageLimits": {
+              "maxImageBytes": 20971520,
+              "maxImagesPerMessage": 20,
+              "maxMessageImageBytes": 209715200,
+              "maxImagePixels": 64000000,
+              "maxImageDimension": 8192,
+              "mediaTypes": [
+                "image/png",
+                "image/jpeg",
+                "image/webp",
+                "image/gif"
+              ]
+            },
+            "todos": null,
+            "plan": {
+              "active": false,
+              "pending": false
+            }
+          }
+        }
+      },
+      {
+        "sessionId": "session-6f990330-6d82-4147-ad6a-76fae7cbd760",
+        "updatedAt": 1788063920582,
+        "running": false,
+        "blank": false,
+        "cwd": "C:\\Users\\TinaD\\AppData\\Local\\Temp\\oasis-dsh-week3-srzVH1\\oasis-week3-workspace-a",
+        "agentPreset": "standard",
+        "projections": {
+          "asOfSeq": 5,
+          "values": {
+            "sessionStats": {
+              "turns": 0,
+              "steps": 0,
+              "llmMs": 0,
+              "toolMs": 0,
+              "ttftMs": 0,
+              "ttftSteps": 0,
+              "decodeMs": 0,
+              "decodeTokens": 0
+            },
+            "title": "Oasis Week3 A-1",
+            "goal": null,
+            "tokenUsage": {
+              "uncachedInputTokens": 0,
+              "outputTokens": 0,
+              "cacheReadTokens": 0,
+              "cacheWriteTokens": 0
+            },
+            "contextPressure": {},
+            "contextBreakdown": {
+              "systemTokens": 0,
+              "toolsTokens": 0,
+              "messageTokens": 0
+            },
+            "subagentTiming": {
+              "settledMs": 0
+            },
+            "subagent": null,
+            "permissions": {
+              "options": [
+                {
+                  "value": "read-only",
+                  "name": "read-only"
+                },
+                {
+                  "value": "workspace-write",
+                  "name": "workspace-write"
+                },
+                {
+                  "value": "danger-full-access",
+                  "name": "danger-full-access"
+                }
+              ],
+              "currentValue": "workspace-write"
+            },
+            "sessionListMetadata": {
+              "blank": false,
+              "lastPromptAt": null
+            },
+            "imageLimits": {
+              "maxImageBytes": 20971520,
+              "maxImagesPerMessage": 20,
+              "maxMessageImageBytes": 209715200,
+              "maxImagePixels": 64000000,
+              "maxImageDimension": 8192,
+              "mediaTypes": [
+                "image/png",
+                "image/jpeg",
+                "image/webp",
+                "image/gif"
+              ]
+            },
+            "todos": null,
+            "plan": {
+              "active": false,
+              "pending": false
+            }
+          }
+        }
+      }
+    ]
+  }
+}

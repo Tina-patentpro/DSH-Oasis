@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-08-29T06:28:39.435Z",
+  "batch": "B",
+  "finding": "W3A-01",
+  "localFindingStatus": "closed",
+  "overallRemediationStatus": "FAIL",
+  "checks": [
+    {
+      "command": "node --test packages/oasis-professional-service/test/local-mock-runner.test.mjs packages/oasis-professional-service/test/workbench-domain.test.mjs",
+      "exitCode": 0,
+      "tests": 15,
+      "passed": 15,
+      "failed": 0,
+      "evidence": "green-focused.txt"
+    },
+    {
+      "command": "node --test --test-skip-pattern=public Better Sidebar|dispose finishes packages/oasis-professional-service/test/*.test.mjs",
+      "exitCode": 0,
+      "tests": 180,
+      "passed": 180,
+      "failed": 0,
+      "evidence": "green-package-excluding-known-reds.txt"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 1,
+      "tests": 182,
+      "passed": 180,
+      "failed": 2,
+      "expectedRemainingFailures": [
+        "W3A-02 Better Sidebar public service integration",
+        "W3A-03 bounded dispose"
+      ],
+      "evidence": "package-full-known-reds.txt"
+    },
+    {
+      "command": "fc /b v1-golden-before.json v1-golden-after.json",
+      "exitCode": 0,
+      "result": "no differences"
+    },
+    {
+      "command": "node --check on five touched JavaScript files",
+      "exitCode": 0,
+      "files": 5
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "result": "no whitespace errors; existing LF-to-CRLF notices only"
+    }
+  ],
+  "proofBoundary": "Static and local unit/package tests only. No Host, browser, isolated Profile, real Profile, production, commit, or push action was performed in Batch B."
+}
+

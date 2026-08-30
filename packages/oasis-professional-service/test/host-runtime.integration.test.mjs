@@ -1,12 +1,17 @@
 import assert from 'node:assert/strict'
 import { Context, Service } from '@deepseek-ai/cordis'
 import { ToolRuntime } from '@deepseek-ai/dsh-tools'
+import { mkdir, mkdtemp, realpath, rm, writeFile } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import test from 'node:test'
 
 import * as oasisPlugin from '../src/index.js'
+import { createEditableDraft } from './workbench-fixtures.mjs'
 
 let storageDomainStub
 let connectionStub
+let workspaceRegistryStub
 
 class SystemPromptStub extends Service {
   constructor(ctx) {
@@ -57,13 +62,35 @@ class ConnectionStub extends Service {
   }
 }
 
+class WorkspaceRegistryStub extends Service {
+  constructor(ctx) {
+    super(ctx, 'workspaceRegistry')
+    workspaceRegistryStub = this
+    this.workspace = undefined
+  }
+
+  get(workspaceId) {
+    return workspaceId === this.workspace?.id ? this.workspace : undefined
+  }
+}
+
 test('real Cordis tools service lists and executes oasis_workbench_status', async () => {
   const root = new Context()
+  const tempRoot = await mkdtemp(join(tmpdir(), 'oasis-host-materials-'))
   try {
     await root.plugin(SystemPromptStub)
     await root.plugin(ToolRuntime)
     await root.plugin(StorageDomainStub)
     await root.plugin(ConnectionStub)
+    await root.plugin(WorkspaceRegistryStub)
+    const workspacePath = join(tempRoot, 'workspace')
+    await mkdir(join(workspacePath, 'materials'), { recursive: true })
+    await writeFile(join(workspacePath, 'materials', 'spec.md'), 'Host material integration fixture')
+    workspaceRegistryStub.workspace = {
+      id: 'workspace-a',
+      path: await realpath(workspacePath),
+      async status() { return 'ok' },
+    }
     await root.plugin(oasisPlugin)
 
     const schema = root.tools.schemas().find((entry) => entry.name === 'oasis_workbench_status')
@@ -79,8 +106,8 @@ test('real Cordis tools service lists and executes oasis_workbench_status', asyn
     assert.equal(result.content.length, 1)
     assert.equal(result.content[0].type, 'text')
     const value = JSON.parse(result.content[0].text)
-    assert.equal(value.phase, 'week-2')
-    assert.equal(value.capabilityLevel, 'durable-workbench-state')
+    assert.equal(value.phase, 'week-3')
+    assert.equal(value.capabilityLevel, 'local-professional-loop')
     assert.deepEqual(value.supportedWorkTypes, ['technical-rd', 'cn-invention-patent'])
 
     assert.equal(connectionStub.registration.channel, '/oasis-workbench')
@@ -88,8 +115,22 @@ test('real Cordis tools service lists and executes oasis_workbench_status', asyn
     const state = await connectionStub.registration.handler('state/get', { workspaceId: 'workspace-a' })
     assert.equal(state.ok, true)
     assert.equal(state.value.revision, 0)
+
+    const created = await connectionStub.registration.handler('state/replace', {
+      workspaceId: 'workspace-a', expectedRevision: 0, state: createEditableDraft(),
+    })
+    assert.equal(created.value.current.revision, 1)
+    const added = await connectionStub.registration.handler('material/add', {
+      workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: 1,
+      relativePath: 'materials\\spec.md', confirmed: true,
+    })
+    assert.equal(added.ok, true)
+    assert.equal(added.value.current.tasks['task-a'].inputRefs.length, 1)
+    assert.equal(added.value.current.tasks['task-a'].inputRefs[0].relativePath, 'materials\\spec.md')
+    assert.equal(Object.hasOwn(added.value.current.tasks['task-a'].inputRefs[0], 'absolutePath'), false)
   } finally {
     await root.fiber.dispose()
+    await rm(tempRoot, { recursive: true, force: true })
   }
 
   assert.equal(connectionStub.disposed, 1)

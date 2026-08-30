@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-08-29T09:01:30.464Z",
+  "batch": "D",
+  "finding": "W3A-03",
+  "findingStatus": "closed_local",
+  "overallRemediationStatus": "FAIL",
+  "checks": [
+    {
+      "command": "node --test test/workbench-store.test.mjs test/workbench-persistence.test.mjs",
+      "exitCode": 0,
+      "tests": 26,
+      "passed": 26,
+      "failed": 0,
+      "evidence": "green-focused.txt"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 200,
+      "passed": 200,
+      "failed": 0,
+      "evidence": "package-full.txt"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "DSH lazy-CJS Client bundle regenerated",
+      "evidence": "build.txt"
+    },
+    {
+      "command": "npm pack --dry-run --json",
+      "exitCode": 0,
+      "entryCount": 37,
+      "evidence": "package-dry-run.json"
+    },
+    {
+      "command": "node --check src/client/workbench-store.js and lib/client.js",
+      "exitCode": 0,
+      "files": 2
+    },
+    {
+      "command": "git diff --check on store source, tests, and generated Client files",
+      "exitCode": 0,
+      "result": "no whitespace errors; existing LF-to-CRLF notices only"
+    },
+    {
+      "command": "node --test --test-name-pattern=workspace.display.name tests/scripts/verification-fixture-compatibility.test.mjs",
+      "exitCode": 1,
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "expectedRemainingFailure": "W3A-04 verifier does not yet pass OASIS_WORKSPACE_DISPLAY_NAME",
+      "evidence": "root-w3a04-known-red.txt"
+    }
+  ],
+  "proofBoundary": "Static, local unit/package tests, generated Client bundle, and npm dry-run inventory only. No Host, browser, isolated Profile, strong real-Profile comparison, production, commit, or push evidence is claimed."
+}

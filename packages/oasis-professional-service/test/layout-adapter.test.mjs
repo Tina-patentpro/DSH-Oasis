@@ -212,6 +212,24 @@ test('dispose is idempotent and restores every owned artifact', () => {
   assert.equal(fixture.document.head.querySelectorAll('[data-oasis-layout-style]').length, 0)
 })
 
+test('releases every standalone Portal and layout artifact before an embedded host is published', () => {
+  const fixture = createFixture()
+  const adapter = createLayoutAdapter({ document: fixture.document, window: fixture.window, watch: false })
+  const portal = adapter.mountPortal()
+  adapter.apply({ requestedMode: 'normal', panelWidth: 360 })
+
+  assert.equal(typeof adapter.releaseStandalone, 'function')
+  const released = adapter.releaseStandalone('better-sidebar-integrating')
+  assert.equal(released.effectiveMode, 'hidden')
+  assert.equal(portal.isConnected, false)
+  assert.equal(fixture.root.hasAttribute('data-oasis-layout-owner'), false)
+  assert.equal(fixture.document.documentElement.style.getPropertyValue('--oasis-right-rail-width'), '')
+  assert.equal(fixture.document.head.querySelectorAll('[data-oasis-layout-style]').length, 0)
+
+  const remounted = adapter.mountPortal()
+  assert.equal(remounted.isConnected, true)
+})
+
 test('explicit runtime fault and Portal unmount both restore the owned DSH layout', () => {
   const faultFixture = createFixture()
   const faultAdapter = createLayoutAdapter({ document: faultFixture.document, window: faultFixture.window, watch: false })

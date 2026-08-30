@@ -1,0 +1,346 @@
+TAP version 13
+# Subtest: all Week verifiers default to the whole real Profile and reuse the no-follow baseline core
+not ok 1 - all Week verifiers default to the whole real Profile and reuse the no-follow baseline core
+  ---
+  duration_ms: 3.3467
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\tests\\scripts\\real-profile-baseline-contract.test.mjs:15:1'
+  failureType: 'testCodeFailure'
+  error: 'scripts/verify-week1-supplement.mjs'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    import { createHash } from 'node:crypto'
+    import { spawn } from 'node:child_process'
+    import { createConnection, createServer } from 'node:net'
+    import { lstat, mkdir, mkdtemp, readFile, readdir, realpath, rm, writeFile } from 'node:fs/promises'
+    import { tmpdir } from 'node:os'
+    import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path'
+    import { fileURLToPath } from 'node:url'
+    
+    const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+    const packageRoot = resolve(projectRoot, 'packages/oasis-professional-service')
+    const clientLayoutProbe = resolve(projectRoot, 'tests/fixtures/oasis-client-layout-probe')
+    const slotEvidenceProbe = resolve(projectRoot, 'tests/fixtures/oasis-slot-evidence-probe')
+    const wrapper = resolve(projectRoot, 'scripts/dsh-isolated.mjs')
+    const browserTest = resolve(projectRoot, 'tests/integration/week1-supplement-browser.test.mjs')
+    const evidenceRoot = resolve(projectRoot, process.env.OASIS_EVIDENCE_ROOT ?? 'docs/evidence/week1-audit-remediation-2026-08-24')
+    const runtimeEvidence = resolve(evidenceRoot, 'runtime')
+    const browserEvidence = resolve(evidenceRoot, 'browser')
+    const realProfile = resolve(process.env.OASIS_REAL_DSH_PROFILE ?? join(process.env.USERPROFILE ?? '', '.dsh/profiles/web'))
+    
+    function sha256(value) {
+      return createHash('sha256').update(value).digest('hex')
+    }
+    
+    async function hashTree(root) {
+      const rootStat = await lstat(root)
+      if (!rootStat.isDirectory() || rootStat.isSymbolicLink()) throw new Error(`protected Profile root is not a plain directory: ${root}`)
+      const rows = []
+      async function visit(directory) {
+        const entries = await readdir(directory, { withFileTypes: true })
+        entries.sort((a, b) => a.name.localeCompare(b.name, 'en'))
+        for (const entry of entries) {
+          const path = join(directory, entry.name)
+          const stat = await lstat(path)
+          if (stat.isSymbolicLink()) throw new Error(`protected Profile contains a link: ${path}`)
+          if (stat.isDirectory()) await visit(path)
+          else if (stat.isFile()) {
+            const content = await readFile(path)
+            rows.push(`${relative(root, path).split(sep).join('/')}\t${stat.size}\t${sha256(content)}`)
+          }
+        }
+      }
+      await visit(root)
+      return `${rows.join('\n')}\n`
+    }
+    
+    function run(command, args, options = {}) {
+      return new Promise((resolveRun, rejectRun) => {
+        const child = spawn(command, args, {
+          cwd: options.cwd ?? projectRoot,
+          env: { ...process.env, ...options.env },
+          shell: options.shell ?? false,
+          stdio: ['ignore', 'pipe', 'pipe'],
+          windowsHide: true,
+        })
+        let stdout = ''
+        let stderr = ''
+        child.stdout.setEncoding('utf8')
+        child.stderr.setEncoding('utf8')
+        child.stdout.on('data', (chunk) => { stdout += chunk })
+        child.stderr.on('data', (chunk) => { stderr += chunk })
+        child.once('error', rejectRun)
+        child.once('close', (code, signal) => {
+          const result = { code: code ?? 1, signal, stdout, stderr }
+          if (result.code === 0) resolveRun(result)
+          else rejectRun(Object.assign(new Error(`${command} exited ${result.code}\n${stderr || stdout}`), { result }))
+        })
+      })
+    }
+    
+    async function allocatePort() {
+      const server = createServer()
+      await new Promise((resolveListen, rejectListen) => {
+        server.once('error', rejectListen)
+        server.listen(0, '127.0.0.1', resolveListen)
+      })
+      const address = server.address()
+      await new Promise((resolveClose, rejectClose) => server.close((error) => error ? rejectClose(error) : resolveClose()))
+      return address.port
+    }
+    
+    async function isPortOpen(port) {
+      return await new Promise((resolveCheck) => {
+        const socket = createConnection({ host: '127.0.0.1', port })
+        socket.setTimeout(300)
+        socket.once('connect', () => {
+          socket.destroy()
+          resolveCheck(true)
+        })
+        const closed = () => {
+          socket.destroy()
+          resolveCheck(false)
+        }
+        socket.once('error', closed)
+        socket.once('timeout', closed)
+      })
+    }
+    
+    async function assertPortClosed(port) {
+      for (let attempt = 0; attempt < 40; attempt += 1) {
+        if (!await isPortOpen(port)) return
+        await new Promise((resolveWait) => setTimeout(resolveWait, 100))
+      }
+      throw new Error(`Host port remained open after stop: ${port}`)
+    }
+    
+    async function rpc(baseUrl, method, payload, rpcId) {
+      const response = await fetch(new URL(`/api/${method}`, baseUrl), {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ type: 'client-request', rpcId, method, payload }),
+      })
+      const body = await response.text()
+      let result
+      try {
+        result = JSON.parse(body)
+      } catch {
+        throw new Error(`${method} failed: HTTP ${response.status} returned non-JSON ${JSON.stringify(body.slice(0, 500))}`)
+      }
+      if (!response.ok || result?.result?.ok !== true) {
+        throw new Error(`${method} failed: HTTP ${response.status} ${JSON.stringify(result?.result?.error ?? result)}`)
+      }
+      return result
+    }
+    
+    function startHost(home, port) {
+      const hostEnv = { ...process.env }
+      for (const key of Object.keys(hostEnv)) {
+        if (/(?:api[_-]?key|token|secret|password|credential)/i.test(key)) delete hostEnv[key]
+      }
+      hostEnv.HTTP_PROXY = 'http://127.0.0.1:1'
+      hostEnv.HTTPS_PROXY = 'http://127.0.0.1:1'
+      hostEnv.ALL_PROXY = 'http://127.0.0.1:1'
+      hostEnv.NO_PROXY = '127.0.0.1,localhost,::1'
+      const child = spawn(process.execPath, [wrapper, '--home', home, '--profile', 'web', '--no-open', '--port', String(port)], {
+        cwd: projectRoot,
+        env: hostEnv,
+        stdio: ['ignore', 'pipe', 'pipe'],
+        windowsHide: true,
+      })
+      let stdout = ''
+      let stderr = ''
+      child.stdout.setEncoding('utf8')
+      child.stderr.setEncoding('utf8')
+      child.stdout.on('data', (chunk) => { stdout += chunk })
+      child.stderr.on('data', (chunk) => { stderr += chunk })
+      const ready = new Promise((resolveReady, rejectReady) => {
+        const timeout = setTimeout(() => rejectReady(new Error(`DSH Host readiness timeout\n${stdout}\n${stderr}`)), 30_000)
+        const inspect = () => {
+          if (stdout.includes(`http://127.0.0.1:${port}`)) {
+            clearTimeout(timeout)
+            resolveReady()
+          }
+        }
+        child.stdout.on('data', inspect)
+        child.once('error', (error) => {
+          clearTimeout(timeout)
+          rejectReady(error)
+        })
+        child.once('exit', (code) => {
+          clearTimeout(timeout)
+          rejectReady(new Error(`DSH Host exited before readiness with ${code}\n${stdout}\n${stderr}`))
+        })
+      })
+      return { child, ready, output: () => ({ stdout, stderr }) }
+    }
+    
+    async function seedVisibleSession(baseUrl, sessionId, title, marker, rpcPrefix) {
+      const renamed = await rpc(baseUrl, 'session.rename', { sessionId, title }, `${rpcPrefix}-rename`)
+      const prompted = await rpc(baseUrl, 'session.prompt', {
+        sessionId,
+        mode: 'queue',
+        content: [{ type: 'text', text: marker }],
+      }, `${rpcPrefix}-prompt`)
+      return { renamed, prompted }
+    }
+    
+    async function waitForVisibleSessions(baseUrl, sessionIds) {
+      let lastError
+      for (let attempt = 0; attempt < 50; attempt += 1) {
+        try {
+          const listed = await rpc(baseUrl, 'session.list', {}, `week1-verifier-session-list-${attempt}`)
+          const rows = listed.result.value.items.filter((item) => sessionIds.includes(item.sessionId))
+          if (rows.length === sessionIds.length && rows.every((item) => item.blank === false)) return listed
+        } catch (error) {
+          lastError = error
+        }
+        await new Promise((resolveWait) => setTimeout(resolveWait, 100))
+      }
+      throw new Error(`verification sessions did not become non-blank within 5 seconds${lastError === undefined ? '' : `; last error: ${lastError.message}`}`)
+    }
+    
+    async function stopHost(host, port) {
+      if (host.child.exitCode === null) {
+        const exited = new Promise((resolveExit) => host.child.once('exit', resolveExit))
+        if (!host.child.kill('SIGTERM')) throw new Error(`failed to terminate DSH Host process ${host.child.pid}`)
+        await Promise.race([
+          exited,
+          new Promise((_, rejectWait) => setTimeout(
+            () => rejectWait(new Error(`DSH Host process did not exit within 5 seconds: ${host.child.pid}`)),
+            5_000,
+          )),
+        ])
+      }
+      await assertPortClosed(port)
+    }
+    
+    async function assertSafeTemporaryRoot(path) {
+      const tempRoot = await realpath(tmpdir())
+      const resolvedPath = await realpath(path)
+      const prefix = `${tempRoot.endsWith(sep) ? tempRoot : `${tempRoot}${sep}`}oasis-dsh-week1-remediation-`
+      if (!resolvedPath.startsWith(prefix)) throw new Error(`refusing cleanup outside declared temporary root: ${resolvedPath}`)
+      const stat = await lstat(resolvedPath)
+      if (!stat.isDirectory() || stat.isSymbolicLink()) throw new Error(`refusing cleanup of linked or non-directory root: ${resolvedPath}`)
+      return resolvedPath
+    }
+    
+    async function main() {
+      await mkdir(runtimeEvidence, { recursive: true })
+      await mkdir(browserEvidence, { recursive: true })
+      if (!isAbsolute(realProfile)) throw new Error('real Profile baseline path must be absolute')
+    
+      const profileBefore = await hashTree(realProfile)
+      await writeFile(resolve(runtimeEvidence, 'profile-hashes-verifier-before.txt'), profileBefore, 'utf8')
+      const temporaryHome = await mkdtemp(join(tmpdir(), 'oasis-dsh-week1-remediation-'))
+      await writeFile(resolve(runtimeEvidence, 'verifier-home.txt'), `${temporaryHome}\n`, 'utf8')
+      let host = null
+      let hostPort = null
+      let succeeded = false
+    
+      try {
+        const build = await run('pnpm.cmd', ['--config.verify-deps-before-run=false', 'run', 'build'], {
+          cwd: packageRoot,
+          shell: process.platform === 'win32',
+        })
+        await writeFile(resolve(runtimeEvidence, 'verifier-build.txt'), `${build.stdout}${build.stderr}`, 'utf8')
+    
+        const add = await run(process.execPath, [wrapper, '--home', temporaryHome, 'plugin', '--profile', 'web', 'add', packageRoot])
+        await writeFile(resolve(runtimeEvidence, 'verifier-plugin-add.txt'), `${add.stdout}${add.stderr}`, 'utf8')
+        const addClientProbe = await run(process.execPath, [wrapper, '--home', temporaryHome, 'plugin', '--profile', 'web', 'add', clientLayoutProbe])
+        await writeFile(resolve(runtimeEvidence, 'verifier-client-layout-probe-add.txt'), `${addClientProbe.stdout}${addClientProbe.stderr}`, 'utf8')
+        const addProbe = await run(process.execPath, [wrapper, '--home', temporaryHome, 'plugin', '--profile', 'web', 'add', slotEvidenceProbe])
+        await writeFile(resolve(runtimeEvidence, 'verifier-slot-probe-add.txt'), `${addProbe.stdout}${addProbe.stderr}`, 'utf8')
+        const dump = await run(process.execPath, [wrapper, '--home', temporaryHome, '--profile', 'web', '--dump-config'])
+        if (!dump.stdout.includes('name: oasis-professional-service')) throw new Error('dump-config does not contain oasis-professional-service')
+        if (!dump.stdout.includes('name: oasis-client-layout-probe')) throw new Error('dump-config does not contain the verification-only Client layout probe')
+        if (!dump.stdout.includes('name: oasis-slot-evidence-probe')) throw new Error('dump-config does not contain the verification-only Slot probe')
+        await writeFile(resolve(runtimeEvidence, 'verifier-dump-config.yml'), dump.stdout, 'utf8')
+    
+        const port = await allocatePort()
+        hostPort = port
+        const baseUrl = `http://127.0.0.1:${port}`
+        host = startHost(temporaryHome, port)
+        await host.ready
+    
+        const workspace = await rpc(baseUrl, 'workspace.create', { path: projectRoot }, 'week1-verifier-workspace-create')
+        const workspaceId = workspace.result.value.workspace.workspaceId
+        const session = await rpc(baseUrl, 'session.create', { workspaceId }, 'week1-verifier-session-create')
+        const sessionA2 = await rpc(baseUrl, 'session.create', { workspaceId }, 'week1-verifier-session-a2-create')
+        const workspaceB = await rpc(baseUrl, 'workspace.create', { path: packageRoot }, 'week1-verifier-workspace-b-create')
+        const sessionB = await rpc(baseUrl, 'session.create', {
+          workspaceId: workspaceB.result.value.workspace.workspaceId,
+        }, 'week1-verifier-session-b-create')
+        const sessionId = session.result.value.sessionId
+        const sessionA2Id = sessionA2.result.value.sessionId
+        const sessionBId = sessionB.result.value.sessionId
+        const seeds = {
+          sessionA1: await seedVisibleSession(baseUrl, sessionId, 'Oasis 验证 A-1', 'Oasis local browser verification marker A-1. No external response is required.', 'week1-verifier-session-a1'),
+          sessionA2: await seedVisibleSession(baseUrl, sessionA2Id, 'Oasis 验证 A-2', 'Oasis local browser verification marker A-2. No external response is required.', 'week1-verifier-session-a2'),
+          sessionB: await seedVisibleSession(baseUrl, sessionBId, 'Oasis 验证 B-1', 'Oasis local browser verification marker B-1. No external response is required.', 'week1-verifier-session-b1'),
+        }
+        const visibleSessions = await waitForVisibleSessions(baseUrl, [sessionId, sessionA2Id, sessionBId])
+        const skills = await rpc(baseUrl, 'skill.list', { sessionId }, 'week1-verifier-skill-list')
+        const names = skills.result.value.skills.map((skill) => skill.name)
+        for (const expected of ['dsh-plugin-development', 'oasis-rd-intake']) {
+          if (!names.includes(expected)) throw new Error(`runtime did not discover Skill ${expected}`)
+        }
+        await writeFile(resolve(runtimeEvidence, 'verifier-rpc.json'), `${JSON.stringify({ workspace, session, sessionA2, workspaceB, sessionB, seeds, visibleSessions, skills }, null, 2)}\n`, 'utf8')
+    
+        const browser = await run(process.execPath, ['--test', browserTest], {
+          env: {
+            OASIS_DSH_BASE_URL: baseUrl,
+            OASIS_BROWSER_OUTPUT: browserEvidence,
+            OASIS_SESSION_A1_ID: sessionId,
+          },
+        })
+        await writeFile(resolve(runtimeEvidence, 'verifier-browser-tap.txt'), `${browser.stdout}${browser.stderr}`, 'utf8')
+        succeeded = true
+      } finally {
+        if (host) {
+          await stopHost(host, hostPort)
+          const output = host.output()
+          await writeFile(resolve(runtimeEvidence, 'verifier-host.txt'), `${output.stdout}${output.stderr}`, 'utf8')
+        }
+        const profileAfter = await hashTree(realProfile)
+        await writeFile(resolve(runtimeEvidence, 'profile-hashes-verifier-after.txt'), profileAfter, 'utf8')
+        if (profileAfter !== profileBefore) throw new Error('protected real DSH Profile changed during verification')
+        if (succeeded) {
+          const safeRoot = await assertSafeTemporaryRoot(temporaryHome)
+          await rm(safeRoot, { recursive: true, force: false })
+        } else {
+          console.error(`verification failed; preserved isolated diagnostics at ${temporaryHome}`)
+        }
+      }
+    
+      console.log(`week-1 audit remediation verification passed; evidence: ${evidenceRoot}`)
+    }
+    
+    main().catch((error) => {
+      console.error(error.stack ?? error.message)
+      process.exitCode = 1
+    })
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/tests/scripts/real-profile-baseline-contract.test.mjs:18:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: the shared traversal records a link and hashes target text without visiting its contents
+ok 2 - the shared traversal records a link and hashes target text without visiting its contents
+  ---
+  duration_ms: 8.414
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 90.5588

@@ -1,0 +1,32 @@
+verification failed; preserved isolated diagnostics at C:\Users\TinaD\AppData\Local\Temp\oasis-dsh-week2-persistence-JqvBvI
+ZodError: [
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "runOrder",
+      "runs"
+    ],
+    "path": [
+      "tasks",
+      "task-a1"
+    ],
+    "message": "Unrecognized keys: \"runOrder\", \"runs\""
+  },
+  {
+    "code": "unrecognized_keys",
+    "keys": [
+      "runOrder",
+      "runs"
+    ],
+    "path": [
+      "tasks",
+      "task-a2"
+    ],
+    "message": "Unrecognized keys: \"runOrder\", \"runs\""
+  }
+]
+    at parseDetached (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/src/workbench-domain.js:34:44)
+    at parseWorkbenchEditableDraft (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/src/workbench-domain.js:58:10)
+    at draftA (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/scripts/verify-week2-persistence.mjs:209:10)
+    at main (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/scripts/verify-week2-persistence.mjs:304:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

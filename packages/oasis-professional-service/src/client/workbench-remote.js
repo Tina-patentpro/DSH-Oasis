@@ -1,6 +1,9 @@
 import {
   workbenchGetResponseSchema,
   workbenchReplaceResponseSchema,
+  writebackCommitResponseSchema,
+  writebackPrepareResponseSchema,
+  workflowCatalogResponseSchema,
 } from '../workbench-contract.js'
 
 const CHANNEL = '/oasis-workbench'
@@ -56,6 +59,79 @@ export function createWorkbenchRemote(connection) {
         { workspaceId, expectedRevision, state },
         signal,
       ), workbenchReplaceResponseSchema)
+    },
+
+    async getWorkflowCatalog(workType, signal) {
+      const payload = workType === undefined ? {} : { workType }
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'workflow/catalog',
+        payload,
+        signal,
+      ), workflowCatalogResponseSchema)
+    },
+
+    async addMaterial(payload, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'material/add',
+        payload,
+        signal,
+      ), workbenchReplaceResponseSchema)
+    },
+
+    async refreshMaterial(payload, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'material/refresh',
+        payload,
+        signal,
+      ), workbenchReplaceResponseSchema)
+    },
+
+    async removeMaterial(payload, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'material/remove',
+        payload,
+        signal,
+      ), workbenchReplaceResponseSchema)
+    },
+
+    async createRun(payload, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'task/create',
+        payload,
+        signal,
+      ), workbenchReplaceResponseSchema)
+    },
+
+    async reviewRun(payload, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'task/review',
+        payload,
+        signal,
+      ), workbenchReplaceResponseSchema)
+    },
+
+    async prepareWriteback(payload, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'artifact/prepare-writeback',
+        payload,
+        signal,
+      ), writebackPrepareResponseSchema)
+    },
+
+    async commitWriteback(confirmationToken, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'artifact/commit-writeback',
+        { confirmationToken },
+        signal,
+      ), writebackCommitResponseSchema)
     },
   })
 }

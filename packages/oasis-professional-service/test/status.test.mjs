@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url'
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const modulePath = resolve(packageRoot, 'src/status.js')
 
-test('creates the immutable week-two durable state status contract', async () => {
+test('creates the immutable week-three local professional loop status contract', async () => {
   assert.equal(existsSync(modulePath), true, 'status module must exist')
   if (!existsSync(modulePath)) return
 
@@ -18,10 +18,10 @@ test('creates the immutable week-two durable state status contract', async () =>
   assert.deepEqual(status, {
     schemaVersion: '1.0.0',
     plugin: 'oasis-professional-service',
-    phase: 'week-2',
-    capabilityLevel: 'durable-workbench-state',
+    phase: 'week-3',
+    capabilityLevel: 'local-professional-loop',
     localFirst: true,
-    externalSystems: 'existing-stable-services',
+    externalSystems: 'not-invoked',
     supportedWorkTypes: [
       'technical-rd',
       'cn-invention-patent',

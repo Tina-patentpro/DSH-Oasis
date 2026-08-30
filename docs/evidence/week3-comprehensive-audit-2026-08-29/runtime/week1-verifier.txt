@@ -1,0 +1,35 @@
+verification failed; preserved isolated diagnostics at C:\Users\TinaD\AppData\Local\Temp\oasis-dsh-week1-remediation-tRonIu
+Error: C:\Program Files\nodejs\node.exe exited 1
+TAP version 13
+# Subtest: isolated DSH preserves native layout while operating the project-bound Oasis panel
+not ok 1 - isolated DSH preserves native layout while operating the project-bound Oasis panel
+  ---
+  duration_ms: 33638.5101
+  type: 'test'
+  location: 'C:\\Users\\TinaD\\.codex\\visualizations\\2026\\08\\21\\01a026ba-0115-7760-a697-cde3f3e68624\\week3-comprehensive-audit-workspace-2026-08-29\\tests\\integration\\week1-supplement-browser.test.mjs:115:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    locator.waitFor: Timeout 30000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('treeitem').filter({ hasText: '9、绿洲慧写4.0预研' }).first() to be visible[22m
+    
+  code: 'ERR_TEST_FAILURE'
+  name: 'TimeoutError'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\TinaD\.codex\visualizations\2026\08\21\01a026ba-0115-7760-a697-cde3f3e68624\week3-comprehensive-audit-workspace-2026-08-29\tests\integration\week1-supplement-browser.test.mjs:166:25)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 33704.5717
+
+    at ChildProcess.<anonymous> (file:///C:/Users/TinaD/.codex/visualizations/2026/08/21/01a026ba-0115-7760-a697-cde3f3e68624/week3-comprehensive-audit-workspace-2026-08-29/scripts/verify-week1-supplement.mjs:49:36)
+    at Object.onceWrapper (node:events:634:26)
+    at ChildProcess.emit (node:events:519:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:304:5)

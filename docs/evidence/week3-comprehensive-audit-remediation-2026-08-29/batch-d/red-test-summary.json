@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-08-29T09:01:30.464Z",
+  "phase": "RED",
+  "finding": "W3A-03",
+  "tests": [
+    {
+      "area": "original deadline reproduction",
+      "command": "node --test --test-name-pattern=dispose.finishes test/workbench-store.test.mjs",
+      "exitCode": 1,
+      "expectedFailure": "dispose timed out because abort followed the unbounded flush",
+      "evidence": "../batch-a/red-dispose-deadline.txt"
+    },
+    {
+      "area": "expanded disposal matrix",
+      "command": "node --test test/workbench-store.test.mjs",
+      "exitCode": 1,
+      "tests": 17,
+      "passed": 12,
+      "failed": 5,
+      "expectedFailures": [
+        "disposeDrainMs was not validated",
+        "closing did not reject a mutation",
+        "default and custom deadline timers were not scheduled",
+        "a never-settling remote could not be bounded",
+        "late completion cleanup was unavailable"
+      ]
+    },
+    {
+      "area": "acknowledged action during hydration",
+      "command": "node --test --test-name-pattern=dispose.preserves.an.action.acknowledged.before.closing test/workbench-store.test.mjs",
+      "exitCode": 1,
+      "expectedFailure": "expected one replacement for the pre-closing action, observed zero"
+    }
+  ],
+  "interpretation": "The RED tests executed normally and failed on the missing lifecycle behavior. The hydration regression prevented the closing guard from silently discarding an operation accepted before shutdown."
+}
+

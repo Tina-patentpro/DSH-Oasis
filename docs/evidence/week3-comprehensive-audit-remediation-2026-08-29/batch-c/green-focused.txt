@@ -1,0 +1,202 @@
+TAP version 13
+# Subtest: registers additive entry and panel host slots but never details
+ok 1 - registers additive entry and panel host slots but never details
+  ---
+  duration_ms: 2.8187
+  type: 'test'
+  ...
+# Subtest: fails closed when the DSH Connection service is unavailable
+ok 2 - fails closed when the DSH Connection service is unavailable
+  ---
+  duration_ms: 0.0855
+  type: 'test'
+  ...
+# Subtest: registers the workbench through the public Better Sidebar tab service when available
+ok 3 - registers the workbench through the public Better Sidebar tab service when available
+  ---
+  duration_ms: 0.3402
+  type: 'test'
+  ...
+# Subtest: entry opens a visible normal panel directly through the shared store
+ok 4 - entry opens a visible normal panel directly through the shared store
+  ---
+  duration_ms: 2.6959
+  type: 'test'
+  ...
+# Subtest: entry opens the targeted native Better Sidebar tab without opening the standalone panel
+ok 5 - entry opens the targeted native Better Sidebar tab without opening the standalone panel
+  ---
+  duration_ms: 0.1693
+  type: 'test'
+  ...
+# Subtest: entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+ok 6 - entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+  ---
+  duration_ms: 0.1983
+  type: 'test'
+  ...
+# Subtest: entry subscribes to host coordinator changes instead of caching its initial host mode
+ok 7 - entry subscribes to host coordinator changes instead of caching its initial host mode
+  ---
+  duration_ms: 0.3983
+  type: 'test'
+  ...
+# Subtest: client no longer uses a window CustomEvent as its open transport
+ok 8 - client no longer uses a window CustomEvent as its open transport
+  ---
+  duration_ms: 0.3034
+  type: 'test'
+  ...
+# Subtest: panel never opens or closes the occupied DSH details modal for geometry
+ok 9 - panel never opens or closes the occupied DSH details modal for geometry
+  ---
+  duration_ms: 0.3558
+  type: 'test'
+  ...
+# Subtest: uses the approved Codex show hide expand and restore SVG paths
+ok 10 - uses the approved Codex show hide expand and restore SVG paths
+  ---
+  duration_ms: 0.2424
+  type: 'test'
+  ...
+# Subtest: embedded chrome leaves show, hide, expand, and restore controls to Better Sidebar
+ok 11 - embedded chrome leaves show, hide, expand, and restore controls to Better Sidebar
+  ---
+  duration_ms: 0.5257
+  type: 'test'
+  ...
+# Subtest: Better Sidebar integration uses only its public service plus the fail-closed marker seam
+ok 12 - Better Sidebar integration uses only its public service plus the fail-closed marker seam
+  ---
+  duration_ms: 0.3719
+  type: 'test'
+  ...
+# Subtest: flushes drafts before task switch, confirmed history close, and panel hide
+ok 13 - flushes drafts before task switch, confirmed history close, and panel hide
+  ---
+  duration_ms: 0.312
+  type: 'test'
+  ...
+# Subtest: shared workbench surface loads persisted state and remote workflow catalog for each resolved Workspace
+ok 14 - shared workbench surface loads persisted state and remote workflow catalog for each resolved Workspace
+  ---
+  duration_ms: 0.2138
+  type: 'test'
+  ...
+# Subtest: hydrates the current embedded workspace and persists standalone mode as hidden before fallback
+ok 15 - hydrates the current embedded workspace and persists standalone mode as hidden before fallback
+  ---
+  duration_ms: 0.9829
+  type: 'test'
+  ...
+# Subtest: keeps fallback locally hidden when the authoritative workspace cannot be persisted
+ok 16 - keeps fallback locally hidden when the authoritative workspace cannot be persisted
+  ---
+  duration_ms: 0.2303
+  type: 'test'
+  ...
+# Subtest: detects the current DSH rc.2 frame without hash classes or positional selectors
+ok 17 - detects the current DSH rc.2 frame without hash classes or positional selectors
+  ---
+  duration_ms: 1.6858
+  type: 'test'
+  ...
+# Subtest: rejects duplicate or structurally unrelated DSH anchors
+ok 18 - rejects duplicate or structurally unrelated DSH anchors
+  ---
+  duration_ms: 0.3036
+  type: 'test'
+  ...
+# Subtest: accepts the current DSH narrow layout when the native sidebar track collapses to zero
+ok 19 - accepts the current DSH narrow layout when the native sidebar track collapses to zero
+  ---
+  duration_ms: 0.5695
+  type: 'test'
+  ...
+# Subtest: resolves requested and effective modes without overwriting the request
+ok 20 - resolves requested and effective modes without overwriting the request
+  ---
+  duration_ms: 0.5522
+  type: 'test'
+  ...
+# Subtest: normal owns one namespaced push and expanded or hidden clears it
+ok 21 - normal owns one namespaced push and expanded or hidden clears it
+  ---
+  duration_ms: 0.6105
+  type: 'test'
+  ...
+# Subtest: foreign layout ownership fails closed without overwriting it
+ok 22 - foreign layout ownership fails closed without overwriting it
+  ---
+  duration_ms: 0.3156
+  type: 'test'
+  ...
+# Subtest: dispose is idempotent and restores every owned artifact
+ok 23 - dispose is idempotent and restores every owned artifact
+  ---
+  duration_ms: 0.3046
+  type: 'test'
+  ...
+# Subtest: releases every standalone Portal and layout artifact before an embedded host is published
+ok 24 - releases every standalone Portal and layout artifact before an embedded host is published
+  ---
+  duration_ms: 0.3526
+  type: 'test'
+  ...
+# Subtest: explicit runtime fault and Portal unmount both restore the owned DSH layout
+ok 25 - explicit runtime fault and Portal unmount both restore the owned DSH layout
+  ---
+  duration_ms: 1.0842
+  type: 'test'
+  ...
+# Subtest: a CSS write failure restores the layout and reports a fault
+ok 26 - a CSS write failure restores the layout and reports a fault
+  ---
+  duration_ms: 0.364
+  type: 'test'
+  ...
+# Subtest: switches through integrating and releasing while Better Sidebar owns the outer panel
+ok 27 - switches through integrating and releasing while Better Sidebar owns the outer panel
+  ---
+  duration_ms: 2.0062
+  type: 'test'
+  ...
+# Subtest: fails closed for an invalid service, invalid registration disposer, or marker without service
+ok 28 - fails closed for an invalid service, invalid registration disposer, or marker without service
+  ---
+  duration_ms: 0.2358
+  type: 'test'
+  ...
+# Subtest: unregisters an active public tab when native open throws and remains idempotent on dispose
+ok 29 - unregisters an active public tab when native open throws and remains idempotent on dispose
+  ---
+  duration_ms: 0.1952
+  type: 'test'
+  ...
+# Subtest: projects one detached frozen workspace generation without paths or stale mutable input
+ok 30 - projects one detached frozen workspace generation without paths or stale mutable input
+  ---
+  duration_ms: 0.9858
+  type: 'test'
+  ...
+# Subtest: renders pending or unbound instead of resolving a previous workspace generation
+ok 31 - renders pending or unbound instead of resolving a previous workspace generation
+  ---
+  duration_ms: 0.2089
+  type: 'test'
+  ...
+# Subtest: blocks malformed workspace hook payloads instead of guessing a project
+ok 32 - blocks malformed workspace hook payloads instead of guessing a project
+  ---
+  duration_ms: 0.098
+  type: 'test'
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 32
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 194.6499

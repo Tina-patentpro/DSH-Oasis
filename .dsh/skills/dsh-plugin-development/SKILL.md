@@ -50,6 +50,14 @@ description: Use when creating, updating, packaging, installing, or validating a
 - 未经明确授权，不写用户`~/.dsh/profiles`、不安装到真实Profile、不发布npm包。
 - 任何文件写回必须限定在用户确认的项目根目录，禁止静默覆盖。
 
+## 第三方布局插件兼容门禁
+
+- 关闭布局兼容结论前，必须只读枚举目标Profile的真实Bundle组合；精简隔离Profile的绿色结果不能替代目标组合证据。
+- 第三方布局插件提供公开服务时，优先使用其公开注册与生命周期接口；禁止通过私有DOM、构建哈希class、模拟点击或内部store实现所谓兼容。
+- 隔离浏览器验证必须分别覆盖“第三方布局插件不存在”和“精确目标版本存在”两条路径，并明确记录已验证版本。
+- 检测到第三方布局DOM但未取得有效公开服务时必须fail-closed，不得让两个布局所有者同时写`#root`。
+- 隔离Profile不得包含解析到真实Profile的junction、symlink或其他reparse target；兼容验证前后仍需对真实Profile做强基线比较。
+
 ## 详细参考
 
 需要清单示例、官方链接、Windows隔离命令或当前兼容基线时，读取[references/official-contracts.md](references/official-contracts.md)。

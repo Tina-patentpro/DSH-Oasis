@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-08-29T07:38:02.224Z",
+  "phase": "RED",
+  "finding": "W3A-02",
+  "tests": [
+    {
+      "area": "public service integration",
+      "expectedFailure": "nested betterSidebar injection was absent",
+      "evidence": "../batch-a/red-better-sidebar-service.txt"
+    },
+    {
+      "area": "host coordinator",
+      "expectedFailure": "coordinator module fallback reported missing instead of standalone/blocked host modes"
+    },
+    {
+      "area": "workspace bridge",
+      "expectedFailure": "workspace projection and generation-aware binding functions were absent"
+    },
+    {
+      "area": "standalone release",
+      "expectedFailure": "layout adapter did not expose releaseStandalone"
+    },
+    {
+      "area": "embedded workspace state",
+      "expectedFailure": "embedded host did not hydrate and persist standalone state as hidden"
+    },
+    {
+      "area": "live entry host state",
+      "command": "node --test --test-name-pattern=entry.subscribes.to.host.coordinator.changes test/client-panel-contract.test.mjs",
+      "exitCode": 1,
+      "expectedFailure": "WorkbenchEntry source did not contain useSyncExternalStore or coordinator.subscribe"
+    }
+  ],
+  "interpretation": "Every recorded RED assertion targeted missing W3A-02 behavior rather than syntax or test setup. Production changes followed the observed failures."
+}
+

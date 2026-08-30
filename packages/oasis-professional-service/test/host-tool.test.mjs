@@ -7,7 +7,7 @@ function createHostFixture() {
   let registered
   let rpcRegistration
   const records = new Map()
-  const calls = { domainClose: 0, rpcDispose: 0 }
+  const calls = { domainClose: 0, rpcDispose: 0, toolDispose: 0 }
   const domain = {
     table() {
       return {
@@ -27,6 +27,9 @@ function createHostFixture() {
     tools: {
       register(tool) {
         registered = tool
+        return () => {
+          calls.toolDispose += 1
+        }
       },
     },
     storageDomain: {
@@ -44,6 +47,9 @@ function createHostFixture() {
         },
       },
     },
+    workspaceRegistry: {
+      get() { return undefined },
+    },
   }
   return {
     ctx,
@@ -53,12 +59,12 @@ function createHostFixture() {
   }
 }
 
-test('registers the week-two Host tool and loopback workbench RPC with owned cleanup', async () => {
+test('registers the current Host tool and loopback workbench RPC with owned cleanup', async () => {
   const fixture = createHostFixture()
   const dispose = await apply(fixture.ctx)
 
   assert.equal(name, 'oasis-professional-service')
-  assert.deepEqual(inject, ['tools', 'storageDomain', 'connection'])
+  assert.deepEqual(inject, ['tools', 'storageDomain', 'connection', 'workspaceRegistry'])
   assert.equal(fixture.registered?.name, 'oasis_workbench_status')
   assert.equal(fixture.rpcRegistration.channel, '/oasis-workbench')
   assert.deepEqual(fixture.rpcRegistration.options, { authority: 'loopback' })
@@ -71,12 +77,22 @@ test('registers the week-two Host tool and loopback workbench RPC with owned cle
     signal: new AbortController().signal,
   })
   assert.equal(value.plugin, 'oasis-professional-service')
-  assert.equal(value.phase, 'week-2')
-  assert.equal(value.capabilityLevel, 'durable-workbench-state')
+  assert.equal(value.phase, 'week-3')
+  assert.equal(value.capabilityLevel, 'local-professional-loop')
   assert.deepEqual(value.supportedWorkTypes, ['technical-rd', 'cn-invention-patent'])
   assert.equal('workspaceState' in value, false)
-  assert.equal(value.externalSystems, 'existing-stable-services')
+  assert.equal(value.externalSystems, 'not-invoked')
 
   await dispose()
-  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 1 })
+  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 1, toolDispose: 1 })
+})
+
+test('unregisters the Host tool when RPC setup fails', async () => {
+  const fixture = createHostFixture()
+  fixture.ctx.connection.rpc.handle = () => {
+    throw new Error('RPC registration failed')
+  }
+
+  await assert.rejects(apply(fixture.ctx), /RPC registration failed/)
+  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 0, toolDispose: 1 })
 })

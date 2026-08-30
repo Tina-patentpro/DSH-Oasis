@@ -1,0 +1,991 @@
+{
+  "full": {
+    "status": 200,
+    "body": {
+      "trees": [
+        {
+          "name": "root",
+          "kind": "single",
+          "scope": "root",
+          "purpose": "The built-in render-tree root hole (seeded by SlotCore): the one slot the shell itself renders, and the ancestor of every other seat.",
+          "replaceRisk": "shadows-shipped-ui",
+          "children": [
+            {
+              "name": "sidebar",
+              "kind": "single",
+              "scope": "root",
+              "purpose": "The whole left column.",
+              "replaceRisk": "shadows-shipped-ui",
+              "children": [
+                {
+                  "name": "sidebar.settings",
+                  "kind": "single",
+                  "scope": "root",
+                  "purpose": "The settings seat at the sidebar foot.",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": [
+                    {
+                      "name": "settings.trigger",
+                      "kind": "single",
+                      "scope": "root",
+                      "purpose": "The sidebar-foot trigger row content: icon + label, supplied as slot content (the accessible name comes from the content — rail state renders the label visually hidden).",
+                      "replaceRisk": "shadows-shipped-ui",
+                      "children": []
+                    },
+                    {
+                      "name": "settings.header",
+                      "kind": "single",
+                      "scope": "root",
+                      "purpose": "The panel title text seat.",
+                      "replaceRisk": "shadows-shipped-ui",
+                      "children": []
+                    },
+                    {
+                      "name": "settings.action",
+                      "kind": "list",
+                      "scope": "root",
+                      "purpose": "Optional actions rendered in the content-column header before Close.",
+                      "replaceRisk": "none",
+                      "registration": [
+                        {
+                          "name": "id",
+                          "type": "string",
+                          "required": true
+                        },
+                        {
+                          "name": "order",
+                          "type": "number",
+                          "required": false
+                        },
+                        {
+                          "name": "label",
+                          "type": "string | (() => string)",
+                          "required": false
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "settings.close",
+                      "kind": "single",
+                      "scope": "root",
+                      "purpose": "The close button's visually-hidden label text (the button itself — icon, geometry, focus — is shell chrome).",
+                      "replaceRisk": "shadows-shipped-ui",
+                      "children": []
+                    },
+                    {
+                      "name": "settings.section",
+                      "kind": "list",
+                      "scope": "root",
+                      "purpose": "One settings page per list entry.",
+                      "replaceRisk": "none",
+                      "registration": [
+                        {
+                          "name": "id",
+                          "type": "string",
+                          "required": true
+                        },
+                        {
+                          "name": "order",
+                          "type": "number",
+                          "required": false
+                        },
+                        {
+                          "name": "label",
+                          "type": "string | (() => string)",
+                          "required": false
+                        }
+                      ],
+                      "children": [
+                        {
+                          "name": "settings.general.item",
+                          "kind": "list",
+                          "scope": "root",
+                          "purpose": "One preference row inside the General section — the additive seat for a single setting that needs no page of its own (a whole page is `settings.section`), contributed by the feature plugin that owns the preference (locale → Language, ui-theme → Appearance, ui-conversation → Composer Enter).",
+                          "replaceRisk": "none",
+                          "registration": [
+                            {
+                              "name": "id",
+                              "type": "string",
+                              "required": true
+                            },
+                            {
+                              "name": "order",
+                              "type": "number",
+                              "required": false
+                            },
+                            {
+                              "name": "label",
+                              "type": "string | (() => string)",
+                              "required": false
+                            }
+                          ],
+                          "children": []
+                        },
+                        {
+                          "name": "settings.plugins.tab",
+                          "kind": "list",
+                          "scope": "root",
+                          "purpose": "One page inside the Plugins settings section.",
+                          "replaceRisk": "none",
+                          "registration": [
+                            {
+                              "name": "id",
+                              "type": "string",
+                              "required": true
+                            },
+                            {
+                              "name": "order",
+                              "type": "number",
+                              "required": false
+                            },
+                            {
+                              "name": "label",
+                              "type": "string | (() => string)",
+                              "required": false
+                            }
+                          ],
+                          "children": [
+                            {
+                              "name": "settings.plugin.item",
+                              "kind": "keyed",
+                              "scope": "root",
+                              "purpose": "One plugin's card inside the plugin configuration section (see module JSDoc).",
+                              "replaceRisk": "none",
+                              "registration": [
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "required": true
+                                }
+                              ],
+                              "keyDomain": "open: any string the owner dispatches (no compile-time key set), none are taken yet",
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "settings.onboarding",
+                      "kind": "list",
+                      "scope": "root",
+                      "purpose": "Root-scoped onboarding steps contributed by settings features.",
+                      "replaceRisk": "none",
+                      "registration": [
+                        {
+                          "name": "id",
+                          "type": "string",
+                          "required": true
+                        },
+                        {
+                          "name": "order",
+                          "type": "number",
+                          "required": false
+                        },
+                        {
+                          "name": "label",
+                          "type": "string | (() => string)",
+                          "required": false
+                        }
+                      ],
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "sidebar.brand.mark",
+                  "kind": "single",
+                  "scope": "root",
+                  "purpose": "Brand mark rendered in the expanded brand row and collapsed rail.",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": []
+                },
+                {
+                  "name": "sidebar.brand.name",
+                  "kind": "single",
+                  "scope": "root",
+                  "purpose": "Brand name rendered beside the expanded mark.",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": []
+                },
+                {
+                  "name": "sidebar.workspaces",
+                  "kind": "single",
+                  "scope": "root",
+                  "purpose": "The workspace/session browsing region: section header, search, the grouped/flat session list, and every workspace dialog.",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": [
+                    {
+                      "name": "sidebar.workspaces.directoryFlow",
+                      "kind": "single",
+                      "scope": "root",
+                      "purpose": "Directory-flow hole under the sidebar browsing region (declared by the WorkspaceBrowser entry).",
+                      "replaceRisk": "shadows-shipped-ui",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "sidebar.footer.action",
+                  "kind": "list",
+                  "scope": "root",
+                  "purpose": "Optional actions beside Settings at the sidebar foot.",
+                  "replaceRisk": "none",
+                  "registration": [
+                    {
+                      "name": "id",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "order",
+                      "type": "number",
+                      "required": false
+                    },
+                    {
+                      "name": "label",
+                      "type": "string | (() => string)",
+                      "required": false
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "conversation",
+              "kind": "single",
+              "scope": "session-maybe",
+              "purpose": "The whole center column, across both the no-session hero and a live conversation.",
+              "replaceRisk": "shadows-shipped-ui",
+              "children": [
+                {
+                  "name": "conversation.hero.brand.mark",
+                  "kind": "single",
+                  "scope": "root",
+                  "purpose": "Brand mark leading the blank-session headline.",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": []
+                },
+                {
+                  "name": "conversation.hero.workspace",
+                  "kind": "single",
+                  "scope": "root",
+                  "purpose": "The hero-phase Workspace picker hole: rendered by ConversationRoot while the session is blank (picking another workspace switches to that workspace's blank session, draft carried).",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": [
+                    {
+                      "name": "conversation.hero.workspace.directoryFlow",
+                      "kind": "single",
+                      "scope": "root",
+                      "purpose": "Directory-flow hole under the conversation empty-state picker (declared by the WorkspacePicker entry).",
+                      "replaceRisk": "shadows-shipped-ui",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "conversation.input.overlay",
+                  "kind": "list",
+                  "scope": "session",
+                  "purpose": "The InputBar floating overlay anchor: MenuView (this package) and the popupSelect shell (ui-commands) contribute list entries; each reads its own store and renders null while closed.",
+                  "replaceRisk": "none",
+                  "registration": [
+                    {
+                      "name": "id",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "order",
+                      "type": "number",
+                      "required": false
+                    },
+                    {
+                      "name": "label",
+                      "type": "string | (() => string)",
+                      "required": false
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "conversation.composer",
+                  "kind": "chain",
+                  "scope": "session",
+                  "purpose": "The composer takeover chain: entries are selector-routed replacements of the default InputBar.",
+                  "replaceRisk": "none",
+                  "registration": [
+                    {
+                      "name": "select",
+                      "type": "(owner) => unknown | null",
+                      "required": true
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "conversation.input.dock",
+                  "kind": "list",
+                  "scope": "session",
+                  "purpose": "A full-width row of its own, stacked above the composer card — the seat for anything that needs a line to itself (queue rows, a todo strip, a goal bar).",
+                  "replaceRisk": "none",
+                  "registration": [
+                    {
+                      "name": "id",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "order",
+                      "type": "number",
+                      "required": false
+                    },
+                    {
+                      "name": "label",
+                      "type": "string | (() => string)",
+                      "required": false
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "conversation.session",
+                  "kind": "single",
+                  "scope": "session",
+                  "purpose": "The entire body of one session: taking this seat means rendering that session's conversation yourself.",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": [
+                    {
+                      "name": "conversation.view",
+                      "kind": "list",
+                      "scope": "session",
+                      "purpose": "The conversation view ring: one list entry per view tab (chat here; trajectory/waterfall from ui-trajectory), rendered one-at-a-time by the session body via `only: <active id>`.",
+                      "replaceRisk": "none",
+                      "registration": [
+                        {
+                          "name": "id",
+                          "type": "string",
+                          "required": true
+                        },
+                        {
+                          "name": "order",
+                          "type": "number",
+                          "required": false
+                        },
+                        {
+                          "name": "label",
+                          "type": "string | (() => string)",
+                          "required": false
+                        }
+                      ],
+                      "children": [
+                        {
+                          "name": "conversation.message.images",
+                          "kind": "single",
+                          "scope": "session",
+                          "purpose": "Optional renderer for one consecutive group of durable message images.",
+                          "replaceRisk": "shadows-shipped-ui",
+                          "children": []
+                        },
+                        {
+                          "name": "conversation.chat.node",
+                          "kind": "keyed",
+                          "scope": "session",
+                          "purpose": "Final business node renderer, dispatched by `ChatConversationViewNode.kind`.",
+                          "replaceRisk": "shadows-shipped-ui",
+                          "registration": [
+                            {
+                              "name": "key",
+                              "type": "string",
+                              "required": true
+                            }
+                          ],
+                          "keyDomain": "fixed by the owner's key table { [Kind in ChatNodeKind]: { node: ChatNode<Kind> } }, already taken: assistant-step, command, command-input, compaction, context, manual-compaction, model-retry, steering, tool-call, turn-error, turn-max-tokens, turn-tail, unknown, user, workflow-run",
+                          "children": [
+                            {
+                              "name": "tool.call.toolview",
+                              "kind": "keyed",
+                              "scope": "session",
+                              "purpose": "Keyed atomic Tool call view, dispatched by the wire Tool name.",
+                              "replaceRisk": "shadows-shipped-ui",
+                              "registration": [
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "required": true
+                                }
+                              ],
+                              "keyDomain": "open: any string the owner dispatches (no compile-time key set), already taken: ask_user_question, bash, cordis_define, cordis_run, cordis_stop, cordis_undefine, edit, glob, grep, read, skill, todo_write, web_fetch, web_search, write",
+                              "children": [
+                                {
+                                  "name": "tool.view.cordis",
+                                  "kind": "keyed",
+                                  "scope": "session",
+                                  "purpose": "Interactive Package-owned region rendered inside the latest eligible `cordis_run` card in the conversation flow.",
+                                  "replaceRisk": "none",
+                                  "registration": [
+                                    {
+                                      "name": "key",
+                                      "type": "string",
+                                      "required": true
+                                    }
+                                  ],
+                                  "keyDomain": "fixed by the dynamic Client Guard",
+                                  "allowedKeys": [
+                                    {
+                                      "value": "self",
+                                      "description": "The only accepted key. The Guard binds it to this Package's pluginId and packageId."
+                                    }
+                                  ],
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "conversation.chat.turnTail",
+                              "kind": "chain",
+                              "scope": "session",
+                              "purpose": "The completed Turn Node's extension chain, rendered before that Node's IconActions.",
+                              "replaceRisk": "none",
+                              "registration": [
+                                {
+                                  "name": "select",
+                                  "type": "(owner) => unknown | null",
+                                  "required": true
+                                }
+                              ],
+                              "children": []
+                            },
+                            {
+                              "name": "conversation.chat.assistant-actions",
+                              "kind": "list",
+                              "scope": "session",
+                              "purpose": "Action strip attached to one finalized assistant message, rendered inside that message's IconActions row.",
+                              "replaceRisk": "none",
+                              "registration": [
+                                {
+                                  "name": "id",
+                                  "type": "string",
+                                  "required": true
+                                },
+                                {
+                                  "name": "order",
+                                  "type": "number",
+                                  "required": false
+                                },
+                                {
+                                  "name": "label",
+                                  "type": "string | (() => string)",
+                                  "required": false
+                                }
+                              ],
+                              "children": []
+                            },
+                            {
+                              "name": "conversation.chat.commandview",
+                              "kind": "keyed",
+                              "scope": "session",
+                              "purpose": "The chat view's per-command row hole: keyed dispatch on the command name (`command/run.name`; a run-less cross-window node has none and always lands on the fallback).",
+                              "replaceRisk": "none",
+                              "registration": [
+                                {
+                                  "name": "key",
+                                  "type": "string",
+                                  "required": true
+                                }
+                              ],
+                              "keyDomain": "open: any string the owner dispatches (no compile-time key set), none are taken yet",
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "conversation.session.header",
+                  "kind": "single",
+                  "scope": "session",
+                  "purpose": "The strip above the session's scrollport: title, view tabs, and the action row.",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": [
+                    {
+                      "name": "conversation.session.header.utilities",
+                      "kind": "list",
+                      "scope": "session",
+                      "purpose": "Right-aligned Session utilities kept outside the title-adjacent action group, so an optional utility cannot reorder session context or lineage.",
+                      "replaceRisk": "none",
+                      "registration": [
+                        {
+                          "name": "id",
+                          "type": "string",
+                          "required": true
+                        },
+                        {
+                          "name": "order",
+                          "type": "number",
+                          "required": false
+                        },
+                        {
+                          "name": "label",
+                          "type": "string | (() => string)",
+                          "required": false
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "conversation.session.header.lineage",
+                      "kind": "single",
+                      "scope": "session",
+                      "purpose": "One breadcrumb title and its lineage controls.",
+                      "replaceRisk": "shadows-shipped-ui",
+                      "children": []
+                    },
+                    {
+                      "name": "conversation.session.header.actions",
+                      "kind": "list",
+                      "scope": "session",
+                      "purpose": "One button in the session header's action row — the additive way to put a per-session control beside the title without replacing the header.",
+                      "replaceRisk": "none",
+                      "registration": [
+                        {
+                          "name": "id",
+                          "type": "string",
+                          "required": true
+                        },
+                        {
+                          "name": "order",
+                          "type": "number",
+                          "required": false
+                        },
+                        {
+                          "name": "label",
+                          "type": "string | (() => string)",
+                          "required": false
+                        }
+                      ],
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "conversation.composer.bar",
+                  "kind": "single",
+                  "scope": "session-maybe",
+                  "purpose": "The default composer body: a single slot rendered as the composer chain's fallback (a real entry, not a chain rider, so a takeover election hides rather than unmounts it and the textarea DOM survives).",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": [
+                    {
+                      "name": "conversation.input.attachments",
+                      "kind": "single",
+                      "scope": "session-maybe",
+                      "purpose": "Optional draft-image rail, drop target, and preview surface inside the composer.",
+                      "replaceRisk": "shadows-shipped-ui",
+                      "children": []
+                    },
+                    {
+                      "name": "conversation.input.plan",
+                      "kind": "single",
+                      "scope": "session",
+                      "purpose": "The named plan-status seat in the composer tool row, immediately right of the access-mode control — one occupant, so taking it means rendering the plan affordance yourself.",
+                      "replaceRisk": "shadows-shipped-ui",
+                      "children": []
+                    },
+                    {
+                      "name": "conversation.input.model",
+                      "kind": "single",
+                      "scope": "session",
+                      "purpose": "The named model-select seat at the right end of the composer tool row, left of the send button — one occupant, so taking it means rendering the whole model affordance yourself.",
+                      "replaceRisk": "shadows-shipped-ui",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "conversation.composer.dock",
+                  "kind": "list",
+                  "scope": "session",
+                  "purpose": "The band under the composer card, inside the bar's width column — the seat for an ambient readout about the conversation (the shipped stats line lives here).",
+                  "replaceRisk": "none",
+                  "registration": [
+                    {
+                      "name": "id",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "order",
+                      "type": "number",
+                      "required": false
+                    },
+                    {
+                      "name": "label",
+                      "type": "string | (() => string)",
+                      "required": false
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "conversation.input.left",
+                  "kind": "list",
+                  "scope": "session",
+                  "purpose": "The left end of the tool row INSIDE the composer card, after the resident chrome (access mode, plan, attach) — the seat for a small always-visible control.",
+                  "replaceRisk": "none",
+                  "registration": [
+                    {
+                      "name": "id",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "order",
+                      "type": "number",
+                      "required": false
+                    },
+                    {
+                      "name": "label",
+                      "type": "string | (() => string)",
+                      "required": false
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "conversation.input.right",
+                  "kind": "list",
+                  "scope": "session",
+                  "purpose": "The right end of the same tool row, before the primary send button — the seat for a control the user reaches on the way to sending (the model select sits in its own named seat just left of here).",
+                  "replaceRisk": "none",
+                  "registration": [
+                    {
+                      "name": "id",
+                      "type": "string",
+                      "required": true
+                    },
+                    {
+                      "name": "order",
+                      "type": "number",
+                      "required": false
+                    },
+                    {
+                      "name": "label",
+                      "type": "string | (() => string)",
+                      "required": false
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "conversation.hero.agentPreset",
+                  "kind": "single",
+                  "scope": "root",
+                  "purpose": "The agent-preset chip beside the workspace picker on the new-session screen.",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "details",
+              "kind": "single",
+              "scope": "session",
+              "purpose": "The right details column, shown when the layout opens it.",
+              "replaceRisk": "shadows-shipped-ui",
+              "children": [
+                {
+                  "name": "conversation.details.tool",
+                  "kind": "single",
+                  "scope": "session",
+                  "purpose": "The body of the details panel for the tool call the user selected — one occupant, so taking it means rendering every tool's output, not just the ones you know.",
+                  "replaceRisk": "shadows-shipped-ui",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "shell.overlay",
+              "kind": "list",
+              "scope": "root",
+              "purpose": "Frame-wide floating layer, above every column and outside their scroll containers.",
+              "replaceRisk": "none",
+              "registration": [
+                {
+                  "name": "id",
+                  "type": "string",
+                  "required": true
+                },
+                {
+                  "name": "order",
+                  "type": "number",
+                  "required": false
+                },
+                {
+                  "name": "label",
+                  "type": "string | (() => string)",
+                  "required": false
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ],
+      "referencedTypes": []
+    }
+  },
+  "entry": {
+    "status": 200,
+    "body": {
+      "requestedRoot": {
+        "name": "conversation.input.right",
+        "available": true
+      },
+      "trees": [
+        {
+          "name": "conversation.input.right",
+          "kind": "list",
+          "scope": "session",
+          "purpose": "The right end of the same tool row, before the primary send button — the seat for a control the user reaches on the way to sending (the model select sits in its own named seat just left of here).",
+          "replaceRisk": "none",
+          "registration": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "order",
+              "type": "number",
+              "required": false
+            },
+            {
+              "name": "label",
+              "type": "string | (() => string)",
+              "required": false
+            }
+          ],
+          "children": []
+        }
+      ],
+      "selected": {
+        "name": "conversation.input.right",
+        "kind": "list",
+        "scope": "session",
+        "declaredBy": "an entry in \"conversation\" (z5)",
+        "occupants": [
+          {
+            "registrant": "z5",
+            "id": "oasis-professional-entry",
+            "order": 80,
+            "priority": 0,
+            "active": true
+          },
+          {
+            "registrant": "z5",
+            "id": "oasis-native-details-verification-probe",
+            "order": 95,
+            "priority": 0,
+            "active": true
+          }
+        ],
+        "catalog": {
+          "description": "The right end of the same tool row, before the primary send button —\nthe seat for a control the user reaches on the way to sending (the\nmodel select sits in its own named seat just left of here). Same\nInputZone owner share and the same one-row height budget as\n`conversation.input.left`.",
+          "registration": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true,
+              "description": "Your cell key. Use an id of your own: a fresh id is added beside the shipped entries, while reusing a shipped id puts you in THAT cell and replaces it. Owners that filter by id address you by it."
+            },
+            {
+              "name": "order",
+              "type": "number",
+              "required": false,
+              "description": "Position among the entries, ascending (default 0)."
+            },
+            {
+              "name": "label",
+              "type": "string | (() => string)",
+              "required": false,
+              "description": "Display text where the owner projects one (nav rows, tabs). A thunk is re-read on every projection, so localized text follows the active locale without re-registering."
+            }
+          ],
+          "ownerProps": [
+            "/**\n * The input-region slot currency: dock/left/right entries read\n * the conversation snapshot and the live input state as owner props (both\n * are point-in-time snapshots — the dispatching skeleton re-renders on\n * either store's change, so entries stay current without subscribing).\n */\nexport interface InputZone {\n  readonly session: ConversationSnapshot\n  readonly input: InputState\n}"
+          ],
+          "ownerPropsReferences": [
+            "ConversationSnapshot",
+            "InputState"
+          ],
+          "standardProps": [
+            "useSessions: SnapshotSelectorHook<SessionListState>",
+            "useWorkspaces: SnapshotSelectorHook<import('./workspaces/service.ts').WorkspaceListState>",
+            "useSession: SnapshotSelectorHook<ConversationSnapshot>",
+            "sessionId: SessionId",
+            "useProjection: UseProjection",
+            "useInput: SnapshotSelectorHook<InputState>",
+            "inputActions: InputActions"
+          ],
+          "keyDomain": "",
+          "hookContext": "",
+          "slotInject": "",
+          "replaceRisk": "none"
+        }
+      },
+      "referencedTypes": []
+    }
+  },
+  "overlay": {
+    "status": 200,
+    "body": {
+      "requestedRoot": {
+        "name": "shell.overlay",
+        "available": true
+      },
+      "trees": [
+        {
+          "name": "shell.overlay",
+          "kind": "list",
+          "scope": "root",
+          "purpose": "Frame-wide floating layer, above every column and outside their scroll containers.",
+          "replaceRisk": "none",
+          "registration": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true
+            },
+            {
+              "name": "order",
+              "type": "number",
+              "required": false
+            },
+            {
+              "name": "label",
+              "type": "string | (() => string)",
+              "required": false
+            }
+          ],
+          "children": []
+        }
+      ],
+      "selected": {
+        "name": "shell.overlay",
+        "kind": "list",
+        "scope": "root",
+        "declaredBy": "an entry in \"root\" (z5)",
+        "occupants": [
+          {
+            "registrant": "z5",
+            "id": "oasis-professional-panel",
+            "order": 80,
+            "priority": 0,
+            "active": true
+          }
+        ],
+        "catalog": {
+          "description": "Frame-wide floating layer, above every column and outside their scroll\ncontainers. Deliberately generic and unowned by any feature: a badge, a\ntoast stack or a status pill all belong here, and entries order among\nthemselves. The layer itself is click-through — entries opt back into\npointer events — so an occupant never blocks the app underneath.\n\nThis is the additive seat for a frame-wide surface of your own: a fresh\n`id` is added beside the shipped entries instead of replacing them.",
+          "registration": [
+            {
+              "name": "id",
+              "type": "string",
+              "required": true,
+              "description": "Your cell key. Use an id of your own: a fresh id is added beside the shipped entries, while reusing a shipped id puts you in THAT cell and replaces it. Owners that filter by id address you by it."
+            },
+            {
+              "name": "order",
+              "type": "number",
+              "required": false,
+              "description": "Position among the entries, ascending (default 0)."
+            },
+            {
+              "name": "label",
+              "type": "string | (() => string)",
+              "required": false,
+              "description": "Display text where the owner projects one (nav rows, tabs). A thunk is re-read on every projection, so localized text follows the active locale without re-registering."
+            }
+          ],
+          "ownerProps": [],
+          "ownerPropsReferences": [],
+          "standardProps": [
+            "useSessions: SnapshotSelectorHook<SessionListState>",
+            "useWorkspaces: SnapshotSelectorHook<import('./workspaces/service.ts').WorkspaceListState>"
+          ],
+          "keyDomain": "",
+          "hookContext": "",
+          "slotInject": "",
+          "replaceRisk": "none"
+        }
+      },
+      "referencedTypes": []
+    }
+  },
+  "details": {
+    "status": 200,
+    "body": {
+      "requestedRoot": {
+        "name": "details",
+        "available": true
+      },
+      "trees": [
+        {
+          "name": "details",
+          "kind": "single",
+          "scope": "session",
+          "purpose": "The right details column, shown when the layout opens it.",
+          "replaceRisk": "shadows-shipped-ui",
+          "children": [
+            {
+              "name": "conversation.details.tool",
+              "kind": "single",
+              "scope": "session",
+              "purpose": "The body of the details panel for the tool call the user selected — one occupant, so taking it means rendering every tool's output, not just the ones you know.",
+              "replaceRisk": "shadows-shipped-ui",
+              "children": []
+            }
+          ]
+        }
+      ],
+      "selected": {
+        "name": "details",
+        "kind": "single",
+        "scope": "session",
+        "declaredBy": "an entry in \"root\" (z5)",
+        "occupants": [
+          {
+            "registrant": "z5",
+            "priority": 0,
+            "active": true
+          }
+        ],
+        "catalog": {
+          "description": "The right details column, shown when the layout opens it. OCCUPIED by\nui-conversation's DetailsPanel, which declares the tool-details seat\ninside it — registering here replaces the column and takes that seat\nwith it. Absent an occupant the column renders nothing.\n\nNo owner props: the framework injects the session id and hooks for the\n`session` scope, and `ctx.layout` owns whether the column is open.",
+          "registration": [],
+          "ownerProps": [
+            "/** Details owner share: empty — sessionId arrives as a framework-standard prop. */\nexport interface DetailsOwnerProps {}"
+          ],
+          "ownerPropsReferences": [],
+          "standardProps": [
+            "useSessions: SnapshotSelectorHook<SessionListState>",
+            "useWorkspaces: SnapshotSelectorHook<import('./workspaces/service.ts').WorkspaceListState>",
+            "useSession: SnapshotSelectorHook<ConversationSnapshot>",
+            "sessionId: SessionId",
+            "useProjection: UseProjection",
+            "useInput: SnapshotSelectorHook<InputState>",
+            "inputActions: InputActions"
+          ],
+          "keyDomain": "",
+          "hookContext": "",
+          "slotInject": "",
+          "replaceRisk": "shadows-shipped-ui"
+        }
+      },
+      "referencedTypes": []
+    }
+  }
+}

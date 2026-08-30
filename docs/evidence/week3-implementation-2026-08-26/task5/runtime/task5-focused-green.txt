@@ -1,0 +1,340 @@
+TAP version 13
+# Subtest: canonical JSON and input hashes are stable across object key order
+ok 1 - canonical JSON and input hashes are stable across object key order
+  ---
+  duration_ms: 2.6861
+  type: 'test'
+  ...
+# Subtest: technical mock is deterministic, warning-only, eight-section Markdown with five result categories
+ok 2 - technical mock is deterministic, warning-only, eight-section Markdown with five result categories
+  ---
+  duration_ms: 1.9895
+  type: 'test'
+  ...
+# Subtest: patent mock includes required drafting structures and blocks unconfirmed facts
+ok 3 - patent mock includes required drafting structures and blocks unconfirmed facts
+  ---
+  duration_ms: 1.9591
+  type: 'test'
+  ...
+# Subtest: bounds the artifact and result lists for maximum legal patent inputs
+ok 4 - bounds the artifact and result lists for maximum legal patent inputs
+  ---
+  duration_ms: 5.8497
+  type: 'test'
+  ...
+# Subtest: strictly validates complete v2 records and both response variants
+ok 5 - strictly validates complete v2 records and both response variants
+  ---
+  duration_ms: 17.9287
+  type: 'test'
+  ...
+# Subtest: publishes immutable fixed Week 3 resource budgets
+ok 6 - publishes immutable fixed Week 3 resource budgets
+  ---
+  duration_ms: 0.5926
+  type: 'test'
+  ...
+# Subtest: editable drafts reject Host-owned material, run, and writeback evidence
+ok 7 - editable drafts reject Host-owned material, run, and writeback evidence
+  ---
+  duration_ms: 4.3121
+  type: 'test'
+  ...
+# Subtest: enforces material and run ownership invariants in complete records
+ok 8 - enforces material and run ownership invariants in complete records
+  ---
+  duration_ms: 8.4332
+  type: 'test'
+  ...
+# Subtest: enforces task, input-reference, and run cardinality
+ok 9 - enforces task, input-reference, and run cardinality
+  ---
+  duration_ms: 8.0071
+  type: 'test'
+  ...
+# Subtest: enforces JSON and serialized draft budgets
+ok 10 - enforces JSON and serialized draft budgets
+  ---
+  duration_ms: 21.9599
+  type: 'test'
+  ...
+# Subtest: enforces artifact bytes and review-note limits
+ok 11 - enforces artifact bytes and review-note limits
+  ---
+  duration_ms: 5.6919
+  type: 'test'
+  ...
+# Subtest: uses the dedicated DSH Connection channel for schema-v2 get and replace
+ok 12 - uses the dedicated DSH Connection channel for schema-v2 get and replace
+  ---
+  duration_ms: 9.1382
+  type: 'test'
+  ...
+# Subtest: turns DSH RpcResult errors into typed Client errors
+ok 13 - turns DSH RpcResult errors into typed Client errors
+  ---
+  duration_ms: 0.5942
+  type: 'test'
+  ...
+# Subtest: loads and strictly validates the Host workflow catalog
+ok 14 - loads and strictly validates the Host workflow catalog
+  ---
+  duration_ms: 1.7449
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed Connection and nested v2 results
+ok 15 - fails closed on malformed Connection and nested v2 results
+  ---
+  duration_ms: 4.6421
+  type: 'test'
+  ...
+# Subtest: calls strict material endpoints and validates their authoritative replacement results
+ok 16 - calls strict material endpoints and validates their authoritative replacement results
+  ---
+  duration_ms: 1.7128
+  type: 'test'
+  ...
+# Subtest: calls task create and review endpoints and validates authoritative replacement results
+ok 17 - calls task create and review endpoints and validates authoritative replacement results
+  ---
+  duration_ms: 1.0616
+  type: 'test'
+  ...
+# Subtest: missing and legacy reads publish v2 without materializing a row
+ok 18 - missing and legacy reads publish v2 without materializing a row
+  ---
+  duration_ms: 6.7269
+  type: 'test'
+  ...
+# Subtest: first editable replacement materializes schema v2 with Host identity and time
+ok 19 - first editable replacement materializes schema v2 with Host identity and time
+  ---
+  duration_ms: 4.0249
+  type: 'test'
+  ...
+# Subtest: editable replacement preserves Host-owned evidence byte-for-byte
+ok 20 - editable replacement preserves Host-owned evidence byte-for-byte
+  ---
+  duration_ms: 4.5098
+  type: 'test'
+  ...
+# Subtest: a Host mutation can append evidence only through full-record validation
+ok 21 - a Host mutation can append evidence only through full-record validation
+  ---
+  duration_ms: 4.1401
+  type: 'test'
+  ...
+# Subtest: a Host no-op mutation returns the current record without a revision or storage write
+ok 22 - a Host no-op mutation returns the current record without a revision or storage write
+  ---
+  duration_ms: 2.4476
+  type: 'test'
+  ...
+# Subtest: persists immutable run and review evidence across repository reopen
+ok 23 - persists immutable run and review evidence across repository reopen
+  ---
+  duration_ms: 2.0906
+  type: 'test'
+  ...
+# Subtest: serializes same-Workspace replacements and isolates Workspaces
+ok 24 - serializes same-Workspace replacements and isolates Workspaces
+  ---
+  duration_ms: 1.6698
+  type: 'test'
+  ...
+# Subtest: explicit editable mutation upgrades a stored v1 row to v2
+ok 25 - explicit editable mutation upgrades a stored v1 row to v2
+  ---
+  duration_ms: 1.344
+  type: 'test'
+  ...
+# Subtest: round-trips a migrated partial workflow identity but never creates or changes one
+ok 26 - round-trips a migrated partial workflow identity but never creates or changes one
+  ---
+  duration_ms: 1.6966
+  type: 'test'
+  ...
+# Subtest: storage failure leaves authoritative state unchanged
+ok 27 - storage failure leaves authoritative state unchanged
+  ---
+  duration_ms: 0.9487
+  type: 'test'
+  ...
+# Subtest: rejects exhausted revision and closes only after admitted writes settle
+ok 28 - rejects exhausted revision and closes only after admitted writes settle
+  ---
+  duration_ms: 1.4266
+  type: 'test'
+  ...
+# Subtest: dispatches state endpoints with a schema-v2 editable replacement
+ok 29 - dispatches state endpoints with a schema-v2 editable replacement
+  ---
+  duration_ms: 7.3465
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 30 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.5305
+  type: 'test'
+  ...
+# Subtest: rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+ok 31 - rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+  ---
+  duration_ms: 1.7046
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures
+ok 32 - does not disguise repository infrastructure failures
+  ---
+  duration_ms: 0.6723
+  type: 'test'
+  ...
+# Subtest: rejects over-budget editable drafts before calling the repository
+ok 33 - rejects over-budget editable drafts before calling the repository
+  ---
+  duration_ms: 1.9425
+  type: 'test'
+  ...
+# Subtest: dispatches a strictly validated workflow catalog endpoint
+ok 34 - dispatches a strictly validated workflow catalog endpoint
+  ---
+  duration_ms: 0.5419
+  type: 'test'
+  ...
+# Subtest: dispatches strictly validated material commands without accepting Host evidence
+ok 35 - dispatches strictly validated material commands without accepting Host evidence
+  ---
+  duration_ms: 1.757
+  type: 'test'
+  ...
+# Subtest: serializes known material failures but still propagates infrastructure failures
+ok 36 - serializes known material failures but still propagates infrastructure failures
+  ---
+  duration_ms: 0.6386
+  type: 'test'
+  ...
+# Subtest: dispatches strict task create and review commands without accepting Client evidence
+ok 37 - dispatches strict task create and review commands without accepting Client evidence
+  ---
+  duration_ms: 3.2433
+  type: 'test'
+  ...
+# Subtest: serializes known run-domain failures and propagates runner infrastructure faults
+ok 38 - serializes known run-domain failures and propagates runner infrastructure faults
+  ---
+  duration_ms: 0.9179
+  type: 'test'
+  ...
+# Subtest: keeps state orchestration behind the service boundary
+ok 39 - keeps state orchestration behind the service boundary
+  ---
+  duration_ms: 1.9187
+  type: 'test'
+  ...
+# Subtest: creates a run only from authoritative validated draft and rechecked materials
+ok 40 - creates a run only from authoritative validated draft and rechecked materials
+  ---
+  duration_ms: 3.4334
+  type: 'test'
+  ...
+# Subtest: makes request keys idempotent for one snapshot and conflicts after draft change
+ok 41 - makes request keys idempotent for one snapshot and conflicts after draft change
+  ---
+  duration_ms: 1.6626
+  type: 'test'
+  ...
+# Subtest: rejects the ninth run without changing the first eight snapshots
+ok 42 - rejects the ninth run without changing the first eight snapshots
+  ---
+  duration_ms: 1.1425
+  type: 'test'
+  ...
+# Subtest: new runs preserve old bytes and review changes only the selected run
+ok 43 - new runs preserve old bytes and review changes only the selected run
+  ---
+  duration_ms: 2.019
+  type: 'test'
+  ...
+# Subtest: publishes catalog through the service without leaking the repository
+ok 44 - publishes catalog through the service without leaking the repository
+  ---
+  duration_ms: 0.2322
+  type: 'test'
+  ...
+# Subtest: requires the complete repository and material-manager boundaries
+ok 45 - requires the complete repository and material-manager boundaries
+  ---
+  duration_ms: 0.8437
+  type: 'test'
+  ...
+# Subtest: adds a confirmed material through the repository Workspace queue
+ok 46 - adds a confirmed material through the repository Workspace queue
+  ---
+  duration_ms: 1.8235
+  type: 'test'
+  ...
+# Subtest: refreshes or removes only the current reference and preserves historical run snapshots
+ok 47 - refreshes or removes only the current reference and preserves historical run snapshots
+  ---
+  duration_ms: 1.0642
+  type: 'test'
+  ...
+# Subtest: rechecks task materials without mutating authoritative state
+ok 48 - rechecks task materials without mutating authoritative state
+  ---
+  duration_ms: 2.2111
+  type: 'test'
+  ...
+# Subtest: returns revision conflict before inspecting any file
+ok 49 - returns revision conflict before inspecting any file
+  ---
+  duration_ms: 0.4321
+  type: 'test'
+  ...
+# Subtest: publishes two deeply frozen versioned local-mock workflows
+ok 50 - publishes two deeply frozen versioned local-mock workflows
+  ---
+  duration_ms: 1.9716
+  type: 'test'
+  ...
+# Subtest: filters by work type without mutating or sharing a writable result
+ok 51 - filters by work type without mutating or sharing a writable result
+  ---
+  duration_ms: 0.5435
+  type: 'test'
+  ...
+# Subtest: uses only the bounded form DSL and unique field identifiers
+ok 52 - uses only the bounded form DSL and unique field identifiers
+  ---
+  duration_ms: 0.3007
+  type: 'test'
+  ...
+# Subtest: validates technical R&D forms with exact fields and boundary budgets
+ok 53 - validates technical R&D forms with exact fields and boundary budgets
+  ---
+  duration_ms: 2.4185
+  type: 'test'
+  ...
+# Subtest: validates patent forms and rejects unsupported versions or unknown workflows
+ok 54 - validates patent forms and rejects unsupported versions or unknown workflows
+  ---
+  duration_ms: 1.1254
+  type: 'test'
+  ...
+# Subtest: does not expose Dify, billing, credentials, prices, URLs, or remote service fields
+ok 55 - does not expose Dify, billing, credentials, prices, URLs, or remote service fields
+  ---
+  duration_ms: 0.2595
+  type: 'test'
+  ...
+1..55
+# tests 55
+# suites 0
+# pass 55
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 303.5223

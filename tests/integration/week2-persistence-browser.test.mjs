@@ -101,8 +101,10 @@ test('Host2 browser restores per-Workspace state and persists refresh, rename, c
   const baseUrl = process.env.OASIS_DSH_BASE_URL
   const workspaceAId = process.env.OASIS_WORKSPACE_A_ID
   const workspaceBId = process.env.OASIS_WORKSPACE_B_ID
+  const workspaceDisplayName = process.env.OASIS_WORKSPACE_DISPLAY_NAME?.trim()
   const expectedATitle = process.env.OASIS_EXPECTED_A_TITLE
   assert.ok(baseUrl && workspaceAId && workspaceBId && expectedATitle, 'explicit Host2 and seeded Workspace evidence is required')
+  assert.ok(workspaceDisplayName, 'OASIS_WORKSPACE_DISPLAY_NAME is required for project Workspace selection')
   const parsedBaseUrl = new URL(baseUrl)
   assert.equal(parsedBaseUrl.protocol, 'http:')
   assert.ok(['127.0.0.1', 'localhost', '::1'].includes(parsedBaseUrl.hostname.replace(/^\[|\]$/g, '')))
@@ -149,7 +151,7 @@ test('Host2 browser restores per-Workspace state and persists refresh, rename, c
       2,
     )}\n`)
 
-    await openWorkspaceSession(page, '9、绿洲慧写4.0预研', 'Oasis 持久化 A-1')
+    await openWorkspaceSession(page, workspaceDisplayName, 'Oasis 持久化 A-1')
     let panel = await ensurePanel(page, workspaceAId)
     assert.deepEqual(await tabNames(panel), [expectedATitle, 'Host1 A 研发任务'])
     layouts.normal = await captureLayout(page)
@@ -158,7 +160,7 @@ test('Host2 browser restores per-Workspace state and persists refresh, rename, c
     assert.equal(layouts.normal.rootOwner, 'oasis-professional-service')
     assert.equal(layouts.normal.widthVariable, '360px')
 
-    await openWorkspaceSession(page, '9、绿洲慧写4.0预研', 'Oasis 持久化 A-2')
+    await openWorkspaceSession(page, workspaceDisplayName, 'Oasis 持久化 A-2')
     panel = await waitReady(page, workspaceAId)
     assert.deepEqual(await tabNames(panel), [expectedATitle, 'Host1 A 研发任务'])
 
@@ -167,13 +169,13 @@ test('Host2 browser restores per-Workspace state and persists refresh, rename, c
     panel = await ensurePanel(page, workspaceBId)
     assert.deepEqual(await tabNames(panel), ['Host1 B 专利任务'])
 
-    await openWorkspaceSession(page, '9、绿洲慧写4.0预研', 'Oasis 持久化 A-1')
+    await openWorkspaceSession(page, workspaceDisplayName, 'Oasis 持久化 A-1')
     panel = await waitReady(page, workspaceAId)
     assert.deepEqual(await tabNames(panel), [expectedATitle, 'Host1 A 研发任务'])
 
     await page.reload({ waitUntil: 'networkidle' })
     await dismissOnboarding(page)
-    await openWorkspaceSession(page, '9、绿洲慧写4.0预研', 'Oasis 持久化 A-1')
+    await openWorkspaceSession(page, workspaceDisplayName, 'Oasis 持久化 A-1')
     panel = await ensurePanel(page, workspaceAId)
     assert.deepEqual(await tabNames(panel), [expectedATitle, 'Host1 A 研发任务'])
 
@@ -189,7 +191,7 @@ test('Host2 browser restores per-Workspace state and persists refresh, rename, c
 
     await page.reload({ waitUntil: 'networkidle' })
     await dismissOnboarding(page)
-    await openWorkspaceSession(page, '9、绿洲慧写4.0预研', 'Oasis 持久化 A-1')
+    await openWorkspaceSession(page, workspaceDisplayName, 'Oasis 持久化 A-1')
     panel = await ensurePanel(page, workspaceAId)
     assert.deepEqual(await tabNames(panel), [renamedTitle])
 

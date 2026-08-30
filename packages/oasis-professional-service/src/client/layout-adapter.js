@@ -352,14 +352,27 @@ export function createLayoutAdapter({
     }
   }
 
-  function dispose() {
-    if (disposed) return
+  function releaseStandalone(reasonCode = 'standalone-released') {
+    if (disposed) return snapshot
     stopGuards()
     clearPush()
     portalHost?.remove?.()
     portalHost = null
     styleElement?.remove?.()
     styleElement = null
+    lastRequest = null
+    return publish({
+      requestedMode: 'hidden',
+      effectiveMode: 'hidden',
+      status: 'idle',
+      reasonCode,
+      panelLeft: null,
+    })
+  }
+
+  function dispose() {
+    if (disposed) return
+    releaseStandalone('adapter-disposed')
     listeners.clear()
     disposed = true
   }
@@ -379,6 +392,7 @@ export function createLayoutAdapter({
     fault,
     mountPortal,
     unmountPortal,
+    releaseStandalone,
     dispose,
   })
 }

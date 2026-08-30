@@ -1,0 +1,16 @@
+Task 7 static audit
+date=2026-08-26
+
+PASS exit=1 (no match): rg -n dangerouslySetInnerHTML src
+PASS exit=1 (no match): rg -n localStorage src
+PASS exit=1 (no match): rg -ni dify src
+PASS exit=1 (no match): rg -ni billing src
+PASS exit=1 (no match): rg -ni secret src
+PASS exit=1 (no match): rg -n technical-rd src\client\PanelPages.js
+PASS exit=0: git diff --check (line-ending warnings only; no whitespace error)
+
+Expected bounded matches:
+- confirmationToken occurs only in the Client RPC argument and per-page transient operation state; workspaceStateToDraft excludes pageOperations, and contract tests reject token/absolute path persistence.
+- better-sidebar occurs only in layout-adapter presence detection; package tests prove it is not a dependency or imported workbench stack.
+
+Boundary=Static text and contract evidence only; no DSH Desktop, browser, runtime memory, network, or production proof.

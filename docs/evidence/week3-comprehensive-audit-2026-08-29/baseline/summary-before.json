@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2026-08-29T04:14:56.488Z",
+  "command": "node docs/evidence/week3-comprehensive-audit-2026-08-29/baseline/capture-audit-baseline.mjs before",
+  "productRoots": [
+    ".dsh/skills/dsh-plugin-development",
+    "packages/oasis-professional-service/src",
+    "packages/oasis-professional-service/test",
+    "packages/oasis-professional-service/lib",
+    "packages/oasis-professional-service/package.json",
+    "packages/oasis-professional-service/pnpm-lock.yaml",
+    "packages/oasis-professional-service/cordis.patch.yml",
+    "packages/oasis-professional-service/tsdown.config.mjs",
+    "scripts",
+    "tests",
+    "README.md",
+    ".gitignore",
+    "docs/PRD-DSH免费工作台.md",
+    "docs/plans/2026-08-24-dsh-beta-overall-plan.md",
+    "docs/plans/2026-08-25-week3-design.md",
+    "docs/plans/2026-08-25-week3-implementation.md",
+    "docs/plans/2026-08-26-week3-reaudit-remediation.md",
+    "docs/第三周-本地闭环验证报告.md",
+    "docs/第三周-全面审计报告.md",
+    "docs/第三周-全面复审报告.md",
+    "docs/第三周-全面复审修复报告.md"
+  ],
+  "productRootsSha256": "31490CE53B875D04A89681B0F4F2CD5B129F08BEF4379EBD5DDD970A1B92E908",
+  "productContentSha256": "1EE6C45175692C6CF2669247551941F6316B381606BD5931430A609E27C49694",
+  "profileContentSha256": "072160A062ECFAE29174BD8222169A270E2FFF18FA64585BCE09C7766F0DED5D",
+  "projectRoot": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研",
+  "profileRoot": "C:\\Users\\TinaD\\.dsh",
+  "resolvedProfileRoot": "C:\\Users\\TinaD\\.dsh",
+  "productEntries": 117,
+  "productLinks": 0,
+  "profileEntries": 13746,
+  "profileLinks": 530,
+  "linkPolicy": "lstat plus readlink target text; link targets are not traversed",
+  "gitHead": "02b3eb7e40ff230689be8cae4218180869de836e",
+  "evidenceInputRoots": [
+    "docs/evidence/week1-audit-2026-08-23",
+    "docs/evidence/week1-audit-remediation-2026-08-24",
+    "docs/evidence/week1-comprehensive-audit-2026-08-24",
+    "docs/evidence/week1-supplement-2026-08-24",
+    "docs/evidence/week2-audit-2026-08-25",
+    "docs/evidence/week2-implementation-2026-08-25",
+    "docs/evidence/week2-persistence-2026-08-25",
+    "docs/evidence/week2-repair-2026-08-25",
+    "docs/evidence/week3-comprehensive-reaudit-2026-08-26",
+    "docs/evidence/week3-implementation-2026-08-25",
+    "docs/evidence/week3-implementation-2026-08-26",
+    "docs/evidence/week3-local-loop-2026-08-26",
+    "docs/evidence/week3-reaudit-remediation-2026-08-27"
+  ],
+  "historicalEvidenceEntries": 1220,
+  "historicalEvidenceSha256": "FB3BC5D356C97CFF1E297BEBDFBD6195BA3F38F5BE140F58ADC45D3108AD85C8",
+  "workspaceContracts": [
+    {
+      "relativePath": "package.json",
+      "sha256": "0DBF7F622E4B7D930734135368907ED8256A707FAB6F990582444772A78E790F"
+    },
+    {
+      "relativePath": "lib/types/index.d.ts",
+      "sha256": "E0C43056B485B269A62E30FFD1921BB54565686A6A106A7BE717753378462AE1"
+    },
+    {
+      "relativePath": "lib/types/types.d.ts",
+      "sha256": "099BF994F6A09CDE62FD31249CA5DC126CB34128ECB7D8DCEC713044FFCC1FB4"
+    },
+    {
+      "relativePath": "README.zh.md",
+      "sha256": "08A909818269EE759919F5EA21C987F1841E98A7573ECDAC80395260C6BA1697"
+    }
+  ],
+  "toolchainExitCodes": [
+    {
+      "command": "git.exe status --short --branch",
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研",
+      "exitCode": 0
+    },
+    {
+      "command": "git.exe diff --check",
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研",
+      "exitCode": 0
+    },
+    {
+      "command": "git.exe rev-parse HEAD",
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研",
+      "exitCode": 0
+    },
+    {
+      "command": "node.exe --version",
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm.cmd --version",
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研",
+      "exitCode": 0
+    },
+    {
+      "command": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\scripts\\dsh-isolated.cmd --print-bin",
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研",
+      "exitCode": 0
+    },
+    {
+      "command": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\scripts\\dsh-isolated.cmd --print-home",
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研",
+      "exitCode": 0
+    },
+    {
+      "command": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\scripts\\dsh-isolated.cmd --version",
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研",
+      "exitCode": 0
+    }
+  ]
+}

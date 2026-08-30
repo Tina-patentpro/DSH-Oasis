@@ -1,0 +1,170 @@
+TAP version 13
+# Subtest: registers the week-two Host tool and loopback workbench RPC with owned cleanup
+not ok 1 - registers the week-two Host tool and loopback workbench RPC with owned cleanup
+  ---
+  duration_ms: 5.1417
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\host-tool.test.mjs:62:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'week-2' !== 'week-3'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'week-3'
+  actual: 'week-2'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/host-tool.test.mjs:80:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: unregisters the Host tool when RPC setup fails
+ok 2 - unregisters the Host tool when RPC setup fails
+  ---
+  duration_ms: 0.6684
+  type: 'test'
+  ...
+# Subtest: does not expose stale week-one or week-two phase labels in current runtime metadata
+not ok 3 - does not expose stale week-one or week-two phase labels in current runtime metadata
+  ---
+  duration_ms: 2.8411
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\package-contract.test.mjs:10:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /week[- ](?:one|two)|week-[12]/i. Input:
+    
+    'const SUPPORTED_WORK_TYPES = Object.freeze([\n' +
+      "  'technical-rd',\n" +
+      "  'cn-invention-patent',\n" +
+      '])\n' +
+      '\n' +
+      'export function createPluginStatus() {\n' +
+      '  return Object.freeze({\n' +
+      "    schemaVersion: '1.0.0',\n" +
+      "    plugin: 'oasis-professional-service',\n" +
+      "    phase: 'week-2',\n" +
+      "    capabilityLevel: 'durable-workbench-state',\n" +
+      '    localFirst: true,\n' +
+      "    externalSystems: 'existing-stable-services',\n" +
+      '    supportedWorkTypes: SUPPORTED_WORK_TYPES,\n' +
+      '  })\n' +
+      '}\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    const SUPPORTED_WORK_TYPES = Object.freeze([
+      'technical-rd',
+      'cn-invention-patent',
+    ])
+    
+    export function createPluginStatus() {
+      return Object.freeze({
+        schemaVersion: '1.0.0',
+        plugin: 'oasis-professional-service',
+        phase: 'week-2',
+        capabilityLevel: 'durable-workbench-state',
+        localFirst: true,
+        externalSystems: 'existing-stable-services',
+        supportedWorkTypes: SUPPORTED_WORK_TYPES,
+      })
+    }
+    
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/package-contract.test.mjs:16:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: pins the verified development dependency versions
+ok 4 - pins the verified development dependency versions
+  ---
+  duration_ms: 0.7759
+  type: 'test'
+  ...
+# Subtest: declares the Portal runtime as matched React peer dependencies
+ok 5 - declares the Portal runtime as matched React peer dependencies
+  ---
+  duration_ms: 0.1112
+  type: 'test'
+  ...
+# Subtest: keeps the distribution whitelist free of tests and local state
+ok 6 - keeps the distribution whitelist free of tests and local state
+  ---
+  duration_ms: 0.1801
+  type: 'test'
+  ...
+# Subtest: declares repeatable verification scripts
+ok 7 - declares repeatable verification scripts
+  ---
+  duration_ms: 0.0884
+  type: 'test'
+  ...
+# Subtest: creates the immutable week-three local professional loop status contract
+not ok 8 - creates the immutable week-three local professional loop status contract
+  ---
+  duration_ms: 4.2178
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service\\test\\status.test.mjs:11:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   capabilityLevel: 'durable-workbench-state',
+    -   capabilityLevel: 'local-professional-loop',
+        externalSystems: 'existing-stable-services',
+        localFirst: true,
+    +   phase: 'week-2',
+    -   phase: 'week-3',
+        plugin: 'oasis-professional-service',
+        schemaVersion: '1.0.0',
+        supportedWorkTypes: [
+          'technical-rd',
+          'cn-invention-patent'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    schemaVersion: '1.0.0'
+    plugin: 'oasis-professional-service'
+    phase: 'week-3'
+    capabilityLevel: 'local-professional-loop'
+    localFirst: true
+    externalSystems: 'existing-stable-services'
+    supportedWorkTypes:
+      0: 'technical-rd'
+      1: 'cn-invention-patent'
+  actual:
+    schemaVersion: '1.0.0'
+    plugin: 'oasis-professional-service'
+    phase: 'week-2'
+    capabilityLevel: 'durable-workbench-state'
+    localFirst: true
+    externalSystems: 'existing-stable-services'
+    supportedWorkTypes:
+      0: 'technical-rd'
+      1: 'cn-invention-patent'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/packages/oasis-professional-service/test/status.test.mjs:18:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 5
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 218.8223

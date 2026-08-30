@@ -17,7 +17,7 @@ function deferred() {
 
 function emptyRecord(workspaceId, revision = 0) {
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     workspaceId,
     revision,
     panelMode: 'hidden',
@@ -31,18 +31,29 @@ function emptyRecord(workspaceId, revision = 0) {
 function committedRecord(workspaceId, revision, draft) {
   return {
     ...draft,
+    tasks: Object.fromEntries(draft.taskOrder.map((taskId) => {
+      const task = draft.tasks[taskId]
+      return [taskId, {
+        ...task,
+        inputRefs: task.inputRefs ?? [],
+        runOrder: task.runOrder ?? [],
+        runs: task.runs ?? {},
+      }]
+    })),
     workspaceId,
     revision,
     updatedAt: NOW,
   }
 }
 
-function createStore(remote) {
+function createStore(remote, options = {}) {
   let id = 0
   return createWorkbenchStore({
     remote,
     createId: () => `task-${++id}`,
     clock: () => NOW,
+    saveDelayMs: 0,
+    ...options,
   })
 }
 
@@ -81,14 +92,14 @@ test('never saves the default state before hydration, then applies the queued op
 
 test('hydrates persisted pages without issuing a replacement', async () => {
   const persisted = committedRecord('workspace-a', 7, {
-    schemaVersion: 1,
+    schemaVersion: 2,
     panelMode: 'expanded',
     activeTaskId: 'task-a',
     taskOrder: ['task-a'],
     tasks: {
       'task-a': {
         taskId: 'task-a', title: '已保存任务', workType: null, workflowId: null, workflowVersion: null,
-        inputRefs: [], formValues: {}, run: null, preview: null, review: 'not-reviewed',
+        inputRefs: [], formValues: {}, activeRunId: null, runOrder: [], runs: {},
         createdAt: NOW, updatedAt: NOW,
       },
     },
@@ -109,14 +120,12 @@ test('hydrates persisted pages without issuing a replacement', async () => {
   assert.equal(replacements, 0)
 })
 
-test('serializes rapid same-Workspace actions with the revision returned by each write', async () => {
-  const firstWrite = deferred()
+test('coalesces rapid same-Workspace actions into the latest draft', async () => {
   const calls = []
   const remote = {
     async get(workspaceId) { return emptyRecord(workspaceId) },
     async replace(workspaceId, expectedRevision, state) {
       calls.push({ workspaceId, expectedRevision, state })
-      if (calls.length === 1) return firstWrite.promise
       return { committed: true, current: committedRecord(workspaceId, expectedRevision + 1, state) }
     },
   }
@@ -126,20 +135,100 @@ test('serializes rapid same-Workspace actions with the revision returned by each
 
   store.createPage('workspace-a')
   store.setPanelMode('workspace-a', 'expanded')
-  await Promise.resolve()
-  assert.equal(calls.length, 1)
-  assert.equal(calls[0].expectedRevision, 0)
-
-  firstWrite.resolve({
-    committed: true,
-    current: committedRecord('workspace-a', 1, calls[0].state),
-  })
   await store.whenSettled('workspace-a')
 
-  assert.equal(calls.length, 2)
-  assert.equal(calls[1].expectedRevision, 1)
-  assert.equal(store.getWorkspaceState('workspace-a').revision, 2)
+  assert.equal(calls.length, 1)
+  assert.equal(calls[0].expectedRevision, 0)
+  assert.equal(calls[0].state.panelMode, 'expanded')
+  assert.equal(store.getWorkspaceState('workspace-a').revision, 1)
   assert.equal(store.getWorkspaceState('workspace-a').panelMode, 'expanded')
+})
+
+test('updates form state immediately, saves after 400 ms, and flushes before the deadline', async () => {
+  let nextTimerId = 0
+  let elapsed = 0
+  const timers = new Map()
+  const scheduler = {
+    setTimeout(callback, delay) {
+      const id = ++nextTimerId
+      timers.set(id, { callback, dueAt: elapsed + delay })
+      return id
+    },
+    clearTimeout(id) { timers.delete(id) },
+    tick(milliseconds) {
+      elapsed += milliseconds
+      const due = [...timers.entries()].filter(([, timer]) => timer.dueAt <= elapsed)
+      for (const [id, timer] of due) {
+        timers.delete(id)
+        timer.callback()
+      }
+    },
+  }
+  const calls = []
+  const catalog = {
+    schemaVersion: 1,
+    workflows: [{
+      workflowId: 'remote-flow', workflowVersion: '7', workType: 'technical-rd', title: '远程流程',
+      description: '测试', executionMode: 'local-mock', outputSections: ['summary'],
+      materialPolicy: { acceptedExtensions: ['.md'], maxFiles: 4, maxFileBytes: 4096, contentReadMode: 'metadata-only' },
+      form: { fields: [{
+        fieldId: 'objective', control: 'long-text', label: '目标', description: '', required: true, maxChars: 200,
+      }] },
+    }],
+  }
+  const remote = {
+    async get(workspaceId) { return emptyRecord(workspaceId) },
+    async replace(workspaceId, expectedRevision, state) {
+      calls.push({ workspaceId, expectedRevision, state })
+      return { committed: true, current: committedRecord(workspaceId, expectedRevision + 1, state) }
+    },
+  }
+  const store = createStore(remote, { workflowCatalog: catalog, saveDelayMs: 400, scheduler })
+  store.syncWorkspaces([{ workspaceId: 'workspace-a' }])
+  await store.hydrateWorkspace('workspace-a')
+  const page = store.createPage('workspace-a')
+  store.selectWorkflow('workspace-a', page.pageId, 'remote-flow')
+  store.updateFormValue('workspace-a', page.pageId, 'objective', '第一稿')
+  store.updateFormValue('workspace-a', page.pageId, 'objective', '第二稿')
+
+  assert.equal(store.getWorkspaceState('workspace-a').pages[0].formValues.objective, '第二稿')
+  scheduler.tick(399)
+  await Promise.resolve()
+  assert.equal(calls.length, 0)
+  scheduler.tick(1)
+  await store.whenSettled('workspace-a')
+  assert.equal(calls.length, 1)
+  assert.equal(calls[0].state.tasks[page.pageId].formValues.objective, '第二稿')
+
+  store.updateFormValue('workspace-a', page.pageId, 'objective', '关闭前草稿')
+  await store.flushWorkspace('workspace-a')
+  assert.equal(calls.length, 2)
+  assert.equal(calls[1].state.tasks[page.pageId].formValues.objective, '关闭前草稿')
+})
+
+test('dispose flushes a pending debounced draft before aborting the remote', async () => {
+  const calls = []
+  const scheduler = {
+    setTimeout() { return 1 },
+    clearTimeout() {},
+  }
+  const remote = {
+    async get(workspaceId) { return emptyRecord(workspaceId) },
+    async replace(workspaceId, expectedRevision, state) {
+      calls.push({ workspaceId, expectedRevision, state })
+      return { committed: true, current: committedRecord(workspaceId, expectedRevision + 1, state) }
+    },
+  }
+  const store = createStore(remote, { saveDelayMs: 400, scheduler })
+  store.syncWorkspaces([{ workspaceId: 'workspace-a' }])
+  await store.hydrateWorkspace('workspace-a')
+  store.createPage('workspace-a')
+
+  const disposal = store.dispose()
+  assert.equal(typeof disposal?.then, 'function')
+  await disposal
+  assert.equal(calls.length, 1)
+  assert.equal(calls[0].state.taskOrder.length, 1)
 })
 
 test('keeps Workspace save queues independent', async () => {

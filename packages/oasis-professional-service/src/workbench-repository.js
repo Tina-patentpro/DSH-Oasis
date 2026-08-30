@@ -1,13 +1,83 @@
 import {
   createEmptyWorkbenchRecord,
   oasisWorkbenchDomainSpec,
-  parseWorkbenchDraft,
+  parseStoredWorkbenchRecord,
+  parseWorkbenchEditableDraft,
   parseWorkbenchRecord,
 } from './workbench-domain.js'
 
 function assertExpectedRevision(value) {
   if (!Number.isSafeInteger(value) || value < 0) {
     throw new TypeError('expectedRevision must be a non-negative safe integer')
+  }
+}
+
+function sameWorkflow(left, right) {
+  return left.workType === right.workType
+    && left.workflowId === right.workflowId
+    && left.workflowVersion === right.workflowVersion
+}
+
+function workflowIdentityState(task) {
+  const values = [task.workType, task.workflowId, task.workflowVersion]
+  const nullCount = values.filter((value) => value === null).length
+  if (nullCount === values.length) return 'empty'
+  if (nullCount === 0) return 'selected'
+  return 'partial'
+}
+
+function assertWorkflowTransitions(current, candidate) {
+  for (const taskId of candidate.taskOrder) {
+    const next = candidate.tasks[taskId]
+    const previous = current.tasks[taskId]
+    if (previous === undefined) {
+      if (workflowIdentityState(next) === 'partial') {
+        throw new Error('new workflow identity must be complete or entirely empty')
+      }
+      continue
+    }
+
+    const previousState = workflowIdentityState(previous)
+    if (previousState !== 'empty' && !sameWorkflow(previous, next)) {
+      throw new Error('selected or migrated partial workflow identity is immutable')
+    }
+    if (previousState === 'empty' && workflowIdentityState(next) === 'partial') {
+      throw new Error('workflow identity must be complete or entirely empty')
+    }
+  }
+}
+
+function mergeEditableDraft(current, draft) {
+  const tasks = {}
+  for (const taskId of draft.taskOrder) {
+    const editable = draft.tasks[taskId]
+    const previous = current.tasks[taskId]
+    if (previous === undefined) {
+      if (editable.activeRunId !== null) {
+        throw new Error('new tasks cannot select a Host-owned run')
+      }
+      tasks[taskId] = {
+        ...editable,
+        inputRefs: [],
+        runOrder: [],
+        runs: {},
+      }
+      continue
+    }
+
+    tasks[taskId] = {
+      ...editable,
+      inputRefs: previous.inputRefs,
+      runOrder: previous.runOrder,
+      runs: previous.runs,
+    }
+  }
+  return {
+    schemaVersion: 2,
+    panelMode: draft.panelMode,
+    activeTaskId: draft.activeTaskId,
+    taskOrder: draft.taskOrder,
+    tasks,
   }
 }
 
@@ -33,7 +103,7 @@ class OasisWorkbenchRepository {
     const stored = this.#table.get(workspaceId)
     return stored === undefined
       ? createEmptyWorkbenchRecord(workspaceId)
-      : parseWorkbenchRecord(workspaceId, stored)
+      : parseStoredWorkbenchRecord(workspaceId, stored)
   }
 
   #enqueue(workspaceId, operation) {
@@ -47,38 +117,61 @@ class OasisWorkbenchRepository {
     return job
   }
 
+  async #commit(workspaceId, current, candidate) {
+    if (current.revision === Number.MAX_SAFE_INTEGER) {
+      throw new RangeError('workbench revision exhausted')
+    }
+    const {
+      workspaceId: _workspaceId,
+      revision: _revision,
+      updatedAt: _updatedAt,
+      ...body
+    } = candidate
+    const next = parseWorkbenchRecord(workspaceId, {
+      ...body,
+      schemaVersion: 2,
+      workspaceId,
+      revision: current.revision + 1,
+      updatedAt: this.#clock(),
+    })
+    assertWorkflowTransitions(current, next)
+    await this.#table.put(workspaceId, next)
+    return Object.freeze({ committed: true, current: next })
+  }
+
   get(workspaceId) {
     this.#assertOpen()
     return this.#read(workspaceId)
   }
 
-  async replace(workspaceId, expectedRevision, input) {
+  async replaceEditable(workspaceId, expectedRevision, input) {
     this.#assertOpen()
     assertExpectedRevision(expectedRevision)
-    const draft = parseWorkbenchDraft(input)
-
+    const draft = parseWorkbenchEditableDraft(input)
     return this.#enqueue(workspaceId, async () => {
       const current = this.#read(workspaceId)
       if (current.revision !== expectedRevision) {
-        return Object.freeze({
-          committed: false,
-          reason: 'revision-conflict',
-          current,
-        })
+        return Object.freeze({ committed: false, reason: 'revision-conflict', current })
       }
+      const candidate = mergeEditableDraft(current, draft)
+      return this.#commit(workspaceId, current, candidate)
+    })
+  }
 
-      if (current.revision === Number.MAX_SAFE_INTEGER) {
-        throw new RangeError('workbench revision exhausted')
+  async mutate(workspaceId, expectedRevision, mutation) {
+    this.#assertOpen()
+    assertExpectedRevision(expectedRevision)
+    if (typeof mutation !== 'function') throw new TypeError('mutation must be a function')
+    return this.#enqueue(workspaceId, async () => {
+      const current = this.#read(workspaceId)
+      if (current.revision !== expectedRevision) {
+        return Object.freeze({ committed: false, reason: 'revision-conflict', current })
       }
-
-      const next = parseWorkbenchRecord(workspaceId, {
-        ...draft,
-        workspaceId,
-        revision: current.revision + 1,
-        updatedAt: this.#clock(),
-      })
-      await this.#table.put(workspaceId, next)
-      return Object.freeze({ committed: true, current: next })
+      const candidate = await mutation(current)
+      if (candidate === current) {
+        return Object.freeze({ committed: true, current })
+      }
+      return this.#commit(workspaceId, current, candidate)
     })
   }
 

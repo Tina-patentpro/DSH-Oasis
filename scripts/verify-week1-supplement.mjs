@@ -1,12 +1,14 @@
-import { createHash } from 'node:crypto'
 import { spawn } from 'node:child_process'
-import { createServer } from 'node:net'
-import { lstat, mkdir, mkdtemp, readFile, readdir, realpath, rm, writeFile } from 'node:fs/promises'
+import { createConnection, createServer } from 'node:net'
+import { lstat, mkdir, mkdtemp, realpath, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
-import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path'
+import { basename, dirname, isAbsolute, join, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { collectTree, compareRows, writeBaselineTsv } from './baseline-capture-core.mjs'
+
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const workspaceDisplayName = basename(projectRoot)
 const packageRoot = resolve(projectRoot, 'packages/oasis-professional-service')
 const clientLayoutProbe = resolve(projectRoot, 'tests/fixtures/oasis-client-layout-probe')
 const slotEvidenceProbe = resolve(projectRoot, 'tests/fixtures/oasis-slot-evidence-probe')
@@ -15,32 +17,15 @@ const browserTest = resolve(projectRoot, 'tests/integration/week1-supplement-bro
 const evidenceRoot = resolve(projectRoot, process.env.OASIS_EVIDENCE_ROOT ?? 'docs/evidence/week1-audit-remediation-2026-08-24')
 const runtimeEvidence = resolve(evidenceRoot, 'runtime')
 const browserEvidence = resolve(evidenceRoot, 'browser')
-const realProfile = resolve(process.env.OASIS_REAL_DSH_PROFILE ?? join(process.env.USERPROFILE ?? '', '.dsh/profiles/web'))
+const realProfile = resolve(process.env.OASIS_REAL_DSH_PROFILE ?? join(process.env.USERPROFILE ?? '', '.dsh'))
 
-function sha256(value) {
-  return createHash('sha256').update(value).digest('hex')
-}
-
-async function hashTree(root) {
+async function captureProfileBaseline(outputPath) {
+  const root = realProfile
   const rootStat = await lstat(root)
   if (!rootStat.isDirectory() || rootStat.isSymbolicLink()) throw new Error(`protected Profile root is not a plain directory: ${root}`)
-  const rows = []
-  async function visit(directory) {
-    const entries = await readdir(directory, { withFileTypes: true })
-    entries.sort((a, b) => a.name.localeCompare(b.name, 'en'))
-    for (const entry of entries) {
-      const path = join(directory, entry.name)
-      const stat = await lstat(path)
-      if (stat.isSymbolicLink()) throw new Error(`protected Profile contains a link: ${path}`)
-      if (stat.isDirectory()) await visit(path)
-      else if (stat.isFile()) {
-        const content = await readFile(path)
-        rows.push(`${relative(root, path).split(sep).join('/')}\t${stat.size}\t${sha256(content)}`)
-      }
-    }
-  }
-  await visit(root)
-  return `${rows.join('\n')}\n`
+  const rows = await collectTree(root, root)
+  await writeBaselineTsv(outputPath, rows)
+  return rows
 }
 
 function run(command, args, options = {}) {
@@ -76,6 +61,31 @@ async function allocatePort() {
   const address = server.address()
   await new Promise((resolveClose, rejectClose) => server.close((error) => error ? rejectClose(error) : resolveClose()))
   return address.port
+}
+
+async function isPortOpen(port) {
+  return await new Promise((resolveCheck) => {
+    const socket = createConnection({ host: '127.0.0.1', port })
+    socket.setTimeout(300)
+    socket.once('connect', () => {
+      socket.destroy()
+      resolveCheck(true)
+    })
+    const closed = () => {
+      socket.destroy()
+      resolveCheck(false)
+    }
+    socket.once('error', closed)
+    socket.once('timeout', closed)
+  })
+}
+
+async function assertPortClosed(port) {
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    if (!await isPortOpen(port)) return
+    await new Promise((resolveWait) => setTimeout(resolveWait, 100))
+  }
+  throw new Error(`Host port remained open after stop: ${port}`)
 }
 
 async function rpc(baseUrl, method, payload, rpcId) {
@@ -164,17 +174,19 @@ async function waitForVisibleSessions(baseUrl, sessionIds) {
   throw new Error(`verification sessions did not become non-blank within 5 seconds${lastError === undefined ? '' : `; last error: ${lastError.message}`}`)
 }
 
-async function stopHost(host) {
-  if (host.child.exitCode !== null) return
-  if (process.platform === 'win32') {
-    await run('taskkill.exe', ['/PID', String(host.child.pid), '/T', '/F']).catch(() => {})
-  } else {
-    host.child.kill('SIGTERM')
+async function stopHost(host, port) {
+  if (host.child.exitCode === null) {
+    const exited = new Promise((resolveExit) => host.child.once('exit', resolveExit))
+    if (!host.child.kill('SIGTERM')) throw new Error(`failed to terminate DSH Host process ${host.child.pid}`)
+    await Promise.race([
+      exited,
+      new Promise((_, rejectWait) => setTimeout(
+        () => rejectWait(new Error(`DSH Host process did not exit within 5 seconds: ${host.child.pid}`)),
+        5_000,
+      )),
+    ])
   }
-  await new Promise((resolveExit) => {
-    if (host.child.exitCode !== null) resolveExit()
-    else host.child.once('exit', resolveExit)
-  })
+  await assertPortClosed(port)
 }
 
 async function assertSafeTemporaryRoot(path) {
@@ -192,11 +204,11 @@ async function main() {
   await mkdir(browserEvidence, { recursive: true })
   if (!isAbsolute(realProfile)) throw new Error('real Profile baseline path must be absolute')
 
-  const profileBefore = await hashTree(realProfile)
-  await writeFile(resolve(runtimeEvidence, 'profile-hashes-verifier-before.txt'), profileBefore, 'utf8')
+  const profileBefore = await captureProfileBaseline(resolve(runtimeEvidence, 'profile-hashes-verifier-before.txt'))
   const temporaryHome = await mkdtemp(join(tmpdir(), 'oasis-dsh-week1-remediation-'))
   await writeFile(resolve(runtimeEvidence, 'verifier-home.txt'), `${temporaryHome}\n`, 'utf8')
   let host = null
+  let hostPort = null
   let succeeded = false
 
   try {
@@ -219,6 +231,7 @@ async function main() {
     await writeFile(resolve(runtimeEvidence, 'verifier-dump-config.yml'), dump.stdout, 'utf8')
 
     const port = await allocatePort()
+    hostPort = port
     const baseUrl = `http://127.0.0.1:${port}`
     host = startHost(temporaryHome, port)
     await host.ready
@@ -252,19 +265,22 @@ async function main() {
         OASIS_DSH_BASE_URL: baseUrl,
         OASIS_BROWSER_OUTPUT: browserEvidence,
         OASIS_SESSION_A1_ID: sessionId,
+        OASIS_WORKSPACE_DISPLAY_NAME: workspaceDisplayName,
       },
     })
     await writeFile(resolve(runtimeEvidence, 'verifier-browser-tap.txt'), `${browser.stdout}${browser.stderr}`, 'utf8')
     succeeded = true
   } finally {
     if (host) {
-      await stopHost(host)
+      await stopHost(host, hostPort)
       const output = host.output()
       await writeFile(resolve(runtimeEvidence, 'verifier-host.txt'), `${output.stdout}${output.stderr}`, 'utf8')
     }
-    const profileAfter = await hashTree(realProfile)
-    await writeFile(resolve(runtimeEvidence, 'profile-hashes-verifier-after.txt'), profileAfter, 'utf8')
-    if (profileAfter !== profileBefore) throw new Error('protected real DSH Profile changed during verification')
+    const profileAfter = await captureProfileBaseline(resolve(runtimeEvidence, 'profile-hashes-verifier-after.txt'))
+    const profileComparison = compareRows(profileBefore, profileAfter)
+    if (!profileComparison.ok) {
+      throw new Error(`protected real DSH Profile changed during verification: ${profileComparison.changes.length} paths`)
+    }
     if (succeeded) {
       const safeRoot = await assertSafeTemporaryRoot(temporaryHome)
       await rm(safeRoot, { recursive: true, force: false })

@@ -1,0 +1,58 @@
+{
+  "generatedAt": "2026-08-29T07:38:02.224Z",
+  "batch": "C",
+  "finding": "W3A-02",
+  "implementationStatus": "implemented_and_locally_verified",
+  "runtimeAcceptance": "pending_task_6",
+  "overallRemediationStatus": "FAIL",
+  "checks": [
+    {
+      "command": "node --test test/panel-host-coordinator.test.mjs test/workspace-context-bridge.test.mjs test/layout-adapter.test.mjs test/embedded-workspace-host.test.mjs test/client-panel-contract.test.mjs",
+      "exitCode": 0,
+      "tests": 32,
+      "passed": 32,
+      "failed": 0,
+      "evidence": "green-focused.txt"
+    },
+    {
+      "command": "node --test --test-skip-pattern=^dispose.finishes.within.its.deadline.when.a.save.can.settle.only.after.abort$ test/*.test.mjs",
+      "exitCode": 0,
+      "tests": 194,
+      "passed": 194,
+      "failed": 0,
+      "evidence": "green-package-excluding-w3a03.txt"
+    },
+    {
+      "command": "npm test",
+      "exitCode": 1,
+      "tests": 195,
+      "passed": 194,
+      "failed": 1,
+      "expectedRemainingFailure": "W3A-03 dispose finishes within its deadline when a save can settle only after abort",
+      "evidence": "package-full-after-build-known-reds.txt"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "result": "DSH lazy-CJS client bundle generated",
+      "evidence": "build.txt"
+    },
+    {
+      "command": "npm pack --dry-run --json",
+      "exitCode": 0,
+      "entryCount": 37,
+      "evidence": "package-dry-run.json"
+    },
+    {
+      "command": "node --check on nine Batch C Client source files and lib/client.js",
+      "exitCode": 0,
+      "files": 10
+    },
+    {
+      "command": "git diff --check on tracked Batch C source, tests, and generated client files",
+      "exitCode": 0,
+      "result": "no whitespace errors; existing LF-to-CRLF notices only"
+    }
+  ],
+  "proofBoundary": "Static, local unit tests, generated browser bundle, and npm dry-run file inventory only. No Host, browser, isolated Profile, strong real-Profile preservation, production, commit, or push evidence is claimed."
+}

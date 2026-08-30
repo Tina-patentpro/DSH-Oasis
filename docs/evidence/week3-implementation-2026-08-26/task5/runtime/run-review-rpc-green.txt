@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: uses the dedicated DSH Connection channel for schema-v2 get and replace
+ok 1 - uses the dedicated DSH Connection channel for schema-v2 get and replace
+  ---
+  duration_ms: 4.9706
+  type: 'test'
+  ...
+# Subtest: turns DSH RpcResult errors into typed Client errors
+ok 2 - turns DSH RpcResult errors into typed Client errors
+  ---
+  duration_ms: 0.493
+  type: 'test'
+  ...
+# Subtest: loads and strictly validates the Host workflow catalog
+ok 3 - loads and strictly validates the Host workflow catalog
+  ---
+  duration_ms: 2.665
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed Connection and nested v2 results
+ok 4 - fails closed on malformed Connection and nested v2 results
+  ---
+  duration_ms: 3.2826
+  type: 'test'
+  ...
+# Subtest: calls strict material endpoints and validates their authoritative replacement results
+ok 5 - calls strict material endpoints and validates their authoritative replacement results
+  ---
+  duration_ms: 1.3948
+  type: 'test'
+  ...
+# Subtest: calls task create and review endpoints and validates authoritative replacement results
+ok 6 - calls task create and review endpoints and validates authoritative replacement results
+  ---
+  duration_ms: 0.821
+  type: 'test'
+  ...
+# Subtest: dispatches state endpoints with a schema-v2 editable replacement
+ok 7 - dispatches state endpoints with a schema-v2 editable replacement
+  ---
+  duration_ms: 4.588
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 8 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.3526
+  type: 'test'
+  ...
+# Subtest: rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+ok 9 - rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+  ---
+  duration_ms: 0.9513
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures
+ok 10 - does not disguise repository infrastructure failures
+  ---
+  duration_ms: 0.3625
+  type: 'test'
+  ...
+# Subtest: rejects over-budget editable drafts before calling the repository
+ok 11 - rejects over-budget editable drafts before calling the repository
+  ---
+  duration_ms: 1.1947
+  type: 'test'
+  ...
+# Subtest: dispatches a strictly validated workflow catalog endpoint
+ok 12 - dispatches a strictly validated workflow catalog endpoint
+  ---
+  duration_ms: 0.3445
+  type: 'test'
+  ...
+# Subtest: dispatches strictly validated material commands without accepting Host evidence
+ok 13 - dispatches strictly validated material commands without accepting Host evidence
+  ---
+  duration_ms: 1.0243
+  type: 'test'
+  ...
+# Subtest: serializes known material failures but still propagates infrastructure failures
+ok 14 - serializes known material failures but still propagates infrastructure failures
+  ---
+  duration_ms: 0.2226
+  type: 'test'
+  ...
+# Subtest: dispatches strict task create and review commands without accepting Client evidence
+ok 15 - dispatches strict task create and review commands without accepting Client evidence
+  ---
+  duration_ms: 2.043
+  type: 'test'
+  ...
+# Subtest: serializes known run-domain failures and propagates runner infrastructure faults
+ok 16 - serializes known run-domain failures and propagates runner infrastructure faults
+  ---
+  duration_ms: 0.4222
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 166.4945

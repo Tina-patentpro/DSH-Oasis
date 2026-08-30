@@ -18,7 +18,7 @@
   - `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\output\ui-concepts\dsh-oasis-v5-state-2-panel-expanded.png`
   - `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\output\ui-concepts\dsh-oasis-v5-state-3-panel-hidden.png`
   - `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\output\ui-concepts\codex-controls\codex-right-panel-controls.svg`
-- 用户已明确授权并完成本地 Git 仓库初始化；当前尚无提交，所有既有文件仍是未跟踪基线，因此本轮不暂存、不提交、不重置，继续用 SHA-256 基线和证据账本保护变更。
+- 用户已明确授权完成 Git 仓库与私有 GitHub 远端配置；第三周工作基于 `02b3eb7e40ff230689be8cae4218180869de836e`。独立全面复审修复已于 2026-08-29 完成并重新关闭；相关变更仍未提交，因此不暂存、不提交、不重置，继续用 Git diff、SHA-256 基线和证据账本保护变更。
 - DSH 当前仍是 developer preview。Beta 固定到本机已验证版本，升级必须单列兼容性工作，不随普通依赖安装漂移。
 
 ## 2. 产品边界
@@ -222,7 +222,7 @@ Skill 分为三层，避免把“入口存在”宣传成“完整专业能力�
 | 第一周补充（历史阶段） | 关闭初次审计缺口并证明右栏原型 | 加固脚本、冻结依赖、运行时 Slot 证据、面板 Host、项目关联状态机、三状态浏览器证据 | 后续全面审计已推翻“全部关闭”结论；不得再作为当前准入证据 |
 | 第一周审计修复（已关闭，2026-08-25） | 关闭全面审计的本地可行动P1/P2 | 官方CLI隔离包装器、Portal与最小布局适配器、三态恢复、键盘焦点、IPv6与全量隔离验证 | 完成门已通过；以`docs/第一周-审计修复验证报告.md`和`docs/evidence/week1-audit-remediation-2026-08-24`为当前准入证据 |
 | 第二周（已关闭，2026-08-25） | 完成项目原生多任务页与本地持久化 | 页签 CRUD、工作流选择页、项目切换、Domain Storage、恢复/冲突处理、严格 wire schema 与资源预算 | 已通过同一隔离 Home 的 Host1/Host2 恢复、A/B 隔离、真实浏览器刷新和原生 details 共存；证据见第二周修复复审与持久化验证报告 |
-| 第三周 | 完成材料输入到结果预览的本地闭环 | schema 表单、材料引用、mock run、预览、审核状态、安全写回预演 | 选择工作流原位转换；无覆盖写回；输入/结果可追溯 |
+| 第三周（已关闭，复审修复完成） | 完成材料输入到结果预览的本地闭环，并关闭独立复审 W3R-01～W3R-06 | schema v2 表单、Workspace 材料引用、确定性 local-mock、预览、审核状态、原子 no-overwrite 写回、持久记录完整性复算 | 2026-08-29 已完成修复计划、Week 1/2/3 Host/浏览器回归、实际 tarball 静态检查与 Task 6 确认基线前后比较；剩余边界见最终修复报告 |
 | 第四周 | 接入既有专业服务 | Host 适配器、异步状态、取消/重试、结果下载、错误映射 | 两类工作各一条真实非生产 E2E；无客户端密钥和直连 |
 | 第五周 | 完善研发与中国发明专利专业能力 | 两套专业 Skill、术语/支持矩阵、权利要求与说明书草案、研发验证包 | 代表性案例通过领域规则与人工复核；不跨越专业边界 |
 | 第六周 | Beta 加固与可分发 | 无障碍、安全、兼容性、安装/卸载、Profile、版本说明、Beta 报告 | Beta 出口清单全部有新证据；无 P0-P2 未解决项 |
@@ -239,6 +239,16 @@ Skill 分为三层，避免把“入口存在”宣传成“完整专业能力�
 
 - `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\第二周-第一二批修复复审报告.md`
 - `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\第二周-持久化验证报告.md`
+
+第三周历史关闭记录、独立全面复审与当前修复证据见：
+
+- `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\第三周-本地闭环验证报告.md`
+- `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\第三周-全面审计报告.md`
+- `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\第三周-全面复审报告.md`
+- `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\第三周-全面复审修复报告.md`
+- `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\plans\2026-08-26-week3-reaudit-remediation.md`
+- `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\evidence\week3-reaudit-remediation-2026-08-27\evidence-ledger.md`
+- `D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\evidence\week3-implementation-2026-08-26\task9\evidence-ledger.md`
 
 ## 6. 质量门与证据分层
 
