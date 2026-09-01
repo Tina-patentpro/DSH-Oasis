@@ -17,7 +17,7 @@ function deferred() {
 
 function emptyRecord(workspaceId, revision = 0) {
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     workspaceId,
     revision,
     panelMode: 'hidden',
@@ -35,9 +35,12 @@ function committedRecord(workspaceId, revision, draft) {
       const task = draft.tasks[taskId]
       return [taskId, {
         ...task,
+        professionalDraft: task.professionalDraft ?? null,
         inputRefs: task.inputRefs ?? [],
         runOrder: task.runOrder ?? [],
         runs: task.runs ?? {},
+        remoteExecutionOrder: task.remoteExecutionOrder ?? [],
+        remoteExecutions: task.remoteExecutions ?? {},
       }]
     })),
     workspaceId,
@@ -92,14 +95,15 @@ test('never saves the default state before hydration, then applies the queued op
 
 test('hydrates persisted pages without issuing a replacement', async () => {
   const persisted = committedRecord('workspace-a', 7, {
-    schemaVersion: 2,
+    schemaVersion: 3,
     panelMode: 'expanded',
     activeTaskId: 'task-a',
     taskOrder: ['task-a'],
     tasks: {
       'task-a': {
         taskId: 'task-a', title: '已保存任务', workType: null, workflowId: null, workflowVersion: null,
-        inputRefs: [], formValues: {}, activeRunId: null, runOrder: [], runs: {},
+        inputRefs: [], formValues: {}, professionalDraft: null, activeRunId: null, runOrder: [], runs: {},
+        remoteExecutionOrder: [], remoteExecutions: {},
         createdAt: NOW, updatedAt: NOW,
       },
     },

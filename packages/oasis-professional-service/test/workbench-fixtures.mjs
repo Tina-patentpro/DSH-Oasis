@@ -102,7 +102,7 @@ export function createRunSnapshot(overrides = {}) {
   }
 }
 
-export function createV2Task(taskId = 'task-a', { withEvidence = false, ...overrides } = {}) {
+export function createStoredV2Task(taskId = 'task-a', { withEvidence = false, ...overrides } = {}) {
   const run = createRunSnapshot()
   return {
     taskId,
@@ -121,7 +121,7 @@ export function createV2Task(taskId = 'task-a', { withEvidence = false, ...overr
   }
 }
 
-export function createV2Record(workspaceId = 'workspace-a', revision = 1, {
+export function createStoredV2Record(workspaceId = 'workspace-a', revision = 1, {
   empty = false,
   withEvidence = false,
   ...overrides
@@ -139,9 +139,50 @@ export function createV2Record(workspaceId = 'workspace-a', revision = 1, {
       ...overrides,
     }
   }
-  const task = createV2Task('task-a', { withEvidence })
+  const task = createStoredV2Task('task-a', { withEvidence })
   return {
     schemaVersion: 2,
+    workspaceId,
+    revision,
+    panelMode: 'normal',
+    activeTaskId: task.taskId,
+    taskOrder: [task.taskId],
+    tasks: { [task.taskId]: task },
+    updatedAt: revision === 0 ? EMPTY_TIME : NOW,
+    ...overrides,
+  }
+}
+
+export function createV3Task(taskId = 'task-a', options = {}) {
+  return {
+    ...createStoredV2Task(taskId, options),
+    professionalDraft: null,
+    remoteExecutionOrder: [],
+    remoteExecutions: {},
+  }
+}
+
+export function createV3Record(workspaceId = 'workspace-a', revision = 1, {
+  empty = false,
+  withEvidence = false,
+  ...overrides
+} = {}) {
+  if (empty) {
+    return {
+      schemaVersion: 3,
+      workspaceId,
+      revision,
+      panelMode: 'hidden',
+      activeTaskId: null,
+      taskOrder: [],
+      tasks: {},
+      updatedAt: revision === 0 ? EMPTY_TIME : NOW,
+      ...overrides,
+    }
+  }
+  const task = createV3Task('task-a', { withEvidence })
+  return {
+    schemaVersion: 3,
     workspaceId,
     revision,
     panelMode: 'normal',
@@ -161,6 +202,7 @@ export function taskToEditable(task) {
     workflowId: task.workflowId,
     workflowVersion: task.workflowVersion,
     formValues: structuredClone(task.formValues),
+    professionalDraft: structuredClone(task.professionalDraft ?? null),
     activeRunId: task.activeRunId,
     createdAt: task.createdAt,
     updatedAt: task.updatedAt,
@@ -169,7 +211,7 @@ export function taskToEditable(task) {
 
 export function recordToEditableDraft(record) {
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     panelMode: record.panelMode,
     activeTaskId: record.activeTaskId,
     taskOrder: [...record.taskOrder],
@@ -181,8 +223,8 @@ export function recordToEditableDraft(record) {
 }
 
 export function createEditableDraft(taskId = 'task-a', overrides = {}) {
-  const record = createV2Record('workspace-a', 0, {
-    tasks: { [taskId]: createV2Task(taskId) },
+  const record = createV3Record('workspace-a', 0, {
+    tasks: { [taskId]: createV3Task(taskId) },
     taskOrder: [taskId],
     activeTaskId: taskId,
   })

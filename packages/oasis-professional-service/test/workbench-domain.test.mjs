@@ -19,7 +19,7 @@ import {
   createLegacyRecord,
   createMaterialReference,
   createRunSnapshot,
-  createV2Record,
+  createV3Record,
 } from './workbench-fixtures.mjs'
 
 test('keeps the fixed DSH Domain identity while the record schema advances', () => {
@@ -28,21 +28,21 @@ test('keeps the fixed DSH Domain identity while the record schema advances', () 
   assert.deepEqual(Object.keys(oasisWorkbenchDomainSpec.tables), ['workspaces'])
 })
 
-test('projects a deterministic deeply frozen schema-v2 revision-zero state', () => {
+test('projects a deterministic deeply frozen schema-v3 revision-zero state', () => {
   const value = createEmptyWorkbenchRecord('workspace-a')
-  assert.deepEqual(value, createV2Record('workspace-a', 0, { empty: true }))
+  assert.deepEqual(value, createV3Record('workspace-a', 0, { empty: true }))
   assert.equal(Object.isFrozen(value), true)
   assert.equal(Object.isFrozen(value.taskOrder), true)
   assert.equal(Object.isFrozen(value.tasks), true)
   assert.throws(() => value.taskOrder.push('task-a'), TypeError)
 })
 
-test('parses complete and stored records into detached frozen schema-v2 values', () => {
-  for (const source of [createV2Record(), createLegacyRecord()]) {
-    const parsed = source.schemaVersion === 2
+test('parses complete and stored records into detached frozen schema-v3 values', () => {
+  for (const source of [createV3Record(), createLegacyRecord()]) {
+    const parsed = source.schemaVersion === 3
       ? parseWorkbenchRecord('workspace-a', source)
       : parseStoredWorkbenchRecord('workspace-a', source)
-    assert.equal(parsed.schemaVersion, 2)
+    assert.equal(parsed.schemaVersion, 3)
     assert.notEqual(parsed, source)
     assert.equal(Object.isFrozen(parsed.tasks['task-a']), true)
   }
@@ -59,46 +59,46 @@ test('accepts only the Client-owned editable projection', () => {
 })
 
 test('rejects unknown versions, identity mismatch, invalid calendar times, and unsafe revisions', () => {
-  assert.throws(() => parseStoredWorkbenchRecord('workspace-a', { ...createV2Record(), schemaVersion: 3 }), /unsupported/i)
-  assert.throws(() => parseWorkbenchRecord('workspace-b', createV2Record()), /workspaceId/i)
+  assert.throws(() => parseStoredWorkbenchRecord('workspace-a', { ...createV3Record(), schemaVersion: 4 }), /unsupported/i)
+  assert.throws(() => parseWorkbenchRecord('workspace-b', createV3Record()), /workspaceId/i)
 
-  const invalidTime = createV2Record()
+  const invalidTime = createV3Record()
   invalidTime.updatedAt = '2026-02-30T00:00:00.000Z'
   assert.throws(() => parseWorkbenchRecord('workspace-a', invalidTime), /ISO-8601/i)
 
   assert.throws(() => parseWorkbenchRecord('workspace-a', {
-    ...createV2Record(),
+    ...createV3Record(),
     revision: Number.MAX_SAFE_INTEGER + 1,
   }), /revision|safe/i)
 })
 
 test('rejects task-order and map inconsistencies after migration', () => {
-  const duplicate = createV2Record()
+  const duplicate = createV3Record()
   duplicate.taskOrder.push('task-a')
   assert.throws(() => parseWorkbenchRecord('workspace-a', duplicate), /duplicate/i)
 
-  const missing = createV2Record()
+  const missing = createV3Record()
   missing.taskOrder = ['task-missing']
   assert.throws(() => parseWorkbenchRecord('workspace-a', missing), /missing/i)
 
-  const orphan = createV2Record()
+  const orphan = createV3Record()
   orphan.tasks['task-orphan'] = { ...orphan.tasks['task-a'], taskId: 'task-orphan' }
   assert.throws(() => parseWorkbenchRecord('workspace-a', orphan), /orphan/i)
 
-  const mismatch = createV2Record()
+  const mismatch = createV3Record()
   mismatch.tasks['task-a'].taskId = 'task-b'
   assert.throws(() => parseWorkbenchRecord('workspace-a', mismatch), /map key/i)
 })
 
 test('rejects stored runs whose canonical input or artifact body no longer matches its digest', () => {
-  const inputTampered = createV2Record('workspace-a', 1, { withEvidence: true })
+  const inputTampered = createV3Record('workspace-a', 1, { withEvidence: true })
   inputTampered.tasks['task-a'].runs['run-a'].inputSnapshot.formValues.objective = '篡改后的目标'
   assert.throws(
     () => parseStoredWorkbenchRecord('workspace-a', inputTampered),
     /input integrity.*task-a.*run-a/i,
   )
 
-  const artifactTampered = createV2Record('workspace-a', 1, { withEvidence: true })
+  const artifactTampered = createV3Record('workspace-a', 1, { withEvidence: true })
   artifactTampered.tasks['task-a'].runs['run-a'].result.artifact.body += '篡改'
   assert.throws(
     () => parseStoredWorkbenchRecord('workspace-a', artifactTampered),
@@ -126,7 +126,7 @@ test('rejects every persisted local-mock result field that differs from determin
       workflowVersion: '1',
       inputSnapshot,
     })
-    const record = createV2Record('workspace-a', 1, { withEvidence: true })
+    const record = createV3Record('workspace-a', 1, { withEvidence: true })
     record.tasks['task-a'].runs['run-a'] = createRunSnapshot({
       inputSnapshot: structuredClone(inputSnapshot),
       result: structuredClone(result),
@@ -160,7 +160,7 @@ test('rejects every persisted local-mock result field that differs from determin
 })
 
 test('keeps legitimate human review and writeback lifecycle fields outside result replay', () => {
-  const record = createV2Record('workspace-a', 2, { withEvidence: true })
+  const record = createV3Record('workspace-a', 2, { withEvidence: true })
   const run = record.tasks['task-a'].runs['run-a']
   run.review = {
     status: 'approved',

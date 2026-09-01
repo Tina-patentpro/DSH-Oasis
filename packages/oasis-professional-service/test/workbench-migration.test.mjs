@@ -7,7 +7,8 @@ import {
 } from '../src/workbench-domain.js'
 import {
   createLegacyRecord,
-  createV2Record,
+  createStoredV2Record,
+  createV3Record,
 } from './workbench-fixtures.mjs'
 
 test('migrates an exact legal v1 record to schema v2 without inventing run evidence', () => {
@@ -64,10 +65,10 @@ test('preserves a legal v1 partial workflow identity without inventing missing v
   })
 })
 
-test('accepts v1 or v2 storage rows and always publishes detached frozen v2 records', () => {
-  for (const source of [createLegacyRecord(), createV2Record()]) {
+test('accepts v1, v2, or v3 storage rows and always publishes detached frozen v3 records', () => {
+  for (const source of [createLegacyRecord(), createStoredV2Record(), createV3Record()]) {
     const parsed = parseStoredWorkbenchRecord('workspace-a', source)
-    assert.equal(parsed.schemaVersion, 2)
+    assert.equal(parsed.schemaVersion, 3)
     assert.notEqual(parsed, source)
     assert.equal(Object.isFrozen(parsed), true)
   }
@@ -75,7 +76,7 @@ test('accepts v1 or v2 storage rows and always publishes detached frozen v2 reco
 
 test('rejects unknown storage versions instead of guessing a migration', () => {
   assert.throws(
-    () => parseStoredWorkbenchRecord('workspace-a', { ...createV2Record(), schemaVersion: 3 }),
+    () => parseStoredWorkbenchRecord('workspace-a', { ...createV3Record(), schemaVersion: 4 }),
     /unsupported.*schemaVersion|schemaVersion.*unsupported/i,
   )
 })

@@ -4,7 +4,7 @@ import test from 'node:test'
 import { createWorkbenchStore } from '../src/client/workbench-store.js'
 import {
   createMaterialReference,
-  createV2Record,
+  createV3Record,
 } from './workbench-fixtures.mjs'
 
 function deferred() {
@@ -146,10 +146,10 @@ test('notifies subscribers and preserves page state across panel transitions', (
 test('keeps material drafts isolated and applies Host-authoritative material evidence', async () => {
   const calls = []
   const remote = {
-    async get(workspaceId) { return createV2Record(workspaceId, 1) },
+    async get(workspaceId) { return createV3Record(workspaceId, 1) },
     async addMaterial(payload) {
       calls.push(payload)
-      const current = createV2Record(payload.workspaceId, 2)
+      const current = createV3Record(payload.workspaceId, 2)
       current.tasks['task-a'].inputRefs = [createMaterialReference()]
       return { committed: true, current }
     },
@@ -175,12 +175,12 @@ test('retains one requestKey across a failed generation retry and clears it afte
   const requestKeys = []
   let attempts = 0
   const remote = {
-    async get(workspaceId) { return createV2Record(workspaceId, 1) },
+    async get(workspaceId) { return createV3Record(workspaceId, 1) },
     async createRun(payload) {
       attempts += 1
       requestKeys.push(payload.requestKey)
       if (attempts === 1) throw Object.assign(new Error('connection lost'), { code: 'transport-failed' })
-      return { committed: true, current: createV2Record(payload.workspaceId, 2, { withEvidence: true }) }
+      return { committed: true, current: createV3Record(payload.workspaceId, 2, { withEvidence: true }) }
     },
   }
   const store = createWorkbenchStore({
@@ -201,7 +201,7 @@ test('retains one requestKey across a failed generation retry and clears it afte
 })
 
 test('enforces review and two-phase writeback confirmations before calling the Host', async () => {
-  const blockedRecord = createV2Record('workspace-a', 3, { withEvidence: true })
+  const blockedRecord = createV3Record('workspace-a', 3, { withEvidence: true })
   blockedRecord.tasks['task-a'].runs['run-a'].result.contentStatus = 'blocked'
   const calls = { review: 0, prepare: 0, commit: 0 }
   const remote = {
@@ -221,7 +221,7 @@ test('enforces review and two-phase writeback confirmations before calling the H
 })
 
 test('stores prepared absolute paths and hashes, then distinguishes successful writeback feedback', async () => {
-  const approved = createV2Record('workspace-a', 3, { withEvidence: true })
+  const approved = createV3Record('workspace-a', 3, { withEvidence: true })
   approved.tasks['task-a'].runs['run-a'].review = {
     status: 'approved', note: '', updatedAt: approved.updatedAt,
   }
@@ -273,7 +273,7 @@ test('stores prepared absolute paths and hashes, then distinguishes successful w
 })
 
 test('distinguishes committed index warnings and discards the consumed writeback plan', async () => {
-  const approved = createV2Record('workspace-a', 3, { withEvidence: true })
+  const approved = createV3Record('workspace-a', 3, { withEvidence: true })
   approved.tasks['task-a'].runs['run-a'].review = {
     status: 'approved', note: '', updatedAt: approved.updatedAt,
   }
@@ -335,7 +335,7 @@ test('dispose finishes within its deadline when a save can settle only after abo
   let signal = null
   const scheduler = createManualScheduler()
   const remote = {
-    async get(workspaceId) { return createV2Record(workspaceId, 1) },
+    async get(workspaceId) { return createV3Record(workspaceId, 1) },
     async replace(_workspaceId, _revision, _draft, nextSignal) {
       replaceStarted = true
       signal = nextSignal
@@ -372,10 +372,10 @@ test('dispose keeps a quick acknowledged draft drain and repeated calls share on
   const scheduler = createManualScheduler()
   const calls = []
   const remote = {
-    async get(workspaceId) { return createV2Record(workspaceId, 1) },
+    async get(workspaceId) { return createV3Record(workspaceId, 1) },
     async replace(workspaceId, expectedRevision, draft, signal) {
       calls.push({ workspaceId, expectedRevision, draft, signal })
-      return { committed: true, current: createV2Record(workspaceId, expectedRevision + 1) }
+      return { committed: true, current: createV3Record(workspaceId, expectedRevision + 1) }
     },
   }
   const store = createWorkbenchStore({
@@ -410,7 +410,7 @@ test('dispose preserves an action acknowledged before closing while hydration is
     async get() { return hydrationGate.promise },
     async replace(workspaceId, expectedRevision, draft) {
       replacements.push({ workspaceId, expectedRevision, draft })
-      return { committed: true, current: createV2Record(workspaceId, expectedRevision + 1) }
+      return { committed: true, current: createV3Record(workspaceId, expectedRevision + 1) }
     },
   }
   const store = createWorkbenchStore({
@@ -425,7 +425,7 @@ test('dispose preserves an action acknowledged before closing while hydration is
   store.openPanel('workspace-a')
 
   const disposal = store.dispose()
-  hydrationGate.resolve(createV2Record('workspace-a', 0))
+  hydrationGate.resolve(createV3Record('workspace-a', 0))
   await hydration
   await disposal
 
@@ -439,7 +439,7 @@ test('dispose uses the 1000 ms default deadline when a remote ignores abort fore
   const scheduler = createManualScheduler()
   let signal = null
   const remote = {
-    async get(workspaceId) { return createV2Record(workspaceId, 1) },
+    async get(workspaceId) { return createV3Record(workspaceId, 1) },
     async replace(_workspaceId, _revision, _draft, nextSignal) {
       signal = nextSignal
       return await new Promise(() => {})
@@ -466,7 +466,7 @@ test('a remote completion after the dispose deadline cannot repopulate cleared s
   let replaceDraft = null
   let notifications = 0
   const remote = {
-    async get(workspaceId) { return createV2Record(workspaceId, 1) },
+    async get(workspaceId) { return createV3Record(workspaceId, 1) },
     async replace(_workspaceId, _revision, draft) {
       replaceDraft = draft
       return gate.promise
@@ -490,7 +490,7 @@ test('a remote completion after the dispose deadline cannot repopulate cleared s
   assert.deepEqual(scheduler.delays(), [5])
   scheduler.runNext()
   await disposal
-  gate.resolve({ committed: true, current: createV2Record('workspace-a', 2) })
+  gate.resolve({ committed: true, current: createV3Record('workspace-a', 2) })
   await Promise.resolve()
   await Promise.resolve()
 

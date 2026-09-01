@@ -6,6 +6,7 @@ import { apply, inject, name } from '../src/index.js'
 function createHostFixture() {
   let registered
   let rpcRegistration
+  let settingsRegistration
   const records = new Map()
   const calls = { domainClose: 0, rpcDispose: 0, toolDispose: 0 }
   const domain = {
@@ -50,12 +51,22 @@ function createHostFixture() {
     workspaceRegistry: {
       get() { return undefined },
     },
+    settings: {
+      register(ns, schema, options) {
+        settingsRegistration = { ns, schema, options }
+        return { get: () => options.base }
+      },
+    },
+    credentials: {
+      async resolve() { return undefined },
+    },
   }
   return {
     ctx,
     calls,
     get registered() { return registered },
     get rpcRegistration() { return rpcRegistration },
+    get settingsRegistration() { return settingsRegistration },
   }
 }
 
@@ -64,7 +75,9 @@ test('registers the current Host tool and loopback workbench RPC with owned clea
   const dispose = await apply(fixture.ctx)
 
   assert.equal(name, 'oasis-professional-service')
-  assert.deepEqual(inject, ['tools', 'storageDomain', 'connection', 'workspaceRegistry'])
+  assert.deepEqual(inject, ['tools', 'storageDomain', 'connection', 'workspaceRegistry', 'settings', 'credentials'])
+  assert.equal(fixture.settingsRegistration?.ns, 'oasis-professional-service')
+  assert.equal(fixture.settingsRegistration?.options.applies, 'restart')
   assert.equal(fixture.registered?.name, 'oasis_workbench_status')
   assert.equal(fixture.rpcRegistration.channel, '/oasis-workbench')
   assert.deepEqual(fixture.rpcRegistration.options, { authority: 'loopback' })

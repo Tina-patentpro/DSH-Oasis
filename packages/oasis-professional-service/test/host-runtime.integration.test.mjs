@@ -74,6 +74,26 @@ class WorkspaceRegistryStub extends Service {
   }
 }
 
+class SettingsStub extends Service {
+  constructor(ctx) {
+    super(ctx, 'settings')
+  }
+
+  register(_ns, _schema, options) {
+    return { get: () => options.base }
+  }
+}
+
+class CredentialsStub extends Service {
+  constructor(ctx) {
+    super(ctx, 'credentials')
+  }
+
+  async resolve() {
+    return undefined
+  }
+}
+
 test('real Cordis tools service lists and executes oasis_workbench_status', async () => {
   const root = new Context()
   const tempRoot = await mkdtemp(join(tmpdir(), 'oasis-host-materials-'))
@@ -83,6 +103,8 @@ test('real Cordis tools service lists and executes oasis_workbench_status', asyn
     await root.plugin(StorageDomainStub)
     await root.plugin(ConnectionStub)
     await root.plugin(WorkspaceRegistryStub)
+    await root.plugin(SettingsStub)
+    await root.plugin(CredentialsStub)
     const workspacePath = join(tempRoot, 'workspace')
     await mkdir(join(workspacePath, 'materials'), { recursive: true })
     await writeFile(join(workspacePath, 'materials', 'spec.md'), 'Host material integration fixture')

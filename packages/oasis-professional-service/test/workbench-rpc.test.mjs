@@ -6,19 +6,19 @@ import { WorkspaceMaterialError } from '../src/workspace-materials.js'
 import {
   createEditableDraft,
   createRunSnapshot,
-  createV2Record,
+  createV3Record,
 } from './workbench-fixtures.mjs'
 
-test('dispatches state endpoints with a schema-v2 editable replacement', async () => {
+test('dispatches state endpoints with a schema-v3 editable replacement', async () => {
   const calls = []
   const service = {
     getState(workspaceId) {
       calls.push(['get', workspaceId])
-      return createV2Record(workspaceId, 0, { empty: true })
+      return createV3Record(workspaceId, 0, { empty: true })
     },
     async replaceState(workspaceId, expectedRevision, state) {
       calls.push(['replaceEditable', workspaceId, expectedRevision, state])
-      return { committed: true, current: createV2Record(workspaceId, 1, { empty: true }) }
+      return { committed: true, current: createV3Record(workspaceId, 1, { empty: true }) }
     },
   }
   const handler = createWorkbenchRpcHandler(service)
@@ -26,7 +26,7 @@ test('dispatches state endpoints with a schema-v2 editable replacement', async (
 
   assert.deepEqual(await handler('state/get', { workspaceId: 'workspace-a' }), {
     ok: true,
-    value: createV2Record('workspace-a', 0, { empty: true }),
+    value: createV3Record('workspace-a', 0, { empty: true }),
   })
   assert.deepEqual(await handler('state/replace', {
     workspaceId: 'workspace-a',
@@ -34,13 +34,13 @@ test('dispatches state endpoints with a schema-v2 editable replacement', async (
     state: draft,
   }), {
     ok: true,
-    value: { committed: true, current: createV2Record('workspace-a', 1, { empty: true }) },
+    value: { committed: true, current: createV3Record('workspace-a', 1, { empty: true }) },
   })
   assert.deepEqual(calls.map((call) => call[0]), ['get', 'replaceEditable'])
 })
 
 test('returns revision conflict as a successful business payload', async () => {
-  const current = createV2Record('workspace-a', 2, { empty: true })
+  const current = createV3Record('workspace-a', 2, { empty: true })
   const handler = createWorkbenchRpcHandler({
     async replaceState() {
       return { committed: false, reason: 'revision-conflict', current }
@@ -122,7 +122,7 @@ test('dispatches a strictly validated workflow catalog endpoint', async () => {
 
 test('dispatches strictly validated material commands without accepting Host evidence', async () => {
   const calls = []
-  const value = { committed: true, current: createV2Record('workspace-a', 2, { withEvidence: true }) }
+  const value = { committed: true, current: createV3Record('workspace-a', 2, { withEvidence: true }) }
   const handler = createWorkbenchRpcHandler({
     async addMaterial(payload) { calls.push(['add', payload]); return value },
     async refreshMaterial(payload) { calls.push(['refresh', payload]); return value },
@@ -180,7 +180,7 @@ test('serializes known material failures but still propagates infrastructure fai
 
 test('dispatches strict task create and review commands without accepting Client evidence', async () => {
   const calls = []
-  const value = { committed: true, current: createV2Record('workspace-a', 4, { withEvidence: true }) }
+  const value = { committed: true, current: createV3Record('workspace-a', 4, { withEvidence: true }) }
   const handler = createWorkbenchRpcHandler({
     async createRun(payload) { calls.push(['create', payload]); return value },
     async reviewRun(payload) { calls.push(['review', payload]); return value },
@@ -270,7 +270,7 @@ test('dispatches strict two-phase writeback commands and commit accepts only a t
       expiresAt: '2026-08-26T01:12:03.000Z',
     },
   }
-  const committed = { committed: true, current: createV2Record('workspace-a', 4, { withEvidence: true }) }
+  const committed = { committed: true, current: createV3Record('workspace-a', 4, { withEvidence: true }) }
   const handler = createWorkbenchRpcHandler({
     async prepareWriteback(payload) { calls.push(['prepare', payload]); return prepared },
     async commitWriteback(payload) { calls.push(['commit', payload]); return committed },

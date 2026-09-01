@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "document": "API接口文档-用户端.md",
+    "sha256": "429357f3e60e39aeaae1c879c475d629633e88f5a1f71975c618c6899768feb1",
+    "userValidated": true,
+    "capturedAt": "2026-09-01"
+  },
+  "scope": {
+    "integration": "legacy-user-api",
+    "environment": "non-production-only",
+    "execution": "synchronous-workflow-only",
+    "productionOrigin": "https://lzhxpy.oasisintwrite.com"
+  },
+  "endpoints": [
+    { "method": "GET", "path": "/api/user/detail", "purpose": "user-detail-and-balance", "classification": "legacy" },
+    { "method": "GET", "path": "/api/apicategories/detail", "purpose": "professional-service-catalog", "classification": "legacy" },
+    { "method": "POST", "path": "/api/apicategories/apidetail", "purpose": "professional-service-detail", "classification": "legacy" },
+    { "method": "GET", "path": "/api/user/user/folderlist", "purpose": "folder-list", "classification": "legacy" },
+    { "method": "GET", "path": "/api/user/user/folderdetail/{id}", "purpose": "folder-detail", "classification": "legacy" },
+    { "method": "POST", "path": "/api/user/upload", "purpose": "legacy-file-upload", "classification": "legacy" },
+    { "method": "POST", "path": "/api/apicategories/create", "purpose": "synchronous-workflow-create", "classification": "legacy" },
+    { "method": "GET", "path": "/api/apicategories/queryprocess/{key}", "purpose": "async-progress-observation", "classification": "legacy" },
+    { "method": "GET", "path": "/api/user/runningwater/list", "purpose": "running-water-observation", "classification": "legacy" }
+  ]
+}

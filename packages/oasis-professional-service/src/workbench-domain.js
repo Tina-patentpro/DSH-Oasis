@@ -7,6 +7,7 @@ import {
   storedWorkbenchRecordSchema,
   workbenchEditableDraftSchema,
   workbenchRecordSchema,
+  workbenchRecordV2Schema,
   workbenchTaskSchema,
 } from './workbench-contract.js'
 import {
@@ -53,13 +54,19 @@ function assertRunIntegrity(record) {
     const task = record.tasks[taskId]
     for (const runId of task.runOrder) {
       const run = task.runs[runId]
-      const inputSha256 = computeCanonicalInputSha256({
-        mockVersion: run.mockVersion,
-        workflowId: run.workflowId,
-        workflowVersion: run.workflowVersion,
-        formValues: run.inputSnapshot.formValues,
-        inputRefs: run.inputSnapshot.inputRefs,
-      })
+      const inputSha256 = run.mode === 'local-mock'
+        ? computeCanonicalInputSha256({
+            mockVersion: run.mockVersion,
+            workflowId: run.workflowId,
+            workflowVersion: run.workflowVersion,
+            formValues: run.inputSnapshot.formValues,
+            inputRefs: run.inputSnapshot.inputRefs,
+          })
+        : computeOasisRemoteInputSha256({
+            providerSnapshot: run.providerSnapshot,
+            formValues: run.inputSnapshot.formValues,
+            inputRefs: run.inputSnapshot.inputRefs,
+          })
       if (inputSha256 !== run.inputSnapshot.sha256) {
         throw new Error(`input integrity mismatch for task ${taskId} run ${runId}`)
       }
@@ -74,23 +81,45 @@ function assertRunIntegrity(record) {
         throw new Error(`artifact integrity mismatch for task ${taskId} run ${runId}`)
       }
 
-      const expectedResult = runLocalMock({
-        mockVersion: run.mockVersion,
-        workflowId: run.workflowId,
-        workflowVersion: run.workflowVersion,
-        inputSnapshot: run.inputSnapshot,
-      })
-      if (canonicalJson(expectedResult) !== canonicalJson(run.result)) {
-        throw new Error(`result integrity mismatch for task ${taskId} run ${runId}`)
+      if (run.mode === 'local-mock') {
+        const expectedResult = runLocalMock({
+          mockVersion: run.mockVersion,
+          workflowId: run.workflowId,
+          workflowVersion: run.workflowVersion,
+          inputSnapshot: run.inputSnapshot,
+        })
+        if (canonicalJson(expectedResult) !== canonicalJson(run.result)) {
+          throw new Error(`result integrity mismatch for task ${taskId} run ${runId}`)
+        }
+      } else {
+        const responseSha256 = computeOasisRemoteResponseSha256({
+          answerText: run.result.answerText,
+          fileUrls: run.result.fileUrls,
+        })
+        if (responseSha256 !== run.result.responseSha) {
+          throw new Error(`response integrity mismatch for task ${taskId} run ${runId}`)
+        }
       }
     }
   }
   return record
 }
 
+function canonicalSha256(value) {
+  return createHash('sha256').update(canonicalJson(value), 'utf8').digest('hex')
+}
+
+export function computeOasisRemoteInputSha256({ providerSnapshot, formValues, inputRefs }) {
+  return canonicalSha256({ mode: 'oasis-legacy', providerSnapshot, formValues, inputRefs })
+}
+
+export function computeOasisRemoteResponseSha256({ answerText, fileUrls }) {
+  return canonicalSha256({ answerText, fileUrls })
+}
+
 export function createEmptyWorkbenchRecord(workspaceId) {
   return parseWorkbenchRecord(workspaceId, {
-    schemaVersion: 2,
+    schemaVersion: 3,
     workspaceId,
     revision: 0,
     panelMode: 'hidden',
@@ -116,7 +145,7 @@ export function parseWorkbenchRecord(workspaceId, input) {
 
 export function migrateWorkbenchRecordV1ToV2(input) {
   const legacy = parseDetached(legacyWorkbenchRecordSchema, input)
-  return parseWorkbenchRecord(legacy.workspaceId, {
+  return parseDetached(workbenchRecordV2Schema, {
     schemaVersion: 2,
     workspaceId: legacy.workspaceId,
     revision: legacy.revision,
@@ -148,11 +177,39 @@ export function migrateWorkbenchRecordV1ToV2(input) {
   })
 }
 
+export function migrateWorkbenchRecordV2ToV3(input) {
+  const previous = parseDetached(workbenchRecordV2Schema, input)
+  return parseWorkbenchRecord(previous.workspaceId, {
+    schemaVersion: 3,
+    workspaceId: previous.workspaceId,
+    revision: previous.revision,
+    panelMode: previous.panelMode,
+    activeTaskId: previous.activeTaskId,
+    taskOrder: previous.taskOrder,
+    tasks: Object.fromEntries(previous.taskOrder.map((taskId) => {
+      const task = previous.tasks[taskId]
+      return [taskId, {
+        ...task,
+        professionalDraft: null,
+        remoteExecutionOrder: [],
+        remoteExecutions: {},
+      }]
+    })),
+    updatedAt: previous.updatedAt,
+  })
+}
+
 export function parseStoredWorkbenchRecord(workspaceId, input) {
   if (input?.schemaVersion === 1) {
-    return assertWorkspaceIdentity(workspaceId, migrateWorkbenchRecordV1ToV2(input))
+    return assertWorkspaceIdentity(
+      workspaceId,
+      migrateWorkbenchRecordV2ToV3(migrateWorkbenchRecordV1ToV2(input)),
+    )
   }
   if (input?.schemaVersion === 2) {
+    return assertWorkspaceIdentity(workspaceId, migrateWorkbenchRecordV2ToV3(input))
+  }
+  if (input?.schemaVersion === 3) {
     return parseWorkbenchRecord(workspaceId, input)
   }
   throw new Error(`unsupported workbench schemaVersion: ${String(input?.schemaVersion)}`)

@@ -8,7 +8,7 @@ import {
 } from '../src/client/workbench-model.js'
 import {
   NOW,
-  createV2Record,
+  createV3Record,
   recordToEditableDraft,
 } from './workbench-fixtures.mjs'
 
@@ -39,7 +39,7 @@ const technicalWorkflow = Object.freeze({
 })
 
 test('maps Host evidence to pages but excludes it from editable replacement drafts', () => {
-  const record = createV2Record('workspace-a', 4, { withEvidence: true, panelMode: 'expanded' })
+  const record = createV3Record('workspace-a', 4, { withEvidence: true, panelMode: 'expanded' })
   const state = recordToWorkspaceState(record)
   assert.equal(state.syncStatus, 'ready')
   assert.equal(state.pages[0].inputRefs.length, 1)
@@ -53,13 +53,13 @@ test('maps Host evidence to pages but excludes it from editable replacement draf
 })
 
 test('fails closed when a persisted record contains malformed evidence', () => {
-  const malformed = createV2Record('workspace-a', 1, { withEvidence: true })
+  const malformed = createV3Record('workspace-a', 1, { withEvidence: true })
   malformed.tasks['task-a'].runs['run-a'].result.artifact.sha256 = 'not-a-hash'
   assert.throws(() => recordToWorkspaceState(malformed))
 })
 
-test('creates tasks with durable schema-v2 defaults before workflow selection', () => {
-  const state = recordToWorkspaceState(createV2Record('workspace-a', 0, { empty: true }))
+test('creates tasks with durable schema-v3 defaults before workflow selection', () => {
+  const state = recordToWorkspaceState(createV3Record('workspace-a', 0, { empty: true }))
   const next = reduceWorkspaceState(state, { type: 'create-page' }, {
     createId: () => 'task-created',
     now: () => NOW,
@@ -72,20 +72,23 @@ test('creates tasks with durable schema-v2 defaults before workflow selection', 
     workflowVersion: null,
     inputRefs: [],
     formValues: {},
+    professionalDraft: null,
     activeRunId: null,
     runOrder: [],
     runs: {},
+    remoteExecutionOrder: [],
+    remoteExecutions: {},
     createdAt: NOW,
     updatedAt: NOW,
     view: 'chooser',
   })
-  assert.equal(workspaceStateToDraft(next).schemaVersion, 2)
+  assert.equal(workspaceStateToDraft(next).schemaVersion, 3)
 })
 
 test('selects a remote workflow definition in place, updates form values, renames, and closes deterministically', () => {
   const env = { createId: () => 'task-a', now: () => NOW }
   let state = reduceWorkspaceState(
-    recordToWorkspaceState(createV2Record('workspace-a', 0, { empty: true })),
+    recordToWorkspaceState(createV3Record('workspace-a', 0, { empty: true })),
     { type: 'create-page' },
     env,
   )
@@ -120,7 +123,7 @@ test('selects a remote workflow definition in place, updates form values, rename
 })
 
 test('does not mutate immutable run snapshots when the editable form diverges', () => {
-  const record = createV2Record('workspace-a', 4, { withEvidence: true })
+  const record = createV3Record('workspace-a', 4, { withEvidence: true })
   record.tasks['task-a'].formValues = { objective: '旧草稿' }
   const state = recordToWorkspaceState(record)
   const previousSnapshot = structuredClone(state.pages[0].runs['run-a'].inputSnapshot.formValues)
@@ -133,7 +136,7 @@ test('does not mutate immutable run snapshots when the editable form diverges', 
 })
 
 test('activates an existing historical run without changing its snapshot', () => {
-  const record = createV2Record('workspace-a', 4, { withEvidence: true })
+  const record = createV3Record('workspace-a', 4, { withEvidence: true })
   const second = structuredClone(record.tasks['task-a'].runs['run-a'])
   second.runId = 'run-b'
   second.requestKey = 'request-b'

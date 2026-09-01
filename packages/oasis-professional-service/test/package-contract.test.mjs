@@ -23,9 +23,12 @@ test('pins the verified development dependency versions', () => {
     '@deepseek-ai/dsh-client-connection': '0.1.1-rc.2',
     '@deepseek-ai/dsh-client-ui-conversation': '0.1.1-rc.2',
     '@deepseek-ai/dsh-client-ui-layout': '0.1.1-rc.2',
+    '@deepseek-ai/dsh-credentials': '0.1.1-rc.2',
+    '@deepseek-ai/dsh-settings': '0.1.1-rc.2',
     '@deepseek-ai/dsh-storage-domain': '0.1.1-rc.2',
     '@deepseek-ai/dsh-tools': '0.1.1-rc.2',
     '@deepseek-ai/dsh-workspace': '0.1.1-rc.2',
+    '@deepseek-ai/schemastery': '3.18.1',
     react: '18.2.0',
     'react-dom': '18.2.0',
     tsdown: '0.22.14',
@@ -38,8 +41,14 @@ test('declares the Portal runtime as matched React peer dependencies', () => {
   assert.equal(manifest.peerDependencies['react-dom'], '18.2.0')
 })
 
+test('declares direct Host peers for settings, credentials, and their schema runtime', () => {
+  assert.equal(manifest.peerDependencies['@deepseek-ai/dsh-credentials'], '0.1.1-rc.2')
+  assert.equal(manifest.peerDependencies['@deepseek-ai/dsh-settings'], '0.1.1-rc.2')
+  assert.equal(manifest.peerDependencies['@deepseek-ai/schemastery'], '3.18.1')
+})
+
 test('keeps the distribution whitelist free of tests and local state', () => {
-  assert.deepEqual(manifest.files, ['src', 'lib', 'cordis.patch.yml'])
+  assert.deepEqual(manifest.files, ['src', 'lib', 'docs/api/oasis-professional-service-baseline.json', 'cordis.patch.yml'])
   assert.equal(manifest.files.some((entry) => /test|node_modules|\.dsh-test|pnpm-lock/.test(entry)), false)
 })
 

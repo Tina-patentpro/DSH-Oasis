@@ -1,12 +1,13 @@
 import { defineTool } from '@deepseek-ai/dsh-tools'
 
 import { createPluginStatus } from './status.js'
+import { registerOasisSettings } from './oasis-runtime-config.js'
 import { openOasisWorkbenchRepository } from './workbench-repository.js'
 import { createWorkbenchRpcHandler, OASIS_WORKBENCH_RPC_CHANNEL } from './workbench-rpc.js'
 import { createWorkbenchService } from './workbench-service.js'
 
 export const name = 'oasis-professional-service'
-export const inject = ['tools', 'storageDomain', 'connection', 'workspaceRegistry']
+export const inject = ['tools', 'storageDomain', 'connection', 'workspaceRegistry', 'settings', 'credentials']
 
 function registerStatusTool(ctx) {
   return ctx.tools.register(defineTool({
@@ -43,6 +44,7 @@ function registerStatusTool(ctx) {
 }
 
 export async function apply(ctx) {
+  registerOasisSettings(ctx)
   const repository = await openOasisWorkbenchRepository(ctx.storageDomain)
   const service = createWorkbenchService({ repository, workspaceRegistry: ctx.workspaceRegistry })
   let disposeTool

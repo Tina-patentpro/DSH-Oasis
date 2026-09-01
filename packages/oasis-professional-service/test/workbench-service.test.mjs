@@ -7,8 +7,8 @@ import {
   createEditableDraft,
   createMaterialReference,
   createRunSnapshot,
-  createV2Record,
-  createV2Task,
+  createV3Record,
+  createV3Task,
   RUN_ARTIFACT_SHA256,
   RUN_INPUT_SHA256,
 } from './workbench-fixtures.mjs'
@@ -57,17 +57,17 @@ test('keeps state orchestration behind the service boundary', async () => {
   const repository = {
     get(workspaceId) {
       calls.push(['get', workspaceId])
-      return createV2Record(workspaceId, 0, { empty: true })
+      return createV3Record(workspaceId, 0, { empty: true })
     },
     async replaceEditable(workspaceId, expectedRevision, state) {
       calls.push(['replaceEditable', workspaceId, expectedRevision, state])
-      return { committed: true, current: createV2Record(workspaceId, 1, { empty: true }) }
+      return { committed: true, current: createV3Record(workspaceId, 1, { empty: true }) }
     },
     async mutate() {},
   }
   const service = createWorkbenchService({ repository, materialManager: createMaterialManager() })
   const draft = createEditableDraft()
-  assert.equal(service.getState('workspace-a').schemaVersion, 2)
+  assert.equal(service.getState('workspace-a').schemaVersion, 3)
   assert.equal((await service.replaceState('workspace-a', 0, draft)).committed, true)
   assert.deepEqual(calls.map((call) => call[0]), ['get', 'replaceEditable'])
 })
@@ -84,8 +84,8 @@ function technicalForm(overrides = {}) {
 }
 
 function runnableRecord(revision = 3, overrides = {}) {
-  const task = createV2Task('task-a', { formValues: technicalForm(), ...overrides })
-  return createV2Record('workspace-a', revision, {
+  const task = createV3Task('task-a', { formValues: technicalForm(), ...overrides })
+  return createV3Record('workspace-a', revision, {
     tasks: { 'task-a': task }, taskOrder: ['task-a'], activeTaskId: 'task-a',
   })
 }
@@ -335,7 +335,7 @@ test('requires the complete repository and material-manager boundaries', () => {
 })
 
 test('adds a confirmed material through the repository Workspace queue', async () => {
-  const repository = createMutableRepository(createV2Record('workspace-a', 3))
+  const repository = createMutableRepository(createV3Record('workspace-a', 3))
   const managerCalls = []
   const materialManager = createMaterialManager({
     async confirm(workspaceId, relativePath, policy, referenceId, confirmedAt) {
@@ -371,7 +371,7 @@ test('adds a confirmed material through the repository Workspace queue', async (
 })
 
 test('refreshes or removes only the current reference and preserves historical run snapshots', async () => {
-  const initial = createV2Record('workspace-a', 5, { withEvidence: true })
+  const initial = createV3Record('workspace-a', 5, { withEvidence: true })
   const historicalInput = structuredClone(initial.tasks['task-a'].runs['run-a'].inputSnapshot.inputRefs)
   const repository = createMutableRepository(initial)
   const materialManager = createMaterialManager({
@@ -396,7 +396,7 @@ test('refreshes or removes only the current reference and preserves historical r
 })
 
 test('rechecks task materials without mutating authoritative state', async () => {
-  const initial = createV2Record('workspace-a', 2, { withEvidence: true })
+  const initial = createV3Record('workspace-a', 2, { withEvidence: true })
   const repository = createMutableRepository(initial)
   const checked = [createMaterialReference({ observedAt: CLOCK() })]
   const materialManager = createMaterialManager({
@@ -413,7 +413,7 @@ test('rechecks task materials without mutating authoritative state', async () =>
 })
 
 test('returns revision conflict before inspecting any file', async () => {
-  const repository = createMutableRepository(createV2Record('workspace-a', 4))
+  const repository = createMutableRepository(createV3Record('workspace-a', 4))
   let inspected = false
   const materialManager = createMaterialManager({
     async confirm() { inspected = true; throw new Error('must not inspect') },

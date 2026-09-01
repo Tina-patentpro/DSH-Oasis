@@ -61,6 +61,8 @@ function mergeEditableDraft(current, draft) {
         inputRefs: [],
         runOrder: [],
         runs: {},
+        remoteExecutionOrder: [],
+        remoteExecutions: {},
       }
       continue
     }
@@ -70,10 +72,12 @@ function mergeEditableDraft(current, draft) {
       inputRefs: previous.inputRefs,
       runOrder: previous.runOrder,
       runs: previous.runs,
+      remoteExecutionOrder: previous.remoteExecutionOrder,
+      remoteExecutions: previous.remoteExecutions,
     }
   }
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     panelMode: draft.panelMode,
     activeTaskId: draft.activeTaskId,
     taskOrder: draft.taskOrder,
@@ -129,7 +133,7 @@ class OasisWorkbenchRepository {
     } = candidate
     const next = parseWorkbenchRecord(workspaceId, {
       ...body,
-      schemaVersion: 2,
+      schemaVersion: 3,
       workspaceId,
       revision: current.revision + 1,
       updatedAt: this.#clock(),

@@ -4,6 +4,7 @@ export const WORKBENCH_LIMITS = Object.freeze({
   maxTasksPerWorkspace: 32,
   maxInputRefsPerTask: 64,
   maxRunsPerTask: 8,
+  maxRemoteExecutionsPerTask: 8,
   maxWritebacksPerRun: 8,
   maxResultItems: 64,
   maxWritebackFiles: 2,
@@ -272,7 +273,31 @@ const artifactSchema = z.object({
   }
 })
 
-export const runSnapshotSchema = z.object({
+const reviewSchema = z.object({
+  status: z.enum(['not-reviewed', 'changes-requested', 'approved']),
+  note: z.string().max(WORKBENCH_LIMITS.maxReviewNoteChars),
+  updatedAt: timestampSchema,
+}).strict()
+
+function enforceReviewAndWritebacks(value, ctx, { blocked = false } = {}) {
+  if (blocked && value.review.status === 'approved') {
+    ctx.addIssue({ code: 'custom', path: ['review', 'status'], message: 'blocked results cannot be approved' })
+  }
+  if (value.review.status === 'changes-requested' && value.review.note.trim().length === 0) {
+    ctx.addIssue({ code: 'custom', path: ['review', 'note'], message: 'changes-requested review requires a note' })
+  }
+  for (const [index, writeback] of value.writebacks.entries()) {
+    if (writeback.artifactId !== value.result.artifact.artifactId) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['writebacks', index, 'artifactId'],
+        message: 'writeback artifactId must belong to the run artifact',
+      })
+    }
+  }
+}
+
+export const localRunSnapshotSchema = z.object({
   runId: identifierSchema,
   requestKey: identifierSchema,
   mode: z.literal('local-mock'),
@@ -294,31 +319,131 @@ export const runSnapshotSchema = z.object({
     disclaimer: z.string().min(1).max(4000),
     artifact: artifactSchema,
   }).strict(),
-  review: z.object({
-    status: z.enum(['not-reviewed', 'changes-requested', 'approved']),
-    note: z.string().max(WORKBENCH_LIMITS.maxReviewNoteChars),
-    updatedAt: timestampSchema,
-  }).strict(),
+  review: reviewSchema,
   writebacks: z.array(writebackRecordSchema).max(WORKBENCH_LIMITS.maxWritebacksPerRun),
   createdAt: timestampSchema,
   completedAt: timestampSchema,
 }).strict().superRefine((value, ctx) => {
-  if (value.result.contentStatus === 'blocked' && value.review.status === 'approved') {
-    ctx.addIssue({ code: 'custom', path: ['review', 'status'], message: 'blocked results cannot be approved' })
+  enforceReviewAndWritebacks(value, ctx, { blocked: value.result.contentStatus === 'blocked' })
+})
+
+const httpUrlSchema = z.string().min(1).max(4096).refine((value) => {
+  try {
+    return ['http:', 'https:'].includes(new URL(value).protocol)
+  } catch {
+    return false
   }
-  if (value.review.status === 'changes-requested' && value.review.note.trim().length === 0) {
-    ctx.addIssue({ code: 'custom', path: ['review', 'note'], message: 'changes-requested review requires a note' })
+}, 'must be an absolute HTTP(S) URL')
+
+const httpOriginSchema = httpUrlSchema.refine((value) => {
+  const url = new URL(value)
+  return value === url.origin
+}, 'must contain only an HTTP(S) origin')
+
+export const oasisRemoteExecutionStatusSchema = z.enum([
+  'prepared',
+  'uploading',
+  'ready-to-submit',
+  'submitting',
+  'submission-unknown',
+  'auth-required',
+  'completed',
+  'failed',
+])
+
+const oasisProviderSnapshotSchema = z.object({
+  apiBaseOrigin: httpOriginSchema,
+  apiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  apiEndpoint: identifierSchema,
+  apiProcess: z.string().max(4000),
+  folderId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  price: z.number().nonnegative().finite(),
+}).strict()
+
+export const oasisRemoteExecutionSchema = z.object({
+  executionId: identifierSchema,
+  requestKey: identifierSchema,
+  status: oasisRemoteExecutionStatusSchema,
+  inputSha: sha256Schema,
+  serviceSnapshot: z.object({
+    apiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+    apiEndpoint: identifierSchema,
+    apiProcess: z.string().max(4000),
+    schemaHash: sha256Schema,
+  }).strict(),
+  folderSnapshot: z.object({
+    folderId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+    folderName: z.string().min(1).max(200),
+  }).strict(),
+  priceSnapshot: z.object({
+    price: z.number().nonnegative().finite(),
+    balance: z.number().nonnegative().finite(),
+  }).strict(),
+  materialSnapshots: z.array(projectMaterialReferenceSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+  uploadedFiles: z.array(z.object({
+    fieldId: identifierSchema,
+    referenceId: identifierSchema,
+    url: httpUrlSchema,
+    sha256: sha256Schema,
+    uploadedAt: timestampSchema,
+  }).strict()).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+  safeError: z.object({
+    code: identifierSchema,
+    message: z.string().min(1).max(1000),
+  }).strict().nullable(),
+  createdAt: timestampSchema,
+  updatedAt: timestampSchema,
+  submittedAt: timestampSchema.nullable(),
+  completedAt: timestampSchema.nullable(),
+}).strict().superRefine((value, ctx) => {
+  if (value.status === 'completed') {
+    if (value.completedAt === null) ctx.addIssue({ code: 'custom', path: ['completedAt'], message: 'completed execution requires completedAt' })
+    if (value.safeError !== null) ctx.addIssue({ code: 'custom', path: ['safeError'], message: 'completed execution cannot retain an error' })
   }
-  for (const [index, writeback] of value.writebacks.entries()) {
-    if (writeback.artifactId !== value.result.artifact.artifactId) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['writebacks', index, 'artifactId'],
-        message: 'writeback artifactId must belong to the run artifact',
-      })
-    }
+  if (['submission-unknown', 'auth-required', 'failed'].includes(value.status) && value.safeError === null) {
+    ctx.addIssue({ code: 'custom', path: ['safeError'], message: `${value.status} execution requires a safe error` })
   }
 })
+
+export const oasisRemoteRunSnapshotSchema = z.object({
+  runId: identifierSchema,
+  requestKey: identifierSchema,
+  mode: z.literal('oasis-legacy'),
+  status: z.literal('completed'),
+  executionId: identifierSchema,
+  providerSnapshot: oasisProviderSnapshotSchema,
+  inputSnapshot: z.object({
+    formValues: jsonRootObjectSchema,
+    inputRefs: z.array(projectMaterialReferenceSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+    sha256: sha256Schema,
+    capturedAt: timestampSchema,
+  }).strict(),
+  result: z.object({
+    answerText: jsonStringSchema,
+    fileUrls: z.array(httpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
+    fileStatus: z.literal('undownloaded-unverified'),
+    responseSha: sha256Schema,
+    artifact: artifactSchema,
+  }).strict(),
+  review: reviewSchema,
+  writebacks: z.array(writebackRecordSchema).max(WORKBENCH_LIMITS.maxWritebacksPerRun),
+  createdAt: timestampSchema,
+  completedAt: timestampSchema,
+}).strict().superRefine((value, ctx) => enforceReviewAndWritebacks(value, ctx))
+
+export const runSnapshotSchema = z.discriminatedUnion('mode', [
+  localRunSnapshotSchema,
+  oasisRemoteRunSnapshotSchema,
+])
+
+export const professionalDraftSchema = z.object({
+  selectedApiEndpoint: identifierSchema,
+  selectedApiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  schemaHash: sha256Schema,
+  formValues: jsonRootObjectSchema,
+  folderId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  updatedAt: timestampSchema,
+}).strict()
 
 export const workbenchEditableTaskSchema = z.object({
   taskId: identifierSchema,
@@ -327,6 +452,7 @@ export const workbenchEditableTaskSchema = z.object({
   workflowId: identifierSchema.nullable(),
   workflowVersion: identifierSchema.nullable(),
   formValues: jsonRootObjectSchema,
+  professionalDraft: professionalDraftSchema.nullable(),
   activeRunId: identifierSchema.nullable(),
   createdAt: timestampSchema,
   updatedAt: timestampSchema,
@@ -339,10 +465,13 @@ export const workbenchTaskSchema = z.object({
   workflowId: identifierSchema.nullable(),
   workflowVersion: identifierSchema.nullable(),
   formValues: jsonRootObjectSchema,
+  professionalDraft: professionalDraftSchema.nullable(),
   inputRefs: z.array(materialReferenceSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
   activeRunId: identifierSchema.nullable(),
   runOrder: z.array(identifierSchema).max(WORKBENCH_LIMITS.maxRunsPerTask),
   runs: z.record(identifierSchema, runSnapshotSchema),
+  remoteExecutionOrder: z.array(identifierSchema).max(WORKBENCH_LIMITS.maxRemoteExecutionsPerTask),
+  remoteExecutions: z.record(identifierSchema, oasisRemoteExecutionSchema),
   createdAt: timestampSchema,
   updatedAt: timestampSchema,
 }).strict().superRefine((value, ctx) => {
@@ -365,6 +494,7 @@ export const workbenchTaskSchema = z.object({
     }
   }
   const requestKeys = new Set()
+  const remoteRunExecutionIds = new Set()
   for (const [mapKey, run] of Object.entries(value.runs)) {
     if (!seen.has(mapKey)) {
       ctx.addIssue({ code: 'custom', path: ['runs', mapKey], message: `orphan run record: ${mapKey}` })
@@ -372,8 +502,20 @@ export const workbenchTaskSchema = z.object({
     if (run.runId !== mapKey) {
       ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'runId'], message: `run map key does not match runId: ${mapKey}` })
     }
-    if (value.workflowId !== run.workflowId || value.workflowVersion !== run.workflowVersion) {
+    if (run.mode === 'local-mock' && (value.workflowId !== run.workflowId || value.workflowVersion !== run.workflowVersion)) {
       ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'workflowId'], message: 'run workflow must match task workflow' })
+    }
+    if (run.mode === 'oasis-legacy') {
+      if (remoteRunExecutionIds.has(run.executionId)) {
+        ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'executionId'], message: 'remote execution can produce only one completed run' })
+      }
+      remoteRunExecutionIds.add(run.executionId)
+      const execution = value.remoteExecutions[run.executionId]
+      if (!execution || execution.status !== 'completed') {
+        ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'executionId'], message: 'remote run requires a completed Host execution' })
+      } else if (execution.requestKey !== run.requestKey || execution.inputSha !== run.inputSnapshot.sha256) {
+        ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'executionId'], message: 'remote run must match its Host execution snapshot' })
+      }
     }
     if (requestKeys.has(run.requestKey)) {
       ctx.addIssue({
@@ -386,6 +528,39 @@ export const workbenchTaskSchema = z.object({
   }
   if (value.activeRunId !== null && !seen.has(value.activeRunId)) {
     ctx.addIssue({ code: 'custom', path: ['activeRunId'], message: 'activeRunId must reference runOrder' })
+  }
+
+  const executionIds = new Set()
+  const executionRequestKeys = new Set()
+  let inFlight = 0
+  const inFlightStatuses = new Set(['prepared', 'uploading', 'ready-to-submit', 'submitting'])
+  for (const [index, executionId] of value.remoteExecutionOrder.entries()) {
+    if (executionIds.has(executionId)) {
+      ctx.addIssue({ code: 'custom', path: ['remoteExecutionOrder', index], message: `duplicate remote execution id: ${executionId}` })
+    }
+    executionIds.add(executionId)
+    if (!(executionId in value.remoteExecutions)) {
+      ctx.addIssue({ code: 'custom', path: ['remoteExecutionOrder', index], message: `missing remote execution: ${executionId}` })
+    }
+  }
+  for (const [mapKey, execution] of Object.entries(value.remoteExecutions)) {
+    if (!executionIds.has(mapKey)) {
+      ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey], message: `orphan remote execution: ${mapKey}` })
+    }
+    if (execution.executionId !== mapKey) {
+      ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey, 'executionId'], message: 'remote execution map key must match executionId' })
+    }
+    if (executionRequestKeys.has(execution.requestKey)) {
+      ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey, 'requestKey'], message: `duplicate remote request key: ${execution.requestKey}` })
+    }
+    executionRequestKeys.add(execution.requestKey)
+    if (execution.status === 'completed' && !remoteRunExecutionIds.has(execution.executionId)) {
+      ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey, 'status'], message: 'completed remote execution requires its completed run snapshot' })
+    }
+    if (inFlightStatuses.has(execution.status)) inFlight += 1
+  }
+  if (inFlight > 1) {
+    ctx.addIssue({ code: 'custom', path: ['remoteExecutions'], message: 'concurrent in-flight remote executions are forbidden' })
   }
 })
 
@@ -422,7 +597,7 @@ function enforceWorkspaceInvariants(value, ctx) {
 }
 
 const editableStateFields = {
-  schemaVersion: z.literal(2),
+  schemaVersion: z.literal(3),
   panelMode: panelModeSchema,
   activeTaskId: identifierSchema.nullable(),
   taskOrder: z.array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
@@ -430,7 +605,7 @@ const editableStateFields = {
 }
 
 const recordStateFields = {
-  schemaVersion: z.literal(2),
+  schemaVersion: z.literal(3),
   panelMode: panelModeSchema,
   activeTaskId: identifierSchema.nullable(),
   taskOrder: z.array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
@@ -444,6 +619,32 @@ export const workbenchRecordSchema = z.object({
   ...recordStateFields,
   workspaceId: identifierSchema,
   revision: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  updatedAt: timestampSchema,
+}).strict().superRefine(enforceWorkspaceInvariants)
+
+const workbenchTaskV2Schema = z.object({
+  taskId: identifierSchema,
+  title: z.string().min(1).max(200),
+  workType: workTypeSchema.nullable(),
+  workflowId: identifierSchema.nullable(),
+  workflowVersion: identifierSchema.nullable(),
+  formValues: jsonRootObjectSchema,
+  inputRefs: z.array(materialReferenceSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+  activeRunId: identifierSchema.nullable(),
+  runOrder: z.array(identifierSchema).max(WORKBENCH_LIMITS.maxRunsPerTask),
+  runs: z.record(identifierSchema, localRunSnapshotSchema),
+  createdAt: timestampSchema,
+  updatedAt: timestampSchema,
+}).strict()
+
+export const workbenchRecordV2Schema = z.object({
+  schemaVersion: z.literal(2),
+  workspaceId: identifierSchema,
+  revision: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  panelMode: panelModeSchema,
+  activeTaskId: identifierSchema.nullable(),
+  taskOrder: z.array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
+  tasks: z.record(identifierSchema, workbenchTaskV2Schema),
   updatedAt: timestampSchema,
 }).strict().superRefine(enforceWorkspaceInvariants)
 
@@ -473,7 +674,11 @@ export const legacyWorkbenchRecordSchema = z.object({
   updatedAt: timestampSchema,
 }).strict().superRefine(enforceWorkspaceInvariants)
 
-export const storedWorkbenchRecordSchema = z.union([legacyWorkbenchRecordSchema, workbenchRecordSchema])
+export const storedWorkbenchRecordSchema = z.union([
+  legacyWorkbenchRecordSchema,
+  workbenchRecordV2Schema,
+  workbenchRecordSchema,
+])
 export const workbenchGetResponseSchema = workbenchRecordSchema
 export const workbenchReplaceResponseSchema = z.discriminatedUnion('committed', [
   z.object({ committed: z.literal(true), current: workbenchRecordSchema }).strict(),

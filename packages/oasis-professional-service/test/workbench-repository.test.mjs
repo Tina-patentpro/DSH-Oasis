@@ -8,7 +8,7 @@ import {
   createLegacyRecord,
   createMaterialReference,
   createRunSnapshot,
-  createV2Record,
+  createV3Record,
   recordToEditableDraft,
 } from './workbench-fixtures.mjs'
 
@@ -55,39 +55,39 @@ function createStorageFixture({ beforePut } = {}) {
   return { storageDomain, records, calls }
 }
 
-test('missing and legacy reads publish v2 without materializing a row', async () => {
+test('missing and legacy reads publish v3 without materializing a row', async () => {
   const fixture = createStorageFixture()
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
-  assert.equal(repository.get('workspace-a').schemaVersion, 2)
+  assert.equal(repository.get('workspace-a').schemaVersion, 3)
   assert.equal(fixture.calls.put.length, 0)
 
   fixture.records.set('workspace-b', createLegacyRecord('workspace-b'))
   const migrated = repository.get('workspace-b')
-  assert.equal(migrated.schemaVersion, 2)
+  assert.equal(migrated.schemaVersion, 3)
   assert.equal(fixture.records.get('workspace-b').schemaVersion, 1)
   assert.equal(fixture.calls.put.length, 0)
   await repository.close()
 })
 
-test('first editable replacement materializes schema v2 with Host identity and time', async () => {
+test('first editable replacement materializes schema v3 with Host identity and time', async () => {
   const fixture = createStorageFixture()
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
   const result = await repository.replaceEditable('workspace-a', 0, createEditableDraft())
 
   assert.equal(result.committed, true)
-  assert.equal(result.current.schemaVersion, 2)
+  assert.equal(result.current.schemaVersion, 3)
   assert.equal(result.current.workspaceId, 'workspace-a')
   assert.equal(result.current.revision, 1)
   assert.equal(result.current.updatedAt, NOW)
   assert.deepEqual(result.current.tasks['task-a'].inputRefs, [])
   assert.deepEqual(result.current.tasks['task-a'].runs, {})
-  assert.equal(fixture.records.get('workspace-a').schemaVersion, 2)
+  assert.equal(fixture.records.get('workspace-a').schemaVersion, 3)
   await repository.close()
 })
 
 test('editable replacement preserves Host-owned evidence byte-for-byte', async () => {
   const fixture = createStorageFixture()
-  const current = createV2Record('workspace-a', 4, { withEvidence: true })
+  const current = createV3Record('workspace-a', 4, { withEvidence: true })
   fixture.records.set('workspace-a', current)
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
   const evidence = structuredClone({
@@ -189,14 +189,14 @@ test('serializes same-Workspace replacements and isolates Workspaces', async () 
   await repository.close()
 })
 
-test('explicit editable mutation upgrades a stored v1 row to v2', async () => {
+test('explicit editable mutation upgrades a stored v1 row to v3', async () => {
   const fixture = createStorageFixture()
   fixture.records.set('workspace-a', createLegacyRecord())
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
   const current = repository.get('workspace-a')
   const result = await repository.replaceEditable('workspace-a', current.revision, recordToEditableDraft(current))
-  assert.equal(result.current.schemaVersion, 2)
-  assert.equal(fixture.records.get('workspace-a').schemaVersion, 2)
+  assert.equal(result.current.schemaVersion, 3)
+  assert.equal(fixture.records.get('workspace-a').schemaVersion, 3)
   await repository.close()
 })
 
@@ -239,7 +239,7 @@ test('storage failure leaves authoritative state unchanged', async () => {
 
 test('rejects exhausted revision and closes only after admitted writes settle', async () => {
   const exhaustedFixture = createStorageFixture()
-  exhaustedFixture.records.set('workspace-a', createV2Record('workspace-a', Number.MAX_SAFE_INTEGER))
+  exhaustedFixture.records.set('workspace-a', createV3Record('workspace-a', Number.MAX_SAFE_INTEGER))
   const exhausted = await openOasisWorkbenchRepository(exhaustedFixture.storageDomain, { clock: () => NOW })
   await assert.rejects(
     exhausted.replaceEditable('workspace-a', Number.MAX_SAFE_INTEGER, recordToEditableDraft(exhausted.get('workspace-a'))),

@@ -6610,6 +6610,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			maxTasksPerWorkspace: 32,
 			maxInputRefsPerTask: 64,
 			maxRunsPerTask: 8,
+			maxRemoteExecutionsPerTask: 8,
 			maxWritebacksPerRun: 8,
 			maxResultItems: 64,
 			maxWritebackFiles: 2,
@@ -6839,7 +6840,37 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				message: "artifactId must match artifact sha256"
 			});
 		});
-		const runSnapshotSchema = object({
+		const reviewSchema = object({
+			status: _enum([
+				"not-reviewed",
+				"changes-requested",
+				"approved"
+			]),
+			note: string().max(WORKBENCH_LIMITS.maxReviewNoteChars),
+			updatedAt: timestampSchema
+		}).strict();
+		function enforceReviewAndWritebacks(value, ctx, { blocked = false } = {}) {
+			if (blocked && value.review.status === "approved") ctx.addIssue({
+				code: "custom",
+				path: ["review", "status"],
+				message: "blocked results cannot be approved"
+			});
+			if (value.review.status === "changes-requested" && value.review.note.trim().length === 0) ctx.addIssue({
+				code: "custom",
+				path: ["review", "note"],
+				message: "changes-requested review requires a note"
+			});
+			for (const [index, writeback] of value.writebacks.entries()) if (writeback.artifactId !== value.result.artifact.artifactId) ctx.addIssue({
+				code: "custom",
+				path: [
+					"writebacks",
+					index,
+					"artifactId"
+				],
+				message: "writeback artifactId must belong to the run artifact"
+			});
+		}
+		const localRunSnapshotSchema = object({
 			runId: identifierSchema,
 			requestKey: identifierSchema,
 			mode: literal("local-mock"),
@@ -6861,39 +6892,132 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				disclaimer: string().min(1).max(4e3),
 				artifact: artifactSchema
 			}).strict(),
-			review: object({
-				status: _enum([
-					"not-reviewed",
-					"changes-requested",
-					"approved"
-				]),
-				note: string().max(WORKBENCH_LIMITS.maxReviewNoteChars),
-				updatedAt: timestampSchema
-			}).strict(),
+			review: reviewSchema,
 			writebacks: array(writebackRecordSchema).max(WORKBENCH_LIMITS.maxWritebacksPerRun),
 			createdAt: timestampSchema,
 			completedAt: timestampSchema
 		}).strict().superRefine((value, ctx) => {
-			if (value.result.contentStatus === "blocked" && value.review.status === "approved") ctx.addIssue({
+			enforceReviewAndWritebacks(value, ctx, { blocked: value.result.contentStatus === "blocked" });
+		});
+		const httpUrlSchema = string().min(1).max(4096).refine((value) => {
+			try {
+				return ["http:", "https:"].includes(new URL(value).protocol);
+			} catch {
+				return false;
+			}
+		}, "must be an absolute HTTP(S) URL");
+		const httpOriginSchema = httpUrlSchema.refine((value) => {
+			return value === new URL(value).origin;
+		}, "must contain only an HTTP(S) origin");
+		const oasisRemoteExecutionStatusSchema = _enum([
+			"prepared",
+			"uploading",
+			"ready-to-submit",
+			"submitting",
+			"submission-unknown",
+			"auth-required",
+			"completed",
+			"failed"
+		]);
+		const oasisProviderSnapshotSchema = object({
+			apiBaseOrigin: httpOriginSchema,
+			apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			apiEndpoint: identifierSchema,
+			apiProcess: string().max(4e3),
+			folderId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			price: number().nonnegative().finite()
+		}).strict();
+		const oasisRemoteExecutionSchema = object({
+			executionId: identifierSchema,
+			requestKey: identifierSchema,
+			status: oasisRemoteExecutionStatusSchema,
+			inputSha: sha256Schema,
+			serviceSnapshot: object({
+				apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+				apiEndpoint: identifierSchema,
+				apiProcess: string().max(4e3),
+				schemaHash: sha256Schema
+			}).strict(),
+			folderSnapshot: object({
+				folderId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+				folderName: string().min(1).max(200)
+			}).strict(),
+			priceSnapshot: object({
+				price: number().nonnegative().finite(),
+				balance: number().nonnegative().finite()
+			}).strict(),
+			materialSnapshots: array(projectMaterialReferenceSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+			uploadedFiles: array(object({
+				fieldId: identifierSchema,
+				referenceId: identifierSchema,
+				url: httpUrlSchema,
+				sha256: sha256Schema,
+				uploadedAt: timestampSchema
+			}).strict()).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+			safeError: object({
+				code: identifierSchema,
+				message: string().min(1).max(1e3)
+			}).strict().nullable(),
+			createdAt: timestampSchema,
+			updatedAt: timestampSchema,
+			submittedAt: timestampSchema.nullable(),
+			completedAt: timestampSchema.nullable()
+		}).strict().superRefine((value, ctx) => {
+			if (value.status === "completed") {
+				if (value.completedAt === null) ctx.addIssue({
+					code: "custom",
+					path: ["completedAt"],
+					message: "completed execution requires completedAt"
+				});
+				if (value.safeError !== null) ctx.addIssue({
+					code: "custom",
+					path: ["safeError"],
+					message: "completed execution cannot retain an error"
+				});
+			}
+			if ([
+				"submission-unknown",
+				"auth-required",
+				"failed"
+			].includes(value.status) && value.safeError === null) ctx.addIssue({
 				code: "custom",
-				path: ["review", "status"],
-				message: "blocked results cannot be approved"
-			});
-			if (value.review.status === "changes-requested" && value.review.note.trim().length === 0) ctx.addIssue({
-				code: "custom",
-				path: ["review", "note"],
-				message: "changes-requested review requires a note"
-			});
-			for (const [index, writeback] of value.writebacks.entries()) if (writeback.artifactId !== value.result.artifact.artifactId) ctx.addIssue({
-				code: "custom",
-				path: [
-					"writebacks",
-					index,
-					"artifactId"
-				],
-				message: "writeback artifactId must belong to the run artifact"
+				path: ["safeError"],
+				message: `${value.status} execution requires a safe error`
 			});
 		});
+		const runSnapshotSchema = discriminatedUnion("mode", [localRunSnapshotSchema, object({
+			runId: identifierSchema,
+			requestKey: identifierSchema,
+			mode: literal("oasis-legacy"),
+			status: literal("completed"),
+			executionId: identifierSchema,
+			providerSnapshot: oasisProviderSnapshotSchema,
+			inputSnapshot: object({
+				formValues: jsonRootObjectSchema,
+				inputRefs: array(projectMaterialReferenceSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+				sha256: sha256Schema,
+				capturedAt: timestampSchema
+			}).strict(),
+			result: object({
+				answerText: jsonStringSchema,
+				fileUrls: array(httpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
+				fileStatus: literal("undownloaded-unverified"),
+				responseSha: sha256Schema,
+				artifact: artifactSchema
+			}).strict(),
+			review: reviewSchema,
+			writebacks: array(writebackRecordSchema).max(WORKBENCH_LIMITS.maxWritebacksPerRun),
+			createdAt: timestampSchema,
+			completedAt: timestampSchema
+		}).strict().superRefine((value, ctx) => enforceReviewAndWritebacks(value, ctx))]);
+		const professionalDraftSchema = object({
+			selectedApiEndpoint: identifierSchema,
+			selectedApiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			schemaHash: sha256Schema,
+			formValues: jsonRootObjectSchema,
+			folderId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			updatedAt: timestampSchema
+		}).strict();
 		const workbenchEditableTaskSchema = object({
 			taskId: identifierSchema,
 			title: string().min(1).max(200),
@@ -6901,6 +7025,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			workflowId: identifierSchema.nullable(),
 			workflowVersion: identifierSchema.nullable(),
 			formValues: jsonRootObjectSchema,
+			professionalDraft: professionalDraftSchema.nullable(),
 			activeRunId: identifierSchema.nullable(),
 			createdAt: timestampSchema,
 			updatedAt: timestampSchema
@@ -6912,10 +7037,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			workflowId: identifierSchema.nullable(),
 			workflowVersion: identifierSchema.nullable(),
 			formValues: jsonRootObjectSchema,
+			professionalDraft: professionalDraftSchema.nullable(),
 			inputRefs: array(materialReferenceSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
 			activeRunId: identifierSchema.nullable(),
 			runOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxRunsPerTask),
 			runs: record(identifierSchema, runSnapshotSchema),
+			remoteExecutionOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxRemoteExecutionsPerTask),
+			remoteExecutions: record(identifierSchema, oasisRemoteExecutionSchema),
 			createdAt: timestampSchema,
 			updatedAt: timestampSchema
 		}).strict().superRefine((value, ctx) => {
@@ -6943,6 +7071,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				});
 			}
 			const requestKeys = /* @__PURE__ */ new Set();
+			const remoteRunExecutionIds = /* @__PURE__ */ new Set();
 			for (const [mapKey, run] of Object.entries(value.runs)) {
 				if (!seen.has(mapKey)) ctx.addIssue({
 					code: "custom",
@@ -6958,7 +7087,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					],
 					message: `run map key does not match runId: ${mapKey}`
 				});
-				if (value.workflowId !== run.workflowId || value.workflowVersion !== run.workflowVersion) ctx.addIssue({
+				if (run.mode === "local-mock" && (value.workflowId !== run.workflowId || value.workflowVersion !== run.workflowVersion)) ctx.addIssue({
 					code: "custom",
 					path: [
 						"runs",
@@ -6967,6 +7096,37 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					],
 					message: "run workflow must match task workflow"
 				});
+				if (run.mode === "oasis-legacy") {
+					if (remoteRunExecutionIds.has(run.executionId)) ctx.addIssue({
+						code: "custom",
+						path: [
+							"runs",
+							mapKey,
+							"executionId"
+						],
+						message: "remote execution can produce only one completed run"
+					});
+					remoteRunExecutionIds.add(run.executionId);
+					const execution = value.remoteExecutions[run.executionId];
+					if (!execution || execution.status !== "completed") ctx.addIssue({
+						code: "custom",
+						path: [
+							"runs",
+							mapKey,
+							"executionId"
+						],
+						message: "remote run requires a completed Host execution"
+					});
+					else if (execution.requestKey !== run.requestKey || execution.inputSha !== run.inputSnapshot.sha256) ctx.addIssue({
+						code: "custom",
+						path: [
+							"runs",
+							mapKey,
+							"executionId"
+						],
+						message: "remote run must match its Host execution snapshot"
+					});
+				}
 				if (requestKeys.has(run.requestKey)) ctx.addIssue({
 					code: "custom",
 					path: [
@@ -6982,6 +7142,69 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				code: "custom",
 				path: ["activeRunId"],
 				message: "activeRunId must reference runOrder"
+			});
+			const executionIds = /* @__PURE__ */ new Set();
+			const executionRequestKeys = /* @__PURE__ */ new Set();
+			let inFlight = 0;
+			const inFlightStatuses = /* @__PURE__ */ new Set([
+				"prepared",
+				"uploading",
+				"ready-to-submit",
+				"submitting"
+			]);
+			for (const [index, executionId] of value.remoteExecutionOrder.entries()) {
+				if (executionIds.has(executionId)) ctx.addIssue({
+					code: "custom",
+					path: ["remoteExecutionOrder", index],
+					message: `duplicate remote execution id: ${executionId}`
+				});
+				executionIds.add(executionId);
+				if (!(executionId in value.remoteExecutions)) ctx.addIssue({
+					code: "custom",
+					path: ["remoteExecutionOrder", index],
+					message: `missing remote execution: ${executionId}`
+				});
+			}
+			for (const [mapKey, execution] of Object.entries(value.remoteExecutions)) {
+				if (!executionIds.has(mapKey)) ctx.addIssue({
+					code: "custom",
+					path: ["remoteExecutions", mapKey],
+					message: `orphan remote execution: ${mapKey}`
+				});
+				if (execution.executionId !== mapKey) ctx.addIssue({
+					code: "custom",
+					path: [
+						"remoteExecutions",
+						mapKey,
+						"executionId"
+					],
+					message: "remote execution map key must match executionId"
+				});
+				if (executionRequestKeys.has(execution.requestKey)) ctx.addIssue({
+					code: "custom",
+					path: [
+						"remoteExecutions",
+						mapKey,
+						"requestKey"
+					],
+					message: `duplicate remote request key: ${execution.requestKey}`
+				});
+				executionRequestKeys.add(execution.requestKey);
+				if (execution.status === "completed" && !remoteRunExecutionIds.has(execution.executionId)) ctx.addIssue({
+					code: "custom",
+					path: [
+						"remoteExecutions",
+						mapKey,
+						"status"
+					],
+					message: "completed remote execution requires its completed run snapshot"
+				});
+				if (inFlightStatuses.has(execution.status)) inFlight += 1;
+			}
+			if (inFlight > 1) ctx.addIssue({
+				code: "custom",
+				path: ["remoteExecutions"],
+				message: "concurrent in-flight remote executions are forbidden"
 			});
 		});
 		const panelModeSchema = _enum([
@@ -7036,14 +7259,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			});
 		}
 		const editableStateFields = {
-			schemaVersion: literal(2),
+			schemaVersion: literal(3),
 			panelMode: panelModeSchema,
 			activeTaskId: identifierSchema.nullable(),
 			taskOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
 			tasks: record(identifierSchema, workbenchEditableTaskSchema)
 		};
 		const recordStateFields = {
-			schemaVersion: literal(2),
+			schemaVersion: literal(3),
 			panelMode: panelModeSchema,
 			activeTaskId: identifierSchema.nullable(),
 			taskOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
@@ -7054,6 +7277,30 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			...recordStateFields,
 			workspaceId: identifierSchema,
 			revision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			updatedAt: timestampSchema
+		}).strict().superRefine(enforceWorkspaceInvariants);
+		const workbenchTaskV2Schema = object({
+			taskId: identifierSchema,
+			title: string().min(1).max(200),
+			workType: workTypeSchema.nullable(),
+			workflowId: identifierSchema.nullable(),
+			workflowVersion: identifierSchema.nullable(),
+			formValues: jsonRootObjectSchema,
+			inputRefs: array(materialReferenceSchema).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
+			activeRunId: identifierSchema.nullable(),
+			runOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxRunsPerTask),
+			runs: record(identifierSchema, localRunSnapshotSchema),
+			createdAt: timestampSchema,
+			updatedAt: timestampSchema
+		}).strict();
+		const workbenchRecordV2Schema = object({
+			schemaVersion: literal(2),
+			workspaceId: identifierSchema,
+			revision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			panelMode: panelModeSchema,
+			activeTaskId: identifierSchema.nullable(),
+			taskOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
+			tasks: record(identifierSchema, workbenchTaskV2Schema),
 			updatedAt: timestampSchema
 		}).strict().superRefine(enforceWorkspaceInvariants);
 		const legacyTaskSchema = object({
@@ -7070,16 +7317,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			createdAt: timestampSchema,
 			updatedAt: timestampSchema
 		}).strict();
-		union([object({
-			schemaVersion: literal(1),
-			workspaceId: identifierSchema,
-			revision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
-			panelMode: panelModeSchema,
-			activeTaskId: identifierSchema.nullable(),
-			taskOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
-			tasks: record(identifierSchema, legacyTaskSchema),
-			updatedAt: timestampSchema
-		}).strict().superRefine(enforceWorkspaceInvariants), workbenchRecordSchema]);
+		union([
+			object({
+				schemaVersion: literal(1),
+				workspaceId: identifierSchema,
+				revision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+				panelMode: panelModeSchema,
+				activeTaskId: identifierSchema.nullable(),
+				taskOrder: array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
+				tasks: record(identifierSchema, legacyTaskSchema),
+				updatedAt: timestampSchema
+			}).strict().superRefine(enforceWorkspaceInvariants),
+			workbenchRecordV2Schema,
+			workbenchRecordSchema
+		]);
 		const workbenchGetResponseSchema = workbenchRecordSchema;
 		const workbenchReplaceResponseSchema = discriminatedUnion("committed", [object({
 			committed: literal(true),
@@ -7178,9 +7429,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				workflowVersion: task.workflowVersion,
 				inputRefs: detached(task.inputRefs),
 				formValues: detached(task.formValues),
+				professionalDraft: detached(task.professionalDraft),
 				activeRunId: task.activeRunId,
 				runOrder: detached(task.runOrder),
 				runs: detached(task.runs),
+				remoteExecutionOrder: detached(task.remoteExecutionOrder),
+				remoteExecutions: detached(task.remoteExecutions),
 				createdAt: task.createdAt,
 				updatedAt: task.updatedAt,
 				view: task.workflowId === null ? "chooser" : "workspace"
@@ -7194,6 +7448,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				workflowId: page.workflowId,
 				workflowVersion: page.workflowVersion,
 				formValues: detached(page.formValues),
+				professionalDraft: detached(page.professionalDraft),
 				activeRunId: page.activeRunId,
 				createdAt: page.createdAt,
 				updatedAt: page.updatedAt
@@ -7236,7 +7491,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const tasks = {};
 			for (const page of state.pages) tasks[page.pageId] = pageToEditableTask(page);
 			return deepFreeze({
-				schemaVersion: 2,
+				schemaVersion: 3,
 				panelMode: state.panelMode,
 				activeTaskId: state.activePageId,
 				taskOrder: state.pages.map((page) => page.pageId),
@@ -7256,9 +7511,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				workflowVersion: null,
 				inputRefs: [],
 				formValues: {},
+				professionalDraft: null,
 				activeRunId: null,
 				runOrder: [],
 				runs: {},
+				remoteExecutionOrder: [],
+				remoteExecutions: {},
 				createdAt: timestamp,
 				updatedAt: timestamp,
 				view: "chooser"

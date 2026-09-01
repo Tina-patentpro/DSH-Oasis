@@ -7,10 +7,10 @@ import {
 } from '../src/client/workbench-remote.js'
 import {
   createEditableDraft,
-  createV2Record,
+  createV3Record,
 } from './workbench-fixtures.mjs'
 
-test('uses the dedicated DSH Connection channel for schema-v2 get and replace', async () => {
+test('uses the dedicated DSH Connection channel for schema-v3 get and replace', async () => {
   const calls = []
   const connection = {
     rpc: {
@@ -19,8 +19,8 @@ test('uses the dedicated DSH Connection channel for schema-v2 get and replace', 
         return {
           ok: true,
           value: endpoint === 'state/get'
-            ? createV2Record('workspace-a', 3, { empty: true })
-            : { committed: true, current: createV2Record('workspace-a', 4, { empty: true }) },
+            ? createV3Record('workspace-a', 3, { empty: true })
+            : { committed: true, current: createV3Record('workspace-a', 4, { empty: true }) },
         }
       },
     },
@@ -29,10 +29,10 @@ test('uses the dedicated DSH Connection channel for schema-v2 get and replace', 
   const signal = new AbortController().signal
   const draft = createEditableDraft()
 
-  assert.deepEqual(await remote.get('workspace-a', signal), createV2Record('workspace-a', 3, { empty: true }))
+  assert.deepEqual(await remote.get('workspace-a', signal), createV3Record('workspace-a', 3, { empty: true }))
   assert.deepEqual(await remote.replace('workspace-a', 3, draft, signal), {
     committed: true,
-    current: createV2Record('workspace-a', 4, { empty: true }),
+    current: createV3Record('workspace-a', 4, { empty: true }),
   })
   assert.deepEqual(calls, [
     { channel: '/oasis-workbench', endpoint: 'state/get', payload: { workspaceId: 'workspace-a' }, signal },
@@ -92,7 +92,7 @@ test('loads and strictly validates the Host workflow catalog', async () => {
 })
 
 test('fails closed on malformed Connection and nested v2 results', async () => {
-  const malformed = createV2Record('workspace-a', 1, { withEvidence: true })
+  const malformed = createV3Record('workspace-a', 1, { withEvidence: true })
   malformed.tasks['task-a'].runs['run-a'].result.artifact.sha256 = 'invalid'
 
   for (const value of [
@@ -110,7 +110,7 @@ test('fails closed on malformed Connection and nested v2 results', async () => {
 
 test('calls strict material endpoints and validates their authoritative replacement results', async () => {
   const calls = []
-  const value = { committed: true, current: createV2Record('workspace-a', 4, { withEvidence: true }) }
+  const value = { committed: true, current: createV3Record('workspace-a', 4, { withEvidence: true }) }
   const remote = createWorkbenchRemote({
     rpc: {
       async call(channel, endpoint, payload, signal) {
@@ -142,7 +142,7 @@ test('calls strict material endpoints and validates their authoritative replacem
 
 test('calls task create and review endpoints and validates authoritative replacement results', async () => {
   const calls = []
-  const value = { committed: true, current: createV2Record('workspace-a', 4, { withEvidence: true }) }
+  const value = { committed: true, current: createV3Record('workspace-a', 4, { withEvidence: true }) }
   const remote = createWorkbenchRemote({
     rpc: {
       async call(channel, endpoint, payload, signal) {
@@ -198,7 +198,7 @@ test('calls two-phase writeback endpoints and fails closed on malformed manifest
       expiresAt: '2026-08-26T01:12:03.000Z',
     },
   }
-  const committed = { committed: true, current: createV2Record('workspace-a', 4, { withEvidence: true }) }
+  const committed = { committed: true, current: createV3Record('workspace-a', 4, { withEvidence: true }) }
   const remote = createWorkbenchRemote({
     rpc: {
       async call(channel, endpoint, payload, signal) {

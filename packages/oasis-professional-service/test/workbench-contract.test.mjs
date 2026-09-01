@@ -14,14 +14,14 @@ import {
   createEditableDraft,
   createMaterialReference,
   createRunSnapshot,
-  createV2Record,
+  createV3Record,
   RUN_ARTIFACT_SHA256,
 } from './workbench-fixtures.mjs'
 
 function createDraftWithTasks(count) {
   const taskOrder = Array.from({ length: count }, (_, index) => `task-${index}`)
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     panelMode: 'normal',
     activeTaskId: taskOrder[0] ?? null,
     taskOrder,
@@ -32,6 +32,7 @@ function createDraftWithTasks(count) {
       workflowId: null,
       workflowVersion: null,
       formValues: {},
+      professionalDraft: null,
       activeRunId: null,
       createdAt: '2026-08-25T01:02:03.000Z',
       updatedAt: '2026-08-25T01:02:03.000Z',
@@ -45,8 +46,8 @@ function nestArray(depth, leaf = 'value') {
   return value
 }
 
-test('strictly validates complete v2 records and both response variants', () => {
-  const current = createV2Record('workspace-a', 1, { withEvidence: true })
+test('strictly validates complete v3 records and both response variants', () => {
+  const current = createV3Record('workspace-a', 1, { withEvidence: true })
   assert.deepEqual(workbenchRecordSchema.parse(current), current)
   assert.deepEqual(workbenchGetResponseSchema.parse(current), current)
   assert.deepEqual(workbenchReplaceResponseSchema.parse({ committed: true, current }), { committed: true, current })
@@ -69,6 +70,7 @@ test('publishes immutable fixed Week 3 resource budgets', () => {
     maxTasksPerWorkspace: 32,
     maxInputRefsPerTask: 64,
     maxRunsPerTask: 8,
+    maxRemoteExecutionsPerTask: 8,
     maxWritebacksPerRun: 8,
     maxResultItems: 64,
     maxWritebackFiles: 2,
@@ -98,7 +100,7 @@ test('editable drafts reject Host-owned material, run, and writeback evidence', 
 })
 
 test('enforces material and run ownership invariants in complete records', () => {
-  const record = createV2Record('workspace-a', 1, { withEvidence: true })
+  const record = createV3Record('workspace-a', 1, { withEvidence: true })
   const duplicate = structuredClone(record)
   duplicate.tasks['task-a'].runOrder.push('run-a')
   assert.throws(() => workbenchRecordSchema.parse(duplicate), /duplicate/i)
@@ -136,13 +138,13 @@ test('enforces task, input-reference, and run cardinality', () => {
   assert.doesNotThrow(() => workbenchEditableDraftSchema.parse(createDraftWithTasks(32)))
   assert.throws(() => workbenchEditableDraftSchema.parse(createDraftWithTasks(33)))
 
-  const record = createV2Record()
+  const record = createV3Record()
   record.tasks['task-a'].inputRefs = Array.from({ length: 64 }, (_, index) => createMaterialReference({ referenceId: `ref-${index}` }))
   assert.doesNotThrow(() => workbenchRecordSchema.parse(record))
   record.tasks['task-a'].inputRefs.push(createMaterialReference({ referenceId: 'ref-over' }))
   assert.throws(() => workbenchRecordSchema.parse(record))
 
-  const runs = createV2Record()
+  const runs = createV3Record()
   runs.tasks['task-a'].runOrder = Array.from({ length: 9 }, (_, index) => `run-${index}`)
   runs.tasks['task-a'].runs = Object.fromEntries(runs.tasks['task-a'].runOrder.map((runId) => [
     runId,
@@ -183,13 +185,13 @@ test('enforces JSON and serialized draft budgets', () => {
 })
 
 test('enforces artifact bytes and review-note limits', () => {
-  const record = createV2Record('workspace-a', 1, { withEvidence: true })
+  const record = createV3Record('workspace-a', 1, { withEvidence: true })
   record.tasks['task-a'].runs['run-a'].result.artifact.body = 'a'.repeat(256 * 1024)
   assert.doesNotThrow(() => workbenchRecordSchema.parse(record))
   record.tasks['task-a'].runs['run-a'].result.artifact.body += 'a'
   assert.throws(() => workbenchRecordSchema.parse(record), /artifact|byte/i)
 
-  const note = createV2Record('workspace-a', 1, { withEvidence: true })
+  const note = createV3Record('workspace-a', 1, { withEvidence: true })
   note.tasks['task-a'].runs['run-a'].review.note = 'a'.repeat(2001)
   assert.throws(() => workbenchRecordSchema.parse(note), /review|2000|too big/i)
 })
@@ -242,7 +244,7 @@ test('keeps absolute paths and confirmation tokens out of persisted and recovery
     assert.throws(() => writebackPrepareResponseSchema.parse({ ...prepared, manifest: unsafe }))
   }
 
-  const record = createV2Record('workspace-a', 1, { withEvidence: true })
+  const record = createV3Record('workspace-a', 1, { withEvidence: true })
   record.tasks['task-a'].runs['run-a'].writebacks = [{
     writebackId: 'writeback-a',
     artifactId: recovery.artifactId,
@@ -255,7 +257,7 @@ test('keeps absolute paths and confirmation tokens out of persisted and recovery
   record.tasks['task-a'].runs['run-a'].writebacks[0].relativeDirectory = 'D:\\workspace\\outputs\\run-a'
   assert.throws(() => workbenchRecordSchema.parse(record), /relative|path/i)
 
-  const outsideDirectory = createV2Record('workspace-a', 1, { withEvidence: true })
+  const outsideDirectory = createV3Record('workspace-a', 1, { withEvidence: true })
   outsideDirectory.tasks['task-a'].runs['run-a'].writebacks = [{
     writebackId: 'writeback-a',
     artifactId: recovery.artifactId,
