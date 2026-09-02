@@ -85,6 +85,14 @@ test('registers the current Host tool and loopback workbench RPC with owned clea
   const stateResult = await fixture.rpcRegistration.handler('state/get', { workspaceId: 'workspace-a' })
   assert.equal(stateResult.ok, true)
   assert.equal(stateResult.value.revision, 0)
+  const professional = await fixture.rpcRegistration.handler('professional/bootstrap', {})
+  assert.deepEqual(professional, {
+    ok: true,
+    value: {
+      environmentKind: 'non-production', remoteEnabled: false, credentialConfigured: false,
+      balance: null, services: [], folders: [],
+    },
+  })
 
   const value = await fixture.registered.execute({}, {
     signal: new AbortController().signal,

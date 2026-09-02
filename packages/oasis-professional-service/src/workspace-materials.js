@@ -299,5 +299,72 @@ export function createWorkspaceMaterialManager({
     return Object.freeze(checked)
   }
 
-  return Object.freeze({ confirm, inspect, recheck, recheckAll, refresh })
+  async function readForUpload(workspaceId, reference, policy) {
+    if (reference?.kind !== 'project-file') {
+      throw materialError(
+        'LEGACY_MATERIAL_REQUIRES_RECONFIRMATION',
+        'Legacy material must be removed or confirmed again',
+      )
+    }
+    const acceptedExtensions = validatePolicy(policy)
+    const normalizedPath = validateWorkspaceRelativePath(reference.relativePath)
+    const extension = extname(normalizedPath).toLowerCase()
+    if (!acceptedExtensions.has(extension) || !(extension in MEDIA_TYPES)) {
+      throw materialError('UNSUPPORTED_MATERIAL_TYPE', 'Material file type is not supported')
+    }
+    const root = await resolveWorkspaceRoot(workspaceRegistry, fileSystem, workspaceId)
+    const absolutePath = await resolveMaterialFile(fileSystem, root, normalizedPath)
+    let handle
+    try {
+      handle = await fileSystem.open(absolutePath, 'r')
+      if (typeof handle.readFile !== 'function') throw new TypeError('fileSystem.open handle.readFile is required for upload')
+      const before = await handle.stat()
+      if (!before.isFile()) throw materialError('MATERIAL_NOT_FILE', 'Material path must name a regular file')
+      if (before.size > policy.maxFileBytes) {
+        throw materialError('MATERIAL_TOO_LARGE', 'Material file exceeds the configured size limit')
+      }
+      const bytes = await handle.readFile()
+      if (bytes.byteLength > policy.maxFileBytes) {
+        throw materialError('MATERIAL_TOO_LARGE', 'Material file exceeds the configured size limit')
+      }
+      const after = await handle.stat()
+      if (fingerprint(before) !== fingerprint(after)) {
+        throw materialError('MATERIAL_CHANGED', 'Material changed while it was being read for upload')
+      }
+      const sha256 = createHash('sha256').update(bytes).digest('hex')
+      if (
+        normalizedPath !== reference.relativePath
+        || basename(absolutePath) !== reference.displayName
+        || MEDIA_TYPES[extension] !== reference.mediaType
+        || before.size !== reference.sizeBytes
+        || sha256 !== reference.sha256
+      ) {
+        throw materialError('MATERIAL_CHANGED', 'Confirmed material evidence no longer matches the file')
+      }
+      await handle.close()
+      handle = undefined
+
+      const pathStat = await fileSystem.lstat(absolutePath)
+      const pathCanonical = await fileSystem.realpath(absolutePath)
+      if (
+        pathStat.isSymbolicLink()
+        || pathKey(pathCanonical) !== pathKey(absolutePath)
+        || fingerprint(after) !== fingerprint(pathStat)
+      ) {
+        throw materialError('MATERIAL_CHANGED', 'Material changed after it was read for upload')
+      }
+      return {
+        bytes: Uint8Array.from(bytes),
+        fileName: reference.displayName,
+        mediaType: reference.mediaType,
+        sha256,
+      }
+    } catch (error) {
+      throw mapFileSystemError(error)
+    } finally {
+      await handle?.close().catch(() => {})
+    }
+  }
+
+  return Object.freeze({ confirm, inspect, readForUpload, recheck, recheckAll, refresh })
 }

@@ -37,6 +37,22 @@ test('rejects the exact production origin and keeps API and download origins sep
   })
 })
 
+test('rejects every normalized production API and download origin spelling', () => {
+  for (const apiBaseUrl of [
+    'http://lzhxpy.oasisintwrite.com',
+    'https://lzhxpy.oasisintwrite.com.',
+    'https://LZHXPy.OASISINTWRITE.COM:443',
+  ]) {
+    assert.throws(() => normalizeOasisRuntimeConfig({ apiBaseUrl }), /production/i)
+  }
+  assert.throws(
+    () => normalizeOasisRuntimeConfig({
+      downloadOrigins: ['https://lzhxpy.oasisintwrite.com'],
+    }),
+    /production/i,
+  )
+})
+
 test('registers a restart-applied DSH settings namespace without embedding a URL or secret', () => {
   let registration
   const scope = { get: () => ({}) }

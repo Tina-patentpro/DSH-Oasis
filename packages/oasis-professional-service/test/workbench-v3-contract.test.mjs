@@ -11,14 +11,24 @@ import {
   parseWorkbenchRecord,
   parseStoredWorkbenchRecord,
 } from '../src/workbench-domain.js'
-import { createStoredV2Record, NOW, recordToEditableDraft } from './workbench-fixtures.mjs'
+import { createMaterialReference, createStoredV2Record, NOW, recordToEditableDraft } from './workbench-fixtures.mjs'
 
-function createRemoteExecution(inputSha) {
+function createRemoteExecution(inputSha = computeOasisRemoteInputSha256({
+  providerSnapshot: {
+    apiBaseOrigin: 'https://oasis-staging.example', apiId: 132,
+    apiEndpoint: '权利要求书生成-3.3-Fast-X', apiProcess: '输入内容整理,权利要求撰写',
+    folderId: 8, price: 3,
+  },
+  formValues: { User_input: '生成权利要求书' },
+  inputRefs: [],
+})) {
   return {
     executionId: 'execution-a',
     requestKey: 'remote-request-a',
     status: 'completed',
     inputSha,
+    formValues: { User_input: '生成权利要求书' },
+    apiBaseOrigin: 'https://oasis-staging.example',
     serviceSnapshot: {
       apiId: 132,
       apiEndpoint: '权利要求书生成-3.3-Fast-X',
@@ -143,17 +153,76 @@ test('accepts completed Oasis runs only after Host execution completion and hash
   assert.throws(() => parseWorkbenchRecord('workspace-a', nonOriginProvider), /origin/i)
 })
 
+test('rejects a completed remote run whose provider snapshot targets production', () => {
+  const current = addCompletedRemoteRun(structuredClone(migrateWorkbenchRecordV2ToV3(createStoredV2Record())))
+  const run = current.tasks['task-a'].runs['remote-run-a']
+  run.providerSnapshot.apiBaseOrigin = 'https://lzhxpy.oasisintwrite.com'
+  run.inputSnapshot.sha256 = computeOasisRemoteInputSha256({
+    providerSnapshot: run.providerSnapshot,
+    formValues: run.inputSnapshot.formValues,
+    inputRefs: run.inputSnapshot.inputRefs,
+  })
+  current.tasks['task-a'].remoteExecutions['execution-a'].inputSha = run.inputSnapshot.sha256
+  assert.throws(() => parseWorkbenchRecord('workspace-a', current), /production|non-production/i)
+})
+
+test('rejects completed execution snapshots that disagree with their remote run provider', () => {
+  const mutations = [
+    (execution) => { execution.apiBaseOrigin = 'https://another-staging.example' },
+    (execution) => { execution.serviceSnapshot.apiId = 999 },
+    (execution) => { execution.serviceSnapshot.apiEndpoint = 'different-service' },
+    (execution) => { execution.serviceSnapshot.apiProcess = 'different-step' },
+    (execution) => { execution.folderSnapshot.folderId = 99 },
+    (execution) => { execution.priceSnapshot.price = 0 },
+  ]
+  for (const mutate of mutations) {
+    const current = addCompletedRemoteRun(structuredClone(migrateWorkbenchRecordV2ToV3(createStoredV2Record())))
+    mutate(current.tasks['task-a'].remoteExecutions['execution-a'])
+    assert.throws(
+      () => parseWorkbenchRecord('workspace-a', current),
+      /snapshot|service|folder|price|provider/i,
+    )
+  }
+})
+
+test('rejects tampered execution inputs and production result or upload URLs', () => {
+  const tamperedInput = addCompletedRemoteRun(structuredClone(migrateWorkbenchRecordV2ToV3(createStoredV2Record())))
+  tamperedInput.tasks['task-a'].remoteExecutions['execution-a'].formValues.User_input = 'tampered'
+  assert.throws(() => parseWorkbenchRecord('workspace-a', tamperedInput), /execution input integrity/i)
+
+  const productionResult = addCompletedRemoteRun(structuredClone(migrateWorkbenchRecordV2ToV3(createStoredV2Record())))
+  productionResult.tasks['task-a'].runs['remote-run-a'].result.fileUrls = [
+    'https://lzhxpy.oasisintwrite.com/result.docx',
+  ]
+  assert.throws(() => parseWorkbenchRecord('workspace-a', productionResult), /non-production/i)
+
+  const productionUpload = structuredClone(migrateWorkbenchRecordV2ToV3(createStoredV2Record()))
+  const task = productionUpload.tasks['task-a']
+  const execution = createRemoteExecution('a'.repeat(64))
+  execution.status = 'uploading'
+  execution.completedAt = null
+  execution.submittedAt = null
+  execution.materialSnapshots = [createMaterialReference()]
+  execution.uploadedFiles = [{
+    fieldId: 'file', referenceId: 'ref-a', url: 'https://lzhxpy.oasisintwrite.com/upload.md',
+    sha256: 'a'.repeat(64), uploadedAt: NOW,
+  }]
+  task.remoteExecutionOrder = ['execution-a']
+  task.remoteExecutions = { 'execution-a': execution }
+  assert.throws(() => parseWorkbenchRecord('workspace-a', productionUpload), /non-production/i)
+})
+
 test('does not persist a completed remote execution without its completed run snapshot', () => {
   const current = structuredClone(migrateWorkbenchRecordV2ToV3(createStoredV2Record()))
   current.tasks['task-a'].remoteExecutionOrder = ['execution-a']
-  current.tasks['task-a'].remoteExecutions['execution-a'] = createRemoteExecution('a'.repeat(64))
+  current.tasks['task-a'].remoteExecutions['execution-a'] = createRemoteExecution()
   assert.throws(() => parseWorkbenchRecord('workspace-a', current), /completed.*run|run.*completed/i)
 })
 
 test('allows one Host-owned in-flight remote execution but rejects concurrent in-flight ledgers', () => {
   const current = structuredClone(migrateWorkbenchRecordV2ToV3(createStoredV2Record()))
   const task = current.tasks['task-a']
-  const first = createRemoteExecution('a'.repeat(64))
+  const first = createRemoteExecution()
   first.status = 'uploading'
   first.submittedAt = null
   first.completedAt = null
@@ -163,4 +232,25 @@ test('allows one Host-owned in-flight remote execution but rejects concurrent in
     'execution-b': { ...structuredClone(first), executionId: 'execution-b', requestKey: 'remote-request-b' },
   }
   assert.throws(() => parseWorkbenchRecord('workspace-a', current), /in-flight|concurrent/i)
+})
+
+test('treats submission-unknown as unresolved and blocks a new in-flight execution', () => {
+  const current = structuredClone(migrateWorkbenchRecordV2ToV3(createStoredV2Record()))
+  const task = current.tasks['task-a']
+  const unknown = createRemoteExecution()
+  unknown.status = 'submission-unknown'
+  unknown.safeError = { code: 'SUBMISSION_UNKNOWN', message: '提交结果未知，等待对账' }
+  unknown.completedAt = null
+  const uploading = createRemoteExecution()
+  uploading.executionId = 'execution-b'
+  uploading.requestKey = 'remote-request-b'
+  uploading.status = 'uploading'
+  uploading.submittedAt = null
+  uploading.completedAt = null
+  task.remoteExecutionOrder = ['execution-a', 'execution-b']
+  task.remoteExecutions = {
+    'execution-a': unknown,
+    'execution-b': uploading,
+  }
+  assert.throws(() => parseWorkbenchRecord('workspace-a', current), /unresolved|in-flight|concurrent/i)
 })

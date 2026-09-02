@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
+import { computeOasisRemoteInputSha256 } from '../src/workbench-domain.js'
 import { openOasisWorkbenchRepository } from '../src/workbench-repository.js'
 import {
   NOW,
@@ -20,6 +21,41 @@ function deferred() {
     reject = rejectPromise
   })
   return { promise, resolve, reject }
+}
+
+function createUnresolvedRemoteExecution() {
+  const providerSnapshot = {
+    apiBaseOrigin: 'https://oasis-staging.example',
+    apiId: 132,
+    apiEndpoint: 'claims-v1',
+    apiProcess: '整理,撰写',
+    folderId: 8,
+    price: 3,
+  }
+  const formValues = { User_input: '生成权利要求书' }
+  return {
+    executionId: 'execution-a',
+    requestKey: 'remote-request-a',
+    status: 'wait-stopped',
+    inputSha: computeOasisRemoteInputSha256({ providerSnapshot, formValues, inputRefs: [] }),
+    formValues,
+    apiBaseOrigin: providerSnapshot.apiBaseOrigin,
+    serviceSnapshot: {
+      apiId: providerSnapshot.apiId,
+      apiEndpoint: providerSnapshot.apiEndpoint,
+      apiProcess: providerSnapshot.apiProcess,
+      schemaHash: 'b'.repeat(64),
+    },
+    folderSnapshot: { folderId: providerSnapshot.folderId, folderName: '测试项目' },
+    priceSnapshot: { price: providerSnapshot.price, balance: 20 },
+    materialSnapshots: [],
+    uploadedFiles: [],
+    safeError: { code: 'WAIT_STOPPED', message: '本地等待已停止' },
+    createdAt: NOW,
+    updatedAt: NOW,
+    submittedAt: NOW,
+    completedAt: null,
+  }
 }
 
 function createStorageFixture({ beforePut } = {}) {
@@ -107,6 +143,26 @@ test('editable replacement preserves Host-owned evidence byte-for-byte', async (
     runOrder: result.current.tasks['task-a'].runOrder,
     runs: result.current.tasks['task-a'].runs,
   }, evidence)
+  await repository.close()
+})
+
+test('editable replacement cannot delete a task with an unresolved remote execution', async () => {
+  const fixture = createStorageFixture()
+  const current = createV3Record('workspace-a', 4)
+  current.tasks['task-a'].remoteExecutionOrder = ['execution-a']
+  current.tasks['task-a'].remoteExecutions = { 'execution-a': createUnresolvedRemoteExecution() }
+  fixture.records.set('workspace-a', current)
+  const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
+  const draft = recordToEditableDraft(current)
+  draft.activeTaskId = null
+  draft.taskOrder = []
+  draft.tasks = {}
+
+  await assert.rejects(
+    repository.replaceEditable('workspace-a', current.revision, draft),
+    /unresolved remote execution/i,
+  )
+  assert.equal(repository.get('workspace-a').tasks['task-a'].remoteExecutions['execution-a'].status, 'wait-stopped')
   await repository.close()
 })
 

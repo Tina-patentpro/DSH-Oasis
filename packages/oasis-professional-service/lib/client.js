@@ -435,1855 +435,6 @@ window.__ModuleLoader__.load({
 			});
 		}
 		//#endregion
-		//#region src/client/codex-icons.js
-		const CODEX_PANEL_ICONS = Object.freeze({
-			showHide: Object.freeze({
-				viewBox: "0 0 20 20",
-				transform: "translate(20 0) scale(-1 1)",
-				paths: Object.freeze(["M6.83496 3.99992C6.38353 4.00411 6.01421 4.0122 5.69824 4.03801C5.31232 4.06954 5.03904 4.12266 4.82227 4.20012L4.62207 4.28606C4.18264 4.50996 3.81498 4.85035 3.55859 5.26848L3.45605 5.45207C3.33013 5.69922 3.25006 6.01354 3.20801 6.52824C3.16533 7.05065 3.16504 7.71885 3.16504 8.66301V11.3271C3.16504 12.2712 3.16533 12.9394 3.20801 13.4618C3.25006 13.9766 3.33013 14.2909 3.45605 14.538L3.55859 14.7216C3.81498 15.1397 4.18266 15.4801 4.62207 15.704L4.82227 15.79C5.03904 15.8674 5.31234 15.9205 5.69824 15.9521C6.01398 15.9779 6.383 15.986 6.83398 15.9902L6.83496 3.99992ZM18.165 11.3271C18.165 12.2493 18.1653 12.9811 18.1172 13.5702C18.0745 14.0924 17.9916 14.5472 17.8125 14.9648L17.7295 15.1415C17.394 15.8 16.8834 16.3511 16.2568 16.7353L15.9814 16.8896C15.5157 17.1268 15.0069 17.2285 14.4102 17.2773C13.821 17.3254 13.0893 17.3251 12.167 17.3251H7.83301C6.91071 17.3251 6.17898 17.3254 5.58984 17.2773C5.06757 17.2346 4.61294 17.1508 4.19531 16.9716L4.01855 16.8896C3.36014 16.5541 2.80898 16.0434 2.4248 15.4169L2.27051 15.1415C2.03328 14.6758 1.93158 14.167 1.88281 13.5702C1.83468 12.9811 1.83496 12.2493 1.83496 11.3271V8.66301C1.83496 7.74072 1.83468 7.00898 1.88281 6.41985C1.93157 5.82309 2.03329 5.31432 2.27051 4.84856L2.4248 4.57317C2.80898 3.94666 3.36012 3.436 4.01855 3.10051L4.19531 3.0175C4.61285 2.83843 5.06771 2.75548 5.58984 2.71281C6.17898 2.66468 6.91071 2.66496 7.83301 2.66496H12.167C13.0893 2.66496 13.821 2.66468 14.4102 2.71281C15.0069 2.76157 15.5157 2.86329 15.9814 3.10051L16.2568 3.25481C16.8833 3.63898 17.394 4.19012 17.7295 4.84856L17.8125 5.02531C17.9916 5.44285 18.0745 5.89771 18.1172 6.41985C18.1653 7.00898 18.165 7.74072 18.165 8.66301V11.3271ZM8.16406 15.995H12.167C13.1112 15.995 13.7794 15.9947 14.3018 15.9521C14.8164 15.91 15.1308 15.8299 15.3779 15.704L15.5615 15.6015C15.9797 15.3451 16.32 14.9774 16.5439 14.538L16.6299 14.3378C16.7074 14.121 16.7605 13.8478 16.792 13.4618C16.8347 12.9394 16.835 12.2712 16.835 11.3271V8.66301C16.835 7.71885 16.8347 7.05065 16.792 6.52824C16.7605 6.14232 16.7073 5.86904 16.6299 5.65227L16.5439 5.45207C16.32 5.01264 15.9796 4.64498 15.5615 4.3886L15.3779 4.28606C15.1308 4.16013 14.8165 4.08006 14.3018 4.03801C13.7794 3.99533 13.1112 3.99504 12.167 3.99504H8.16406C8.16407 3.99667 8.16504 3.99829 8.16504 3.99992L8.16406 15.995Z"])
-			}),
-			expand: Object.freeze({
-				viewBox: "0 0 20 20",
-				paths: Object.freeze(["M4.33496 11C4.33496 10.6327 4.63273 10.335 5 10.335C5.36727 10.335 5.66504 10.6327 5.66504 11V14.335H9L9.13379 14.3486C9.43692 14.4106 9.66504 14.6786 9.66504 15C9.66504 15.3214 9.43692 15.5894 9.13379 15.6514L9 15.665H5C4.63273 15.665 4.33496 15.3673 4.33496 15V11ZM14.335 9V5.66504H11C10.6327 5.66504 10.335 5.36727 10.335 5C10.335 4.63273 10.6327 4.33496 11 4.33496H15L15.1338 4.34863C15.4369 4.41057 15.665 4.67857 15.665 5V9C15.665 9.36727 15.3673 9.66504 15 9.66504C14.6327 9.66504 14.335 9.36727 14.335 9Z"])
-			}),
-			restore: Object.freeze({
-				viewBox: "0 0 16 16",
-				paths: Object.freeze(["M6.1664 8.80845C6.7325 8.80845 7.1918 9.26774 7.1918 9.83384V13.3338C7.19155 13.6236 6.9562 13.8592 6.6664 13.8592C6.37672 13.8591 6.14126 13.6235 6.14101 13.3338V10.5936L2.70547 14.0379C2.50071 14.243 2.16753 14.2435 1.9623 14.0389C1.75709 13.8342 1.75665 13.501 1.96133 13.2957L5.39101 9.85923H2.6664C2.37672 9.85909 2.14126 9.6235 2.14101 9.33384C2.14101 9.04397 2.37657 8.80858 2.6664 8.80845H6.1664Z", "M13.2943 1.96274C13.4989 1.75743 13.8311 1.75731 14.0365 1.96177C14.2419 2.16637 14.243 2.49854 14.0385 2.70395L10.6127 6.14145H13.3334C13.6233 6.14145 13.8588 6.37689 13.8588 6.66684C13.8587 6.95674 13.6233 7.19223 13.3334 7.19223H9.8334C9.26734 7.19223 8.80807 6.73288 8.80801 6.16684V2.66684C8.80801 2.37689 9.04345 2.14145 9.3334 2.14145C9.62335 2.14145 9.85879 2.37689 9.85879 2.66684V5.41098L13.2943 1.96274Z"])
-			})
-		});
-		function CodexPanelIcon({ name, size = 18 }) {
-			const icon = CODEX_PANEL_ICONS[name];
-			if (!icon) throw new Error(`unknown Codex panel icon: ${name}`);
-			const paths = icon.paths.map((path) => (0, react.createElement)("path", {
-				key: path,
-				d: path,
-				fill: "currentColor"
-			}));
-			const body = icon.transform ? (0, react.createElement)("g", { transform: icon.transform }, paths) : paths;
-			return (0, react.createElement)("svg", {
-				width: size,
-				height: size,
-				viewBox: icon.viewBox,
-				fill: "none",
-				"aria-hidden": true
-			}, body);
-		}
-		//#endregion
-		//#region src/client/PanelChrome.js
-		const iconButtonStyle = {
-			width: 32,
-			height: 32,
-			display: "inline-flex",
-			alignItems: "center",
-			justifyContent: "center",
-			border: 0,
-			borderRadius: 8,
-			background: "transparent",
-			color: "var(--dsw-alias-text-primary, #202123)",
-			cursor: "pointer"
-		};
-		function IconButton({ label, icon, onClick, testId, disabled = false }) {
-			return (0, react.createElement)("button", {
-				type: "button",
-				title: label,
-				"aria-label": label,
-				"data-testid": testId,
-				onClick,
-				disabled,
-				style: {
-					...iconButtonStyle,
-					cursor: disabled ? "not-allowed" : "pointer",
-					opacity: disabled ? .5 : 1
-				}
-			}, (0, react.createElement)(CodexPanelIcon, { name: icon }));
-		}
-		function getKeyboardTabTarget(pages, pageId, key) {
-			const index = pages.findIndex((page) => page.pageId === pageId);
-			if (index < 0 || pages.length === 0) return null;
-			if (key === "Home") return pages[0].pageId;
-			if (key === "End") return pages[pages.length - 1].pageId;
-			if (key === "ArrowLeft") return pages[(index - 1 + pages.length) % pages.length].pageId;
-			if (key === "ArrowRight") return pages[(index + 1) % pages.length].pageId;
-			if (key === "Delete") {
-				if (pages.length === 1) return null;
-				return pages[index + 1]?.pageId ?? pages[index - 1].pageId;
-			}
-			return null;
-		}
-		function scheduleAfterRender(callback) {
-			if (typeof globalThis.requestAnimationFrame === "function") {
-				globalThis.requestAnimationFrame(callback);
-				return;
-			}
-			globalThis.queueMicrotask(callback);
-		}
-		function syncStatusLabel(status) {
-			if (status === "loading") return "正在读取当前项目…";
-			if (status === "saving") return "正在保存…";
-			if (status === "ready") return "已与当前DSH项目同步";
-			if (status === "conflict") return "需要解决版本冲突";
-			if (status === "error") return "同步失败";
-			return "等待加载当前项目";
-		}
-		function focusTabAfterUpdate(tabList, pageId, schedule = scheduleAfterRender) {
-			schedule(() => {
-				if (pageId === null) {
-					tabList?.querySelector("[data-testid=\"oasis-new-page\"]")?.focus();
-					return;
-				}
-				const targetId = `oasis-tab-${pageId}`;
-				[...tabList?.querySelectorAll("[role=\"tab\"]") ?? []].find((tab) => tab.id === targetId)?.focus();
-			});
-		}
-		function PanelChrome({ hostMode = "standalone", state, titleRef, onActivatePage, onClosePage, onCreatePage, onHide, onToggleExpanded }) {
-			const effectiveExpanded = state.effectiveMode === "expanded";
-			const autoExpanded = state.panelMode === "normal" && effectiveExpanded;
-			const operationInFlight = Object.values(state.pageOperations ?? {}).some((operation) => operation.activeOperation !== null);
-			const canPersist = ["ready", "saving"].includes(state.syncStatus) && !operationInFlight;
-			function moveTab(event, pageId) {
-				if (!canPersist) return;
-				if (![
-					"ArrowLeft",
-					"ArrowRight",
-					"Home",
-					"End",
-					"Delete"
-				].includes(event.key)) return;
-				const targetPageId = getKeyboardTabTarget(state.pages, pageId, event.key);
-				event.preventDefault();
-				if (event.key === "Delete") onClosePage(pageId);
-				if (targetPageId !== null) onActivatePage(targetPageId);
-				focusTabAfterUpdate(event.currentTarget.closest?.("[role=\"tablist\"]") ?? event.currentTarget.parentElement, targetPageId);
-			}
-			return (0, react.createElement)("header", { style: {
-				flex: "0 0 auto",
-				borderBottom: "1px solid var(--dsw-alias-border-l2, #e3e3e5)",
-				background: "var(--dsw-alias-bg-base, #fff)"
-			} }, (0, react.createElement)("div", { style: {
-				minHeight: 52,
-				padding: "0 12px 0 16px",
-				display: "flex",
-				alignItems: "center",
-				gap: 10
-			} }, (0, react.createElement)("div", { style: {
-				minWidth: 0,
-				flex: 1
-			} }, (0, react.createElement)("h2", {
-				ref: titleRef,
-				tabIndex: -1,
-				style: {
-					margin: 0,
-					fontSize: 15,
-					lineHeight: 1.25,
-					fontWeight: 650,
-					outline: "none"
-				}
-			}, "绿洲专业工作台"), (0, react.createElement)("div", {
-				role: "status",
-				"aria-live": "polite",
-				style: {
-					marginTop: 2,
-					color: "var(--dsw-alias-text-secondary, #6b7280)",
-					fontSize: 11
-				}
-			}, `与当前DSH项目关联 · ${syncStatusLabel(state.syncStatus)}`)), ...hostMode === "embedded" ? [] : [(0, react.createElement)(IconButton, {
-				key: "expand",
-				label: autoExpanded ? "窗口过窄，右栏已自动展开" : effectiveExpanded ? "恢复右栏宽度" : "展开右栏",
-				icon: effectiveExpanded ? "restore" : "expand",
-				testId: effectiveExpanded ? "oasis-panel-restore" : "oasis-panel-expand",
-				onClick: onToggleExpanded,
-				disabled: autoExpanded || !canPersist
-			}), (0, react.createElement)(IconButton, {
-				key: "hide",
-				label: "隐藏右栏",
-				icon: "showHide",
-				testId: "oasis-panel-hide",
-				onClick: onHide
-			})]), (0, react.createElement)("div", {
-				role: "tablist",
-				"aria-label": "绿洲任务页",
-				style: {
-					minHeight: 38,
-					padding: "0 10px",
-					display: "flex",
-					alignItems: "end",
-					gap: 4,
-					overflowX: "auto"
-				}
-			}, ...state.pages.map((page) => (0, react.createElement)("div", {
-				key: page.pageId,
-				role: "presentation",
-				style: {
-					display: "inline-flex",
-					alignItems: "center",
-					borderBottom: state.activePageId === page.pageId ? "2px solid #10a37f" : "2px solid transparent",
-					borderRadius: "8px 8px 0 0"
-				}
-			}, (0, react.createElement)("button", {
-				id: `oasis-tab-${page.pageId}`,
-				type: "button",
-				role: "tab",
-				"aria-selected": state.activePageId === page.pageId,
-				"aria-controls": `oasis-panel-${page.pageId}`,
-				tabIndex: state.activePageId === page.pageId ? 0 : -1,
-				disabled: !canPersist,
-				onClick: () => onActivatePage(page.pageId),
-				onKeyDown: (event) => moveTab(event, page.pageId),
-				style: {
-					maxWidth: 150,
-					border: 0,
-					background: "transparent",
-					color: "var(--dsw-alias-text-primary, #202123)",
-					padding: "8px 4px 7px 10px",
-					whiteSpace: "nowrap",
-					overflow: "hidden",
-					textOverflow: "ellipsis",
-					cursor: canPersist ? "pointer" : "not-allowed"
-				}
-			}, page.title), (0, react.createElement)("button", {
-				type: "button",
-				"aria-label": `关闭任务页 ${page.title}`,
-				title: `关闭任务页 ${page.title}`,
-				disabled: !canPersist,
-				onClick: () => onClosePage(page.pageId),
-				style: {
-					border: 0,
-					background: "transparent",
-					padding: "6px 7px 6px 3px",
-					color: "var(--dsw-alias-text-secondary, #6b7280)",
-					cursor: canPersist ? "pointer" : "not-allowed"
-				}
-			}, "×"))), (0, react.createElement)("button", {
-				type: "button",
-				title: "新建任务页",
-				"aria-label": "新建任务页",
-				"data-testid": "oasis-new-page",
-				disabled: !canPersist,
-				onClick: onCreatePage,
-				style: {
-					...iconButtonStyle,
-					width: 30,
-					height: 30,
-					flex: "0 0 auto",
-					fontSize: 20,
-					cursor: canPersist ? "pointer" : "not-allowed",
-					opacity: canPersist ? 1 : .5
-				}
-			}, "+")));
-		}
-		//#endregion
-		//#region src/client/MaterialReferences.js
-		function shortHash$1(hash) {
-			return typeof hash === "string" && hash.length >= 8 ? `${hash.slice(0, 8)}…` : "—";
-		}
-		function formatBytes(bytes) {
-			if (!Number.isFinite(bytes)) return "—";
-			if (bytes < 1024) return `${bytes} B`;
-			if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
-			return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
-		}
-		const actionStyle = {
-			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
-			borderRadius: 7,
-			padding: "6px 9px",
-			background: "var(--dsw-alias-bg-base, #fff)",
-			color: "var(--dsw-alias-text-primary, #1f2623)"
-		};
-		function MaterialReferences({ page, workflow, operation, disabled, onMaterialDraft, onAdd, onRefresh, onRemove, confirmRemove = (message) => globalThis.confirm?.(message) === true }) {
-			const addDisabled = disabled || !operation.materialConfirmed || operation.materialPath.trim().length === 0;
-			return (0, react.createElement)("section", { "aria-labelledby": `oasis-material-title-${page.pageId}` }, (0, react.createElement)("h4", {
-				id: `oasis-material-title-${page.pageId}`,
-				style: {
-					margin: "0 0 5px",
-					fontSize: 15
-				}
-			}, "项目材料"), (0, react.createElement)("p", { style: {
-				margin: "0 0 12px",
-				color: "var(--dsw-alias-text-secondary, #66706b)",
-				fontSize: 12
-			} }, `仅登记元数据与哈希；文件在本机流式读取以计算哈希，正文不提取、不持久化且不用于生成。支持 ${workflow.materialPolicy.acceptedExtensions.join("、")}。`), (0, react.createElement)("div", { style: {
-				display: "grid",
-				gap: 8,
-				marginBottom: 12
-			} }, (0, react.createElement)("label", {
-				htmlFor: `oasis-material-path-${page.pageId}`,
-				style: {
-					fontSize: 13,
-					fontWeight: 650
-				}
-			}, "Workspace 内相对路径"), (0, react.createElement)("input", {
-				id: `oasis-material-path-${page.pageId}`,
-				"aria-label": "Workspace 内材料相对路径",
-				value: operation.materialPath,
-				disabled,
-				onChange: (event) => onMaterialDraft(event.currentTarget.value, false),
-				style: {
-					...actionStyle,
-					width: "100%",
-					boxSizing: "border-box",
-					padding: "9px 10px"
-				}
-			}), (0, react.createElement)("label", { style: {
-				display: "flex",
-				gap: 8,
-				alignItems: "flex-start",
-				fontSize: 12
-			} }, (0, react.createElement)("input", {
-				type: "checkbox",
-				checked: operation.materialConfirmed,
-				disabled,
-				onChange: (event) => onMaterialDraft(operation.materialPath, event.currentTarget.checked)
-			}), (0, react.createElement)("span", null, "我确认该相对路径属于当前项目，并同意登记文件元数据与 SHA-256。")), (0, react.createElement)("button", {
-				type: "button",
-				disabled: addDisabled,
-				onClick: onAdd,
-				style: actionStyle,
-				title: addDisabled ? "填写路径并勾选确认后才可登记" : void 0
-			}, "登记材料")), (0, react.createElement)("div", { style: {
-				display: "grid",
-				gap: 8
-			} }, ...page.inputRefs.map((reference) => (0, react.createElement)("article", {
-				key: reference.referenceId,
-				style: {
-					border: "1px solid var(--dsw-alias-border-l2, #dfe2e0)",
-					borderRadius: 9,
-					padding: 11,
-					display: "grid",
-					gap: 7
-				}
-			}, (0, react.createElement)("strong", { style: {
-				fontSize: 13,
-				overflowWrap: "anywhere"
-			} }, reference.displayName ?? reference.relativePath ?? "旧版材料"), reference.kind === "project-file" ? (0, react.createElement)("div", { style: {
-				fontSize: 12,
-				color: "var(--dsw-alias-text-secondary, #66706b)"
-			} }, `${reference.relativePath} · ${formatBytes(reference.sizeBytes)} · SHA-256 ${shortHash$1(reference.sha256)}`) : (0, react.createElement)("div", { style: {
-				fontSize: 12,
-				color: "#9b3d2f"
-			} }, "旧版材料需移除后重新确认。"), (0, react.createElement)("div", { style: {
-				display: "flex",
-				gap: 7
-			} }, (0, react.createElement)("button", {
-				type: "button",
-				disabled: disabled || reference.kind !== "project-file",
-				"data-testid": `oasis-material-refresh-${reference.referenceId}`,
-				onClick: () => onRefresh(reference.referenceId),
-				style: actionStyle
-			}, "刷新证据"), (0, react.createElement)("button", {
-				type: "button",
-				disabled,
-				"data-testid": `oasis-material-remove-${reference.referenceId}`,
-				onClick: () => onRemove(reference.referenceId, confirmRemove(`确认从任务中移除材料“${reference.displayName ?? reference.referenceId}”？不会删除项目文件。`)),
-				style: actionStyle
-			}, "移除登记"))))), operation.error ? (0, react.createElement)("div", {
-				role: "alert",
-				tabIndex: -1,
-				style: {
-					marginTop: 10,
-					color: "#9b3d2f",
-					fontSize: 12
-				}
-			}, `操作失败（${operation.errorCode ?? "unknown"}）。本地项目文件未被删除或覆盖。`) : null, (0, react.createElement)("div", {
-				role: "status",
-				"aria-live": "polite",
-				style: {
-					marginTop: 8,
-					fontSize: 12,
-					color: "#2f6653"
-				}
-			}, operation.feedback === "material-added" ? "材料证据已登记。" : "", operation.materialsChanged ? "材料已发生变化，请刷新证据后再生成。" : ""));
-		}
-		//#endregion
-		//#region src/client/RunPreview.js
-		function materialIdentity(reference) {
-			return reference?.kind === "project-file" ? [
-				reference.referenceId,
-				reference.relativePath,
-				reference.sha256,
-				reference.sizeBytes
-			] : [reference?.referenceId, reference?.kind];
-		}
-		function hasDraftDiverged(page, run) {
-			if (!run) return false;
-			return JSON.stringify(page.formValues) !== JSON.stringify(run.inputSnapshot.formValues) || JSON.stringify(page.inputRefs.map(materialIdentity)) !== JSON.stringify(run.inputSnapshot.inputRefs.map(materialIdentity));
-		}
-		function generationDisabledReason({ syncStatus, validation, operation }) {
-			if (syncStatus !== "ready") return syncStatus === "saving" ? "正在保存草稿" : "工作区尚未就绪";
-			if (!validation.valid) return "请先修正表单错误";
-			if (operation.materialsChanged) return "材料已变化，请先刷新";
-			if (operation.activeOperation !== null) return "任务正在处理中";
-			return null;
-		}
-		function statusText(status) {
-			if (status === "blocked") return "阻断";
-			return "需人工复核";
-		}
-		const buttonStyle$1 = {
-			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
-			borderRadius: 7,
-			padding: "7px 10px",
-			background: "var(--dsw-alias-bg-base, #fff)",
-			color: "inherit"
-		};
-		function RunPreview({ page, operation, validation, syncStatus, onGenerate, onActivateRun, onReviewNote, onReview }) {
-			const disabledReason = generationDisabledReason({
-				syncStatus,
-				validation,
-				operation
-			});
-			const run = page.activeRunId === null ? null : page.runs[page.activeRunId];
-			const blocked = run?.result.contentStatus === "blocked";
-			return (0, react.createElement)("section", { "aria-labelledby": `oasis-run-title-${page.pageId}` }, (0, react.createElement)("div", { style: {
-				display: "flex",
-				alignItems: "flex-start",
-				justifyContent: "space-between",
-				gap: 12,
-				marginBottom: 12
-			} }, (0, react.createElement)("div", null, (0, react.createElement)("h4", {
-				id: `oasis-run-title-${page.pageId}`,
-				style: {
-					margin: 0,
-					fontSize: 15
-				}
-			}, "生成与结果"), (0, react.createElement)("p", { style: {
-				margin: "5px 0 0",
-				fontSize: 12,
-				color: "var(--dsw-alias-text-secondary, #66706b)"
-			} }, "本地确定性演练；结果必须经过人工审核。")), (0, react.createElement)("button", {
-				type: "button",
-				disabled: disabledReason !== null,
-				onClick: onGenerate,
-				title: disabledReason ?? "基于已保存表单和已确认材料生成",
-				"aria-describedby": disabledReason ? `oasis-generate-reason-${page.pageId}` : void 0,
-				style: {
-					...buttonStyle$1,
-					background: "#245d47",
-					color: "#fff",
-					borderColor: "#245d47",
-					whiteSpace: "nowrap"
-				}
-			}, operation.activeOperation === "run-create" ? "生成中…" : "生成新运行")), (0, react.createElement)("div", {
-				id: `oasis-generate-reason-${page.pageId}`,
-				role: "status",
-				"aria-live": "polite",
-				style: {
-					minHeight: 18,
-					fontSize: 12,
-					color: "#8a4b2f"
-				}
-			}, disabledReason ?? (operation.feedback === "run-completed" ? "新运行已完成。" : ""), !validation.valid && validation.firstInvalidFieldId ? (0, react.createElement)("button", {
-				type: "button",
-				onClick: () => globalThis.document?.getElementById(`oasis-field-${page.pageId}-${validation.firstInvalidFieldId}`)?.focus(),
-				style: {
-					...buttonStyle$1,
-					marginLeft: 8,
-					padding: "3px 7px",
-					fontSize: 11
-				}
-			}, "定位首个错误") : null), operation.error ? (0, react.createElement)("div", {
-				role: "alert",
-				tabIndex: -1,
-				style: {
-					marginBottom: 10,
-					color: "#8b2f24",
-					fontSize: 12
-				}
-			}, `操作失败（${operation.errorCode ?? "unknown"}）。草稿与既有运行仍保留。`) : null, page.runOrder.length > 0 ? (0, react.createElement)("nav", {
-				"aria-label": "运行历史",
-				style: {
-					display: "flex",
-					gap: 6,
-					overflowX: "auto",
-					padding: "4px 0 12px"
-				}
-			}, ...[...page.runOrder].reverse().map((runId, index) => (0, react.createElement)("button", {
-				key: runId,
-				type: "button",
-				onClick: () => onActivateRun(runId),
-				"aria-current": runId === page.activeRunId ? "true" : void 0,
-				style: {
-					...buttonStyle$1,
-					background: runId === page.activeRunId ? "#e7f0eb" : buttonStyle$1.background,
-					whiteSpace: "nowrap"
-				}
-			}, `运行 ${page.runOrder.length - index}`))) : null, run ? (0, react.createElement)("article", { style: {
-				display: "grid",
-				gap: 12
-			} }, (0, react.createElement)("div", { style: {
-				display: "flex",
-				gap: 8,
-				alignItems: "center",
-				flexWrap: "wrap",
-				fontSize: 12
-			} }, (0, react.createElement)("strong", null, statusText(run.result.contentStatus)), (0, react.createElement)("span", null, run.completedAt), hasDraftDiverged(page, run) ? (0, react.createElement)("span", { style: { color: "#8a4b2f" } }, "草稿已偏离此运行；旧运行快照保持不变。") : (0, react.createElement)("span", { style: { color: "#2f6653" } }, "当前草稿与此运行输入一致。")), ...run.result.sections.map((section) => (0, react.createElement)("section", {
-				key: section.sectionId,
-				style: {
-					borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
-					paddingTop: 10
-				}
-			}, (0, react.createElement)("h5", { style: {
-				margin: "0 0 6px",
-				fontSize: 13
-			} }, section.title), (0, react.createElement)("pre", { style: {
-				margin: 0,
-				whiteSpace: "pre-wrap",
-				overflowWrap: "anywhere",
-				font: "inherit",
-				fontSize: 13,
-				lineHeight: 1.65
-			} }, section.body))), run.result.risks.length > 0 ? (0, react.createElement)("div", null, (0, react.createElement)("strong", { style: { fontSize: 13 } }, "风险"), (0, react.createElement)("ul", null, ...run.result.risks.map((risk, index) => (0, react.createElement)("li", { key: index }, risk)))) : null, (0, react.createElement)("p", { style: {
-				margin: 0,
-				fontSize: 12,
-				color: "var(--dsw-alias-text-secondary, #66706b)"
-			} }, run.result.disclaimer), blocked ? (0, react.createElement)("div", {
-				role: "alert",
-				style: {
-					border: "1px solid #d7a69d",
-					borderRadius: 8,
-					padding: 10,
-					color: "#8b2f24"
-				}
-			}, "该运行包含阻断结果；阻断结果不能批准或回写。请补充信息后生成新运行。") : (0, react.createElement)("div", { style: {
-				borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
-				paddingTop: 12,
-				display: "grid",
-				gap: 8
-			} }, (0, react.createElement)("label", {
-				htmlFor: `oasis-review-note-${page.pageId}`,
-				style: {
-					fontWeight: 650,
-					fontSize: 13
-				}
-			}, "审核意见"), (0, react.createElement)("textarea", {
-				id: `oasis-review-note-${page.pageId}`,
-				value: operation.reviewNote,
-				rows: 3,
-				disabled: operation.activeOperation !== null,
-				onChange: (event) => onReviewNote(event.currentTarget.value),
-				style: {
-					width: "100%",
-					boxSizing: "border-box",
-					border: "1px solid #d7d9d8",
-					borderRadius: 8,
-					padding: 9
-				}
-			}), (0, react.createElement)("div", { style: {
-				display: "flex",
-				gap: 8,
-				flexWrap: "wrap"
-			} }, (0, react.createElement)("button", {
-				type: "button",
-				disabled: operation.reviewNote.trim().length === 0 || operation.activeOperation !== null,
-				onClick: () => onReview("changes-requested", operation.reviewNote),
-				style: buttonStyle$1
-			}, "要求修改"), (0, react.createElement)("button", {
-				type: "button",
-				"data-testid": "oasis-review-approve",
-				disabled: operation.activeOperation !== null,
-				onClick: () => onReview("approved", operation.reviewNote),
-				style: buttonStyle$1
-			}, "批准此运行")), run.review.status === "approved" ? (0, react.createElement)("p", { style: {
-				margin: 0,
-				color: "#2f6653",
-				fontSize: 12
-			} }, "已记录人工批准；此状态不代表专业、技术或法律结论。") : run.review.status === "changes-requested" ? (0, react.createElement)("p", { style: {
-				margin: 0,
-				color: "#8a4b2f",
-				fontSize: 12
-			} }, `已要求修改：${run.review.note}`) : null)) : (0, react.createElement)("div", { style: {
-				border: "1px dashed #c8ceca",
-				borderRadius: 10,
-				padding: 18,
-				color: "var(--dsw-alias-text-secondary, #66706b)",
-				fontSize: 13
-			} }, "保存有效表单并确认材料后，可生成第一个本地运行。"));
-		}
-		//#endregion
-		//#region src/client/WorkflowForm.js
-		const fieldShellStyle = {
-			display: "grid",
-			gap: 6,
-			padding: "0 0 16px"
-		};
-		const controlStyle = {
-			width: "100%",
-			boxSizing: "border-box",
-			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
-			borderRadius: 8,
-			padding: "9px 10px",
-			background: "var(--dsw-alias-bg-base, #fff)",
-			color: "var(--dsw-alias-text-primary, #1f2623)",
-			font: "inherit",
-			lineHeight: 1.5
-		};
-		function fieldError(field, value) {
-			if (field.control === "short-text" || field.control === "long-text") {
-				if (typeof value !== "string") return "字段值格式不正确。";
-				if (field.required && value.trim().length === 0) return "此项为必填项。";
-				if (value.length > field.maxChars) return `最多输入 ${field.maxChars} 个字符。`;
-				return null;
-			}
-			if (field.control === "string-list") {
-				if (!Array.isArray(value)) return "列表格式不正确。";
-				if (field.required && value.length === 0) return "请至少填写一项。";
-				if (value.length > field.maxItems) return `最多填写 ${field.maxItems} 项。`;
-				if (value.some((item) => typeof item !== "string" || item.trim().length === 0)) return "列表项不能为空。";
-				if (value.some((item) => item.length > field.itemMaxChars)) return `每项最多 ${field.itemMaxChars} 个字符。`;
-				return null;
-			}
-			if (field.control === "select") {
-				if (field.required && (typeof value !== "string" || value.length === 0)) return "请选择一个选项。";
-				if (value !== "" && !field.options.some((option) => option.value === value)) return "请选择目录中提供的选项。";
-				return null;
-			}
-			return "不支持的字段控件。";
-		}
-		function validateWorkflowFormValues(workflow, values) {
-			const errors = {};
-			for (const field of workflow?.form?.fields ?? []) {
-				const error = fieldError(field, values?.[field.fieldId]);
-				if (error !== null) errors[field.fieldId] = error;
-			}
-			const firstInvalidFieldId = Object.keys(errors)[0] ?? null;
-			return Object.freeze({
-				valid: firstInvalidFieldId === null,
-				errors: Object.freeze(errors),
-				firstInvalidFieldId
-			});
-		}
-		function controlFor({ pageId, field, value, error, firstInvalidFieldId, disabled, onChange }) {
-			const id = `oasis-field-${pageId}-${field.fieldId}`;
-			const describedBy = `${id}-description${error ? ` ${id}-error` : ""}`;
-			const shared = {
-				id,
-				name: field.fieldId,
-				disabled,
-				"data-control": field.control,
-				"aria-invalid": Boolean(error),
-				"aria-describedby": describedBy,
-				"data-first-error": firstInvalidFieldId === field.fieldId || void 0,
-				style: {
-					...controlStyle,
-					borderColor: error ? "var(--dsw-alias-color-danger, #b42318)" : "var(--dsw-alias-border-l2, #d7d9d8)"
-				}
-			};
-			if (field.control === "short-text") return (0, react.createElement)("input", {
-				...shared,
-				type: "text",
-				value: value ?? "",
-				maxLength: field.maxChars,
-				onChange: (event) => onChange(field.fieldId, event.currentTarget.value)
-			});
-			if (field.control === "long-text") return (0, react.createElement)("textarea", {
-				...shared,
-				value: value ?? "",
-				maxLength: field.maxChars,
-				rows: 5,
-				onChange: (event) => onChange(field.fieldId, event.currentTarget.value)
-			});
-			if (field.control === "string-list") return (0, react.createElement)("textarea", {
-				...shared,
-				value: Array.isArray(value) ? value.join("\n") : "",
-				rows: 4,
-				onChange: (event) => onChange(field.fieldId, event.currentTarget.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean))
-			});
-			return (0, react.createElement)("select", {
-				...shared,
-				value: value ?? "",
-				onChange: (event) => onChange(field.fieldId, event.currentTarget.value)
-			}, (0, react.createElement)("option", { value: "" }, "请选择"), ...field.options.map((option) => (0, react.createElement)("option", {
-				key: option.value,
-				value: option.value
-			}, option.label)));
-		}
-		function WorkflowForm({ pageId, workflow, values, validation, disabled, onChange }) {
-			return (0, react.createElement)("section", { "aria-labelledby": `oasis-form-title-${pageId}` }, (0, react.createElement)("div", { style: { marginBottom: 16 } }, (0, react.createElement)("h4", {
-				id: `oasis-form-title-${pageId}`,
-				style: {
-					margin: 0,
-					fontSize: 15
-				}
-			}, "工作流输入"), (0, react.createElement)("p", { style: {
-				margin: "5px 0 0",
-				color: "var(--dsw-alias-text-secondary, #66706b)",
-				fontSize: 12
-			} }, `字段来自 Host 工作流目录 · ${workflow.workflowId}@${workflow.workflowVersion}`)), ...workflow.form.fields.map((field) => {
-				const id = `oasis-field-${pageId}-${field.fieldId}`;
-				const error = validation.errors[field.fieldId];
-				return (0, react.createElement)("div", {
-					key: field.fieldId,
-					style: fieldShellStyle,
-					"data-field-id": field.fieldId
-				}, (0, react.createElement)("label", {
-					htmlFor: id,
-					style: {
-						fontWeight: 650,
-						fontSize: 13
-					}
-				}, field.label, field.required ? (0, react.createElement)("span", {
-					"aria-hidden": true,
-					style: {
-						color: "#9b3d2f",
-						marginLeft: 4
-					}
-				}, "＊") : null), (0, react.createElement)("span", {
-					id: `${id}-description`,
-					style: {
-						color: "var(--dsw-alias-text-secondary, #66706b)",
-						fontSize: 12
-					}
-				}, field.description), controlFor({
-					pageId,
-					field,
-					value: values[field.fieldId],
-					error,
-					firstInvalidFieldId: validation.firstInvalidFieldId,
-					disabled,
-					onChange
-				}), error ? (0, react.createElement)("span", {
-					id: `${id}-error`,
-					style: {
-						color: "var(--dsw-alias-color-danger, #b42318)",
-						fontSize: 12
-					}
-				}, error) : null);
-			}));
-		}
-		//#endregion
-		//#region src/client/WritebackPanel.js
-		function shortHash(hash) {
-			return typeof hash === "string" ? `${hash.slice(0, 8)}…` : "—";
-		}
-		const buttonStyle = {
-			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
-			borderRadius: 7,
-			padding: "7px 10px",
-			background: "var(--dsw-alias-bg-base, #fff)",
-			color: "inherit"
-		};
-		function WritebackPanel({ run, operation, disabled, onDraft, onPrepare, onConfirm, onCommit }) {
-			if (!run || run.result.contentStatus === "blocked" || run.review.status !== "approved") return null;
-			const prepared = operation.writebackPlan;
-			const commitDisabled = disabled || !prepared || !operation.writebackConfirmed;
-			return (0, react.createElement)("section", {
-				"aria-label": "项目回写",
-				style: {
-					borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
-					paddingTop: 14,
-					display: "grid",
-					gap: 10
-				}
-			}, (0, react.createElement)("h4", { style: {
-				margin: 0,
-				fontSize: 15
-			} }, "项目回写"), (0, react.createElement)("p", { style: {
-				margin: 0,
-				fontSize: 12,
-				color: "var(--dsw-alias-text-secondary, #66706b)"
-			} }, "仅可创建全新目录；不会覆盖既有路径。人工批准与回写均不构成专业或法律结论。"), (0, react.createElement)("label", {
-				htmlFor: "oasis-writeback-directory",
-				style: {
-					fontSize: 13,
-					fontWeight: 650
-				}
-			}, "Workspace 内新目录"), (0, react.createElement)("input", {
-				id: "oasis-writeback-directory",
-				value: operation.writebackDirectory,
-				disabled,
-				onChange: (event) => onDraft(event.currentTarget.value, false),
-				style: {
-					width: "100%",
-					boxSizing: "border-box",
-					border: "1px solid #d7d9d8",
-					borderRadius: 8,
-					padding: 9
-				}
-			}), (0, react.createElement)("button", {
-				type: "button",
-				disabled: disabled || operation.writebackDirectory.trim().length === 0,
-				onClick: onPrepare,
-				style: buttonStyle
-			}, operation.activeOperation === "writeback-prepare" ? "正在准备…" : "准备回写清单"), prepared ? (0, react.createElement)("div", { style: {
-				border: "1px solid #cbd7d0",
-				borderRadius: 9,
-				padding: 11,
-				display: "grid",
-				gap: 7
-			} }, (0, react.createElement)("strong", { style: { fontSize: 13 } }, "待确认目标"), (0, react.createElement)("code", { style: {
-				overflowWrap: "anywhere",
-				fontSize: 12
-			} }, prepared.manifest.absoluteTarget), ...prepared.manifest.files.map((file) => (0, react.createElement)("div", {
-				key: file.absolutePath,
-				style: { fontSize: 12 }
-			}, (0, react.createElement)("code", { style: { overflowWrap: "anywhere" } }, file.absolutePath), (0, react.createElement)("span", null, ` · SHA-256 ${shortHash(file.sha256)}`))), (0, react.createElement)("label", { style: {
-				display: "flex",
-				gap: 8,
-				alignItems: "flex-start",
-				fontSize: 12,
-				marginTop: 4
-			} }, (0, react.createElement)("input", {
-				type: "checkbox",
-				checked: operation.writebackConfirmed,
-				disabled,
-				onChange: (event) => onConfirm(event.currentTarget.checked)
-			}), (0, react.createElement)("span", null, "我已复核绝对目标路径和两份文件哈希，同意创建该全新目录。")), (0, react.createElement)("button", {
-				type: "button",
-				"data-testid": "oasis-writeback-commit",
-				disabled: commitDisabled,
-				onClick: onCommit,
-				style: {
-					...buttonStyle,
-					background: "#245d47",
-					color: "#fff",
-					borderColor: "#245d47"
-				}
-			}, operation.activeOperation === "writeback-commit" ? "正在提交…" : "确认创建新目录")) : null, (0, react.createElement)("div", {
-				role: operation.feedback === "index-warning" ? "alert" : "status",
-				"aria-live": "polite",
-				style: { fontSize: 12 }
-			}, operation.feedback === "writeback-success" ? "回写成功：新目录和索引均已提交。" : "", operation.feedback === "conflict" ? "版本或目标路径冲突：未执行覆盖，请重新准备。" : "", operation.feedback === "index-warning" ? "文件已创建，但任务索引更新失败；请按恢复清单人工核对。" : ""), operation.indexWarningManifest ? (0, react.createElement)("div", { style: {
-				border: "1px solid #d7a69d",
-				borderRadius: 8,
-				padding: 9,
-				fontSize: 12
-			} }, (0, react.createElement)("strong", null, "恢复清单"), (0, react.createElement)("div", null, operation.indexWarningManifest.relativeDirectory), ...operation.indexWarningManifest.files.map((file) => (0, react.createElement)("div", { key: file.relativePath }, (0, react.createElement)("code", null, file.relativePath), ` · ${shortHash(file.sha256)}`))) : null);
-		}
-		//#endregion
-		//#region src/client/PanelPages.js
-		const surfaceStyle = {
-			border: "1px solid var(--dsw-alias-border-l2, #dfe2e0)",
-			borderRadius: 12,
-			padding: 16,
-			background: "var(--dsw-alias-bg-base, #fff)"
-		};
-		const cardStyle = {
-			width: "100%",
-			textAlign: "left",
-			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
-			borderRadius: 12,
-			padding: 16,
-			background: "var(--dsw-alias-bg-base, #fff)",
-			color: "var(--dsw-alias-text-primary, #1f2623)",
-			cursor: "pointer"
-		};
-		function WorkflowChooser({ state, onSelect }) {
-			if (state.catalogStatus === "idle" || state.catalogStatus === "loading") return (0, react.createElement)("div", {
-				role: "status",
-				"aria-live": "polite",
-				style: { padding: 20 }
-			}, "正在读取 Host 工作流目录…");
-			if (state.catalogStatus === "error") return (0, react.createElement)("div", {
-				role: "alert",
-				tabIndex: -1,
-				style: {
-					padding: 20,
-					color: "#8b2f24"
-				}
-			}, "工作流目录读取失败。不会使用 Client 内置卡片替代 Host 定义。");
-			return (0, react.createElement)("div", { style: { padding: 20 } }, (0, react.createElement)("div", { style: { marginBottom: 18 } }, (0, react.createElement)("p", { style: {
-				margin: 0,
-				color: "#2f6653",
-				fontSize: 11,
-				letterSpacing: ".08em",
-				fontWeight: 700
-			} }, "OASIS PROFESSIONAL LOOP"), (0, react.createElement)("h3", { style: {
-				margin: "6px 0",
-				fontSize: 19
-			} }, "选择工作流"), (0, react.createElement)("p", { style: {
-				margin: 0,
-				color: "var(--dsw-alias-text-secondary, #66706b)",
-				fontSize: 13,
-				lineHeight: 1.6
-			} }, "选择后，本任务页将在原位转为 schema 驱动的材料、生成、审核与回写工作区。")), (0, react.createElement)("div", { style: {
-				display: "grid",
-				gap: 10
-			} }, ...state.workflows.map((workflow) => (0, react.createElement)("button", {
-				key: `${workflow.workflowId}@${workflow.workflowVersion}`,
-				type: "button",
-				"data-testid": `oasis-workflow-${workflow.workflowId}`,
-				onClick: () => onSelect(workflow.workflowId),
-				style: cardStyle
-			}, (0, react.createElement)("span", { style: {
-				display: "flex",
-				justifyContent: "space-between",
-				gap: 12,
-				alignItems: "baseline"
-			} }, (0, react.createElement)("strong", { style: { fontSize: 15 } }, workflow.title), (0, react.createElement)("code", { style: {
-				fontSize: 10,
-				color: "#607068"
-			} }, `v${workflow.workflowVersion}`)), (0, react.createElement)("span", { style: {
-				display: "block",
-				marginTop: 6,
-				color: "var(--dsw-alias-text-secondary, #66706b)",
-				fontSize: 12,
-				lineHeight: 1.55
-			} }, workflow.description)))), state.workflows.length === 0 ? (0, react.createElement)("div", {
-				role: "status",
-				style: {
-					color: "#66706b",
-					fontSize: 13
-				}
-			}, "Host 当前未提供可用工作流。") : null);
-		}
-		const syncNoticeStyle = {
-			margin: 20,
-			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
-			borderRadius: 12,
-			padding: 16,
-			color: "var(--dsw-alias-text-primary, #1f2623)",
-			background: "var(--dsw-alias-bg-base, #fff)"
-		};
-		function reloadButton(onReload, label) {
-			return (0, react.createElement)("button", {
-				type: "button",
-				onClick: onReload,
-				style: {
-					marginTop: 12,
-					border: "1px solid #d7d9d8",
-					borderRadius: 8,
-					padding: "7px 10px",
-					background: "#fff",
-					color: "inherit"
-				}
-			}, label);
-		}
-		function activeRun(page) {
-			return page.activeRunId === null ? null : page.runs[page.activeRunId];
-		}
-		function PanelPages({ state, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {} }) {
-			if (state.syncStatus === "idle" || state.syncStatus === "loading") return (0, react.createElement)("div", {
-				role: "status",
-				"aria-live": "polite",
-				style: syncNoticeStyle
-			}, "正在读取当前项目的绿洲任务页…");
-			if (state.syncStatus === "conflict") {
-				const currentRevision = state.conflictCurrent?.revision ?? "未知";
-				return (0, react.createElement)("div", {
-					role: "alert",
-					tabIndex: -1,
-					style: syncNoticeStyle
-				}, (0, react.createElement)("strong", null, "检测到版本冲突"), (0, react.createElement)("div", { style: {
-					marginTop: 6,
-					fontSize: 13
-				} }, `服务端当前为 revision ${currentRevision}。本地草稿仍保留，系统不会自动覆盖。`), reloadButton(onReload, "重新载入服务端版本（舍弃本地草稿）"));
-			}
-			if (state.syncStatus === "error") return (0, react.createElement)("div", {
-				role: "alert",
-				tabIndex: -1,
-				style: syncNoticeStyle
-			}, (0, react.createElement)("strong", null, "保存或读取失败"), (0, react.createElement)("div", { style: {
-				marginTop: 6,
-				fontSize: 13
-			} }, "本地草稿仍保留。请检查 DSH Host 后，再明确重新载入服务端版本。"), reloadButton(onReload, "重新载入服务端版本"));
-			const page = state.pages.find((item) => item.pageId === state.activePageId);
-			if (!page) return (0, react.createElement)("div", { style: {
-				padding: 20,
-				color: "#66706b"
-			} }, "请新建任务页。");
-			const titleEditor = (0, react.createElement)("div", { style: {
-				padding: "14px 20px",
-				display: "grid",
-				gap: 5,
-				borderBottom: "1px solid var(--dsw-alias-border-l2, #eceeec)"
-			} }, (0, react.createElement)("label", {
-				htmlFor: `oasis-task-title-${page.pageId}`,
-				style: {
-					fontSize: 11,
-					color: "#66706b",
-					fontWeight: 650
-				}
-			}, "任务名称"), (0, react.createElement)("input", {
-				key: `${page.pageId}:${page.title}`,
-				id: `oasis-task-title-${page.pageId}`,
-				"aria-label": "任务名称",
-				defaultValue: page.title,
-				maxLength: 200,
-				disabled: !["ready", "saving"].includes(state.syncStatus),
-				onBlur: (event) => {
-					const title = event.currentTarget.value.trim();
-					if (title.length === 0) return void (event.currentTarget.value = page.title);
-					if (title !== page.title) onRenamePage(page.pageId, title);
-				},
-				style: {
-					width: "100%",
-					boxSizing: "border-box",
-					border: 0,
-					padding: 0,
-					background: "transparent",
-					color: "inherit",
-					fontSize: 16,
-					fontWeight: 680
-				}
-			}));
-			let content;
-			if (page.view === "chooser") content = (0, react.createElement)(WorkflowChooser, {
-				state,
-				onSelect: (workflowId) => onSelectWorkflow(page.pageId, workflowId)
-			});
-			else {
-				const workflow = state.workflows.find((item) => item.workflowId === page.workflowId && item.workflowVersion === page.workflowVersion);
-				if (!workflow) content = (0, react.createElement)("div", {
-					role: "alert",
-					tabIndex: -1,
-					style: syncNoticeStyle
-				}, "当前任务引用的工作流版本不在 Host 目录中。为避免错误解释，已停止编辑和生成。");
-				else {
-					const operation = state.pageOperations[page.pageId] ?? {
-						materialPath: "",
-						materialConfirmed: false,
-						reviewNote: "",
-						writebackDirectory: "",
-						writebackConfirmed: false,
-						writebackPlan: null,
-						requestKey: null,
-						activeOperation: null,
-						error: null,
-						errorCode: null,
-						feedback: null,
-						materialsChanged: false,
-						indexWarningManifest: null
-					};
-					const validation = validateWorkflowFormValues(workflow, page.formValues);
-					const operationDisabled = operation.activeOperation !== null;
-					const run = activeRun(page);
-					content = (0, react.createElement)("div", {
-						"data-workspace-layout": true,
-						"data-mode": effectiveMode,
-						style: {
-							display: "grid",
-							gridTemplateColumns: effectiveMode === "expanded" ? "minmax(300px, .9fr) minmax(360px, 1.1fr)" : "minmax(0, 1fr)",
-							gap: 14,
-							padding: 14,
-							alignItems: "start"
-						}
-					}, (0, react.createElement)("div", { style: {
-						display: "grid",
-						gap: 14,
-						minWidth: 0
-					} }, (0, react.createElement)("div", { style: surfaceStyle }, (0, react.createElement)(WorkflowForm, {
-						pageId: page.pageId,
-						workflow,
-						values: page.formValues,
-						validation,
-						disabled: operationDisabled,
-						onChange: (fieldId, value) => onUpdateForm(page.pageId, fieldId, value)
-					})), (0, react.createElement)("div", { style: surfaceStyle }, (0, react.createElement)(MaterialReferences, {
-						page,
-						workflow,
-						operation,
-						disabled: operationDisabled,
-						onMaterialDraft: (path, confirmed) => onMaterialDraft(page.pageId, path, confirmed),
-						onAdd: () => onAddMaterial(page.pageId),
-						onRefresh: (referenceId) => onRefreshMaterial(page.pageId, referenceId),
-						onRemove: (referenceId, confirmed) => onRemoveMaterial(page.pageId, referenceId, confirmed)
-					}))), (0, react.createElement)("div", { style: {
-						...surfaceStyle,
-						display: "grid",
-						gap: 16,
-						minWidth: 0
-					} }, (0, react.createElement)(RunPreview, {
-						page,
-						operation,
-						workflow,
-						validation,
-						syncStatus: state.syncStatus,
-						onGenerate: () => onGenerate(page.pageId),
-						onActivateRun: (runId) => onActivateRun(page.pageId, runId),
-						onReviewNote: (note) => onReviewNote(page.pageId, note),
-						onReview: (status, note) => onReview(page.pageId, page.activeRunId, status, note)
-					}), (0, react.createElement)(WritebackPanel, {
-						run,
-						operation,
-						disabled: operationDisabled,
-						onDraft: (directory, confirmed) => onWritebackDraft(page.pageId, directory, confirmed),
-						onPrepare: () => onPrepareWriteback(page.pageId, page.activeRunId),
-						onConfirm: (confirmed) => onWritebackConfirm(page.pageId, confirmed),
-						onCommit: () => onCommitWriteback(page.pageId)
-					})));
-				}
-			}
-			return (0, react.createElement)("main", {
-				key: page.pageId,
-				id: `oasis-panel-${page.pageId}`,
-				role: "tabpanel",
-				"aria-labelledby": `oasis-tab-${page.pageId}`,
-				style: {
-					flex: 1,
-					minHeight: 0,
-					overflow: "auto",
-					background: "var(--dsw-alias-bg-subtle, #f5f7f5)"
-				}
-			}, titleEditor, content);
-		}
-		//#endregion
-		//#region src/client/OasisWorkbenchSurface.js
-		const reducedMotionCss = `
-  [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
-  @media (prefers-reduced-motion: reduce) { [data-oasis-panel] { transition: none; } }
-  @media (max-width: 760px) {
-    [data-oasis-panel] [data-workspace-layout] { grid-template-columns: minmax(0, 1fr) !important; }
-  }
-`;
-		function createPanelActions({ store, workspaceId, focusTargets, confirmClose = (message) => globalThis.confirm?.(message) === true }) {
-			return Object.freeze({
-				async activatePage(pageId) {
-					await store.flushWorkspace(workspaceId);
-					store.activatePage(workspaceId, pageId);
-				},
-				async closePage(pageId) {
-					const page = store.getWorkspaceState(workspaceId).pages.find((item) => item.pageId === pageId);
-					if (!page) return false;
-					if (page.runOrder.length > 0 && !confirmClose(`任务“${page.title}”包含 ${page.runOrder.length} 个运行记录。确认关闭此任务页？`)) return false;
-					await store.flushWorkspace(workspaceId);
-					store.closePage(workspaceId, pageId);
-					return true;
-				},
-				async hidePanel() {
-					await store.flushWorkspace(workspaceId);
-					const current = store.getWorkspaceState(workspaceId);
-					if (["ready", "saving"].includes(current.syncStatus)) store.setPanelMode(workspaceId, "hidden");
-					else store.setLocalPanelMode(workspaceId, "hidden");
-					focusTargets.get(workspaceId)?.focus?.();
-				}
-			});
-		}
-		async function ensureEmbeddedWorkspaceHidden({ store, workspaceId, workspaceItems }) {
-			store.syncWorkspaces(workspaceItems);
-			await Promise.all([store.hydrateWorkspace(workspaceId), store.loadWorkflowCatalog(workspaceId)]);
-			const current = store.getWorkspaceState(workspaceId);
-			if (current.panelMode === "hidden") return true;
-			if (["ready", "saving"].includes(current.syncStatus)) {
-				store.setPanelMode(workspaceId, "hidden");
-				await store.flushWorkspace(workspaceId);
-				return true;
-			}
-			store.setLocalPanelMode(workspaceId, "hidden");
-			return false;
-		}
-		async function hydrateSurface({ store, workspaceId, workspaceItems, hostMode }) {
-			if (hostMode === "embedded") return ensureEmbeddedWorkspaceHidden({
-				store,
-				workspaceId,
-				workspaceItems
-			});
-			store.syncWorkspaces(workspaceItems);
-			await Promise.all([store.hydrateWorkspace(workspaceId), store.loadWorkflowCatalog(workspaceId)]);
-			return true;
-		}
-		function sectionStyle(hostMode, layout, effectiveMode) {
-			if (hostMode === "embedded") return {
-				position: "relative",
-				width: "100%",
-				height: "100%",
-				minHeight: 0,
-				minWidth: 0,
-				display: "flex",
-				flexDirection: "column",
-				overflow: "hidden",
-				background: "var(--dsw-alias-bg-base, #fff)",
-				color: "var(--dsw-alias-text-primary, #202123)"
-			};
-			return {
-				position: "fixed",
-				top: 0,
-				bottom: 0,
-				zIndex: 1,
-				display: "flex",
-				flexDirection: "column",
-				minWidth: 0,
-				boxSizing: "border-box",
-				overflow: "hidden",
-				borderLeft: "1px solid var(--dsw-alias-border-l2, #dedee1)",
-				boxShadow: "-10px 0 28px rgba(0, 0, 0, 0.08)",
-				background: "var(--dsw-alias-bg-base, #fff)",
-				color: "var(--dsw-alias-text-primary, #202123)",
-				...effectiveMode === "normal" ? {
-					right: 0,
-					width: 360
-				} : {
-					left: layout.panelLeft ?? 72,
-					right: 0
-				}
-			};
-		}
-		function OasisWorkbenchSurface({ store, focusTargets, layoutAdapter, workspaceId, workspaceItems, hostMode = "standalone", visible = true }) {
-			const state = (0, react.useSyncExternalStore)(store.subscribe, () => store.peekWorkspaceState(workspaceId), () => store.peekWorkspaceState(workspaceId));
-			const panelRef = (0, react.useRef)(null);
-			const titleRef = (0, react.useRef)(null);
-			const layout = (0, react.useSyncExternalStore)(layoutAdapter.subscribe, layoutAdapter.getSnapshot, layoutAdapter.getSnapshot);
-			(0, react.useEffect)(() => {
-				if (workspaceId !== null) hydrateSurface({
-					store,
-					workspaceId,
-					workspaceItems,
-					hostMode
-				}).catch(() => {
-					if (hostMode === "embedded") try {
-						store.setLocalPanelMode(workspaceId, "hidden");
-					} catch {}
-				});
-				else store.syncWorkspaces(workspaceItems);
-			}, [
-				hostMode,
-				store,
-				workspaceId,
-				workspaceItems
-			]);
-			(0, react.useEffect)(() => () => {
-				if (workspaceId !== null) store.flushWorkspace(workspaceId).catch(() => {});
-			}, [store, workspaceId]);
-			(0, react.useLayoutEffect)(() => {
-				if (hostMode === "embedded") {
-					layoutAdapter.releaseStandalone("embedded-surface-active");
-					return;
-				}
-				layoutAdapter.apply({
-					requestedMode: workspaceId === null ? "hidden" : state.panelMode,
-					panelWidth: 360,
-					panelElement: panelRef.current
-				});
-			}, [
-				hostMode,
-				layoutAdapter,
-				state.panelMode,
-				workspaceId
-			]);
-			(0, react.useEffect)(() => {
-				if (hostMode === "embedded" && visible || layout.effectiveMode !== "hidden") titleRef.current?.focus();
-			}, [
-				hostMode,
-				layout.effectiveMode,
-				visible,
-				workspaceId
-			]);
-			const layoutBlocked = hostMode === "standalone" && state.panelMode !== "hidden" && layout.requestedMode === state.panelMode && layout.effectiveMode === "hidden" && [
-				"incompatible",
-				"conflict",
-				"faulted"
-			].includes(layout.status);
-			if (workspaceId === null || hostMode === "standalone" && state.panelMode === "hidden" || layoutBlocked) return null;
-			const effectiveMode = hostMode === "embedded" ? "embedded" : layout.requestedMode === state.panelMode ? layout.effectiveMode : state.panelMode;
-			const actions = createPanelActions({
-				store,
-				workspaceId,
-				focusTargets
-			});
-			return (0, react.createElement)("section", {
-				ref: panelRef,
-				"data-oasis-panel": true,
-				"data-testid": hostMode === "embedded" ? "oasis-embedded-workbench" : "oasis-panel",
-				"data-host-mode": hostMode,
-				"data-mode": effectiveMode,
-				"data-requested-mode": state.panelMode,
-				"data-layout-status": hostMode === "embedded" ? "better-sidebar-owned" : layout.status,
-				"data-workspace-id": workspaceId,
-				"data-visible": visible ? "true" : "false",
-				"aria-label": "绿洲专业工作台",
-				style: sectionStyle(hostMode, layout, effectiveMode)
-			}, (0, react.createElement)("style", null, reducedMotionCss), (0, react.createElement)(PanelChrome, {
-				hostMode,
-				state: {
-					...state,
-					effectiveMode,
-					layoutStatus: hostMode === "embedded" ? "better-sidebar-owned" : layout.status
-				},
-				titleRef,
-				onActivatePage: (pageId) => {
-					actions.activatePage(pageId).catch(() => {});
-				},
-				onClosePage: (pageId) => {
-					actions.closePage(pageId).catch(() => {});
-				},
-				onCreatePage: () => store.createPage(workspaceId),
-				onHide: () => {
-					if (hostMode === "standalone") actions.hidePanel().catch(() => {});
-				},
-				onToggleExpanded: () => {
-					if (hostMode === "standalone") store.setPanelMode(workspaceId, state.panelMode === "expanded" ? "normal" : "expanded");
-				}
-			}), (0, react.createElement)(PanelPages, {
-				state,
-				effectiveMode,
-				onSelectWorkflow: (pageId, workflowId) => store.selectWorkflow(workspaceId, pageId, workflowId),
-				onRenamePage: (pageId, title) => store.renamePage(workspaceId, pageId, title),
-				onReload: () => store.reloadWorkspace(workspaceId),
-				onUpdateForm: (pageId, fieldId, value) => store.updateFormValue(workspaceId, pageId, fieldId, value),
-				onMaterialDraft: (pageId, path, confirmed) => store.setMaterialDraft(workspaceId, pageId, path, confirmed),
-				onAddMaterial: (pageId) => {
-					store.addMaterial(workspaceId, pageId).catch(() => {});
-				},
-				onRefreshMaterial: (pageId, referenceId) => {
-					store.refreshMaterial(workspaceId, pageId, referenceId).catch(() => {});
-				},
-				onRemoveMaterial: (pageId, referenceId, confirmed) => {
-					if (confirmed) store.removeMaterial(workspaceId, pageId, referenceId, true).catch(() => {});
-				},
-				onGenerate: (pageId) => {
-					store.createRun(workspaceId, pageId).catch(() => {});
-				},
-				onActivateRun: (pageId, runId) => store.activateRun(workspaceId, pageId, runId),
-				onReviewNote: (pageId, note) => store.setReviewNote(workspaceId, pageId, note),
-				onReview: (pageId, runId, status, note) => {
-					store.reviewRun(workspaceId, pageId, runId, status, note).catch(() => {});
-				},
-				onWritebackDraft: (pageId, directory, confirmed) => {
-					store.setWritebackDraft(workspaceId, pageId, directory, confirmed);
-				},
-				onPrepareWriteback: (pageId, runId) => {
-					store.prepareWriteback(workspaceId, pageId, runId).catch(() => {});
-				},
-				onWritebackConfirm: (pageId, confirmed) => store.setWritebackConfirmation(workspaceId, pageId, confirmed),
-				onCommitWriteback: (pageId) => {
-					store.commitWriteback(workspaceId, pageId).catch(() => {});
-				}
-			}));
-		}
-		//#endregion
-		//#region src/client/panel-host-coordinator.js
-		const OASIS_BETTER_SIDEBAR_TAB_ID = "oasis-professional-service:workbench";
-		const HOST_MODES = Object.freeze([
-			"standalone",
-			"integrating",
-			"better-sidebar",
-			"releasing",
-			"blocked"
-		]);
-		function pendingWorkspaceContext(generation = 0) {
-			return Object.freeze({
-				status: "pending",
-				reasonCode: "workspace-bridge-pending",
-				generation,
-				currentSessionId: null,
-				workspaceItems: Object.freeze([])
-			});
-		}
-		function hasBetterSidebarMarker(document = globalThis.document) {
-			try {
-				return (document?.querySelectorAll?.("[data-dsh-better-sidebar]")?.length ?? 0) > 0;
-			} catch {
-				return true;
-			}
-		}
-		function validService(service) {
-			return service !== null && typeof service === "object" && typeof service.registerTab === "function" && typeof service.openTab === "function";
-		}
-		function validDescriptor(descriptor) {
-			return descriptor !== null && typeof descriptor === "object" && descriptor.id === "oasis-professional-service:workbench" && descriptor.single === true && typeof descriptor.component === "function";
-		}
-		function createPanelHostCoordinator({ layoutAdapter, hasBetterSidebarMarker: markerPresent = () => hasBetterSidebarMarker() } = {}) {
-			if (!layoutAdapter || typeof layoutAdapter.releaseStandalone !== "function") throw new TypeError("layoutAdapter.releaseStandalone is required");
-			if (typeof markerPresent !== "function") throw new TypeError("hasBetterSidebarMarker must be a function");
-			const listeners = /* @__PURE__ */ new Set();
-			let disposed = false;
-			let service = null;
-			let registrationDisposer = null;
-			let currentDetach = null;
-			const initialMarker = markerPresent();
-			let snapshot = Object.freeze({
-				mode: initialMarker ? "blocked" : "standalone",
-				reasonCode: initialMarker ? "better-sidebar-marker-without-service" : null,
-				serviceVersion: null,
-				serviceFeatures: Object.freeze([]),
-				workspaceContext: pendingWorkspaceContext()
-			});
-			function publish(next) {
-				if (disposed) return snapshot;
-				const normalized = Object.freeze({
-					...snapshot,
-					...next
-				});
-				if (!HOST_MODES.includes(normalized.mode)) throw new Error(`invalid panel host mode: ${normalized.mode}`);
-				if (!Object.keys(normalized).some((key) => normalized[key] !== snapshot[key])) return snapshot;
-				snapshot = normalized;
-				for (const listener of [...listeners]) listener();
-				return snapshot;
-			}
-			function block(reasonCode) {
-				layoutAdapter.releaseStandalone(reasonCode);
-				return publish({
-					mode: "blocked",
-					reasonCode,
-					serviceVersion: service === null ? null : snapshot.serviceVersion,
-					serviceFeatures: service === null ? Object.freeze([]) : snapshot.serviceFeatures
-				});
-			}
-			function reconcileExternalState() {
-				if (disposed) return snapshot;
-				if (service !== null && registrationDisposer !== null) {
-					if (snapshot.mode === "blocked") return snapshot;
-					return publish({
-						mode: "better-sidebar",
-						reasonCode: null
-					});
-				}
-				const marker = markerPresent();
-				return publish({
-					mode: marker ? "blocked" : "standalone",
-					reasonCode: marker ? "better-sidebar-marker-without-service" : null,
-					serviceVersion: null,
-					serviceFeatures: Object.freeze([])
-				});
-			}
-			function attachBetterSidebar(nextService, descriptor) {
-				if (disposed) return () => {};
-				if (!validService(nextService)) {
-					block("better-sidebar-service-invalid");
-					return () => {};
-				}
-				if (!validDescriptor(descriptor)) {
-					block("better-sidebar-descriptor-invalid");
-					return () => {};
-				}
-				if (service === nextService && currentDetach !== null) return currentDetach;
-				if (service !== null || registrationDisposer !== null) {
-					block("better-sidebar-service-replaced-without-release");
-					return currentDetach ?? (() => {});
-				}
-				publish({
-					mode: "integrating",
-					reasonCode: null
-				});
-				layoutAdapter.releaseStandalone("better-sidebar-integrating");
-				let disposer;
-				try {
-					disposer = nextService.registerTab(descriptor);
-				} catch {
-					block("better-sidebar-registration-failed");
-					return () => {};
-				}
-				if (typeof disposer !== "function") {
-					block("better-sidebar-registration-disposer-invalid");
-					return () => {};
-				}
-				service = nextService;
-				registrationDisposer = disposer;
-				const features = Array.isArray(nextService.features) ? Object.freeze(nextService.features.filter((value) => typeof value === "string")) : Object.freeze([]);
-				publish({
-					mode: "better-sidebar",
-					reasonCode: null,
-					serviceVersion: typeof nextService.version === "string" ? nextService.version : "unknown",
-					serviceFeatures: features
-				});
-				let detached = false;
-				currentDetach = () => {
-					if (detached) return;
-					detached = true;
-					publish({
-						mode: "releasing",
-						reasonCode: null
-					});
-					layoutAdapter.releaseStandalone("better-sidebar-releasing");
-					const registeredDisposer = registrationDisposer;
-					service = null;
-					registrationDisposer = null;
-					currentDetach = null;
-					try {
-						registeredDisposer();
-					} catch {
-						publish({
-							mode: "blocked",
-							reasonCode: "better-sidebar-registration-dispose-failed",
-							serviceVersion: null,
-							serviceFeatures: Object.freeze([])
-						});
-						return;
-					}
-					reconcileExternalState();
-				};
-				return currentDetach;
-			}
-			function openBetterSidebar(sessionId) {
-				if (disposed || snapshot.mode !== "better-sidebar" || !validService(service)) return false;
-				if (typeof sessionId !== "string" || sessionId.length === 0) return false;
-				layoutAdapter.releaseStandalone("better-sidebar-open");
-				try {
-					const seed = {
-						type: OASIS_BETTER_SIDEBAR_TAB_ID,
-						path: ".oasis/professional-workbench"
-					};
-					if (snapshot.serviceFeatures.includes("targetedOpen")) service.openTab(seed, { sessionId });
-					else service.openTab(seed);
-					return true;
-				} catch {
-					currentDetach?.();
-					block("better-sidebar-open-failed");
-					return false;
-				}
-			}
-			return Object.freeze({
-				subscribe(listener) {
-					listeners.add(listener);
-					return () => listeners.delete(listener);
-				},
-				getSnapshot() {
-					return snapshot;
-				},
-				attachBetterSidebar,
-				openBetterSidebar,
-				reconcileExternalState,
-				updateWorkspaceContext(context) {
-					if (!context || typeof context !== "object") throw new TypeError("workspace context is required");
-					return publish({ workspaceContext: context });
-				},
-				clearWorkspaceContext() {
-					return publish({ workspaceContext: pendingWorkspaceContext(snapshot.workspaceContext.generation + 1) });
-				},
-				block,
-				dispose() {
-					if (disposed) return;
-					currentDetach?.();
-					layoutAdapter.releaseStandalone("panel-host-coordinator-disposed");
-					listeners.clear();
-					disposed = true;
-				}
-			});
-		}
-		//#endregion
-		//#region src/client/OasisPanelBoundary.js
-		var OasisPanelBoundary = class extends react.Component {
-			constructor(props) {
-				super(props);
-				this.state = { failed: false };
-			}
-			static getDerivedStateFromError() {
-				return { failed: true };
-			}
-			componentDidCatch(error) {
-				this.props.layoutAdapter.fault(`panel-render-error:${error instanceof Error ? error.message : String(error)}`);
-			}
-			render() {
-				return this.state.failed ? null : this.props.children;
-			}
-		};
-		//#endregion
-		//#region src/client/project-resolution.js
-		function resolveWorkspaceId(currentSessionId, workspaceItems) {
-			if (typeof currentSessionId !== "string" || currentSessionId.length === 0) return null;
-			if (!Array.isArray(workspaceItems)) return null;
-			const matches = workspaceItems.filter((workspace) => typeof workspace?.workspaceId === "string" && Array.isArray(workspace.sessionIds) && workspace.sessionIds.includes(currentSessionId));
-			return matches.length === 1 ? matches[0].workspaceId : null;
-		}
-		//#endregion
-		//#region src/client/OasisPanelHost.js
-		function OasisPanelHost({ store, focusTargets, layoutAdapter, useSessions, useWorkspaces }) {
-			const currentSessionId = useSessions((snapshot) => snapshot.current);
-			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
-			const workspaceId = resolveWorkspaceId(currentSessionId, workspaceItems);
-			return (0, react.createElement)(OasisWorkbenchSurface, {
-				store,
-				focusTargets,
-				layoutAdapter,
-				workspaceId,
-				workspaceItems,
-				hostMode: "standalone",
-				visible: true
-			});
-		}
-		//#endregion
-		//#region src/client/OasisPanelPortal.js
-		function OasisPanelPortal(props) {
-			const { layoutAdapter } = props;
-			const [portalHost, setPortalHost] = (0, react.useState)(null);
-			(0, react.useLayoutEffect)(() => {
-				let host;
-				try {
-					host = layoutAdapter.mountPortal();
-					setPortalHost(host);
-				} catch (error) {
-					layoutAdapter.fault(`portal-mount-error:${error instanceof Error ? error.message : String(error)}`);
-				}
-				return () => {
-					if (host) layoutAdapter.unmountPortal(host);
-				};
-			}, [layoutAdapter]);
-			if (portalHost === null) return null;
-			return (0, react_dom.createPortal)((0, react.createElement)(OasisPanelBoundary, { layoutAdapter }, (0, react.createElement)(OasisPanelHost, props)), portalHost);
-		}
-		//#endregion
-		//#region src/client/WorkspaceContextBridge.js
-		function blockedWorkspaceContext(generation) {
-			return Object.freeze({
-				status: "blocked",
-				reasonCode: "workspace-context-invalid",
-				generation,
-				currentSessionId: null,
-				workspaceItems: Object.freeze([])
-			});
-		}
-		function createWorkspaceContextSnapshot({ currentSessionId, workspaceItems, generation }) {
-			if (!Number.isSafeInteger(generation) || generation < 0) return blockedWorkspaceContext(0);
-			if (currentSessionId !== null && (typeof currentSessionId !== "string" || currentSessionId.length === 0)) return blockedWorkspaceContext(generation);
-			if (!Array.isArray(workspaceItems)) return blockedWorkspaceContext(generation);
-			const projected = [];
-			for (const workspace of workspaceItems) {
-				if (typeof workspace?.workspaceId !== "string" || workspace.workspaceId.length === 0 || !Array.isArray(workspace.sessionIds) || workspace.sessionIds.some((sessionId) => typeof sessionId !== "string" || sessionId.length === 0)) return blockedWorkspaceContext(generation);
-				projected.push(Object.freeze({
-					workspaceId: workspace.workspaceId,
-					sessionIds: Object.freeze([...workspace.sessionIds])
-				}));
-			}
-			return Object.freeze({
-				status: "ready",
-				reasonCode: null,
-				generation,
-				currentSessionId,
-				workspaceItems: Object.freeze(projected)
-			});
-		}
-		function resolveWorkspaceBinding({ context, sessionId, visible }) {
-			const generation = Number.isSafeInteger(context?.generation) ? context.generation : 0;
-			if (context?.status === "blocked") return Object.freeze({
-				status: "blocked",
-				reasonCode: context.reasonCode ?? "workspace-context-invalid",
-				workspaceId: null,
-				generation
-			});
-			if (context?.status !== "ready") return Object.freeze({
-				status: "pending",
-				reasonCode: "workspace-bridge-pending",
-				workspaceId: null,
-				generation
-			});
-			if (visible === true && context.currentSessionId !== sessionId) return Object.freeze({
-				status: "pending",
-				reasonCode: "workspace-generation-not-current",
-				workspaceId: null,
-				generation
-			});
-			const workspaceId = resolveWorkspaceId(sessionId, context.workspaceItems);
-			return Object.freeze({
-				status: workspaceId === null ? "unbound" : "ready",
-				reasonCode: workspaceId === null ? "workspace-not-resolved" : null,
-				workspaceId,
-				generation
-			});
-		}
-		function BridgeStatus({ mode, reasonCode }) {
-			const blocked = mode === "blocked";
-			return (0, react.createElement)("div", {
-				role: blocked ? "alert" : "status",
-				"data-oasis-host-state": mode,
-				"data-oasis-host-reason": reasonCode ?? void 0,
-				style: {
-					position: "fixed",
-					right: 12,
-					bottom: 12,
-					zIndex: 41,
-					maxWidth: 320,
-					padding: "8px 10px",
-					border: "1px solid var(--dsw-alias-border-l2, #d9d9dc)",
-					borderRadius: 8,
-					background: "var(--dsw-alias-bg-base, #fff)",
-					color: "var(--dsw-alias-text-primary, #202123)",
-					fontSize: 12,
-					boxShadow: "0 8px 24px rgba(0, 0, 0, 0.12)"
-				}
-			}, blocked ? "绿洲工作台暂不可用：检测到侧栏宿主冲突。" : "正在切换绿洲工作台侧栏宿主…");
-		}
-		function WorkspaceContextBridge(props) {
-			const { coordinator, useSessions, useWorkspaces } = props;
-			const currentSessionId = useSessions((snapshot) => snapshot.current);
-			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
-			const generationRef = (0, react.useRef)(0);
-			const hostSnapshot = (0, react.useSyncExternalStore)(coordinator.subscribe, coordinator.getSnapshot, coordinator.getSnapshot);
-			(0, react.useLayoutEffect)(() => {
-				generationRef.current += 1;
-				coordinator.updateWorkspaceContext(createWorkspaceContextSnapshot({
-					currentSessionId: currentSessionId ?? null,
-					workspaceItems,
-					generation: generationRef.current
-				}));
-				coordinator.reconcileExternalState();
-				return () => coordinator.clearWorkspaceContext();
-			}, [
-				coordinator,
-				currentSessionId,
-				workspaceItems
-			]);
-			(0, react.useLayoutEffect)(() => {
-				const MutationObserverClass = globalThis.MutationObserver;
-				const body = globalThis.document?.body;
-				if (typeof MutationObserverClass !== "function" || !body) return void 0;
-				const observer = new MutationObserverClass(() => coordinator.reconcileExternalState());
-				observer.observe(body, {
-					childList: true,
-					subtree: true,
-					attributes: true,
-					attributeFilter: ["data-dsh-better-sidebar"]
-				});
-				return () => observer.disconnect();
-			}, [coordinator]);
-			(0, react.useEffect)(() => {
-				if (hostSnapshot.mode !== "better-sidebar") return;
-				const binding = resolveWorkspaceBinding({
-					context: hostSnapshot.workspaceContext,
-					sessionId: currentSessionId,
-					visible: true
-				});
-				if (binding.status !== "ready") return;
-				ensureEmbeddedWorkspaceHidden({
-					store: props.store,
-					workspaceId: binding.workspaceId,
-					workspaceItems: hostSnapshot.workspaceContext.workspaceItems
-				}).catch(() => {
-					try {
-						props.store.setLocalPanelMode(binding.workspaceId, "hidden");
-					} catch {}
-				});
-			}, [
-				currentSessionId,
-				hostSnapshot.mode,
-				hostSnapshot.workspaceContext,
-				props.store
-			]);
-			if (hostSnapshot.mode === "standalone") return (0, react.createElement)(OasisPanelPortal, props);
-			if ([
-				"integrating",
-				"releasing",
-				"blocked"
-			].includes(hostSnapshot.mode)) return (0, react.createElement)(BridgeStatus, {
-				mode: hostSnapshot.mode,
-				reasonCode: hostSnapshot.reasonCode
-			});
-			return null;
-		}
-		//#endregion
-		//#region src/client/OasisBetterSidebarTab.js
-		function EmbeddedStatus({ status, reasonCode }) {
-			const messages = {
-				pending: "正在关联当前 DSH 项目…",
-				unbound: "当前会话尚未关联唯一的 DSH 项目。请先在中栏切换到一个有效项目。",
-				blocked: "绿洲工作台已阻断：项目上下文或侧栏宿主不可安全使用。"
-			};
-			return (0, react.createElement)("section", {
-				role: status === "blocked" ? "alert" : "status",
-				"data-oasis-embedded-state": status,
-				"data-oasis-embedded-reason": reasonCode ?? void 0,
-				style: {
-					height: "100%",
-					minHeight: 0,
-					padding: 20,
-					display: "grid",
-					alignContent: "start",
-					gap: 8,
-					background: "var(--dsw-alias-bg-base, #fff)",
-					color: "var(--dsw-alias-text-primary, #202123)"
-				}
-			}, (0, react.createElement)("strong", null, "绿洲专业工作台"), (0, react.createElement)("span", { style: {
-				color: "var(--dsw-alias-text-secondary, #6b7280)",
-				fontSize: 13,
-				lineHeight: 1.5
-			} }, messages[status] ?? messages.blocked));
-		}
-		function OasisBetterSidebarTab({ scope, visible, coordinator, store, focusTargets, layoutAdapter }) {
-			const hostSnapshot = (0, react.useSyncExternalStore)(coordinator.subscribe, coordinator.getSnapshot, coordinator.getSnapshot);
-			const sessionId = scope?.sessionId;
-			if (hostSnapshot.mode !== "better-sidebar") {
-				const status = hostSnapshot.mode === "blocked" ? "blocked" : "pending";
-				return (0, react.createElement)(EmbeddedStatus, {
-					status,
-					reasonCode: hostSnapshot.reasonCode
-				});
-			}
-			const binding = resolveWorkspaceBinding({
-				context: hostSnapshot.workspaceContext,
-				sessionId,
-				visible: visible === true
-			});
-			if (binding.status !== "ready") return (0, react.createElement)(EmbeddedStatus, {
-				status: binding.status,
-				reasonCode: binding.reasonCode
-			});
-			return (0, react.createElement)(OasisWorkbenchSurface, {
-				store,
-				focusTargets,
-				layoutAdapter,
-				workspaceId: binding.workspaceId,
-				workspaceItems: hostSnapshot.workspaceContext.workspaceItems,
-				hostMode: "embedded",
-				visible: visible === true
-			});
-		}
-		function createOasisBetterSidebarDescriptor({ coordinator, store, focusTargets, layoutAdapter }) {
-			return Object.freeze({
-				id: OASIS_BETTER_SIDEBAR_TAB_ID,
-				title: "绿洲专业工作台",
-				order: 60,
-				single: true,
-				component: (props) => (0, react.createElement)(OasisBetterSidebarTab, {
-					...props,
-					coordinator,
-					store,
-					focusTargets,
-					layoutAdapter
-				})
-			});
-		}
-		//#endregion
-		//#region src/client/WorkbenchEntry.js
-		const STANDALONE_HOST_SNAPSHOT = Object.freeze({ mode: "standalone" });
-		const subscribeStandaloneHost = () => () => {};
-		const getStandaloneHostSnapshot = () => STANDALONE_HOST_SNAPSHOT;
-		function useLivePanelHostSnapshot(coordinator) {
-			return (0, react.useSyncExternalStore)(coordinator === null ? subscribeStandaloneHost : coordinator.subscribe, coordinator === null ? getStandaloneHostSnapshot : coordinator.getSnapshot, coordinator === null ? getStandaloneHostSnapshot : coordinator.getSnapshot);
-		}
-		function WorkbenchEntry({ sessionId, store, focusTargets, useWorkspaces, coordinator = null, usePanelHostSnapshot = useLivePanelHostSnapshot }) {
-			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
-			const workspaceId = resolveWorkspaceId(sessionId, workspaceItems);
-			const hostSnapshot = usePanelHostSnapshot(coordinator);
-			let mountedTarget = null;
-			function registerFocusTarget(node) {
-				if (workspaceId === null) return;
-				if (node === null) {
-					if (mountedTarget !== null && focusTargets.get(workspaceId) === mountedTarget) focusTargets.delete(workspaceId);
-					mountedTarget = null;
-					return;
-				}
-				mountedTarget = node;
-				focusTargets.set(workspaceId, node);
-			}
-			function openWorkbench(event) {
-				if (workspaceId === null) return;
-				store.syncWorkspaces(workspaceItems);
-				focusTargets.set(workspaceId, event.currentTarget);
-				if (coordinator?.getSnapshot?.().mode === "better-sidebar") {
-					coordinator.openBetterSidebar(sessionId);
-					return;
-				}
-				if (coordinator && coordinator.getSnapshot().mode !== "standalone") return;
-				store.openPanel(workspaceId);
-			}
-			const hostMode = hostSnapshot.mode;
-			const hostUnavailable = [
-				"integrating",
-				"releasing",
-				"blocked"
-			].includes(hostMode);
-			const disabled = workspaceId === null || hostUnavailable;
-			const unavailableTitle = hostMode === "blocked" ? "侧栏宿主冲突，绿洲工作台已安全阻断" : "绿洲工作台正在切换侧栏宿主";
-			return (0, react.createElement)("button", {
-				type: "button",
-				ref: registerFocusTarget,
-				"data-testid": "oasis-workbench-entry",
-				disabled,
-				"data-oasis-host-mode": hostMode,
-				"data-oasis-host-version": hostSnapshot.serviceVersion ?? void 0,
-				title: workspaceId === null ? "当前会话尚未关联项目" : hostUnavailable ? unavailableTitle : "打开技术研发与中国发明专利工作台",
-				"aria-label": workspaceId === null ? "当前会话尚未关联项目" : hostUnavailable ? unavailableTitle : "打开技术研发与中国发明专利工作台",
-				onClick: openWorkbench,
-				style: {
-					border: "1px solid var(--dsw-alias-border-l2, #d9d9dc)",
-					borderRadius: 8,
-					background: "var(--dsw-alias-bg-base, #fff)",
-					color: "var(--dsw-alias-text-primary, #202123)",
-					padding: "5px 9px",
-					fontSize: 12,
-					cursor: disabled ? "not-allowed" : "pointer",
-					opacity: disabled ? .5 : 1
-				}
-			}, "研发 / 专利");
-		}
-		//#endregion
 		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js
 		var _a$1;
 		function $constructor(name, initializer, params) {
@@ -3928,7 +2079,7 @@ window.__ModuleLoader__.load({
             })));
           }
         }
-        
+
         if (${id}.value === undefined) {
           if (${k} in input) {
             newResult[${k}] = undefined;
@@ -3936,7 +2087,7 @@ window.__ModuleLoader__.load({
         } else {
           newResult[${k}] = ${id}.value;
         }
-        
+
       `);
 					else if (!isOptionalIn) doc.write(`
         const ${id}_present = ${k} in input;
@@ -3971,7 +2122,7 @@ window.__ModuleLoader__.load({
             path: iss.path ? [${k}, ...iss.path] : [${k}]
           })));
         }
-        
+
         if (${id}.value === undefined) {
           if (${k} in input) {
             newResult[${k}] = undefined;
@@ -3979,7 +2130,7 @@ window.__ModuleLoader__.load({
         } else {
           newResult[${k}] = ${id}.value;
         }
-        
+
       `);
 				}
 				doc.write(`payload.value = newResult;`);
@@ -6604,6 +4755,30 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function superRefine(fn, params) {
 			return /* @__PURE__ */ _superRefine(fn, params);
 		}
+		function canonicalHostname(url) {
+			return url.hostname.toLocaleLowerCase("en-US").replace(/\.+$/u, "");
+		}
+		function normalizeOasisOrigin(value, label = "origin") {
+			let url;
+			try {
+				url = new URL(value);
+			} catch {
+				throw new TypeError(`${label} must be an absolute HTTP(S) origin`);
+			}
+			if (!["http:", "https:"].includes(url.protocol)) throw new TypeError(`${label} must use HTTP(S)`);
+			if (url.username || url.password || url.search || url.hash || !["", "/"].includes(url.pathname)) throw new TypeError(`${label} must contain only an origin`);
+			const hostname = canonicalHostname(url);
+			if (hostname === "lzhxpy.oasisintwrite.com") throw new TypeError("The Oasis production origin is forbidden");
+			url.hostname = hostname;
+			return url.origin;
+		}
+		function isCanonicalOasisNonProductionOrigin(value) {
+			try {
+				return normalizeOasisOrigin(value) === value;
+			} catch {
+				return false;
+			}
+		}
 		//#endregion
 		//#region src/workbench-contract.js
 		const WORKBENCH_LIMITS = Object.freeze({
@@ -6906,19 +5081,70 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return false;
 			}
 		}, "must be an absolute HTTP(S) URL");
-		const httpOriginSchema = httpUrlSchema.refine((value) => {
-			return value === new URL(value).origin;
-		}, "must contain only an HTTP(S) origin");
+		const httpOriginSchema = httpUrlSchema.refine(isCanonicalOasisNonProductionOrigin, "must contain only a non-production HTTP(S) origin");
+		const nonProductionHttpUrlSchema = httpUrlSchema.refine((value) => isCanonicalOasisNonProductionOrigin(new URL(value).origin), "must target a non-production HTTP(S) origin");
 		const oasisRemoteExecutionStatusSchema = _enum([
 			"prepared",
 			"uploading",
 			"ready-to-submit",
 			"submitting",
 			"submission-unknown",
+			"waiting-result",
+			"wait-stopped",
 			"auth-required",
 			"completed",
 			"failed"
 		]);
+		const OASIS_REMOTE_TERMINAL_STATUSES = /* @__PURE__ */ new Set(["completed", "failed"]);
+		function isOasisRemoteExecutionUnresolved(execution) {
+			return !OASIS_REMOTE_TERMINAL_STATUSES.has(execution?.status);
+		}
+		const oasisServiceSummarySchema = object({
+			categoryId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			categoryName: string().min(1).max(200),
+			group: string().max(200),
+			description: string().max(4e3),
+			apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			apiEndpoint: identifierSchema,
+			apiProcess: string().max(4e3),
+			apiDescription: string().max(4e3)
+		}).strict();
+		const oasisServiceFieldSchema = object({
+			fieldId: identifierSchema,
+			label: string().min(1).max(200),
+			description: string().max(4e3),
+			type: identifierSchema,
+			control: _enum([
+				"short-text",
+				"long-text",
+				"single-file",
+				"text-output",
+				"file-output"
+			])
+		}).strict();
+		const oasisProfessionalBootstrapSchema = object({
+			environmentKind: literal("non-production"),
+			remoteEnabled: boolean(),
+			credentialConfigured: boolean(),
+			balance: number().nonnegative().finite().nullable(),
+			services: array(oasisServiceSummarySchema).max(256),
+			folders: array(object({
+				id: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+				name: string().min(1).max(200)
+			}).strict()).max(1e3)
+		}).strict();
+		const oasisProfessionalDetailSchema = object({
+			id: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			name: identifierSchema,
+			apiType: literal("Workflow"),
+			price: number().nonnegative().finite(),
+			modelName: string().max(200),
+			executionMode: literal("sync"),
+			inputFields: array(oasisServiceFieldSchema).max(128),
+			outputFields: array(oasisServiceFieldSchema).max(128),
+			schemaHash: sha256Schema
+		}).strict();
+		const oasisProfessionalStopResponseSchema = object({ stopped: boolean() }).strict();
 		const oasisProviderSnapshotSchema = object({
 			apiBaseOrigin: httpOriginSchema,
 			apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
@@ -6932,6 +5158,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			requestKey: identifierSchema,
 			status: oasisRemoteExecutionStatusSchema,
 			inputSha: sha256Schema,
+			formValues: jsonRootObjectSchema,
+			apiBaseOrigin: httpOriginSchema,
 			serviceSnapshot: object({
 				apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
 				apiEndpoint: identifierSchema,
@@ -6950,7 +5178,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			uploadedFiles: array(object({
 				fieldId: identifierSchema,
 				referenceId: identifierSchema,
-				url: httpUrlSchema,
+				url: nonProductionHttpUrlSchema,
 				sha256: sha256Schema,
 				uploadedAt: timestampSchema
 			}).strict()).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
@@ -6969,6 +5197,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					path: ["completedAt"],
 					message: "completed execution requires completedAt"
 				});
+				if (value.submittedAt === null) ctx.addIssue({
+					code: "custom",
+					path: ["submittedAt"],
+					message: "completed execution requires submittedAt"
+				});
 				if (value.safeError !== null) ctx.addIssue({
 					code: "custom",
 					path: ["safeError"],
@@ -6977,6 +5210,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}
 			if ([
 				"submission-unknown",
+				"wait-stopped",
 				"auth-required",
 				"failed"
 			].includes(value.status) && value.safeError === null) ctx.addIssue({
@@ -7000,7 +5234,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}).strict(),
 			result: object({
 				answerText: jsonStringSchema,
-				fileUrls: array(httpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
+				fileUrls: array(nonProductionHttpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
 				fileStatus: literal("undownloaded-unverified"),
 				responseSha: sha256Schema,
 				artifact: artifactSchema
@@ -7117,15 +5351,27 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						],
 						message: "remote run requires a completed Host execution"
 					});
-					else if (execution.requestKey !== run.requestKey || execution.inputSha !== run.inputSnapshot.sha256) ctx.addIssue({
-						code: "custom",
-						path: [
-							"runs",
-							mapKey,
-							"executionId"
-						],
-						message: "remote run must match its Host execution snapshot"
-					});
+					else {
+						if (execution.requestKey !== run.requestKey || execution.inputSha !== run.inputSnapshot.sha256) ctx.addIssue({
+							code: "custom",
+							path: [
+								"runs",
+								mapKey,
+								"executionId"
+							],
+							message: "remote run must match its Host execution snapshot"
+						});
+						const provider = run.providerSnapshot;
+						if (execution.serviceSnapshot.apiId !== provider.apiId || execution.apiBaseOrigin !== provider.apiBaseOrigin || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint || execution.serviceSnapshot.apiProcess !== provider.apiProcess || execution.folderSnapshot.folderId !== provider.folderId || execution.priceSnapshot.price !== provider.price) ctx.addIssue({
+							code: "custom",
+							path: [
+								"runs",
+								mapKey,
+								"providerSnapshot"
+							],
+							message: "remote run provider must match its Host service, folder, and price snapshots"
+						});
+					}
 				}
 				if (requestKeys.has(run.requestKey)) ctx.addIssue({
 					code: "custom",
@@ -7150,7 +5396,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				"prepared",
 				"uploading",
 				"ready-to-submit",
-				"submitting"
+				"submitting",
+				"submission-unknown",
+				"waiting-result",
+				"wait-stopped",
+				"auth-required"
 			]);
 			for (const [index, executionId] of value.remoteExecutionOrder.entries()) {
 				if (executionIds.has(executionId)) ctx.addIssue({
@@ -7190,6 +5440,32 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					message: `duplicate remote request key: ${execution.requestKey}`
 				});
 				executionRequestKeys.add(execution.requestKey);
+				const uploadedFields = /* @__PURE__ */ new Set();
+				for (const [index, upload] of execution.uploadedFiles.entries()) {
+					if (uploadedFields.has(upload.fieldId)) ctx.addIssue({
+						code: "custom",
+						path: [
+							"remoteExecutions",
+							mapKey,
+							"uploadedFiles",
+							index,
+							"fieldId"
+						],
+						message: "uploaded field ids must be unique"
+					});
+					uploadedFields.add(upload.fieldId);
+					const reference = execution.materialSnapshots.find((item) => item.referenceId === upload.referenceId);
+					if (!reference || reference.sha256 !== upload.sha256) ctx.addIssue({
+						code: "custom",
+						path: [
+							"remoteExecutions",
+							mapKey,
+							"uploadedFiles",
+							index
+						],
+						message: "uploaded file must match its confirmed material snapshot"
+					});
+				}
 				if (execution.status === "completed" && !remoteRunExecutionIds.has(execution.executionId)) ctx.addIssue({
 					code: "custom",
 					path: [
@@ -7204,7 +5480,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			if (inFlight > 1) ctx.addIssue({
 				code: "custom",
 				path: ["remoteExecutions"],
-				message: "concurrent in-flight remote executions are forbidden"
+				message: "concurrent unresolved remote executions are forbidden"
 			});
 		});
 		const panelModeSchema = _enum([
@@ -7342,6 +5618,2058 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}).strict()]);
 		const writebackCommitResponseSchema = workbenchReplaceResponseSchema;
 		//#endregion
+		//#region src/client/codex-icons.js
+		const CODEX_PANEL_ICONS = Object.freeze({
+			showHide: Object.freeze({
+				viewBox: "0 0 20 20",
+				transform: "translate(20 0) scale(-1 1)",
+				paths: Object.freeze(["M6.83496 3.99992C6.38353 4.00411 6.01421 4.0122 5.69824 4.03801C5.31232 4.06954 5.03904 4.12266 4.82227 4.20012L4.62207 4.28606C4.18264 4.50996 3.81498 4.85035 3.55859 5.26848L3.45605 5.45207C3.33013 5.69922 3.25006 6.01354 3.20801 6.52824C3.16533 7.05065 3.16504 7.71885 3.16504 8.66301V11.3271C3.16504 12.2712 3.16533 12.9394 3.20801 13.4618C3.25006 13.9766 3.33013 14.2909 3.45605 14.538L3.55859 14.7216C3.81498 15.1397 4.18266 15.4801 4.62207 15.704L4.82227 15.79C5.03904 15.8674 5.31234 15.9205 5.69824 15.9521C6.01398 15.9779 6.383 15.986 6.83398 15.9902L6.83496 3.99992ZM18.165 11.3271C18.165 12.2493 18.1653 12.9811 18.1172 13.5702C18.0745 14.0924 17.9916 14.5472 17.8125 14.9648L17.7295 15.1415C17.394 15.8 16.8834 16.3511 16.2568 16.7353L15.9814 16.8896C15.5157 17.1268 15.0069 17.2285 14.4102 17.2773C13.821 17.3254 13.0893 17.3251 12.167 17.3251H7.83301C6.91071 17.3251 6.17898 17.3254 5.58984 17.2773C5.06757 17.2346 4.61294 17.1508 4.19531 16.9716L4.01855 16.8896C3.36014 16.5541 2.80898 16.0434 2.4248 15.4169L2.27051 15.1415C2.03328 14.6758 1.93158 14.167 1.88281 13.5702C1.83468 12.9811 1.83496 12.2493 1.83496 11.3271V8.66301C1.83496 7.74072 1.83468 7.00898 1.88281 6.41985C1.93157 5.82309 2.03329 5.31432 2.27051 4.84856L2.4248 4.57317C2.80898 3.94666 3.36012 3.436 4.01855 3.10051L4.19531 3.0175C4.61285 2.83843 5.06771 2.75548 5.58984 2.71281C6.17898 2.66468 6.91071 2.66496 7.83301 2.66496H12.167C13.0893 2.66496 13.821 2.66468 14.4102 2.71281C15.0069 2.76157 15.5157 2.86329 15.9814 3.10051L16.2568 3.25481C16.8833 3.63898 17.394 4.19012 17.7295 4.84856L17.8125 5.02531C17.9916 5.44285 18.0745 5.89771 18.1172 6.41985C18.1653 7.00898 18.165 7.74072 18.165 8.66301V11.3271ZM8.16406 15.995H12.167C13.1112 15.995 13.7794 15.9947 14.3018 15.9521C14.8164 15.91 15.1308 15.8299 15.3779 15.704L15.5615 15.6015C15.9797 15.3451 16.32 14.9774 16.5439 14.538L16.6299 14.3378C16.7074 14.121 16.7605 13.8478 16.792 13.4618C16.8347 12.9394 16.835 12.2712 16.835 11.3271V8.66301C16.835 7.71885 16.8347 7.05065 16.792 6.52824C16.7605 6.14232 16.7073 5.86904 16.6299 5.65227L16.5439 5.45207C16.32 5.01264 15.9796 4.64498 15.5615 4.3886L15.3779 4.28606C15.1308 4.16013 14.8165 4.08006 14.3018 4.03801C13.7794 3.99533 13.1112 3.99504 12.167 3.99504H8.16406C8.16407 3.99667 8.16504 3.99829 8.16504 3.99992L8.16406 15.995Z"])
+			}),
+			expand: Object.freeze({
+				viewBox: "0 0 20 20",
+				paths: Object.freeze(["M4.33496 11C4.33496 10.6327 4.63273 10.335 5 10.335C5.36727 10.335 5.66504 10.6327 5.66504 11V14.335H9L9.13379 14.3486C9.43692 14.4106 9.66504 14.6786 9.66504 15C9.66504 15.3214 9.43692 15.5894 9.13379 15.6514L9 15.665H5C4.63273 15.665 4.33496 15.3673 4.33496 15V11ZM14.335 9V5.66504H11C10.6327 5.66504 10.335 5.36727 10.335 5C10.335 4.63273 10.6327 4.33496 11 4.33496H15L15.1338 4.34863C15.4369 4.41057 15.665 4.67857 15.665 5V9C15.665 9.36727 15.3673 9.66504 15 9.66504C14.6327 9.66504 14.335 9.36727 14.335 9Z"])
+			}),
+			restore: Object.freeze({
+				viewBox: "0 0 16 16",
+				paths: Object.freeze(["M6.1664 8.80845C6.7325 8.80845 7.1918 9.26774 7.1918 9.83384V13.3338C7.19155 13.6236 6.9562 13.8592 6.6664 13.8592C6.37672 13.8591 6.14126 13.6235 6.14101 13.3338V10.5936L2.70547 14.0379C2.50071 14.243 2.16753 14.2435 1.9623 14.0389C1.75709 13.8342 1.75665 13.501 1.96133 13.2957L5.39101 9.85923H2.6664C2.37672 9.85909 2.14126 9.6235 2.14101 9.33384C2.14101 9.04397 2.37657 8.80858 2.6664 8.80845H6.1664Z", "M13.2943 1.96274C13.4989 1.75743 13.8311 1.75731 14.0365 1.96177C14.2419 2.16637 14.243 2.49854 14.0385 2.70395L10.6127 6.14145H13.3334C13.6233 6.14145 13.8588 6.37689 13.8588 6.66684C13.8587 6.95674 13.6233 7.19223 13.3334 7.19223H9.8334C9.26734 7.19223 8.80807 6.73288 8.80801 6.16684V2.66684C8.80801 2.37689 9.04345 2.14145 9.3334 2.14145C9.62335 2.14145 9.85879 2.37689 9.85879 2.66684V5.41098L13.2943 1.96274Z"])
+			})
+		});
+		function CodexPanelIcon({ name, size = 18 }) {
+			const icon = CODEX_PANEL_ICONS[name];
+			if (!icon) throw new Error(`unknown Codex panel icon: ${name}`);
+			const paths = icon.paths.map((path) => (0, react.createElement)("path", {
+				key: path,
+				d: path,
+				fill: "currentColor"
+			}));
+			const body = icon.transform ? (0, react.createElement)("g", { transform: icon.transform }, paths) : paths;
+			return (0, react.createElement)("svg", {
+				width: size,
+				height: size,
+				viewBox: icon.viewBox,
+				fill: "none",
+				"aria-hidden": true
+			}, body);
+		}
+		//#endregion
+		//#region src/client/PanelChrome.js
+		const iconButtonStyle = {
+			width: 32,
+			height: 32,
+			display: "inline-flex",
+			alignItems: "center",
+			justifyContent: "center",
+			border: 0,
+			borderRadius: 8,
+			background: "transparent",
+			color: "var(--dsw-alias-text-primary, #202123)",
+			cursor: "pointer"
+		};
+		function IconButton({ label, icon, onClick, testId, disabled = false }) {
+			return (0, react.createElement)("button", {
+				type: "button",
+				title: label,
+				"aria-label": label,
+				"data-testid": testId,
+				onClick,
+				disabled,
+				style: {
+					...iconButtonStyle,
+					cursor: disabled ? "not-allowed" : "pointer",
+					opacity: disabled ? .5 : 1
+				}
+			}, (0, react.createElement)(CodexPanelIcon, { name: icon }));
+		}
+		function hasUnresolvedRemoteExecution(page) {
+			return page.remoteExecutionOrder?.some((executionId) => isOasisRemoteExecutionUnresolved(page.remoteExecutions?.[executionId])) === true;
+		}
+		function getKeyboardTabTarget(pages, pageId, key) {
+			const index = pages.findIndex((page) => page.pageId === pageId);
+			if (index < 0 || pages.length === 0) return null;
+			if (key === "Home") return pages[0].pageId;
+			if (key === "End") return pages[pages.length - 1].pageId;
+			if (key === "ArrowLeft") return pages[(index - 1 + pages.length) % pages.length].pageId;
+			if (key === "ArrowRight") return pages[(index + 1) % pages.length].pageId;
+			if (key === "Delete") {
+				if (pages.length === 1) return null;
+				return pages[index + 1]?.pageId ?? pages[index - 1].pageId;
+			}
+			return null;
+		}
+		function scheduleAfterRender(callback) {
+			if (typeof globalThis.requestAnimationFrame === "function") {
+				globalThis.requestAnimationFrame(callback);
+				return;
+			}
+			globalThis.queueMicrotask(callback);
+		}
+		function syncStatusLabel(status) {
+			if (status === "loading") return "正在读取当前项目…";
+			if (status === "saving") return "正在保存…";
+			if (status === "ready") return "已与当前DSH项目同步";
+			if (status === "conflict") return "需要解决版本冲突";
+			if (status === "error") return "同步失败";
+			return "等待加载当前项目";
+		}
+		function focusTabAfterUpdate(tabList, pageId, schedule = scheduleAfterRender) {
+			schedule(() => {
+				if (pageId === null) {
+					tabList?.querySelector("[data-testid=\"oasis-new-page\"]")?.focus();
+					return;
+				}
+				const targetId = `oasis-tab-${pageId}`;
+				[...tabList?.querySelectorAll("[role=\"tab\"]") ?? []].find((tab) => tab.id === targetId)?.focus();
+			});
+		}
+		function PanelChrome({ hostMode = "standalone", state, titleRef, onActivatePage, onClosePage, onCreatePage, onHide, onToggleExpanded }) {
+			const effectiveExpanded = state.effectiveMode === "expanded";
+			const autoExpanded = state.panelMode === "normal" && effectiveExpanded;
+			const operationInFlight = Object.values(state.pageOperations ?? {}).some((operation) => operation.activeOperation !== null);
+			const canPersist = ["ready", "saving"].includes(state.syncStatus) && !operationInFlight;
+			function moveTab(event, pageId) {
+				if (!canPersist) return;
+				if (![
+					"ArrowLeft",
+					"ArrowRight",
+					"Home",
+					"End",
+					"Delete"
+				].includes(event.key)) return;
+				if (event.key === "Delete" && hasUnresolvedRemoteExecution(state.pages.find((page) => page.pageId === pageId))) {
+					event.preventDefault();
+					return;
+				}
+				const targetPageId = getKeyboardTabTarget(state.pages, pageId, event.key);
+				event.preventDefault();
+				if (event.key === "Delete") onClosePage(pageId);
+				if (targetPageId !== null) onActivatePage(targetPageId);
+				focusTabAfterUpdate(event.currentTarget.closest?.("[role=\"tablist\"]") ?? event.currentTarget.parentElement, targetPageId);
+			}
+			return (0, react.createElement)("header", { style: {
+				flex: "0 0 auto",
+				borderBottom: "1px solid var(--dsw-alias-border-l2, #e3e3e5)",
+				background: "var(--dsw-alias-bg-base, #fff)"
+			} }, (0, react.createElement)("div", { style: {
+				minHeight: 52,
+				padding: "0 12px 0 16px",
+				display: "flex",
+				alignItems: "center",
+				gap: 10
+			} }, (0, react.createElement)("div", { style: {
+				minWidth: 0,
+				flex: 1
+			} }, (0, react.createElement)("h2", {
+				ref: titleRef,
+				tabIndex: -1,
+				style: {
+					margin: 0,
+					fontSize: 15,
+					lineHeight: 1.25,
+					fontWeight: 650,
+					outline: "none"
+				}
+			}, "绿洲专业工作台"), (0, react.createElement)("div", {
+				role: "status",
+				"aria-live": "polite",
+				style: {
+					marginTop: 2,
+					color: "var(--dsw-alias-text-secondary, #6b7280)",
+					fontSize: 11
+				}
+			}, `与当前DSH项目关联 · ${syncStatusLabel(state.syncStatus)}`)), ...hostMode === "embedded" ? [] : [(0, react.createElement)(IconButton, {
+				key: "expand",
+				label: autoExpanded ? "窗口过窄，右栏已自动展开" : effectiveExpanded ? "恢复右栏宽度" : "展开右栏",
+				icon: effectiveExpanded ? "restore" : "expand",
+				testId: effectiveExpanded ? "oasis-panel-restore" : "oasis-panel-expand",
+				onClick: onToggleExpanded,
+				disabled: autoExpanded || !canPersist
+			}), (0, react.createElement)(IconButton, {
+				key: "hide",
+				label: "隐藏右栏",
+				icon: "showHide",
+				testId: "oasis-panel-hide",
+				onClick: onHide
+			})]), (0, react.createElement)("div", {
+				role: "tablist",
+				"aria-label": "绿洲任务页",
+				style: {
+					minHeight: 38,
+					padding: "0 10px",
+					display: "flex",
+					alignItems: "end",
+					gap: 4,
+					overflowX: "auto"
+				}
+			}, ...state.pages.map((page) => (0, react.createElement)("div", {
+				key: page.pageId,
+				role: "presentation",
+				style: {
+					display: "inline-flex",
+					alignItems: "center",
+					borderBottom: state.activePageId === page.pageId ? "2px solid #10a37f" : "2px solid transparent",
+					borderRadius: "8px 8px 0 0"
+				}
+			}, (0, react.createElement)("button", {
+				id: `oasis-tab-${page.pageId}`,
+				type: "button",
+				role: "tab",
+				"aria-selected": state.activePageId === page.pageId,
+				"aria-controls": `oasis-panel-${page.pageId}`,
+				tabIndex: state.activePageId === page.pageId ? 0 : -1,
+				disabled: !canPersist,
+				onClick: () => onActivatePage(page.pageId),
+				onKeyDown: (event) => moveTab(event, page.pageId),
+				style: {
+					maxWidth: 150,
+					border: 0,
+					background: "transparent",
+					color: "var(--dsw-alias-text-primary, #202123)",
+					padding: "8px 4px 7px 10px",
+					whiteSpace: "nowrap",
+					overflow: "hidden",
+					textOverflow: "ellipsis",
+					cursor: canPersist ? "pointer" : "not-allowed"
+				}
+			}, page.title), (0, react.createElement)("button", {
+				type: "button",
+				"aria-label": `关闭任务页 ${page.title}`,
+				title: `关闭任务页 ${page.title}`,
+				disabled: !canPersist || hasUnresolvedRemoteExecution(page),
+				onClick: () => onClosePage(page.pageId),
+				style: {
+					border: 0,
+					background: "transparent",
+					padding: "6px 7px 6px 3px",
+					color: "var(--dsw-alias-text-secondary, #6b7280)",
+					cursor: canPersist && !hasUnresolvedRemoteExecution(page) ? "pointer" : "not-allowed"
+				}
+			}, "×"))), (0, react.createElement)("button", {
+				type: "button",
+				title: "新建任务页",
+				"aria-label": "新建任务页",
+				"data-testid": "oasis-new-page",
+				disabled: !canPersist,
+				onClick: onCreatePage,
+				style: {
+					...iconButtonStyle,
+					width: 30,
+					height: 30,
+					flex: "0 0 auto",
+					fontSize: 20,
+					cursor: canPersist ? "pointer" : "not-allowed",
+					opacity: canPersist ? 1 : .5
+				}
+			}, "+")));
+		}
+		//#endregion
+		//#region src/client/MaterialReferences.js
+		function shortHash$1(hash) {
+			return typeof hash === "string" && hash.length >= 8 ? `${hash.slice(0, 8)}…` : "—";
+		}
+		function formatBytes(bytes) {
+			if (!Number.isFinite(bytes)) return "—";
+			if (bytes < 1024) return `${bytes} B`;
+			if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
+			return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+		}
+		const actionStyle = {
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 7,
+			padding: "6px 9px",
+			background: "var(--dsw-alias-bg-base, #fff)",
+			color: "var(--dsw-alias-text-primary, #1f2623)"
+		};
+		function MaterialReferences({ page, workflow, operation, disabled, onMaterialDraft, onAdd, onRefresh, onRemove, confirmRemove = (message) => globalThis.confirm?.(message) === true }) {
+			const addDisabled = disabled || !operation.materialConfirmed || operation.materialPath.trim().length === 0;
+			return (0, react.createElement)("section", { "aria-labelledby": `oasis-material-title-${page.pageId}` }, (0, react.createElement)("h4", {
+				id: `oasis-material-title-${page.pageId}`,
+				style: {
+					margin: "0 0 5px",
+					fontSize: 15
+				}
+			}, "项目材料"), (0, react.createElement)("p", { style: {
+				margin: "0 0 12px",
+				color: "var(--dsw-alias-text-secondary, #66706b)",
+				fontSize: 12
+			} }, `仅登记元数据与哈希；文件在本机流式读取以计算哈希，正文不提取、不持久化且不用于生成。支持 ${workflow.materialPolicy.acceptedExtensions.join("、")}。`), (0, react.createElement)("div", { style: {
+				display: "grid",
+				gap: 8,
+				marginBottom: 12
+			} }, (0, react.createElement)("label", {
+				htmlFor: `oasis-material-path-${page.pageId}`,
+				style: {
+					fontSize: 13,
+					fontWeight: 650
+				}
+			}, "Workspace 内相对路径"), (0, react.createElement)("input", {
+				id: `oasis-material-path-${page.pageId}`,
+				"aria-label": "Workspace 内材料相对路径",
+				value: operation.materialPath,
+				disabled,
+				onChange: (event) => onMaterialDraft(event.currentTarget.value, false),
+				style: {
+					...actionStyle,
+					width: "100%",
+					boxSizing: "border-box",
+					padding: "9px 10px"
+				}
+			}), (0, react.createElement)("label", { style: {
+				display: "flex",
+				gap: 8,
+				alignItems: "flex-start",
+				fontSize: 12
+			} }, (0, react.createElement)("input", {
+				type: "checkbox",
+				checked: operation.materialConfirmed,
+				disabled,
+				onChange: (event) => onMaterialDraft(operation.materialPath, event.currentTarget.checked)
+			}), (0, react.createElement)("span", null, "我确认该相对路径属于当前项目，并同意登记文件元数据与 SHA-256。")), (0, react.createElement)("button", {
+				type: "button",
+				disabled: addDisabled,
+				onClick: onAdd,
+				style: actionStyle,
+				title: addDisabled ? "填写路径并勾选确认后才可登记" : void 0
+			}, "登记材料")), (0, react.createElement)("div", { style: {
+				display: "grid",
+				gap: 8
+			} }, ...page.inputRefs.map((reference) => (0, react.createElement)("article", {
+				key: reference.referenceId,
+				style: {
+					border: "1px solid var(--dsw-alias-border-l2, #dfe2e0)",
+					borderRadius: 9,
+					padding: 11,
+					display: "grid",
+					gap: 7
+				}
+			}, (0, react.createElement)("strong", { style: {
+				fontSize: 13,
+				overflowWrap: "anywhere"
+			} }, reference.displayName ?? reference.relativePath ?? "旧版材料"), reference.kind === "project-file" ? (0, react.createElement)("div", { style: {
+				fontSize: 12,
+				color: "var(--dsw-alias-text-secondary, #66706b)"
+			} }, `${reference.relativePath} · ${formatBytes(reference.sizeBytes)} · SHA-256 ${shortHash$1(reference.sha256)}`) : (0, react.createElement)("div", { style: {
+				fontSize: 12,
+				color: "#9b3d2f"
+			} }, "旧版材料需移除后重新确认。"), (0, react.createElement)("div", { style: {
+				display: "flex",
+				gap: 7
+			} }, (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabled || reference.kind !== "project-file",
+				"data-testid": `oasis-material-refresh-${reference.referenceId}`,
+				onClick: () => onRefresh(reference.referenceId),
+				style: actionStyle
+			}, "刷新证据"), (0, react.createElement)("button", {
+				type: "button",
+				disabled,
+				"data-testid": `oasis-material-remove-${reference.referenceId}`,
+				onClick: () => onRemove(reference.referenceId, confirmRemove(`确认从任务中移除材料“${reference.displayName ?? reference.referenceId}”？不会删除项目文件。`)),
+				style: actionStyle
+			}, "移除登记"))))), operation.error ? (0, react.createElement)("div", {
+				role: "alert",
+				tabIndex: -1,
+				style: {
+					marginTop: 10,
+					color: "#9b3d2f",
+					fontSize: 12
+				}
+			}, `操作失败（${operation.errorCode ?? "unknown"}）。本地项目文件未被删除或覆盖。`) : null, (0, react.createElement)("div", {
+				role: "status",
+				"aria-live": "polite",
+				style: {
+					marginTop: 8,
+					fontSize: 12,
+					color: "#2f6653"
+				}
+			}, operation.feedback === "material-added" ? "材料证据已登记。" : "", operation.materialsChanged ? "材料已发生变化，请刷新证据后再生成。" : ""));
+		}
+		//#endregion
+		//#region src/client/ProfessionalServicePanel.js
+		const boxStyle = {
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 12,
+			padding: 16,
+			background: "var(--dsw-alias-bg-base, #fff)",
+			display: "grid",
+			gap: 12
+		};
+		const fieldStyle = {
+			display: "grid",
+			gap: 5,
+			fontSize: 12
+		};
+		const controlStyle$1 = {
+			width: "100%",
+			boxSizing: "border-box",
+			border: "1px solid #cfd5d1",
+			borderRadius: 8,
+			padding: 8
+		};
+		function latestExecution(page) {
+			const id = page.remoteExecutionOrder.at(-1);
+			return id ? page.remoteExecutions[id] : null;
+		}
+		function ProfessionalServicePanel({ state, page, operation, onSelectService = () => {}, onUpdateField = () => {}, onSelectFolder = () => {}, onConfirm = () => {}, onStart = () => {}, onContinue = () => {}, onStop = () => {} }) {
+			if (state.professionalStatus === "idle" || state.professionalStatus === "loading") return (0, react.createElement)("section", {
+				style: boxStyle,
+				"data-testid": "oasis-professional-service"
+			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("div", { role: "status" }, "正在读取 Host 专业服务目录…"));
+			if (state.professionalStatus === "error") return (0, react.createElement)("section", {
+				style: boxStyle,
+				"data-testid": "oasis-professional-service"
+			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("div", { role: "alert" }, "专业服务目录读取失败；本地工作流仍可继续使用。"));
+			const bootstrap = state.professionalBootstrap;
+			if (!bootstrap?.remoteEnabled) return (0, react.createElement)("section", {
+				style: boxStyle,
+				"data-testid": "oasis-professional-service"
+			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { style: {
+				margin: 0,
+				color: "#66706b"
+			} }, "Host 尚未配置非生产 API 地址。"));
+			if (!bootstrap.credentialConfigured) return (0, react.createElement)("section", {
+				style: boxStyle,
+				"data-testid": "oasis-professional-service"
+			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { style: {
+				margin: 0,
+				color: "#8b2f24"
+			} }, "请在 DSH 凭证界面配置 JWT；凭证不会进入工作台状态。"));
+			const draft = page.professionalDraft;
+			const detail = operation.professionalDetail;
+			const execution = latestExecution(page);
+			const busy = operation.activeOperation !== null;
+			const canStart = detail && draft && operation.priceConfirmed && operation.externalTransferConfirmed && !busy;
+			const canContinue = execution && [
+				"submission-unknown",
+				"waiting-result",
+				"wait-stopped",
+				"auth-required"
+			].includes(execution.status) && !busy;
+			return (0, react.createElement)("section", {
+				style: boxStyle,
+				"data-testid": "oasis-professional-service"
+			}, (0, react.createElement)("div", null, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("div", { style: {
+				marginTop: 4,
+				color: "#66706b",
+				fontSize: 12
+			} }, `环境：非生产 · 余额：${bootstrap.balance ?? "未知"} · 价格仅作提交前快照`)), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, "服务"), (0, react.createElement)("select", {
+				value: draft?.selectedApiEndpoint ?? "",
+				disabled: busy,
+				onChange: (event) => {
+					if (event.currentTarget.value) onSelectService(event.currentTarget.value);
+				},
+				style: controlStyle$1,
+				"data-testid": "oasis-professional-service-select"
+			}, (0, react.createElement)("option", { value: "" }, "请选择服务"), ...bootstrap.services.map((service) => (0, react.createElement)("option", {
+				key: service.apiEndpoint,
+				value: service.apiEndpoint
+			}, `${service.categoryName} / ${service.apiEndpoint}`)))), draft && !detail ? (0, react.createElement)("button", {
+				type: "button",
+				disabled: busy,
+				onClick: () => onSelectService(draft.selectedApiEndpoint),
+				"data-testid": "oasis-professional-load-detail"
+			}, "加载并校验服务定义") : null, detail ? (0, react.createElement)("div", { style: {
+				display: "grid",
+				gap: 10
+			} }, ...detail.inputFields.map((field) => (0, react.createElement)("label", {
+				key: field.fieldId,
+				style: fieldStyle
+			}, (0, react.createElement)("span", null, field.label), field.control === "single-file" ? (0, react.createElement)("select", {
+				value: draft.formValues[field.fieldId] ?? "",
+				disabled: busy,
+				style: controlStyle$1,
+				onChange: (event) => onUpdateField(field.fieldId, event.currentTarget.value),
+				"data-testid": `oasis-professional-field-${field.fieldId}`
+			}, (0, react.createElement)("option", { value: "" }, "不上传文件"), ...page.inputRefs.filter((item) => item.kind === "project-file").map((reference) => (0, react.createElement)("option", {
+				key: reference.referenceId,
+				value: reference.referenceId
+			}, reference.displayName))) : (0, react.createElement)(field.control === "long-text" ? "textarea" : "input", {
+				value: draft.formValues[field.fieldId] ?? "",
+				disabled: busy,
+				style: controlStyle$1,
+				onChange: (event) => onUpdateField(field.fieldId, event.currentTarget.value),
+				"data-testid": `oasis-professional-field-${field.fieldId}`
+			}))), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, "项目文件夹"), (0, react.createElement)("select", {
+				value: draft.folderId,
+				disabled: busy,
+				style: controlStyle$1,
+				onChange: (event) => onSelectFolder(Number(event.currentTarget.value)),
+				"data-testid": "oasis-professional-folder"
+			}, ...bootstrap.folders.map((folder) => (0, react.createElement)("option", {
+				key: folder.id,
+				value: folder.id
+			}, folder.name)))), (0, react.createElement)("div", { style: { fontSize: 12 } }, `参考价格：${detail.price}`), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, (0, react.createElement)("input", {
+				type: "checkbox",
+				checked: operation.priceConfirmed,
+				disabled: busy,
+				onChange: (event) => onConfirm({
+					priceConfirmed: event.currentTarget.checked,
+					externalTransferConfirmed: operation.externalTransferConfirmed
+				})
+			}), " 我已确认本次参考价格与余额快照")), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, (0, react.createElement)("input", {
+				type: "checkbox",
+				checked: operation.externalTransferConfirmed,
+				disabled: busy,
+				onChange: (event) => onConfirm({
+					priceConfirmed: operation.priceConfirmed,
+					externalTransferConfirmed: event.currentTarget.checked
+				})
+			}), " 我确认所选材料将上传至已配置的非生产绿洲环境")), (0, react.createElement)("button", {
+				type: "button",
+				disabled: !canStart,
+				onClick: onStart,
+				"data-testid": "oasis-professional-start"
+			}, busy ? "处理中…" : "提交专业服务")) : null, execution ? (0, react.createElement)("div", {
+				role: "status",
+				style: {
+					borderTop: "1px solid #eceeec",
+					paddingTop: 10,
+					fontSize: 12
+				}
+			}, `执行状态：${execution.status}`, execution.safeError ? (0, react.createElement)("div", { role: "alert" }, execution.safeError.message) : null, canContinue ? (0, react.createElement)("button", {
+				type: "button",
+				onClick: () => onContinue(execution.executionId),
+				"data-testid": "oasis-professional-continue"
+			}, "继续按原请求 key 对账") : null, busy ? (0, react.createElement)("button", {
+				type: "button",
+				onClick: () => onStop(execution.executionId),
+				"data-testid": "oasis-professional-stop"
+			}, "停止本地等待") : null) : null, operation.error ? (0, react.createElement)("div", { role: "alert" }, operation.error) : null);
+		}
+		//#endregion
+		//#region src/client/RunPreview.js
+		function materialIdentity(reference) {
+			return reference?.kind === "project-file" ? [
+				reference.referenceId,
+				reference.relativePath,
+				reference.sha256,
+				reference.sizeBytes
+			] : [reference?.referenceId, reference?.kind];
+		}
+		function hasDraftDiverged(page, run) {
+			if (!run) return false;
+			return JSON.stringify(page.formValues) !== JSON.stringify(run.inputSnapshot.formValues) || JSON.stringify(page.inputRefs.map(materialIdentity)) !== JSON.stringify(run.inputSnapshot.inputRefs.map(materialIdentity));
+		}
+		function generationDisabledReason({ syncStatus, validation, operation }) {
+			if (syncStatus !== "ready") return syncStatus === "saving" ? "正在保存草稿" : "工作区尚未就绪";
+			if (!validation.valid) return "请先修正表单错误";
+			if (operation.materialsChanged) return "材料已变化，请先刷新";
+			if (operation.activeOperation !== null) return "任务正在处理中";
+			return null;
+		}
+		function statusText(status) {
+			if (status === "blocked") return "阻断";
+			return "需人工复核";
+		}
+		const buttonStyle$1 = {
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 7,
+			padding: "7px 10px",
+			background: "var(--dsw-alias-bg-base, #fff)",
+			color: "inherit"
+		};
+		function RunPreview({ page, operation, validation, syncStatus, onGenerate, onActivateRun, onReviewNote, onReview }) {
+			const disabledReason = generationDisabledReason({
+				syncStatus,
+				validation,
+				operation
+			});
+			const run = page.activeRunId === null ? null : page.runs[page.activeRunId];
+			const blocked = run?.result.contentStatus === "blocked";
+			return (0, react.createElement)("section", { "aria-labelledby": `oasis-run-title-${page.pageId}` }, (0, react.createElement)("div", { style: {
+				display: "flex",
+				alignItems: "flex-start",
+				justifyContent: "space-between",
+				gap: 12,
+				marginBottom: 12
+			} }, (0, react.createElement)("div", null, (0, react.createElement)("h4", {
+				id: `oasis-run-title-${page.pageId}`,
+				style: {
+					margin: 0,
+					fontSize: 15
+				}
+			}, "生成与结果"), (0, react.createElement)("p", { style: {
+				margin: "5px 0 0",
+				fontSize: 12,
+				color: "var(--dsw-alias-text-secondary, #66706b)"
+			} }, "本地确定性演练；结果必须经过人工审核。")), (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabledReason !== null,
+				onClick: onGenerate,
+				title: disabledReason ?? "基于已保存表单和已确认材料生成",
+				"aria-describedby": disabledReason ? `oasis-generate-reason-${page.pageId}` : void 0,
+				style: {
+					...buttonStyle$1,
+					background: "#245d47",
+					color: "#fff",
+					borderColor: "#245d47",
+					whiteSpace: "nowrap"
+				}
+			}, operation.activeOperation === "run-create" ? "生成中…" : "生成新运行")), (0, react.createElement)("div", {
+				id: `oasis-generate-reason-${page.pageId}`,
+				role: "status",
+				"aria-live": "polite",
+				style: {
+					minHeight: 18,
+					fontSize: 12,
+					color: "#8a4b2f"
+				}
+			}, disabledReason ?? (operation.feedback === "run-completed" ? "新运行已完成。" : ""), !validation.valid && validation.firstInvalidFieldId ? (0, react.createElement)("button", {
+				type: "button",
+				onClick: () => globalThis.document?.getElementById(`oasis-field-${page.pageId}-${validation.firstInvalidFieldId}`)?.focus(),
+				style: {
+					...buttonStyle$1,
+					marginLeft: 8,
+					padding: "3px 7px",
+					fontSize: 11
+				}
+			}, "定位首个错误") : null), operation.error ? (0, react.createElement)("div", {
+				role: "alert",
+				tabIndex: -1,
+				style: {
+					marginBottom: 10,
+					color: "#8b2f24",
+					fontSize: 12
+				}
+			}, `操作失败（${operation.errorCode ?? "unknown"}）。草稿与既有运行仍保留。`) : null, page.runOrder.length > 0 ? (0, react.createElement)("nav", {
+				"aria-label": "运行历史",
+				style: {
+					display: "flex",
+					gap: 6,
+					overflowX: "auto",
+					padding: "4px 0 12px"
+				}
+			}, ...[...page.runOrder].reverse().map((runId, index) => (0, react.createElement)("button", {
+				key: runId,
+				type: "button",
+				onClick: () => onActivateRun(runId),
+				"aria-current": runId === page.activeRunId ? "true" : void 0,
+				style: {
+					...buttonStyle$1,
+					background: runId === page.activeRunId ? "#e7f0eb" : buttonStyle$1.background,
+					whiteSpace: "nowrap"
+				}
+			}, `运行 ${page.runOrder.length - index}`))) : null, run ? (0, react.createElement)("article", { style: {
+				display: "grid",
+				gap: 12
+			} }, (0, react.createElement)("div", { style: {
+				display: "flex",
+				gap: 8,
+				alignItems: "center",
+				flexWrap: "wrap",
+				fontSize: 12
+			} }, (0, react.createElement)("strong", null, statusText(run.result.contentStatus)), (0, react.createElement)("span", null, run.completedAt), hasDraftDiverged(page, run) ? (0, react.createElement)("span", { style: { color: "#8a4b2f" } }, "草稿已偏离此运行；旧运行快照保持不变。") : (0, react.createElement)("span", { style: { color: "#2f6653" } }, "当前草稿与此运行输入一致。")), ...run.result.sections.map((section) => (0, react.createElement)("section", {
+				key: section.sectionId,
+				style: {
+					borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
+					paddingTop: 10
+				}
+			}, (0, react.createElement)("h5", { style: {
+				margin: "0 0 6px",
+				fontSize: 13
+			} }, section.title), (0, react.createElement)("pre", { style: {
+				margin: 0,
+				whiteSpace: "pre-wrap",
+				overflowWrap: "anywhere",
+				font: "inherit",
+				fontSize: 13,
+				lineHeight: 1.65
+			} }, section.body))), run.result.risks.length > 0 ? (0, react.createElement)("div", null, (0, react.createElement)("strong", { style: { fontSize: 13 } }, "风险"), (0, react.createElement)("ul", null, ...run.result.risks.map((risk, index) => (0, react.createElement)("li", { key: index }, risk)))) : null, (0, react.createElement)("p", { style: {
+				margin: 0,
+				fontSize: 12,
+				color: "var(--dsw-alias-text-secondary, #66706b)"
+			} }, run.result.disclaimer), blocked ? (0, react.createElement)("div", {
+				role: "alert",
+				style: {
+					border: "1px solid #d7a69d",
+					borderRadius: 8,
+					padding: 10,
+					color: "#8b2f24"
+				}
+			}, "该运行包含阻断结果；阻断结果不能批准或回写。请补充信息后生成新运行。") : (0, react.createElement)("div", { style: {
+				borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
+				paddingTop: 12,
+				display: "grid",
+				gap: 8
+			} }, (0, react.createElement)("label", {
+				htmlFor: `oasis-review-note-${page.pageId}`,
+				style: {
+					fontWeight: 650,
+					fontSize: 13
+				}
+			}, "审核意见"), (0, react.createElement)("textarea", {
+				id: `oasis-review-note-${page.pageId}`,
+				value: operation.reviewNote,
+				rows: 3,
+				disabled: operation.activeOperation !== null,
+				onChange: (event) => onReviewNote(event.currentTarget.value),
+				style: {
+					width: "100%",
+					boxSizing: "border-box",
+					border: "1px solid #d7d9d8",
+					borderRadius: 8,
+					padding: 9
+				}
+			}), (0, react.createElement)("div", { style: {
+				display: "flex",
+				gap: 8,
+				flexWrap: "wrap"
+			} }, (0, react.createElement)("button", {
+				type: "button",
+				disabled: operation.reviewNote.trim().length === 0 || operation.activeOperation !== null,
+				onClick: () => onReview("changes-requested", operation.reviewNote),
+				style: buttonStyle$1
+			}, "要求修改"), (0, react.createElement)("button", {
+				type: "button",
+				"data-testid": "oasis-review-approve",
+				disabled: operation.activeOperation !== null,
+				onClick: () => onReview("approved", operation.reviewNote),
+				style: buttonStyle$1
+			}, "批准此运行")), run.review.status === "approved" ? (0, react.createElement)("p", { style: {
+				margin: 0,
+				color: "#2f6653",
+				fontSize: 12
+			} }, "已记录人工批准；此状态不代表专业、技术或法律结论。") : run.review.status === "changes-requested" ? (0, react.createElement)("p", { style: {
+				margin: 0,
+				color: "#8a4b2f",
+				fontSize: 12
+			} }, `已要求修改：${run.review.note}`) : null)) : (0, react.createElement)("div", { style: {
+				border: "1px dashed #c8ceca",
+				borderRadius: 10,
+				padding: 18,
+				color: "var(--dsw-alias-text-secondary, #66706b)",
+				fontSize: 13
+			} }, "保存有效表单并确认材料后，可生成第一个本地运行。"));
+		}
+		//#endregion
+		//#region src/client/WorkflowForm.js
+		const fieldShellStyle = {
+			display: "grid",
+			gap: 6,
+			padding: "0 0 16px"
+		};
+		const controlStyle = {
+			width: "100%",
+			boxSizing: "border-box",
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 8,
+			padding: "9px 10px",
+			background: "var(--dsw-alias-bg-base, #fff)",
+			color: "var(--dsw-alias-text-primary, #1f2623)",
+			font: "inherit",
+			lineHeight: 1.5
+		};
+		function fieldError(field, value) {
+			if (field.control === "short-text" || field.control === "long-text") {
+				if (typeof value !== "string") return "字段值格式不正确。";
+				if (field.required && value.trim().length === 0) return "此项为必填项。";
+				if (value.length > field.maxChars) return `最多输入 ${field.maxChars} 个字符。`;
+				return null;
+			}
+			if (field.control === "string-list") {
+				if (!Array.isArray(value)) return "列表格式不正确。";
+				if (field.required && value.length === 0) return "请至少填写一项。";
+				if (value.length > field.maxItems) return `最多填写 ${field.maxItems} 项。`;
+				if (value.some((item) => typeof item !== "string" || item.trim().length === 0)) return "列表项不能为空。";
+				if (value.some((item) => item.length > field.itemMaxChars)) return `每项最多 ${field.itemMaxChars} 个字符。`;
+				return null;
+			}
+			if (field.control === "select") {
+				if (field.required && (typeof value !== "string" || value.length === 0)) return "请选择一个选项。";
+				if (value !== "" && !field.options.some((option) => option.value === value)) return "请选择目录中提供的选项。";
+				return null;
+			}
+			return "不支持的字段控件。";
+		}
+		function validateWorkflowFormValues(workflow, values) {
+			const errors = {};
+			for (const field of workflow?.form?.fields ?? []) {
+				const error = fieldError(field, values?.[field.fieldId]);
+				if (error !== null) errors[field.fieldId] = error;
+			}
+			const firstInvalidFieldId = Object.keys(errors)[0] ?? null;
+			return Object.freeze({
+				valid: firstInvalidFieldId === null,
+				errors: Object.freeze(errors),
+				firstInvalidFieldId
+			});
+		}
+		function controlFor({ pageId, field, value, error, firstInvalidFieldId, disabled, onChange }) {
+			const id = `oasis-field-${pageId}-${field.fieldId}`;
+			const describedBy = `${id}-description${error ? ` ${id}-error` : ""}`;
+			const shared = {
+				id,
+				name: field.fieldId,
+				disabled,
+				"data-control": field.control,
+				"aria-invalid": Boolean(error),
+				"aria-describedby": describedBy,
+				"data-first-error": firstInvalidFieldId === field.fieldId || void 0,
+				style: {
+					...controlStyle,
+					borderColor: error ? "var(--dsw-alias-color-danger, #b42318)" : "var(--dsw-alias-border-l2, #d7d9d8)"
+				}
+			};
+			if (field.control === "short-text") return (0, react.createElement)("input", {
+				...shared,
+				type: "text",
+				value: value ?? "",
+				maxLength: field.maxChars,
+				onChange: (event) => onChange(field.fieldId, event.currentTarget.value)
+			});
+			if (field.control === "long-text") return (0, react.createElement)("textarea", {
+				...shared,
+				value: value ?? "",
+				maxLength: field.maxChars,
+				rows: 5,
+				onChange: (event) => onChange(field.fieldId, event.currentTarget.value)
+			});
+			if (field.control === "string-list") return (0, react.createElement)("textarea", {
+				...shared,
+				value: Array.isArray(value) ? value.join("\n") : "",
+				rows: 4,
+				onChange: (event) => onChange(field.fieldId, event.currentTarget.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean))
+			});
+			return (0, react.createElement)("select", {
+				...shared,
+				value: value ?? "",
+				onChange: (event) => onChange(field.fieldId, event.currentTarget.value)
+			}, (0, react.createElement)("option", { value: "" }, "请选择"), ...field.options.map((option) => (0, react.createElement)("option", {
+				key: option.value,
+				value: option.value
+			}, option.label)));
+		}
+		function WorkflowForm({ pageId, workflow, values, validation, disabled, onChange }) {
+			return (0, react.createElement)("section", { "aria-labelledby": `oasis-form-title-${pageId}` }, (0, react.createElement)("div", { style: { marginBottom: 16 } }, (0, react.createElement)("h4", {
+				id: `oasis-form-title-${pageId}`,
+				style: {
+					margin: 0,
+					fontSize: 15
+				}
+			}, "工作流输入"), (0, react.createElement)("p", { style: {
+				margin: "5px 0 0",
+				color: "var(--dsw-alias-text-secondary, #66706b)",
+				fontSize: 12
+			} }, `字段来自 Host 工作流目录 · ${workflow.workflowId}@${workflow.workflowVersion}`)), ...workflow.form.fields.map((field) => {
+				const id = `oasis-field-${pageId}-${field.fieldId}`;
+				const error = validation.errors[field.fieldId];
+				return (0, react.createElement)("div", {
+					key: field.fieldId,
+					style: fieldShellStyle,
+					"data-field-id": field.fieldId
+				}, (0, react.createElement)("label", {
+					htmlFor: id,
+					style: {
+						fontWeight: 650,
+						fontSize: 13
+					}
+				}, field.label, field.required ? (0, react.createElement)("span", {
+					"aria-hidden": true,
+					style: {
+						color: "#9b3d2f",
+						marginLeft: 4
+					}
+				}, "＊") : null), (0, react.createElement)("span", {
+					id: `${id}-description`,
+					style: {
+						color: "var(--dsw-alias-text-secondary, #66706b)",
+						fontSize: 12
+					}
+				}, field.description), controlFor({
+					pageId,
+					field,
+					value: values[field.fieldId],
+					error,
+					firstInvalidFieldId: validation.firstInvalidFieldId,
+					disabled,
+					onChange
+				}), error ? (0, react.createElement)("span", {
+					id: `${id}-error`,
+					style: {
+						color: "var(--dsw-alias-color-danger, #b42318)",
+						fontSize: 12
+					}
+				}, error) : null);
+			}));
+		}
+		//#endregion
+		//#region src/client/WritebackPanel.js
+		function shortHash(hash) {
+			return typeof hash === "string" ? `${hash.slice(0, 8)}…` : "—";
+		}
+		const buttonStyle = {
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 7,
+			padding: "7px 10px",
+			background: "var(--dsw-alias-bg-base, #fff)",
+			color: "inherit"
+		};
+		function WritebackPanel({ run, operation, disabled, onDraft, onPrepare, onConfirm, onCommit }) {
+			if (!run || run.result.contentStatus === "blocked" || run.review.status !== "approved") return null;
+			const prepared = operation.writebackPlan;
+			const commitDisabled = disabled || !prepared || !operation.writebackConfirmed;
+			return (0, react.createElement)("section", {
+				"aria-label": "项目回写",
+				style: {
+					borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
+					paddingTop: 14,
+					display: "grid",
+					gap: 10
+				}
+			}, (0, react.createElement)("h4", { style: {
+				margin: 0,
+				fontSize: 15
+			} }, "项目回写"), (0, react.createElement)("p", { style: {
+				margin: 0,
+				fontSize: 12,
+				color: "var(--dsw-alias-text-secondary, #66706b)"
+			} }, "仅可创建全新目录；不会覆盖既有路径。人工批准与回写均不构成专业或法律结论。"), (0, react.createElement)("label", {
+				htmlFor: "oasis-writeback-directory",
+				style: {
+					fontSize: 13,
+					fontWeight: 650
+				}
+			}, "Workspace 内新目录"), (0, react.createElement)("input", {
+				id: "oasis-writeback-directory",
+				value: operation.writebackDirectory,
+				disabled,
+				onChange: (event) => onDraft(event.currentTarget.value, false),
+				style: {
+					width: "100%",
+					boxSizing: "border-box",
+					border: "1px solid #d7d9d8",
+					borderRadius: 8,
+					padding: 9
+				}
+			}), (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabled || operation.writebackDirectory.trim().length === 0,
+				onClick: onPrepare,
+				style: buttonStyle
+			}, operation.activeOperation === "writeback-prepare" ? "正在准备…" : "准备回写清单"), prepared ? (0, react.createElement)("div", { style: {
+				border: "1px solid #cbd7d0",
+				borderRadius: 9,
+				padding: 11,
+				display: "grid",
+				gap: 7
+			} }, (0, react.createElement)("strong", { style: { fontSize: 13 } }, "待确认目标"), (0, react.createElement)("code", { style: {
+				overflowWrap: "anywhere",
+				fontSize: 12
+			} }, prepared.manifest.absoluteTarget), ...prepared.manifest.files.map((file) => (0, react.createElement)("div", {
+				key: file.absolutePath,
+				style: { fontSize: 12 }
+			}, (0, react.createElement)("code", { style: { overflowWrap: "anywhere" } }, file.absolutePath), (0, react.createElement)("span", null, ` · SHA-256 ${shortHash(file.sha256)}`))), (0, react.createElement)("label", { style: {
+				display: "flex",
+				gap: 8,
+				alignItems: "flex-start",
+				fontSize: 12,
+				marginTop: 4
+			} }, (0, react.createElement)("input", {
+				type: "checkbox",
+				checked: operation.writebackConfirmed,
+				disabled,
+				onChange: (event) => onConfirm(event.currentTarget.checked)
+			}), (0, react.createElement)("span", null, "我已复核绝对目标路径和两份文件哈希，同意创建该全新目录。")), (0, react.createElement)("button", {
+				type: "button",
+				"data-testid": "oasis-writeback-commit",
+				disabled: commitDisabled,
+				onClick: onCommit,
+				style: {
+					...buttonStyle,
+					background: "#245d47",
+					color: "#fff",
+					borderColor: "#245d47"
+				}
+			}, operation.activeOperation === "writeback-commit" ? "正在提交…" : "确认创建新目录")) : null, (0, react.createElement)("div", {
+				role: operation.feedback === "index-warning" ? "alert" : "status",
+				"aria-live": "polite",
+				style: { fontSize: 12 }
+			}, operation.feedback === "writeback-success" ? "回写成功：新目录和索引均已提交。" : "", operation.feedback === "conflict" ? "版本或目标路径冲突：未执行覆盖，请重新准备。" : "", operation.feedback === "index-warning" ? "文件已创建，但任务索引更新失败；请按恢复清单人工核对。" : ""), operation.indexWarningManifest ? (0, react.createElement)("div", { style: {
+				border: "1px solid #d7a69d",
+				borderRadius: 8,
+				padding: 9,
+				fontSize: 12
+			} }, (0, react.createElement)("strong", null, "恢复清单"), (0, react.createElement)("div", null, operation.indexWarningManifest.relativeDirectory), ...operation.indexWarningManifest.files.map((file) => (0, react.createElement)("div", { key: file.relativePath }, (0, react.createElement)("code", null, file.relativePath), ` · ${shortHash(file.sha256)}`))) : null);
+		}
+		//#endregion
+		//#region src/client/PanelPages.js
+		const surfaceStyle = {
+			border: "1px solid var(--dsw-alias-border-l2, #dfe2e0)",
+			borderRadius: 12,
+			padding: 16,
+			background: "var(--dsw-alias-bg-base, #fff)"
+		};
+		const cardStyle = {
+			width: "100%",
+			textAlign: "left",
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 12,
+			padding: 16,
+			background: "var(--dsw-alias-bg-base, #fff)",
+			color: "var(--dsw-alias-text-primary, #1f2623)",
+			cursor: "pointer"
+		};
+		function WorkflowChooser({ state, onSelect }) {
+			if (state.catalogStatus === "idle" || state.catalogStatus === "loading") return (0, react.createElement)("div", {
+				role: "status",
+				"aria-live": "polite",
+				style: { padding: 20 }
+			}, "正在读取 Host 工作流目录…");
+			if (state.catalogStatus === "error") return (0, react.createElement)("div", {
+				role: "alert",
+				tabIndex: -1,
+				style: {
+					padding: 20,
+					color: "#8b2f24"
+				}
+			}, "工作流目录读取失败。不会使用 Client 内置卡片替代 Host 定义。");
+			return (0, react.createElement)("div", { style: { padding: 20 } }, (0, react.createElement)("div", { style: { marginBottom: 18 } }, (0, react.createElement)("p", { style: {
+				margin: 0,
+				color: "#2f6653",
+				fontSize: 11,
+				letterSpacing: ".08em",
+				fontWeight: 700
+			} }, "OASIS PROFESSIONAL LOOP"), (0, react.createElement)("h3", { style: {
+				margin: "6px 0",
+				fontSize: 19
+			} }, "选择工作流"), (0, react.createElement)("p", { style: {
+				margin: 0,
+				color: "var(--dsw-alias-text-secondary, #66706b)",
+				fontSize: 13,
+				lineHeight: 1.6
+			} }, "选择后，本任务页将在原位转为 schema 驱动的材料、生成、审核与回写工作区。")), (0, react.createElement)("div", { style: {
+				display: "grid",
+				gap: 10
+			} }, ...state.workflows.map((workflow) => (0, react.createElement)("button", {
+				key: `${workflow.workflowId}@${workflow.workflowVersion}`,
+				type: "button",
+				"data-testid": `oasis-workflow-${workflow.workflowId}`,
+				onClick: () => onSelect(workflow.workflowId),
+				style: cardStyle
+			}, (0, react.createElement)("span", { style: {
+				display: "flex",
+				justifyContent: "space-between",
+				gap: 12,
+				alignItems: "baseline"
+			} }, (0, react.createElement)("strong", { style: { fontSize: 15 } }, workflow.title), (0, react.createElement)("code", { style: {
+				fontSize: 10,
+				color: "#607068"
+			} }, `v${workflow.workflowVersion}`)), (0, react.createElement)("span", { style: {
+				display: "block",
+				marginTop: 6,
+				color: "var(--dsw-alias-text-secondary, #66706b)",
+				fontSize: 12,
+				lineHeight: 1.55
+			} }, workflow.description)))), state.workflows.length === 0 ? (0, react.createElement)("div", {
+				role: "status",
+				style: {
+					color: "#66706b",
+					fontSize: 13
+				}
+			}, "Host 当前未提供可用工作流。") : null);
+		}
+		const syncNoticeStyle = {
+			margin: 20,
+			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
+			borderRadius: 12,
+			padding: 16,
+			color: "var(--dsw-alias-text-primary, #1f2623)",
+			background: "var(--dsw-alias-bg-base, #fff)"
+		};
+		function reloadButton(onReload, label) {
+			return (0, react.createElement)("button", {
+				type: "button",
+				onClick: onReload,
+				style: {
+					marginTop: 12,
+					border: "1px solid #d7d9d8",
+					borderRadius: 8,
+					padding: "7px 10px",
+					background: "#fff",
+					color: "inherit"
+				}
+			}, label);
+		}
+		function activeRun(page) {
+			return page.activeRunId === null ? null : page.runs[page.activeRunId];
+		}
+		function PanelPages({ state, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {} }) {
+			if (state.syncStatus === "idle" || state.syncStatus === "loading") return (0, react.createElement)("div", {
+				role: "status",
+				"aria-live": "polite",
+				style: syncNoticeStyle
+			}, "正在读取当前项目的绿洲任务页…");
+			if (state.syncStatus === "conflict") {
+				const currentRevision = state.conflictCurrent?.revision ?? "未知";
+				return (0, react.createElement)("div", {
+					role: "alert",
+					tabIndex: -1,
+					style: syncNoticeStyle
+				}, (0, react.createElement)("strong", null, "检测到版本冲突"), (0, react.createElement)("div", { style: {
+					marginTop: 6,
+					fontSize: 13
+				} }, `服务端当前为 revision ${currentRevision}。本地草稿仍保留，系统不会自动覆盖。`), reloadButton(onReload, "重新载入服务端版本（舍弃本地草稿）"));
+			}
+			if (state.syncStatus === "error") return (0, react.createElement)("div", {
+				role: "alert",
+				tabIndex: -1,
+				style: syncNoticeStyle
+			}, (0, react.createElement)("strong", null, "保存或读取失败"), (0, react.createElement)("div", { style: {
+				marginTop: 6,
+				fontSize: 13
+			} }, "本地草稿仍保留。请检查 DSH Host 后，再明确重新载入服务端版本。"), reloadButton(onReload, "重新载入服务端版本"));
+			const page = state.pages.find((item) => item.pageId === state.activePageId);
+			if (!page) return (0, react.createElement)("div", { style: {
+				padding: 20,
+				color: "#66706b"
+			} }, "请新建任务页。");
+			const titleEditor = (0, react.createElement)("div", { style: {
+				padding: "14px 20px",
+				display: "grid",
+				gap: 5,
+				borderBottom: "1px solid var(--dsw-alias-border-l2, #eceeec)"
+			} }, (0, react.createElement)("label", {
+				htmlFor: `oasis-task-title-${page.pageId}`,
+				style: {
+					fontSize: 11,
+					color: "#66706b",
+					fontWeight: 650
+				}
+			}, "任务名称"), (0, react.createElement)("input", {
+				key: `${page.pageId}:${page.title}`,
+				id: `oasis-task-title-${page.pageId}`,
+				"aria-label": "任务名称",
+				defaultValue: page.title,
+				maxLength: 200,
+				disabled: !["ready", "saving"].includes(state.syncStatus),
+				onBlur: (event) => {
+					const title = event.currentTarget.value.trim();
+					if (title.length === 0) return void (event.currentTarget.value = page.title);
+					if (title !== page.title) onRenamePage(page.pageId, title);
+				},
+				style: {
+					width: "100%",
+					boxSizing: "border-box",
+					border: 0,
+					padding: 0,
+					background: "transparent",
+					color: "inherit",
+					fontSize: 16,
+					fontWeight: 680
+				}
+			}));
+			let content;
+			if (page.view === "chooser") content = (0, react.createElement)(WorkflowChooser, {
+				state,
+				onSelect: (workflowId) => onSelectWorkflow(page.pageId, workflowId)
+			});
+			else {
+				const workflow = state.workflows.find((item) => item.workflowId === page.workflowId && item.workflowVersion === page.workflowVersion);
+				if (!workflow) content = (0, react.createElement)("div", {
+					role: "alert",
+					tabIndex: -1,
+					style: syncNoticeStyle
+				}, "当前任务引用的工作流版本不在 Host 目录中。为避免错误解释，已停止编辑和生成。");
+				else {
+					const operation = state.pageOperations[page.pageId] ?? {
+						materialPath: "",
+						materialConfirmed: false,
+						reviewNote: "",
+						writebackDirectory: "",
+						writebackConfirmed: false,
+						writebackPlan: null,
+						requestKey: null,
+						activeOperation: null,
+						error: null,
+						errorCode: null,
+						feedback: null,
+						materialsChanged: false,
+						indexWarningManifest: null,
+						professionalDetail: null,
+						priceConfirmed: false,
+						externalTransferConfirmed: false
+					};
+					const validation = validateWorkflowFormValues(workflow, page.formValues);
+					const operationDisabled = operation.activeOperation !== null;
+					const run = activeRun(page);
+					content = (0, react.createElement)("div", {
+						"data-workspace-layout": true,
+						"data-mode": effectiveMode,
+						style: {
+							display: "grid",
+							gridTemplateColumns: effectiveMode === "expanded" ? "minmax(300px, .9fr) minmax(360px, 1.1fr)" : "minmax(0, 1fr)",
+							gap: 14,
+							padding: 14,
+							alignItems: "start"
+						}
+					}, (0, react.createElement)("div", { style: {
+						display: "grid",
+						gap: 14,
+						minWidth: 0
+					} }, (0, react.createElement)("div", { style: surfaceStyle }, (0, react.createElement)(WorkflowForm, {
+						pageId: page.pageId,
+						workflow,
+						values: page.formValues,
+						validation,
+						disabled: operationDisabled,
+						onChange: (fieldId, value) => onUpdateForm(page.pageId, fieldId, value)
+					})), (0, react.createElement)("div", { style: surfaceStyle }, (0, react.createElement)(MaterialReferences, {
+						page,
+						workflow,
+						operation,
+						disabled: operationDisabled,
+						onMaterialDraft: (path, confirmed) => onMaterialDraft(page.pageId, path, confirmed),
+						onAdd: () => onAddMaterial(page.pageId),
+						onRefresh: (referenceId) => onRefreshMaterial(page.pageId, referenceId),
+						onRemove: (referenceId, confirmed) => onRemoveMaterial(page.pageId, referenceId, confirmed)
+					})), (0, react.createElement)(ProfessionalServicePanel, {
+						state,
+						page,
+						operation,
+						onSelectService: (apiEndpoint) => onSelectProfessionalService(page.pageId, apiEndpoint),
+						onUpdateField: (fieldId, value) => onUpdateProfessionalField(page.pageId, fieldId, value),
+						onSelectFolder: (folderId) => onSelectProfessionalFolder(page.pageId, folderId),
+						onConfirm: (value) => onProfessionalConfirm(page.pageId, value),
+						onStart: () => onStartProfessional(page.pageId),
+						onContinue: (executionId) => onContinueProfessional(page.pageId, executionId),
+						onStop: (executionId) => onStopProfessional(page.pageId, executionId)
+					})), (0, react.createElement)("div", { style: {
+						...surfaceStyle,
+						display: "grid",
+						gap: 16,
+						minWidth: 0
+					} }, (0, react.createElement)(RunPreview, {
+						page,
+						operation,
+						workflow,
+						validation,
+						syncStatus: state.syncStatus,
+						onGenerate: () => onGenerate(page.pageId),
+						onActivateRun: (runId) => onActivateRun(page.pageId, runId),
+						onReviewNote: (note) => onReviewNote(page.pageId, note),
+						onReview: (status, note) => onReview(page.pageId, page.activeRunId, status, note)
+					}), (0, react.createElement)(WritebackPanel, {
+						run,
+						operation,
+						disabled: operationDisabled,
+						onDraft: (directory, confirmed) => onWritebackDraft(page.pageId, directory, confirmed),
+						onPrepare: () => onPrepareWriteback(page.pageId, page.activeRunId),
+						onConfirm: (confirmed) => onWritebackConfirm(page.pageId, confirmed),
+						onCommit: () => onCommitWriteback(page.pageId)
+					})));
+				}
+			}
+			return (0, react.createElement)("main", {
+				key: page.pageId,
+				id: `oasis-panel-${page.pageId}`,
+				role: "tabpanel",
+				"aria-labelledby": `oasis-tab-${page.pageId}`,
+				style: {
+					flex: 1,
+					minHeight: 0,
+					overflow: "auto",
+					background: "var(--dsw-alias-bg-subtle, #f5f7f5)"
+				}
+			}, titleEditor, content);
+		}
+		//#endregion
+		//#region src/client/OasisWorkbenchSurface.js
+		const reducedMotionCss = `
+  [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
+  @media (prefers-reduced-motion: reduce) { [data-oasis-panel] { transition: none; } }
+  @media (max-width: 760px) {
+    [data-oasis-panel] [data-workspace-layout] { grid-template-columns: minmax(0, 1fr) !important; }
+  }
+`;
+		function createPanelActions({ store, workspaceId, focusTargets, confirmClose = (message) => globalThis.confirm?.(message) === true }) {
+			return Object.freeze({
+				async activatePage(pageId) {
+					await store.flushWorkspace(workspaceId);
+					store.activatePage(workspaceId, pageId);
+				},
+				async closePage(pageId) {
+					const page = store.getWorkspaceState(workspaceId).pages.find((item) => item.pageId === pageId);
+					if (!page) return false;
+					if (page.remoteExecutionOrder?.some((executionId) => isOasisRemoteExecutionUnresolved(page.remoteExecutions?.[executionId]))) return false;
+					if (page.runOrder.length > 0 && !confirmClose(`任务“${page.title}”包含 ${page.runOrder.length} 个运行记录。确认关闭此任务页？`)) return false;
+					await store.flushWorkspace(workspaceId);
+					store.closePage(workspaceId, pageId);
+					return true;
+				},
+				async hidePanel() {
+					await store.flushWorkspace(workspaceId);
+					const current = store.getWorkspaceState(workspaceId);
+					if (["ready", "saving"].includes(current.syncStatus)) store.setPanelMode(workspaceId, "hidden");
+					else store.setLocalPanelMode(workspaceId, "hidden");
+					focusTargets.get(workspaceId)?.focus?.();
+				}
+			});
+		}
+		async function ensureEmbeddedWorkspaceHidden({ store, workspaceId, workspaceItems }) {
+			store.syncWorkspaces(workspaceItems);
+			await Promise.all([
+				store.hydrateWorkspace(workspaceId),
+				store.loadWorkflowCatalog(workspaceId),
+				typeof store.loadProfessionalBootstrap === "function" ? store.loadProfessionalBootstrap(workspaceId).catch(() => null) : Promise.resolve(null)
+			]);
+			const current = store.getWorkspaceState(workspaceId);
+			if (current.panelMode === "hidden") return true;
+			if (["ready", "saving"].includes(current.syncStatus)) {
+				store.setPanelMode(workspaceId, "hidden");
+				await store.flushWorkspace(workspaceId);
+				return true;
+			}
+			store.setLocalPanelMode(workspaceId, "hidden");
+			return false;
+		}
+		async function hydrateSurface({ store, workspaceId, workspaceItems, hostMode }) {
+			if (hostMode === "embedded") return ensureEmbeddedWorkspaceHidden({
+				store,
+				workspaceId,
+				workspaceItems
+			});
+			store.syncWorkspaces(workspaceItems);
+			await Promise.all([
+				store.hydrateWorkspace(workspaceId),
+				store.loadWorkflowCatalog(workspaceId),
+				typeof store.loadProfessionalBootstrap === "function" ? store.loadProfessionalBootstrap(workspaceId).catch(() => null) : Promise.resolve(null)
+			]);
+			return true;
+		}
+		function sectionStyle(hostMode, layout, effectiveMode) {
+			if (hostMode === "embedded") return {
+				position: "relative",
+				width: "100%",
+				height: "100%",
+				minHeight: 0,
+				minWidth: 0,
+				display: "flex",
+				flexDirection: "column",
+				overflow: "hidden",
+				background: "var(--dsw-alias-bg-base, #fff)",
+				color: "var(--dsw-alias-text-primary, #202123)"
+			};
+			return {
+				position: "fixed",
+				top: 0,
+				bottom: 0,
+				zIndex: 1,
+				display: "flex",
+				flexDirection: "column",
+				minWidth: 0,
+				boxSizing: "border-box",
+				overflow: "hidden",
+				borderLeft: "1px solid var(--dsw-alias-border-l2, #dedee1)",
+				boxShadow: "-10px 0 28px rgba(0, 0, 0, 0.08)",
+				background: "var(--dsw-alias-bg-base, #fff)",
+				color: "var(--dsw-alias-text-primary, #202123)",
+				...effectiveMode === "normal" ? {
+					right: 0,
+					width: 360
+				} : {
+					left: layout.panelLeft ?? 72,
+					right: 0
+				}
+			};
+		}
+		function OasisWorkbenchSurface({ store, focusTargets, layoutAdapter, workspaceId, workspaceItems, hostMode = "standalone", visible = true }) {
+			const state = (0, react.useSyncExternalStore)(store.subscribe, () => store.peekWorkspaceState(workspaceId), () => store.peekWorkspaceState(workspaceId));
+			const panelRef = (0, react.useRef)(null);
+			const titleRef = (0, react.useRef)(null);
+			const layout = (0, react.useSyncExternalStore)(layoutAdapter.subscribe, layoutAdapter.getSnapshot, layoutAdapter.getSnapshot);
+			(0, react.useEffect)(() => {
+				if (workspaceId !== null) hydrateSurface({
+					store,
+					workspaceId,
+					workspaceItems,
+					hostMode
+				}).catch(() => {
+					if (hostMode === "embedded") try {
+						store.setLocalPanelMode(workspaceId, "hidden");
+					} catch {}
+				});
+				else store.syncWorkspaces(workspaceItems);
+			}, [
+				hostMode,
+				store,
+				workspaceId,
+				workspaceItems
+			]);
+			(0, react.useEffect)(() => () => {
+				if (workspaceId !== null) store.flushWorkspace(workspaceId).catch(() => {});
+			}, [store, workspaceId]);
+			(0, react.useLayoutEffect)(() => {
+				if (hostMode === "embedded") {
+					layoutAdapter.releaseStandalone("embedded-surface-active");
+					return;
+				}
+				layoutAdapter.apply({
+					requestedMode: workspaceId === null ? "hidden" : state.panelMode,
+					panelWidth: 360,
+					panelElement: panelRef.current
+				});
+			}, [
+				hostMode,
+				layoutAdapter,
+				state.panelMode,
+				workspaceId
+			]);
+			(0, react.useEffect)(() => {
+				if (hostMode === "embedded" && visible || layout.effectiveMode !== "hidden") titleRef.current?.focus();
+			}, [
+				hostMode,
+				layout.effectiveMode,
+				visible,
+				workspaceId
+			]);
+			const layoutBlocked = hostMode === "standalone" && state.panelMode !== "hidden" && layout.requestedMode === state.panelMode && layout.effectiveMode === "hidden" && [
+				"incompatible",
+				"conflict",
+				"faulted"
+			].includes(layout.status);
+			if (workspaceId === null || hostMode === "standalone" && state.panelMode === "hidden" || layoutBlocked) return null;
+			const effectiveMode = hostMode === "embedded" ? "embedded" : layout.requestedMode === state.panelMode ? layout.effectiveMode : state.panelMode;
+			const actions = createPanelActions({
+				store,
+				workspaceId,
+				focusTargets
+			});
+			return (0, react.createElement)("section", {
+				ref: panelRef,
+				"data-oasis-panel": true,
+				"data-testid": hostMode === "embedded" ? "oasis-embedded-workbench" : "oasis-panel",
+				"data-host-mode": hostMode,
+				"data-mode": effectiveMode,
+				"data-requested-mode": state.panelMode,
+				"data-layout-status": hostMode === "embedded" ? "better-sidebar-owned" : layout.status,
+				"data-workspace-id": workspaceId,
+				"data-visible": visible ? "true" : "false",
+				"aria-label": "绿洲专业工作台",
+				style: sectionStyle(hostMode, layout, effectiveMode)
+			}, (0, react.createElement)("style", null, reducedMotionCss), (0, react.createElement)(PanelChrome, {
+				hostMode,
+				state: {
+					...state,
+					effectiveMode,
+					layoutStatus: hostMode === "embedded" ? "better-sidebar-owned" : layout.status
+				},
+				titleRef,
+				onActivatePage: (pageId) => {
+					actions.activatePage(pageId).catch(() => {});
+				},
+				onClosePage: (pageId) => {
+					actions.closePage(pageId).catch(() => {});
+				},
+				onCreatePage: () => store.createPage(workspaceId),
+				onHide: () => {
+					if (hostMode === "standalone") actions.hidePanel().catch(() => {});
+				},
+				onToggleExpanded: () => {
+					if (hostMode === "standalone") store.setPanelMode(workspaceId, state.panelMode === "expanded" ? "normal" : "expanded");
+				}
+			}), (0, react.createElement)(PanelPages, {
+				state,
+				effectiveMode,
+				onSelectWorkflow: (pageId, workflowId) => store.selectWorkflow(workspaceId, pageId, workflowId),
+				onRenamePage: (pageId, title) => store.renamePage(workspaceId, pageId, title),
+				onReload: () => store.reloadWorkspace(workspaceId),
+				onUpdateForm: (pageId, fieldId, value) => store.updateFormValue(workspaceId, pageId, fieldId, value),
+				onMaterialDraft: (pageId, path, confirmed) => store.setMaterialDraft(workspaceId, pageId, path, confirmed),
+				onAddMaterial: (pageId) => {
+					store.addMaterial(workspaceId, pageId).catch(() => {});
+				},
+				onRefreshMaterial: (pageId, referenceId) => {
+					store.refreshMaterial(workspaceId, pageId, referenceId).catch(() => {});
+				},
+				onRemoveMaterial: (pageId, referenceId, confirmed) => {
+					if (confirmed) store.removeMaterial(workspaceId, pageId, referenceId, true).catch(() => {});
+				},
+				onGenerate: (pageId) => {
+					store.createRun(workspaceId, pageId).catch(() => {});
+				},
+				onActivateRun: (pageId, runId) => store.activateRun(workspaceId, pageId, runId),
+				onReviewNote: (pageId, note) => store.setReviewNote(workspaceId, pageId, note),
+				onReview: (pageId, runId, status, note) => {
+					store.reviewRun(workspaceId, pageId, runId, status, note).catch(() => {});
+				},
+				onWritebackDraft: (pageId, directory, confirmed) => {
+					store.setWritebackDraft(workspaceId, pageId, directory, confirmed);
+				},
+				onPrepareWriteback: (pageId, runId) => {
+					store.prepareWriteback(workspaceId, pageId, runId).catch(() => {});
+				},
+				onWritebackConfirm: (pageId, confirmed) => store.setWritebackConfirmation(workspaceId, pageId, confirmed),
+				onCommitWriteback: (pageId) => {
+					store.commitWriteback(workspaceId, pageId).catch(() => {});
+				},
+				onSelectProfessionalService: (pageId, apiEndpoint) => {
+					store.selectProfessionalService(workspaceId, pageId, apiEndpoint).catch(() => {});
+				},
+				onUpdateProfessionalField: (pageId, fieldId, value) => {
+					store.updateProfessionalFormValue(workspaceId, pageId, fieldId, value);
+				},
+				onSelectProfessionalFolder: (pageId, folderId) => {
+					store.setProfessionalFolder(workspaceId, pageId, folderId);
+				},
+				onProfessionalConfirm: (pageId, value) => {
+					store.setProfessionalConfirmations(workspaceId, pageId, value);
+				},
+				onStartProfessional: (pageId) => {
+					store.startProfessional(workspaceId, pageId).catch(() => {});
+				},
+				onContinueProfessional: (pageId, executionId) => {
+					store.continueProfessional(workspaceId, pageId, executionId).catch(() => {});
+				},
+				onStopProfessional: (pageId, executionId) => {
+					store.stopProfessional(workspaceId, pageId, executionId).catch(() => {});
+				}
+			}));
+		}
+		//#endregion
+		//#region src/client/panel-host-coordinator.js
+		const OASIS_BETTER_SIDEBAR_TAB_ID = "oasis-professional-service:workbench";
+		const HOST_MODES = Object.freeze([
+			"standalone",
+			"integrating",
+			"better-sidebar",
+			"releasing",
+			"blocked"
+		]);
+		function pendingWorkspaceContext(generation = 0) {
+			return Object.freeze({
+				status: "pending",
+				reasonCode: "workspace-bridge-pending",
+				generation,
+				currentSessionId: null,
+				workspaceItems: Object.freeze([])
+			});
+		}
+		function hasBetterSidebarMarker(document = globalThis.document) {
+			try {
+				return (document?.querySelectorAll?.("[data-dsh-better-sidebar]")?.length ?? 0) > 0;
+			} catch {
+				return true;
+			}
+		}
+		function validService(service) {
+			return service !== null && typeof service === "object" && typeof service.registerTab === "function" && typeof service.openTab === "function";
+		}
+		function validDescriptor(descriptor) {
+			return descriptor !== null && typeof descriptor === "object" && descriptor.id === "oasis-professional-service:workbench" && descriptor.single === true && typeof descriptor.component === "function";
+		}
+		function createPanelHostCoordinator({ layoutAdapter, hasBetterSidebarMarker: markerPresent = () => hasBetterSidebarMarker() } = {}) {
+			if (!layoutAdapter || typeof layoutAdapter.releaseStandalone !== "function") throw new TypeError("layoutAdapter.releaseStandalone is required");
+			if (typeof markerPresent !== "function") throw new TypeError("hasBetterSidebarMarker must be a function");
+			const listeners = /* @__PURE__ */ new Set();
+			let disposed = false;
+			let service = null;
+			let registrationDisposer = null;
+			let currentDetach = null;
+			const initialMarker = markerPresent();
+			let snapshot = Object.freeze({
+				mode: initialMarker ? "blocked" : "standalone",
+				reasonCode: initialMarker ? "better-sidebar-marker-without-service" : null,
+				serviceVersion: null,
+				serviceFeatures: Object.freeze([]),
+				workspaceContext: pendingWorkspaceContext()
+			});
+			function publish(next) {
+				if (disposed) return snapshot;
+				const normalized = Object.freeze({
+					...snapshot,
+					...next
+				});
+				if (!HOST_MODES.includes(normalized.mode)) throw new Error(`invalid panel host mode: ${normalized.mode}`);
+				if (!Object.keys(normalized).some((key) => normalized[key] !== snapshot[key])) return snapshot;
+				snapshot = normalized;
+				for (const listener of [...listeners]) listener();
+				return snapshot;
+			}
+			function block(reasonCode) {
+				layoutAdapter.releaseStandalone(reasonCode);
+				return publish({
+					mode: "blocked",
+					reasonCode,
+					serviceVersion: service === null ? null : snapshot.serviceVersion,
+					serviceFeatures: service === null ? Object.freeze([]) : snapshot.serviceFeatures
+				});
+			}
+			function reconcileExternalState() {
+				if (disposed) return snapshot;
+				if (service !== null && registrationDisposer !== null) {
+					if (snapshot.mode === "blocked") return snapshot;
+					return publish({
+						mode: "better-sidebar",
+						reasonCode: null
+					});
+				}
+				const marker = markerPresent();
+				return publish({
+					mode: marker ? "blocked" : "standalone",
+					reasonCode: marker ? "better-sidebar-marker-without-service" : null,
+					serviceVersion: null,
+					serviceFeatures: Object.freeze([])
+				});
+			}
+			function attachBetterSidebar(nextService, descriptor) {
+				if (disposed) return () => {};
+				if (!validService(nextService)) {
+					block("better-sidebar-service-invalid");
+					return () => {};
+				}
+				if (!validDescriptor(descriptor)) {
+					block("better-sidebar-descriptor-invalid");
+					return () => {};
+				}
+				if (service === nextService && currentDetach !== null) return currentDetach;
+				if (service !== null || registrationDisposer !== null) {
+					block("better-sidebar-service-replaced-without-release");
+					return currentDetach ?? (() => {});
+				}
+				publish({
+					mode: "integrating",
+					reasonCode: null
+				});
+				layoutAdapter.releaseStandalone("better-sidebar-integrating");
+				let disposer;
+				try {
+					disposer = nextService.registerTab(descriptor);
+				} catch {
+					block("better-sidebar-registration-failed");
+					return () => {};
+				}
+				if (typeof disposer !== "function") {
+					block("better-sidebar-registration-disposer-invalid");
+					return () => {};
+				}
+				service = nextService;
+				registrationDisposer = disposer;
+				const features = Array.isArray(nextService.features) ? Object.freeze(nextService.features.filter((value) => typeof value === "string")) : Object.freeze([]);
+				publish({
+					mode: "better-sidebar",
+					reasonCode: null,
+					serviceVersion: typeof nextService.version === "string" ? nextService.version : "unknown",
+					serviceFeatures: features
+				});
+				let detached = false;
+				currentDetach = () => {
+					if (detached) return;
+					detached = true;
+					publish({
+						mode: "releasing",
+						reasonCode: null
+					});
+					layoutAdapter.releaseStandalone("better-sidebar-releasing");
+					const registeredDisposer = registrationDisposer;
+					service = null;
+					registrationDisposer = null;
+					currentDetach = null;
+					try {
+						registeredDisposer();
+					} catch {
+						publish({
+							mode: "blocked",
+							reasonCode: "better-sidebar-registration-dispose-failed",
+							serviceVersion: null,
+							serviceFeatures: Object.freeze([])
+						});
+						return;
+					}
+					reconcileExternalState();
+				};
+				return currentDetach;
+			}
+			function openBetterSidebar(sessionId) {
+				if (disposed || snapshot.mode !== "better-sidebar" || !validService(service)) return false;
+				if (typeof sessionId !== "string" || sessionId.length === 0) return false;
+				layoutAdapter.releaseStandalone("better-sidebar-open");
+				try {
+					const seed = {
+						type: OASIS_BETTER_SIDEBAR_TAB_ID,
+						path: ".oasis/professional-workbench"
+					};
+					if (snapshot.serviceFeatures.includes("targetedOpen")) service.openTab(seed, { sessionId });
+					else service.openTab(seed);
+					return true;
+				} catch {
+					currentDetach?.();
+					block("better-sidebar-open-failed");
+					return false;
+				}
+			}
+			return Object.freeze({
+				subscribe(listener) {
+					listeners.add(listener);
+					return () => listeners.delete(listener);
+				},
+				getSnapshot() {
+					return snapshot;
+				},
+				attachBetterSidebar,
+				openBetterSidebar,
+				reconcileExternalState,
+				updateWorkspaceContext(context) {
+					if (!context || typeof context !== "object") throw new TypeError("workspace context is required");
+					return publish({ workspaceContext: context });
+				},
+				clearWorkspaceContext() {
+					return publish({ workspaceContext: pendingWorkspaceContext(snapshot.workspaceContext.generation + 1) });
+				},
+				block,
+				dispose() {
+					if (disposed) return;
+					currentDetach?.();
+					layoutAdapter.releaseStandalone("panel-host-coordinator-disposed");
+					listeners.clear();
+					disposed = true;
+				}
+			});
+		}
+		//#endregion
+		//#region src/client/OasisPanelBoundary.js
+		var OasisPanelBoundary = class extends react.Component {
+			constructor(props) {
+				super(props);
+				this.state = { failed: false };
+			}
+			static getDerivedStateFromError() {
+				return { failed: true };
+			}
+			componentDidCatch(error) {
+				this.props.layoutAdapter.fault(`panel-render-error:${error instanceof Error ? error.message : String(error)}`);
+			}
+			render() {
+				return this.state.failed ? null : this.props.children;
+			}
+		};
+		//#endregion
+		//#region src/client/project-resolution.js
+		function resolveWorkspaceId(currentSessionId, workspaceItems) {
+			if (typeof currentSessionId !== "string" || currentSessionId.length === 0) return null;
+			if (!Array.isArray(workspaceItems)) return null;
+			const matches = workspaceItems.filter((workspace) => typeof workspace?.workspaceId === "string" && Array.isArray(workspace.sessionIds) && workspace.sessionIds.includes(currentSessionId));
+			return matches.length === 1 ? matches[0].workspaceId : null;
+		}
+		//#endregion
+		//#region src/client/OasisPanelHost.js
+		function OasisPanelHost({ store, focusTargets, layoutAdapter, useSessions, useWorkspaces }) {
+			const currentSessionId = useSessions((snapshot) => snapshot.current);
+			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
+			const workspaceId = resolveWorkspaceId(currentSessionId, workspaceItems);
+			return (0, react.createElement)(OasisWorkbenchSurface, {
+				store,
+				focusTargets,
+				layoutAdapter,
+				workspaceId,
+				workspaceItems,
+				hostMode: "standalone",
+				visible: true
+			});
+		}
+		//#endregion
+		//#region src/client/OasisPanelPortal.js
+		function OasisPanelPortal(props) {
+			const { layoutAdapter } = props;
+			const [portalHost, setPortalHost] = (0, react.useState)(null);
+			(0, react.useLayoutEffect)(() => {
+				let host;
+				try {
+					host = layoutAdapter.mountPortal();
+					setPortalHost(host);
+				} catch (error) {
+					layoutAdapter.fault(`portal-mount-error:${error instanceof Error ? error.message : String(error)}`);
+				}
+				return () => {
+					if (host) layoutAdapter.unmountPortal(host);
+				};
+			}, [layoutAdapter]);
+			if (portalHost === null) return null;
+			return (0, react_dom.createPortal)((0, react.createElement)(OasisPanelBoundary, { layoutAdapter }, (0, react.createElement)(OasisPanelHost, props)), portalHost);
+		}
+		//#endregion
+		//#region src/client/WorkspaceContextBridge.js
+		function blockedWorkspaceContext(generation) {
+			return Object.freeze({
+				status: "blocked",
+				reasonCode: "workspace-context-invalid",
+				generation,
+				currentSessionId: null,
+				workspaceItems: Object.freeze([])
+			});
+		}
+		function createWorkspaceContextSnapshot({ currentSessionId, workspaceItems, generation }) {
+			if (!Number.isSafeInteger(generation) || generation < 0) return blockedWorkspaceContext(0);
+			if (currentSessionId !== null && (typeof currentSessionId !== "string" || currentSessionId.length === 0)) return blockedWorkspaceContext(generation);
+			if (!Array.isArray(workspaceItems)) return blockedWorkspaceContext(generation);
+			const projected = [];
+			for (const workspace of workspaceItems) {
+				if (typeof workspace?.workspaceId !== "string" || workspace.workspaceId.length === 0 || !Array.isArray(workspace.sessionIds) || workspace.sessionIds.some((sessionId) => typeof sessionId !== "string" || sessionId.length === 0)) return blockedWorkspaceContext(generation);
+				projected.push(Object.freeze({
+					workspaceId: workspace.workspaceId,
+					sessionIds: Object.freeze([...workspace.sessionIds])
+				}));
+			}
+			return Object.freeze({
+				status: "ready",
+				reasonCode: null,
+				generation,
+				currentSessionId,
+				workspaceItems: Object.freeze(projected)
+			});
+		}
+		function resolveWorkspaceBinding({ context, sessionId, visible }) {
+			const generation = Number.isSafeInteger(context?.generation) ? context.generation : 0;
+			if (context?.status === "blocked") return Object.freeze({
+				status: "blocked",
+				reasonCode: context.reasonCode ?? "workspace-context-invalid",
+				workspaceId: null,
+				generation
+			});
+			if (context?.status !== "ready") return Object.freeze({
+				status: "pending",
+				reasonCode: "workspace-bridge-pending",
+				workspaceId: null,
+				generation
+			});
+			if (visible === true && context.currentSessionId !== sessionId) return Object.freeze({
+				status: "pending",
+				reasonCode: "workspace-generation-not-current",
+				workspaceId: null,
+				generation
+			});
+			const workspaceId = resolveWorkspaceId(sessionId, context.workspaceItems);
+			return Object.freeze({
+				status: workspaceId === null ? "unbound" : "ready",
+				reasonCode: workspaceId === null ? "workspace-not-resolved" : null,
+				workspaceId,
+				generation
+			});
+		}
+		function BridgeStatus({ mode, reasonCode }) {
+			const blocked = mode === "blocked";
+			return (0, react.createElement)("div", {
+				role: blocked ? "alert" : "status",
+				"data-oasis-host-state": mode,
+				"data-oasis-host-reason": reasonCode ?? void 0,
+				style: {
+					position: "fixed",
+					right: 12,
+					bottom: 12,
+					zIndex: 41,
+					maxWidth: 320,
+					padding: "8px 10px",
+					border: "1px solid var(--dsw-alias-border-l2, #d9d9dc)",
+					borderRadius: 8,
+					background: "var(--dsw-alias-bg-base, #fff)",
+					color: "var(--dsw-alias-text-primary, #202123)",
+					fontSize: 12,
+					boxShadow: "0 8px 24px rgba(0, 0, 0, 0.12)"
+				}
+			}, blocked ? "绿洲工作台暂不可用：检测到侧栏宿主冲突。" : "正在切换绿洲工作台侧栏宿主…");
+		}
+		function WorkspaceContextBridge(props) {
+			const { coordinator, useSessions, useWorkspaces } = props;
+			const currentSessionId = useSessions((snapshot) => snapshot.current);
+			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
+			const generationRef = (0, react.useRef)(0);
+			const hostSnapshot = (0, react.useSyncExternalStore)(coordinator.subscribe, coordinator.getSnapshot, coordinator.getSnapshot);
+			(0, react.useLayoutEffect)(() => {
+				generationRef.current += 1;
+				coordinator.updateWorkspaceContext(createWorkspaceContextSnapshot({
+					currentSessionId: currentSessionId ?? null,
+					workspaceItems,
+					generation: generationRef.current
+				}));
+				coordinator.reconcileExternalState();
+				return () => coordinator.clearWorkspaceContext();
+			}, [
+				coordinator,
+				currentSessionId,
+				workspaceItems
+			]);
+			(0, react.useLayoutEffect)(() => {
+				const MutationObserverClass = globalThis.MutationObserver;
+				const body = globalThis.document?.body;
+				if (typeof MutationObserverClass !== "function" || !body) return void 0;
+				const observer = new MutationObserverClass(() => coordinator.reconcileExternalState());
+				observer.observe(body, {
+					childList: true,
+					subtree: true,
+					attributes: true,
+					attributeFilter: ["data-dsh-better-sidebar"]
+				});
+				return () => observer.disconnect();
+			}, [coordinator]);
+			(0, react.useEffect)(() => {
+				if (hostSnapshot.mode !== "better-sidebar") return;
+				const binding = resolveWorkspaceBinding({
+					context: hostSnapshot.workspaceContext,
+					sessionId: currentSessionId,
+					visible: true
+				});
+				if (binding.status !== "ready") return;
+				ensureEmbeddedWorkspaceHidden({
+					store: props.store,
+					workspaceId: binding.workspaceId,
+					workspaceItems: hostSnapshot.workspaceContext.workspaceItems
+				}).catch(() => {
+					try {
+						props.store.setLocalPanelMode(binding.workspaceId, "hidden");
+					} catch {}
+				});
+			}, [
+				currentSessionId,
+				hostSnapshot.mode,
+				hostSnapshot.workspaceContext,
+				props.store
+			]);
+			if (hostSnapshot.mode === "standalone") return (0, react.createElement)(OasisPanelPortal, props);
+			if ([
+				"integrating",
+				"releasing",
+				"blocked"
+			].includes(hostSnapshot.mode)) return (0, react.createElement)(BridgeStatus, {
+				mode: hostSnapshot.mode,
+				reasonCode: hostSnapshot.reasonCode
+			});
+			return null;
+		}
+		//#endregion
+		//#region src/client/OasisBetterSidebarTab.js
+		function EmbeddedStatus({ status, reasonCode }) {
+			const messages = {
+				pending: "正在关联当前 DSH 项目…",
+				unbound: "当前会话尚未关联唯一的 DSH 项目。请先在中栏切换到一个有效项目。",
+				blocked: "绿洲工作台已阻断：项目上下文或侧栏宿主不可安全使用。"
+			};
+			return (0, react.createElement)("section", {
+				role: status === "blocked" ? "alert" : "status",
+				"data-oasis-embedded-state": status,
+				"data-oasis-embedded-reason": reasonCode ?? void 0,
+				style: {
+					height: "100%",
+					minHeight: 0,
+					padding: 20,
+					display: "grid",
+					alignContent: "start",
+					gap: 8,
+					background: "var(--dsw-alias-bg-base, #fff)",
+					color: "var(--dsw-alias-text-primary, #202123)"
+				}
+			}, (0, react.createElement)("strong", null, "绿洲专业工作台"), (0, react.createElement)("span", { style: {
+				color: "var(--dsw-alias-text-secondary, #6b7280)",
+				fontSize: 13,
+				lineHeight: 1.5
+			} }, messages[status] ?? messages.blocked));
+		}
+		function OasisBetterSidebarTab({ scope, visible, coordinator, store, focusTargets, layoutAdapter }) {
+			const hostSnapshot = (0, react.useSyncExternalStore)(coordinator.subscribe, coordinator.getSnapshot, coordinator.getSnapshot);
+			const sessionId = scope?.sessionId;
+			if (hostSnapshot.mode !== "better-sidebar") {
+				const status = hostSnapshot.mode === "blocked" ? "blocked" : "pending";
+				return (0, react.createElement)(EmbeddedStatus, {
+					status,
+					reasonCode: hostSnapshot.reasonCode
+				});
+			}
+			const binding = resolveWorkspaceBinding({
+				context: hostSnapshot.workspaceContext,
+				sessionId,
+				visible: visible === true
+			});
+			if (binding.status !== "ready") return (0, react.createElement)(EmbeddedStatus, {
+				status: binding.status,
+				reasonCode: binding.reasonCode
+			});
+			return (0, react.createElement)(OasisWorkbenchSurface, {
+				store,
+				focusTargets,
+				layoutAdapter,
+				workspaceId: binding.workspaceId,
+				workspaceItems: hostSnapshot.workspaceContext.workspaceItems,
+				hostMode: "embedded",
+				visible: visible === true
+			});
+		}
+		function createOasisBetterSidebarDescriptor({ coordinator, store, focusTargets, layoutAdapter }) {
+			return Object.freeze({
+				id: OASIS_BETTER_SIDEBAR_TAB_ID,
+				title: "绿洲专业工作台",
+				order: 60,
+				single: true,
+				component: (props) => (0, react.createElement)(OasisBetterSidebarTab, {
+					...props,
+					coordinator,
+					store,
+					focusTargets,
+					layoutAdapter
+				})
+			});
+		}
+		//#endregion
+		//#region src/client/WorkbenchEntry.js
+		const STANDALONE_HOST_SNAPSHOT = Object.freeze({ mode: "standalone" });
+		const subscribeStandaloneHost = () => () => {};
+		const getStandaloneHostSnapshot = () => STANDALONE_HOST_SNAPSHOT;
+		function useLivePanelHostSnapshot(coordinator) {
+			return (0, react.useSyncExternalStore)(coordinator === null ? subscribeStandaloneHost : coordinator.subscribe, coordinator === null ? getStandaloneHostSnapshot : coordinator.getSnapshot, coordinator === null ? getStandaloneHostSnapshot : coordinator.getSnapshot);
+		}
+		function WorkbenchEntry({ sessionId, store, focusTargets, useWorkspaces, coordinator = null, usePanelHostSnapshot = useLivePanelHostSnapshot }) {
+			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
+			const workspaceId = resolveWorkspaceId(sessionId, workspaceItems);
+			const hostSnapshot = usePanelHostSnapshot(coordinator);
+			let mountedTarget = null;
+			function registerFocusTarget(node) {
+				if (workspaceId === null) return;
+				if (node === null) {
+					if (mountedTarget !== null && focusTargets.get(workspaceId) === mountedTarget) focusTargets.delete(workspaceId);
+					mountedTarget = null;
+					return;
+				}
+				mountedTarget = node;
+				focusTargets.set(workspaceId, node);
+			}
+			function openWorkbench(event) {
+				if (workspaceId === null) return;
+				store.syncWorkspaces(workspaceItems);
+				focusTargets.set(workspaceId, event.currentTarget);
+				if (coordinator?.getSnapshot?.().mode === "better-sidebar") {
+					coordinator.openBetterSidebar(sessionId);
+					return;
+				}
+				if (coordinator && coordinator.getSnapshot().mode !== "standalone") return;
+				store.openPanel(workspaceId);
+			}
+			const hostMode = hostSnapshot.mode;
+			const hostUnavailable = [
+				"integrating",
+				"releasing",
+				"blocked"
+			].includes(hostMode);
+			const disabled = workspaceId === null || hostUnavailable;
+			const unavailableTitle = hostMode === "blocked" ? "侧栏宿主冲突，绿洲工作台已安全阻断" : "绿洲工作台正在切换侧栏宿主";
+			return (0, react.createElement)("button", {
+				type: "button",
+				ref: registerFocusTarget,
+				"data-testid": "oasis-workbench-entry",
+				disabled,
+				"data-oasis-host-mode": hostMode,
+				"data-oasis-host-version": hostSnapshot.serviceVersion ?? void 0,
+				title: workspaceId === null ? "当前会话尚未关联项目" : hostUnavailable ? unavailableTitle : "打开技术研发与中国发明专利工作台",
+				"aria-label": workspaceId === null ? "当前会话尚未关联项目" : hostUnavailable ? unavailableTitle : "打开技术研发与中国发明专利工作台",
+				onClick: openWorkbench,
+				style: {
+					border: "1px solid var(--dsw-alias-border-l2, #d9d9dc)",
+					borderRadius: 8,
+					background: "var(--dsw-alias-bg-base, #fff)",
+					color: "var(--dsw-alias-text-primary, #202123)",
+					padding: "5px 9px",
+					fontSize: 12,
+					cursor: disabled ? "not-allowed" : "pointer",
+					opacity: disabled ? .5 : 1
+				}
+			}, "研发 / 专利");
+		}
+		//#endregion
 		//#region src/client/workbench-remote.js
 		const CHANNEL = "/oasis-workbench";
 		var WorkbenchRemoteError = class extends Error {
@@ -7377,6 +7705,21 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async getWorkflowCatalog(workType, signal) {
 					const payload = workType === void 0 ? {} : { workType };
 					return unwrap(await connection.rpc.call(CHANNEL, "workflow/catalog", payload, signal), workflowCatalogResponseSchema);
+				},
+				async getProfessionalBootstrap(signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "professional/bootstrap", {}, signal), oasisProfessionalBootstrapSchema);
+				},
+				async getProfessionalDetail(apiEndpoint, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "professional/detail", { apiEndpoint }, signal), oasisProfessionalDetailSchema);
+				},
+				async startProfessional(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "professional/start", payload, signal), workbenchReplaceResponseSchema);
+				},
+				async continueProfessional(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "professional/continue", payload, signal), workbenchReplaceResponseSchema);
+				},
+				async stopProfessional(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "professional/stop", payload, signal), oasisProfessionalStopResponseSchema);
 				},
 				async addMaterial(payload, signal) {
 					return unwrap(await connection.rpc.call(CHANNEL, "material/add", payload, signal), workbenchReplaceResponseSchema);
@@ -7467,6 +7810,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				catalogStatus: "idle",
 				catalogError: null,
 				workflows: [],
+				professionalStatus: "idle",
+				professionalError: null,
+				professionalBootstrap: null,
 				pageOperations: {}
 			});
 		}
@@ -7484,6 +7830,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				catalogStatus: "idle",
 				catalogError: null,
 				workflows: [],
+				professionalStatus: "idle",
+				professionalError: null,
+				professionalBootstrap: null,
 				pageOperations: {}
 			});
 		}
@@ -7581,6 +7930,58 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						updatedAt: env.now()
 					} : item)
 				};
+			} else if (action.type === "select-professional-service") {
+				const page = state.pages.find((item) => item.pageId === action.pageId);
+				if (!page) throw new Error("unknown page");
+				const sameSchema = page.professionalDraft?.selectedApiEndpoint === action.detail.name && page.professionalDraft?.selectedApiId === action.detail.id && page.professionalDraft?.schemaHash === action.detail.schemaHash;
+				const formValues = Object.fromEntries(action.detail.inputFields.map((field) => [field.fieldId, sameSchema && Object.hasOwn(page.professionalDraft.formValues, field.fieldId) ? detached(page.professionalDraft.formValues[field.fieldId]) : ""]));
+				next = {
+					...state,
+					pages: state.pages.map((item) => item.pageId === action.pageId ? {
+						...item,
+						professionalDraft: {
+							selectedApiEndpoint: action.detail.name,
+							selectedApiId: action.detail.id,
+							schemaHash: action.detail.schemaHash,
+							formValues,
+							folderId: action.folderId,
+							updatedAt: env.now()
+						},
+						updatedAt: env.now()
+					} : item)
+				};
+			} else if (action.type === "update-professional-form-value") {
+				const page = state.pages.find((item) => item.pageId === action.pageId);
+				if (!page?.professionalDraft || !Object.hasOwn(page.professionalDraft.formValues, action.fieldId)) throw new Error("unknown professional service form field");
+				next = {
+					...state,
+					pages: state.pages.map((item) => item.pageId === action.pageId ? {
+						...item,
+						professionalDraft: {
+							...item.professionalDraft,
+							formValues: {
+								...item.professionalDraft.formValues,
+								[action.fieldId]: detached(action.value)
+							},
+							updatedAt: env.now()
+						},
+						updatedAt: env.now()
+					} : item)
+				};
+			} else if (action.type === "set-professional-folder") {
+				if (!state.pages.find((item) => item.pageId === action.pageId)?.professionalDraft) throw new Error("professional service must be selected first");
+				next = {
+					...state,
+					pages: state.pages.map((item) => item.pageId === action.pageId ? {
+						...item,
+						professionalDraft: {
+							...item.professionalDraft,
+							folderId: action.folderId,
+							updatedAt: env.now()
+						},
+						updatedAt: env.now()
+					} : item)
+				};
 			} else if (action.type === "rename-page") {
 				const title = String(action.title).trim();
 				if (title.length === 0 || title.length > 200) throw new Error("task title must contain 1 to 200 characters");
@@ -7643,7 +8044,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			errorCode: null,
 			feedback: null,
 			materialsChanged: false,
-			indexWarningManifest: null
+			indexWarningManifest: null,
+			professionalDetail: null,
+			priceConfirmed: false,
+			externalTransferConfirmed: false
 		});
 		function defaultCreateId() {
 			if (typeof globalThis.crypto?.randomUUID !== "function") throw new Error("crypto.randomUUID is required to create an Oasis task");
@@ -7681,6 +8085,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					runtime = {
 						hydrationPromise: null,
 						catalogPromise: null,
+						professionalPromise: null,
 						drainPromise: null,
 						pendingActions: [],
 						pendingDraft: null,
@@ -7727,6 +8132,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					catalogStatus: current.catalogStatus,
 					catalogError: current.catalogError,
 					workflows: current.workflows,
+					professionalStatus: current.professionalStatus,
+					professionalError: current.professionalError,
+					professionalBootstrap: current.professionalBootstrap,
 					pageOperations: current.pageOperations
 				});
 			}
@@ -8059,6 +8467,45 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					})();
 					return runtime.catalogPromise;
 				},
+				async loadProfessionalBootstrap(workspaceId) {
+					assertOpen();
+					assertKnown(workspaceId);
+					const current = getCurrent(workspaceId);
+					if (current.professionalStatus === "ready") return current.professionalBootstrap;
+					if (remote === null || typeof remote.getProfessionalBootstrap !== "function") return setState(workspaceId, stateWith(current, {
+						professionalStatus: "unavailable",
+						professionalError: null,
+						professionalBootstrap: null
+					})).professionalBootstrap;
+					const runtime = runtimeFor(workspaceId);
+					if (runtime.professionalPromise) return runtime.professionalPromise;
+					setState(workspaceId, stateWith(current, {
+						professionalStatus: "loading",
+						professionalError: null
+					}));
+					runtime.professionalPromise = (async () => {
+						try {
+							const bootstrap = await remote.getProfessionalBootstrap(controller.signal);
+							if (closing || disposed) return null;
+							setState(workspaceId, stateWith(getCurrent(workspaceId), {
+								professionalStatus: "ready",
+								professionalError: null,
+								professionalBootstrap: bootstrap
+							}));
+							return bootstrap;
+						} catch (error) {
+							if (!closing && !disposed && !controller.signal.aborted) setState(workspaceId, stateWith(getCurrent(workspaceId), {
+								professionalStatus: "error",
+								professionalError: errorMessage(error),
+								professionalBootstrap: null
+							}));
+							throw error;
+						} finally {
+							runtime.professionalPromise = null;
+						}
+					})();
+					return runtime.professionalPromise;
+				},
 				async reloadWorkspace(workspaceId) {
 					assertOpen();
 					assertKnown(workspaceId);
@@ -8118,6 +8565,144 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						value
 					});
 				},
+				async selectProfessionalService(workspaceId, pageId, apiEndpoint) {
+					assertOpen();
+					assertKnown(workspaceId);
+					pageFor(workspaceId, pageId);
+					const bootstrap = getCurrent(workspaceId).professionalBootstrap;
+					if (!bootstrap?.remoteEnabled || !bootstrap.credentialConfigured) throw new Error("Professional service runtime is not ready");
+					const service = bootstrap.services.find((item) => item.apiEndpoint === apiEndpoint);
+					if (!service) throw new Error("unknown professional service");
+					const existingFolderId = pageFor(workspaceId, pageId).professionalDraft?.folderId;
+					const folderId = bootstrap.folders.some((item) => item.id === existingFolderId) ? existingFolderId : bootstrap.folders[0]?.id;
+					if (!Number.isSafeInteger(folderId)) throw new Error("Professional service requires an available project folder");
+					const detail = await remote.getProfessionalDetail(apiEndpoint, controller.signal);
+					if (detail.id !== service.apiId || detail.name !== service.apiEndpoint) throw new Error("Professional service detail mismatch");
+					const next = dispatch(workspaceId, {
+						type: "select-professional-service",
+						pageId,
+						detail,
+						folderId
+					});
+					updatePageOperation(workspaceId, pageId, {
+						professionalDetail: detail,
+						priceConfirmed: false,
+						externalTransferConfirmed: false,
+						error: null,
+						errorCode: null,
+						feedback: null
+					});
+					return next;
+				},
+				updateProfessionalFormValue(workspaceId, pageId, fieldId, value) {
+					const next = dispatch(workspaceId, {
+						type: "update-professional-form-value",
+						pageId,
+						fieldId,
+						value
+					});
+					updatePageOperation(workspaceId, pageId, {
+						priceConfirmed: false,
+						externalTransferConfirmed: false
+					});
+					return next;
+				},
+				setProfessionalFolder(workspaceId, pageId, folderId) {
+					const next = dispatch(workspaceId, {
+						type: "set-professional-folder",
+						pageId,
+						folderId
+					});
+					updatePageOperation(workspaceId, pageId, { priceConfirmed: false });
+					return next;
+				},
+				setProfessionalConfirmations(workspaceId, pageId, { priceConfirmed, externalTransferConfirmed }) {
+					return updatePageOperation(workspaceId, pageId, {
+						priceConfirmed: priceConfirmed === true,
+						externalTransferConfirmed: externalTransferConfirmed === true,
+						error: null,
+						errorCode: null
+					});
+				},
+				async startProfessional(workspaceId, pageId) {
+					assertOpen();
+					assertKnown(workspaceId);
+					if (!pageFor(workspaceId, pageId).professionalDraft) throw new Error("A professional service must be selected first");
+					const operation = operationFor(getCurrent(workspaceId), pageId);
+					if (operation.priceConfirmed !== true) throw new Error("Price confirmation is required");
+					if (operation.externalTransferConfirmed !== true) throw new Error("External material transfer confirmation is required");
+					if (operation.activeOperation !== null) throw new Error("another page operation is already in progress");
+					const requestKey = operation.requestKey ?? createRequestKey();
+					updatePageOperation(workspaceId, pageId, {
+						requestKey,
+						activeOperation: "professional-run",
+						error: null,
+						errorCode: null,
+						feedback: null
+					});
+					try {
+						await flushWorkspace(workspaceId);
+						const current = getCurrent(workspaceId);
+						if (current.syncStatus !== "ready") throw new Error("Workspace is not ready for professional execution");
+						applyAuthoritativeReplacement(workspaceId, await remote.startProfessional({
+							workspaceId,
+							taskId: pageId,
+							expectedRevision: current.revision,
+							requestKey,
+							priceConfirmed: true,
+							externalTransferConfirmed: true
+						}, controller.signal));
+						const authoritativePage = pageFor(workspaceId, pageId);
+						const execution = Object.values(authoritativePage.remoteExecutions).find((item) => item.requestKey === requestKey);
+						if (!execution) throw new Error("Prepared professional execution is missing");
+						const applied = applyAuthoritativeReplacement(workspaceId, await remote.continueProfessional({
+							workspaceId,
+							taskId: pageId,
+							executionId: execution.executionId
+						}, controller.signal));
+						const finalExecution = pageFor(workspaceId, pageId).remoteExecutions[execution.executionId];
+						updatePageOperation(workspaceId, pageId, {
+							activeOperation: null,
+							requestKey: ["completed", "failed"].includes(finalExecution.status) ? null : requestKey,
+							priceConfirmed: false,
+							externalTransferConfirmed: false,
+							feedback: finalExecution.status === "completed" ? "professional-completed" : finalExecution.status
+						});
+						return applied;
+					} catch (error) {
+						if (!closing && !disposed) updatePageOperation(workspaceId, pageId, {
+							activeOperation: null,
+							error: errorMessage(error),
+							errorCode: typeof error?.code === "string" ? error.code : null,
+							feedback: operationErrorFeedback(error)
+						});
+						throw error;
+					}
+				},
+				async continueProfessional(workspaceId, pageId, executionId) {
+					return runPageOperation(workspaceId, pageId, "professional-continue", () => remote.continueProfessional({
+						workspaceId,
+						taskId: pageId,
+						executionId
+					}, controller.signal), (applied) => {
+						const execution = applied.pages.find((item) => item.pageId === pageId)?.remoteExecutions[executionId];
+						return {
+							requestKey: execution && ["completed", "failed"].includes(execution.status) ? null : operationFor(applied, pageId).requestKey,
+							feedback: execution?.status === "completed" ? "professional-completed" : execution?.status ?? null
+						};
+					});
+				},
+				async stopProfessional(workspaceId, pageId, executionId) {
+					assertOpen();
+					assertKnown(workspaceId);
+					pageFor(workspaceId, pageId);
+					if (remote === null || typeof remote.stopProfessional !== "function") throw new Error("Professional service requires the Oasis Host");
+					return remote.stopProfessional({
+						workspaceId,
+						taskId: pageId,
+						executionId
+					}, controller.signal);
+				},
 				setMaterialDraft(workspaceId, pageId, materialPath, confirmed) {
 					return updatePageOperation(workspaceId, pageId, {
 						materialPath: String(materialPath),
@@ -8152,6 +8737,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						expectedRevision: current.revision
 					}, controller.signal), () => ({
 						materialsChanged: false,
+						externalTransferConfirmed: false,
 						feedback: "material-refreshed"
 					}));
 				},
@@ -8164,6 +8750,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						expectedRevision: current.revision
 					}, controller.signal), () => ({
 						materialsChanged: false,
+						externalTransferConfirmed: false,
 						feedback: "material-removed"
 					}));
 				},
@@ -8329,6 +8916,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								clearScheduledSave(runtime);
 								runtime.hydrationPromise = null;
 								runtime.catalogPromise = null;
+								runtime.professionalPromise = null;
 								runtime.drainPromise = null;
 							}
 							knownWorkspaceIds.clear();

@@ -5,6 +5,7 @@ import {
   parseWorkbenchEditableDraft,
   parseWorkbenchRecord,
 } from './workbench-domain.js'
+import { isOasisRemoteExecutionUnresolved } from './workbench-contract.js'
 
 function assertExpectedRevision(value) {
   if (!Number.isSafeInteger(value) || value < 0) {
@@ -43,6 +44,20 @@ function assertWorkflowTransitions(current, candidate) {
     }
     if (previousState === 'empty' && workflowIdentityState(next) === 'partial') {
       throw new Error('workflow identity must be complete or entirely empty')
+    }
+  }
+}
+
+function assertUnresolvedRemoteExecutionsPreserved(current, draft) {
+  const retainedTaskIds = new Set(draft.taskOrder)
+  for (const taskId of current.taskOrder) {
+    if (retainedTaskIds.has(taskId)) continue
+    const task = current.tasks[taskId]
+    const unresolved = task.remoteExecutionOrder.some((executionId) => (
+      isOasisRemoteExecutionUnresolved(task.remoteExecutions[executionId])
+    ))
+    if (unresolved) {
+      throw new Error('tasks with an unresolved remote execution cannot be removed')
     }
   }
 }
@@ -157,6 +172,7 @@ class OasisWorkbenchRepository {
       if (current.revision !== expectedRevision) {
         return Object.freeze({ committed: false, reason: 'revision-conflict', current })
       }
+      assertUnresolvedRemoteExecutionsPreserved(current, draft)
       const candidate = mergeEditableDraft(current, draft)
       return this.#commit(workspaceId, current, candidate)
     })

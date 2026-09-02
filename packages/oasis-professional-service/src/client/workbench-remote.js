@@ -1,4 +1,7 @@
 import {
+  oasisProfessionalBootstrapSchema,
+  oasisProfessionalDetailSchema,
+  oasisProfessionalStopResponseSchema,
   workbenchGetResponseSchema,
   workbenchReplaceResponseSchema,
   writebackCommitResponseSchema,
@@ -69,6 +72,51 @@ export function createWorkbenchRemote(connection) {
         payload,
         signal,
       ), workflowCatalogResponseSchema)
+    },
+
+    async getProfessionalBootstrap(signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'professional/bootstrap',
+        {},
+        signal,
+      ), oasisProfessionalBootstrapSchema)
+    },
+
+    async getProfessionalDetail(apiEndpoint, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'professional/detail',
+        { apiEndpoint },
+        signal,
+      ), oasisProfessionalDetailSchema)
+    },
+
+    async startProfessional(payload, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'professional/start',
+        payload,
+        signal,
+      ), workbenchReplaceResponseSchema)
+    },
+
+    async continueProfessional(payload, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'professional/continue',
+        payload,
+        signal,
+      ), workbenchReplaceResponseSchema)
+    },
+
+    async stopProfessional(payload, signal) {
+      return unwrap(await connection.rpc.call(
+        CHANNEL,
+        'professional/stop',
+        payload,
+        signal,
+      ), oasisProfessionalStopResponseSchema)
     },
 
     async addMaterial(payload, signal) {

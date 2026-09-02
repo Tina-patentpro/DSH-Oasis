@@ -51,6 +51,23 @@ const taskCreatePayloadSchema = z.object({
   requestKey: workspaceIdSchema,
 }).strict()
 
+const professionalDetailPayloadSchema = z.object({
+  apiEndpoint: workspaceIdSchema,
+}).strict()
+
+const professionalStartPayloadSchema = z.object({
+  ...materialCommandBase,
+  requestKey: workspaceIdSchema,
+  priceConfirmed: z.literal(true),
+  externalTransferConfirmed: z.literal(true),
+}).strict()
+
+const professionalExecutionPayloadSchema = z.object({
+  workspaceId: workspaceIdSchema,
+  taskId: workspaceIdSchema,
+  executionId: workspaceIdSchema,
+}).strict()
+
 const taskReviewPayloadSchema = z.object({
   ...materialCommandBase,
   runId: workspaceIdSchema,
@@ -131,7 +148,7 @@ async function writebackResult(operation) {
   }
 }
 
-export function createWorkbenchRpcHandler(service) {
+export function createWorkbenchRpcHandler(service, professionalService = null) {
   return async function handleWorkbenchRpc(endpoint, payload) {
     if (endpoint === 'state/get') {
       const parsed = parsePayload(getPayloadSchema, payload)
@@ -150,6 +167,36 @@ export function createWorkbenchRpcHandler(service) {
       const parsed = parsePayload(workflowCatalogPayloadSchema, payload)
       if (!parsed.success) return parsed
       return { ok: true, value: service.getWorkflowCatalog(parsed.data.workType) }
+    }
+
+    if (endpoint === 'professional/bootstrap') {
+      const parsed = parsePayload(z.object({}).strict(), payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => professionalService.getBootstrap())
+    }
+
+    if (endpoint === 'professional/detail') {
+      const parsed = parsePayload(professionalDetailPayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => professionalService.getServiceDetail(parsed.data.apiEndpoint))
+    }
+
+    if (endpoint === 'professional/start') {
+      const parsed = parsePayload(professionalStartPayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => professionalService.start(parsed.data))
+    }
+
+    if (endpoint === 'professional/continue') {
+      const parsed = parsePayload(professionalExecutionPayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => professionalService.continue(parsed.data))
+    }
+
+    if (endpoint === 'professional/stop') {
+      const parsed = parsePayload(professionalExecutionPayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => professionalService.stop(parsed.data))
     }
 
     if (endpoint === 'material/add') {

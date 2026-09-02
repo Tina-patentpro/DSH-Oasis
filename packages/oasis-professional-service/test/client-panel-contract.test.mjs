@@ -15,6 +15,19 @@ import { createWorkbenchStore } from '../src/client/workbench-store.js'
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const readPanelHostSnapshot = (coordinator) => coordinator?.getSnapshot?.() ?? { mode: 'standalone' }
 
+function collectElements(value, collected = []) {
+  if (Array.isArray(value)) {
+    for (const child of value) collectElements(child, collected)
+    return collected
+  }
+  if (value === null || typeof value !== 'object') return collected
+  if (value.props) {
+    collected.push(value)
+    collectElements(value.props.children, collected)
+  }
+  return collected
+}
+
 test('registers additive entry and panel host slots but never details', async () => {
   const injectedSlots = []
   const registrations = []
@@ -253,6 +266,44 @@ test('flushes drafts before task switch, confirmed history close, and panel hide
     'flush', 'activate:task-b',
     'flush', 'mode:hidden', 'focus',
   ])
+})
+
+test('blocks every close control while a task retains an unresolved remote execution', async () => {
+  const order = []
+  const page = {
+    pageId: 'task-a',
+    title: '待对账任务',
+    runOrder: [],
+    remoteExecutionOrder: ['execution-a'],
+    remoteExecutions: {
+      'execution-a': { status: 'wait-stopped' },
+    },
+  }
+  const state = {
+    effectiveMode: 'normal',
+    panelMode: 'normal',
+    syncStatus: 'ready',
+    activePageId: 'task-a',
+    pageOperations: { 'task-a': { activeOperation: null } },
+    pages: [page],
+  }
+  const store = {
+    getWorkspaceState: () => state,
+    async flushWorkspace() { order.push('flush') },
+    closePage() { order.push('close') },
+  }
+  const actions = createPanelActions({
+    store,
+    workspaceId: 'workspace-a',
+    focusTargets: new Map(),
+    confirmClose: () => true,
+  })
+
+  assert.equal(await actions.closePage('task-a'), false)
+  assert.deepEqual(order, [])
+  const closeButton = collectElements(PanelChrome({ state }))
+    .find((element) => element.props?.['aria-label'] === '关闭任务页 待对账任务')
+  assert.equal(closeButton?.props.disabled, true)
 })
 
 test('shared workbench surface loads persisted state and remote workflow catalog for each resolved Workspace', () => {

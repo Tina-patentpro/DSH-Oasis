@@ -1,6 +1,7 @@
 import { createElement } from 'react'
 
 import { MaterialReferences } from './MaterialReferences.js'
+import { ProfessionalServicePanel } from './ProfessionalServicePanel.js'
 import { RunPreview } from './RunPreview.js'
 import { WorkflowForm, validateWorkflowFormValues } from './WorkflowForm.js'
 import { WritebackPanel } from './WritebackPanel.js'
@@ -93,6 +94,13 @@ export function PanelPages({
   onPrepareWriteback = () => {},
   onWritebackConfirm = () => {},
   onCommitWriteback = () => {},
+  onSelectProfessionalService = () => {},
+  onUpdateProfessionalField = () => {},
+  onSelectProfessionalFolder = () => {},
+  onProfessionalConfirm = () => {},
+  onStartProfessional = () => {},
+  onContinueProfessional = () => {},
+  onStopProfessional = () => {},
 }) {
   if (state.syncStatus === 'idle' || state.syncStatus === 'loading') {
     return createElement('div', { role: 'status', 'aria-live': 'polite', style: syncNoticeStyle }, '正在读取当前项目的绿洲任务页…')
@@ -153,6 +161,7 @@ export function PanelPages({
         materialPath: '', materialConfirmed: false, reviewNote: '', writebackDirectory: '',
         writebackConfirmed: false, writebackPlan: null, requestKey: null, activeOperation: null,
         error: null, errorCode: null, feedback: null, materialsChanged: false, indexWarningManifest: null,
+        professionalDetail: null, priceConfirmed: false, externalTransferConfirmed: false,
       }
       const validation = validateWorkflowFormValues(workflow, page.formValues)
       const operationDisabled = operation.activeOperation !== null
@@ -185,7 +194,17 @@ export function PanelPages({
             onAdd: () => onAddMaterial(page.pageId),
             onRefresh: (referenceId) => onRefreshMaterial(page.pageId, referenceId),
             onRemove: (referenceId, confirmed) => onRemoveMaterial(page.pageId, referenceId, confirmed),
-          }))),
+          })),
+        createElement(ProfessionalServicePanel, {
+          state, page, operation,
+          onSelectService: (apiEndpoint) => onSelectProfessionalService(page.pageId, apiEndpoint),
+          onUpdateField: (fieldId, value) => onUpdateProfessionalField(page.pageId, fieldId, value),
+          onSelectFolder: (folderId) => onSelectProfessionalFolder(page.pageId, folderId),
+          onConfirm: (value) => onProfessionalConfirm(page.pageId, value),
+          onStart: () => onStartProfessional(page.pageId),
+          onContinue: (executionId) => onContinueProfessional(page.pageId, executionId),
+          onStop: (executionId) => onStopProfessional(page.pageId, executionId),
+        })),
       createElement('div', { style: { ...surfaceStyle, display: 'grid', gap: 16, minWidth: 0 } },
         createElement(RunPreview, {
           page, operation, workflow, validation, syncStatus: state.syncStatus,

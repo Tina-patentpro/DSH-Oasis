@@ -52,6 +52,24 @@ function assertWorkspaceIdentity(workspaceId, record) {
 function assertRunIntegrity(record) {
   for (const taskId of record.taskOrder) {
     const task = record.tasks[taskId]
+    for (const executionId of task.remoteExecutionOrder) {
+      const execution = task.remoteExecutions[executionId]
+      const executionInputSha256 = computeOasisRemoteInputSha256({
+        providerSnapshot: {
+          apiBaseOrigin: execution.apiBaseOrigin,
+          apiId: execution.serviceSnapshot.apiId,
+          apiEndpoint: execution.serviceSnapshot.apiEndpoint,
+          apiProcess: execution.serviceSnapshot.apiProcess,
+          folderId: execution.folderSnapshot.folderId,
+          price: execution.priceSnapshot.price,
+        },
+        formValues: execution.formValues,
+        inputRefs: execution.materialSnapshots,
+      })
+      if (executionInputSha256 !== execution.inputSha) {
+        throw new Error(`remote execution input integrity mismatch for task ${taskId} execution ${executionId}`)
+      }
+    }
     for (const runId of task.runOrder) {
       const run = task.runs[runId]
       const inputSha256 = run.mode === 'local-mock'

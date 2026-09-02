@@ -1,5 +1,6 @@
 import { createElement } from 'react'
 
+import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
 import { CodexPanelIcon } from './codex-icons.js'
 
 const iconButtonStyle = {
@@ -25,6 +26,12 @@ function IconButton({ label, icon, onClick, testId, disabled = false }) {
     disabled,
     style: { ...iconButtonStyle, cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.5 : 1 },
   }, createElement(CodexPanelIcon, { name: icon }))
+}
+
+function hasUnresolvedRemoteExecution(page) {
+  return page.remoteExecutionOrder?.some((executionId) => (
+    isOasisRemoteExecutionUnresolved(page.remoteExecutions?.[executionId])
+  )) === true
 }
 
 export function getKeyboardTabTarget(pages, pageId, key) {
@@ -91,6 +98,12 @@ export function PanelChrome({
     if (!canPersist) return
     const handled = ['ArrowLeft', 'ArrowRight', 'Home', 'End', 'Delete'].includes(event.key)
     if (!handled) return
+    if (event.key === 'Delete' && hasUnresolvedRemoteExecution(
+      state.pages.find((page) => page.pageId === pageId),
+    )) {
+      event.preventDefault()
+      return
+    }
     const targetPageId = getKeyboardTabTarget(state.pages, pageId, event.key)
     event.preventDefault()
     if (event.key === 'Delete') {
@@ -195,14 +208,14 @@ export function PanelChrome({
     type: 'button',
     'aria-label': `关闭任务页 ${page.title}`,
     title: `关闭任务页 ${page.title}`,
-    disabled: !canPersist,
+    disabled: !canPersist || hasUnresolvedRemoteExecution(page),
     onClick: () => onClosePage(page.pageId),
     style: {
       border: 0,
       background: 'transparent',
       padding: '6px 7px 6px 3px',
       color: 'var(--dsw-alias-text-secondary, #6b7280)',
-      cursor: canPersist ? 'pointer' : 'not-allowed',
+      cursor: canPersist && !hasUnresolvedRemoteExecution(page) ? 'pointer' : 'not-allowed',
     },
   }, '×'))),
   createElement('button', {

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 
 import { createWorkbenchStore } from '../src/client/workbench-store.js'
+import { computeOasisRemoteInputSha256 } from '../src/workbench-domain.js'
 import {
   createMaterialReference,
   createV3Record,
@@ -169,6 +170,54 @@ test('keeps material drafts isolated and applies Host-authoritative material evi
   assert.equal(store.getWorkspaceState('workspace-a').pages[0].inputRefs[0].sha256, 'a'.repeat(64))
   assert.equal(store.getWorkspaceState('workspace-a').pageOperations['task-a'].materialPath, '')
   assert.equal(store.getWorkspaceState('workspace-a').pageOperations['task-a'].feedback, 'material-added')
+})
+
+test('refreshing material invalidates the prior external-transfer confirmation', async () => {
+  const initial = createV3Record('workspace-a', 1)
+  initial.tasks['task-a'].inputRefs = [createMaterialReference()]
+  const refreshed = structuredClone(initial)
+  refreshed.revision = 2
+  refreshed.tasks['task-a'].inputRefs[0].sha256 = 'b'.repeat(64)
+  const remote = {
+    async get() { return structuredClone(initial) },
+    async refreshMaterial() { return { committed: true, current: structuredClone(refreshed) } },
+  }
+  const store = createWorkbenchStore({ remote, workflowCatalog: TEST_CATALOG })
+  store.syncWorkspaces([{ workspaceId: 'workspace-a' }])
+  await store.hydrateWorkspace('workspace-a')
+  store.setProfessionalConfirmations('workspace-a', 'task-a', {
+    priceConfirmed: true,
+    externalTransferConfirmed: true,
+  })
+
+  await store.refreshMaterial('workspace-a', 'task-a', 'ref-a')
+  const operation = store.getWorkspaceState('workspace-a').pageOperations['task-a']
+  assert.equal(operation.priceConfirmed, true)
+  assert.equal(operation.externalTransferConfirmed, false)
+})
+
+test('removing material invalidates the prior external-transfer confirmation', async () => {
+  const initial = createV3Record('workspace-a', 1)
+  initial.tasks['task-a'].inputRefs = [createMaterialReference()]
+  const removed = structuredClone(initial)
+  removed.revision = 2
+  removed.tasks['task-a'].inputRefs = []
+  const remote = {
+    async get() { return structuredClone(initial) },
+    async removeMaterial() { return { committed: true, current: structuredClone(removed) } },
+  }
+  const store = createWorkbenchStore({ remote, workflowCatalog: TEST_CATALOG })
+  store.syncWorkspaces([{ workspaceId: 'workspace-a' }])
+  await store.hydrateWorkspace('workspace-a')
+  store.setProfessionalConfirmations('workspace-a', 'task-a', {
+    priceConfirmed: true,
+    externalTransferConfirmed: true,
+  })
+
+  await store.removeMaterial('workspace-a', 'task-a', 'ref-a', true)
+  const operation = store.getWorkspaceState('workspace-a').pageOperations['task-a']
+  assert.equal(operation.priceConfirmed, true)
+  assert.equal(operation.externalTransferConfirmed, false)
 })
 
 test('retains one requestKey across a failed generation retry and clears it after success', async () => {
@@ -497,4 +546,92 @@ test('a remote completion after the dispose deadline cannot repopulate cleared s
   assert.equal(replaceDraft.panelMode, 'expanded')
   assert.equal(store.peekWorkspaceState('workspace-a').workspaceId, null)
   assert.equal(notifications, notificationsBeforeDispose)
+})
+
+test('loads, persists, and starts professional-service drafts with explicit confirmations', async () => {
+  const calls = []
+  const bootstrap = {
+    environmentKind: 'non-production', remoteEnabled: true, credentialConfigured: true,
+    balance: 20,
+    services: [{
+      categoryId: 6, categoryName: '权利要求书生成', group: '专利撰写', description: '',
+      apiId: 132, apiEndpoint: 'claims-v1', apiProcess: '整理,撰写', apiDescription: '',
+    }],
+    folders: [{ id: 8, name: '测试项目' }],
+  }
+  const detail = {
+    id: 132, name: 'claims-v1', apiType: 'Workflow', price: 3, modelName: '', executionMode: 'sync',
+    inputFields: [
+      { fieldId: 'User_input', label: '要求', description: '', type: 'paragraph', control: 'long-text' },
+      { fieldId: 'file', label: '交底书', description: '', type: 'file', control: 'single-file' },
+    ],
+    outputFields: [], schemaHash: 'b'.repeat(64),
+  }
+  let current = createV3Record('workspace-a', 1)
+  const remote = {
+    async get() { return structuredClone(current) },
+    async getProfessionalBootstrap() { calls.push(['bootstrap']); return bootstrap },
+    async getProfessionalDetail(endpoint) { calls.push(['detail', endpoint]); return detail },
+    async replace(_workspaceId, expectedRevision, draft) {
+      calls.push(['replace', expectedRevision])
+      const next = structuredClone(current)
+      next.revision = expectedRevision + 1
+      next.tasks['task-a'].professionalDraft = structuredClone(draft.tasks['task-a'].professionalDraft)
+      current = next
+      return { committed: true, current: structuredClone(current) }
+    },
+    async startProfessional(payload) {
+      calls.push(['start', payload])
+      const next = structuredClone(current)
+      next.revision += 1
+      next.tasks['task-a'].remoteExecutionOrder = ['execution-a']
+      next.tasks['task-a'].remoteExecutions = {
+        'execution-a': {
+          executionId: 'execution-a', requestKey: payload.requestKey, status: 'prepared',
+          inputSha: computeOasisRemoteInputSha256({
+            providerSnapshot: {
+              apiBaseOrigin: 'https://oasis-staging.example', apiId: 132, apiEndpoint: 'claims-v1',
+              apiProcess: '整理,撰写', folderId: 8, price: 3,
+            },
+            formValues: next.tasks['task-a'].professionalDraft.formValues,
+            inputRefs: [],
+          }),
+          formValues: structuredClone(next.tasks['task-a'].professionalDraft.formValues),
+          apiBaseOrigin: 'https://oasis-staging.example',
+          serviceSnapshot: {
+            apiId: 132, apiEndpoint: 'claims-v1', apiProcess: '整理,撰写', schemaHash: 'b'.repeat(64),
+          },
+          folderSnapshot: { folderId: 8, folderName: '测试项目' },
+          priceSnapshot: { price: 3, balance: 20 },
+          materialSnapshots: [], uploadedFiles: [], safeError: null,
+          createdAt: next.updatedAt, updatedAt: next.updatedAt, submittedAt: null, completedAt: null,
+        },
+      }
+      current = next
+      return { committed: true, current: structuredClone(current) }
+    },
+    async continueProfessional(payload) {
+      calls.push(['continue', payload])
+      throw Object.assign(new Error('bounded wait interrupted'), { code: 'transport-failed' })
+    },
+  }
+  const store = createWorkbenchStore({
+    remote, workflowCatalog: TEST_CATALOG, createRequestKey: () => 'remote-request-stable', saveDelayMs: 0,
+  })
+  store.syncWorkspaces([{ workspaceId: 'workspace-a' }])
+  await store.hydrateWorkspace('workspace-a')
+  await store.loadProfessionalBootstrap('workspace-a')
+  await store.selectProfessionalService('workspace-a', 'task-a', 'claims-v1')
+  store.updateProfessionalFormValue('workspace-a', 'task-a', 'User_input', '请撰写')
+  store.setProfessionalConfirmations('workspace-a', 'task-a', {
+    priceConfirmed: true, externalTransferConfirmed: true,
+  })
+  await assert.rejects(store.startProfessional('workspace-a', 'task-a'), /interrupted/i)
+
+  const operation = store.getWorkspaceState('workspace-a').pageOperations['task-a']
+  assert.equal(operation.requestKey, 'remote-request-stable')
+  assert.equal(operation.activeOperation, null)
+  assert.deepEqual(calls.map(([kind]) => kind), ['bootstrap', 'detail', 'replace', 'replace', 'start', 'continue'])
+  assert.equal(calls.find(([kind]) => kind === 'start')[1].priceConfirmed, true)
+  assert.equal(calls.find(([kind]) => kind === 'start')[1].externalTransferConfirmed, true)
 })

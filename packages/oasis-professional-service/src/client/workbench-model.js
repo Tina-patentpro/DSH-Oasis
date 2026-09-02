@@ -66,6 +66,9 @@ export function createInitialWorkspaceState(workspaceId, syncStatus = 'idle') {
     catalogStatus: 'idle',
     catalogError: null,
     workflows: [],
+    professionalStatus: 'idle',
+    professionalError: null,
+    professionalBootstrap: null,
     pageOperations: {},
   })
 }
@@ -84,6 +87,9 @@ export function recordToWorkspaceState(record) {
     catalogStatus: 'idle',
     catalogError: null,
     workflows: [],
+    professionalStatus: 'idle',
+    professionalError: null,
+    professionalBootstrap: null,
     pageOperations: {},
   })
 }
@@ -179,6 +185,67 @@ export function reduceWorkspaceState(state, action, env) {
         ? {
             ...item,
             formValues: { ...item.formValues, [action.fieldId]: detached(action.value) },
+            updatedAt: env.now(),
+          }
+        : item),
+    }
+  } else if (action.type === 'select-professional-service') {
+    const page = state.pages.find((item) => item.pageId === action.pageId)
+    if (!page) throw new Error('unknown page')
+    const sameSchema = page.professionalDraft?.selectedApiEndpoint === action.detail.name
+      && page.professionalDraft?.selectedApiId === action.detail.id
+      && page.professionalDraft?.schemaHash === action.detail.schemaHash
+    const formValues = Object.fromEntries(action.detail.inputFields.map((field) => [
+      field.fieldId,
+      sameSchema && Object.hasOwn(page.professionalDraft.formValues, field.fieldId)
+        ? detached(page.professionalDraft.formValues[field.fieldId])
+        : '',
+    ]))
+    next = {
+      ...state,
+      pages: state.pages.map((item) => item.pageId === action.pageId
+        ? {
+            ...item,
+            professionalDraft: {
+              selectedApiEndpoint: action.detail.name,
+              selectedApiId: action.detail.id,
+              schemaHash: action.detail.schemaHash,
+              formValues,
+              folderId: action.folderId,
+              updatedAt: env.now(),
+            },
+            updatedAt: env.now(),
+          }
+        : item),
+    }
+  } else if (action.type === 'update-professional-form-value') {
+    const page = state.pages.find((item) => item.pageId === action.pageId)
+    if (!page?.professionalDraft || !Object.hasOwn(page.professionalDraft.formValues, action.fieldId)) {
+      throw new Error('unknown professional service form field')
+    }
+    next = {
+      ...state,
+      pages: state.pages.map((item) => item.pageId === action.pageId
+        ? {
+            ...item,
+            professionalDraft: {
+              ...item.professionalDraft,
+              formValues: { ...item.professionalDraft.formValues, [action.fieldId]: detached(action.value) },
+              updatedAt: env.now(),
+            },
+            updatedAt: env.now(),
+          }
+        : item),
+    }
+  } else if (action.type === 'set-professional-folder') {
+    const page = state.pages.find((item) => item.pageId === action.pageId)
+    if (!page?.professionalDraft) throw new Error('professional service must be selected first')
+    next = {
+      ...state,
+      pages: state.pages.map((item) => item.pageId === action.pageId
+        ? {
+            ...item,
+            professionalDraft: { ...item.professionalDraft, folderId: action.folderId, updatedAt: env.now() },
             updatedAt: env.now(),
           }
         : item),

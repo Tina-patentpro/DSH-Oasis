@@ -227,3 +227,46 @@ test('calls two-phase writeback endpoints and fails closed on malformed manifest
   })
   await assert.rejects(malformed.prepareWriteback(prepare), /malformed/i)
 })
+
+test('calls professional-service Host endpoints and validates every response boundary', async () => {
+  const calls = []
+  const bootstrap = {
+    environmentKind: 'non-production', remoteEnabled: true, credentialConfigured: true,
+    balance: 20, services: [], folders: [],
+  }
+  const detail = {
+    id: 132, name: 'claims-v1', apiType: 'Workflow', price: 3, modelName: '', executionMode: 'sync',
+    inputFields: [], outputFields: [], schemaHash: 'a'.repeat(64),
+  }
+  const replacement = { committed: true, current: createV3Record('workspace-a', 4, { withEvidence: true }) }
+  const remote = createWorkbenchRemote({ rpc: { async call(channel, endpoint, payload, signal) {
+    calls.push({ channel, endpoint, payload, signal })
+    if (endpoint === 'professional/bootstrap') return { ok: true, value: bootstrap }
+    if (endpoint === 'professional/detail') return { ok: true, value: detail }
+    if (endpoint === 'professional/stop') return { ok: true, value: { stopped: true } }
+    return { ok: true, value: replacement }
+  } } })
+  const signal = new AbortController().signal
+  const start = {
+    workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: 3,
+    requestKey: 'remote-a', priceConfirmed: true, externalTransferConfirmed: true,
+  }
+  const execution = { workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-a' }
+  assert.deepEqual(await remote.getProfessionalBootstrap(signal), bootstrap)
+  assert.deepEqual(await remote.getProfessionalDetail('claims-v1', signal), detail)
+  assert.deepEqual(await remote.startProfessional(start, signal), replacement)
+  assert.deepEqual(await remote.continueProfessional(execution, signal), replacement)
+  assert.deepEqual(await remote.stopProfessional(execution, signal), { stopped: true })
+  assert.deepEqual(calls.map((call) => call.endpoint), [
+    'professional/bootstrap', 'professional/detail', 'professional/start',
+    'professional/continue', 'professional/stop',
+  ])
+
+  const malformed = createWorkbenchRemote({ rpc: { async call() {
+    return { ok: true, value: { environmentKind: 'production' } }
+  } } })
+  await assert.rejects(malformed.getProfessionalBootstrap(), /malformed/i)
+  await assert.rejects(malformed.getProfessionalDetail('claims-v1'), /malformed/i)
+  await assert.rejects(malformed.startProfessional(start), /malformed/i)
+  await assert.rejects(malformed.stopProfessional(execution), /malformed/i)
+})

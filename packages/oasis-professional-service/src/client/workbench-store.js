@@ -21,6 +21,9 @@ const EMPTY_PAGE_OPERATION = Object.freeze({
   feedback: null,
   materialsChanged: false,
   indexWarningManifest: null,
+  professionalDetail: null,
+  priceConfirmed: false,
+  externalTransferConfirmed: false,
 })
 
 function defaultCreateId() {
@@ -80,6 +83,7 @@ export function createWorkbenchStore({
       runtime = {
         hydrationPromise: null,
         catalogPromise: null,
+        professionalPromise: null,
         drainPromise: null,
         pendingActions: [],
         pendingDraft: null,
@@ -129,6 +133,9 @@ export function createWorkbenchStore({
       catalogStatus: current.catalogStatus,
       catalogError: current.catalogError,
       workflows: current.workflows,
+      professionalStatus: current.professionalStatus,
+      professionalError: current.professionalError,
+      professionalBootstrap: current.professionalBootstrap,
       pageOperations: current.pageOperations,
     })
   }
@@ -538,6 +545,41 @@ export function createWorkbenchStore({
       return runtime.catalogPromise
     },
 
+    async loadProfessionalBootstrap(workspaceId) {
+      assertOpen()
+      assertKnown(workspaceId)
+      const current = getCurrent(workspaceId)
+      if (current.professionalStatus === 'ready') return current.professionalBootstrap
+      if (remote === null || typeof remote.getProfessionalBootstrap !== 'function') {
+        return setState(workspaceId, stateWith(current, {
+          professionalStatus: 'unavailable', professionalError: null, professionalBootstrap: null,
+        })).professionalBootstrap
+      }
+      const runtime = runtimeFor(workspaceId)
+      if (runtime.professionalPromise) return runtime.professionalPromise
+      setState(workspaceId, stateWith(current, { professionalStatus: 'loading', professionalError: null }))
+      runtime.professionalPromise = (async () => {
+        try {
+          const bootstrap = await remote.getProfessionalBootstrap(controller.signal)
+          if (closing || disposed) return null
+          setState(workspaceId, stateWith(getCurrent(workspaceId), {
+            professionalStatus: 'ready', professionalError: null, professionalBootstrap: bootstrap,
+          }))
+          return bootstrap
+        } catch (error) {
+          if (!closing && !disposed && !controller.signal.aborted) {
+            setState(workspaceId, stateWith(getCurrent(workspaceId), {
+              professionalStatus: 'error', professionalError: errorMessage(error), professionalBootstrap: null,
+            }))
+          }
+          throw error
+        } finally {
+          runtime.professionalPromise = null
+        }
+      })()
+      return runtime.professionalPromise
+    },
+
     async reloadWorkspace(workspaceId) {
       assertOpen()
       assertKnown(workspaceId)
@@ -597,6 +639,128 @@ export function createWorkbenchStore({
       return dispatch(workspaceId, { type: 'update-form-value', pageId, fieldId, value })
     },
 
+    async selectProfessionalService(workspaceId, pageId, apiEndpoint) {
+      assertOpen()
+      assertKnown(workspaceId)
+      pageFor(workspaceId, pageId)
+      const bootstrap = getCurrent(workspaceId).professionalBootstrap
+      if (!bootstrap?.remoteEnabled || !bootstrap.credentialConfigured) {
+        throw new Error('Professional service runtime is not ready')
+      }
+      const service = bootstrap.services.find((item) => item.apiEndpoint === apiEndpoint)
+      if (!service) throw new Error('unknown professional service')
+      const existingFolderId = pageFor(workspaceId, pageId).professionalDraft?.folderId
+      const folderId = bootstrap.folders.some((item) => item.id === existingFolderId)
+        ? existingFolderId
+        : bootstrap.folders[0]?.id
+      if (!Number.isSafeInteger(folderId)) throw new Error('Professional service requires an available project folder')
+      const detail = await remote.getProfessionalDetail(apiEndpoint, controller.signal)
+      if (detail.id !== service.apiId || detail.name !== service.apiEndpoint) {
+        throw new Error('Professional service detail mismatch')
+      }
+      const next = dispatch(workspaceId, { type: 'select-professional-service', pageId, detail, folderId })
+      updatePageOperation(workspaceId, pageId, {
+        professionalDetail: detail, priceConfirmed: false, externalTransferConfirmed: false,
+        error: null, errorCode: null, feedback: null,
+      })
+      return next
+    },
+
+    updateProfessionalFormValue(workspaceId, pageId, fieldId, value) {
+      const next = dispatch(workspaceId, { type: 'update-professional-form-value', pageId, fieldId, value })
+      updatePageOperation(workspaceId, pageId, { priceConfirmed: false, externalTransferConfirmed: false })
+      return next
+    },
+
+    setProfessionalFolder(workspaceId, pageId, folderId) {
+      const next = dispatch(workspaceId, { type: 'set-professional-folder', pageId, folderId })
+      updatePageOperation(workspaceId, pageId, { priceConfirmed: false })
+      return next
+    },
+
+    setProfessionalConfirmations(workspaceId, pageId, { priceConfirmed, externalTransferConfirmed }) {
+      return updatePageOperation(workspaceId, pageId, {
+        priceConfirmed: priceConfirmed === true,
+        externalTransferConfirmed: externalTransferConfirmed === true,
+        error: null, errorCode: null,
+      })
+    },
+
+    async startProfessional(workspaceId, pageId) {
+      assertOpen()
+      assertKnown(workspaceId)
+      const page = pageFor(workspaceId, pageId)
+      if (!page.professionalDraft) throw new Error('A professional service must be selected first')
+      const operation = operationFor(getCurrent(workspaceId), pageId)
+      if (operation.priceConfirmed !== true) throw new Error('Price confirmation is required')
+      if (operation.externalTransferConfirmed !== true) throw new Error('External material transfer confirmation is required')
+      if (operation.activeOperation !== null) throw new Error('another page operation is already in progress')
+      const requestKey = operation.requestKey ?? createRequestKey()
+      updatePageOperation(workspaceId, pageId, {
+        requestKey, activeOperation: 'professional-run', error: null, errorCode: null, feedback: null,
+      })
+      try {
+        await flushWorkspace(workspaceId)
+        const current = getCurrent(workspaceId)
+        if (current.syncStatus !== 'ready') throw new Error('Workspace is not ready for professional execution')
+        const prepared = await remote.startProfessional({
+          workspaceId, taskId: pageId, expectedRevision: current.revision, requestKey,
+          priceConfirmed: true, externalTransferConfirmed: true,
+        }, controller.signal)
+        applyAuthoritativeReplacement(workspaceId, prepared)
+        const authoritativePage = pageFor(workspaceId, pageId)
+        const execution = Object.values(authoritativePage.remoteExecutions).find((item) => item.requestKey === requestKey)
+        if (!execution) throw new Error('Prepared professional execution is missing')
+        const result = await remote.continueProfessional({
+          workspaceId, taskId: pageId, executionId: execution.executionId,
+        }, controller.signal)
+        const applied = applyAuthoritativeReplacement(workspaceId, result)
+        const finalExecution = pageFor(workspaceId, pageId).remoteExecutions[execution.executionId]
+        updatePageOperation(workspaceId, pageId, {
+          activeOperation: null,
+          requestKey: ['completed', 'failed'].includes(finalExecution.status) ? null : requestKey,
+          priceConfirmed: false,
+          externalTransferConfirmed: false,
+          feedback: finalExecution.status === 'completed' ? 'professional-completed' : finalExecution.status,
+        })
+        return applied
+      } catch (error) {
+        if (!closing && !disposed) {
+          updatePageOperation(workspaceId, pageId, {
+            activeOperation: null,
+            error: errorMessage(error),
+            errorCode: typeof error?.code === 'string' ? error.code : null,
+            feedback: operationErrorFeedback(error),
+          })
+        }
+        throw error
+      }
+    },
+
+    async continueProfessional(workspaceId, pageId, executionId) {
+      return runPageOperation(
+        workspaceId,
+        pageId,
+        'professional-continue',
+        () => remote.continueProfessional({ workspaceId, taskId: pageId, executionId }, controller.signal),
+        (applied) => {
+          const execution = applied.pages.find((item) => item.pageId === pageId)?.remoteExecutions[executionId]
+          return {
+            requestKey: execution && ['completed', 'failed'].includes(execution.status) ? null : operationFor(applied, pageId).requestKey,
+            feedback: execution?.status === 'completed' ? 'professional-completed' : execution?.status ?? null,
+          }
+        },
+      )
+    },
+
+    async stopProfessional(workspaceId, pageId, executionId) {
+      assertOpen()
+      assertKnown(workspaceId)
+      pageFor(workspaceId, pageId)
+      if (remote === null || typeof remote.stopProfessional !== 'function') throw new Error('Professional service requires the Oasis Host')
+      return remote.stopProfessional({ workspaceId, taskId: pageId, executionId }, controller.signal)
+    },
+
     setMaterialDraft(workspaceId, pageId, materialPath, confirmed) {
       return updatePageOperation(workspaceId, pageId, {
         materialPath: String(materialPath), materialConfirmed: confirmed === true,
@@ -633,7 +797,11 @@ export function createWorkbenchStore({
         (current) => remote.refreshMaterial({
           workspaceId, taskId: pageId, referenceId, expectedRevision: current.revision,
         }, controller.signal),
-        () => ({ materialsChanged: false, feedback: 'material-refreshed' }),
+        () => ({
+          materialsChanged: false,
+          externalTransferConfirmed: false,
+          feedback: 'material-refreshed',
+        }),
       )
     },
 
@@ -646,7 +814,11 @@ export function createWorkbenchStore({
         (current) => remote.removeMaterial({
           workspaceId, taskId: pageId, referenceId, expectedRevision: current.revision,
         }, controller.signal),
-        () => ({ materialsChanged: false, feedback: 'material-removed' }),
+        () => ({
+          materialsChanged: false,
+          externalTransferConfirmed: false,
+          feedback: 'material-removed',
+        }),
       )
     },
 
@@ -823,6 +995,7 @@ export function createWorkbenchStore({
             clearScheduledSave(runtime)
             runtime.hydrationPromise = null
             runtime.catalogPromise = null
+            runtime.professionalPromise = null
             runtime.drainPromise = null
           }
           knownWorkspaceIds.clear()

@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { isCanonicalOasisNonProductionOrigin } from './oasis-origin-policy.js'
+
 export const WORKBENCH_LIMITS = Object.freeze({
   maxTasksPerWorkspace: 32,
   maxInputRefsPerTask: 64,
@@ -335,10 +337,14 @@ const httpUrlSchema = z.string().min(1).max(4096).refine((value) => {
   }
 }, 'must be an absolute HTTP(S) URL')
 
-const httpOriginSchema = httpUrlSchema.refine((value) => {
-  const url = new URL(value)
-  return value === url.origin
-}, 'must contain only an HTTP(S) origin')
+const httpOriginSchema = httpUrlSchema.refine(
+  isCanonicalOasisNonProductionOrigin,
+  'must contain only a non-production HTTP(S) origin',
+)
+
+const nonProductionHttpUrlSchema = httpUrlSchema.refine((value) => (
+  isCanonicalOasisNonProductionOrigin(new URL(value).origin)
+), 'must target a non-production HTTP(S) origin')
 
 export const oasisRemoteExecutionStatusSchema = z.enum([
   'prepared',
@@ -346,10 +352,63 @@ export const oasisRemoteExecutionStatusSchema = z.enum([
   'ready-to-submit',
   'submitting',
   'submission-unknown',
+  'waiting-result',
+  'wait-stopped',
   'auth-required',
   'completed',
   'failed',
 ])
+
+const OASIS_REMOTE_TERMINAL_STATUSES = new Set(['completed', 'failed'])
+
+export function isOasisRemoteExecutionUnresolved(execution) {
+  return !OASIS_REMOTE_TERMINAL_STATUSES.has(execution?.status)
+}
+
+const oasisServiceSummarySchema = z.object({
+  categoryId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  categoryName: z.string().min(1).max(200),
+  group: z.string().max(200),
+  description: z.string().max(4000),
+  apiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  apiEndpoint: identifierSchema,
+  apiProcess: z.string().max(4000),
+  apiDescription: z.string().max(4000),
+}).strict()
+
+const oasisServiceFieldSchema = z.object({
+  fieldId: identifierSchema,
+  label: z.string().min(1).max(200),
+  description: z.string().max(4000),
+  type: identifierSchema,
+  control: z.enum(['short-text', 'long-text', 'single-file', 'text-output', 'file-output']),
+}).strict()
+
+export const oasisProfessionalBootstrapSchema = z.object({
+  environmentKind: z.literal('non-production'),
+  remoteEnabled: z.boolean(),
+  credentialConfigured: z.boolean(),
+  balance: z.number().nonnegative().finite().nullable(),
+  services: z.array(oasisServiceSummarySchema).max(256),
+  folders: z.array(z.object({
+    id: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+    name: z.string().min(1).max(200),
+  }).strict()).max(1000),
+}).strict()
+
+export const oasisProfessionalDetailSchema = z.object({
+  id: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  name: identifierSchema,
+  apiType: z.literal('Workflow'),
+  price: z.number().nonnegative().finite(),
+  modelName: z.string().max(200),
+  executionMode: z.literal('sync'),
+  inputFields: z.array(oasisServiceFieldSchema).max(128),
+  outputFields: z.array(oasisServiceFieldSchema).max(128),
+  schemaHash: sha256Schema,
+}).strict()
+
+export const oasisProfessionalStopResponseSchema = z.object({ stopped: z.boolean() }).strict()
 
 const oasisProviderSnapshotSchema = z.object({
   apiBaseOrigin: httpOriginSchema,
@@ -365,6 +424,8 @@ export const oasisRemoteExecutionSchema = z.object({
   requestKey: identifierSchema,
   status: oasisRemoteExecutionStatusSchema,
   inputSha: sha256Schema,
+  formValues: jsonRootObjectSchema,
+  apiBaseOrigin: httpOriginSchema,
   serviceSnapshot: z.object({
     apiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
     apiEndpoint: identifierSchema,
@@ -383,7 +444,7 @@ export const oasisRemoteExecutionSchema = z.object({
   uploadedFiles: z.array(z.object({
     fieldId: identifierSchema,
     referenceId: identifierSchema,
-    url: httpUrlSchema,
+    url: nonProductionHttpUrlSchema,
     sha256: sha256Schema,
     uploadedAt: timestampSchema,
   }).strict()).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
@@ -398,9 +459,10 @@ export const oasisRemoteExecutionSchema = z.object({
 }).strict().superRefine((value, ctx) => {
   if (value.status === 'completed') {
     if (value.completedAt === null) ctx.addIssue({ code: 'custom', path: ['completedAt'], message: 'completed execution requires completedAt' })
+    if (value.submittedAt === null) ctx.addIssue({ code: 'custom', path: ['submittedAt'], message: 'completed execution requires submittedAt' })
     if (value.safeError !== null) ctx.addIssue({ code: 'custom', path: ['safeError'], message: 'completed execution cannot retain an error' })
   }
-  if (['submission-unknown', 'auth-required', 'failed'].includes(value.status) && value.safeError === null) {
+  if (['submission-unknown', 'wait-stopped', 'auth-required', 'failed'].includes(value.status) && value.safeError === null) {
     ctx.addIssue({ code: 'custom', path: ['safeError'], message: `${value.status} execution requires a safe error` })
   }
 })
@@ -420,7 +482,7 @@ export const oasisRemoteRunSnapshotSchema = z.object({
   }).strict(),
   result: z.object({
     answerText: jsonStringSchema,
-    fileUrls: z.array(httpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
+    fileUrls: z.array(nonProductionHttpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
     fileStatus: z.literal('undownloaded-unverified'),
     responseSha: sha256Schema,
     artifact: artifactSchema,
@@ -513,8 +575,25 @@ export const workbenchTaskSchema = z.object({
       const execution = value.remoteExecutions[run.executionId]
       if (!execution || execution.status !== 'completed') {
         ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'executionId'], message: 'remote run requires a completed Host execution' })
-      } else if (execution.requestKey !== run.requestKey || execution.inputSha !== run.inputSnapshot.sha256) {
-        ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'executionId'], message: 'remote run must match its Host execution snapshot' })
+      } else {
+        if (execution.requestKey !== run.requestKey || execution.inputSha !== run.inputSnapshot.sha256) {
+          ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'executionId'], message: 'remote run must match its Host execution snapshot' })
+        }
+        const provider = run.providerSnapshot
+        if (
+          execution.serviceSnapshot.apiId !== provider.apiId
+          || execution.apiBaseOrigin !== provider.apiBaseOrigin
+          || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint
+          || execution.serviceSnapshot.apiProcess !== provider.apiProcess
+          || execution.folderSnapshot.folderId !== provider.folderId
+          || execution.priceSnapshot.price !== provider.price
+        ) {
+          ctx.addIssue({
+            code: 'custom',
+            path: ['runs', mapKey, 'providerSnapshot'],
+            message: 'remote run provider must match its Host service, folder, and price snapshots',
+          })
+        }
       }
     }
     if (requestKeys.has(run.requestKey)) {
@@ -533,7 +612,16 @@ export const workbenchTaskSchema = z.object({
   const executionIds = new Set()
   const executionRequestKeys = new Set()
   let inFlight = 0
-  const inFlightStatuses = new Set(['prepared', 'uploading', 'ready-to-submit', 'submitting'])
+  const inFlightStatuses = new Set([
+    'prepared',
+    'uploading',
+    'ready-to-submit',
+    'submitting',
+    'submission-unknown',
+    'waiting-result',
+    'wait-stopped',
+    'auth-required',
+  ])
   for (const [index, executionId] of value.remoteExecutionOrder.entries()) {
     if (executionIds.has(executionId)) {
       ctx.addIssue({ code: 'custom', path: ['remoteExecutionOrder', index], message: `duplicate remote execution id: ${executionId}` })
@@ -554,13 +642,24 @@ export const workbenchTaskSchema = z.object({
       ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey, 'requestKey'], message: `duplicate remote request key: ${execution.requestKey}` })
     }
     executionRequestKeys.add(execution.requestKey)
+    const uploadedFields = new Set()
+    for (const [index, upload] of execution.uploadedFiles.entries()) {
+      if (uploadedFields.has(upload.fieldId)) {
+        ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey, 'uploadedFiles', index, 'fieldId'], message: 'uploaded field ids must be unique' })
+      }
+      uploadedFields.add(upload.fieldId)
+      const reference = execution.materialSnapshots.find((item) => item.referenceId === upload.referenceId)
+      if (!reference || reference.sha256 !== upload.sha256) {
+        ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey, 'uploadedFiles', index], message: 'uploaded file must match its confirmed material snapshot' })
+      }
+    }
     if (execution.status === 'completed' && !remoteRunExecutionIds.has(execution.executionId)) {
       ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey, 'status'], message: 'completed remote execution requires its completed run snapshot' })
     }
     if (inFlightStatuses.has(execution.status)) inFlight += 1
   }
   if (inFlight > 1) {
-    ctx.addIssue({ code: 'custom', path: ['remoteExecutions'], message: 'concurrent in-flight remote executions are forbidden' })
+    ctx.addIssue({ code: 'custom', path: ['remoteExecutions'], message: 'concurrent unresolved remote executions are forbidden' })
   }
 })
 

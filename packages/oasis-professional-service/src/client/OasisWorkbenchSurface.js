@@ -1,5 +1,6 @@
 import { createElement, useEffect, useLayoutEffect, useRef, useSyncExternalStore } from 'react'
 
+import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
 import { PanelChrome } from './PanelChrome.js'
 import { PanelPages } from './PanelPages.js'
 
@@ -25,6 +26,9 @@ export function createPanelActions({
     async closePage(pageId) {
       const page = store.getWorkspaceState(workspaceId).pages.find((item) => item.pageId === pageId)
       if (!page) return false
+      if (page.remoteExecutionOrder?.some((executionId) => (
+        isOasisRemoteExecutionUnresolved(page.remoteExecutions?.[executionId])
+      ))) return false
       if (page.runOrder.length > 0 && !confirmClose(
         `任务“${page.title}”包含 ${page.runOrder.length} 个运行记录。确认关闭此任务页？`,
       )) return false
@@ -50,6 +54,9 @@ export async function ensureEmbeddedWorkspaceHidden({ store, workspaceId, worksp
   await Promise.all([
     store.hydrateWorkspace(workspaceId),
     store.loadWorkflowCatalog(workspaceId),
+    typeof store.loadProfessionalBootstrap === 'function'
+      ? store.loadProfessionalBootstrap(workspaceId).catch(() => null)
+      : Promise.resolve(null),
   ])
   const current = store.getWorkspaceState(workspaceId)
   if (current.panelMode === 'hidden') return true
@@ -70,6 +77,9 @@ async function hydrateSurface({ store, workspaceId, workspaceItems, hostMode }) 
   await Promise.all([
     store.hydrateWorkspace(workspaceId),
     store.loadWorkflowCatalog(workspaceId),
+    typeof store.loadProfessionalBootstrap === 'function'
+      ? store.loadProfessionalBootstrap(workspaceId).catch(() => null)
+      : Promise.resolve(null),
   ])
   return true
 }
@@ -243,5 +253,26 @@ export function OasisWorkbenchSurface({
     },
     onWritebackConfirm: (pageId, confirmed) => store.setWritebackConfirmation(workspaceId, pageId, confirmed),
     onCommitWriteback: (pageId) => { void store.commitWriteback(workspaceId, pageId).catch(() => {}) },
+    onSelectProfessionalService: (pageId, apiEndpoint) => {
+      void store.selectProfessionalService(workspaceId, pageId, apiEndpoint).catch(() => {})
+    },
+    onUpdateProfessionalField: (pageId, fieldId, value) => {
+      store.updateProfessionalFormValue(workspaceId, pageId, fieldId, value)
+    },
+    onSelectProfessionalFolder: (pageId, folderId) => {
+      store.setProfessionalFolder(workspaceId, pageId, folderId)
+    },
+    onProfessionalConfirm: (pageId, value) => {
+      store.setProfessionalConfirmations(workspaceId, pageId, value)
+    },
+    onStartProfessional: (pageId) => {
+      void store.startProfessional(workspaceId, pageId).catch(() => {})
+    },
+    onContinueProfessional: (pageId, executionId) => {
+      void store.continueProfessional(workspaceId, pageId, executionId).catch(() => {})
+    },
+    onStopProfessional: (pageId, executionId) => {
+      void store.stopProfessional(workspaceId, pageId, executionId).catch(() => {})
+    },
   }))
 }

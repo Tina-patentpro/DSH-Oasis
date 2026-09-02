@@ -345,3 +345,47 @@ test('serializes committed-index failure with only a relative recovery manifest'
     /recovery manifest/i,
   )
 })
+
+test('dispatches strict professional-service commands only through the Host service', async () => {
+  const calls = []
+  const bootstrap = {
+    environmentKind: 'non-production', remoteEnabled: true, credentialConfigured: true,
+    balance: 20, services: [], folders: [],
+  }
+  const replacement = { committed: true, current: createV3Record('workspace-a', 4, { withEvidence: true }) }
+  const professional = {
+    async getBootstrap() { calls.push(['bootstrap']); return bootstrap },
+    async getServiceDetail(apiEndpoint) { calls.push(['detail', apiEndpoint]); return { apiEndpoint } },
+    async start(payload) { calls.push(['start', payload]); return replacement },
+    async continue(payload) { calls.push(['continue', payload]); return replacement },
+    async stop(payload) { calls.push(['stop', payload]); return { stopped: true } },
+  }
+  const handler = createWorkbenchRpcHandler({}, professional)
+  const start = {
+    workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: 3,
+    requestKey: 'remote-a', priceConfirmed: true, externalTransferConfirmed: true,
+  }
+  const execution = { workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-a' }
+  assert.deepEqual(await handler('professional/bootstrap', {}), { ok: true, value: bootstrap })
+  assert.deepEqual(await handler('professional/detail', { apiEndpoint: 'claims-v1' }), {
+    ok: true, value: { apiEndpoint: 'claims-v1' },
+  })
+  assert.deepEqual(await handler('professional/start', start), { ok: true, value: replacement })
+  assert.deepEqual(await handler('professional/continue', execution), { ok: true, value: replacement })
+  assert.deepEqual(await handler('professional/stop', execution), { ok: true, value: { stopped: true } })
+  assert.deepEqual(calls.map((call) => call[0]), ['bootstrap', 'detail', 'start', 'continue', 'stop'])
+
+  for (const [endpoint, payload] of [
+    ['professional/bootstrap', { workspaceId: 'workspace-a' }],
+    ['professional/detail', { apiEndpoint: '' }],
+    ['professional/start', { ...start, priceConfirmed: false }],
+    ['professional/start', { ...start, jwt: 'forbidden' }],
+    ['professional/continue', { ...execution, expectedRevision: 3 }],
+    ['professional/stop', { ...execution, executionId: '' }],
+  ]) {
+    const result = await handler(endpoint, payload)
+    assert.equal(result.ok, false)
+    assert.equal(result.error.code, 'bad-request')
+  }
+  assert.equal(calls.length, 5)
+})

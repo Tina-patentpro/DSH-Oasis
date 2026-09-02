@@ -14,6 +14,7 @@ import {
 } from '../src/client/RunPreview.js'
 import { WritebackPanel } from '../src/client/WritebackPanel.js'
 import { PanelPages } from '../src/client/PanelPages.js'
+import { ProfessionalServicePanel } from '../src/client/ProfessionalServicePanel.js'
 import {
   createMaterialReference,
   createRunSnapshot,
@@ -76,6 +77,7 @@ function page(overrides = {}) {
     pageId: 'task-a', title: '任务 A', workType: 'technical-rd', workflowId: workflow.workflowId,
     workflowVersion: workflow.workflowVersion, inputRefs: [],
     formValues: { name: '', objective: '', constraints: [], evidence: '' },
+    professionalDraft: null, remoteExecutionOrder: [], remoteExecutions: {},
     activeRunId: null, runOrder: [], runs: {}, view: 'workspace',
     createdAt: '2026-08-25T01:02:03.000Z', updatedAt: '2026-08-25T01:02:03.000Z',
     ...overrides,
@@ -236,4 +238,60 @@ test('standalone panel keeps its border inside the declared 360px layout width',
   const source = await readFile(new URL('../src/client/OasisWorkbenchSurface.js', import.meta.url), 'utf8')
 
   assert.match(source, /boxSizing: 'border-box'/)
+})
+
+test('renders only Host-provided professional fields and requires both explicit confirmations', () => {
+  const selected = []
+  const updated = []
+  const confirmations = []
+  const servicePage = page({
+    inputRefs: [createMaterialReference()],
+    professionalDraft: {
+      selectedApiEndpoint: 'claims-v1', selectedApiId: 132, schemaHash: 'b'.repeat(64),
+      formValues: { User_input: '请撰写', file: 'ref-a' }, folderId: 8,
+      updatedAt: '2026-08-25T01:02:03.000Z',
+    },
+  })
+  const serviceOperation = operation({
+    professionalDetail: {
+      id: 132, name: 'claims-v1', apiType: 'Workflow', price: 3, modelName: '', executionMode: 'sync',
+      inputFields: [
+        { fieldId: 'User_input', label: '要求', description: '', type: 'paragraph', control: 'long-text' },
+        { fieldId: 'file', label: '交底书', description: '', type: 'file', control: 'single-file' },
+      ],
+      outputFields: [], schemaHash: 'b'.repeat(64),
+    },
+    priceConfirmed: true,
+    externalTransferConfirmed: false,
+  })
+  const state = {
+    professionalStatus: 'ready',
+    professionalBootstrap: {
+      environmentKind: 'non-production', remoteEnabled: true, credentialConfigured: true, balance: 20,
+      services: [{
+        categoryId: 6, categoryName: '权利要求书生成', group: '专利撰写', description: '',
+        apiId: 132, apiEndpoint: 'claims-v1', apiProcess: '整理,撰写', apiDescription: '',
+      }],
+      folders: [{ id: 8, name: '测试项目' }],
+    },
+  }
+  const panel = ProfessionalServicePanel({
+    state, page: servicePage, operation: serviceOperation,
+    onSelectService: (value) => selected.push(value),
+    onUpdateField: (fieldId, value) => updated.push([fieldId, value]),
+    onConfirm: (value) => confirmations.push(value),
+  })
+  assert.match(textOf(panel), /非生产/)
+  assert.match(textOf(panel), /参考价格：3/)
+  const start = allNodes(panel).find((node) => node?.props?.['data-testid'] === 'oasis-professional-start')
+  assert.equal(start.props.disabled, true)
+  const file = allNodes(panel).find((node) => node?.props?.['data-testid'] === 'oasis-professional-field-file')
+  assert.match(textOf(file), /technical\.md/)
+  file.props.onChange({ currentTarget: { value: 'ref-a' } })
+  assert.deepEqual(updated, [['file', 'ref-a']])
+  const checkboxes = allNodes(panel).filter((node) => node?.type === 'input' && node.props?.type === 'checkbox')
+  checkboxes[1].props.onChange({ currentTarget: { checked: true } })
+  assert.deepEqual(confirmations, [{ priceConfirmed: true, externalTransferConfirmed: true }])
+  assert.deepEqual(selected, [])
+  assert.equal(allNodes(panel).some((node) => node?.props && Object.hasOwn(node.props, 'dangerouslySetInnerHTML')), false)
 })

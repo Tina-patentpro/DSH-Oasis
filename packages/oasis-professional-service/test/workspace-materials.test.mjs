@@ -238,3 +238,24 @@ test('rechecks confirmed evidence without mutating it and blocks legacy referenc
     referenceId: 'legacy-v1-1', kind: 'legacy-v1', legacyValue: { source: 'v1' },
   }], POLICY), 'LEGACY_MATERIAL_REQUIRES_RECONFIRMATION')
 })
+
+test('reads confirmed material bytes only after a fresh bounded integrity check', async (t) => {
+  const fixture = await createFixture(t)
+  const absolutePath = join(fixture.workspaceRoot, 'material.md')
+  const content = '经用户确认可外发的材料'
+  await writeFile(absolutePath, content)
+  const reference = await fixture.manager.confirm('workspace-a', 'material.md', POLICY, 'ref-a', NOW)
+
+  const upload = await fixture.manager.readForUpload('workspace-a', reference, POLICY)
+  assert.equal(Buffer.from(upload.bytes).toString('utf8'), content)
+  assert.equal(upload.fileName, 'material.md')
+  assert.equal(upload.mediaType, 'text/markdown')
+  assert.equal(upload.sha256, reference.sha256)
+  assert.equal(Object.hasOwn(upload, 'absolutePath'), false)
+
+  await writeFile(absolutePath, `${content}-changed`)
+  await expectCode(
+    fixture.manager.readForUpload('workspace-a', reference, POLICY),
+    'MATERIAL_CHANGED',
+  )
+})
