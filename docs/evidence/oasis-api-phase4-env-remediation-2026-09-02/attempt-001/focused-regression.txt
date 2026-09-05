@@ -1,0 +1,23 @@
+TAP version 13
+# {"nativeCleanup":{"ok":true,"exitCode":0,"closed":true,"error":null,"executable":"C:\\\\Windows\\\\System32\\\\taskkill.exe","argv":["/PID","18496","/T","/F"],"cwd":"C:\\\\Users\\\\TinaD\\\\AppData\\\\Local\\\\Temp\\\\oasis-dsh-p4-native-gc5Zwt\\\\tmp\\\\oasis-dsh-p4-native-Sjqunq","environment":{"SystemRoot":"C:\\\\Windows","SystemDrive":"C:","ProgramData":"C:\\\\Users\\\\TinaD\\\\AppData\\\\Local\\\\Temp\\\\oasis-dsh-p4-native-gc5Zwt\\\\tmp\\\\oasis-dsh-p4-native-Sjqunq\\\\programdata","ALLUSERSPROFILE":"C:\\\\Users\\\\TinaD\\\\AppData\\\\Local\\\\Temp\\\\oasis-dsh-p4-native-gc5Zwt\\\\tmp\\\\oasis-dsh-p4-native-Sjqunq\\\\programdata","TEMP":"C:\\\\Users\\\\TinaD\\\\AppData\\\\Local\\\\Temp\\\\oasis-dsh-p4-native-gc5Zwt\\\\tmp\\\\oasis-dsh-p4-native-Sjqunq/tmp","TMP":"C:\\\\Users\\\\TinaD\\\\AppData\\\\Local\\\\Temp\\\\oasis-dsh-p4-native-gc5Zwt\\\\tmp\\\\oasis-dsh-p4-native-Sjqunq/tmp"}}}
+# Subtest: inspection CLI timeout terminates its owned nested process tree on Windows
+ok 1 - inspection CLI timeout terminates its owned nested process tree on Windows
+  ---
+  duration_ms: 1054.873
+  type: 'test'
+  ...
+# Subtest: failed tree termination is reported and does not leave the command promise pending
+ok 2 - failed tree termination is reported and does not leave the command promise pending
+  ---
+  duration_ms: 73.0817
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1271.7244

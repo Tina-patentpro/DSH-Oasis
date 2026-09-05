@@ -1,0 +1,149 @@
+{
+  "generatedAt": "2026-09-02T03:52:36.628Z",
+  "boundary": "mock APIs and local disposable audit workspaces only",
+  "runRoot": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\docs\\evidence\\oasis-api-phase3-audit-2026-09-02\\probe-5XQiap",
+  "reports": [
+    {
+      "name": "cross-environment-collision",
+      "kind": "confirmed-defect",
+      "runOrigin": "https://oasis-staging.example",
+      "activeOrigin": "https://oasis-other-staging.example",
+      "foreignCalls": 1,
+      "actual": {
+        "status": "observed",
+        "runId": "run-remote-a",
+        "recordId": 90,
+        "scope": "current-page",
+        "total": 1,
+        "item": {
+          "id": 301,
+          "linkId": 90,
+          "type": "消费",
+          "money": 999,
+          "balance": 1000,
+          "createTime": "2026-08-26T09:02:03"
+        },
+        "observedAt": "2026-08-25T01:02:03.000Z"
+      }
+    },
+    {
+      "name": "conflicting-create-query-record-id",
+      "kind": "confirmed-defect-with-undocumented-query-extension",
+      "createRecordId": 90,
+      "queryRecordId": 91,
+      "actual": {
+        "status": "observed",
+        "runId": "run-remote-a",
+        "recordId": 91,
+        "scope": "current-page",
+        "total": 1,
+        "item": {
+          "id": 301,
+          "linkId": 91,
+          "type": "消费",
+          "money": 3,
+          "balance": 17,
+          "createTime": "2026-08-26T09:02:03"
+        },
+        "observedAt": "2026-08-25T01:02:03.000Z"
+      }
+    },
+    {
+      "name": "malformed-ledger-false-negative",
+      "kind": "confirmed-defect",
+      "malformedField": "items[0].link_id is string, not document numeric shape",
+      "actual": {
+        "status": "not-observed",
+        "runId": "run-remote-a",
+        "recordId": 90,
+        "scope": "current-page",
+        "total": 1,
+        "item": null,
+        "observedAt": "2026-08-25T01:02:03.000Z"
+      },
+      "acceptedByClientSchema": true
+    },
+    {
+      "name": "mixed-type-duplicate-ledger",
+      "kind": "correlation-contract-gap",
+      "actual": {
+        "status": "observed",
+        "runId": "run-remote-a",
+        "recordId": 90,
+        "scope": "current-page",
+        "total": 2,
+        "item": {
+          "id": 301,
+          "linkId": 90,
+          "type": "充值",
+          "money": 500,
+          "balance": 17,
+          "createTime": "2026-08-26T09:02:03"
+        },
+        "observedAt": "2026-08-25T01:02:03.000Z"
+      },
+      "discardedCandidate": {
+        "id": 302,
+        "linkId": 90,
+        "type": "消费",
+        "money": 3,
+        "balance": 17,
+        "createTime": "2026-08-26T09:02:03"
+      },
+      "note": "Document lists mixed types but does not establish globally unique link_id semantics."
+    },
+    {
+      "name": "url-credentials-published",
+      "kind": "confirmed-defect",
+      "network": "mock-fetch-only",
+      "metadataHasUserinfo": true,
+      "metadataHasToken": true,
+      "markdownHasCredentials": true,
+      "files": [
+        "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\docs\\evidence\\oasis-api-phase3-audit-2026-09-02\\probe-5XQiap\\url\\result\\oasis-result.md",
+        "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\docs\\evidence\\oasis-api-phase3-audit-2026-09-02\\probe-5XQiap\\url\\result\\oasis-result.oasis.json"
+      ]
+    },
+    {
+      "name": "artifact-preview-binding",
+      "kind": "preexisting-integrity-gap-new-writeback-exposure",
+      "prerequisite": "stored Host-owned artifact modified and its artifact hash recomputed; no public mutation path demonstrated",
+      "previewAnswer": "人工审核可见的正文",
+      "publishedBody": "# 此内容不在人工审核预览中\n"
+    },
+    {
+      "name": "review-revision-and-token-guard",
+      "kind": "guard-verified",
+      "result": "revision-conflict",
+      "targetAbsent": true,
+      "replayCode": "WRITEBACK_TOKEN_USED"
+    },
+    {
+      "name": "windows-empty-directory-race",
+      "kind": "guard-verified",
+      "platform": "win32",
+      "outcome": "WRITEBACK_TARGET_EXISTS",
+      "targetEntries": []
+    },
+    {
+      "name": "observation-schema-correlation",
+      "kind": "defense-in-depth-gap",
+      "acceptedInconsistentObservation": {
+        "status": "observed",
+        "runId": "run-remote-a",
+        "recordId": 90,
+        "scope": "current-page",
+        "total": null,
+        "item": {
+          "id": 301,
+          "linkId": 999,
+          "type": "消费",
+          "money": 3,
+          "balance": 17,
+          "createTime": "2026-08-26T09:02:03"
+        },
+        "observedAt": "2026-08-25T01:02:03.000Z"
+      }
+    }
+  ]
+}

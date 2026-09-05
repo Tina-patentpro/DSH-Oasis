@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-09-03T02:23:11.306Z",
+  "stableFunctions": [
+    {
+      "name": "terminateOwnedProcessTree",
+      "before": "11B8A56CCAB745F815A525444986690B0EBC608AE551BF6F883C1D20660C2A72",
+      "after": "11B8A56CCAB745F815A525444986690B0EBC608AE551BF6F883C1D20660C2A72",
+      "unchanged": true
+    },
+    {
+      "name": "runRecordedCommand",
+      "before": "C66F9043ED411EBE954CA8B6367DC28002579671AC057D7621B47DE36282903C",
+      "after": "C66F9043ED411EBE954CA8B6367DC28002579671AC057D7621B47DE36282903C",
+      "unchanged": true
+    }
+  ],
+  "whitespace": [
+    {
+      "path": "scripts/verify-oasis-api-phase4.mjs",
+      "trailingWhitespaceLines": [],
+      "endsWithNewline": true
+    },
+    {
+      "path": "scripts/oasis-api-phase4-browser-worker.mjs",
+      "trailingWhitespaceLines": [],
+      "endsWithNewline": true
+    },
+    {
+      "path": "tests/scripts/oasis-api-phase4-contract.test.mjs",
+      "trailingWhitespaceLines": [],
+      "endsWithNewline": true
+    },
+    {
+      "path": "scripts/diagnose-oasis-api-phase4-windows.mjs",
+      "trailingWhitespaceLines": [],
+      "endsWithNewline": true
+    },
+    {
+      "path": "scripts/oasis-api-phase4-windows-probe.ps1",
+      "trailingWhitespaceLines": [],
+      "endsWithNewline": true
+    }
+  ],
+  "diffCheck": {
+    "exitCode": 2,
+    "stdout": "packages/oasis-professional-service/lib/client.js:2082: trailing whitespace.\n+        \npackages/oasis-professional-service/lib/client.js:2090: trailing whitespace.\n+        \npackages/oasis-professional-service/lib/client.js:2125: trailing whitespace.\n+        \npackages/oasis-professional-service/lib/client.js:2133: trailing whitespace.\n+        \n",
+    "stderr": "warning: in the working copy of 'packages/oasis-professional-service/lib/client.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/client/OasisWorkbenchSurface.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/client/PanelPages.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/client/ProfessionalServicePanel.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/client/RunPreview.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/client/workbench-remote.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/client/workbench-store.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/index.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/oasis-api-contract.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/oasis-origin-policy.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/oasis-remote-service.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/workbench-contract.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/workbench-rpc.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/workbench-service.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/src/writeback-service.js', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/test/host-tool.test.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/test/oasis-api-contract.test.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/test/oasis-remote-service.test.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/test/panel-local-loop-ui.test.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/test/workbench-remote.test.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/test/workbench-rpc.test.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/test/workbench-service.test.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/test/workbench-store.test.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/test/workbench-v3-contract.test.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'packages/oasis-professional-service/test/writeback-service.test.mjs', LF will be replaced by CRLF the next time Git touches it\n",
+    "executable": "C:/Program Files/Git/cmd/git.exe",
+    "argv": [
+      "diff",
+      "--check"
+    ],
+    "cwd": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研",
+    "startedAt": "2026-09-03T02:23:11.162Z",
+    "scope": "includes protected pre-existing dirty files"
+  }
+}

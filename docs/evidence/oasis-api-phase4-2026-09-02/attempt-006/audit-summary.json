@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-09-02T13:34:29.761Z",
+  "status": "FAIL",
+  "stageComplete": false,
+  "phase4Complete": false,
+  "attempts": [
+    {
+      "attempt": "005",
+      "exitCode": 1,
+      "failedAt": "first read-only Git command; sandbox ownership mismatch; no Profile snapshot or DSH launch"
+    },
+    {
+      "attempt": "006",
+      "exitCode": 1,
+      "failedAt": "Edge launchPersistentContext timed out before browser connection"
+    }
+  ],
+  "commands": {
+    "count": 15,
+    "allClosed": true,
+    "allExitZero": true
+  },
+  "standalone": {
+    "copyBuildPack": true,
+    "packageFiles": 43,
+    "offlineInstall": true,
+    "installedBundles": [
+      "@deepseek-ai/dsh-base",
+      "@deepseek-ai/dsh-web-app",
+      "oasis-professional-service",
+      "oasis-api-phase4-slot-probe"
+    ],
+    "officialDshVersion": "0.1.1-rc.2",
+    "runtimeFiles": 29503,
+    "isolatedLinkChecks": 1079,
+    "hostStarted": true,
+    "hostClosed": true,
+    "portClosed": true,
+    "browserLaunchAttempted": true,
+    "browserConnected": false,
+    "observedBrowserPidAbsent": true,
+    "completeBrowserDescendantExitProof": false,
+    "liveSlotContracts": false
+  },
+  "betterSidebar": "not-run after first mode failed",
+  "preservation": {
+    "generatedAt": "2026-09-02T13:33:45.716Z",
+    "profileEntries": 15218,
+    "profileUnchanged": true,
+    "fileCount": 2885,
+    "changed": [],
+    "errors": [],
+    "authorityUnchanged": true,
+    "literalCacheAbsent": true,
+    "ok": true
+  },
+  "codeChanges": false,
+  "realBusinessApi": "not-run",
+  "browserBackgroundNetwork": "Microsoft background fetch attempted; proxy connection failed; no claim of zero network attempts",
+  "unitRegressionsThisTurn": "not-rerun; exact repaired source hashes verified before actual inspect",
+  "sourceEvidence": "execution-scope.json",
+  "rawRuntimeLedger": "evidence-ledger.json",
+  "browserFailureEvidence": "browser-failure-observed.json",
+  "unresolved": [
+    "Browser Windows user-folder/token context interaction not isolated",
+    "Launch-failure lifecycle incorrectly treats missing browser object as closed",
+    "Peer dependency warnings remain unresolved",
+    "Full browser child-process tree exit not captured by current runner"
+  ],
+  "next": "Propose bounded browser-only preflight and failure-lifecycle repair; no new Host/browser attempt or Stage C in this turn."
+}

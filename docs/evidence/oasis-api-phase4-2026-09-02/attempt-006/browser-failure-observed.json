@@ -1,0 +1,24 @@
+{
+  "source": "Actual tool output chunk eb29d3, current turn; diagnostic excerpt, not a complete captured stderr file",
+  "generatedAt": "2026-09-02T13:33:39.657Z",
+  "phase": "standalone launchPersistentContext before page/context connection",
+  "outerExitCode": 1,
+  "timeoutMs": 180000,
+  "browserPid": 20844,
+  "executable": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  "userDataDir": "C:\\Users\\TinaD\\AppData\\Local\\Temp\\oasis-dsh-p4-tkV7sm\\standalone\\browser-data",
+  "observedMessages": [
+    "browserType.launchPersistentContext: Timeout 180000ms exceeded.",
+    "Failed to get path from PathService for key: 112: 试图引用不存在的令牌。 (0x3F0)",
+    "DevTools remote debugging requires a non-default data directory. Specify this using --user-data-dir.",
+    "Unable to get local app data path.",
+    "EDGE_IDENTITY: Image Fetch FAILED: kTokenRequestFailed; kDLLInvalidAccountId",
+    "Sitelist download failed: ERR_PROXY_CONNECTION_FAILED"
+  ],
+  "notes": [
+    "The actual launch command already included the isolated --user-data-dir; do not treat the message as proof the argument was omitted.",
+    "The browser attempted background Microsoft URL access; its proxy connection failed. No real business API called.",
+    "User-folder/token-context interaction is a hypothesis; no single-variable browser-only reproduction has been performed.",
+    "No page route installed before launch resolved; empty blockedRequests is not zero-network evidence."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-09-03T03:16:27.864Z",
+  "code": "REGRESSION_OUTPUT_OUTSIDE_APPROVED_ROOT",
+  "source": {
+    "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/tests/scripts/oasis-api-phase4-contract.test.mjs",
+    "startLine": 212,
+    "endLine": 218,
+    "testName": "native diagnostic evidence write failure cannot return collection success",
+    "sha256": "8BDD1E4C099845A026F97F78809D8ECF02CB54639C062595051CE08874F90932"
+  },
+  "rootCommandEvidence": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-path-parity-2026-09-03/attempt-001/root-safe-1788405154973/result.json",
+  "rootWindow": {
+    "startedAt": "2026-09-03T03:12:34.990Z",
+    "finishedAt": "2026-09-03T03:12:41.896Z"
+  },
+  "observedPaths": [
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/save-failure-1788405155446",
+      "kind": "directory"
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/save-failure-1788405155446/context.json",
+      "kind": "file",
+      "sha256": "0D02EFA00ADB51AB8F1061E9898D5C223296F1D4CDF5948F900636807D1BBD60",
+      "createdAt": "2026-09-03T03:12:35.459Z",
+      "modifiedAt": "2026-09-03T03:12:35.460Z"
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/save-failure-1788405155446/native-result.json",
+      "kind": "directory"
+    }
+  ],
+  "cause": "Approved root regression runner did not exclude the existing test whose output destination is hardcoded to the previous evidence root. Test uses a fake execute dependency, not the native probe.",
+  "disposition": "Preserved untouched. No deletion, relocation, old test modification or further test/native execution after detection.",
+  "acceptance": {
+    "existingFileContentPreserved": true,
+    "allowedOutputScope": false,
+    "n2Accepted": false,
+    "n3Authorized": false
+  }
+}

@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: D2 text-only service completes once with no upload or file result
+ok 1 - D2 text-only service completes once with no upload or file result
+  ---
+  duration_ms: 50.7439
+  type: 'test'
+  ...
+# Subtest: D2 text-only lost response retains the original key without a second create
+ok 2 - D2 text-only lost response retains the original key without a second create
+  ---
+  duration_ms: 11.5135
+  type: 'test'
+  ...
+# Subtest: D2 text-only refuses unexpected material; default fixture still requires material
+ok 3 - D2 text-only refuses unexpected material; default fixture still requires material
+  ---
+  duration_ms: 11.452
+  type: 'test'
+  ...
+# Subtest: fixture has exactly the frozen nine business endpoints
+ok 4 - fixture has exactly the frozen nine business endpoints
+  ---
+  duration_ms: 2.0894
+  type: 'test'
+  ...
+# Subtest: actual adapter uses HTTP for all nine operations without logging sensitive values
+ok 5 - actual adapter uses HTTP for all nine operations without logging sensitive values
+  ---
+  duration_ms: 70.2605
+  type: 'test'
+  ...
+# Subtest: fixture supports receipt without another create
+ok 6 - fixture supports receipt without another create
+  ---
+  duration_ms: 10.8706
+  type: 'test'
+  ...
+# Subtest: fixture supports lost-create without another create
+ok 7 - fixture supports lost-create without another create
+  ---
+  duration_ms: 8.0178
+  type: 'test'
+  ...
+# Subtest: fixture supports no-create-id without another create
+ok 8 - fixture supports no-create-id without another create
+  ---
+  duration_ms: 7.8083
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-query response
+ok 9 - adapter rejects unsafe-query response
+  ---
+  duration_ms: 5.1945
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-fragment response
+ok 10 - adapter rejects unsafe-fragment response
+  ---
+  duration_ms: 3.829
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-userinfo response
+ok 11 - adapter rejects unsafe-userinfo response
+  ---
+  duration_ms: 3.2781
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-raw
+ok 12 - adapter observes ledger-raw
+  ---
+  duration_ms: 5.0712
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-empty
+ok 13 - adapter observes ledger-empty
+  ---
+  duration_ms: 4.5598
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-duplicate
+ok 14 - adapter observes ledger-duplicate
+  ---
+  duration_ms: 3.8189
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-malformed
+ok 15 - adapter observes ledger-malformed
+  ---
+  duration_ms: 3.6328
+  type: 'test'
+  ...
+# Subtest: adapter observes unauthorized
+ok 16 - adapter observes unauthorized
+  ---
+  duration_ms: 3.331
+  type: 'test'
+  ...
+# Subtest: fixture rejects extra create fields, unexpected endpoint, query and malformed material
+ok 17 - fixture rejects extra create fields, unexpected endpoint, query and malformed material
+  ---
+  duration_ms: 18.7372
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 368.0927

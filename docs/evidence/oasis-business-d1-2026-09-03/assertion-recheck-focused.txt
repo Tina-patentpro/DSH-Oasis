@@ -1,0 +1,412 @@
+TAP version 13
+# Subtest: registers additive entry and panel host slots but never details
+ok 1 - registers additive entry and panel host slots but never details
+  ---
+  duration_ms: 2.5102
+  type: 'test'
+  ...
+# Subtest: fails closed when the DSH Connection service is unavailable
+ok 2 - fails closed when the DSH Connection service is unavailable
+  ---
+  duration_ms: 0.0983
+  type: 'test'
+  ...
+# Subtest: registers the workbench through the public Better Sidebar tab service when available
+ok 3 - registers the workbench through the public Better Sidebar tab service when available
+  ---
+  duration_ms: 0.7639
+  type: 'test'
+  ...
+# Subtest: entry opens a visible normal panel directly through the shared store
+ok 4 - entry opens a visible normal panel directly through the shared store
+  ---
+  duration_ms: 2.9735
+  type: 'test'
+  ...
+# Subtest: entry opens the targeted native Better Sidebar tab without opening the standalone panel
+ok 5 - entry opens the targeted native Better Sidebar tab without opening the standalone panel
+  ---
+  duration_ms: 0.2416
+  type: 'test'
+  ...
+# Subtest: entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+ok 6 - entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+  ---
+  duration_ms: 0.2119
+  type: 'test'
+  ...
+# Subtest: entry subscribes to host coordinator changes instead of caching its initial host mode
+ok 7 - entry subscribes to host coordinator changes instead of caching its initial host mode
+  ---
+  duration_ms: 0.4414
+  type: 'test'
+  ...
+# Subtest: client no longer uses a window CustomEvent as its open transport
+ok 8 - client no longer uses a window CustomEvent as its open transport
+  ---
+  duration_ms: 0.3352
+  type: 'test'
+  ...
+# Subtest: panel never opens or closes the occupied DSH details modal for geometry
+ok 9 - panel never opens or closes the occupied DSH details modal for geometry
+  ---
+  duration_ms: 0.4084
+  type: 'test'
+  ...
+# Subtest: uses the approved Codex show hide expand and restore SVG paths
+ok 10 - uses the approved Codex show hide expand and restore SVG paths
+  ---
+  duration_ms: 0.2721
+  type: 'test'
+  ...
+# Subtest: embedded chrome leaves show, hide, expand, and restore controls to Better Sidebar
+ok 11 - embedded chrome leaves show, hide, expand, and restore controls to Better Sidebar
+  ---
+  duration_ms: 0.6686
+  type: 'test'
+  ...
+# Subtest: Better Sidebar integration uses only its public service plus the fail-closed marker seam
+ok 12 - Better Sidebar integration uses only its public service plus the fail-closed marker seam
+  ---
+  duration_ms: 0.6097
+  type: 'test'
+  ...
+# Subtest: flushes drafts before task switch, confirmed history close, and panel hide
+ok 13 - flushes drafts before task switch, confirmed history close, and panel hide
+  ---
+  duration_ms: 0.3816
+  type: 'test'
+  ...
+# Subtest: blocks every close control while a task retains an unresolved remote execution
+ok 14 - blocks every close control while a task retains an unresolved remote execution
+  ---
+  duration_ms: 0.4547
+  type: 'test'
+  ...
+# Subtest: shared workbench surface loads persisted state and remote workflow catalog for each resolved Workspace
+ok 15 - shared workbench surface loads persisted state and remote workflow catalog for each resolved Workspace
+  ---
+  duration_ms: 0.3055
+  type: 'test'
+  ...
+# Subtest: configuration form offers separate writes and clears password before sending and when collapsed
+ok 16 - configuration form offers separate writes and clears password before sending and when collapsed
+  ---
+  duration_ms: 1.6902
+  type: 'test'
+  ...
+# Subtest: disabled configuration is explanatory, not a disabled local workbench
+ok 17 - disabled configuration is explanatory, not a disabled local workbench
+  ---
+  duration_ms: 0.2066
+  type: 'test'
+  ...
+# Subtest: client optionally binds configuration service without adding Slot registrations and disposes it
+ok 18 - client optionally binds configuration service without adding Slot registrations and disposes it
+  ---
+  duration_ms: 4.7962
+  type: 'test'
+  ...
+# Subtest: configuration changes do not hide the stop-waiting action for an existing remote execution
+ok 19 - configuration changes do not hide the stop-waiting action for an existing remote execution
+  ---
+  duration_ms: 0.6234
+  type: 'test'
+  ...
+# Subtest: settings and JWT are separate public writes; production and non-origin inputs never reach the Host
+ok 20 - settings and JWT are separate public writes; production and non-origin inputs never reach the Host
+  ---
+  duration_ms: 4.4673
+  type: 'test'
+  ...
+# Subtest: a failed credential update is not success even when an old credential remains configured; no secret in state
+ok 21 - a failed credential update is not success even when an old credential remains configured; no secret in state
+  ---
+  duration_ms: 0.7124
+  type: 'test'
+  ...
+# Subtest: empty JWT never deletes or writes; duplicate pending writes are rejected and successful update refreshes metadata
+ok 22 - empty JWT never deletes or writes; duplicate pending writes are rejected and successful update refreshes metadata
+  ---
+  duration_ms: 0.7043
+  type: 'test'
+  ...
+# Subtest: disconnect ignores late credential reads, blocks writes, and reconnect refreshes; detach removes subscriptions
+ok 23 - disconnect ignores late credential reads, blocks writes, and reconnect refreshes; detach removes subscriptions
+  ---
+  duration_ms: 0.6298
+  type: 'test'
+  ...
+# Subtest: readonly/mismatched configuration and save failures remain fail-closed with safe errors
+ok 24 - readonly/mismatched configuration and save failures remain fail-closed with safe errors
+  ---
+  duration_ms: 0.6696
+  type: 'test'
+  ...
+# Subtest: unavailable settings do not prevent local Workspace task creation
+ok 25 - unavailable settings do not prevent local Workspace task creation
+  ---
+  duration_ms: 2.3342
+  type: 'test'
+  ...
+# Subtest: configuration refresh rejects old bootstrap responses without overwriting Workspace drafts
+ok 26 - configuration refresh rejects old bootstrap responses without overwriting Workspace drafts
+  ---
+  duration_ms: 0.5959
+  type: 'test'
+  ...
+# Subtest: external setting changes require a Host restart rather than enabling submission against old runtime settings
+ok 27 - external setting changes require a Host restart rather than enabling submission against old runtime settings
+  ---
+  duration_ms: 0.9408
+  type: 'test'
+  ...
+# Subtest: configuration invalidation clears confirmations, preserves local task drafts, and blocks remote submission
+ok 28 - configuration invalidation clears confirmations, preserves local task drafts, and blocks remote submission
+  ---
+  duration_ms: 1.1249
+  type: 'test'
+  ...
+# Subtest: defaults to disabled non-production integration with no base URL
+ok 29 - defaults to disabled non-production integration with no base URL
+  ---
+  duration_ms: 1.1871
+  type: 'test'
+  ...
+# Subtest: rejects the exact production origin and keeps API and download origins separate
+ok 30 - rejects the exact production origin and keeps API and download origins separate
+  ---
+  duration_ms: 0.6001
+  type: 'test'
+  ...
+# Subtest: rejects every normalized production API and download origin spelling
+ok 31 - rejects every normalized production API and download origin spelling
+  ---
+  duration_ms: 0.25
+  type: 'test'
+  ...
+# Subtest: registers a restart-applied DSH settings namespace without embedding a URL or secret
+ok 32 - registers a restart-applied DSH settings namespace without embedding a URL or secret
+  ---
+  duration_ms: 0.2605
+  type: 'test'
+  ...
+# Subtest: resolves the referenced JWT once per operation and never caches it
+ok 33 - resolves the referenced JWT once per operation and never caches it
+  ---
+  duration_ms: 0.1765
+  type: 'test'
+  ...
+# Subtest: validates and renders all four schema controls with accessible field errors
+ok 34 - validates and renders all four schema controls with accessible field errors
+  ---
+  duration_ms: 2.6886
+  type: 'test'
+  ...
+# Subtest: shows confirmed material metadata with accurate local hashing disclosure
+ok 35 - shows confirmed material metadata with accurate local hashing disclosure
+  ---
+  duration_ms: 1.3492
+  type: 'test'
+  ...
+# Subtest: disables generation for each unsafe state and keeps old snapshots immutable in the preview
+ok 36 - disables generation for each unsafe state and keeps old snapshots immutable in the preview
+  ---
+  duration_ms: 1.0159
+  type: 'test'
+  ...
+# Subtest: renders a completed remote result without pretending that its files were downloaded or verified
+ok 37 - renders a completed remote result without pretending that its files were downloaded or verified
+  ---
+  duration_ms: 0.4991
+  type: 'test'
+  ...
+# Subtest: blocks approval/writeback for blocked output and requires a second writeback confirmation
+ok 38 - blocks approval/writeback for blocked output and requires a second writeback confirmation
+  ---
+  duration_ms: 0.9079
+  type: 'test'
+  ...
+# Subtest: uses the remote catalog in the chooser and one business tree for normal/expanded layouts
+ok 39 - uses the remote catalog in the chooser and one business tree for normal/expanded layouts
+  ---
+  duration_ms: 4.6177
+  type: 'test'
+  ...
+# Subtest: standalone panel keeps its border inside the declared 360px layout width
+ok 40 - standalone panel keeps its border inside the declared 360px layout width
+  ---
+  duration_ms: 0.5545
+  type: 'test'
+  ...
+# Subtest: renders only Host-provided professional fields and requires both explicit confirmations
+ok 41 - renders only Host-provided professional fields and requires both explicit confirmations
+  ---
+  duration_ms: 0.9693
+  type: 'test'
+  ...
+# Subtest: offers read-only running-water observation only for a completed remote run
+ok 42 - offers read-only running-water observation only for a completed remote run
+  ---
+  duration_ms: 0.574
+  type: 'test'
+  ...
+# Subtest: F5 removing and restoring a workspace releases observation busy state
+ok 43 - F5 removing and restoring a workspace releases observation busy state
+  ---
+  duration_ms: 8.3276
+  type: 'test'
+  ...
+# Subtest: F5 an old response cannot clear a new observation after workspace restoration
+ok 44 - F5 an old response cannot clear a new observation after workspace restoration
+  ---
+  duration_ms: 0.9175
+  type: 'test'
+  ...
+# Subtest: F5 closing a page cancels its observation and preserves the original late error
+ok 45 - F5 closing a page cancels its observation and preserves the original late error
+  ---
+  duration_ms: 1.4438
+  type: 'test'
+  ...
+# Subtest: F5 disposal aborts observation and ignores a late success
+ok 46 - F5 disposal aborts observation and ignores a late success
+  ---
+  duration_ms: 0.6814
+  type: 'test'
+  ...
+# Subtest: keeps pages when switching sessions inside one Workspace
+ok 47 - keeps pages when switching sessions inside one Workspace
+  ---
+  duration_ms: 0.5947
+  type: 'test'
+  ...
+# Subtest: loads the chooser catalog from the Host and fails closed for an unknown workflow
+ok 48 - loads the chooser catalog from the Host and fails closed for an unknown workflow
+  ---
+  duration_ms: 0.2908
+  type: 'test'
+  ...
+# Subtest: switches to an independent page set when Workspace changes
+ok 49 - switches to an independent page set when Workspace changes
+  ---
+  duration_ms: 0.1786
+  type: 'test'
+  ...
+# Subtest: keeps hidden normal expanded state per Workspace
+ok 50 - keeps hidden normal expanded state per Workspace
+  ---
+  duration_ms: 0.1524
+  type: 'test'
+  ...
+# Subtest: opening an empty Workspace creates one workflow chooser page
+ok 51 - opening an empty Workspace creates one workflow chooser page
+  ---
+  duration_ms: 0.3508
+  type: 'test'
+  ...
+# Subtest: rejects task creation when no Workspace owns the session
+ok 52 - rejects task creation when no Workspace owns the session
+  ---
+  duration_ms: 0.37
+  type: 'test'
+  ...
+# Subtest: notifies subscribers and preserves page state across panel transitions
+ok 53 - notifies subscribers and preserves page state across panel transitions
+  ---
+  duration_ms: 0.298
+  type: 'test'
+  ...
+# Subtest: keeps material drafts isolated and applies Host-authoritative material evidence
+ok 54 - keeps material drafts isolated and applies Host-authoritative material evidence
+  ---
+  duration_ms: 1.2462
+  type: 'test'
+  ...
+# Subtest: refreshing material invalidates the prior external-transfer confirmation
+ok 55 - refreshing material invalidates the prior external-transfer confirmation
+  ---
+  duration_ms: 0.8787
+  type: 'test'
+  ...
+# Subtest: removing material invalidates the prior external-transfer confirmation
+ok 56 - removing material invalidates the prior external-transfer confirmation
+  ---
+  duration_ms: 0.7698
+  type: 'test'
+  ...
+# Subtest: retains one requestKey across a failed generation retry and clears it after success
+ok 57 - retains one requestKey across a failed generation retry and clears it after success
+  ---
+  duration_ms: 1.7267
+  type: 'test'
+  ...
+# Subtest: enforces review and two-phase writeback confirmations before calling the Host
+ok 58 - enforces review and two-phase writeback confirmations before calling the Host
+  ---
+  duration_ms: 0.9135
+  type: 'test'
+  ...
+# Subtest: stores prepared absolute paths and hashes, then distinguishes successful writeback feedback
+ok 59 - stores prepared absolute paths and hashes, then distinguishes successful writeback feedback
+  ---
+  duration_ms: 1.3575
+  type: 'test'
+  ...
+# Subtest: distinguishes committed index warnings and discards the consumed writeback plan
+ok 60 - distinguishes committed index warnings and discards the consumed writeback plan
+  ---
+  duration_ms: 1.0268
+  type: 'test'
+  ...
+# Subtest: validates the dispose drain deadline
+ok 61 - validates the dispose drain deadline
+  ---
+  duration_ms: 0.148
+  type: 'test'
+  ...
+# Subtest: dispose finishes within its deadline when a save can settle only after abort
+ok 62 - dispose finishes within its deadline when a save can settle only after abort
+  ---
+  duration_ms: 0.8228
+  type: 'test'
+  ...
+# Subtest: dispose keeps a quick acknowledged draft drain and repeated calls share one promise
+ok 63 - dispose keeps a quick acknowledged draft drain and repeated calls share one promise
+  ---
+  duration_ms: 0.7106
+  type: 'test'
+  ...
+# Subtest: dispose preserves an action acknowledged before closing while hydration is still in flight
+ok 64 - dispose preserves an action acknowledged before closing while hydration is still in flight
+  ---
+  duration_ms: 0.4808
+  type: 'test'
+  ...
+# Subtest: dispose uses the 1000 ms default deadline when a remote ignores abort forever
+ok 65 - dispose uses the 1000 ms default deadline when a remote ignores abort forever
+  ---
+  duration_ms: 0.4989
+  type: 'test'
+  ...
+# Subtest: a remote completion after the dispose deadline cannot repopulate cleared state
+ok 66 - a remote completion after the dispose deadline cannot repopulate cleared state
+  ---
+  duration_ms: 0.4693
+  type: 'test'
+  ...
+# Subtest: loads, persists, and starts professional-service drafts with explicit confirmations
+ok 67 - loads, persists, and starts professional-service drafts with explicit confirmations
+  ---
+  duration_ms: 4.1449
+  type: 'test'
+  ...
+1..67
+# tests 67
+# suites 0
+# pass 67
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 268.5806

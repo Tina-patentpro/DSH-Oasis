@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: A1 adapter -> Host -> Domain -> RPC -> two-phase local files; review, revision, token and no-overwrite guards
+ok 1 - A1 adapter -> Host -> Domain -> RPC -> two-phase local files; review, revision, token and no-overwrite guards
+  ---
+  duration_ms: 78.0934
+  type: 'test'
+  ...
+# Subtest: A2 structured unsafe URLs rejected by adapter, historical Domain and direct writeback egress
+ok 2 - A2 structured unsafe URLs rejected by adapter, historical Domain and direct writeback egress
+  ---
+  duration_ms: 40.4838
+  type: 'test'
+  ...
+# Subtest: A3 environment mismatch blocks observation and continuation before requests or state writes
+ok 3 - A3 environment mismatch blocks observation and continuation before requests or state writes
+  ---
+  duration_ms: 12.0853
+  type: 'test'
+  ...
+# Subtest: A4 create-only anchors: same ID accepted, conflicts rejected, query-only and historical IDs unverified without requests
+ok 4 - A4 create-only anchors: same ID accepted, conflicts rejected, query-only and historical IDs unverified without requests
+  ---
+  duration_ms: 27.0204
+  type: 'test'
+  ...
+# Subtest: A5 Host rejects malformed or wrong-key create receipts before persisting anchors
+ok 5 - A5 Host rejects malformed or wrong-key create receipts before persisting anchors
+  ---
+  duration_ms: 24.1446
+  type: 'test'
+  ...
+# Subtest: A6 full-page raw and normalized validation; duplicates rejected; no financial equivalence claimed
+ok 6 - A6 full-page raw and normalized validation; duplicates rejected; no financial equivalence claimed
+  ---
+  duration_ms: 18.6673
+  type: 'test'
+  ...
+# Subtest: A7 Client rejects response cross-field contradictions, missing marker and wrong requested run
+ok 7 - A7 Client rejects response cross-field contradictions, missing marker and wrong requested run
+  ---
+  duration_ms: 6.6746
+  type: 'test'
+  ...
+# Subtest: A8 late rejection cannot clear restored/new observation; unrelated workspace and unsaved draft preserved
+ok 8 - A8 late rejection cannot clear restored/new observation; unrelated workspace and unsaved draft preserved
+  ---
+  duration_ms: 12.1308
+  type: 'test'
+  ...
+# Subtest: A9 page close/dispose ignore late success and failure; ordinary errors can retry
+ok 9 - A9 page close/dispose ignore late success and failure; ordinary errors can retry
+  ---
+  duration_ms: 36.7376
+  type: 'test'
+  ...
+# Subtest: A10 React element contract: candidate warning in all three states and stop only for workflow wait
+ok 10 - A10 React element contract: candidate warning in all three states and stop only for workflow wait
+  ---
+  duration_ms: 6.9499
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 444.5209

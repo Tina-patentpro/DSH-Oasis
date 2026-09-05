@@ -1,0 +1,931 @@
+{
+  "generatedAt": "2026-09-03T03:22:18.418Z",
+  "reviewType": "targeted static callsite review, not OS monitoring",
+  "filesReviewed": [
+    "tests/scripts/baseline-capture.test.mjs",
+    "tests/scripts/browser-executable-resolution.test.mjs",
+    "tests/scripts/dsh-isolated.test.mjs",
+    "tests/scripts/dsh-local-api-smoke.test.mjs",
+    "tests/scripts/oasis-api-path-parity.test.mjs",
+    "tests/scripts/oasis-api-phase4-contract.test.mjs",
+    "tests/scripts/real-profile-baseline-contract.test.mjs",
+    "tests/scripts/verification-fixture-compatibility.test.mjs",
+    "tests/scripts/verification-host-lifecycle.test.mjs",
+    "tests/scripts/week3-dual-host-verification-contract.test.mjs",
+    "tests/scripts/week3-package-audit-scope.test.mjs",
+    "packages/oasis-professional-service/test/bundle-contract.test.mjs",
+    "packages/oasis-professional-service/test/client-build-contract.test.mjs",
+    "packages/oasis-professional-service/test/client-panel-contract.test.mjs",
+    "packages/oasis-professional-service/test/embedded-workspace-host.test.mjs",
+    "packages/oasis-professional-service/test/host-runtime.integration.test.mjs",
+    "packages/oasis-professional-service/test/host-tool.test.mjs",
+    "packages/oasis-professional-service/test/layout-adapter.test.mjs",
+    "packages/oasis-professional-service/test/local-mock-runner.test.mjs",
+    "packages/oasis-professional-service/test/oasis-api-contract.test.mjs",
+    "packages/oasis-professional-service/test/oasis-remote-service.test.mjs",
+    "packages/oasis-professional-service/test/oasis-runtime-config.test.mjs",
+    "packages/oasis-professional-service/test/package-contract.test.mjs",
+    "packages/oasis-professional-service/test/panel-geometry.test.mjs",
+    "packages/oasis-professional-service/test/panel-host-coordinator.test.mjs",
+    "packages/oasis-professional-service/test/panel-keyboard.test.mjs",
+    "packages/oasis-professional-service/test/panel-local-loop-ui.test.mjs",
+    "packages/oasis-professional-service/test/panel-persistence-ui.test.mjs",
+    "packages/oasis-professional-service/test/panel-portal-contract.test.mjs",
+    "packages/oasis-professional-service/test/project-resolution.test.mjs",
+    "packages/oasis-professional-service/test/skill-contract.test.mjs",
+    "packages/oasis-professional-service/test/slot-contract.test.mjs",
+    "packages/oasis-professional-service/test/status.test.mjs",
+    "packages/oasis-professional-service/test/workbench-contract.test.mjs",
+    "packages/oasis-professional-service/test/workbench-domain.test.mjs",
+    "packages/oasis-professional-service/test/workbench-migration.test.mjs",
+    "packages/oasis-professional-service/test/workbench-model.test.mjs",
+    "packages/oasis-professional-service/test/workbench-persistence.test.mjs",
+    "packages/oasis-professional-service/test/workbench-remote.test.mjs",
+    "packages/oasis-professional-service/test/workbench-repository.test.mjs",
+    "packages/oasis-professional-service/test/workbench-rpc.test.mjs",
+    "packages/oasis-professional-service/test/workbench-service.test.mjs",
+    "packages/oasis-professional-service/test/workbench-store.test.mjs",
+    "packages/oasis-professional-service/test/workbench-v3-contract.test.mjs",
+    "packages/oasis-professional-service/test/workflow-catalog.test.mjs",
+    "packages/oasis-professional-service/test/workspace-context-bridge.test.mjs",
+    "packages/oasis-professional-service/test/workspace-materials.test.mjs",
+    "packages/oasis-professional-service/test/writeback-service.test.mjs"
+  ],
+  "callsiteEvidence": [
+    {
+      "path": "tests/scripts/baseline-capture.test.mjs",
+      "hits": [
+        {
+          "line": 2,
+          "text": "import assert from 'node:assert/strict'\nimport { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { dirname, join, resolve } from 'node:path'"
+        },
+        {
+          "line": 3,
+          "text": "import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { dirname, join, resolve } from 'node:path'\nimport test from 'node:test'"
+        },
+        {
+          "line": 15,
+          "text": "async function withTemp(callback) {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-baseline-'))\n  try {\n    await callback(root)"
+        },
+        {
+          "line": 19,
+          "text": "  } finally {\n    await rm(root, { recursive: true, force: true })\n  }\n}"
+        },
+        {
+          "line": 28,
+          "text": "    const link = join(product, 'linked')\n    await mkdir(product)\n    await mkdir(target)\n    await writeFile(join(product, 'plain.txt'), 'plain', 'utf8')"
+        },
+        {
+          "line": 29,
+          "text": "    await mkdir(product)\n    await mkdir(target)\n    await writeFile(join(product, 'plain.txt'), 'plain', 'utf8')\n    await writeFile(join(target, 'secret.txt'), 'must-not-be-traversed', 'utf8')"
+        },
+        {
+          "line": 30,
+          "text": "    await mkdir(target)\n    await writeFile(join(product, 'plain.txt'), 'plain', 'utf8')\n    await writeFile(join(target, 'secret.txt'), 'must-not-be-traversed', 'utf8')\n    try {"
+        },
+        {
+          "line": 31,
+          "text": "    await writeFile(join(product, 'plain.txt'), 'plain', 'utf8')\n    await writeFile(join(target, 'secret.txt'), 'must-not-be-traversed', 'utf8')\n    try {\n      await symlink(target, link, process.platform === 'win32' ? 'junction' : 'dir')"
+        },
+        {
+          "line": 33,
+          "text": "    try {\n      await symlink(target, link, process.platform === 'win32' ? 'junction' : 'dir')\n    } catch (error) {\n      t.skip(`link creation unavailable: ${error.message}`)"
+        },
+        {
+          "line": 56,
+          "text": "    const output = join(root, 'evidence')\n    await mkdir(product)\n    await mkdir(profile)\n    await writeFile(join(product, 'source.js'), 'source', 'utf8')"
+        },
+        {
+          "line": 57,
+          "text": "    await mkdir(product)\n    await mkdir(profile)\n    await writeFile(join(product, 'source.js'), 'source', 'utf8')\n    await writeFile(join(profile, 'config.json'), '{}', 'utf8')"
+        },
+        {
+          "line": 58,
+          "text": "    await mkdir(profile)\n    await writeFile(join(product, 'source.js'), 'source', 'utf8')\n    await writeFile(join(profile, 'config.json'), '{}', 'utf8')\n"
+        },
+        {
+          "line": 59,
+          "text": "    await writeFile(join(product, 'source.js'), 'source', 'utf8')\n    await writeFile(join(profile, 'config.json'), '{}', 'utf8')\n\n    const result = await captureFilesystemBaseline({"
+        },
+        {
+          "line": 105,
+          "text": "    projectRoot,\n    'docs/evidence/week2-implementation-2026-08-25/baseline/capture-baseline.mjs',\n  ), 'utf8')\n  const audit = await readFile(resolve("
+        },
+        {
+          "line": 109,
+          "text": "    projectRoot,\n    'docs/evidence/week2-audit-2026-08-25/capture-audit-baseline.mjs',\n  ), 'utf8')\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/scripts/dsh-isolated.test.mjs",
+      "hits": [
+        {
+          "line": 2,
+          "text": "import assert from 'node:assert/strict'\nimport { spawn } from 'node:child_process'\nimport { access, mkdir, mkdtemp, rm, symlink, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'"
+        },
+        {
+          "line": 3,
+          "text": "import { spawn } from 'node:child_process'\nimport { access, mkdir, mkdtemp, rm, symlink, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { dirname, join, resolve } from 'node:path'"
+        },
+        {
+          "line": 4,
+          "text": "import { access, mkdir, mkdtemp, rm, symlink, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { dirname, join, resolve } from 'node:path'\nimport test from 'node:test'"
+        },
+        {
+          "line": 21,
+          "text": "  return await new Promise((resolveRun) => {\n    const child = spawn(command, args, {\n      cwd: process.cwd(),\n      env: { ...process.env, ...env },"
+        },
+        {
+          "line": 22,
+          "text": "    const child = spawn(command, args, {\n      cwd: process.cwd(),\n      env: { ...process.env, ...env },\n      shell,"
+        },
+        {
+          "line": 39,
+          "text": "async function withFakeOfficialDsh(callback) {\n  const prefix = await mkdtemp(join(tmpdir(), 'oasis-dsh-bin-'))\n  const packageRoot = join(prefix, 'node_modules', '@deepseek-ai', 'dsh')\n  const cli = join(packageRoot, 'lib', 'bin.js')"
+        },
+        {
+          "line": 43,
+          "text": "  const shim = join(prefix, 'dsh.cmd')\n  await mkdir(dirname(cli), { recursive: true })\n  await writeFile(join(packageRoot, 'package.json'), JSON.stringify({\n    name: '@deepseek-ai/dsh',"
+        },
+        {
+          "line": 44,
+          "text": "  await mkdir(dirname(cli), { recursive: true })\n  await writeFile(join(packageRoot, 'package.json'), JSON.stringify({\n    name: '@deepseek-ai/dsh',\n    version: '0.1.1-rc.2',"
+        },
+        {
+          "line": 50,
+          "text": "  }), 'utf8')\n  await writeFile(cli, [\n    \"import process from 'node:process'\",\n    \"console.log(JSON.stringify({ args: process.argv.slice(2), home: process.env.DSH_HOME }))\","
+        },
+        {
+          "line": 55,
+          "text": "  ].join('\\n'), 'utf8')\n  await writeFile(shim, '@echo off\\r\\nnode \"%~dp0\\\\node_modules\\\\@deepseek-ai\\\\dsh\\\\lib\\\\bin.js\" %*\\r\\n', 'utf8')\n  try {\n    return await callback({ prefix, packageRoot, cli, shim })"
+        },
+        {
+          "line": 59,
+          "text": "  } finally {\n    await rm(prefix, { recursive: true, force: true })\n  }\n}"
+        },
+        {
+          "line": 126,
+          "text": "test('rejects an arbitrary command shim even when DSH_BIN points to it', async () => {\n  const directory = await mkdtemp(join(tmpdir(), 'oasis-dsh-arbitrary-'))\n  const shim = join(directory, 'dsh.cmd')\n  await writeFile(shim, '@echo off\\r\\necho unsafe\\r\\n', 'utf8')"
+        },
+        {
+          "line": 128,
+          "text": "  const shim = join(directory, 'dsh.cmd')\n  await writeFile(shim, '@echo off\\r\\necho unsafe\\r\\n', 'utf8')\n  try {\n    const result = await runModule(['--print-bin'], { DSH_BIN: shim })"
+        },
+        {
+          "line": 134,
+          "text": "  } finally {\n    await rm(directory, { recursive: true, force: true })\n  }\n})"
+        },
+        {
+          "line": 167,
+          "text": "\ntest('rejects a home whose existing path chain contains a symlink or junction', async (t) => {\n  const directory = await mkdtemp(join(tmpdir(), 'oasis-dsh-link-'))\n  const target = join(directory, 'target')"
+        },
+        {
+          "line": 168,
+          "text": "test('rejects a home whose existing path chain contains a symlink or junction', async (t) => {\n  const directory = await mkdtemp(join(tmpdir(), 'oasis-dsh-link-'))\n  const target = join(directory, 'target')\n  const link = join(directory, 'linked-home')"
+        },
+        {
+          "line": 171,
+          "text": "  const link = join(directory, 'linked-home')\n  await mkdir(target)\n  try {\n    try {"
+        },
+        {
+          "line": 174,
+          "text": "    try {\n      await symlink(target, link, process.platform === 'win32' ? 'junction' : 'dir')\n    } catch (error) {\n      t.skip(`link creation unavailable: ${error.message}`)"
+        },
+        {
+          "line": 185,
+          "text": "  } finally {\n    await rm(directory, { recursive: true, force: true })\n  }\n})"
+        },
+        {
+          "line": 198,
+          "text": "test('fails closed when no official DSH package can be resolved', async () => {\n  const directory = await mkdtemp(join(tmpdir(), 'oasis-no-dsh-'))\n  try {\n    const path = `${dirname(process.execPath)};${process.env.SystemRoot}\\\\System32`"
+        },
+        {
+          "line": 211,
+          "text": "  } finally {\n    await rm(directory, { recursive: true, force: true })\n  }\n})"
+        }
+      ]
+    },
+    {
+      "path": "tests/scripts/dsh-local-api-smoke.test.mjs",
+      "hits": [
+        {
+          "line": 2,
+          "text": "import assert from 'node:assert/strict'\nimport { spawn } from 'node:child_process'\nimport { mkdtemp, rm, writeFile } from 'node:fs/promises'\nimport { createServer } from 'node:http'"
+        },
+        {
+          "line": 3,
+          "text": "import { spawn } from 'node:child_process'\nimport { mkdtemp, rm, writeFile } from 'node:fs/promises'\nimport { createServer } from 'node:http'\nimport { tmpdir } from 'node:os'"
+        },
+        {
+          "line": 4,
+          "text": "import { mkdtemp, rm, writeFile } from 'node:fs/promises'\nimport { createServer } from 'node:http'\nimport { tmpdir } from 'node:os'\nimport { join, resolve } from 'node:path'"
+        },
+        {
+          "line": 5,
+          "text": "import { createServer } from 'node:http'\nimport { tmpdir } from 'node:os'\nimport { join, resolve } from 'node:path'\nimport test from 'node:test'"
+        },
+        {
+          "line": 13,
+          "text": "  return await new Promise((resolveRun) => {\n    const child = spawn(process.execPath, [scriptPath, ...args], {\n      cwd: process.cwd(),\n      stdio: ['ignore', 'pipe', 'pipe'],"
+        },
+        {
+          "line": 14,
+          "text": "    const child = spawn(process.execPath, [scriptPath, ...args], {\n      cwd: process.cwd(),\n      stdio: ['ignore', 'pipe', 'pipe'],\n    })"
+        },
+        {
+          "line": 29,
+          "text": "  const requests = []\n  const server = createServer((request, response) => {\n    requests.push({ method: request.method, url: request.url })\n    request.resume()"
+        },
+        {
+          "line": 37,
+          "text": "  })\n  await new Promise((resolveListen) => server.listen(0, host, resolveListen))\n  const address = server.address()\n  try {"
+        },
+        {
+          "line": 48,
+          "text": "async function withRequestFile(callback) {\n  const directory = await mkdtemp(join(tmpdir(), 'oasis-rpc-test-'))\n  const requestPath = join(directory, 'request.json')\n  await writeFile(requestPath, '{}', 'utf8')"
+        },
+        {
+          "line": 50,
+          "text": "  const requestPath = join(directory, 'request.json')\n  await writeFile(requestPath, '{}', 'utf8')\n  try {\n    return await callback(requestPath)"
+        },
+        {
+          "line": 54,
+          "text": "  } finally {\n    await rm(directory, { recursive: true, force: true })\n  }\n}"
+        }
+      ]
+    },
+    {
+      "path": "tests/scripts/oasis-api-path-parity.test.mjs",
+      "hits": [
+        {
+          "line": 3,
+          "text": "import assert from 'node:assert/strict'\nimport { readFile, mkdir, lstat, symlink } from 'node:fs/promises'\nimport { join, win32 } from 'node:path'\nimport { fileURLToPath } from 'node:url'"
+        },
+        {
+          "line": 12,
+          "text": "const root = fileURLToPath(new URL('../..', import.meta.url))\nconst evidence = join(root, 'docs/evidence/oasis-api-path-parity-2026-09-03/attempt-001')\nconst probe = join(root, 'scripts/oasis-api-path-parity-probe.ps1')\nconst guid = 'F1B32785-6FBA-4FCF-9D55-7B8E7F157091'"
+        },
+        {
+          "line": 28,
+          "text": "  catch (error) { assert.fail('path parity entry must exist and import safely: ' + error.code) }\n  for (const name of ['parseParityArgs', 'parseParityReport', 'collectPathParity', 'runPathParity']) assert.equal(typeof module[name], 'function', name)\n  return module\n}"
+        },
+        {
+          "line": 53,
+          "text": "test('path parity import has no process launch', async t => {\n  t.mock.method(childProcess, 'spawn', () => assert.fail('import launched a process'))\n  syncBuiltinESMExports()\n  try { await moduleUnderTest() } finally { t.mock.restoreAll(); syncBuiltinESMExports() }"
+        },
+        {
+          "line": 126,
+          "text": "  for (const status of ['outside-scope', 'reparse-rejected', 'unreadable']) {\n    const result = await m.collectPathParity(context, { execute: async () => assert.fail('unsafe spawn'), inspect: async () => ({ status }) })\n    assert.equal(result.collectionComplete, false); assert.equal(result.failure.code, 'PARITY_PATH_UNSAFE')\n  }"
+        },
+        {
+          "line": 152,
+          "text": "test('path parity claims fresh evidence and rejects reuse, outside paths and junctions before execution', async () => {\n  const m = await moduleUnderTest(); const already = fresh('reused'); await mkdir(already)\n  let count = 0; const deps = { execute: async () => { count++; return output() }, inspect: missing }\n  for (const target of [already, 'C:\\\\outside-parity', evidence + '-sibling']) await assert.rejects(m.runPathParity(['--evidence', target, '--offline'], deps))"
+        },
+        {
+          "line": 154,
+          "text": "  let count = 0; const deps = { execute: async () => { count++; return output() }, inspect: missing }\n  for (const target of [already, 'C:\\\\outside-parity', evidence + '-sibling']) await assert.rejects(m.runPathParity(['--evidence', target, '--offline'], deps))\n  const link = fresh('junction'); await symlink(already, link, 'junction')\n  await assert.rejects(m.runPathParity(['--evidence', join(link, 'child'), '--offline'], deps))"
+        },
+        {
+          "line": 155,
+          "text": "  for (const target of [already, 'C:\\\\outside-parity', evidence + '-sibling']) await assert.rejects(m.runPathParity(['--evidence', target, '--offline'], deps))\n  const link = fresh('junction'); await symlink(already, link, 'junction')\n  await assert.rejects(m.runPathParity(['--evidence', join(link, 'child'), '--offline'], deps))\n  assert.equal(count, 0)"
+        },
+        {
+          "line": 156,
+          "text": "  const link = fresh('junction'); await symlink(already, link, 'junction')\n  await assert.rejects(m.runPathParity(['--evidence', join(link, 'child'), '--offline'], deps))\n  assert.equal(count, 0)\n})"
+        },
+        {
+          "line": 161,
+          "text": "  const m = await moduleUnderTest(); const target = fresh('write-failure')\n  await assert.rejects(m.runPathParity(['--evidence', target, '--offline'], { inspect: missing, execute: async request => {\n    await mkdir(join(target, 'parity-result.json'))\n    const data = report(); for (const call of data.calls) call.path = win32.join(request.cwd, 'os-home/AppData/Local')"
+        },
+        {
+          "line": 162,
+          "text": "  await assert.rejects(m.runPathParity(['--evidence', target, '--offline'], { inspect: missing, execute: async request => {\n    await mkdir(join(target, 'parity-result.json'))\n    const data = report(); for (const call of data.calls) call.path = win32.join(request.cwd, 'os-home/AppData/Local')\n    return output(data)"
+        },
+        {
+          "line": 196,
+          "text": "    clearTimeout(id) { timers.delete(id) },\n    spawn(executable, argv, options) {\n      spawns++; assert.equal(win32.basename(executable), 'powershell.exe'); assert.equal(options.shell, false)\n      assert.equal(options.windowsHide, true); assert.deepEqual(argv, ['-NoProfile', '-NonInteractive', '-File', probe])"
+        },
+        {
+          "line": 260,
+          "text": "})\ntest('path parity bounded executor handles synchronous spawn failure without unsafe termination', async () => {\n  const m = await moduleUnderTest(); const h = harness()\n  h.runtime.spawn = () => { throw Error('canary-secret') }"
+        },
+        {
+          "line": 262,
+          "text": "  const m = await moduleUnderTest(); const h = harness()\n  h.runtime.spawn = () => { throw Error('canary-secret') }\n  const result = await m.collectPathParity(context, { inspect: missing, runtime: h.runtime })\n  assert.equal(result.collectionComplete, false); assert.equal(result.commandResult.spawnError.code, 'PARITY_SPAWN_FAILED')"
+        },
+        {
+          "line": 283,
+          "text": "  const m = await moduleUnderTest(); const target = fresh('mock-success'); let calls = 0\n  const result = await m.runPathParity(['--offline', '--evidence', target], { execute: async request => {\n    calls++; const data = report(); for (const row of data.calls) row.path = win32.join(request.cwd, 'os-home/AppData/Local')\n    return output(data)"
+        },
+        {
+          "line": 298,
+          "text": "})\ntest('path parity asynchronous spawn errors and signal close fail without raw messages', async () => {\n  const m = await moduleUnderTest()\n  const h = harness(child => { child.pid = undefined; child.emit('error', Error('secret-canary')) })"
+        }
+      ]
+    },
+    {
+      "path": "tests/scripts/oasis-api-phase4-contract.test.mjs",
+      "hits": [
+        {
+          "line": 2,
+          "text": "import assert from 'node:assert/strict'\nimport { mkdir, mkdtemp, readFile, realpath, symlink, utimes, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { createHash } from 'node:crypto'"
+        },
+        {
+          "line": 3,
+          "text": "import { mkdir, mkdtemp, readFile, realpath, symlink, utimes, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { createHash } from 'node:crypto'\nimport { createRequire } from 'node:module'"
+        },
+        {
+          "line": 8,
+          "text": "import test from 'node:test'\nimport { createServer } from 'node:net'\nimport { assertLoopbackUrl, assertIndependentHomes, claimEvidenceRoot, isolatedEnvironment, requireOfflinePackages, acquireHostLease } from '../../scripts/verify-oasis-api-phase4.mjs'\nimport { startFixture, FIXTURE_TOKEN, FIXTURE_SERVICE, FIXTURE_MATERIAL, FIXTURE_OPERATIONS } from '../fixtures/oasis-api-phase4-server.mjs'"
+        },
+        {
+          "line": 159,
+          "text": "})\ntest('native diagnostic fails closed on spawn timeout compile malformed or identity mismatch', async () => {\n  const module = await nativeDiagnosticModule(); const context = await phase4.createInspectionNativeContext(process.env)\n  const base = { exitCode: 0, closed: true, timedOut: false, pid: 42, stdout: JSON.stringify(nativeReportFixture(module)), stderr: '' }"
+        },
+        {
+          "line": 180,
+          "text": "  const module = await nativeDiagnosticModule(); let called = false\n  await assert.rejects(module.runWindowsDiagnostic(['--evidence', 'C:\\\\outside\\\\new', '--offline'], { execute: async () => { called = true } }))\n  assert.equal(called, false)\n  const folder = join(process.cwd(), 'docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001')"
+        },
+        {
+          "line": 182,
+          "text": "  assert.equal(called, false)\n  const folder = join(process.cwd(), 'docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001')\n  await assert.rejects(module.runWindowsDiagnostic(['--evidence', folder, '--offline'], { execute: async () => { called = true } }))\n  assert.equal(called, false)"
+        },
+        {
+          "line": 183,
+          "text": "  const folder = join(process.cwd(), 'docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001')\n  await assert.rejects(module.runWindowsDiagnostic(['--evidence', folder, '--offline'], { execute: async () => { called = true } }))\n  assert.equal(called, false)\n})"
+        },
+        {
+          "line": 214,
+          "text": "  const module = await nativeDiagnosticModule()\n  const out = join(process.cwd(), 'docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001', `save-failure-${Date.now()}`)\n  await assert.rejects(module.runWindowsDiagnostic(['--evidence', out, '--offline'], { execute: async () => {\n    await mkdir(join(out, 'native-result.json'))"
+        },
+        {
+          "line": 215,
+          "text": "  const out = join(process.cwd(), 'docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001', `save-failure-${Date.now()}`)\n  await assert.rejects(module.runWindowsDiagnostic(['--evidence', out, '--offline'], { execute: async () => {\n    await mkdir(join(out, 'native-result.json'))\n    return { exitCode: 0, closed: true, pid: 42, stdout: JSON.stringify(nativeReportFixture(module)), stderr: '' }"
+        },
+        {
+          "line": 216,
+          "text": "  await assert.rejects(module.runWindowsDiagnostic(['--evidence', out, '--offline'], { execute: async () => {\n    await mkdir(join(out, 'native-result.json'))\n    return { exitCode: 0, closed: true, pid: 42, stdout: JSON.stringify(nativeReportFixture(module)), stderr: '' }\n  } }))"
+        },
+        {
+          "line": 224,
+          "text": "  const forbidden = async () => { throw Error('DSH_BRANCH_ENTERED') }\n  await phase4.runVerification(['--stage', 'browser-preflight', '--evidence', 'fresh', '--offline'], {\n    browserPreflight: async options => { preflights++; assert.equal(options.stage, 'browser-preflight') },\n    prepare: forbidden, inspect: forbidden, saveBlocked: forbidden,"
+        },
+        {
+          "line": 403,
+          "text": "  const helper = join(context.cwd, 'inheritance.mjs')\n  await writeFile(helper, \"import {spawnSync} from 'node:child_process';const r=spawnSync(process.env.ComSpec,['/d','/c','echo %ProgramData% & cd'],{encoding:'utf8',windowsHide:true});console.log(JSON.stringify({stdout:r.stdout,status:r.status,secret:process.env.API_KEY??null}));\")\n  const result = await phase4.runRecordedCommand({ executable: process.execPath, argv: [helper], cwd: context.cwd, env: context.env })\n  assert.equal(result.exitCode, 0)"
+        },
+        {
+          "line": 430,
+          "text": "  const hooks = { inspect: async options => { inspected++; assert.equal(options.stage, 'inspect') }, prepare: async () => { prepared++ }, saveBlocked: async () => { blocked++ } }\n  await phase4.runVerification([...args, '--stage', 'inspect'], hooks)\n  await assert.rejects(phase4.runVerification(args, hooks), { code: 'INTEGRATION_NOT_READY' })\n  assert.deepEqual([inspected, prepared, blocked], [1, 0, 1])"
+        },
+        {
+          "line": 431,
+          "text": "  await phase4.runVerification([...args, '--stage', 'inspect'], hooks)\n  await assert.rejects(phase4.runVerification(args, hooks), { code: 'INTEGRATION_NOT_READY' })\n  assert.deepEqual([inspected, prepared, blocked], [1, 0, 1])\n})"
+        },
+        {
+          "line": 447,
+          "text": "async function physicalInspectionTree() {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-inspect-test-'))\n  const source = join(root, 'source', 'node_modules')\n  await mkdir(join(root, 'copy'))"
+        },
+        {
+          "line": 449,
+          "text": "  const source = join(root, 'source', 'node_modules')\n  await mkdir(join(root, 'copy'))\n  const specs = [\n    ['plugin', { name: 'plugin', version: '1.0.0', dependencies: { dep: '*', other: '*' } }, \"import a from 'dep'; import b from 'other'; console.log(a+':'+b)\"],"
+        },
+        {
+          "line": 457,
+          "text": "  for (const [location, manifest, body] of specs) {\n    const dir = join(source, location); await mkdir(dir, { recursive: true })\n    await writeFile(join(dir, 'package.json'), JSON.stringify({ ...manifest, type: 'module', exports: './index.js' }))\n    await writeFile(join(dir, 'index.js'), body)"
+        },
+        {
+          "line": 458,
+          "text": "    const dir = join(source, location); await mkdir(dir, { recursive: true })\n    await writeFile(join(dir, 'package.json'), JSON.stringify({ ...manifest, type: 'module', exports: './index.js' }))\n    await writeFile(join(dir, 'index.js'), body)\n  }"
+        },
+        {
+          "line": 459,
+          "text": "    await writeFile(join(dir, 'package.json'), JSON.stringify({ ...manifest, type: 'module', exports: './index.js' }))\n    await writeFile(join(dir, 'index.js'), body)\n  }\n  return { root, source, destination: join(root, 'copy', 'node_modules') }"
+        },
+        {
+          "line": 477,
+          "text": "  const missing = await physicalInspectionTree()\n  await writeFile(join(missing.source, 'plugin/package.json'), JSON.stringify({ name: 'plugin', dependencies: { missing: '*' } }))\n  await assert.rejects(phase4.copyInspectionPackages(missing.source, 'plugin', missing.destination), { code: 'OFFLINE_DEPENDENCY_MISSING' })\n  const linked = await physicalInspectionTree()"
+        },
+        {
+          "line": 480,
+          "text": "  const linked = await physicalInspectionTree()\n  await symlink(linked.root, join(linked.source, 'plugin/outside'), process.platform === 'win32' ? 'junction' : 'dir')\n  await assert.rejects(phase4.copyInspectionPackages(linked.source, 'plugin', linked.destination), { code: 'INSPECTION_SOURCE_LINK' })\n  const changed = await physicalInspectionTree()"
+        },
+        {
+          "line": 483,
+          "text": "  const changed = await physicalInspectionTree()\n  await assert.rejects(phase4.copyInspectionPackages(changed.source, 'plugin', changed.destination, { afterCopy: async () => writeFile(join(changed.source, 'dep/index.js'), 'changed') }), { code: 'DEPENDENCY_SOURCE_DRIFT' })\n})\n"
+        },
+        {
+          "line": 526,
+          "text": "  for (const broken of [false, true]) {\n    const home = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-host-test-'))\n    const script = join(home, 'host.mjs')\n    await writeFile(script, \"import http from 'node:http';const port=Number(process.argv.at(-1));http.createServer((q,r)=>r.end('ready')).listen(port,'127.0.0.1',()=>console.log('http://127.0.0.1:'+port));\")"
+        },
+        {
+          "line": 528,
+          "text": "    const script = join(home, 'host.mjs')\n    await writeFile(script, \"import http from 'node:http';const port=Number(process.argv.at(-1));http.createServer((q,r)=>r.end('ready')).listen(port,'127.0.0.1',()=>console.log('http://127.0.0.1:'+port));\")\n    let record; let observedPid\n    const run = phase4.withInspectionHost({ home, executable: process.execPath, argv: [script], cwd: home, env: {}, readinessMs: 5000, save: async value => { record = value } }, async ({ pid }) => {"
+        },
+        {
+          "line": 545,
+          "text": "  assert.equal(typeof phase4.withInspectionHost, 'function')\n  const home = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-host-test-'))\n  const occupied = createServer(); await new Promise(resolve => occupied.listen(0, '127.0.0.1', resolve))\n  try {"
+        },
+        {
+          "line": 546,
+          "text": "  const home = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-host-test-'))\n  const occupied = createServer(); await new Promise(resolve => occupied.listen(0, '127.0.0.1', resolve))\n  try {\n    await assert.rejects(phase4.withInspectionHost({ home, port: occupied.address().port, executable: 'not-launched', argv: [], cwd: home, env: {}, save: async () => {} }, async () => {}), { code: 'HOST_PORT_BUSY' })"
+        },
+        {
+          "line": 551,
+          "text": "  for (const kind of ['missing', 'early-exit', 'timeout']) {\n    const script = join(home, kind+'.mjs'); await writeFile(script, kind === 'timeout' ? 'setInterval(()=>{},1000)' : 'process.exit(2)')\n    let record\n    await assert.rejects(phase4.withInspectionHost({ home, executable: kind === 'missing' ? join(home, 'missing.exe') : process.execPath, argv: [script], cwd: home, env: {}, readinessMs: 200, save: async value => { record = value } }, async () => assert.fail('must not probe')))"
+        },
+        {
+          "line": 573,
+          "text": "test('inspection CLI timeout terminates its owned nested process tree on Windows', async () => {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-cli-test-'))\n  const leaf = join(root, 'leaf.mjs'); const parent = join(root, 'parent.mjs')\n  await writeFile(leaf, 'setInterval(()=>{},1000)')"
+        },
+        {
+          "line": 575,
+          "text": "  const leaf = join(root, 'leaf.mjs'); const parent = join(root, 'parent.mjs')\n  await writeFile(leaf, 'setInterval(()=>{},1000)')\n  await writeFile(parent, \"import {spawn} from 'node:child_process';const c=spawn(process.execPath,[process.argv[2]],{stdio:'ignore',windowsHide:true});console.log(c.pid);setInterval(()=>{},1000)\")\n  assert.equal(typeof phase4.terminateOwnedProcessTree, 'function')"
+        },
+        {
+          "line": 576,
+          "text": "  await writeFile(leaf, 'setInterval(()=>{},1000)')\n  await writeFile(parent, \"import {spawn} from 'node:child_process';const c=spawn(process.execPath,[process.argv[2]],{stdio:'ignore',windowsHide:true});console.log(c.pid);setInterval(()=>{},1000)\")\n  assert.equal(typeof phase4.terminateOwnedProcessTree, 'function')\n  const result = await phase4.runRecordedCommand({ executable: process.execPath, argv: [parent, leaf], cwd: root, env: process.env, timeoutMs: 750, terminateTree: true })"
+        },
+        {
+          "line": 592,
+          "text": "test('failed tree termination is reported and does not leave the command promise pending', async () => {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-cli-test-'))\n  const file = join(root, 'single.mjs'); await writeFile(file, 'setInterval(()=>{},1000)')\n  const result = await phase4.runRecordedCommand({ executable: process.execPath, argv: [file], cwd: root, env: {}, timeoutMs: 50,"
+        },
+        {
+          "line": 593,
+          "text": "  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-cli-test-'))\n  const file = join(root, 'single.mjs'); await writeFile(file, 'setInterval(()=>{},1000)')\n  const result = await phase4.runRecordedCommand({ executable: process.execPath, argv: [file], cwd: root, env: {}, timeoutMs: 50,\n    terminateTree: async () => ({ ok: false, error: { code: 'TERMINATION_DENIED' } }) })"
+        },
+        {
+          "line": 644,
+          "text": "  assert.equal(typeof phase4.hashFiles, 'function')\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  await writeFile(join(root, 'present'), 'synthetic')\n  const result = await phase4.hashFiles(root, ['absent-a', 'present', 'absent-b'])"
+        },
+        {
+          "line": 645,
+          "text": "  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  await writeFile(join(root, 'present'), 'synthetic')\n  const result = await phase4.hashFiles(root, ['absent-a', 'present', 'absent-b'])\n  assert.equal(result.rows.length, 1); assert.equal(result.errors.length, 2)"
+        },
+        {
+          "line": 651,
+          "text": "\ntest('command runner records spawn errors and waits for timed-out child exit', async () => {\n  assert.equal(typeof phase4.runRecordedCommand, 'function')\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))"
+        },
+        {
+          "line": 653,
+          "text": "  assert.equal(typeof phase4.runRecordedCommand, 'function')\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  const missing = await phase4.runRecordedCommand({ executable: join(root, 'missing.exe'), argv: [], cwd: root, env: {}, timeoutMs: 1000 })\n  assert.equal(missing.spawnError.code, 'ENOENT'); assert.equal(missing.exitCode, null)"
+        },
+        {
+          "line": 657,
+          "text": "  assert.ok(missing.startedAt); assert.ok(missing.finishedAt)\n  const script = join(root, 'wait.mjs'); await writeFile(script, 'setInterval(() => {}, 1000)')\n  const slow = await phase4.runRecordedCommand({ executable: process.execPath, argv: [script], cwd: root, env: {}, timeoutMs: 100 })\n  assert.equal(slow.timedOut, true); assert.equal(slow.closed, true)"
+        },
+        {
+          "line": 664,
+          "text": "async function dependencyTree() {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  const source = join(root, 'source'); await mkdir(source)\n  const packages = { tool: ['tool@1', \"import a from 'dep'; import b from 'other'; console.log(a + ':' + b)\"], dep1: ['dep@1', \"import v from 'leaf'; export default 'one-'+v\"], dep2: ['dep@2', \"export default 'two'\"], leaf: ['leaf@1', \"export default 'leaf'\"], other: ['other@1', \"import d from 'dep'; export default d\"] }"
+        },
+        {
+          "line": 665,
+          "text": "  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  const source = join(root, 'source'); await mkdir(source)\n  const packages = { tool: ['tool@1', \"import a from 'dep'; import b from 'other'; console.log(a + ':' + b)\"], dep1: ['dep@1', \"import v from 'leaf'; export default 'one-'+v\"], dep2: ['dep@2', \"export default 'two'\"], leaf: ['leaf@1', \"export default 'leaf'\"], other: ['other@1', \"import d from 'dep'; export default d\"] }\n  const locations = {}"
+        },
+        {
+          "line": 670,
+          "text": "    const name = store.split('@')[0]; const directory = join(source, '.pnpm', store, 'node_modules', name)\n    await mkdir(directory, { recursive: true }); locations[key] = directory\n    await writeFile(join(directory, 'package.json'), JSON.stringify({ name, type: 'module', exports: './index.js' }))\n    await writeFile(join(directory, 'index.js'), body)"
+        },
+        {
+          "line": 671,
+          "text": "    await mkdir(directory, { recursive: true }); locations[key] = directory\n    await writeFile(join(directory, 'package.json'), JSON.stringify({ name, type: 'module', exports: './index.js' }))\n    await writeFile(join(directory, 'index.js'), body)\n  }"
+        },
+        {
+          "line": 672,
+          "text": "    await writeFile(join(directory, 'package.json'), JSON.stringify({ name, type: 'module', exports: './index.js' }))\n    await writeFile(join(directory, 'index.js'), body)\n  }\n  const link = (from, to) => symlink(to, from, process.platform === 'win32' ? 'junction' : 'dir')"
+        },
+        {
+          "line": 674,
+          "text": "  }\n  const link = (from, to) => symlink(to, from, process.platform === 'win32' ? 'junction' : 'dir')\n  await link(join(source, 'tool'), locations.tool)\n  await link(join(locations.tool, '..', 'dep'), locations.dep1)"
+        },
+        {
+          "line": 698,
+          "text": "  let target = join(tree.root, 'outside')\n  if (kind === 'outside') await mkdir(target)\n  if (kind === 'file-target') { target = join(tree.source, 'file'); await writeFile(target, 'synthetic') }\n  await tree.link(join(tree.source, 'unsafe'), target)"
+        },
+        {
+          "line": 699,
+          "text": "  if (kind === 'outside') await mkdir(target)\n  if (kind === 'file-target') { target = join(tree.source, 'file'); await writeFile(target, 'synthetic') }\n  await tree.link(join(tree.source, 'unsafe'), target)\n  await assert.rejects(phase4.copyIsolatedNodeModules(tree.source, tree.destination))"
+        },
+        {
+          "line": 709,
+          "text": "  await assert.rejects(phase4.copyIsolatedNodeModules(tree.source, tree.destination, {\n    afterCopy: async () => writeFile(join(tree.locations.leaf, 'index.js'), \"export default 'changed'\"),\n  }), { code: 'DEPENDENCY_SOURCE_DRIFT' })\n  assert.equal(await readFile(join(tree.destination, '.pnpm/leaf@1/node_modules/leaf/index.js'), 'utf8'), \"export default 'leaf'\")"
+        },
+        {
+          "line": 749,
+          "text": "  assert.equal(typeof phase4.snapshotTree, 'function')\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  await writeFile(join(root, 'a'), 'before')\n  await assert.rejects(phase4.snapshotTree(root, { afterHash: async name => writeFile(name, 'changed-size') }), { code: 'SNAPSHOT_UNSTABLE' })"
+        },
+        {
+          "line": 750,
+          "text": "  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  await writeFile(join(root, 'a'), 'before')\n  await assert.rejects(phase4.snapshotTree(root, { afterHash: async name => writeFile(name, 'changed-size') }), { code: 'SNAPSHOT_UNSTABLE' })\n})"
+        },
+        {
+          "line": 751,
+          "text": "  await writeFile(join(root, 'a'), 'before')\n  await assert.rejects(phase4.snapshotTree(root, { afterHash: async name => writeFile(name, 'changed-size') }), { code: 'SNAPSHOT_UNSTABLE' })\n})\n"
+        },
+        {
+          "line": 756,
+          "text": "  assert.equal(typeof phase4.snapshotTree, 'function')\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  const inside = join(root, 'inside'); const outside = join(root, 'outside')\n  await mkdir(inside); await mkdir(outside); await writeFile(join(outside, 'secret'), 'not-to-be-read')"
+        },
+        {
+          "line": 758,
+          "text": "  const inside = join(root, 'inside'); const outside = join(root, 'outside')\n  await mkdir(inside); await mkdir(outside); await writeFile(join(outside, 'secret'), 'not-to-be-read')\n  await symlink(outside, join(inside, 'link'), process.platform === 'win32' ? 'junction' : 'dir')\n  let reads = 0"
+        },
+        {
+          "line": 759,
+          "text": "  await mkdir(inside); await mkdir(outside); await writeFile(join(outside, 'secret'), 'not-to-be-read')\n  await symlink(outside, join(inside, 'link'), process.platform === 'win32' ? 'junction' : 'dir')\n  let reads = 0\n  const result = await phase4.snapshotTree(inside, { afterHash: async () => { reads++ } })"
+        },
+        {
+          "line": 775,
+          "text": "test('stage dispatch refuses integration before preparation or any service startup', async () => {\n  assert.equal(typeof phase4.runVerification, 'function')\n  let prepared = 0; let blocked = 0\n  const hooks = { prepare: async options => { prepared++; assert.equal(options.stage, 'prepare') }, saveBlocked: async () => { blocked++ } }"
+        },
+        {
+          "line": 779,
+          "text": "  const args = ['--evidence', 'attempt', '--modes', 'standalone,better-sidebar', '--offline']\n  await assert.rejects(phase4.runVerification(args, hooks), { code: 'INTEGRATION_NOT_READY' })\n  await assert.rejects(phase4.runVerification([...args, '--stage', 'integration'], hooks), { code: 'INTEGRATION_NOT_READY' })\n  assert.equal(prepared, 0); assert.equal(blocked, 2)"
+        },
+        {
+          "line": 780,
+          "text": "  await assert.rejects(phase4.runVerification(args, hooks), { code: 'INTEGRATION_NOT_READY' })\n  await assert.rejects(phase4.runVerification([...args, '--stage', 'integration'], hooks), { code: 'INTEGRATION_NOT_READY' })\n  assert.equal(prepared, 0); assert.equal(blocked, 2)\n  await phase4.runVerification([...args, '--stage', 'prepare'], hooks)"
+        },
+        {
+          "line": 782,
+          "text": "  assert.equal(prepared, 0); assert.equal(blocked, 2)\n  await phase4.runVerification([...args, '--stage', 'prepare'], hooks)\n  assert.equal(prepared, 1); assert.equal(blocked, 2)\n})"
+        },
+        {
+          "line": 796,
+          "text": "  assert.equal(typeof phase4.verifyPackageTarball, 'function')\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  await mkdir(join(root, 'package')); await writeFile(join(root, 'package/a.txt'), 'synthetic')\n  const tar = createRequire('C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js')('tar')"
+        },
+        {
+          "line": 797,
+          "text": "  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  await mkdir(join(root, 'package')); await writeFile(join(root, 'package/a.txt'), 'synthetic')\n  const tar = createRequire('C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js')('tar')\n  const file = join(root, 'test.tgz'); await tar.c({ cwd: root, file, gzip: true }, ['package'])"
+        },
+        {
+          "line": 807,
+          "text": "test('evidence directories cannot be reused', async () => {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  const target = join(root, 'attempt-001')\n  await claimEvidenceRoot(target, root)"
+        },
+        {
+          "line": 820,
+          "text": "test('Home isolation rejects real Profile, shared paths and junctions', async () => {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  const a = join(root, 'a'); const b = join(root, 'b')\n  await mkdir(a); await mkdir(b)"
+        },
+        {
+          "line": 822,
+          "text": "  const a = join(root, 'a'); const b = join(root, 'b')\n  await mkdir(a); await mkdir(b)\n  await assertIndependentHomes([a, b], root)\n  await assert.rejects(assertIndependentHomes([a, a], root))"
+        },
+        {
+          "line": 828,
+          "text": "  const link = join(root, 'link')\n  await symlink(b, link, process.platform === 'win32' ? 'junction' : 'dir')\n  await assert.rejects(assertIndependentHomes([link], root))\n})"
+        },
+        {
+          "line": 842,
+          "text": "test('missing offline package and duplicate Host fail closed', async () => {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-test-'))\n  await assert.rejects(requireOfflinePackages([{ name: 'missing', path: join(root, 'missing') }]), /OFFLINE_DEPENDENCY_MISSING/)\n  const pkg = join(root, 'pkg'); await mkdir(pkg)"
+        },
+        {
+          "line": 844,
+          "text": "  await assert.rejects(requireOfflinePackages([{ name: 'missing', path: join(root, 'missing') }]), /OFFLINE_DEPENDENCY_MISSING/)\n  const pkg = join(root, 'pkg'); await mkdir(pkg)\n  await writeFile(join(pkg, 'package.json'), JSON.stringify({ name: 'test', version: '1.0.0' }))\n  assert.equal((await requireOfflinePackages([{ name: 'test', path: pkg }])).length, 1)"
+        },
+        {
+          "line": 845,
+          "text": "  const pkg = join(root, 'pkg'); await mkdir(pkg)\n  await writeFile(join(pkg, 'package.json'), JSON.stringify({ name: 'test', version: '1.0.0' }))\n  assert.equal((await requireOfflinePackages([{ name: 'test', path: pkg }])).length, 1)\n  await assert.rejects(requireOfflinePackages([{ name: 'other', path: pkg }]))"
+        },
+        {
+          "line": 981,
+          "text": "test('native context rejects a linked Windows executable ancestry before any process starts', async () => {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-env-link-test-'))\n  const link = join(root, 'Windows')\n  await symlink(process.env.SystemRoot, link, 'junction')"
+        },
+        {
+          "line": 983,
+          "text": "  const link = join(root, 'Windows')\n  await symlink(process.env.SystemRoot, link, 'junction')\n  await assert.rejects(phase4.createInspectionNativeContext({ SystemRoot: link }), /reparse path rejected/)\n})"
+        },
+        {
+          "line": 989,
+          "text": "test('native context rejects a redirected temporary root before resolving its target', async () => {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-dsh-p4-temp-link-test-'))\n  const target = join(root, 'target'); const link = join(root, 'link')\n  await mkdir(target); await symlink(target, link, 'junction')"
+        },
+        {
+          "line": 991,
+          "text": "  const target = join(root, 'target'); const link = join(root, 'link')\n  await mkdir(target); await symlink(target, link, 'junction')\n  const previous = process.env.TEMP\n  try {"
+        }
+      ]
+    },
+    {
+      "path": "tests/scripts/real-profile-baseline-contract.test.mjs",
+      "hits": [
+        {
+          "line": 2,
+          "text": "import assert from 'node:assert/strict'\nimport { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { join, resolve } from 'node:path'"
+        },
+        {
+          "line": 3,
+          "text": "import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { join, resolve } from 'node:path'\nimport test from 'node:test'"
+        },
+        {
+          "line": 30,
+          "text": "test('the shared traversal records a link and hashes target text without visiting its contents', async (t) => {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-profile-contract-'))\n  try {\n    const profile = join(root, '.dsh')"
+        },
+        {
+          "line": 34,
+          "text": "    const target = join(root, 'external-target')\n    await mkdir(profile)\n    await mkdir(target)\n    await writeFile(join(target, 'must-not-appear.txt'), 'external bytes', 'utf8')"
+        },
+        {
+          "line": 35,
+          "text": "    await mkdir(profile)\n    await mkdir(target)\n    await writeFile(join(target, 'must-not-appear.txt'), 'external bytes', 'utf8')\n    try {"
+        },
+        {
+          "line": 36,
+          "text": "    await mkdir(target)\n    await writeFile(join(target, 'must-not-appear.txt'), 'external bytes', 'utf8')\n    try {\n      await symlink(target, join(profile, 'linked'), process.platform === 'win32' ? 'junction' : 'dir')"
+        },
+        {
+          "line": 38,
+          "text": "    try {\n      await symlink(target, join(profile, 'linked'), process.platform === 'win32' ? 'junction' : 'dir')\n    } catch (error) {\n      t.skip(`link creation unavailable: ${error.message}`)"
+        },
+        {
+          "line": 51,
+          "text": "  } finally {\n    await rm(root, { recursive: true, force: true })\n  }\n})"
+        },
+        {
+          "line": 57,
+          "text": "  const source = await readFile(resolve(\n    'docs/evidence/week3-reaudit-remediation-2026-08-27/baseline/capture-remediation-baseline.mjs',\n  ), 'utf8')\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/scripts/week3-package-audit-scope.test.mjs",
+      "hits": [
+        {
+          "line": 3,
+          "text": "import { spawnSync } from 'node:child_process'\nimport { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { join, resolve } from 'node:path'"
+        },
+        {
+          "line": 4,
+          "text": "import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { join, resolve } from 'node:path'\nimport test from 'node:test'"
+        },
+        {
+          "line": 11,
+          "text": "test('package audit reports only static package scope and explicit limitations', async () => {\n  const root = await mkdtemp(join(tmpdir(), 'oasis-package-audit-scope-'))\n  try {\n    const packageRoot = join(root, 'package')"
+        },
+        {
+          "line": 14,
+          "text": "    const packageRoot = join(root, 'package')\n    await mkdir(join(packageRoot, 'src'), { recursive: true })\n    await mkdir(join(packageRoot, 'lib'), { recursive: true })\n    await writeFile(join(packageRoot, 'package.json'), `${JSON.stringify({"
+        },
+        {
+          "line": 15,
+          "text": "    await mkdir(join(packageRoot, 'src'), { recursive: true })\n    await mkdir(join(packageRoot, 'lib'), { recursive: true })\n    await writeFile(join(packageRoot, 'package.json'), `${JSON.stringify({\n      name: 'scope-probe',"
+        },
+        {
+          "line": 16,
+          "text": "    await mkdir(join(packageRoot, 'lib'), { recursive: true })\n    await writeFile(join(packageRoot, 'package.json'), `${JSON.stringify({\n      name: 'scope-probe',\n      version: '0.0.0',"
+        },
+        {
+          "line": 23,
+          "text": "    }, null, 2)}\\n`, 'utf8')\n    await writeFile(join(packageRoot, 'cordis.patch.yml'), 'plugins: {}\\n', 'utf8')\n    await writeFile(join(packageRoot, 'src', 'index.js'), 'export const probe = true\\n', 'utf8')\n    await writeFile(join(packageRoot, 'lib', 'client.js'), 'export const probe = true\\n', 'utf8')"
+        },
+        {
+          "line": 24,
+          "text": "    await writeFile(join(packageRoot, 'cordis.patch.yml'), 'plugins: {}\\n', 'utf8')\n    await writeFile(join(packageRoot, 'src', 'index.js'), 'export const probe = true\\n', 'utf8')\n    await writeFile(join(packageRoot, 'lib', 'client.js'), 'export const probe = true\\n', 'utf8')\n"
+        },
+        {
+          "line": 25,
+          "text": "    await writeFile(join(packageRoot, 'src', 'index.js'), 'export const probe = true\\n', 'utf8')\n    await writeFile(join(packageRoot, 'lib', 'client.js'), 'export const probe = true\\n', 'utf8')\n\n    const tarball = join(root, 'scope-probe.tgz')"
+        },
+        {
+          "line": 68,
+          "text": "  } finally {\n    await rm(root, { recursive: true, force: true })\n  }\n})"
+        }
+      ]
+    },
+    {
+      "path": "packages/oasis-professional-service/test/host-runtime.integration.test.mjs",
+      "hits": [
+        {
+          "line": 4,
+          "text": "import { ToolRuntime } from '@deepseek-ai/dsh-tools'\nimport { mkdir, mkdtemp, realpath, rm, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { join } from 'node:path'"
+        },
+        {
+          "line": 5,
+          "text": "import { mkdir, mkdtemp, realpath, rm, writeFile } from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { join } from 'node:path'\nimport test from 'node:test'"
+        },
+        {
+          "line": 99,
+          "text": "  const root = new Context()\n  const tempRoot = await mkdtemp(join(tmpdir(), 'oasis-host-materials-'))\n  try {\n    await root.plugin(SystemPromptStub)"
+        },
+        {
+          "line": 109,
+          "text": "    const workspacePath = join(tempRoot, 'workspace')\n    await mkdir(join(workspacePath, 'materials'), { recursive: true })\n    await writeFile(join(workspacePath, 'materials', 'spec.md'), 'Host material integration fixture')\n    workspaceRegistryStub.workspace = {"
+        },
+        {
+          "line": 110,
+          "text": "    await mkdir(join(workspacePath, 'materials'), { recursive: true })\n    await writeFile(join(workspacePath, 'materials', 'spec.md'), 'Host material integration fixture')\n    workspaceRegistryStub.workspace = {\n      id: 'workspace-a',"
+        },
+        {
+          "line": 155,
+          "text": "    await root.fiber.dispose()\n    await rm(tempRoot, { recursive: true, force: true })\n  }\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/oasis-professional-service/test/oasis-api-contract.test.mjs",
+      "hits": [
+        {
+          "line": 4,
+          "text": "import { readFileSync } from 'node:fs'\nimport { createServer } from 'node:http'\nimport { dirname, resolve } from 'node:path'\nimport test from 'node:test'"
+        },
+        {
+          "line": 250,
+          "text": "  let redirectedRequests = 0\n  const target = createServer((request, response) => {\n    redirectedRequests += 1\n    request.resume()"
+        },
+        {
+          "line": 256,
+          "text": "  })\n  target.listen(0, '127.0.0.1')\n  await once(target, 'listening')\n"
+        },
+        {
+          "line": 259,
+          "text": "\n  const source = createServer((_request, response) => {\n    response.writeHead(307, { location: `http://127.0.0.1:${target.address().port}/redirected` })\n    response.end()"
+        },
+        {
+          "line": 263,
+          "text": "  })\n  source.listen(0, '127.0.0.1')\n  await once(source, 'listening')\n"
+        }
+      ]
+    },
+    {
+      "path": "packages/oasis-professional-service/test/workspace-materials.test.mjs",
+      "hits": [
+        {
+          "line": 5,
+          "text": "  lstat,\n  mkdir,\n  mkdtemp,\n  open,"
+        },
+        {
+          "line": 6,
+          "text": "  mkdir,\n  mkdtemp,\n  open,\n  realpath,"
+        },
+        {
+          "line": 10,
+          "text": "  rm,\n  symlink,\n  truncate,\n  writeFile,"
+        },
+        {
+          "line": 12,
+          "text": "  truncate,\n  writeFile,\n} from 'node:fs/promises'\nimport { tmpdir } from 'node:os'"
+        },
+        {
+          "line": 14,
+          "text": "} from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { dirname, join } from 'node:path'\nimport test from 'node:test'"
+        },
+        {
+          "line": 32,
+          "text": "async function createFixture(t, { status = 'ok', fileSystem } = {}) {\n  const base = await mkdtemp(join(tmpdir(), 'oasis-materials-'))\n  const workspaceRoot = join(base, 'workspace')\n  await mkdir(workspaceRoot)"
+        },
+        {
+          "line": 34,
+          "text": "  const workspaceRoot = join(base, 'workspace')\n  await mkdir(workspaceRoot)\n  t.after(() => rm(base, { recursive: true, force: true }))\n  const workspace = {"
+        },
+        {
+          "line": 35,
+          "text": "  await mkdir(workspaceRoot)\n  t.after(() => rm(base, { recursive: true, force: true }))\n  const workspace = {\n    id: 'workspace-a',"
+        },
+        {
+          "line": 90,
+          "text": "  const fixture = await createFixture(t)\n  await mkdir(join(fixture.workspaceRoot, 'materials'))\n  await writeFile(join(fixture.workspaceRoot, 'materials', 'bad.exe'), 'not executable input')\n  await writeFile(join(fixture.workspaceRoot, 'materials', 'large.md'), '')"
+        },
+        {
+          "line": 91,
+          "text": "  await mkdir(join(fixture.workspaceRoot, 'materials'))\n  await writeFile(join(fixture.workspaceRoot, 'materials', 'bad.exe'), 'not executable input')\n  await writeFile(join(fixture.workspaceRoot, 'materials', 'large.md'), '')\n  await truncate(join(fixture.workspaceRoot, 'materials', 'large.md'), POLICY.maxFileBytes + 1)"
+        },
+        {
+          "line": 92,
+          "text": "  await writeFile(join(fixture.workspaceRoot, 'materials', 'bad.exe'), 'not executable input')\n  await writeFile(join(fixture.workspaceRoot, 'materials', 'large.md'), '')\n  await truncate(join(fixture.workspaceRoot, 'materials', 'large.md'), POLICY.maxFileBytes + 1)\n"
+        },
+        {
+          "line": 100,
+          "text": "  const outside = join(fixture.base, 'outside')\n  await mkdir(outside)\n  await writeFile(join(outside, 'secret.md'), 'outside')\n  await symlink(outside, join(fixture.workspaceRoot, 'linked'), 'junction')"
+        },
+        {
+          "line": 101,
+          "text": "  await mkdir(outside)\n  await writeFile(join(outside, 'secret.md'), 'outside')\n  await symlink(outside, join(fixture.workspaceRoot, 'linked'), 'junction')\n  await expectCode(fixture.manager.inspect('workspace-a', 'linked\\\\secret.md', POLICY), 'MATERIAL_REPARSE_POINT')"
+        },
+        {
+          "line": 102,
+          "text": "  await writeFile(join(outside, 'secret.md'), 'outside')\n  await symlink(outside, join(fixture.workspaceRoot, 'linked'), 'junction')\n  await expectCode(fixture.manager.inspect('workspace-a', 'linked\\\\secret.md', POLICY), 'MATERIAL_REPARSE_POINT')\n})"
+        },
+        {
+          "line": 126,
+          "text": "  const absolutePath = join(fixture.workspaceRoot, 'materials', 'spec.md')\n  await mkdir(dirname(absolutePath), { recursive: true })\n  await writeFile(absolutePath, content, 'utf8')\n"
+        },
+        {
+          "line": 127,
+          "text": "  await mkdir(dirname(absolutePath), { recursive: true })\n  await writeFile(absolutePath, content, 'utf8')\n\n  const inspected = await fixture.manager.inspect('workspace-a', 'materials/spec.md', POLICY)"
+        },
+        {
+          "line": 171,
+          "text": "  const fixture = await createFixture(t, { fileSystem })\n  await writeFile(join(fixture.workspaceRoot, 'changing.md'), 'CONFIDENTIAL-SENTINEL')\n  await expectCode(\n    fixture.manager.inspect('workspace-a', 'changing.md', POLICY),"
+        },
+        {
+          "line": 204,
+          "text": "  const fixture = await createFixture(t, { fileSystem })\n  await writeFile(join(fixture.workspaceRoot, 'growing.md'), 'a')\n\n  await expectCode("
+        },
+        {
+          "line": 217,
+          "text": "  const absolutePath = join(fixture.workspaceRoot, 'material.md')\n  await writeFile(absolutePath, 'version one')\n  const reference = await fixture.manager.confirm('workspace-a', 'material.md', POLICY, 'ref-a', NOW)\n  const original = structuredClone(reference)"
+        },
+        {
+          "line": 226,
+          "text": "\n  await writeFile(absolutePath, 'version two')\n  await expectCode(fixture.manager.recheck('workspace-a', reference, POLICY), 'MATERIAL_CHANGED')\n  assert.deepEqual(reference, original)"
+        },
+        {
+          "line": 246,
+          "text": "  const content = '经用户确认可外发的材料'\n  await writeFile(absolutePath, content)\n  const reference = await fixture.manager.confirm('workspace-a', 'material.md', POLICY, 'ref-a', NOW)\n"
+        },
+        {
+          "line": 256,
+          "text": "\n  await writeFile(absolutePath, `${content}-changed`)\n  await expectCode(\n    fixture.manager.readForUpload('workspace-a', reference, POLICY),"
+        }
+      ]
+    },
+    {
+      "path": "packages/oasis-professional-service/test/writeback-service.test.mjs",
+      "hits": [
+        {
+          "line": 6,
+          "text": "  link,\n  mkdir,\n  mkdtemp,\n  open,"
+        },
+        {
+          "line": 7,
+          "text": "  mkdir,\n  mkdtemp,\n  open,\n  readFile,"
+        },
+        {
+          "line": 16,
+          "text": "  stat,\n  symlink,\n  unlink,\n  writeFile,"
+        },
+        {
+          "line": 18,
+          "text": "  unlink,\n  writeFile,\n} from 'node:fs/promises'\nimport { tmpdir } from 'node:os'"
+        },
+        {
+          "line": 20,
+          "text": "} from 'node:fs/promises'\nimport { tmpdir } from 'node:os'\nimport { basename, join, relative, resolve, sep } from 'node:path'\nimport test from 'node:test'"
+        },
+        {
+          "line": 61,
+          "text": "async function createHarness(t, options = {}) {\n  const tempRoot = await mkdtemp(join(tmpdir(), 'oasis-writeback-'))\n  const workspaceRoot = join(tempRoot, 'workspace')\n  await mkdir(join(workspaceRoot, 'outputs'), { recursive: true })"
+        },
+        {
+          "line": 63,
+          "text": "  const workspaceRoot = join(tempRoot, 'workspace')\n  await mkdir(join(workspaceRoot, 'outputs'), { recursive: true })\n  const canonicalRoot = await realpath(workspaceRoot)\n  t.after(async () => {"
+        },
+        {
+          "line": 67,
+          "text": "    const resolved = resolve(tempRoot)\n    assert.equal(resolved.startsWith(resolve(tmpdir()) + sep), true)\n    await rm(resolved, { recursive: true, force: true })\n  })"
+        },
+        {
+          "line": 68,
+          "text": "    assert.equal(resolved.startsWith(resolve(tmpdir()) + sep), true)\n    await rm(resolved, { recursive: true, force: true })\n  })\n  let now = START"
+        },
+        {
+          "line": 105,
+          "text": "    link,\n    mkdir,\n    open,\n    readFile,"
+        },
+        {
+          "line": 156,
+          "text": "  )\n  await mkdir(join(workspaceRoot, 'outputs', 'existing'))\n  await expectCode(\n    manager.prepare(prepareInput({ relativeDirectory: 'outputs\\\\existing' })),"
+        },
+        {
+          "line": 162,
+          "text": "  const outside = join(tempRoot, 'outside')\n  await mkdir(outside)\n  try {\n    await symlink(outside, join(workspaceRoot, 'redirect'), process.platform === 'win32' ? 'junction' : 'dir')"
+        },
+        {
+          "line": 164,
+          "text": "  try {\n    await symlink(outside, join(workspaceRoot, 'redirect'), process.platform === 'win32' ? 'junction' : 'dir')\n    await expectCode(\n      manager.prepare(prepareInput({ relativeDirectory: 'redirect\\\\run-a' })),"
+        },
+        {
+          "line": 373,
+          "text": "  const neighbor = join(workspaceRoot, 'outputs', 'neighbor.txt')\n  await writeFile(neighbor, 'protected neighbor', 'utf8')\n  const beforeHash = sha256(await readFile(neighbor))\n  const prepared = await manager.prepare(prepareInput())"
+        },
+        {
+          "line": 377,
+          "text": "  const target = prepared.manifest.absoluteTarget\n  await mkdir(target)\n  await writeFile(join(target, 'sentinel.txt'), 'existing target', 'utf8')\n"
+        },
+        {
+          "line": 378,
+          "text": "  await mkdir(target)\n  await writeFile(join(target, 'sentinel.txt'), 'existing target', 'utf8')\n\n  await expectCode("
+        },
+        {
+          "line": 394,
+          "text": "        finalTarget = target\n        await mkdir(target)\n        await writeFile(join(target, 'sentinel.txt'), 'racing owner', 'utf8')\n        return rename(source, target)"
+        },
+        {
+          "line": 395,
+          "text": "        await mkdir(target)\n        await writeFile(join(target, 'sentinel.txt'), 'racing owner', 'utf8')\n        return rename(source, target)\n      },"
+        },
+        {
+          "line": 466,
+          "text": "      const neighbor = join(workspaceRoot, 'outputs', 'neighbor.txt')\n      await writeFile(neighbor, 'protected neighbor', 'utf8')\n      const beforeHash = sha256(await readFile(neighbor))\n      const prepared = await manager.prepare(prepareInput())"
+        }
+      ]
+    }
+  ],
+  "conclusions": {
+    "oldHistoricalWriter": "excluded exact case at oasis-api-phase4-contract.test.mjs:212-218",
+    "oldHistoricalReuseTest": "rejects existing root before writing at lines 178-184",
+    "currentParityFixtures": "fresh owned children of current evidence root only",
+    "otherWrites": "mkdtemp under isolated TEMP; fixture-only data and owned cleanup",
+    "processes": "Node/fake CLI/tar/cmd fixtures only; no real DSH or browser",
+    "network": "local loopback fixtures only; not a business API request"
+  }
+}

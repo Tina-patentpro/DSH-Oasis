@@ -1,0 +1,417 @@
+{
+  "generatedAt": "2026-09-03T02:27:02.310Z",
+  "ok": true,
+  "originalProtection": {
+    "at": "2026-09-03T02:27:02.147Z",
+    "protectedOriginalFiles": 3056,
+    "changed": [
+      {
+        "path": "scripts/oasis-api-phase4-browser-worker.mjs",
+        "before": "9E35CBC8F3666C1928394BF1663F0B3FBC584515A5DEBF5D43C81BFDCDE5FDF9",
+        "after": "8469C31270E18BA2A371F127DE9819276ED9B8776C4CF0C750B7D3BFF015B104",
+        "allowed": true
+      },
+      {
+        "path": "scripts/verify-oasis-api-phase4.mjs",
+        "before": "022CCE3A9F47858E7F64EE970BC5D87BB278BCF98244A6ADD5F83EC24E600DDF",
+        "after": "B24C744AD2AC52288CED0EDE310846DEDF25463DE2AFB2E6F9BC4A3F2D5FB298",
+        "allowed": true
+      },
+      {
+        "path": "tests/scripts/oasis-api-phase4-contract.test.mjs",
+        "before": "495B93DE0B2C3209E74603C4DFD4D6C3CCE042C7F141ED750E34FF20D5A2E41A",
+        "after": "8BDD1E4C099845A026F97F78809D8ECF02CB54639C062595051CE08874F90932",
+        "allowed": true
+      }
+    ],
+    "errors": [],
+    "added": [
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/archive-native-readonly-attempt.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/archive-native-readonly-result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/archive-native-readonly.mjs",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/archive-native-readonly.ps1",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/baseline.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/change-checks.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/commands.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/evidence-ledger.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/existing-source-changes.patch",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/focused-runner.mjs",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/native-probe/context.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/native-probe/native-result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/owner-execution-context.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/owner-native-attempt.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/owner-native-command-result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/owner-native-command.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p1-green-inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p1-green-result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p1-red-inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p1-red-result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-green-final-inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-green-final-result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-green-inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-green-result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-red-inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-red-result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/package-1788401697728/inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/package-1788401697728/result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/package/inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/package/result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/post-native-preservation.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/pre-native-inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/pre-native-preservation.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/regression-runner.mjs",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/replay/evaluations.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/report.md",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/review-green-inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/review-green-result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/review-red-inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/review-red-result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/root-safe-1788401689755/inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/root-safe-1788401689755/result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/root-safe/inputs.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/root-safe/result.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/run-owner-native.mjs",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/save-failure-1788401600273/context.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/save-failure-1788401631585/context.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/save-failure-1788401690185/context.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-before/1-verify-oasis-api-phase4.mjs",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-before/2-oasis-api-phase4-browser-worker.mjs",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-before/3-oasis-api-phase4-contract.test.mjs",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-change-manifest.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/syntax/commands.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/target-contract.json",
+      "docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/verification-runner.mjs",
+      "scripts/diagnose-oasis-api-phase4-windows.mjs",
+      "scripts/oasis-api-phase4-windows-probe.ps1"
+    ],
+    "forbiddenAdded": [],
+    "head": "3c2bd5a469b67ed4070b0b9beacc30212cd038e3",
+    "stage": "",
+    "protectedExternal": [
+      {
+        "path": "D:/OneDrive/4、董娣相关/3、绿洲慧写3.0/绿洲前端/API接口文档-用户端.md",
+        "sha256": "429357F3E60E39AEAAE1C879C475D629633E88F5A1F71975C618C6899768FEB1",
+        "current": "429357F3E60E39AEAAE1C879C475D629633E88F5A1F71975C618C6899768FEB1"
+      },
+      {
+        "path": "C:/Program Files/nodejs/node.exe",
+        "sha256": "995A3FB3CEFAD590CD3F4B321532A4B9582FB9C6575320ED2E3E894CAAC3E362",
+        "current": "995A3FB3CEFAD590CD3F4B321532A4B9582FB9C6575320ED2E3E894CAAC3E362"
+      },
+      {
+        "path": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+        "sha256": "D26CC5367000F94F05664F33D7118B1BEDA5A4633CFF019D13CC113449B71B0C",
+        "current": "D26CC5367000F94F05664F33D7118B1BEDA5A4633CFF019D13CC113449B71B0C"
+      },
+      {
+        "path": "C:/Users/TinaD/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright-core/lib/coreBundle.js",
+        "sha256": "9393FA79E1C67C74EDC26B610D65A4F7ED73D345A762465CC88340A33A2454AC",
+        "current": "9393FA79E1C67C74EDC26B610D65A4F7ED73D345A762465CC88340A33A2454AC"
+      }
+    ],
+    "ok": true
+  },
+  "sourcesUnchanged": true,
+  "sourceHashes": [
+    {
+      "path": "scripts/verify-oasis-api-phase4.mjs",
+      "sha256": "B24C744AD2AC52288CED0EDE310846DEDF25463DE2AFB2E6F9BC4A3F2D5FB298"
+    },
+    {
+      "path": "scripts/oasis-api-phase4-browser-worker.mjs",
+      "sha256": "8469C31270E18BA2A371F127DE9819276ED9B8776C4CF0C750B7D3BFF015B104"
+    },
+    {
+      "path": "tests/scripts/oasis-api-phase4-contract.test.mjs",
+      "sha256": "8BDD1E4C099845A026F97F78809D8ECF02CB54639C062595051CE08874F90932"
+    },
+    {
+      "path": "scripts/diagnose-oasis-api-phase4-windows.mjs",
+      "sha256": "BE641E3368D58FDC62B3D00776772A73823E0D2CEB052DDB1BAE5E2E7805AECE"
+    },
+    {
+      "path": "scripts/oasis-api-phase4-windows-probe.ps1",
+      "sha256": "0AC6A04B45F6A8E6755B31CD851D9D0E6F5C1F4B0FD4136B29144CF5AD16DB67"
+    }
+  ],
+  "evidenceReferencesReadable": true,
+  "jsonErrors": [],
+  "archiveManifest": [
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/archive-native-readonly-attempt.json",
+      "sha256": "70200BF4D58D0C9897E4B1993FEA2AD5962F3064196332D3A9B2818C5FD254C7",
+      "bytes": 71
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/archive-native-readonly-result.json",
+      "sha256": "49701B20CB9C160F63D4E484F3AEEE5D70D0DB4CFD213E35F7D815878688F1CA",
+      "bytes": 2220
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/archive-native-readonly.mjs",
+      "sha256": "FCB38E3126819710F6C7181E32617EFC9F46E08D02BD8B470F1E57B418D46107",
+      "bytes": 1795
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/archive-native-readonly.ps1",
+      "sha256": "1D3E07314B3BF72EC81DB99C212F2DB9E69F15D61320173549F0FCE50C8022F5",
+      "bytes": 2367
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/baseline.json",
+      "sha256": "6C186988183E8A540458C5240D280F4FF157022F352B89D4A6B59D616F5C47C0",
+      "bytes": 645119
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/change-checks.json",
+      "sha256": "0DC4E4C53D46DF6A46D5973AD336A198C7D5EBEE534A068639D72CC6FE16C720",
+      "bytes": 5929
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/commands.json",
+      "sha256": "F463A5BB6FBA9BAEE1F2A5901A6F164F932C9FAB0B645D616C5126275F2B1250",
+      "bytes": 35532
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/evidence-ledger.json",
+      "sha256": "9BAEBBF989F33D86BDB638B4AA946CFAA2A7DC3B2A2B24CEDE855B540B903578",
+      "bytes": 11305
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/existing-source-changes.patch",
+      "sha256": "5796F9B0A396D82A225A731FE29EDBA718CD1FD2AE5E42628D23D7965B274135",
+      "bytes": 34305
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/focused-runner.mjs",
+      "sha256": "566154DCF81ACC496089E90966DBDFFE247D19B0B68AFAFF26BB6F508362B6D0",
+      "bytes": 1264
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/native-probe/context.json",
+      "sha256": "F5701658C0B60125368D0E2552306CE46F6059B7657A04BF5C9ED37C9480762A",
+      "bytes": 4628
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/native-probe/native-result.json",
+      "sha256": "3744D1BCBA0A55B5D603D138AFF2ADE9A634A6A71FE0C1A9C42E6EBBA7315F30",
+      "bytes": 5636
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/owner-execution-context.json",
+      "sha256": "642C1A10A92EF8B9AB2C61C1C8061B1848F0B7D58A1B4AEAC48BA7026DCCDA6B",
+      "bytes": 5402
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/owner-native-attempt.json",
+      "sha256": "DC41C572044FE13BAFE0E678FFEC57CC65CFE3FDB8103CAE472A555FE0BF9E47",
+      "bytes": 186
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/owner-native-command-result.json",
+      "sha256": "150D7A213F80057B90E74A08BF12592A06A8F7FB9F04799DB1427DF1EBE14BFD",
+      "bytes": 787
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/owner-native-command.json",
+      "sha256": "DB911C827050AB059ACB580401F7200583E23F32A567343DE3E6108954863145",
+      "bytes": 4316
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p1-green-inputs.json",
+      "sha256": "45208DCF35F1D182D3F17C402738F2A0F27741D9ED8A87586E01A5E7639F0830",
+      "bytes": 358
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p1-green-result.json",
+      "sha256": "122AF9E29A71A8BAECF119B87255AA6B7EC5CF41F8BCC077669719A20C7E0DF1",
+      "bytes": 2576
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p1-red-inputs.json",
+      "sha256": "CEE2AD80BBE2C820C6505C2F17F511753595D7E6CEC177E854188E368FC8DF07",
+      "bytes": 358
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p1-red-result.json",
+      "sha256": "DFE8F1E9BD8C4349F2424622455C3F02FE90BD2641B3C43A7E157AB4B260751B",
+      "bytes": 11748
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-green-final-inputs.json",
+      "sha256": "18003BE2CBA90A9D58D704A889BA41BCBECE1763A657F0C4C366AB2C29F54220",
+      "bytes": 358
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-green-final-result.json",
+      "sha256": "F5F725C3C878DF73F4A38ECCD0649A59FEF4C596F2074E1C2EAECD4EDE71BCEB",
+      "bytes": 3989
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-green-inputs.json",
+      "sha256": "647302A3E96519F93AB935D4A4FCC6C33A860DCACCE25E7379FF6A18856A5B98",
+      "bytes": 358
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-green-result.json",
+      "sha256": "290849CC9CF14FD7F33A1D3F1C290C546DB725250349949AE928ADAABF8EE2EE",
+      "bytes": 4740
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-red-inputs.json",
+      "sha256": "B55B921B20AAEB8FC42492E669DF4F7B4FBAE4AE25A47AA2027EF452086A7FF8",
+      "bytes": 358
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/p2-red-result.json",
+      "sha256": "0EE6D975D1B6DDF94ABDE02D7A7C9DCFCDD7093C862DF226F4F405AC72467F6C",
+      "bytes": 9553
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/package/inputs.json",
+      "sha256": "B45CE76C50C6431D1420D3574DB1B864D953DCB90542CCA06D325000B2112EC7",
+      "bytes": 13797
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/package/result.json",
+      "sha256": "C781E0B4A14FB6CE5AF400D5AFEEA7EBB5A8C02E0A4893FF23672995738D5DD1",
+      "bytes": 65493
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/package-1788401697728/inputs.json",
+      "sha256": "0DB7B31B11CF2D604BED630AF83BA67444BFB51F185CFC14B65B2B2867CB6A3F",
+      "bytes": 13797
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/package-1788401697728/result.json",
+      "sha256": "46234123CB80911664DA6910305CC7B72CD28B1DE6494F28D73FE853AC2C5B27",
+      "bytes": 65474
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/post-native-preservation.json",
+      "sha256": "70C35A131C318BCF127286AF9109E0D68633EF12FD19F6A423BEC344A6BFD2BA",
+      "bytes": 6892
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/pre-native-inputs.json",
+      "sha256": "B7DBB2B5FA3A7DE15EB2156012AD585EE09FB718A248105386585F57885BE1C2",
+      "bytes": 2014
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/pre-native-preservation.json",
+      "sha256": "98E59837535D0C9C1623931BDF1C4B136864A770F5AD0762B5ED48FD3727A033",
+      "bytes": 5418
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/regression-runner.mjs",
+      "sha256": "6FD9034C3B01021CA32690A251DF139C192B2D78D310304489EC1D2C0ABD0DAE",
+      "bytes": 1860
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/replay/evaluations.json",
+      "sha256": "427BD628B5C5F3293140DE369E9A9DDFE117E1C9339DF28280CE2B2AE75CA4A2",
+      "bytes": 4239
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/report.md",
+      "sha256": "62F0FADBEFCC75BC439A5665F37E1BEBD0B92366B132054128F103DBED31C114",
+      "bytes": 8924
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/review-green-inputs.json",
+      "sha256": "000EDDB8475FF4857700C3E5F726D11E6410A5CFE8A407900AF5725B83C8C6AE",
+      "bytes": 358
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/review-green-result.json",
+      "sha256": "EA4D8040F4607B40C4DA61E9FBF1E1E6605A84B26910E0CDB647ED4A28A55DDB",
+      "bytes": 4865
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/review-red-inputs.json",
+      "sha256": "F5D04018C1642439C49496C5551893BB757EA1EFFBCEC109DCA21BDD7EB14FC7",
+      "bytes": 358
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/review-red-result.json",
+      "sha256": "6F4D4AC6E9D508F05F902DBA5FEC3E14E0B957621211D6138C2CF828ECDDF299",
+      "bytes": 7462
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/root-safe/inputs.json",
+      "sha256": "39D2CB737641161B525610CD245A3F181A0CC425DCC8A2F40D4E28D9048B0F1F",
+      "bytes": 3683
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/root-safe/result.json",
+      "sha256": "480E1E0CC5EFACF9087EF2E22B03A59290E504517E28CA84B4CDA981EC9A3EAA",
+      "bytes": 29006
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/root-safe-1788401689755/inputs.json",
+      "sha256": "23479C403D00B5B43556AC4E721FFC7CF4DDDD9B4BE48E35F9B8882E0845FAB3",
+      "bytes": 3683
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/root-safe-1788401689755/result.json",
+      "sha256": "6D9F8F8B7D0FC0C92809CC32BEF0A0815110B1CD0D825FCCCF6AE06C4AB6AB03",
+      "bytes": 29876
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/run-owner-native.mjs",
+      "sha256": "2DECCFBDE151936CEAC79953A881E2FD90852CA3073A20A498B8863B38962F0C",
+      "bytes": 2709
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/save-failure-1788401600273/context.json",
+      "sha256": "FA2C8FCBB43B5729C4161F322A96355E5D039B4C2B32687E48567C96A9D06AAF",
+      "bytes": 4628
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/save-failure-1788401631585/context.json",
+      "sha256": "9591D959F87AB55BFF6C3EBD3FEF404C6CEA4A345CAEED09D213C89CAF61C392",
+      "bytes": 4628
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/save-failure-1788401690185/context.json",
+      "sha256": "A18DCD4E5922B61567DADC9369728D59E68FFA4FA232FAA6242FA12C30FD5B5E",
+      "bytes": 4628
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-before/1-verify-oasis-api-phase4.mjs",
+      "sha256": "022CCE3A9F47858E7F64EE970BC5D87BB278BCF98244A6ADD5F83EC24E600DDF",
+      "bytes": 76518
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-before/2-oasis-api-phase4-browser-worker.mjs",
+      "sha256": "9E35CBC8F3666C1928394BF1663F0B3FBC584515A5DEBF5D43C81BFDCDE5FDF9",
+      "bytes": 11474
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-before/3-oasis-api-phase4-contract.test.mjs",
+      "sha256": "495B93DE0B2C3209E74603C4DFD4D6C3CCE042C7F141ED750E34FF20D5A2E41A",
+      "bytes": 53404
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-change-manifest.json",
+      "sha256": "5A74AAB62D65E662BBE3EC1738C38FEC9546B10041A3142D4523672052467359",
+      "bytes": 3045
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/syntax/commands.json",
+      "sha256": "AC663CF79E39498913E9DECD554042070116B967D8089E925ADD56144C4F1818",
+      "bytes": 2591
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/target-contract.json",
+      "sha256": "B09B2DF3C4C258C5AAAD97C7A409190EA7051DD32849DF9CAAC26EF08A0BE486",
+      "bytes": 1117
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/verification-runner.mjs",
+      "sha256": "66AF52FEFA1F32FBC48F8F4344158BD7F3F17082E71D200B2554B6D6D5291526",
+      "bytes": 3299
+    }
+  ],
+  "scope": "file hashes and JSON/reference integrity; does not rerun tests/native/browser"
+}

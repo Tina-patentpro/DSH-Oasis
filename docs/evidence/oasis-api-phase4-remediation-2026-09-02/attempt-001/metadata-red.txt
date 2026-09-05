@@ -1,0 +1,280 @@
+TAP version 13
+# Subtest: finalizer preserves primary failure and attempts every protection check
+ok 1 - finalizer preserves primary failure and attempts every protection check
+  ---
+  duration_ms: 2.2856
+  type: 'test'
+  ...
+# Subtest: finalizer continues after evidence-write failure and cannot claim completion
+ok 2 - finalizer continues after evidence-write failure and cannot claim completion
+  ---
+  duration_ms: 0.3312
+  type: 'test'
+  ...
+# Subtest: finalizer reports uncollected baseline and cleanup errors without suppressing other checks
+ok 3 - finalizer reports uncollected baseline and cleanup errors without suppressing other checks
+  ---
+  duration_ms: 0.3766
+  type: 'test'
+  ...
+# Subtest: file hashing collects all missing files rather than short-circuiting
+ok 4 - file hashing collects all missing files rather than short-circuiting
+  ---
+  duration_ms: 13.4237
+  type: 'test'
+  ...
+# Subtest: command runner records spawn errors and waits for timed-out child exit
+ok 5 - command runner records spawn errors and waits for timed-out child exit
+  ---
+  duration_ms: 134.6881
+  type: 'test'
+  ...
+# Subtest: isolated dependency copy preserves multilevel and multiple-version ESM resolution
+ok 6 - isolated dependency copy preserves multilevel and multiple-version ESM resolution
+  ---
+  duration_ms: 463.4433
+  type: 'test'
+  ...
+# Subtest: dependency copier rejects outside link without following it
+ok 7 - dependency copier rejects outside link without following it
+  ---
+  duration_ms: 61.1041
+  type: 'test'
+  ...
+# Subtest: dependency copier rejects dangling link without following it
+ok 8 - dependency copier rejects dangling link without following it
+  ---
+  duration_ms: 61.45
+  type: 'test'
+  ...
+# Subtest: dependency copier rejects file-target link without following it
+ok 9 - dependency copier rejects file-target link without following it
+  ---
+  duration_ms: 73.0431
+  type: 'test'
+  ...
+# Subtest: dependency copy detects source change during copy and retains the rejected destination
+ok 10 - dependency copy detects source change during copy and retains the rejected destination
+  ---
+  duration_ms: 184.6949
+  type: 'test'
+  ...
+# Subtest: dependency copy rejects source metadata drift even when bytes are unchanged
+not ok 11 - dependency copy rejects source metadata drift even when bytes are unchanged
+  ---
+  duration_ms: 214.2872
+  type: 'test'
+  location: 'D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\tests\\scripts\\oasis-api-phase4-contract.test.mjs:129:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'DEPENDENCY_SOURCE_DRIFT'
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///D:/OneDrive/4%E3%80%81%E8%91%A3%E5%A8%A3%E7%9B%B8%E5%85%B3/9%E3%80%81%E7%BB%BF%E6%B4%B2%E6%85%A7%E5%86%994.0%E9%A2%84%E7%A0%94/tests/scripts/oasis-api-phase4-contract.test.mjs:131:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Profile gate requires three matching snapshots spaced by five seconds
+ok 12 - Profile gate requires three matching snapshots spaced by five seconds
+  ---
+  duration_ms: 0.802
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects content without rebaselining
+ok 13 - Profile gate rejects content without rebaselining
+  ---
+  duration_ms: 0.2177
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects addition without rebaselining
+ok 14 - Profile gate rejects addition without rebaselining
+  ---
+  duration_ms: 0.3021
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects deletion without rebaselining
+ok 15 - Profile gate rejects deletion without rebaselining
+  ---
+  duration_ms: 0.0967
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects link without rebaselining
+ok 16 - Profile gate rejects link without rebaselining
+  ---
+  duration_ms: 0.1514
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects metadata without rebaselining
+ok 17 - Profile gate rejects metadata without rebaselining
+  ---
+  duration_ms: 0.0588
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects unreadable without rebaselining
+ok 18 - Profile gate rejects unreadable without rebaselining
+  ---
+  duration_ms: 0.0616
+  type: 'test'
+  ...
+# Subtest: strong snapshot detects a file modified during its hash read
+ok 19 - strong snapshot detects a file modified during its hash read
+  ---
+  duration_ms: 7.2767
+  type: 'test'
+  ...
+# Subtest: strong snapshot never follows links to external credential-like data
+ok 20 - strong snapshot never follows links to external credential-like data
+  ---
+  duration_ms: 6.9849
+  type: 'test'
+  ...
+# Subtest: stage parser rejects ambiguity and defaults to gated integration
+ok 21 - stage parser rejects ambiguity and defaults to gated integration
+  ---
+  duration_ms: 0.7722
+  type: 'test'
+  ...
+# Subtest: stage dispatch refuses integration before preparation or any service startup
+ok 22 - stage dispatch refuses integration before preparation or any service startup
+  ---
+  duration_ms: 0.2366
+  type: 'test'
+  ...
+# Subtest: successful preparation still does not claim full fourth-batch completion
+ok 23 - successful preparation still does not claim full fourth-batch completion
+  ---
+  duration_ms: 0.2617
+  type: 'test'
+  ...
+# Subtest: tarball verification checks actual contents and rejects unlisted or mismatched files
+ok 24 - tarball verification checks actual contents and rejects unlisted or mismatched files
+  ---
+  duration_ms: 53.5271
+  type: 'test'
+  ...
+# Subtest: evidence directories cannot be reused
+ok 25 - evidence directories cannot be reused
+  ---
+  duration_ms: 4.2739
+  type: 'test'
+  ...
+# Subtest: only literal loopback HTTP origin is accepted
+ok 26 - only literal loopback HTTP origin is accepted
+  ---
+  duration_ms: 1.1567
+  type: 'test'
+  ...
+# Subtest: Home isolation rejects real Profile, shared paths and junctions
+ok 27 - Home isolation rejects real Profile, shared paths and junctions
+  ---
+  duration_ms: 21.7361
+  type: 'test'
+  ...
+# Subtest: child environment never inherits credential or external configuration
+ok 28 - child environment never inherits credential or external configuration
+  ---
+  duration_ms: 0.3084
+  type: 'test'
+  ...
+# Subtest: missing offline package and duplicate Host fail closed
+ok 29 - missing offline package and duplicate Host fail closed
+  ---
+  duration_ms: 11.0103
+  type: 'test'
+  ...
+# Subtest: fixture has exactly the frozen nine business endpoints
+ok 30 - fixture has exactly the frozen nine business endpoints
+  ---
+  duration_ms: 0.548
+  type: 'test'
+  ...
+# Subtest: actual adapter uses HTTP for all nine operations without logging sensitive values
+ok 31 - actual adapter uses HTTP for all nine operations without logging sensitive values
+  ---
+  duration_ms: 74.0962
+  type: 'test'
+  ...
+# Subtest: fixture supports receipt without another create
+ok 32 - fixture supports receipt without another create
+  ---
+  duration_ms: 12.3312
+  type: 'test'
+  ...
+# Subtest: fixture supports lost-create without another create
+ok 33 - fixture supports lost-create without another create
+  ---
+  duration_ms: 7.5074
+  type: 'test'
+  ...
+# Subtest: fixture supports no-create-id without another create
+ok 34 - fixture supports no-create-id without another create
+  ---
+  duration_ms: 7.2972
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-query response
+ok 35 - adapter rejects unsafe-query response
+  ---
+  duration_ms: 5.3515
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-fragment response
+ok 36 - adapter rejects unsafe-fragment response
+  ---
+  duration_ms: 4.1306
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-userinfo response
+ok 37 - adapter rejects unsafe-userinfo response
+  ---
+  duration_ms: 5.2273
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-raw
+ok 38 - adapter observes ledger-raw
+  ---
+  duration_ms: 3.9573
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-empty
+ok 39 - adapter observes ledger-empty
+  ---
+  duration_ms: 3.5338
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-duplicate
+ok 40 - adapter observes ledger-duplicate
+  ---
+  duration_ms: 4.2389
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-malformed
+ok 41 - adapter observes ledger-malformed
+  ---
+  duration_ms: 3.8757
+  type: 'test'
+  ...
+# Subtest: adapter observes unauthorized
+ok 42 - adapter observes unauthorized
+  ---
+  duration_ms: 3.449
+  type: 'test'
+  ...
+# Subtest: fixture rejects extra create fields, unexpected endpoint, query and malformed material
+ok 43 - fixture rejects extra create fields, unexpected endpoint, query and malformed material
+  ---
+  duration_ms: 16.9705
+  type: 'test'
+  ...
+1..43
+# tests 43
+# suites 0
+# pass 42
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1663.0302

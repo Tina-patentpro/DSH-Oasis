@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: inspection native environment must be complete before any Windows CLI launch
+ok 1 - inspection native environment must be complete before any Windows CLI launch
+  ---
+  duration_ms: 2.2829
+  type: 'test'
+  ...
+# Subtest: inspection environment derives the real OS drive and redirects all writable Windows roots
+ok 2 - inspection environment derives the real OS drive and redirects all writable Windows roots
+  ---
+  duration_ms: 0.6881
+  type: 'test'
+  ...
+# Subtest: inspection environment rejects missing unresolved conflicting and ambiguous Windows values
+ok 3 - inspection environment rejects missing unresolved conflicting and ambiguous Windows values
+  ---
+  duration_ms: 0.7607
+  type: 'test'
+  ...
+# Subtest: native cleanup context is fresh no-link ASCII temp and records explicit environment
+ok 4 - native cleanup context is fresh no-link ASCII temp and records explicit environment
+  ---
+  duration_ms: 29.3742
+  type: 'test'
+  ...
+# Subtest: inspection environment rejects conflicting command and malformed parent native paths
+ok 5 - inspection environment rejects conflicting command and malformed parent native paths
+  ---
+  duration_ms: 0.5311
+  type: 'test'
+  ...
+# Subtest: native context rejects a linked Windows executable ancestry before any process starts
+ok 6 - native context rejects a linked Windows executable ancestry before any process starts
+  ---
+  duration_ms: 4.3881
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 207.9412

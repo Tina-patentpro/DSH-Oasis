@@ -1,0 +1,25 @@
+{
+  "source": "D:/OneDrive/4、董娣相关/3、绿洲慧写3.0/绿洲前端/API接口文档-用户端.md",
+  "ranges": [
+    {
+      "start": 1256,
+      "end": 1268,
+      "text": "### 5.6 获取账户流水列表\n\n**接口**: `GET /user/runningwater/list`\n\n**需要认证**: OpenAPI 未显式声明；`apiClient` 有令牌时会附带 Bearer Token\n\n**查询参数**:\n\n- `page`: 页码（默认1）。\n- `limit`: 每页数量（默认20）。\n- `type`: 流水类型，可选值为 `consumption`（消费）、`topup`（充值）、`give`（赠送）、`refund`（退费）；不传表示全部。\n\n**响应结构**: 前端兼容顶层 `{total, items}` 与 `{code, msg/message, data: {total, items}}` 两种结构。"
+    },
+    {
+      "start": 1277,
+      "end": 1289,
+      "text": "    \"total\": 8,\n    \"items\": [\n      {\n        \"id\": 93,\n        \"uid\": 2,\n        \"username\": \"user_d5itld\",\n        \"title\": \"\",\n        \"link_id\": 99,\n        \"type\": \"消费\",\n        \"money\": 1,\n        \"balance\": 0,\n        \"pm\": 0,\n        \"create_time\": \"2026-01-24T09:25:30\""
+    },
+    {
+      "start": 2323,
+      "end": 2344,
+      "text": "**安全约束**:\n\n- 请求体若包含第三方密钥类字段，服务端必须拒绝透传，可返回 `400 Bad Request`，或忽略该字段并记录安全告警。\n- 响应体不得回显第三方密钥类字段。\n\n**响应示例**:\n\n```json\n{\n  \"code\": 200,\n  \"msg\": \"成功\",\n  \"data\": {\n    \"id\": 456,\n    \"key\": \"task_key\",\n    \"folder_id\": 1,\n    \"type\": 1,\n    \"answer_text\": \"生成的内容\",\n    \"file_url\": \"https://example.com/file.pdf\",\n    \"created_at\": \"2026-02-14T10:55:00\"\n  }\n}\n```"
+    },
+    {
+      "start": 2401,
+      "end": 2423,
+      "text": "### 8.7 查询异步任务进度\n\n**接口**: `GET /apicategories/queryprocess/{key}`\n\n**需要认证**: OpenAPI 未显式声明；`apiClient` 有令牌时会附带 Bearer Token\n\n**路径参数**:\n\n- `key`: 任务唯一标识\n\n**响应示例**:\n\n```json\n{\n  \"key\": \"task_key\",\n  \"current_step\": 2,\n  \"current_step_name\": \"生成中\",\n  \"total_steps\": 5,\n  \"steps\": [\"步骤1\", \"步骤2\", \"步骤3\", \"步骤4\", \"步骤5\"],\n  \"progress_percent\": 40,\n  \"is_completed\": false\n}\n```"
+    }
+  ]
+}

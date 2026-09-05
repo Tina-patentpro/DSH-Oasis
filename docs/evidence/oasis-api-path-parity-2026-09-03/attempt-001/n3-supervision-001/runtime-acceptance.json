@@ -1,0 +1,62 @@
+{
+  "generatedAt": "2026-09-03T04:43:43.881Z",
+  "nativeCollectionAccepted": true,
+  "ownerMatches": true,
+  "outerClosed": true,
+  "innerClosed": true,
+  "outerExitCode": 0,
+  "innerExitCode": 0,
+  "cleanupComplete": true,
+  "pathBefore": {
+    "status": "missing",
+    "error": "ENOENT"
+  },
+  "pathAfter": {
+    "status": "missing",
+    "error": "ENOENT"
+  },
+  "executedCallCount": 3,
+  "calls": [
+    {
+      "id": "known-dont-verify",
+      "api": "SHGetKnownFolderPath",
+      "flags": 16384,
+      "csidl": null,
+      "hresult": "0x00000000",
+      "status": "executed"
+    },
+    {
+      "id": "legacy-current",
+      "api": "SHGetFolderPathW",
+      "flags": 0,
+      "csidl": 28,
+      "hresult": "0x80070003",
+      "status": "executed"
+    },
+    {
+      "id": "known-verify",
+      "api": "SHGetKnownFolderPath",
+      "flags": 0,
+      "csidl": null,
+      "hresult": "0x80070003",
+      "status": "executed"
+    }
+  ],
+  "hypothesis": "H1 supported in this independent process only; not proof of Edge root cause",
+  "readyFilesUnchanged": [
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-path-parity-2026-09-03/attempt-001/n3-supervision-001/owner-once.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-path-parity-2026-09-03/attempt-001/n3-supervision-001/owner-once.test.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-path-parity-2026-09-03/attempt-001/n3-supervision-001/test-runner.mjs",
+      "unchanged": true
+    }
+  ],
+  "preflightComplete": false,
+  "phase4Complete": false
+}

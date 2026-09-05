@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-09-03T23:15:01.042Z",
+  "proofBoundary": "isolated-browser-and-local-synthetic-api-only",
+  "hostOrigin": "http://127.0.0.1:13537",
+  "configuredApiOrigin": "http://127.0.0.1:6326",
+  "fixtureCounts": {
+    "user": 4,
+    "catalog": 4,
+    "folders": 3,
+    "detail": 3,
+    "folder": 1,
+    "create": 1,
+    "ledger": 1
+  },
+  "fixtureViolations": [],
+  "businessResult": {
+    "status": "completed",
+    "recordId": 8801,
+    "recordIdSource": "create",
+    "materialUploads": 0,
+    "resultText": "Synthetic Phase 4 result; no real service was called.",
+    "runningWater": {
+      "status": "observed-candidate",
+      "type": "consume",
+      "money": 1,
+      "balance": 99,
+      "associationVerified": false
+    }
+  },
+  "workspaceIsolation": {
+    "executedWorkspace": "workspace-b",
+    "workspaceB": {
+      "taskCount": 1,
+      "localRunCount": 1,
+      "remoteExecutionCount": 1,
+      "completedRemoteCount": 1
+    },
+    "workspaceA": {
+      "workbenchRecordPresent": false
+    }
+  },
+  "screenshots": [
+    "browser-config-persisted.png",
+    "browser-catalog-recovered.png",
+    "browser-service-detail.png",
+    "browser-professional-completed.png",
+    "browser-running-water-observed.png"
+  ]
+}

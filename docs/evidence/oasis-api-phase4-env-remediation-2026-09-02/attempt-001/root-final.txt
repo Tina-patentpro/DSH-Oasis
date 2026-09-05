@@ -1,0 +1,605 @@
+TAP version 13
+# Subtest: hashes file content and link target text without traversing the target
+ok 1 - hashes file content and link target text without traversing the target
+  ---
+  duration_ms: 23.5809
+  type: 'test'
+  ...
+# Subtest: writes reproducible content hashes and freshness metadata
+ok 2 - writes reproducible content hashes and freshness metadata
+  ---
+  duration_ms: 20.8221
+  type: 'test'
+  ...
+# Subtest: baseline comparison fails closed except for exact allowlisted paths
+ok 3 - baseline comparison fails closed except for exact allowlisted paths
+  ---
+  duration_ms: 0.4526
+  type: 'test'
+  ...
+# Subtest: both historical wrappers use the shared no-follow core and cover build outputs
+ok 4 - both historical wrappers use the shared no-follow core and cover build outputs
+  ---
+  duration_ms: 2.4937
+  type: 'test'
+  ...
+# Subtest: browser integrations resolve only real executable files
+ok 5 - browser integrations resolve only real executable files
+  ---
+  duration_ms: 5.7138
+  type: 'test'
+  ...
+# Subtest: DSH_BIN official npm shim resolves to its package Node CLI entry
+ok 6 - DSH_BIN official npm shim resolves to its package Node CLI entry
+  ---
+  duration_ms: 100.7292
+  type: 'test'
+  ...
+# Subtest: PATH fallback resolves an official npm shim without executing the shim shell
+ok 7 - PATH fallback resolves an official npm shim without executing the shim shell
+  ---
+  duration_ms: 138.9211
+  type: 'test'
+  ...
+# Subtest: forwards spaces, Unicode, quotes, trailing slashes and CMD metacharacters as exact argv
+ok 8 - forwards spaces, Unicode, quotes, trailing slashes and CMD metacharacters as exact argv
+  ---
+  duration_ms: 138.6061
+  type: 'test'
+  ...
+# Subtest: does not execute a second CMD command embedded in one argument
+ok 9 - does not execute a second CMD command embedded in one argument
+  ---
+  duration_ms: 134.1135
+  type: 'test'
+  ...
+# Subtest: rejects an arbitrary command shim even when DSH_BIN points to it
+ok 10 - rejects an arbitrary command shim even when DSH_BIN points to it
+  ---
+  duration_ms: 75.8072
+  type: 'test'
+  ...
+# Subtest: supports the project .dsh-test home
+ok 11 - supports the project .dsh-test home
+  ---
+  duration_ms: 73.7837
+  type: 'test'
+  ...
+# Subtest: supports a declared oasis-dsh temporary home
+ok 12 - supports a declared oasis-dsh temporary home
+  ---
+  duration_ms: 76.4546
+  type: 'test'
+  ...
+# Subtest: rejects the real DSH home and its ancestors or descendants
+ok 13 - rejects the real DSH home and its ancestors or descendants
+  ---
+  duration_ms: 202.5838
+  type: 'test'
+  ...
+# Subtest: rejects a home whose existing path chain contains a symlink or junction
+ok 14 - rejects a home whose existing path chain contains a symlink or junction
+  ---
+  duration_ms: 76.4868
+  type: 'test'
+  ...
+# Subtest: the cmd convenience wrapper still handles ordinary arguments
+ok 15 - the cmd convenience wrapper still handles ordinary arguments
+  ---
+  duration_ms: 159.6694
+  type: 'test'
+  ...
+# Subtest: fails closed when no official DSH package can be resolved
+ok 16 - fails closed when no official DSH package can be resolved
+  ---
+  duration_ms: 70.7783
+  type: 'test'
+  ...
+# Subtest: HTTP 200 with result.ok=false exits non-zero
+ok 17 - HTTP 200 with result.ok=false exits non-zero
+  ---
+  duration_ms: 105.665
+  type: 'test'
+  ...
+# Subtest: rejects non-http protocols before fetching
+ok 18 - rejects non-http protocols before fetching
+  ---
+  duration_ms: 50.7338
+  type: 'test'
+  ...
+# Subtest: rejects non-loopback hosts before fetching
+ok 19 - rejects non-loopback hosts before fetching
+  ---
+  duration_ms: 53.4253
+  type: 'test'
+  ...
+# Subtest: rejects endpoints outside the fixed allowlist
+ok 20 - rejects endpoints outside the fixed allowlist
+  ---
+  duration_ms: 56.0937
+  type: 'test'
+  ...
+# Subtest: rejects dot-segment endpoint traversal
+ok 21 - rejects dot-segment endpoint traversal
+  ---
+  duration_ms: 61.6237
+  type: 'test'
+  ...
+# Subtest: fails when the RPC envelope has no boolean result.ok
+ok 22 - fails when the RPC envelope has no boolean result.ok
+  ---
+  duration_ms: 80.5748
+  type: 'test'
+  ...
+# Subtest: accepts a valid skill.list response with expected skills
+ok 23 - accepts a valid skill.list response with expected skills
+  ---
+  duration_ms: 82.071
+  type: 'test'
+  ...
+# Subtest: accepts the bracketed IPv6 loopback hostname emitted by URL
+ok 24 - accepts the bracketed IPv6 loopback hostname emitted by URL
+  ---
+  duration_ms: 87.7154
+  type: 'test'
+  ...
+# Subtest: inspection native environment must be complete before any Windows CLI launch
+ok 25 - inspection native environment must be complete before any Windows CLI launch
+  ---
+  duration_ms: 1.7871
+  type: 'test'
+  ...
+# Subtest: inspection installs bundles in explicit order without version-collapsing overrides
+ok 26 - inspection installs bundles in explicit order without version-collapsing overrides
+  ---
+  duration_ms: 0.5182
+  type: 'test'
+  ...
+# Subtest: inspect dispatch is explicit and never opens default integration
+ok 27 - inspect dispatch is explicit and never opens default integration
+  ---
+  duration_ms: 0.276
+  type: 'test'
+  ...
+# Subtest: inspect completion requires both live contracts and all protection checks
+ok 28 - inspect completion requires both live contracts and all protection checks
+  ---
+  duration_ms: 0.5228
+  type: 'test'
+  ...
+# Subtest: inspection package selection preserves actual nested multiversion resolution
+ok 29 - inspection package selection preserves actual nested multiversion resolution
+  ---
+  duration_ms: 204.4295
+  type: 'test'
+  ...
+# Subtest: inspection copy rejects missing dependency, escaping link and source changes
+ok 30 - inspection copy rejects missing dependency, escaping link and source changes
+  ---
+  duration_ms: 123.8552
+  type: 'test'
+  ...
+# Subtest: probe exposes full and exact Slot queries only
+ok 31 - probe exposes full and exact Slot queries only
+  ---
+  duration_ms: 2.7241
+  type: 'test'
+  ...
+# Subtest: probe rejects cross-origin, non-loopback, duplicate and unknown parameters without querying
+ok 32 - probe rejects cross-origin, non-loopback, duplicate and unknown parameters without querying
+  ---
+  duration_ms: 0.868
+  type: 'test'
+  ...
+# Subtest: probe timeout and errors are bounded and never echo secrets
+ok 33 - probe timeout and errors are bounded and never echo secrets
+  ---
+  duration_ms: 16.4412
+  type: 'test'
+  ...
+# Subtest: inspection Host lifecycle closes its process on success and probe failure
+ok 34 - inspection Host lifecycle closes its process on success and probe failure
+  ---
+  duration_ms: 288.1124
+  type: 'test'
+  ...
+# Subtest: inspection Host refuses busy port and bounds startup failures without leaking leases
+ok 35 - inspection Host refuses busy port and bounds startup failures without leaking leases
+  ---
+  duration_ms: 468.4998
+  type: 'test'
+  ...
+# Subtest: inspection scope checks ordered full and exact query completion, not HTTP 200 alone
+ok 36 - inspection scope checks ordered full and exact query completion, not HTTP 200 alone
+  ---
+  duration_ms: 0.798
+  type: 'test'
+  ...
+# {"nativeCleanup":{"ok":true,"exitCode":0,"closed":true,"error":null,"executable":"C:\\\\Windows\\\\System32\\\\taskkill.exe","argv":["/PID","15088","/T","/F"],"cwd":"C:\\\\Users\\\\TinaD\\\\AppData\\\\Local\\\\Temp\\\\oasis-dsh-p4-native-SEZ2ax\\\\tmp\\\\oasis-dsh-p4-native-DEQ2iZ","environment":{"SystemRoot":"C:\\\\Windows","SystemDrive":"C:","ProgramData":"C:\\\\Users\\\\TinaD\\\\AppData\\\\Local\\\\Temp\\\\oasis-dsh-p4-native-SEZ2ax\\\\tmp\\\\oasis-dsh-p4-native-DEQ2iZ\\\\programdata","ALLUSERSPROFILE":"C:\\\\Users\\\\TinaD\\\\AppData\\\\Local\\\\Temp\\\\oasis-dsh-p4-native-SEZ2ax\\\\tmp\\\\oasis-dsh-p4-native-DEQ2iZ\\\\programdata","TEMP":"C:\\\\Users\\\\TinaD\\\\AppData\\\\Local\\\\Temp\\\\oasis-dsh-p4-native-SEZ2ax\\\\tmp\\\\oasis-dsh-p4-native-DEQ2iZ/tmp","TMP":"C:\\\\Users\\\\TinaD\\\\AppData\\\\Local\\\\Temp\\\\oasis-dsh-p4-native-SEZ2ax\\\\tmp\\\\oasis-dsh-p4-native-DEQ2iZ/tmp"}}}
+# Subtest: inspection CLI timeout terminates its owned nested process tree on Windows
+ok 37 - inspection CLI timeout terminates its owned nested process tree on Windows
+  ---
+  duration_ms: 1031.4354
+  type: 'test'
+  ...
+# Subtest: failed tree termination is reported and does not leave the command promise pending
+ok 38 - failed tree termination is reported and does not leave the command promise pending
+  ---
+  duration_ms: 71.6426
+  type: 'test'
+  ...
+# Subtest: finalizer preserves primary failure and attempts every protection check
+ok 39 - finalizer preserves primary failure and attempts every protection check
+  ---
+  duration_ms: 0.9142
+  type: 'test'
+  ...
+# Subtest: finalizer continues after evidence-write failure and cannot claim completion
+ok 40 - finalizer continues after evidence-write failure and cannot claim completion
+  ---
+  duration_ms: 0.2993
+  type: 'test'
+  ...
+# Subtest: finalizer reports uncollected baseline and cleanup errors without suppressing other checks
+ok 41 - finalizer reports uncollected baseline and cleanup errors without suppressing other checks
+  ---
+  duration_ms: 0.1933
+  type: 'test'
+  ...
+# Subtest: file hashing collects all missing files rather than short-circuiting
+ok 42 - file hashing collects all missing files rather than short-circuiting
+  ---
+  duration_ms: 8.3164
+  type: 'test'
+  ...
+# Subtest: command runner records spawn errors and waits for timed-out child exit
+ok 43 - command runner records spawn errors and waits for timed-out child exit
+  ---
+  duration_ms: 126.6499
+  type: 'test'
+  ...
+# Subtest: isolated dependency copy preserves multilevel and multiple-version ESM resolution
+ok 44 - isolated dependency copy preserves multilevel and multiple-version ESM resolution
+  ---
+  duration_ms: 319.7436
+  type: 'test'
+  ...
+# Subtest: dependency copier rejects outside link without following it
+ok 45 - dependency copier rejects outside link without following it
+  ---
+  duration_ms: 56.9338
+  type: 'test'
+  ...
+# Subtest: dependency copier rejects dangling link without following it
+ok 46 - dependency copier rejects dangling link without following it
+  ---
+  duration_ms: 48.7504
+  type: 'test'
+  ...
+# Subtest: dependency copier rejects file-target link without following it
+ok 47 - dependency copier rejects file-target link without following it
+  ---
+  duration_ms: 47.8536
+  type: 'test'
+  ...
+# Subtest: dependency copy detects source change during copy and retains the rejected destination
+ok 48 - dependency copy detects source change during copy and retains the rejected destination
+  ---
+  duration_ms: 119.1609
+  type: 'test'
+  ...
+# Subtest: dependency copy rejects source metadata drift even when bytes are unchanged
+ok 49 - dependency copy rejects source metadata drift even when bytes are unchanged
+  ---
+  duration_ms: 113.6779
+  type: 'test'
+  ...
+# Subtest: Profile gate requires three matching snapshots spaced by five seconds
+ok 50 - Profile gate requires three matching snapshots spaced by five seconds
+  ---
+  duration_ms: 0.4182
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects content without rebaselining
+ok 51 - Profile gate rejects content without rebaselining
+  ---
+  duration_ms: 0.1497
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects addition without rebaselining
+ok 52 - Profile gate rejects addition without rebaselining
+  ---
+  duration_ms: 0.0558
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects deletion without rebaselining
+ok 53 - Profile gate rejects deletion without rebaselining
+  ---
+  duration_ms: 0.0419
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects link without rebaselining
+ok 54 - Profile gate rejects link without rebaselining
+  ---
+  duration_ms: 0.0446
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects metadata without rebaselining
+ok 55 - Profile gate rejects metadata without rebaselining
+  ---
+  duration_ms: 0.0382
+  type: 'test'
+  ...
+# Subtest: Profile gate rejects unreadable without rebaselining
+ok 56 - Profile gate rejects unreadable without rebaselining
+  ---
+  duration_ms: 0.0467
+  type: 'test'
+  ...
+# Subtest: strong snapshot detects a file modified during its hash read
+ok 57 - strong snapshot detects a file modified during its hash read
+  ---
+  duration_ms: 10.7482
+  type: 'test'
+  ...
+# Subtest: strong snapshot never follows links to external credential-like data
+ok 58 - strong snapshot never follows links to external credential-like data
+  ---
+  duration_ms: 5.2878
+  type: 'test'
+  ...
+# Subtest: stage parser rejects ambiguity and defaults to gated integration
+ok 59 - stage parser rejects ambiguity and defaults to gated integration
+  ---
+  duration_ms: 0.9368
+  type: 'test'
+  ...
+# Subtest: stage dispatch refuses integration before preparation or any service startup
+ok 60 - stage dispatch refuses integration before preparation or any service startup
+  ---
+  duration_ms: 0.3324
+  type: 'test'
+  ...
+# Subtest: successful preparation still does not claim full fourth-batch completion
+ok 61 - successful preparation still does not claim full fourth-batch completion
+  ---
+  duration_ms: 0.1319
+  type: 'test'
+  ...
+# Subtest: tarball verification checks actual contents and rejects unlisted or mismatched files
+ok 62 - tarball verification checks actual contents and rejects unlisted or mismatched files
+  ---
+  duration_ms: 40.4021
+  type: 'test'
+  ...
+# Subtest: evidence directories cannot be reused
+ok 63 - evidence directories cannot be reused
+  ---
+  duration_ms: 3.5751
+  type: 'test'
+  ...
+# Subtest: only literal loopback HTTP origin is accepted
+ok 64 - only literal loopback HTTP origin is accepted
+  ---
+  duration_ms: 0.644
+  type: 'test'
+  ...
+# Subtest: Home isolation rejects real Profile, shared paths and junctions
+ok 65 - Home isolation rejects real Profile, shared paths and junctions
+  ---
+  duration_ms: 16.9822
+  type: 'test'
+  ...
+# Subtest: child environment never inherits credential or external configuration
+ok 66 - child environment never inherits credential or external configuration
+  ---
+  duration_ms: 0.1425
+  type: 'test'
+  ...
+# Subtest: missing offline package and duplicate Host fail closed
+ok 67 - missing offline package and duplicate Host fail closed
+  ---
+  duration_ms: 7.3944
+  type: 'test'
+  ...
+# Subtest: fixture has exactly the frozen nine business endpoints
+ok 68 - fixture has exactly the frozen nine business endpoints
+  ---
+  duration_ms: 0.2293
+  type: 'test'
+  ...
+# Subtest: actual adapter uses HTTP for all nine operations without logging sensitive values
+ok 69 - actual adapter uses HTTP for all nine operations without logging sensitive values
+  ---
+  duration_ms: 35.0187
+  type: 'test'
+  ...
+# Subtest: fixture supports receipt without another create
+ok 70 - fixture supports receipt without another create
+  ---
+  duration_ms: 7.5944
+  type: 'test'
+  ...
+# Subtest: fixture supports lost-create without another create
+ok 71 - fixture supports lost-create without another create
+  ---
+  duration_ms: 5.1555
+  type: 'test'
+  ...
+# Subtest: fixture supports no-create-id without another create
+ok 72 - fixture supports no-create-id without another create
+  ---
+  duration_ms: 5.1049
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-query response
+ok 73 - adapter rejects unsafe-query response
+  ---
+  duration_ms: 3.6344
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-fragment response
+ok 74 - adapter rejects unsafe-fragment response
+  ---
+  duration_ms: 7.0293
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-userinfo response
+ok 75 - adapter rejects unsafe-userinfo response
+  ---
+  duration_ms: 3.2382
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-raw
+ok 76 - adapter observes ledger-raw
+  ---
+  duration_ms: 2.8931
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-empty
+ok 77 - adapter observes ledger-empty
+  ---
+  duration_ms: 2.7638
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-duplicate
+ok 78 - adapter observes ledger-duplicate
+  ---
+  duration_ms: 2.986
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-malformed
+ok 79 - adapter observes ledger-malformed
+  ---
+  duration_ms: 3.2978
+  type: 'test'
+  ...
+# Subtest: adapter observes unauthorized
+ok 80 - adapter observes unauthorized
+  ---
+  duration_ms: 2.3578
+  type: 'test'
+  ...
+# Subtest: fixture rejects extra create fields, unexpected endpoint, query and malformed material
+ok 81 - fixture rejects extra create fields, unexpected endpoint, query and malformed material
+  ---
+  duration_ms: 12.5551
+  type: 'test'
+  ...
+# Subtest: inspection environment derives the real OS drive and redirects all writable Windows roots
+ok 82 - inspection environment derives the real OS drive and redirects all writable Windows roots
+  ---
+  duration_ms: 0.2591
+  type: 'test'
+  ...
+# Subtest: inspection environment rejects missing unresolved conflicting and ambiguous Windows values
+ok 83 - inspection environment rejects missing unresolved conflicting and ambiguous Windows values
+  ---
+  duration_ms: 0.5002
+  type: 'test'
+  ...
+# Subtest: native cleanup context is fresh no-link ASCII temp and records explicit environment
+ok 84 - native cleanup context is fresh no-link ASCII temp and records explicit environment
+  ---
+  duration_ms: 21.9916
+  type: 'test'
+  ...
+# Subtest: inspection environment rejects conflicting command and malformed parent native paths
+ok 85 - inspection environment rejects conflicting command and malformed parent native paths
+  ---
+  duration_ms: 0.2714
+  type: 'test'
+  ...
+# Subtest: native context rejects a linked Windows executable ancestry before any process starts
+ok 86 - native context rejects a linked Windows executable ancestry before any process starts
+  ---
+  duration_ms: 4.4444
+  type: 'test'
+  ...
+# Subtest: native context rejects a redirected temporary root before resolving its target
+ok 87 - native context rejects a redirected temporary root before resolving its target
+  ---
+  duration_ms: 1.5756
+  type: 'test'
+  ...
+# Subtest: all Week verifiers default to the whole real Profile and reuse the no-follow baseline core
+ok 88 - all Week verifiers default to the whole real Profile and reuse the no-follow baseline core
+  ---
+  duration_ms: 5.4805
+  type: 'test'
+  ...
+# Subtest: the shared traversal records a link and hashes target text without visiting its contents
+ok 89 - the shared traversal records a link and hashes target text without visiting its contents
+  ---
+  duration_ms: 8.7904
+  type: 'test'
+  ...
+# Subtest: the remediation closing baseline gates on the confirmed Task 6 Profile and records earlier drift separately
+ok 90 - the remediation closing baseline gates on the confirmed Task 6 Profile and records earlier drift separately
+  ---
+  duration_ms: 0.7088
+  type: 'test'
+  ...
+# Subtest: Week 2 verifier constructs drafts through the current editable contract
+ok 91 - Week 2 verifier constructs drafts through the current editable contract
+  ---
+  duration_ms: 4.048
+  type: 'test'
+  ...
+# Subtest: Week 1 and Week 2 browser verification receives the workspace display name from the verifier
+ok 92 - Week 1 and Week 2 browser verification receives the workspace display name from the verifier
+  ---
+  duration_ms: 2.9239
+  type: 'test'
+  ...
+# Subtest: all long-running DSH verifiers stop the owned Host with a bounded portable lifecycle
+ok 93 - all long-running DSH verifiers stop the owned Host with a bounded portable lifecycle
+  ---
+  duration_ms: 4.6871
+  type: 'test'
+  ...
+# Subtest: Week 3 runtime verifier keeps standalone and Better Sidebar hosts isolated and reversible
+ok 94 - Week 3 runtime verifier keeps standalone and Better Sidebar hosts isolated and reversible
+  ---
+  duration_ms: 4.0741
+  type: 'test'
+  ...
+# Subtest: Week 3 browser verifies public embedded markers without private Better Sidebar selectors
+ok 95 - Week 3 browser verifies public embedded markers without private Better Sidebar selectors
+  ---
+  duration_ms: 0.9246
+  type: 'test'
+  ...
+# Subtest: Week 3 dual-host orchestrator runs both isolated modes and gates the whole real Profile
+ok 96 - Week 3 dual-host orchestrator runs both isolated modes and gates the whole real Profile
+  ---
+  duration_ms: 1.0848
+  type: 'test'
+  ...
+# Subtest: Week 3 closure verifier refreshes baselines and reruns package, root, Week 1, and Week 2 gates
+ok 97 - Week 3 closure verifier refreshes baselines and reruns package, root, Week 1, and Week 2 gates
+  ---
+  duration_ms: 0.6379
+  type: 'test'
+  ...
+# Subtest: package audit reports only static package scope and explicit limitations
+ok 98 - package audit reports only static package scope and explicit limitations
+  ---
+  duration_ms: 325.423
+  type: 'test'
+  ...
+# Subtest: package audit source contains no positive source-marker claims or V4.1 verdict words
+ok 99 - package audit source contains no positive source-marker claims or V4.1 verdict words
+  ---
+  duration_ms: 1.0153
+  type: 'test'
+  ...
+1..99
+# tests 99
+# suites 0
+# pass 99
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6303.1503

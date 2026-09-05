@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-09-03T06:27:20.017Z",
+  "status": "BLOCKED_WAITING_FOR_USER",
+  "scope": "D1 only",
+  "focused": {
+    "command": "node --test test/oasis-connection-settings.test.mjs test/oasis-connection-settings-ui.test.mjs test/oasis-runtime-config.test.mjs test/client-panel-contract.test.mjs test/panel-local-loop-ui.test.mjs test/workbench-store.test.mjs",
+    "exit": 1,
+    "tests": 67,
+    "pass": 66,
+    "fail": 1,
+    "log": "focused-tests.txt"
+  },
+  "packageVerify": {
+    "command": "pnpm --config.verify-deps-before-run=false --config.cache=D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-business-d1-2026-09-03/npm-cache run verify",
+    "exit": 1,
+    "buildCompleted": true,
+    "tests": 284,
+    "pass": 283,
+    "fail": 1,
+    "packDryRunExecuted": false,
+    "evidence": "exec_command chunk 6f158a in current task; output truncated by tool, summary and failure visible"
+  },
+  "soleFailure": {
+    "file": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/packages/oasis-professional-service/test/client-panel-contract.test.mjs",
+    "line": 104,
+    "reason": "Old exact injection expectation permits betterSidebar only; D1 adds settingsScope and remote.",
+    "proposedChange": "assert.deepEqual(injected, [['settingsScope', 'remote'], ['betterSidebar']])",
+    "authorizationNeeded": true
+  },
+  "newFiles": [
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/packages/oasis-professional-service/src/client/OasisConnectionSettings.js",
+      "sha256": "E26E676C228D00CF816F65FC110EA69B1028C41C3FC69F273411711F25817A13"
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/packages/oasis-professional-service/src/client/oasis-connection-settings.js",
+      "sha256": "7D32F517300E3FA53FC51CB2B3D605ACCD29AE495D96D36CC7527F0EDC5F8979"
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/packages/oasis-professional-service/test/oasis-connection-settings.test.mjs",
+      "sha256": "8D21ACD0D97B9F965A7741A3AE9EF101E8333EEDBF3C65D11E8162BC8C4E0D4E"
+    },
+    {
+      "path": "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/packages/oasis-professional-service/test/oasis-connection-settings-ui.test.mjs",
+      "sha256": "458A4AEACE0CA004FFE7BFFA25D356EF7A64AD89050E678E879CA325414D7A27"
+    }
+  ],
+  "bundleSha256": "390C21FAEF36350E25C5F5DB6E36456023D33E38D084F4E3E7062EFEDB66FB47",
+  "diffCheck": {
+    "exit": 2,
+    "preexistingOnly": [
+      "lib/client.js:2082",
+      "lib/client.js:2090",
+      "lib/client.js:2125",
+      "lib/client.js:2133"
+    ]
+  },
+  "liveBrowser": false,
+  "realApiCalls": false,
+  "commitCreated": false
+}

@@ -1,0 +1,162 @@
+{
+  "results": [
+    {
+      "label": "node-version",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--version"
+      ],
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service",
+      "start": "2026-09-02T03:49:19.661Z",
+      "end": "2026-09-02T03:49:19.693Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "pnpm-version",
+      "executable": "cmd.exe",
+      "args": [
+        "/d",
+        "/c",
+        "pnpm --version"
+      ],
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service",
+      "start": "2026-09-02T03:49:19.694Z",
+      "end": "2026-09-02T03:49:20.450Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "full-tests",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "test/bundle-contract.test.mjs",
+        "test/client-build-contract.test.mjs",
+        "test/client-panel-contract.test.mjs",
+        "test/embedded-workspace-host.test.mjs",
+        "test/host-runtime.integration.test.mjs",
+        "test/host-tool.test.mjs",
+        "test/layout-adapter.test.mjs",
+        "test/local-mock-runner.test.mjs",
+        "test/oasis-api-contract.test.mjs",
+        "test/oasis-remote-service.test.mjs",
+        "test/oasis-runtime-config.test.mjs",
+        "test/package-contract.test.mjs",
+        "test/panel-geometry.test.mjs",
+        "test/panel-host-coordinator.test.mjs",
+        "test/panel-keyboard.test.mjs",
+        "test/panel-local-loop-ui.test.mjs",
+        "test/panel-persistence-ui.test.mjs",
+        "test/panel-portal-contract.test.mjs",
+        "test/project-resolution.test.mjs",
+        "test/skill-contract.test.mjs",
+        "test/slot-contract.test.mjs",
+        "test/status.test.mjs",
+        "test/workbench-contract.test.mjs",
+        "test/workbench-domain.test.mjs",
+        "test/workbench-migration.test.mjs",
+        "test/workbench-model.test.mjs",
+        "test/workbench-persistence.test.mjs",
+        "test/workbench-remote.test.mjs",
+        "test/workbench-repository.test.mjs",
+        "test/workbench-rpc.test.mjs",
+        "test/workbench-service.test.mjs",
+        "test/workbench-store.test.mjs",
+        "test/workbench-v3-contract.test.mjs",
+        "test/workflow-catalog.test.mjs",
+        "test/workspace-context-bridge.test.mjs",
+        "test/workspace-materials.test.mjs",
+        "test/writeback-service.test.mjs"
+      ],
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service",
+      "start": "2026-09-02T03:49:20.451Z",
+      "end": "2026-09-02T03:49:22.765Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "focused-tests",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "test/oasis-api-contract.test.mjs",
+        "test/oasis-remote-service.test.mjs",
+        "test/workbench-rpc.test.mjs",
+        "test/workbench-remote.test.mjs",
+        "test/workbench-store.test.mjs",
+        "test/panel-local-loop-ui.test.mjs",
+        "test/workbench-service.test.mjs",
+        "test/writeback-service.test.mjs",
+        "test/host-tool.test.mjs"
+      ],
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service",
+      "start": "2026-09-02T03:49:22.765Z",
+      "end": "2026-09-02T03:49:23.264Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "isolated-build",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/tsdown/dist/run.mjs",
+        "--config",
+        "tsdown.config.mjs",
+        "--out-dir",
+        "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\docs\\evidence\\oasis-api-phase3-audit-2026-09-02\\build",
+        "--no-clean"
+      ],
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service",
+      "start": "2026-09-02T03:49:23.264Z",
+      "end": "2026-09-02T03:49:24.148Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "pack-dry-run",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "C:/Program Files/nodejs/node_modules/npm/bin/npm-cli.js",
+        "pack",
+        "--dry-run",
+        "--json",
+        "--ignore-scripts",
+        "--offline"
+      ],
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\packages\\oasis-professional-service",
+      "start": "2026-09-02T03:49:24.148Z",
+      "end": "2026-09-02T03:49:36.270Z",
+      "exitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "diff-check",
+      "executable": "git",
+      "args": [
+        "diff",
+        "--check"
+      ],
+      "cwd": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研",
+      "start": "2026-09-02T03:49:36.270Z",
+      "end": "2026-09-02T03:49:36.378Z",
+      "exitCode": 0,
+      "signal": null
+    }
+  ],
+  "comparison": {
+    "sourceSha": "73173c6d23f49c3f966ba493b8274360b43197d41eb31702b450268d88dbfd86",
+    "builtSha": "c60f6ce03507055ee01a3932b015cb9280cfe7223ffc5d110634264a940ce85a",
+    "exactEqual": false,
+    "trailingWhitespaceNormalizedEqual": true,
+    "mapMappingsEqual": true,
+    "mapSourceContentsEqual": true,
+    "mapResolvedSourcesEqual": true,
+    "differingLines": [
+      2082,
+      2090,
+      2125,
+      2133
+    ]
+  }
+}

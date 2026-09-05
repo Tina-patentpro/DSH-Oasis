@@ -1,0 +1,340 @@
+TAP version 13
+# Subtest: hashes file content and link target text without traversing the target
+ok 1 - hashes file content and link target text without traversing the target
+  ---
+  duration_ms: 33.5587
+  type: 'test'
+  ...
+# Subtest: writes reproducible content hashes and freshness metadata
+ok 2 - writes reproducible content hashes and freshness metadata
+  ---
+  duration_ms: 35.4561
+  type: 'test'
+  ...
+# Subtest: baseline comparison fails closed except for exact allowlisted paths
+ok 3 - baseline comparison fails closed except for exact allowlisted paths
+  ---
+  duration_ms: 0.761
+  type: 'test'
+  ...
+# Subtest: both historical wrappers use the shared no-follow core and cover build outputs
+ok 4 - both historical wrappers use the shared no-follow core and cover build outputs
+  ---
+  duration_ms: 2.7246
+  type: 'test'
+  ...
+# Subtest: browser integrations resolve only real executable files
+ok 5 - browser integrations resolve only real executable files
+  ---
+  duration_ms: 8.645
+  type: 'test'
+  ...
+# Subtest: DSH_BIN official npm shim resolves to its package Node CLI entry
+ok 6 - DSH_BIN official npm shim resolves to its package Node CLI entry
+  ---
+  duration_ms: 125.1587
+  type: 'test'
+  ...
+# Subtest: PATH fallback resolves an official npm shim without executing the shim shell
+ok 7 - PATH fallback resolves an official npm shim without executing the shim shell
+  ---
+  duration_ms: 169.6117
+  type: 'test'
+  ...
+# Subtest: forwards spaces, Unicode, quotes, trailing slashes and CMD metacharacters as exact argv
+ok 8 - forwards spaces, Unicode, quotes, trailing slashes and CMD metacharacters as exact argv
+  ---
+  duration_ms: 159.4951
+  type: 'test'
+  ...
+# Subtest: does not execute a second CMD command embedded in one argument
+ok 9 - does not execute a second CMD command embedded in one argument
+  ---
+  duration_ms: 155.5343
+  type: 'test'
+  ...
+# Subtest: rejects an arbitrary command shim even when DSH_BIN points to it
+ok 10 - rejects an arbitrary command shim even when DSH_BIN points to it
+  ---
+  duration_ms: 78.7311
+  type: 'test'
+  ...
+# Subtest: supports the project .dsh-test home
+ok 11 - supports the project .dsh-test home
+  ---
+  duration_ms: 99.43
+  type: 'test'
+  ...
+# Subtest: supports a declared oasis-dsh temporary home
+ok 12 - supports a declared oasis-dsh temporary home
+  ---
+  duration_ms: 93.0037
+  type: 'test'
+  ...
+# Subtest: rejects the real DSH home and its ancestors or descendants
+ok 13 - rejects the real DSH home and its ancestors or descendants
+  ---
+  duration_ms: 235.6741
+  type: 'test'
+  ...
+# Subtest: rejects a home whose existing path chain contains a symlink or junction
+ok 14 - rejects a home whose existing path chain contains a symlink or junction
+  ---
+  duration_ms: 84.9339
+  type: 'test'
+  ...
+# Subtest: the cmd convenience wrapper still handles ordinary arguments
+ok 15 - the cmd convenience wrapper still handles ordinary arguments
+  ---
+  duration_ms: 177.0841
+  type: 'test'
+  ...
+# Subtest: fails closed when no official DSH package can be resolved
+ok 16 - fails closed when no official DSH package can be resolved
+  ---
+  duration_ms: 70.7905
+  type: 'test'
+  ...
+# Subtest: HTTP 200 with result.ok=false exits non-zero
+ok 17 - HTTP 200 with result.ok=false exits non-zero
+  ---
+  duration_ms: 139.99
+  type: 'test'
+  ...
+# Subtest: rejects non-http protocols before fetching
+ok 18 - rejects non-http protocols before fetching
+  ---
+  duration_ms: 65.1706
+  type: 'test'
+  ...
+# Subtest: rejects non-loopback hosts before fetching
+ok 19 - rejects non-loopback hosts before fetching
+  ---
+  duration_ms: 69.185
+  type: 'test'
+  ...
+# Subtest: rejects endpoints outside the fixed allowlist
+ok 20 - rejects endpoints outside the fixed allowlist
+  ---
+  duration_ms: 64.547
+  type: 'test'
+  ...
+# Subtest: rejects dot-segment endpoint traversal
+ok 21 - rejects dot-segment endpoint traversal
+  ---
+  duration_ms: 64.9889
+  type: 'test'
+  ...
+# Subtest: fails when the RPC envelope has no boolean result.ok
+ok 22 - fails when the RPC envelope has no boolean result.ok
+  ---
+  duration_ms: 92.6204
+  type: 'test'
+  ...
+# Subtest: accepts a valid skill.list response with expected skills
+ok 23 - accepts a valid skill.list response with expected skills
+  ---
+  duration_ms: 95.9366
+  type: 'test'
+  ...
+# Subtest: accepts the bracketed IPv6 loopback hostname emitted by URL
+ok 24 - accepts the bracketed IPv6 loopback hostname emitted by URL
+  ---
+  duration_ms: 93.9515
+  type: 'test'
+  ...
+# Subtest: evidence directories cannot be reused
+ok 25 - evidence directories cannot be reused
+  ---
+  duration_ms: 15.4416
+  type: 'test'
+  ...
+# Subtest: only literal loopback HTTP origin is accepted
+ok 26 - only literal loopback HTTP origin is accepted
+  ---
+  duration_ms: 0.9715
+  type: 'test'
+  ...
+# Subtest: Home isolation rejects real Profile, shared paths and junctions
+ok 27 - Home isolation rejects real Profile, shared paths and junctions
+  ---
+  duration_ms: 29.346
+  type: 'test'
+  ...
+# Subtest: child environment never inherits credential or external configuration
+ok 28 - child environment never inherits credential or external configuration
+  ---
+  duration_ms: 0.3347
+  type: 'test'
+  ...
+# Subtest: missing offline package and duplicate Host fail closed
+ok 29 - missing offline package and duplicate Host fail closed
+  ---
+  duration_ms: 14.1427
+  type: 'test'
+  ...
+# Subtest: fixture has exactly the frozen nine business endpoints
+ok 30 - fixture has exactly the frozen nine business endpoints
+  ---
+  duration_ms: 0.9302
+  type: 'test'
+  ...
+# Subtest: actual adapter uses HTTP for all nine operations without logging sensitive values
+ok 31 - actual adapter uses HTTP for all nine operations without logging sensitive values
+  ---
+  duration_ms: 62.5625
+  type: 'test'
+  ...
+# Subtest: fixture supports receipt without another create
+ok 32 - fixture supports receipt without another create
+  ---
+  duration_ms: 10.6322
+  type: 'test'
+  ...
+# Subtest: fixture supports lost-create without another create
+ok 33 - fixture supports lost-create without another create
+  ---
+  duration_ms: 9.3592
+  type: 'test'
+  ...
+# Subtest: fixture supports no-create-id without another create
+ok 34 - fixture supports no-create-id without another create
+  ---
+  duration_ms: 7.5537
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-query response
+ok 35 - adapter rejects unsafe-query response
+  ---
+  duration_ms: 5.5217
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-fragment response
+ok 36 - adapter rejects unsafe-fragment response
+  ---
+  duration_ms: 5.3983
+  type: 'test'
+  ...
+# Subtest: adapter rejects unsafe-userinfo response
+ok 37 - adapter rejects unsafe-userinfo response
+  ---
+  duration_ms: 4.8998
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-raw
+ok 38 - adapter observes ledger-raw
+  ---
+  duration_ms: 3.8351
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-empty
+ok 39 - adapter observes ledger-empty
+  ---
+  duration_ms: 5.1587
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-duplicate
+ok 40 - adapter observes ledger-duplicate
+  ---
+  duration_ms: 3.4198
+  type: 'test'
+  ...
+# Subtest: adapter observes ledger-malformed
+ok 41 - adapter observes ledger-malformed
+  ---
+  duration_ms: 7.4258
+  type: 'test'
+  ...
+# Subtest: adapter observes unauthorized
+ok 42 - adapter observes unauthorized
+  ---
+  duration_ms: 3.2607
+  type: 'test'
+  ...
+# Subtest: fixture rejects extra create fields, unexpected endpoint, query and malformed material
+ok 43 - fixture rejects extra create fields, unexpected endpoint, query and malformed material
+  ---
+  duration_ms: 13.5633
+  type: 'test'
+  ...
+# Subtest: all Week verifiers default to the whole real Profile and reuse the no-follow baseline core
+ok 44 - all Week verifiers default to the whole real Profile and reuse the no-follow baseline core
+  ---
+  duration_ms: 9.171
+  type: 'test'
+  ...
+# Subtest: the shared traversal records a link and hashes target text without visiting its contents
+ok 45 - the shared traversal records a link and hashes target text without visiting its contents
+  ---
+  duration_ms: 11.9926
+  type: 'test'
+  ...
+# Subtest: the remediation closing baseline gates on the confirmed Task 6 Profile and records earlier drift separately
+ok 46 - the remediation closing baseline gates on the confirmed Task 6 Profile and records earlier drift separately
+  ---
+  duration_ms: 1.5096
+  type: 'test'
+  ...
+# Subtest: Week 2 verifier constructs drafts through the current editable contract
+ok 47 - Week 2 verifier constructs drafts through the current editable contract
+  ---
+  duration_ms: 6.4852
+  type: 'test'
+  ...
+# Subtest: Week 1 and Week 2 browser verification receives the workspace display name from the verifier
+ok 48 - Week 1 and Week 2 browser verification receives the workspace display name from the verifier
+  ---
+  duration_ms: 3.8524
+  type: 'test'
+  ...
+# Subtest: all long-running DSH verifiers stop the owned Host with a bounded portable lifecycle
+ok 49 - all long-running DSH verifiers stop the owned Host with a bounded portable lifecycle
+  ---
+  duration_ms: 6.4318
+  type: 'test'
+  ...
+# Subtest: Week 3 runtime verifier keeps standalone and Better Sidebar hosts isolated and reversible
+ok 50 - Week 3 runtime verifier keeps standalone and Better Sidebar hosts isolated and reversible
+  ---
+  duration_ms: 6.6149
+  type: 'test'
+  ...
+# Subtest: Week 3 browser verifies public embedded markers without private Better Sidebar selectors
+ok 51 - Week 3 browser verifies public embedded markers without private Better Sidebar selectors
+  ---
+  duration_ms: 1.2662
+  type: 'test'
+  ...
+# Subtest: Week 3 dual-host orchestrator runs both isolated modes and gates the whole real Profile
+ok 52 - Week 3 dual-host orchestrator runs both isolated modes and gates the whole real Profile
+  ---
+  duration_ms: 1.4404
+  type: 'test'
+  ...
+# Subtest: Week 3 closure verifier refreshes baselines and reruns package, root, Week 1, and Week 2 gates
+ok 53 - Week 3 closure verifier refreshes baselines and reruns package, root, Week 1, and Week 2 gates
+  ---
+  duration_ms: 0.8989
+  type: 'test'
+  ...
+# Subtest: package audit reports only static package scope and explicit limitations
+ok 54 - package audit reports only static package scope and explicit limitations
+  ---
+  duration_ms: 396.0137
+  type: 'test'
+  ...
+# Subtest: package audit source contains no positive source-marker claims or V4.1 verdict words
+ok 55 - package audit source contains no positive source-marker claims or V4.1 verdict words
+  ---
+  duration_ms: 1.089
+  type: 'test'
+  ...
+1..55
+# tests 55
+# suites 0
+# pass 55
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1580.3399

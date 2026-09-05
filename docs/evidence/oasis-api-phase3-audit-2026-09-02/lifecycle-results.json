@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-09-02T03:56:09.254Z",
+  "reports": [
+    {
+      "name": "client-concurrency-workspace-isolation",
+      "kind": "guard-verified",
+      "calls": 1,
+      "otherWorkspaceUnchanged": true
+    },
+    {
+      "name": "client-transport-error",
+      "kind": "guard-verified",
+      "status": "error",
+      "errorCode": "AUDIT_TRANSPORT"
+    },
+    {
+      "name": "client-dispose-late-result",
+      "kind": "guard-verified",
+      "signalAborted": true,
+      "noStateResurrection": true
+    },
+    {
+      "name": "client-workspace-removal-stuck",
+      "kind": "confirmed-defect",
+      "error": "action requires a known Workspace",
+      "activeOperation": "running-water-observe",
+      "runningWaterStatus": "loading",
+      "retryRejected": true
+    },
+    {
+      "name": "client-run-identity-and-stop-control",
+      "kind": "ui-control-gap",
+      "unrelatedRunObservationHidden": true,
+      "stopButtonShownWhileReadingLedger": true,
+      "stopResult": {
+        "stopped": false
+      }
+    },
+    {
+      "name": "client-rpc-schema-boundary",
+      "kind": "mixed-result",
+      "invalidAmountRejected": true,
+      "mismatchedLinkIdAccepted": true
+    },
+    {
+      "name": "plugin-apply-rpc-writeback",
+      "kind": "guard-verified",
+      "boundary": "local service stubs, no real DSH process",
+      "workspace": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\docs\\evidence\\oasis-api-phase3-audit-2026-09-02\\host-rpc-whxGTF",
+      "publishedFiles": [
+        "oasis-result.md",
+        "oasis-result.oasis.json"
+      ],
+      "disposed": {
+        "tool": 1,
+        "rpc": 1,
+        "domain": 1
+      }
+    }
+  ]
+}

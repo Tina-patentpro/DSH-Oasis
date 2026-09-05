@@ -1,0 +1,1637 @@
+TAP version 13
+# Subtest: declares one installable DSH bundle with host and web client faces
+ok 1 - declares one installable DSH bundle with host and web client faces
+  ---
+  duration_ms: 3.7588
+  type: 'test'
+  ...
+# Subtest: builds the browser face as a DSH lazy-CJS module
+ok 2 - builds the browser face as a DSH lazy-CJS module
+  ---
+  duration_ms: 3.2731
+  type: 'test'
+  ...
+# Subtest: cleans stale browser artifacts before each build
+ok 3 - cleans stale browser artifacts before each build
+  ---
+  duration_ms: 1.4997
+  type: 'test'
+  ...
+# Subtest: registers additive entry and panel host slots but never details
+ok 4 - registers additive entry and panel host slots but never details
+  ---
+  duration_ms: 2.7654
+  type: 'test'
+  ...
+# Subtest: fails closed when the DSH Connection service is unavailable
+ok 5 - fails closed when the DSH Connection service is unavailable
+  ---
+  duration_ms: 0.1333
+  type: 'test'
+  ...
+# Subtest: registers the workbench through the public Better Sidebar tab service when available
+ok 6 - registers the workbench through the public Better Sidebar tab service when available
+  ---
+  duration_ms: 0.561
+  type: 'test'
+  ...
+# Subtest: entry opens a visible normal panel directly through the shared store
+ok 7 - entry opens a visible normal panel directly through the shared store
+  ---
+  duration_ms: 5.18
+  type: 'test'
+  ...
+# Subtest: entry opens the targeted native Better Sidebar tab without opening the standalone panel
+ok 8 - entry opens the targeted native Better Sidebar tab without opening the standalone panel
+  ---
+  duration_ms: 0.3239
+  type: 'test'
+  ...
+# Subtest: entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+ok 9 - entry ref tracks the currently mounted trigger per workspace and removes stale nodes
+  ---
+  duration_ms: 1.4561
+  type: 'test'
+  ...
+# Subtest: entry subscribes to host coordinator changes instead of caching its initial host mode
+ok 10 - entry subscribes to host coordinator changes instead of caching its initial host mode
+  ---
+  duration_ms: 0.9316
+  type: 'test'
+  ...
+# Subtest: client no longer uses a window CustomEvent as its open transport
+ok 11 - client no longer uses a window CustomEvent as its open transport
+  ---
+  duration_ms: 1.718
+  type: 'test'
+  ...
+# Subtest: panel never opens or closes the occupied DSH details modal for geometry
+ok 12 - panel never opens or closes the occupied DSH details modal for geometry
+  ---
+  duration_ms: 0.7711
+  type: 'test'
+  ...
+# Subtest: uses the approved Codex show hide expand and restore SVG paths
+ok 13 - uses the approved Codex show hide expand and restore SVG paths
+  ---
+  duration_ms: 0.6096
+  type: 'test'
+  ...
+# Subtest: embedded chrome leaves show, hide, expand, and restore controls to Better Sidebar
+ok 14 - embedded chrome leaves show, hide, expand, and restore controls to Better Sidebar
+  ---
+  duration_ms: 2.559
+  type: 'test'
+  ...
+# Subtest: Better Sidebar integration uses only its public service plus the fail-closed marker seam
+ok 15 - Better Sidebar integration uses only its public service plus the fail-closed marker seam
+  ---
+  duration_ms: 0.8615
+  type: 'test'
+  ...
+# Subtest: flushes drafts before task switch, confirmed history close, and panel hide
+ok 16 - flushes drafts before task switch, confirmed history close, and panel hide
+  ---
+  duration_ms: 1.0269
+  type: 'test'
+  ...
+# Subtest: blocks every close control while a task retains an unresolved remote execution
+ok 17 - blocks every close control while a task retains an unresolved remote execution
+  ---
+  duration_ms: 0.8447
+  type: 'test'
+  ...
+# Subtest: shared workbench surface loads persisted state and remote workflow catalog for each resolved Workspace
+ok 18 - shared workbench surface loads persisted state and remote workflow catalog for each resolved Workspace
+  ---
+  duration_ms: 0.6654
+  type: 'test'
+  ...
+# Subtest: hydrates the current embedded workspace and persists standalone mode as hidden before fallback
+ok 19 - hydrates the current embedded workspace and persists standalone mode as hidden before fallback
+  ---
+  duration_ms: 1.9664
+  type: 'test'
+  ...
+# Subtest: keeps fallback locally hidden when the authoritative workspace cannot be persisted
+ok 20 - keeps fallback locally hidden when the authoritative workspace cannot be persisted
+  ---
+  duration_ms: 0.4012
+  type: 'test'
+  ...
+# Subtest: real Cordis tools service lists and executes oasis_workbench_status
+ok 21 - real Cordis tools service lists and executes oasis_workbench_status
+  ---
+  duration_ms: 115.5212
+  type: 'test'
+  ...
+# Subtest: registers the current Host tool and loopback workbench RPC with owned cleanup
+ok 22 - registers the current Host tool and loopback workbench RPC with owned cleanup
+  ---
+  duration_ms: 11.4253
+  type: 'test'
+  ...
+# Subtest: unregisters the Host tool when RPC setup fails
+ok 23 - unregisters the Host tool when RPC setup fails
+  ---
+  duration_ms: 3.4917
+  type: 'test'
+  ...
+# Subtest: wires the Host workspace registry into the safe writeback boundary
+ok 24 - wires the Host workspace registry into the safe writeback boundary
+  ---
+  duration_ms: 5.4265
+  type: 'test'
+  ...
+# Subtest: detects the current DSH rc.2 frame without hash classes or positional selectors
+ok 25 - detects the current DSH rc.2 frame without hash classes or positional selectors
+  ---
+  duration_ms: 2.0468
+  type: 'test'
+  ...
+# Subtest: rejects duplicate or structurally unrelated DSH anchors
+ok 26 - rejects duplicate or structurally unrelated DSH anchors
+  ---
+  duration_ms: 0.3887
+  type: 'test'
+  ...
+# Subtest: accepts the current DSH narrow layout when the native sidebar track collapses to zero
+ok 27 - accepts the current DSH narrow layout when the native sidebar track collapses to zero
+  ---
+  duration_ms: 0.8786
+  type: 'test'
+  ...
+# Subtest: resolves requested and effective modes without overwriting the request
+ok 28 - resolves requested and effective modes without overwriting the request
+  ---
+  duration_ms: 0.8345
+  type: 'test'
+  ...
+# Subtest: normal owns one namespaced push and expanded or hidden clears it
+ok 29 - normal owns one namespaced push and expanded or hidden clears it
+  ---
+  duration_ms: 0.8073
+  type: 'test'
+  ...
+# Subtest: foreign layout ownership fails closed without overwriting it
+ok 30 - foreign layout ownership fails closed without overwriting it
+  ---
+  duration_ms: 0.3638
+  type: 'test'
+  ...
+# Subtest: dispose is idempotent and restores every owned artifact
+ok 31 - dispose is idempotent and restores every owned artifact
+  ---
+  duration_ms: 0.3395
+  type: 'test'
+  ...
+# Subtest: releases every standalone Portal and layout artifact before an embedded host is published
+ok 32 - releases every standalone Portal and layout artifact before an embedded host is published
+  ---
+  duration_ms: 0.3774
+  type: 'test'
+  ...
+# Subtest: explicit runtime fault and Portal unmount both restore the owned DSH layout
+ok 33 - explicit runtime fault and Portal unmount both restore the owned DSH layout
+  ---
+  duration_ms: 1.8338
+  type: 'test'
+  ...
+# Subtest: a CSS write failure restores the layout and reports a fault
+ok 34 - a CSS write failure restores the layout and reports a fault
+  ---
+  duration_ms: 0.6372
+  type: 'test'
+  ...
+# Subtest: canonical JSON and input hashes are stable across object key order
+ok 35 - canonical JSON and input hashes are stable across object key order
+  ---
+  duration_ms: 1.3183
+  type: 'test'
+  ...
+# Subtest: version 1 canonical inputs and complete results retain their golden bytes
+ok 36 - version 1 canonical inputs and complete results retain their golden bytes
+  ---
+  duration_ms: 2.1435
+  type: 'test'
+  ...
+# Subtest: rejects an explicit local-mock version that has no frozen runner
+ok 37 - rejects an explicit local-mock version that has no frozen runner
+  ---
+  duration_ms: 0.6239
+  type: 'test'
+  ...
+# Subtest: technical mock is deterministic, warning-only, eight-section Markdown with five result categories
+ok 38 - technical mock is deterministic, warning-only, eight-section Markdown with five result categories
+  ---
+  duration_ms: 0.7465
+  type: 'test'
+  ...
+# Subtest: patent mock includes required drafting structures and blocks unconfirmed facts
+ok 39 - patent mock includes required drafting structures and blocks unconfirmed facts
+  ---
+  duration_ms: 0.5075
+  type: 'test'
+  ...
+# Subtest: bounds the artifact and result lists for maximum legal patent inputs
+ok 40 - bounds the artifact and result lists for maximum legal patent inputs
+  ---
+  duration_ms: 7.1626
+  type: 'test'
+  ...
+# Subtest: F3 validates every raw ledger item before projection rather than coercing or dropping malformed data
+ok 41 - F3 validates every raw ledger item before projection rather than coercing or dropping malformed data
+  ---
+  duration_ms: 9.7134
+  type: 'test'
+  ...
+# Subtest: F1 rejects credential-bearing file URLs at upload and result boundaries without echoing them
+ok 42 - F1 rejects credential-bearing file URLs at upload and result boundaries without echoing them
+  ---
+  duration_ms: 19.9877
+  type: 'test'
+  ...
+# Subtest: ships the user-validated legacy API baseline with exact provenance and nine bounded endpoints
+ok 43 - ships the user-validated legacy API baseline with exact provenance and nine bounded endpoints
+  ---
+  duration_ms: 2.3682
+  type: 'test'
+  ...
+# Subtest: normalizes dynamic category ids, endpoints, and process strings without hardcoding services
+ok 44 - normalizes dynamic category ids, endpoints, and process strings without hardcoding services
+  ---
+  duration_ms: 0.7388
+  type: 'test'
+  ...
+# Subtest: accepts only synchronous Workflow details and maps documented dynamic fields
+ok 45 - accepts only synchronous Workflow details and maps documented dynamic fields
+  ---
+  duration_ms: 0.7207
+  type: 'test'
+  ...
+# Subtest: rejects missing, non-numeric, negative, and non-finite service prices
+ok 46 - rejects missing, non-numeric, negative, and non-finite service prices
+  ---
+  duration_ms: 0.3659
+  type: 'test'
+  ...
+# Subtest: builds the exact five-field create body and omits absent file inputs
+ok 47 - builds the exact five-field create body and omits absent file inputs
+  ---
+  duration_ms: 1.9403
+  type: 'test'
+  ...
+# Subtest: normalizes both folder-list wrappers, workflow output variants, and running-water wrappers
+ok 48 - normalizes both folder-list wrappers, workflow output variants, and running-water wrappers
+  ---
+  duration_ms: 3.0326
+  type: 'test'
+  ...
+# Subtest: rejects exact forbidden property names without scanning ordinary user text
+ok 49 - rejects exact forbidden property names without scanning ordinary user text
+  ---
+  duration_ms: 3.8571
+  type: 'test'
+  ...
+# Subtest: rejects bounded credential field variants across common naming conventions
+ok 50 - rejects bounded credential field variants across common naming conventions
+  ---
+  duration_ms: 0.9546
+  type: 'test'
+  ...
+# Subtest: uses Bearer auth and documented paths through injected fake fetch without retries
+ok 51 - uses Bearer auth and documented paths through injected fake fetch without retries
+  ---
+  duration_ms: 1.8251
+  type: 'test'
+  ...
+# Subtest: rejects transport redirects before forwarding a workflow request body to another origin
+ok 52 - rejects transport redirects before forwarding a workflow request body to another origin
+  ---
+  duration_ms: 95.9533
+  type: 'test'
+  ...
+# Subtest: rejects create and query responses whose task key differs from the original request key
+ok 53 - rejects create and query responses whose task key differs from the original request key
+  ---
+  duration_ms: 2.6912
+  type: 'test'
+  ...
+# Subtest: dispatches every bounded professional-service endpoint with fixed methods and bodies
+ok 54 - dispatches every bounded professional-service endpoint with fixed methods and bodies
+  ---
+  duration_ms: 4.6561
+  type: 'test'
+  ...
+# Subtest: rejects upload and result URLs outside the configured non-production origins
+ok 55 - rejects upload and result URLs outside the configured non-production origins
+  ---
+  duration_ms: 1.328
+  type: 'test'
+  ...
+# Subtest: rejects a direct API client configured for the normalized production host
+ok 56 - rejects a direct API client configured for the normalized production host
+  ---
+  duration_ms: 0.5233
+  type: 'test'
+  ...
+# Subtest: rejects endpoint option overrides before resolving credentials or calling fetch
+ok 57 - rejects endpoint option overrides before resolving credentials or calling fetch
+  ---
+  duration_ms: 0.7903
+  type: 'test'
+  ...
+# Subtest: F3 rejects malformed nonmatching normalized ledger items before claiming a miss
+ok 58 - F3 rejects malformed nonmatching normalized ledger items before claiming a miss
+  ---
+  duration_ms: 40.733
+  type: 'test'
+  ...
+# Subtest: F3 refuses duplicate link candidates rather than selecting the first transaction type
+ok 59 - F3 refuses duplicate link candidates rather than selecting the first transaction type
+  ---
+  duration_ms: 15.0713
+  type: 'test'
+  ...
+# Subtest: F2 refuses cross-environment observation without reading a foreign ledger or changing state
+ok 60 - F2 refuses cross-environment observation without reading a foreign ledger or changing state
+  ---
+  duration_ms: 7.3658
+  type: 'test'
+  ...
+# Subtest: F2 refuses cross-environment continuation before any remote call
+ok 61 - F2 refuses cross-environment continuation before any remote call
+  ---
+  duration_ms: 4.3546
+  type: 'test'
+  ...
+# Subtest: F4 preserves the create anchor and fails a conflicting query ID
+ok 62 - F4 preserves the create anchor and fails a conflicting query ID
+  ---
+  duration_ms: 23.2709
+  type: 'test'
+  ...
+# Subtest: F4 query IDs never supply an absent create anchor
+ok 63 - F4 query IDs never supply an absent create anchor
+  ---
+  duration_ms: 7.979
+  type: 'test'
+  ...
+# Subtest: F4 a historical ID without provenance remains readable but is not an observation anchor
+ok 64 - F4 a historical ID without provenance remains readable but is not an observation anchor
+  ---
+  duration_ms: 7.2866
+  type: 'test'
+  ...
+# Subtest: F4 a wrong create key cannot store a record ID before rejection
+ok 65 - F4 a wrong create key cannot store a record ID before rejection
+  ---
+  duration_ms: 7.5325
+  type: 'test'
+  ...
+# Subtest: publishes a safe non-production bootstrap and schema-hashed service detail
+ok 66 - publishes a safe non-production bootstrap and schema-hashed service detail
+  ---
+  duration_ms: 1.8118
+  type: 'test'
+  ...
+# Subtest: persists a prepared execution before upload and completes through one create call
+ok 67 - persists a prepared execution before upload and completes through one create call
+  ---
+  duration_ms: 9.2791
+  type: 'test'
+  ...
+# Subtest: observes running water on demand without persisting it or claiming settlement
+ok 68 - observes running water on demand without persisting it or claiming settlement
+  ---
+  duration_ms: 10.3073
+  type: 'test'
+  ...
+# Subtest: distinguishes a current-page miss from an unverifiable execution without querying twice
+ok 69 - distinguishes a current-page miss from an unverifiable execution without querying twice
+  ---
+  duration_ms: 20.873
+  type: 'test'
+  ...
+# Subtest: never repeats an uncertain create and reconciles only through the original key
+ok 70 - never repeats an uncertain create and reconciles only through the original key
+  ---
+  duration_ms: 11.5585
+  type: 'test'
+  ...
+# Subtest: shares one continuation job so concurrent callers cannot duplicate upload or create
+ok 71 - shares one continuation job so concurrent callers cannot duplicate upload or create
+  ---
+  duration_ms: 11.8643
+  type: 'test'
+  ...
+# Subtest: fails closed when the Host receives a completed result for another request key
+ok 72 - fails closed when the Host receives a completed result for another request key
+  ---
+  duration_ms: 13.6493
+  type: 'test'
+  ...
+# Subtest: marks an uncertain upload failed and never uploads it again for the same execution
+ok 73 - marks an uncertain upload failed and never uploads it again for the same execution
+  ---
+  duration_ms: 11.3284
+  type: 'test'
+  ...
+# Subtest: defaults to disabled non-production integration with no base URL
+ok 74 - defaults to disabled non-production integration with no base URL
+  ---
+  duration_ms: 1.2979
+  type: 'test'
+  ...
+# Subtest: rejects the exact production origin and keeps API and download origins separate
+ok 75 - rejects the exact production origin and keeps API and download origins separate
+  ---
+  duration_ms: 0.7307
+  type: 'test'
+  ...
+# Subtest: rejects every normalized production API and download origin spelling
+ok 76 - rejects every normalized production API and download origin spelling
+  ---
+  duration_ms: 0.2862
+  type: 'test'
+  ...
+# Subtest: registers a restart-applied DSH settings namespace without embedding a URL or secret
+ok 77 - registers a restart-applied DSH settings namespace without embedding a URL or secret
+  ---
+  duration_ms: 0.309
+  type: 'test'
+  ...
+# Subtest: resolves the referenced JWT once per operation and never caches it
+ok 78 - resolves the referenced JWT once per operation and never caches it
+  ---
+  duration_ms: 0.1908
+  type: 'test'
+  ...
+# Subtest: does not expose stale week-one or week-two phase labels in current runtime metadata
+ok 79 - does not expose stale week-one or week-two phase labels in current runtime metadata
+  ---
+  duration_ms: 3.5306
+  type: 'test'
+  ...
+# Subtest: pins the verified development dependency versions
+ok 80 - pins the verified development dependency versions
+  ---
+  duration_ms: 0.8625
+  type: 'test'
+  ...
+# Subtest: declares the Portal runtime as matched React peer dependencies
+ok 81 - declares the Portal runtime as matched React peer dependencies
+  ---
+  duration_ms: 0.2909
+  type: 'test'
+  ...
+# Subtest: declares direct Host peers for settings, credentials, and their schema runtime
+ok 82 - declares direct Host peers for settings, credentials, and their schema runtime
+  ---
+  duration_ms: 0.1272
+  type: 'test'
+  ...
+# Subtest: keeps the distribution whitelist free of tests and local state
+ok 83 - keeps the distribution whitelist free of tests and local state
+  ---
+  duration_ms: 0.2764
+  type: 'test'
+  ...
+# Subtest: declares repeatable verification scripts
+ok 84 - declares repeatable verification scripts
+  ---
+  duration_ms: 0.1101
+  type: 'test'
+  ...
+# Subtest: normal geometry uses a fixed right rail without opening the DSH details modal
+ok 85 - normal geometry uses a fixed right rail without opening the DSH details modal
+  ---
+  duration_ms: 1.2498
+  type: 'test'
+  ...
+# Subtest: expanded geometry starts after the rendered sidebar
+ok 86 - expanded geometry starts after the rendered sidebar
+  ---
+  duration_ms: 0.108
+  type: 'test'
+  ...
+# Subtest: hidden geometry has no panel rectangle
+ok 87 - hidden geometry has no panel rectangle
+  ---
+  duration_ms: 0.7679
+  type: 'test'
+  ...
+# Subtest: switches through integrating and releasing while Better Sidebar owns the outer panel
+ok 88 - switches through integrating and releasing while Better Sidebar owns the outer panel
+  ---
+  duration_ms: 3.4869
+  type: 'test'
+  ...
+# Subtest: fails closed for an invalid service, invalid registration disposer, or marker without service
+ok 89 - fails closed for an invalid service, invalid registration disposer, or marker without service
+  ---
+  duration_ms: 0.5973
+  type: 'test'
+  ...
+# Subtest: unregisters an active public tab when native open throws and remains idempotent on dispose
+ok 90 - unregisters an active public tab when native open throws and remains idempotent on dispose
+  ---
+  duration_ms: 0.3819
+  type: 'test'
+  ...
+# Subtest: resolves Arrow, Home, End, and Delete focus targets with wrapping
+ok 91 - resolves Arrow, Home, End, and Delete focus targets with wrapping
+  ---
+  duration_ms: 1.0128
+  type: 'test'
+  ...
+# Subtest: moves DOM focus to the selected tab after render
+ok 92 - moves DOM focus to the selected tab after render
+  ---
+  duration_ms: 0.7505
+  type: 'test'
+  ...
+# Subtest: auto-expanded narrow mode shows restore semantics but disables an impossible restore
+ok 93 - auto-expanded narrow mode shows restore semantics but disables an impossible restore
+  ---
+  duration_ms: 1.2279
+  type: 'test'
+  ...
+# Subtest: validates and renders all four schema controls with accessible field errors
+ok 94 - validates and renders all four schema controls with accessible field errors
+  ---
+  duration_ms: 3.9067
+  type: 'test'
+  ...
+# Subtest: shows confirmed material metadata with accurate local hashing disclosure
+ok 95 - shows confirmed material metadata with accurate local hashing disclosure
+  ---
+  duration_ms: 8.4301
+  type: 'test'
+  ...
+# Subtest: disables generation for each unsafe state and keeps old snapshots immutable in the preview
+ok 96 - disables generation for each unsafe state and keeps old snapshots immutable in the preview
+  ---
+  duration_ms: 3.28
+  type: 'test'
+  ...
+# Subtest: renders a completed remote result without pretending that its files were downloaded or verified
+ok 97 - renders a completed remote result without pretending that its files were downloaded or verified
+  ---
+  duration_ms: 1.0942
+  type: 'test'
+  ...
+# Subtest: blocks approval/writeback for blocked output and requires a second writeback confirmation
+ok 98 - blocks approval/writeback for blocked output and requires a second writeback confirmation
+  ---
+  duration_ms: 2.2627
+  type: 'test'
+  ...
+# Subtest: uses the remote catalog in the chooser and one business tree for normal/expanded layouts
+ok 99 - uses the remote catalog in the chooser and one business tree for normal/expanded layouts
+  ---
+  duration_ms: 7.3865
+  type: 'test'
+  ...
+# Subtest: standalone panel keeps its border inside the declared 360px layout width
+ok 100 - standalone panel keeps its border inside the declared 360px layout width
+  ---
+  duration_ms: 1.0471
+  type: 'test'
+  ...
+# Subtest: renders only Host-provided professional fields and requires both explicit confirmations
+ok 101 - renders only Host-provided professional fields and requires both explicit confirmations
+  ---
+  duration_ms: 1.3153
+  type: 'test'
+  ...
+# Subtest: offers read-only running-water observation only for a completed remote run
+ok 102 - offers read-only running-water observation only for a completed remote run
+  ---
+  duration_ms: 0.7974
+  type: 'test'
+  ...
+# Subtest: renders loading, conflict, and transport failure as distinct accessible states
+ok 103 - renders loading, conflict, and transport failure as distinct accessible states
+  ---
+  duration_ms: 2.3137
+  type: 'test'
+  ...
+# Subtest: exposes task rename and explicit close controls while preserving saving feedback
+ok 104 - exposes task rename and explicit close controls while preserving saving feedback
+  ---
+  duration_ms: 1.6337
+  type: 'test'
+  ...
+# Subtest: disables persistent mutations while conflict resolution is required
+ok 105 - disables persistent mutations while conflict resolution is required
+  ---
+  duration_ms: 0.3578
+  type: 'test'
+  ...
+# Subtest: the panel uses a React portal while the layout adapter is the only DSH DOM writer
+ok 106 - the panel uses a React portal while the layout adapter is the only DSH DOM writer
+  ---
+  duration_ms: 2.6888
+  type: 'test'
+  ...
+# Subtest: the package does not depend on better-sidebar or its excluded workbench stack
+ok 107 - the package does not depend on better-sidebar or its excluded workbench stack
+  ---
+  duration_ms: 0.7218
+  type: 'test'
+  ...
+# Subtest: the React error boundary faults the adapter instead of leaving a pushed layout
+ok 108 - the React error boundary faults the adapter instead of leaving a pushed layout
+  ---
+  duration_ms: 1.0467
+  type: 'test'
+  ...
+# Subtest: maps the current session only through Workspace sessionIds membership
+ok 109 - maps the current session only through Workspace sessionIds membership
+  ---
+  duration_ms: 2.0189
+  type: 'test'
+  ...
+# Subtest: does not fall back to matching cwd or path
+ok 110 - does not fall back to matching cwd or path
+  ---
+  duration_ms: 0.1959
+  type: 'test'
+  ...
+# Subtest: fails closed for ambiguous or malformed Workspace membership
+ok 111 - fails closed for ambiguous or malformed Workspace membership
+  ---
+  duration_ms: 0.1992
+  type: 'test'
+  ...
+# Subtest: publishes a project-local DSH skill with an explicit scope boundary
+ok 112 - publishes a project-local DSH skill with an explicit scope boundary
+  ---
+  duration_ms: 1.2098
+  type: 'test'
+  ...
+# Subtest: requires a live whole-tree query followed by exact rooted Slot queries
+ok 113 - requires a live whole-tree query followed by exact rooted Slot queries
+  ---
+  duration_ms: 2.2951
+  type: 'test'
+  ...
+# Subtest: forbids guessed options and replacement of DSH structural single slots
+ok 114 - forbids guessed options and replacement of DSH structural single slots
+  ---
+  duration_ms: 0.4601
+  type: 'test'
+  ...
+# Subtest: records the approved additive entry and overlay decisions
+ok 115 - records the approved additive entry and overlay decisions
+  ---
+  duration_ms: 1.4835
+  type: 'test'
+  ...
+# Subtest: creates the immutable week-three local professional loop status contract
+ok 116 - creates the immutable week-three local professional loop status contract
+  ---
+  duration_ms: 5.1516
+  type: 'test'
+  ...
+# Subtest: strictly validates complete v3 records and both response variants
+ok 117 - strictly validates complete v3 records and both response variants
+  ---
+  duration_ms: 32.1581
+  type: 'test'
+  ...
+# Subtest: publishes immutable fixed Week 3 resource budgets
+ok 118 - publishes immutable fixed Week 3 resource budgets
+  ---
+  duration_ms: 0.2735
+  type: 'test'
+  ...
+# Subtest: editable drafts reject Host-owned material, run, and writeback evidence
+ok 119 - editable drafts reject Host-owned material, run, and writeback evidence
+  ---
+  duration_ms: 7.0884
+  type: 'test'
+  ...
+# Subtest: enforces material and run ownership invariants in complete records
+ok 120 - enforces material and run ownership invariants in complete records
+  ---
+  duration_ms: 16.7431
+  type: 'test'
+  ...
+# Subtest: enforces task, input-reference, and run cardinality
+ok 121 - enforces task, input-reference, and run cardinality
+  ---
+  duration_ms: 12.4837
+  type: 'test'
+  ...
+# Subtest: enforces JSON and serialized draft budgets
+ok 122 - enforces JSON and serialized draft budgets
+  ---
+  duration_ms: 26.0056
+  type: 'test'
+  ...
+# Subtest: enforces artifact bytes and review-note limits
+ok 123 - enforces artifact bytes and review-note limits
+  ---
+  duration_ms: 9.98
+  type: 'test'
+  ...
+# Subtest: keeps absolute paths and confirmation tokens out of persisted and recovery writeback contracts
+ok 124 - keeps absolute paths and confirmation tokens out of persisted and recovery writeback contracts
+  ---
+  duration_ms: 9.4724
+  type: 'test'
+  ...
+# Subtest: keeps the fixed DSH Domain identity while the record schema advances
+ok 125 - keeps the fixed DSH Domain identity while the record schema advances
+  ---
+  duration_ms: 1.2603
+  type: 'test'
+  ...
+# Subtest: projects a deterministic deeply frozen schema-v3 revision-zero state
+ok 126 - projects a deterministic deeply frozen schema-v3 revision-zero state
+  ---
+  duration_ms: 2.6475
+  type: 'test'
+  ...
+# Subtest: parses complete and stored records into detached frozen schema-v3 values
+ok 127 - parses complete and stored records into detached frozen schema-v3 values
+  ---
+  duration_ms: 6.3237
+  type: 'test'
+  ...
+# Subtest: accepts only the Client-owned editable projection
+ok 128 - accepts only the Client-owned editable projection
+  ---
+  duration_ms: 8.2719
+  type: 'test'
+  ...
+# Subtest: rejects unknown versions, identity mismatch, invalid calendar times, and unsafe revisions
+ok 129 - rejects unknown versions, identity mismatch, invalid calendar times, and unsafe revisions
+  ---
+  duration_ms: 3.6194
+  type: 'test'
+  ...
+# Subtest: rejects task-order and map inconsistencies after migration
+ok 130 - rejects task-order and map inconsistencies after migration
+  ---
+  duration_ms: 4.9391
+  type: 'test'
+  ...
+# Subtest: rejects stored runs whose canonical input or artifact body no longer matches its digest
+ok 131 - rejects stored runs whose canonical input or artifact body no longer matches its digest
+  ---
+  duration_ms: 12.309
+  type: 'test'
+  ...
+# Subtest: rejects every persisted local-mock result field that differs from deterministic replay
+ok 132 - rejects every persisted local-mock result field that differs from deterministic replay
+  ---
+  duration_ms: 12.9183
+  type: 'test'
+  ...
+# Subtest: keeps legitimate human review and writeback lifecycle fields outside result replay
+ok 133 - keeps legitimate human review and writeback lifecycle fields outside result replay
+  ---
+  duration_ms: 3.14
+  type: 'test'
+  ...
+# Subtest: migrates an exact legal v1 record to schema v2 without inventing run evidence
+ok 134 - migrates an exact legal v1 record to schema v2 without inventing run evidence
+  ---
+  duration_ms: 11.4857
+  type: 'test'
+  ...
+# Subtest: preserves arbitrary legal v1 inputRefs as isolated legacy values without fake path or hash
+ok 135 - preserves arbitrary legal v1 inputRefs as isolated legacy values without fake path or hash
+  ---
+  duration_ms: 3.643
+  type: 'test'
+  ...
+# Subtest: preserves a legal v1 partial workflow identity without inventing missing values
+ok 136 - preserves a legal v1 partial workflow identity without inventing missing values
+  ---
+  duration_ms: 1.8117
+  type: 'test'
+  ...
+# Subtest: accepts v1, v2, or v3 storage rows and always publishes detached frozen v3 records
+ok 137 - accepts v1, v2, or v3 storage rows and always publishes detached frozen v3 records
+  ---
+  duration_ms: 15.8855
+  type: 'test'
+  ...
+# Subtest: rejects unknown storage versions instead of guessing a migration
+ok 138 - rejects unknown storage versions instead of guessing a migration
+  ---
+  duration_ms: 2.3848
+  type: 'test'
+  ...
+# Subtest: maps Host evidence to pages but excludes it from editable replacement drafts
+ok 139 - maps Host evidence to pages but excludes it from editable replacement drafts
+  ---
+  duration_ms: 27.4095
+  type: 'test'
+  ...
+# Subtest: fails closed when a persisted record contains malformed evidence
+ok 140 - fails closed when a persisted record contains malformed evidence
+  ---
+  duration_ms: 3.587
+  type: 'test'
+  ...
+# Subtest: creates tasks with durable schema-v3 defaults before workflow selection
+ok 141 - creates tasks with durable schema-v3 defaults before workflow selection
+  ---
+  duration_ms: 1.0487
+  type: 'test'
+  ...
+# Subtest: selects a remote workflow definition in place, updates form values, renames, and closes deterministically
+ok 142 - selects a remote workflow definition in place, updates form values, renames, and closes deterministically
+  ---
+  duration_ms: 0.6616
+  type: 'test'
+  ...
+# Subtest: does not mutate immutable run snapshots when the editable form diverges
+ok 143 - does not mutate immutable run snapshots when the editable form diverges
+  ---
+  duration_ms: 1.1665
+  type: 'test'
+  ...
+# Subtest: activates an existing historical run without changing its snapshot
+ok 144 - activates an existing historical run without changing its snapshot
+  ---
+  duration_ms: 2.1252
+  type: 'test'
+  ...
+# Subtest: never saves the default state before hydration, then applies the queued open action
+ok 145 - never saves the default state before hydration, then applies the queued open action
+  ---
+  duration_ms: 13.0622
+  type: 'test'
+  ...
+# Subtest: hydrates persisted pages without issuing a replacement
+ok 146 - hydrates persisted pages without issuing a replacement
+  ---
+  duration_ms: 1.0205
+  type: 'test'
+  ...
+# Subtest: coalesces rapid same-Workspace actions into the latest draft
+ok 147 - coalesces rapid same-Workspace actions into the latest draft
+  ---
+  duration_ms: 1.0536
+  type: 'test'
+  ...
+# Subtest: updates form state immediately, saves after 400 ms, and flushes before the deadline
+ok 148 - updates form state immediately, saves after 400 ms, and flushes before the deadline
+  ---
+  duration_ms: 2.118
+  type: 'test'
+  ...
+# Subtest: dispose flushes a pending debounced draft before aborting the remote
+ok 149 - dispose flushes a pending debounced draft before aborting the remote
+  ---
+  duration_ms: 2.2715
+  type: 'test'
+  ...
+# Subtest: keeps Workspace save queues independent
+ok 150 - keeps Workspace save queues independent
+  ---
+  duration_ms: 2.0273
+  type: 'test'
+  ...
+# Subtest: preserves the local draft on revision conflict and reloads only on explicit request
+ok 151 - preserves the local draft on revision conflict and reloads only on explicit request
+  ---
+  duration_ms: 11.4346
+  type: 'test'
+  ...
+# Subtest: shows transport failure without discarding the unsaved draft
+ok 152 - shows transport failure without discarding the unsaved draft
+  ---
+  duration_ms: 2.355
+  type: 'test'
+  ...
+# Subtest: F3 verifies the response run identity and correlated fields in addition to its shape
+ok 153 - F3 verifies the response run identity and correlated fields in addition to its shape
+  ---
+  duration_ms: 12.1307
+  type: 'test'
+  ...
+# Subtest: uses the dedicated DSH Connection channel for schema-v3 get and replace
+ok 154 - uses the dedicated DSH Connection channel for schema-v3 get and replace
+  ---
+  duration_ms: 2.928
+  type: 'test'
+  ...
+# Subtest: turns DSH RpcResult errors into typed Client errors
+ok 155 - turns DSH RpcResult errors into typed Client errors
+  ---
+  duration_ms: 0.3787
+  type: 'test'
+  ...
+# Subtest: loads and strictly validates the Host workflow catalog
+ok 156 - loads and strictly validates the Host workflow catalog
+  ---
+  duration_ms: 2.2527
+  type: 'test'
+  ...
+# Subtest: fails closed on malformed Connection and nested v2 results
+ok 157 - fails closed on malformed Connection and nested v2 results
+  ---
+  duration_ms: 8.8453
+  type: 'test'
+  ...
+# Subtest: calls strict material endpoints and validates their authoritative replacement results
+ok 158 - calls strict material endpoints and validates their authoritative replacement results
+  ---
+  duration_ms: 3.924
+  type: 'test'
+  ...
+# Subtest: calls task create and review endpoints and validates authoritative replacement results
+ok 159 - calls task create and review endpoints and validates authoritative replacement results
+  ---
+  duration_ms: 2.293
+  type: 'test'
+  ...
+# Subtest: calls two-phase writeback endpoints and fails closed on malformed manifests
+ok 160 - calls two-phase writeback endpoints and fails closed on malformed manifests
+  ---
+  duration_ms: 3.7838
+  type: 'test'
+  ...
+# Subtest: calls professional-service Host endpoints and validates every response boundary
+ok 161 - calls professional-service Host endpoints and validates every response boundary
+  ---
+  duration_ms: 4.9839
+  type: 'test'
+  ...
+# Subtest: missing and legacy reads publish v3 without materializing a row
+ok 162 - missing and legacy reads publish v3 without materializing a row
+  ---
+  duration_ms: 9.1734
+  type: 'test'
+  ...
+# Subtest: first editable replacement materializes schema v3 with Host identity and time
+ok 163 - first editable replacement materializes schema v3 with Host identity and time
+  ---
+  duration_ms: 5.0648
+  type: 'test'
+  ...
+# Subtest: editable replacement preserves Host-owned evidence byte-for-byte
+ok 164 - editable replacement preserves Host-owned evidence byte-for-byte
+  ---
+  duration_ms: 5.3393
+  type: 'test'
+  ...
+# Subtest: editable replacement cannot delete a task with an unresolved remote execution
+ok 165 - editable replacement cannot delete a task with an unresolved remote execution
+  ---
+  duration_ms: 4.1146
+  type: 'test'
+  ...
+# Subtest: a Host mutation can append evidence only through full-record validation
+ok 166 - a Host mutation can append evidence only through full-record validation
+  ---
+  duration_ms: 2.3601
+  type: 'test'
+  ...
+# Subtest: a Host no-op mutation returns the current record without a revision or storage write
+ok 167 - a Host no-op mutation returns the current record without a revision or storage write
+  ---
+  duration_ms: 0.7145
+  type: 'test'
+  ...
+# Subtest: persists immutable run and review evidence across repository reopen
+ok 168 - persists immutable run and review evidence across repository reopen
+  ---
+  duration_ms: 4.6262
+  type: 'test'
+  ...
+# Subtest: serializes same-Workspace replacements and isolates Workspaces
+ok 169 - serializes same-Workspace replacements and isolates Workspaces
+  ---
+  duration_ms: 1.8368
+  type: 'test'
+  ...
+# Subtest: explicit editable mutation upgrades a stored v1 row to v3
+ok 170 - explicit editable mutation upgrades a stored v1 row to v3
+  ---
+  duration_ms: 6.3862
+  type: 'test'
+  ...
+# Subtest: round-trips a migrated partial workflow identity but never creates or changes one
+ok 171 - round-trips a migrated partial workflow identity but never creates or changes one
+  ---
+  duration_ms: 5.6309
+  type: 'test'
+  ...
+# Subtest: storage failure leaves authoritative state unchanged
+ok 172 - storage failure leaves authoritative state unchanged
+  ---
+  duration_ms: 1.2171
+  type: 'test'
+  ...
+# Subtest: rejects exhausted revision and closes only after admitted writes settle
+ok 173 - rejects exhausted revision and closes only after admitted writes settle
+  ---
+  duration_ms: 2.2085
+  type: 'test'
+  ...
+# Subtest: dispatches state endpoints with a schema-v3 editable replacement
+ok 174 - dispatches state endpoints with a schema-v3 editable replacement
+  ---
+  duration_ms: 5.251
+  type: 'test'
+  ...
+# Subtest: returns revision conflict as a successful business payload
+ok 175 - returns revision conflict as a successful business payload
+  ---
+  duration_ms: 0.5548
+  type: 'test'
+  ...
+# Subtest: rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+ok 176 - rejects unknown endpoints, extra root fields, identity injection, and Host evidence
+  ---
+  duration_ms: 1.4807
+  type: 'test'
+  ...
+# Subtest: does not disguise repository infrastructure failures
+ok 177 - does not disguise repository infrastructure failures
+  ---
+  duration_ms: 0.5655
+  type: 'test'
+  ...
+# Subtest: rejects over-budget editable drafts before calling the repository
+ok 178 - rejects over-budget editable drafts before calling the repository
+  ---
+  duration_ms: 2.0699
+  type: 'test'
+  ...
+# Subtest: dispatches a strictly validated workflow catalog endpoint
+ok 179 - dispatches a strictly validated workflow catalog endpoint
+  ---
+  duration_ms: 0.8057
+  type: 'test'
+  ...
+# Subtest: dispatches strictly validated material commands without accepting Host evidence
+ok 180 - dispatches strictly validated material commands without accepting Host evidence
+  ---
+  duration_ms: 2.7225
+  type: 'test'
+  ...
+# Subtest: serializes known material failures but still propagates infrastructure failures
+ok 181 - serializes known material failures but still propagates infrastructure failures
+  ---
+  duration_ms: 0.4198
+  type: 'test'
+  ...
+# Subtest: dispatches strict task create and review commands without accepting Client evidence
+ok 182 - dispatches strict task create and review commands without accepting Client evidence
+  ---
+  duration_ms: 2.2282
+  type: 'test'
+  ...
+# Subtest: serializes known run-domain failures and propagates runner infrastructure faults
+ok 183 - serializes known run-domain failures and propagates runner infrastructure faults
+  ---
+  duration_ms: 1.3701
+  type: 'test'
+  ...
+# Subtest: dispatches strict two-phase writeback commands and commit accepts only a token
+ok 184 - dispatches strict two-phase writeback commands and commit accepts only a token
+  ---
+  duration_ms: 3.1092
+  type: 'test'
+  ...
+# Subtest: serializes committed-index failure with only a relative recovery manifest
+ok 185 - serializes committed-index failure with only a relative recovery manifest
+  ---
+  duration_ms: 2.9639
+  type: 'test'
+  ...
+# Subtest: dispatches strict professional-service commands only through the Host service
+ok 186 - dispatches strict professional-service commands only through the Host service
+  ---
+  duration_ms: 3.5288
+  type: 'test'
+  ...
+# Subtest: keeps state orchestration behind the service boundary
+ok 187 - keeps state orchestration behind the service boundary
+  ---
+  duration_ms: 5.9066
+  type: 'test'
+  ...
+# Subtest: creates a run only from authoritative validated draft and rechecked materials
+ok 188 - creates a run only from authoritative validated draft and rechecked materials
+  ---
+  duration_ms: 3.4979
+  type: 'test'
+  ...
+# Subtest: makes request keys idempotent for one snapshot and conflicts after draft change
+ok 189 - makes request keys idempotent for one snapshot and conflicts after draft change
+  ---
+  duration_ms: 3.3391
+  type: 'test'
+  ...
+# Subtest: rejects the ninth run without changing the first eight snapshots
+ok 190 - rejects the ninth run without changing the first eight snapshots
+  ---
+  duration_ms: 1.6624
+  type: 'test'
+  ...
+# Subtest: new runs preserve old bytes and review changes only the selected run
+ok 191 - new runs preserve old bytes and review changes only the selected run
+  ---
+  duration_ms: 4.1628
+  type: 'test'
+  ...
+# Subtest: publishes catalog through the service without leaking the repository
+ok 192 - publishes catalog through the service without leaking the repository
+  ---
+  duration_ms: 0.3407
+  type: 'test'
+  ...
+# Subtest: requires the complete repository and material-manager boundaries
+ok 193 - requires the complete repository and material-manager boundaries
+  ---
+  duration_ms: 0.4361
+  type: 'test'
+  ...
+# Subtest: adds a confirmed material through the repository Workspace queue
+ok 194 - adds a confirmed material through the repository Workspace queue
+  ---
+  duration_ms: 1.17
+  type: 'test'
+  ...
+# Subtest: refreshes or removes only the current reference and preserves historical run snapshots
+ok 195 - refreshes or removes only the current reference and preserves historical run snapshots
+  ---
+  duration_ms: 3.462
+  type: 'test'
+  ...
+# Subtest: rechecks task materials without mutating authoritative state
+ok 196 - rechecks task materials without mutating authoritative state
+  ---
+  duration_ms: 0.8796
+  type: 'test'
+  ...
+# Subtest: returns revision conflict before inspecting any file
+ok 197 - returns revision conflict before inspecting any file
+  ---
+  duration_ms: 0.3949
+  type: 'test'
+  ...
+# Subtest: prepares writeback only from the authoritative approved run artifact
+ok 198 - prepares writeback only from the authoritative approved run artifact
+  ---
+  duration_ms: 0.6683
+  type: 'test'
+  ...
+# Subtest: prepares remote writeback metadata without the raw request key or provider price
+ok 199 - prepares remote writeback metadata without the raw request key or provider price
+  ---
+  duration_ms: 0.4615
+  type: 'test'
+  ...
+# Subtest: rejects stale, unapproved, blocked, foreign-artifact, and over-limit prepare requests
+ok 200 - rejects stale, unapproved, blocked, foreign-artifact, and over-limit prepare requests
+  ---
+  duration_ms: 1.2182
+  type: 'test'
+  ...
+# Subtest: commits a consumed plan through one Host mutation and appends only a relative WritebackRecord
+ok 201 - commits a consumed plan through one Host mutation and appends only a relative WritebackRecord
+  ---
+  duration_ms: 8.9573
+  type: 'test'
+  ...
+# Subtest: commit consumes the token but does not publish on revision conflict or stale plan identity
+ok 202 - commit consumes the token but does not publish on revision conflict or stale plan identity
+  ---
+  duration_ms: 1.0576
+  type: 'test'
+  ...
+# Subtest: reports committed files separately when the Domain index write fails and keeps a safe recovery manifest
+ok 203 - reports committed files separately when the Domain index write fails and keeps a safe recovery manifest
+  ---
+  duration_ms: 0.8069
+  type: 'test'
+  ...
+# Subtest: F5 removing and restoring a workspace releases observation busy state
+ok 204 - F5 removing and restoring a workspace releases observation busy state
+  ---
+  duration_ms: 13.8831
+  type: 'test'
+  ...
+# Subtest: F5 an old response cannot clear a new observation after workspace restoration
+ok 205 - F5 an old response cannot clear a new observation after workspace restoration
+  ---
+  duration_ms: 2.022
+  type: 'test'
+  ...
+# Subtest: F5 closing a page cancels its observation and preserves the original late error
+ok 206 - F5 closing a page cancels its observation and preserves the original late error
+  ---
+  duration_ms: 2.9854
+  type: 'test'
+  ...
+# Subtest: F5 disposal aborts observation and ignores a late success
+ok 207 - F5 disposal aborts observation and ignores a late success
+  ---
+  duration_ms: 1.5162
+  type: 'test'
+  ...
+# Subtest: keeps pages when switching sessions inside one Workspace
+ok 208 - keeps pages when switching sessions inside one Workspace
+  ---
+  duration_ms: 1.1681
+  type: 'test'
+  ...
+# Subtest: loads the chooser catalog from the Host and fails closed for an unknown workflow
+ok 209 - loads the chooser catalog from the Host and fails closed for an unknown workflow
+  ---
+  duration_ms: 0.5703
+  type: 'test'
+  ...
+# Subtest: switches to an independent page set when Workspace changes
+ok 210 - switches to an independent page set when Workspace changes
+  ---
+  duration_ms: 0.4652
+  type: 'test'
+  ...
+# Subtest: keeps hidden normal expanded state per Workspace
+ok 211 - keeps hidden normal expanded state per Workspace
+  ---
+  duration_ms: 0.292
+  type: 'test'
+  ...
+# Subtest: opening an empty Workspace creates one workflow chooser page
+ok 212 - opening an empty Workspace creates one workflow chooser page
+  ---
+  duration_ms: 0.6674
+  type: 'test'
+  ...
+# Subtest: rejects task creation when no Workspace owns the session
+ok 213 - rejects task creation when no Workspace owns the session
+  ---
+  duration_ms: 0.7035
+  type: 'test'
+  ...
+# Subtest: notifies subscribers and preserves page state across panel transitions
+ok 214 - notifies subscribers and preserves page state across panel transitions
+  ---
+  duration_ms: 0.5352
+  type: 'test'
+  ...
+# Subtest: keeps material drafts isolated and applies Host-authoritative material evidence
+ok 215 - keeps material drafts isolated and applies Host-authoritative material evidence
+  ---
+  duration_ms: 2.2523
+  type: 'test'
+  ...
+# Subtest: refreshing material invalidates the prior external-transfer confirmation
+ok 216 - refreshing material invalidates the prior external-transfer confirmation
+  ---
+  duration_ms: 1.4854
+  type: 'test'
+  ...
+# Subtest: removing material invalidates the prior external-transfer confirmation
+ok 217 - removing material invalidates the prior external-transfer confirmation
+  ---
+  duration_ms: 0.8494
+  type: 'test'
+  ...
+# Subtest: retains one requestKey across a failed generation retry and clears it after success
+ok 218 - retains one requestKey across a failed generation retry and clears it after success
+  ---
+  duration_ms: 2.4717
+  type: 'test'
+  ...
+# Subtest: enforces review and two-phase writeback confirmations before calling the Host
+ok 219 - enforces review and two-phase writeback confirmations before calling the Host
+  ---
+  duration_ms: 1.1343
+  type: 'test'
+  ...
+# Subtest: stores prepared absolute paths and hashes, then distinguishes successful writeback feedback
+ok 220 - stores prepared absolute paths and hashes, then distinguishes successful writeback feedback
+  ---
+  duration_ms: 2.0329
+  type: 'test'
+  ...
+# Subtest: distinguishes committed index warnings and discards the consumed writeback plan
+ok 221 - distinguishes committed index warnings and discards the consumed writeback plan
+  ---
+  duration_ms: 1.4591
+  type: 'test'
+  ...
+# Subtest: validates the dispose drain deadline
+ok 222 - validates the dispose drain deadline
+  ---
+  duration_ms: 0.1451
+  type: 'test'
+  ...
+# Subtest: dispose finishes within its deadline when a save can settle only after abort
+ok 223 - dispose finishes within its deadline when a save can settle only after abort
+  ---
+  duration_ms: 0.8468
+  type: 'test'
+  ...
+# Subtest: dispose keeps a quick acknowledged draft drain and repeated calls share one promise
+ok 224 - dispose keeps a quick acknowledged draft drain and repeated calls share one promise
+  ---
+  duration_ms: 1.2407
+  type: 'test'
+  ...
+# Subtest: dispose preserves an action acknowledged before closing while hydration is still in flight
+ok 225 - dispose preserves an action acknowledged before closing while hydration is still in flight
+  ---
+  duration_ms: 0.7021
+  type: 'test'
+  ...
+# Subtest: dispose uses the 1000 ms default deadline when a remote ignores abort forever
+ok 226 - dispose uses the 1000 ms default deadline when a remote ignores abort forever
+  ---
+  duration_ms: 0.5851
+  type: 'test'
+  ...
+# Subtest: a remote completion after the dispose deadline cannot repopulate cleared state
+ok 227 - a remote completion after the dispose deadline cannot repopulate cleared state
+  ---
+  duration_ms: 0.6532
+  type: 'test'
+  ...
+# Subtest: loads, persists, and starts professional-service drafts with explicit confirmations
+ok 228 - loads, persists, and starts professional-service drafts with explicit confirmations
+  ---
+  duration_ms: 4.9055
+  type: 'test'
+  ...
+# Subtest: F1 rejects unsafe historical result and upload URLs without altering stored data
+ok 229 - F1 rejects unsafe historical result and upload URLs without altering stored data
+  ---
+  duration_ms: 18.0312
+  type: 'test'
+  ...
+# Subtest: migrates stored v2 records to detached frozen v3 ledgers without inventing remote evidence
+ok 230 - migrates stored v2 records to detached frozen v3 ledgers without inventing remote evidence
+  ---
+  duration_ms: 1.4297
+  type: 'test'
+  ...
+# Subtest: creates v3 workspaces and keeps remote execution ledgers outside editable drafts
+ok 231 - creates v3 workspaces and keeps remote execution ledgers outside editable drafts
+  ---
+  duration_ms: 3.0093
+  type: 'test'
+  ...
+# Subtest: accepts completed Oasis runs only after Host execution completion and hash verification
+ok 232 - accepts completed Oasis runs only after Host execution completion and hash verification
+  ---
+  duration_ms: 4.0068
+  type: 'test'
+  ...
+# Subtest: rejects a completed remote run whose provider snapshot targets production
+ok 233 - rejects a completed remote run whose provider snapshot targets production
+  ---
+  duration_ms: 1.2146
+  type: 'test'
+  ...
+# Subtest: rejects completed execution snapshots that disagree with their remote run provider
+ok 234 - rejects completed execution snapshots that disagree with their remote run provider
+  ---
+  duration_ms: 6.1095
+  type: 'test'
+  ...
+# Subtest: rejects tampered execution inputs and production result or upload URLs
+ok 235 - rejects tampered execution inputs and production result or upload URLs
+  ---
+  duration_ms: 4.1803
+  type: 'test'
+  ...
+# Subtest: does not persist a completed remote execution without its completed run snapshot
+ok 236 - does not persist a completed remote execution without its completed run snapshot
+  ---
+  duration_ms: 0.8507
+  type: 'test'
+  ...
+# Subtest: allows one Host-owned in-flight remote execution but rejects concurrent in-flight ledgers
+ok 237 - allows one Host-owned in-flight remote execution but rejects concurrent in-flight ledgers
+  ---
+  duration_ms: 0.975
+  type: 'test'
+  ...
+# Subtest: treats submission-unknown as unresolved and blocks a new in-flight execution
+ok 238 - treats submission-unknown as unresolved and blocks a new in-flight execution
+  ---
+  duration_ms: 1.2141
+  type: 'test'
+  ...
+# Subtest: publishes two deeply frozen versioned local-mock workflows
+ok 239 - publishes two deeply frozen versioned local-mock workflows
+  ---
+  duration_ms: 2.0302
+  type: 'test'
+  ...
+# Subtest: filters by work type without mutating or sharing a writable result
+ok 240 - filters by work type without mutating or sharing a writable result
+  ---
+  duration_ms: 0.5513
+  type: 'test'
+  ...
+# Subtest: uses only the bounded form DSL and unique field identifiers
+ok 241 - uses only the bounded form DSL and unique field identifiers
+  ---
+  duration_ms: 0.2761
+  type: 'test'
+  ...
+# Subtest: validates technical R&D forms with exact fields and boundary budgets
+ok 242 - validates technical R&D forms with exact fields and boundary budgets
+  ---
+  duration_ms: 2.1852
+  type: 'test'
+  ...
+# Subtest: validates patent forms and rejects unsupported versions or unknown workflows
+ok 243 - validates patent forms and rejects unsupported versions or unknown workflows
+  ---
+  duration_ms: 1.3323
+  type: 'test'
+  ...
+# Subtest: does not expose Dify, billing, credentials, prices, URLs, or remote service fields
+ok 244 - does not expose Dify, billing, credentials, prices, URLs, or remote service fields
+  ---
+  duration_ms: 0.3734
+  type: 'test'
+  ...
+# Subtest: projects one detached frozen workspace generation without paths or stale mutable input
+ok 245 - projects one detached frozen workspace generation without paths or stale mutable input
+  ---
+  duration_ms: 1.4491
+  type: 'test'
+  ...
+# Subtest: renders pending or unbound instead of resolving a previous workspace generation
+ok 246 - renders pending or unbound instead of resolving a previous workspace generation
+  ---
+  duration_ms: 0.4218
+  type: 'test'
+  ...
+# Subtest: blocks malformed workspace hook payloads instead of guessing a project
+ok 247 - blocks malformed workspace hook payloads instead of guessing a project
+  ---
+  duration_ms: 0.176
+  type: 'test'
+  ...
+# Subtest: normalizes only bounded relative Windows paths and rejects dangerous spellings
+ok 248 - normalizes only bounded relative Windows paths and rejects dangerous spellings
+  ---
+  duration_ms: 3.5538
+  type: 'test'
+  ...
+# Subtest: fails closed for unknown or currently missing Workspaces
+ok 249 - fails closed for unknown or currently missing Workspaces
+  ---
+  duration_ms: 16.9069
+  type: 'test'
+  ...
+# Subtest: rejects directories, unsupported extensions, oversized files, and junction traversal
+ok 250 - rejects directories, unsupported extensions, oversized files, and junction traversal
+  ---
+  duration_ms: 24.8807
+  type: 'test'
+  ...
+# Subtest: streams SHA-256 and returns only normalized metadata
+ok 251 - streams SHA-256 and returns only normalized metadata
+  ---
+  duration_ms: 24.1562
+  type: 'test'
+  ...
+# Subtest: detects a file changing during streaming and never returns partial evidence
+ok 252 - detects a file changing during streaming and never returns partial evidence
+  ---
+  duration_ms: 10.9196
+  type: 'test'
+  ...
+# Subtest: bounds the hash stream when a file grows after its initial stat
+ok 253 - bounds the hash stream when a file grows after its initial stat
+  ---
+  duration_ms: 7.1642
+  type: 'test'
+  ...
+# Subtest: rechecks confirmed evidence without mutating it and blocks legacy references
+ok 254 - rechecks confirmed evidence without mutating it and blocks legacy references
+  ---
+  duration_ms: 29.7809
+  type: 'test'
+  ...
+# Subtest: reads confirmed material bytes only after a fresh bounded integrity check
+ok 255 - reads confirmed material bytes only after a fresh bounded integrity check
+  ---
+  duration_ms: 18.3352
+  type: 'test'
+  ...
+# Subtest: prepare returns a two-file transient manifest without creating the target
+ok 256 - prepare returns a two-file transient manifest without creating the target
+  ---
+  duration_ms: 22
+  type: 'test'
+  ...
+# Subtest: prepare rejects unsafe, missing, redirecting, existing, and overlong targets before writing
+ok 257 - prepare rejects unsafe, missing, redirecting, existing, and overlong targets before writing
+  ---
+  duration_ms: 20.9529
+  type: 'test'
+  ...
+# Subtest: confirmation tokens are bounded, single-use, expire after ten minutes, and do not survive restart
+ok 258 - confirmation tokens are bounded, single-use, expire after ten minutes, and do not survive restart
+  ---
+  duration_ms: 15.0535
+  type: 'test'
+  ...
+# Subtest: prepare never embeds token, absolute paths, artifact body, or pricing data in the planned metadata
+ok 259 - prepare never embeds token, absolute paths, artifact body, or pricing data in the planned metadata
+  ---
+  duration_ms: 6.8225
+  type: 'test'
+  ...
+# Subtest: prepare creates mode-aware remote metadata without a raw request key or pricing
+ok 260 - prepare creates mode-aware remote metadata without a raw request key or pricing
+  ---
+  duration_ms: 8.6514
+  type: 'test'
+  ...
+# Subtest: F1 rejects unsafe file URLs before creating a writeback target
+ok 261 - F1 rejects unsafe file URLs before creating a writeback target
+  ---
+  duration_ms: 11.4366
+  type: 'test'
+  ...
+# Subtest: remote writeback metadata rejects the production provider origin
+ok 262 - remote writeback metadata rejects the production provider origin
+  ---
+  duration_ms: 8.1242
+  type: 'test'
+  ...
+# Subtest: publish fsyncs two verified files and commits with exactly one final rename
+ok 263 - publish fsyncs two verified files and commits with exactly one final rename
+  ---
+  duration_ms: 30.4585
+  type: 'test'
+  ...
+# Subtest: publish rechecks prepare assumptions and preserves a target created in between
+ok 264 - publish rechecks prepare assumptions and preserves a target created in between
+  ---
+  duration_ms: 16.3079
+  type: 'test'
+  ...
+# Subtest: a target created at the final rename is preserved and reported as existing
+ok 265 - a target created at the final rename is preserved and reported as existing
+  ---
+  duration_ms: 22.0117
+  type: 'test'
+  ...
+# Subtest: serializes concurrent plans for one target so at most one can publish
+ok 266 - serializes concurrent plans for one target so at most one can publish
+  ---
+  duration_ms: 21.6287
+  type: 'test'
+  ...
+# Subtest: staging and final-rename failures clean only operation-owned paths and preserve adjacent bytes
+    # Subtest: main staging write
+    ok 1 - main staging write
+      ---
+      duration_ms: 10.8973
+      type: 'test'
+      ...
+    # Subtest: metadata staging write
+    ok 2 - metadata staging write
+      ---
+      duration_ms: 16.5833
+      type: 'test'
+      ...
+    # Subtest: directory rename
+    ok 3 - directory rename
+      ---
+      duration_ms: 21.7135
+      type: 'test'
+      ...
+    1..3
+ok 267 - staging and final-rename failures clean only operation-owned paths and preserve adjacent bytes
+  ---
+  duration_ms: 49.925
+  type: 'test'
+  ...
+# Subtest: writeback source has no post-commit cleanup branch or hard-link publication
+ok 268 - writeback source has no post-commit cleanup branch or hard-link publication
+  ---
+  duration_ms: 0.9203
+  type: 'test'
+  ...
+1..268
+# tests 271
+# suites 0
+# pass 271
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 926.2962

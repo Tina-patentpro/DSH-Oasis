@@ -1,0 +1,80 @@
+{
+  "at": "2026-09-03T02:23:43.987Z",
+  "files": [
+    {
+      "path": "scripts/verify-oasis-api-phase4.mjs",
+      "sha256": "B24C744AD2AC52288CED0EDE310846DEDF25463DE2AFB2E6F9BC4A3F2D5FB298"
+    },
+    {
+      "path": "scripts/oasis-api-phase4-browser-worker.mjs",
+      "sha256": "8469C31270E18BA2A371F127DE9819276ED9B8776C4CF0C750B7D3BFF015B104"
+    },
+    {
+      "path": "tests/scripts/oasis-api-phase4-contract.test.mjs",
+      "sha256": "8BDD1E4C099845A026F97F78809D8ECF02CB54639C062595051CE08874F90932"
+    },
+    {
+      "path": "scripts/diagnose-oasis-api-phase4-windows.mjs",
+      "sha256": "BE641E3368D58FDC62B3D00776772A73823E0D2CEB052DDB1BAE5E2E7805AECE"
+    },
+    {
+      "path": "scripts/oasis-api-phase4-windows-probe.ps1",
+      "sha256": "0AC6A04B45F6A8E6755B31CD851D9D0E6F5C1F4B0FD4136B29144CF5AD16DB67"
+    }
+  ],
+  "protectedFunctions": [
+    {
+      "name": "terminateOwnedProcessTree",
+      "before": "11B8A56CCAB745F815A525444986690B0EBC608AE551BF6F883C1D20660C2A72",
+      "after": "11B8A56CCAB745F815A525444986690B0EBC608AE551BF6F883C1D20660C2A72",
+      "unchanged": true
+    },
+    {
+      "name": "runRecordedCommand",
+      "before": "C66F9043ED411EBE954CA8B6367DC28002579671AC057D7621B47DE36282903C",
+      "after": "C66F9043ED411EBE954CA8B6367DC28002579671AC057D7621B47DE36282903C",
+      "unchanged": true
+    }
+  ],
+  "diffCommands": [
+    {
+      "executable": "C:/Program Files/Git/cmd/git.exe",
+      "argv": [
+        "diff",
+        "--no-index",
+        "--",
+        "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-before/1-verify-oasis-api-phase4.mjs",
+        "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/scripts/verify-oasis-api-phase4.mjs"
+      ],
+      "startedAt": "2026-09-03T02:23:43.749Z",
+      "exitCode": 1,
+      "meaning": "differences expected; read only"
+    },
+    {
+      "executable": "C:/Program Files/Git/cmd/git.exe",
+      "argv": [
+        "diff",
+        "--no-index",
+        "--",
+        "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-before/2-oasis-api-phase4-browser-worker.mjs",
+        "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/scripts/oasis-api-phase4-browser-worker.mjs"
+      ],
+      "startedAt": "2026-09-03T02:23:43.828Z",
+      "exitCode": 1,
+      "meaning": "differences expected; read only"
+    },
+    {
+      "executable": "C:/Program Files/Git/cmd/git.exe",
+      "argv": [
+        "diff",
+        "--no-index",
+        "--",
+        "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/docs/evidence/oasis-api-browser-diagnostics-2026-09-03/attempt-001/source-before/3-oasis-api-phase4-contract.test.mjs",
+        "D:/OneDrive/4、董娣相关/9、绿洲慧写4.0预研/tests/scripts/oasis-api-phase4-contract.test.mjs"
+      ],
+      "startedAt": "2026-09-03T02:23:43.906Z",
+      "exitCode": 1,
+      "meaning": "differences expected; read only"
+    }
+  ]
+}
