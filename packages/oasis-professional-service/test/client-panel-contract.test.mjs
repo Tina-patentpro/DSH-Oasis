@@ -101,7 +101,7 @@ test('registers the workbench through the public Better Sidebar tab service when
 
   const dispose = apply(ctx)
   try {
-    assert.deepEqual(injected, [['betterSidebar']])
+    assert.deepEqual(injected, [['settingsScope', 'remote'], ['betterSidebar']])
     assert.equal(descriptor?.id, 'oasis-professional-service:workbench')
     assert.equal(descriptor?.single, true)
     assert.equal(typeof descriptor?.component, 'function')

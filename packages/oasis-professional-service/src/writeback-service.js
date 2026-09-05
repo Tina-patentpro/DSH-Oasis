@@ -20,6 +20,7 @@ import {
 } from 'node:path'
 
 import { WorkspaceMaterialError } from './workspace-materials.js'
+import { isCanonicalOasisNonProductionOrigin, isSafeOasisFileUrl } from './oasis-origin-policy.js'
 
 const DEFAULT_TOKEN_TTL_MS = 10 * 60 * 1000
 const DEFAULT_MAX_TOKENS = 128
@@ -179,13 +180,11 @@ async function resolveSafeNewTarget(fileSystem, root, normalizedDirectory) {
 }
 
 function createMetadata(input, artifactSizeBytes) {
-  return Object.freeze({
+  const common = {
     schemaVersion: 1,
     workspace: { workspaceId: input.workspaceId },
     task: { taskId: input.taskId },
     run: { runId: input.runId },
-    workflow: { workflowId: input.workflowId, workflowVersion: input.workflowVersion },
-    execution: { mode: input.mode, mockVersion: input.mockVersion },
     input: { sha256: input.inputSha256 },
     artifact: {
       artifactId: input.artifact.artifactId,
@@ -195,7 +194,50 @@ function createMetadata(input, artifactSizeBytes) {
       sha256: input.artifact.sha256,
     },
     review: { status: input.reviewStatus },
-  })
+  }
+  if (input.mode === 'local-mock') {
+    return Object.freeze({
+      ...common,
+      workflow: { workflowId: input.workflowId, workflowVersion: input.workflowVersion },
+      execution: { mode: input.mode, mockVersion: input.mockVersion },
+    })
+  }
+  if (input.mode === 'oasis-legacy') {
+    const remote = input.remote
+    if (
+      !remote
+      || typeof remote.executionId !== 'string'
+      || !/^[a-f0-9]{64}$/.test(remote.requestKeySha256)
+      || typeof remote.provider?.apiBaseOrigin !== 'string'
+      || !isCanonicalOasisNonProductionOrigin(remote.provider.apiBaseOrigin)
+      || !Number.isSafeInteger(remote.provider?.apiId)
+      || typeof remote.provider?.apiEndpoint !== 'string'
+      || typeof remote.provider?.apiProcess !== 'string'
+      || !Number.isSafeInteger(remote.provider?.folderId)
+      || remote.files?.status !== 'undownloaded-unverified'
+      || !Array.isArray(remote.files?.urls)
+      || remote.files.urls.some((value) => !isSafeOasisFileUrl(value))
+    ) {
+      throw writebackError('WRITEBACK_SOURCE_INVALID', 'Remote writeback source is incomplete or unsafe')
+    }
+    return Object.freeze({
+      ...common,
+      execution: {
+        mode: input.mode,
+        executionId: remote.executionId,
+        requestKeySha256: remote.requestKeySha256,
+      },
+      provider: {
+        apiBaseOrigin: remote.provider.apiBaseOrigin,
+        apiId: remote.provider.apiId,
+        apiEndpoint: remote.provider.apiEndpoint,
+        apiProcess: remote.provider.apiProcess,
+        folderId: remote.provider.folderId,
+      },
+      remoteFiles: { status: remote.files.status, urls: [...remote.files.urls] },
+    })
+  }
+  throw writebackError('WRITEBACK_SOURCE_INVALID', 'Writeback execution mode is unsupported')
 }
 
 function assertManagerOptions({

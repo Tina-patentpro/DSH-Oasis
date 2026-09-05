@@ -18,6 +18,84 @@ function deferred() {
   return { promise, resolve, reject }
 }
 
+async function observationStore() {
+  const pending = []
+  const store = createWorkbenchStore({ remote: {
+    async get(workspaceId) { return createV3Record(workspaceId, 1, { withEvidence: true }) },
+    async replace(workspaceId, revision) { return { committed: true, current: createV3Record(workspaceId, revision + 1, { empty: true }) } },
+    async observeRunningWater(payload, signal) {
+      const gate = deferred()
+      pending.push({ ...gate, signal, payload })
+      return gate.promise
+    },
+  } })
+  store.syncWorkspaces([{ workspaceId: 'workspace-a' }, { workspaceId: 'workspace-b' }])
+  await store.hydrateWorkspace('workspace-a')
+  return { store, pending }
+}
+
+const OBSERVATION = {
+  status: 'not-observed', associationStatus: 'unverified', runId: 'run-a', recordId: 90,
+  scope: 'current-page', total: 0, item: null, observedAt: '2026-09-02T01:00:00.000Z',
+}
+
+test('F5 removing and restoring a workspace releases observation busy state', async () => {
+  const { store, pending } = await observationStore()
+  const first = store.observeRunningWater('workspace-a', 'task-a', 'run-a')
+  store.syncWorkspaces([{ workspaceId: 'workspace-b' }])
+  assert.equal(pending[0].signal.aborted, true)
+  pending[0].resolve(OBSERVATION)
+  await first
+  store.syncWorkspaces([{ workspaceId: 'workspace-a' }, { workspaceId: 'workspace-b' }])
+  const op = store.getWorkspaceState('workspace-a').pageOperations['task-a']
+  assert.equal(op.activeOperation, null)
+  assert.equal(op.runningWaterStatus, 'idle')
+  assert.equal(op.runningWaterObservation, null)
+  const second = store.observeRunningWater('workspace-a', 'task-a', 'run-a')
+  pending[1].resolve(OBSERVATION)
+  await second
+  assert.equal(store.getWorkspaceState('workspace-a').pageOperations['task-a'].runningWaterStatus, 'ready')
+  await store.dispose()
+})
+
+test('F5 an old response cannot clear a new observation after workspace restoration', async () => {
+  const { store, pending } = await observationStore()
+  const first = store.observeRunningWater('workspace-a', 'task-a', 'run-a')
+  store.syncWorkspaces([])
+  store.syncWorkspaces([{ workspaceId: 'workspace-a' }])
+  const second = store.observeRunningWater('workspace-a', 'task-a', 'run-a')
+  void second.catch(() => {})
+  pending[0].resolve({ ...OBSERVATION, total: 99 })
+  await first
+  assert.equal(pending.length, 2)
+  assert.equal(store.getWorkspaceState('workspace-a').pageOperations['task-a'].activeOperation, 'running-water-observe')
+  pending[1].resolve(OBSERVATION)
+  await second
+  assert.equal(store.getWorkspaceState('workspace-a').pageOperations['task-a'].runningWaterObservation.total, 0)
+  await store.dispose()
+})
+
+test('F5 closing a page cancels its observation and preserves the original late error', async () => {
+  const { store, pending } = await observationStore()
+  const first = store.observeRunningWater('workspace-a', 'task-a', 'run-a')
+  store.closePage('workspace-a', 'task-a')
+  assert.equal(pending[0].signal.aborted, true)
+  pending[0].reject(new Error('synthetic late failure'))
+  await assert.rejects(first, /synthetic late failure/)
+  assert.equal(store.getWorkspaceState('workspace-a').pages.length, 0)
+  await store.dispose()
+})
+
+test('F5 disposal aborts observation and ignores a late success', async () => {
+  const { store, pending } = await observationStore()
+  const first = store.observeRunningWater('workspace-a', 'task-a', 'run-a')
+  await store.dispose()
+  assert.equal(pending[0].signal.aborted, true)
+  pending[0].resolve(OBSERVATION)
+  await first
+  assert.equal(store.peekWorkspaceState('workspace-a').workspaceId, null)
+})
+
 function createManualScheduler() {
   let nextTimerId = 0
   const timers = new Map()
@@ -614,6 +692,13 @@ test('loads, persists, and starts professional-service drafts with explicit conf
       calls.push(['continue', payload])
       throw Object.assign(new Error('bounded wait interrupted'), { code: 'transport-failed' })
     },
+    async observeRunningWater(payload) {
+      calls.push(['running-water', payload])
+      return {
+        status: 'not-observed', runId: 'run-remote-a', recordId: 90, scope: 'current-page', total: 0,
+        item: null, observedAt: '2026-08-26T01:02:03.000Z',
+      }
+    },
   }
   const store = createWorkbenchStore({
     remote, workflowCatalog: TEST_CATALOG, createRequestKey: () => 'remote-request-stable', saveDelayMs: 0,
@@ -627,11 +712,19 @@ test('loads, persists, and starts professional-service drafts with explicit conf
     priceConfirmed: true, externalTransferConfirmed: true,
   })
   await assert.rejects(store.startProfessional('workspace-a', 'task-a'), /interrupted/i)
+  await store.observeRunningWater('workspace-a', 'task-a', 'run-remote-a')
 
   const operation = store.getWorkspaceState('workspace-a').pageOperations['task-a']
   assert.equal(operation.requestKey, 'remote-request-stable')
   assert.equal(operation.activeOperation, null)
-  assert.deepEqual(calls.map(([kind]) => kind), ['bootstrap', 'detail', 'replace', 'replace', 'start', 'continue'])
+  assert.equal(operation.runningWaterStatus, 'ready')
+  assert.deepEqual(operation.runningWaterObservation, {
+    status: 'not-observed', runId: 'run-remote-a', recordId: 90, scope: 'current-page', total: 0,
+    item: null, observedAt: '2026-08-26T01:02:03.000Z',
+  })
+  assert.deepEqual(calls.map(([kind]) => kind), [
+    'bootstrap', 'detail', 'replace', 'replace', 'start', 'continue', 'running-water',
+  ])
   assert.equal(calls.find(([kind]) => kind === 'start')[1].priceConfirmed, true)
   assert.equal(calls.find(([kind]) => kind === 'start')[1].externalTransferConfirmed, true)
 })

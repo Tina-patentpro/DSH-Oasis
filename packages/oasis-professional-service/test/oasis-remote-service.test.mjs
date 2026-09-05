@@ -64,12 +64,20 @@ function createClient(overrides = {}) {
     async createWorkflow(input) {
       calls.push(['create', structuredClone(input)])
       return { resolved: true, result: {
+        recordId: 90,
         key: input.key,
         answerText: '远程权利要求书草稿',
         fileUrls: ['https://files-staging.example/result/claims.docx'],
       } }
     },
     async queryProcess(key) { calls.push(['query', key]); return { key, status: 'running', progressPercent: 50, result: null } },
+    async getRunningWater() {
+      calls.push(['running-water'])
+      return { total: 1, items: [{
+        id: 301, linkId: 90, type: '消费', money: 3, balance: 17,
+        createTime: '2026-08-26 09:02:03',
+      }] }
+    },
     ...overrides,
   }
 }
@@ -90,23 +98,21 @@ function createHarness({ client = createClient(), pollLimit = 2 } = {}) {
       }
     },
   }
+  const runtime = {
+    enabled: true, environmentKind: 'non-production', apiBaseOrigin: 'https://oasis-staging.example',
+    credentialConfigured: true, client,
+  }
   const service = createOasisRemoteService({
     repository,
     materialManager,
-    getRuntime: async () => ({
-      enabled: true,
-      environmentKind: 'non-production',
-      apiBaseOrigin: 'https://oasis-staging.example',
-      credentialConfigured: true,
-      client,
-    }),
+    getRuntime: async () => runtime,
     clock: () => NOW,
     executionIdFactory: () => 'execution-remote-a',
     runIdFactory: () => 'run-remote-a',
     pollLimit,
     sleep: async () => {},
   })
-  return { client, repository, service }
+  return { client, repository, service, runtime }
 }
 
 async function configureDraft(harness) {
@@ -123,6 +129,107 @@ async function configureDraft(harness) {
   harness.repository.replace(current)
   return detail
 }
+
+async function prepareRemote(harness) {
+  await configureDraft(harness)
+  await harness.service.start({
+    workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: harness.repository.get().revision,
+    requestKey: 'remote-request-a', priceConfirmed: true, externalTransferConfirmed: true,
+  })
+}
+
+const REMOTE_EXECUTION = { workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-remote-a' }
+const REMOTE_RUN = { workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-remote-a' }
+
+test('F3 rejects malformed nonmatching normalized ledger items before claiming a miss', async () => {
+  const h = createHarness({ client: createClient({ async getRunningWater() {
+    return { total: 1, items: [{ id: 301, linkId: '90', type: '消费', money: 3, balance: 17 }] }
+  } }) })
+  await prepareRemote(h)
+  await h.service.continue(REMOTE_EXECUTION)
+  await assert.rejects(h.service.observeRunningWater(REMOTE_RUN), { code: 'INVALID_RUNNING_WATER_RESPONSE' })
+})
+
+test('F3 refuses duplicate link candidates rather than selecting the first transaction type', async () => {
+  const item = { id: 301, linkId: 90, type: '充值', money: 30, balance: 17, createTime: null }
+  const h = createHarness({ client: createClient({ async getRunningWater() {
+    return { total: 2, items: [item, { ...item, id: 302, type: '消费' }] }
+  } }) })
+  await prepareRemote(h)
+  await h.service.continue(REMOTE_EXECUTION)
+  await assert.rejects(h.service.observeRunningWater(REMOTE_RUN), { code: 'RUNNING_WATER_AMBIGUOUS' })
+})
+
+test('F2 refuses cross-environment observation without reading a foreign ledger or changing state', async () => {
+  const h = createHarness()
+  await prepareRemote(h)
+  await h.service.continue(REMOTE_EXECUTION)
+  h.runtime.apiBaseOrigin = 'https://other-staging.example'
+  const before = JSON.stringify(h.repository.get())
+  await assert.rejects(h.service.observeRunningWater(REMOTE_RUN), { code: 'REMOTE_ENVIRONMENT_MISMATCH' })
+  assert.equal(h.client.calls.some(([name]) => name === 'running-water'), false)
+  assert.equal(JSON.stringify(h.repository.get()), before)
+})
+
+test('F2 refuses cross-environment continuation before any remote call', async () => {
+  const h = createHarness()
+  await prepareRemote(h)
+  h.client.calls.length = 0
+  h.runtime.apiBaseOrigin = 'https://other-staging.example'
+  await assert.rejects(h.service.continue(REMOTE_EXECUTION), { code: 'REMOTE_ENVIRONMENT_MISMATCH' })
+  assert.deepEqual(h.client.calls, [])
+})
+
+test('F4 preserves the create anchor and fails a conflicting query ID', async () => {
+  const h = createHarness({ client: createClient({
+    async createWorkflow(input) { return { resolved: false, receipt: { key: input.key, recordId: 90 } } },
+    async queryProcess(key) { return { key, status: 'completed', result: { key, recordId: 91, answerText: 'conflict', fileUrls: [] } } },
+  }) })
+  await prepareRemote(h)
+  const completed = await h.service.continue(REMOTE_EXECUTION)
+  const task = completed.current.tasks['task-a']
+  const execution = task.remoteExecutions['execution-remote-a']
+  assert.equal(execution.recordId, 90)
+  assert.equal(execution.recordIdSource, 'create')
+  assert.equal(execution.safeError.code, 'REMOTE_RECORD_ID_MISMATCH')
+  assert.equal(execution.status, 'failed')
+  assert.equal(task.runs['run-remote-a'], undefined)
+})
+
+test('F4 query IDs never supply an absent create anchor', async () => {
+  const h = createHarness({ client: createClient({
+    async createWorkflow(input) { return { resolved: false, receipt: { key: input.key } } },
+    async queryProcess(key) { return { key, status: 'completed', result: { key, recordId: 90, answerText: 'query only', fileUrls: [] } } },
+  }) })
+  await prepareRemote(h)
+  await h.service.continue(REMOTE_EXECUTION)
+  const observed = await h.service.observeRunningWater(REMOTE_RUN)
+  assert.equal(observed.status, 'unverifiable')
+  assert.equal(h.client.calls.some(([name]) => name === 'running-water'), false)
+})
+
+test('F4 a historical ID without provenance remains readable but is not an observation anchor', async () => {
+  const h = createHarness()
+  await prepareRemote(h)
+  await h.service.continue(REMOTE_EXECUTION)
+  const old = h.repository.get()
+  delete old.tasks['task-a'].remoteExecutions['execution-remote-a'].recordIdSource
+  h.repository.replace(old)
+  const observed = await h.service.observeRunningWater(REMOTE_RUN)
+  assert.equal(observed.status, 'unverifiable')
+  assert.equal(h.client.calls.some(([name]) => name === 'running-water'), false)
+})
+
+test('F4 a wrong create key cannot store a record ID before rejection', async () => {
+  const h = createHarness({ client: createClient({
+    async createWorkflow() { return { resolved: true, result: { key: 'wrong-key', recordId: 99, answerText: 'wrong', fileUrls: [] } } },
+  }) })
+  await prepareRemote(h)
+  await h.service.continue(REMOTE_EXECUTION)
+  const e = h.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a']
+  assert.equal(e.recordId, null)
+  assert.equal(e.safeError.code, 'REMOTE_KEY_MISMATCH')
+})
 
 test('publishes a safe non-production bootstrap and schema-hashed service detail', async () => {
   const harness = createHarness()
@@ -162,6 +269,7 @@ test('persists a prepared execution before upload and completes through one crea
   })
   const finalTask = completed.current.tasks['task-a']
   assert.equal(finalTask.remoteExecutions['execution-remote-a'].status, 'completed')
+  assert.equal(finalTask.remoteExecutions['execution-remote-a'].recordId, 90)
   assert.equal(finalTask.runs['run-remote-a'].mode, 'oasis-legacy')
   assert.equal(finalTask.runs['run-remote-a'].result.answerText, '远程权利要求书草稿')
   assert.deepEqual(harness.client.calls.filter(([name]) => name === 'upload').length, 1)
@@ -172,6 +280,90 @@ test('persists a prepared execution before upload and completes through one crea
     url: 'https://files-staging.example/upload/material.md',
   })
   assert.equal(JSON.stringify(completed.current).includes('"bytes"'), false)
+})
+
+test('observes running water on demand without persisting it or claiming settlement', async () => {
+  const harness = createHarness()
+  await configureDraft(harness)
+  await harness.service.start({
+    workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: 1,
+    requestKey: 'remote-request-a', priceConfirmed: true, externalTransferConfirmed: true,
+  })
+  await harness.service.continue({
+    workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-remote-a',
+  })
+  const before = JSON.stringify(harness.repository.get())
+
+  const observed = await harness.service.observeRunningWater({
+    workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-remote-a',
+  })
+
+  assert.deepEqual(observed, {
+    status: 'observed',
+    associationStatus: 'unverified',
+    runId: 'run-remote-a',
+    recordId: 90,
+    scope: 'current-page',
+    total: 1,
+    item: {
+      id: 301, linkId: 90, type: '消费', money: 3, balance: 17,
+      createTime: '2026-08-26 09:02:03',
+    },
+    observedAt: NOW,
+  })
+  assert.equal(JSON.stringify(harness.repository.get()), before)
+  assert.equal(harness.client.calls.filter(([name]) => name === 'running-water').length, 1)
+  assert.equal(JSON.stringify(observed).includes('username'), false)
+  assert.equal(JSON.stringify(observed).includes('settled'), false)
+})
+
+test('distinguishes a current-page miss from an unverifiable execution without querying twice', async () => {
+  const missClient = createClient({
+    async getRunningWater() {
+      this.calls.push(['running-water'])
+      return { total: 0, items: [] }
+    },
+  })
+  const missHarness = createHarness({ client: missClient })
+  await configureDraft(missHarness)
+  await missHarness.service.start({
+    workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: 1,
+    requestKey: 'remote-request-a', priceConfirmed: true, externalTransferConfirmed: true,
+  })
+  await missHarness.service.continue({
+    workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-remote-a',
+  })
+  assert.deepEqual(await missHarness.service.observeRunningWater({
+    workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-remote-a',
+  }), {
+    status: 'not-observed', runId: 'run-remote-a', recordId: 90,
+    associationStatus: 'unverified',
+    scope: 'current-page', total: 0, item: null, observedAt: NOW,
+  })
+
+  const unverifiableClient = createClient({
+    async createWorkflow(input) {
+      this.calls.push(['create', structuredClone(input)])
+      return { resolved: true, result: { key: input.key, answerText: '无记录 id', fileUrls: [] } }
+    },
+  })
+  const unverifiableHarness = createHarness({ client: unverifiableClient })
+  await configureDraft(unverifiableHarness)
+  await unverifiableHarness.service.start({
+    workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: 1,
+    requestKey: 'remote-request-a', priceConfirmed: true, externalTransferConfirmed: true,
+  })
+  await unverifiableHarness.service.continue({
+    workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-remote-a',
+  })
+  assert.deepEqual(await unverifiableHarness.service.observeRunningWater({
+    workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-remote-a',
+  }), {
+    status: 'unverifiable', runId: 'run-remote-a', recordId: null,
+    associationStatus: 'unverified',
+    scope: 'current-page', total: null, item: null, observedAt: NOW,
+  })
+  assert.equal(unverifiableClient.calls.some(([name]) => name === 'running-water'), false)
 })
 
 test('never repeats an uncertain create and reconciles only through the original key', async () => {

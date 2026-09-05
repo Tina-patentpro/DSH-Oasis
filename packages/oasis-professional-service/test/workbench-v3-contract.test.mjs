@@ -98,6 +98,18 @@ function addCompletedRemoteRun(record) {
   return record
 }
 
+test('F1 rejects unsafe historical result and upload URLs without altering stored data', () => {
+  for (const suffix of ['?token=AUDIT_SECRET', '#AUDIT_SECRET']) {
+    const current = addCompletedRemoteRun(structuredClone(migrateWorkbenchRecordV2ToV3(createStoredV2Record())))
+    const run = current.tasks['task-a'].runs['remote-run-a']
+    run.result.fileUrls = [`https://files-staging.example/result.docx${suffix}`]
+    run.result.responseSha = computeOasisRemoteResponseSha256(run.result)
+    const before = JSON.stringify(current)
+    assert.throws(() => parseWorkbenchRecord('workspace-a', current), error => !String(error).includes('AUDIT_SECRET'))
+    assert.equal(JSON.stringify(current), before)
+  }
+})
+
 test('migrates stored v2 records to detached frozen v3 ledgers without inventing remote evidence', () => {
   const source = createStoredV2Record()
   const migrated = migrateWorkbenchRecordV2ToV3(source)

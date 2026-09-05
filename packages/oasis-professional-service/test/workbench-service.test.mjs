@@ -450,6 +450,82 @@ test('prepares writeback only from the authoritative approved run artifact', asy
   assert.deepEqual(repository.calls.map((call) => call[0]), ['get'])
 })
 
+test('prepares remote writeback metadata without the raw request key or provider price', async () => {
+  const artifact = createRunSnapshot().result.artifact
+  const run = {
+    runId: 'remote-run-a',
+    requestKey: 'remote-request-a',
+    mode: 'oasis-legacy',
+    status: 'completed',
+    executionId: 'execution-a',
+    providerSnapshot: {
+      apiBaseOrigin: 'https://oasis-staging.example',
+      apiId: 132,
+      apiEndpoint: 'claims-v1',
+      apiProcess: '整理,撰写',
+      folderId: 8,
+      price: 3,
+    },
+    inputSnapshot: {
+      formValues: { User_input: '生成权利要求书' },
+      inputRefs: [],
+      sha256: 'b'.repeat(64),
+      capturedAt: CLOCK(),
+    },
+    result: {
+      answerText: '远程草稿',
+      fileUrls: ['https://files-staging.example/result/claims.docx'],
+      fileStatus: 'undownloaded-unverified',
+      responseSha: 'c'.repeat(64),
+      artifact,
+    },
+    review: { status: 'approved', note: '已人工检查', updatedAt: CLOCK() },
+    writebacks: [],
+    createdAt: CLOCK(),
+    completedAt: CLOCK(),
+  }
+  const repository = createMutableRepository(runnableRecord(3, {
+    runs: { [run.runId]: run },
+    runOrder: [run.runId],
+    activeRunId: run.runId,
+  }))
+  const writebackManager = createWritebackManager()
+  const service = createWorkbenchService({
+    repository,
+    materialManager: createMaterialManager(),
+    writebackManager,
+  })
+
+  await service.prepareWriteback({
+    workspaceId: 'workspace-a', taskId: 'task-a', runId: run.runId,
+    artifactId: artifact.artifactId, expectedRevision: 3,
+    relativeDirectory: 'outputs\\remote-run-a',
+  })
+
+  const input = writebackManager.calls[0][1]
+  assert.equal(input.mode, 'oasis-legacy')
+  assert.equal(input.workflowId, undefined)
+  assert.equal(input.workflowVersion, undefined)
+  assert.deepEqual(input.remote, {
+    executionId: 'execution-a',
+    requestKeySha256: input.remote.requestKeySha256,
+    provider: {
+      apiBaseOrigin: 'https://oasis-staging.example',
+      apiId: 132,
+      apiEndpoint: 'claims-v1',
+      apiProcess: '整理,撰写',
+      folderId: 8,
+    },
+    files: {
+      status: 'undownloaded-unverified',
+      urls: ['https://files-staging.example/result/claims.docx'],
+    },
+  })
+  assert.match(input.remote.requestKeySha256, /^[a-f0-9]{64}$/)
+  assert.equal(JSON.stringify(input.remote).includes('remote-request-a'), false)
+  assert.equal(JSON.stringify(input.remote).includes('price'), false)
+})
+
 test('rejects stale, unapproved, blocked, foreign-artifact, and over-limit prepare requests', async () => {
   const cases = [
     {

@@ -30,3 +30,25 @@ export function isCanonicalOasisNonProductionOrigin(value) {
     return false
   }
 }
+
+export function normalizeOasisFileUrl(value) {
+  let url
+  try {
+    if (typeof value !== 'string' || value.length > 4096) throw new TypeError()
+    url = new URL(value)
+    normalizeOasisOrigin(url.origin)
+    if (url.username || url.password || url.search || url.hash) throw new TypeError()
+  } catch {
+    throw new TypeError('Remote file URL must be a non-production HTTP(S) URL without credentials, query or fragment')
+  }
+  return url.href
+}
+
+export function isSafeOasisFileUrl(value) {
+  try {
+    normalizeOasisFileUrl(value)
+    return true
+  } catch {
+    return false
+  }
+}

@@ -24,6 +24,8 @@ const EMPTY_PAGE_OPERATION = Object.freeze({
   professionalDetail: null,
   priceConfirmed: false,
   externalTransferConfirmed: false,
+  runningWaterStatus: 'idle',
+  runningWaterObservation: null,
 })
 
 function defaultCreateId() {
@@ -39,6 +41,7 @@ function errorMessage(error) {
 
 export function createWorkbenchStore({
   remote = null,
+  connectionSettings = null,
   createId = defaultCreateId,
   createRequestKey = defaultCreateId,
   clock = () => new Date().toISOString(),
@@ -62,10 +65,19 @@ export function createWorkbenchStore({
   const runtimes = new Map()
   const listeners = new Set()
   const controller = new AbortController()
+  const pendingObservations = new Map()
   const reducerEnvironment = { createId, now: clock }
   let closing = false
   let disposed = false
   let disposePromise
+  let professionalConfigurationGeneration = 0
+
+  function assertProfessionalConfiguration(generation = professionalConfigurationGeneration) {
+    if (generation !== professionalConfigurationGeneration
+      || (connectionSettings !== null && !connectionSettings.getSnapshot().canSubmit)) {
+      throw new Error('连接配置已变更或尚未就绪；请刷新目录并重新确认后再提交。')
+    }
+  }
 
   function assertOpen() {
     if (closing || disposed) throw new Error(disposed ? 'workbench store is disposed' : 'workbench store is closing')
@@ -84,6 +96,7 @@ export function createWorkbenchStore({
         hydrationPromise: null,
         catalogPromise: null,
         professionalPromise: null,
+        professionalGeneration: 0,
         drainPromise: null,
         pendingActions: [],
         pendingDraft: null,
@@ -106,6 +119,11 @@ export function createWorkbenchStore({
     if (current === next) return current
     const frozen = Object.isFrozen(next) ? next : Object.freeze(next)
     states.set(workspaceId, frozen)
+    for (const entry of pendingObservations.values()) {
+      if (entry.workspaceId === workspaceId && !frozen.pages.some((page) => page.pageId === entry.pageId)) {
+        invalidateObservation(entry)
+      }
+    }
     publish()
     return frozen
   }
@@ -159,6 +177,31 @@ export function createWorkbenchStore({
     return setState(workspaceId, stateWith(current, {
       pageOperations: Object.freeze({ ...current.pageOperations, [pageId]: operation }),
     }))
+  }
+
+  function observationIsCurrent(entry) {
+    return !closing && !disposed && !entry.controller.signal.aborted
+      && pendingObservations.get(entry.key) === entry
+      && knownWorkspaceIds.has(entry.workspaceId)
+      && states.get(entry.workspaceId)?.pages.some((page) => page.pageId === entry.pageId)
+  }
+
+  function invalidateObservation(entry) {
+    if (pendingObservations.get(entry.key) !== entry) return
+    pendingObservations.delete(entry.key)
+    entry.controller.abort()
+    const current = states.get(entry.workspaceId)
+    const operation = current?.pageOperations[entry.pageId]
+    if (operation?.activeOperation !== 'running-water-observe') return
+    const pageOperations = { ...current.pageOperations }
+    if (current.pages.some((page) => page.pageId === entry.pageId)) {
+      pageOperations[entry.pageId] = Object.freeze({
+        ...operation, activeOperation: null, runningWaterStatus: 'idle', runningWaterObservation: null,
+      })
+    } else {
+      delete pageOperations[entry.pageId]
+    }
+    setState(entry.workspaceId, stateWith(current, { pageOperations: Object.freeze(pageOperations) }))
   }
 
   function operationErrorFeedback(error) {
@@ -477,6 +520,31 @@ export function createWorkbenchStore({
   }
 
   const store = {
+    connectionSettings,
+
+    async refreshProfessionalConfiguration(reload = false) {
+      if (closing || disposed) return
+      professionalConfigurationGeneration += 1
+      for (const entry of pendingObservations.values()) invalidateObservation(entry)
+      const workspaceIds = [...knownWorkspaceIds]
+      for (const workspaceId of workspaceIds) {
+        const runtime = runtimeFor(workspaceId)
+        runtime.professionalGeneration += 1
+        runtime.professionalPromise = null
+        const current = getCurrent(workspaceId)
+        const pageOperations = Object.fromEntries(Object.entries(current.pageOperations).map(([pageId, operation]) => [
+          pageId, Object.freeze({ ...operation, professionalDetail: null,
+            priceConfirmed: false, externalTransferConfirmed: false,
+            runningWaterStatus: 'idle', runningWaterObservation: null }),
+        ]))
+        setState(workspaceId, stateWith(current, {
+          professionalStatus: 'idle', professionalBootstrap: null, professionalError: null,
+          pageOperations: Object.freeze(pageOperations),
+        }))
+      }
+      if (reload) await Promise.all(workspaceIds.map((workspaceId) => store.loadProfessionalBootstrap(workspaceId).catch(() => null)))
+    },
+
     syncWorkspaces(workspaceItems) {
       assertOpen()
       const nextIds = new Set(
@@ -490,6 +558,9 @@ export function createWorkbenchStore({
         if (!states.has(id)) {
           states.set(id, initialState(id))
         }
+      }
+      for (const entry of pendingObservations.values()) {
+        if (!nextIds.has(entry.workspaceId)) invalidateObservation(entry)
       }
     },
 
@@ -557,24 +628,27 @@ export function createWorkbenchStore({
       }
       const runtime = runtimeFor(workspaceId)
       if (runtime.professionalPromise) return runtime.professionalPromise
+      const generation = ++runtime.professionalGeneration
+      const isCurrent = () => !closing && !disposed && knownWorkspaceIds.has(workspaceId)
+        && runtimes.get(workspaceId) === runtime && runtime.professionalGeneration === generation
       setState(workspaceId, stateWith(current, { professionalStatus: 'loading', professionalError: null }))
       runtime.professionalPromise = (async () => {
         try {
           const bootstrap = await remote.getProfessionalBootstrap(controller.signal)
-          if (closing || disposed) return null
+          if (!isCurrent()) return null
           setState(workspaceId, stateWith(getCurrent(workspaceId), {
             professionalStatus: 'ready', professionalError: null, professionalBootstrap: bootstrap,
           }))
           return bootstrap
         } catch (error) {
-          if (!closing && !disposed && !controller.signal.aborted) {
+          if (isCurrent() && !controller.signal.aborted) {
             setState(workspaceId, stateWith(getCurrent(workspaceId), {
               professionalStatus: 'error', professionalError: errorMessage(error), professionalBootstrap: null,
             }))
           }
           throw error
         } finally {
-          runtime.professionalPromise = null
+          if (runtime.professionalGeneration === generation) runtime.professionalPromise = null
         }
       })()
       return runtime.professionalPromise
@@ -642,6 +716,8 @@ export function createWorkbenchStore({
     async selectProfessionalService(workspaceId, pageId, apiEndpoint) {
       assertOpen()
       assertKnown(workspaceId)
+      assertProfessionalConfiguration()
+      const configurationGeneration = professionalConfigurationGeneration
       pageFor(workspaceId, pageId)
       const bootstrap = getCurrent(workspaceId).professionalBootstrap
       if (!bootstrap?.remoteEnabled || !bootstrap.credentialConfigured) {
@@ -655,6 +731,7 @@ export function createWorkbenchStore({
         : bootstrap.folders[0]?.id
       if (!Number.isSafeInteger(folderId)) throw new Error('Professional service requires an available project folder')
       const detail = await remote.getProfessionalDetail(apiEndpoint, controller.signal)
+      assertProfessionalConfiguration(configurationGeneration)
       if (detail.id !== service.apiId || detail.name !== service.apiEndpoint) {
         throw new Error('Professional service detail mismatch')
       }
@@ -689,6 +766,8 @@ export function createWorkbenchStore({
     async startProfessional(workspaceId, pageId) {
       assertOpen()
       assertKnown(workspaceId)
+      assertProfessionalConfiguration()
+      const configurationGeneration = professionalConfigurationGeneration
       const page = pageFor(workspaceId, pageId)
       if (!page.professionalDraft) throw new Error('A professional service must be selected first')
       const operation = operationFor(getCurrent(workspaceId), pageId)
@@ -701,6 +780,7 @@ export function createWorkbenchStore({
       })
       try {
         await flushWorkspace(workspaceId)
+        assertProfessionalConfiguration(configurationGeneration)
         const current = getCurrent(workspaceId)
         if (current.syncStatus !== 'ready') throw new Error('Workspace is not ready for professional execution')
         const prepared = await remote.startProfessional({
@@ -711,6 +791,7 @@ export function createWorkbenchStore({
         const authoritativePage = pageFor(workspaceId, pageId)
         const execution = Object.values(authoritativePage.remoteExecutions).find((item) => item.requestKey === requestKey)
         if (!execution) throw new Error('Prepared professional execution is missing')
+        assertProfessionalConfiguration(configurationGeneration)
         const result = await remote.continueProfessional({
           workspaceId, taskId: pageId, executionId: execution.executionId,
         }, controller.signal)
@@ -738,11 +819,16 @@ export function createWorkbenchStore({
     },
 
     async continueProfessional(workspaceId, pageId, executionId) {
+      assertProfessionalConfiguration()
+      const configurationGeneration = professionalConfigurationGeneration
       return runPageOperation(
         workspaceId,
         pageId,
         'professional-continue',
-        () => remote.continueProfessional({ workspaceId, taskId: pageId, executionId }, controller.signal),
+        () => {
+          assertProfessionalConfiguration(configurationGeneration)
+          return remote.continueProfessional({ workspaceId, taskId: pageId, executionId }, controller.signal)
+        },
         (applied) => {
           const execution = applied.pages.find((item) => item.pageId === pageId)?.remoteExecutions[executionId]
           return {
@@ -759,6 +845,53 @@ export function createWorkbenchStore({
       pageFor(workspaceId, pageId)
       if (remote === null || typeof remote.stopProfessional !== 'function') throw new Error('Professional service requires the Oasis Host')
       return remote.stopProfessional({ workspaceId, taskId: pageId, executionId }, controller.signal)
+    },
+
+    async observeRunningWater(workspaceId, pageId, runId) {
+      assertOpen()
+      assertKnown(workspaceId)
+      pageFor(workspaceId, pageId)
+      if (remote === null || typeof remote.observeRunningWater !== 'function') {
+        throw new Error('Running-water observation requires the Oasis Host')
+      }
+      const existing = operationFor(getCurrent(workspaceId), pageId)
+      if (existing.activeOperation !== null || existing.runningWaterStatus === 'loading') {
+        throw new Error('another page operation is already in progress')
+      }
+      const entry = {
+        key: JSON.stringify([workspaceId, pageId]), workspaceId, pageId, controller: new AbortController(),
+      }
+      pendingObservations.set(entry.key, entry)
+      updatePageOperation(workspaceId, pageId, {
+        activeOperation: 'running-water-observe',
+        runningWaterStatus: 'loading', runningWaterObservation: null,
+        error: null, errorCode: null,
+      })
+      try {
+        if (!observationIsCurrent(entry)) return undefined
+        const observation = await remote.observeRunningWater(
+          { workspaceId, taskId: pageId, runId },
+          entry.controller.signal,
+        )
+        if (observationIsCurrent(entry)) {
+          updatePageOperation(workspaceId, pageId, {
+            activeOperation: null,
+            runningWaterStatus: 'ready', runningWaterObservation: observation,
+          })
+        }
+        return observation
+      } catch (error) {
+        if (observationIsCurrent(entry)) {
+          updatePageOperation(workspaceId, pageId, {
+            activeOperation: null,
+            runningWaterStatus: 'error', runningWaterObservation: null,
+            error: errorMessage(error), errorCode: typeof error?.code === 'string' ? error.code : null,
+          })
+        }
+        throw error
+      } finally {
+        if (pendingObservations.get(entry.key) === entry) pendingObservations.delete(entry.key)
+      }
     },
 
     setMaterialDraft(workspaceId, pageId, materialPath, confirmed) {
@@ -973,6 +1106,7 @@ export function createWorkbenchStore({
     dispose() {
       if (disposePromise) return disposePromise
       closing = true
+      for (const entry of pendingObservations.values()) invalidateObservation(entry)
       const drains = Promise.all(
         [...knownWorkspaceIds].map((workspaceId) => flushWorkspaceInternal(workspaceId)),
       )

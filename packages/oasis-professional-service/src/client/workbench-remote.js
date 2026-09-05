@@ -1,6 +1,7 @@
 import {
   oasisProfessionalBootstrapSchema,
   oasisProfessionalDetailSchema,
+  oasisRunningWaterObservationSchema,
   oasisProfessionalStopResponseSchema,
   workbenchGetResponseSchema,
   workbenchReplaceResponseSchema,
@@ -117,6 +118,19 @@ export function createWorkbenchRemote(connection) {
         payload,
         signal,
       ), oasisProfessionalStopResponseSchema)
+    },
+
+    async observeRunningWater(payload, signal) {
+      const observation = unwrap(await connection.rpc.call(
+        CHANNEL,
+        'professional/running-water',
+        payload,
+        signal,
+      ), oasisRunningWaterObservationSchema)
+      if (observation.runId !== payload.runId) {
+        throw new WorkbenchRemoteError('malformed-response', 'Running-water response does not match the requested run', {})
+      }
+      return observation
     },
 
     async addMaterial(payload, signal) {

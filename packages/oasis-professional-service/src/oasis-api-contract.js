@@ -1,4 +1,5 @@
-import { normalizeOasisOrigin } from './oasis-origin-policy.js'
+import { normalizeOasisFileUrl, normalizeOasisOrigin } from './oasis-origin-policy.js'
+import { oasisRunningWaterPageSchema } from './workbench-contract.js'
 
 const ENDPOINTS = [
   { method: 'GET', path: '/api/user/detail', purpose: 'user-detail-and-balance', classification: 'legacy' },
@@ -254,6 +255,7 @@ export function normalizeWorkflowProgress(response, taskKey) {
     status: 'completed',
     progressPercent,
     result: {
+      ...(Number.isSafeInteger(normalized.recordId) ? { recordId: normalized.recordId } : {}),
       ...(typeof normalized.key === 'string' ? { key: normalized.key } : { key }),
       answerText: normalized.answerText,
       fileUrls: normalized.fileUrls,
@@ -267,19 +269,26 @@ export function normalizeRunningWater(response) {
   if (!Array.isArray(page.items) || !Number.isSafeInteger(page.total) || page.total < 0) {
     fail('INVALID_RESPONSE', 'running-water data must contain non-negative total and items')
   }
-  return {
+  const normalized = {
     total: page.total,
     items: page.items.map((value) => {
       const item = record(value, 'running-water item')
+      if (item.create_time !== undefined && typeof item.create_time !== 'string') {
+        fail('INVALID_RESPONSE', 'running-water creation time must be a string when provided')
+      }
       return {
         id: item.id,
         linkId: item.link_id,
         type: item.type,
         money: item.money,
         balance: item.balance,
+        createTime: item.create_time ?? null,
       }
     }),
   }
+  const parsed = oasisRunningWaterPageSchema.safeParse(normalized)
+  if (!parsed.success) fail('INVALID_RESPONSE', 'running-water page contains invalid fields')
+  return parsed.data
 }
 
 export function createOasisApiClient({
@@ -300,9 +309,9 @@ export function createOasisApiClient({
   function assertAllowedUrl(value, label) {
     let url
     try {
-      url = new URL(value)
+      url = new URL(normalizeOasisFileUrl(value))
     } catch {
-      fail('INVALID_RESPONSE', `${label} must be an absolute HTTP(S) URL`)
+      fail('UNTRUSTED_REMOTE_URL', `${label} is not a safe non-production file URL`)
     }
     if (!['http:', 'https:'].includes(url.protocol) || !allowedOrigins.has(url.origin)) {
       fail('UNTRUSTED_REMOTE_URL', `${label} origin is not allowed`)
@@ -411,6 +420,7 @@ export function createOasisApiClient({
         return {
           resolved: true,
           result: {
+            ...(Number.isSafeInteger(result.recordId) ? { recordId: result.recordId } : {}),
             key,
             answerText: result.answerText,
             fileUrls: normalizeResultUrls(result.fileUrls, assertAllowedUrl),

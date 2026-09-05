@@ -10,6 +10,27 @@ import {
   createV3Record,
 } from './workbench-fixtures.mjs'
 
+test('F3 verifies the response run identity and correlated fields in addition to its shape', async () => {
+  const valid = {
+    status: 'observed', runId: 'run-a', recordId: 90, scope: 'current-page', total: 1,
+    associationStatus: 'unverified',
+    item: { id: 1, linkId: 90, type: '消费', money: 3, balance: 17, createTime: null },
+    observedAt: '2026-09-02T01:00:00.000Z',
+  }
+  let value = valid
+  const remote = createWorkbenchRemote({ rpc: { async call() { return { ok: true, value } } } })
+  const payload = { workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-a' }
+  assert.deepEqual(await remote.observeRunningWater(payload), valid)
+  for (const bad of [
+    { ...valid, runId: 'other-run' }, { ...valid, total: null }, { ...valid, total: 0 },
+    { ...valid, item: { ...valid.item, linkId: 91 } },
+    { ...valid, associationStatus: undefined },
+  ]) {
+    value = bad
+    await assert.rejects(remote.observeRunningWater(payload), { code: 'malformed-response' })
+  }
+})
+
 test('uses the dedicated DSH Connection channel for schema-v3 get and replace', async () => {
   const calls = []
   const connection = {
@@ -239,11 +260,21 @@ test('calls professional-service Host endpoints and validates every response bou
     inputFields: [], outputFields: [], schemaHash: 'a'.repeat(64),
   }
   const replacement = { committed: true, current: createV3Record('workspace-a', 4, { withEvidence: true }) }
+  const observation = {
+    status: 'observed', runId: 'run-remote-a', recordId: 90, scope: 'current-page', total: 1,
+    associationStatus: 'unverified',
+    item: {
+      id: 301, linkId: 90, type: '消费', money: 3, balance: 17,
+      createTime: '2026-08-26 09:02:03',
+    },
+    observedAt: '2026-08-26T01:02:03.000Z',
+  }
   const remote = createWorkbenchRemote({ rpc: { async call(channel, endpoint, payload, signal) {
     calls.push({ channel, endpoint, payload, signal })
     if (endpoint === 'professional/bootstrap') return { ok: true, value: bootstrap }
     if (endpoint === 'professional/detail') return { ok: true, value: detail }
     if (endpoint === 'professional/stop') return { ok: true, value: { stopped: true } }
+    if (endpoint === 'professional/running-water') return { ok: true, value: observation }
     return { ok: true, value: replacement }
   } } })
   const signal = new AbortController().signal
@@ -252,14 +283,16 @@ test('calls professional-service Host endpoints and validates every response bou
     requestKey: 'remote-a', priceConfirmed: true, externalTransferConfirmed: true,
   }
   const execution = { workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-a' }
+  const observe = { workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-remote-a' }
   assert.deepEqual(await remote.getProfessionalBootstrap(signal), bootstrap)
   assert.deepEqual(await remote.getProfessionalDetail('claims-v1', signal), detail)
   assert.deepEqual(await remote.startProfessional(start, signal), replacement)
   assert.deepEqual(await remote.continueProfessional(execution, signal), replacement)
   assert.deepEqual(await remote.stopProfessional(execution, signal), { stopped: true })
+  assert.deepEqual(await remote.observeRunningWater(observe, signal), observation)
   assert.deepEqual(calls.map((call) => call.endpoint), [
     'professional/bootstrap', 'professional/detail', 'professional/start',
-    'professional/continue', 'professional/stop',
+    'professional/continue', 'professional/stop', 'professional/running-water',
   ])
 
   const malformed = createWorkbenchRemote({ rpc: { async call() {
@@ -269,4 +302,5 @@ test('calls professional-service Host endpoints and validates every response bou
   await assert.rejects(malformed.getProfessionalDetail('claims-v1'), /malformed/i)
   await assert.rejects(malformed.startProfessional(start), /malformed/i)
   await assert.rejects(malformed.stopProfessional(execution), /malformed/i)
+  await assert.rejects(malformed.observeRunningWater(observe), /malformed/i)
 })

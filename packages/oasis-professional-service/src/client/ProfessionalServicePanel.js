@@ -28,7 +28,19 @@ export function ProfessionalServicePanel({
   onStart = () => {},
   onContinue = () => {},
   onStop = () => {},
+  onObserveRunningWater = () => {},
 }) {
+  const configurationBlocked = state.professionalConfigurationBlocked === true
+  const waiting = ['professional-run', 'professional-continue'].includes(operation.activeOperation)
+  if (configurationBlocked) {
+    const execution = latestExecution(page)
+    return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
+      createElement('strong', null, '非生产专业服务'),
+      createElement('p', { role: 'status' }, '请先完成上方“非生产服务连接配置”。设置保存后须重启隔离 Host 并刷新页面；本地工作流仍可继续使用。'),
+      waiting && execution ? createElement('button', {
+        type: 'button', onClick: () => onStop(execution.executionId), 'data-testid': 'oasis-professional-stop',
+      }, '停止本地等待') : null)
+  }
   if (state.professionalStatus === 'idle' || state.professionalStatus === 'loading') {
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
       createElement('strong', null, '非生产专业服务'),
@@ -43,20 +55,27 @@ export function ProfessionalServicePanel({
   if (!bootstrap?.remoteEnabled) {
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
       createElement('strong', null, '非生产专业服务'),
-      createElement('p', { style: { margin: 0, color: '#66706b' } }, 'Host 尚未配置非生产 API 地址。'))
+      createElement('p', { style: { margin: 0, color: '#66706b' } }, 'Host 尚未启用非生产 API 地址。请展开上方连接配置，保存后重启隔离 Host 并刷新页面。'))
   }
   if (!bootstrap.credentialConfigured) {
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
       createElement('strong', null, '非生产专业服务'),
-      createElement('p', { style: { margin: 0, color: '#8b2f24' } }, '请在 DSH 凭证界面配置 JWT；凭证不会进入工作台状态。'))
+      createElement('p', { style: { margin: 0, color: '#8b2f24' } }, '请在上方连接配置中单独更新 JWT；凭证不会进入工作台状态。'))
   }
 
   const draft = page.professionalDraft
   const detail = operation.professionalDetail
   const execution = latestExecution(page)
   const busy = operation.activeOperation !== null
-  const canStart = detail && draft && operation.priceConfirmed && operation.externalTransferConfirmed && !busy
-  const canContinue = execution && ['submission-unknown', 'waiting-result', 'wait-stopped', 'auth-required'].includes(execution.status) && !busy
+  const canStart = !configurationBlocked && detail && draft && operation.priceConfirmed && operation.externalTransferConfirmed && !busy
+  const canContinue = !configurationBlocked && execution && ['submission-unknown', 'waiting-result', 'wait-stopped', 'auth-required'].includes(execution.status) && !busy
+  const activeRemoteRun = page.activeRunId === null ? null : page.runs[page.activeRunId]
+  const showRunningWater = activeRemoteRun?.mode === 'oasis-legacy'
+    && activeRemoteRun.status === 'completed'
+  const canObserveRunningWater = showRunningWater && !busy
+  const observation = operation.runningWaterObservation?.runId === activeRemoteRun?.runId
+    ? operation.runningWaterObservation
+    : null
 
   return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
     createElement('div', null,
@@ -102,7 +121,7 @@ export function ProfessionalServicePanel({
                   'data-testid': `oasis-professional-field-${field.fieldId}`,
                 }))),
           createElement('label', { style: fieldStyle },
-            createElement('span', null, '项目文件夹'),
+            createElement('span', null, '项目文件夹（当前返回页）'),
             createElement('select', {
               value: draft.folderId, disabled: busy, style: controlStyle,
               onChange: (event) => onSelectFolder(Number(event.currentTarget.value)),
@@ -142,10 +161,29 @@ export function ProfessionalServicePanel({
             type: 'button', onClick: () => onContinue(execution.executionId),
             'data-testid': 'oasis-professional-continue',
           }, '继续按原请求 key 对账') : null,
-          busy ? createElement('button', {
+          ['professional-run', 'professional-continue'].includes(operation.activeOperation) ? createElement('button', {
             type: 'button', onClick: () => onStop(execution.executionId),
             'data-testid': 'oasis-professional-stop',
           }, '停止本地等待') : null)
+      : null,
+    showRunningWater
+      ? createElement('div', { style: { borderTop: '1px solid #eceeec', paddingTop: 10, fontSize: 12 } },
+          createElement('button', {
+            type: 'button',
+            disabled: !canObserveRunningWater,
+            onClick: () => onObserveRunningWater(activeRemoteRun.runId),
+            'data-testid': 'oasis-professional-running-water',
+          }, operation.runningWaterStatus === 'loading' ? '正在观察流水…' : '观察当前页流水'),
+          createElement('div', { style: { marginTop: 6, color: '#66706b' } },
+            '仅表示当前页观察结果；同 link_id 仅为候选，关联未验证，不代表结算、退款或资金锁定。'),
+          observation
+            ? createElement('div', { role: 'status', style: { marginTop: 6 } },
+                observation.status === 'observed'
+                  ? `已观察到同 link_id 的候选流水（关联未验证）：${observation.item.type} ${observation.item.money}，余额 ${observation.item.balance}`
+                  : observation.status === 'not-observed'
+                    ? '当前返回页未观察到同 link_id 候选；不能据此判断不存在或未结算。'
+                    : '没有来源已验证的创建记录 id，本次观察不可验证。')
+            : null)
       : null,
     operation.error ? createElement('div', { role: 'alert' }, operation.error) : null)
 }

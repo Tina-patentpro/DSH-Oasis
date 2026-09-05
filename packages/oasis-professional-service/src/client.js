@@ -7,6 +7,7 @@ import { WorkbenchEntry } from './client/WorkbenchEntry.js'
 import { WorkspaceContextBridge } from './client/WorkspaceContextBridge.js'
 import { createWorkbenchRemote } from './client/workbench-remote.js'
 import { createWorkbenchStore } from './client/workbench-store.js'
+import { createOasisConnectionSettings } from './client/oasis-connection-settings.js'
 
 export const inject = ['slots', 'connection']
 
@@ -18,7 +19,10 @@ export function apply(ctx) {
   const connection = ctx.get?.('connection') ?? ctx.connection
   if (slots === undefined || connection === undefined) return () => {}
 
-  const store = createWorkbenchStore({ remote: createWorkbenchRemote(connection) })
+  const connectionSettings = createOasisConnectionSettings({
+    onInvalidated: ({ reload }) => store.refreshProfessionalConfiguration(reload),
+  })
+  const store = createWorkbenchStore({ remote: createWorkbenchRemote(connection), connectionSettings })
   const focusTargets = new Map()
   const layoutAdapter = createLayoutAdapter()
   const coordinator = createPanelHostCoordinator({ layoutAdapter })
@@ -60,7 +64,17 @@ export function apply(ctx) {
   ))
 
   let betterSidebarFiber = null
+  let settingsFiber = null
   if (typeof ctx.inject === 'function') {
+    try {
+      settingsFiber = ctx.inject(['settingsScope', 'remote'], (injectedCtx) => connectionSettings.bind({
+        settingsScope: injectedCtx.get?.('settingsScope') ?? injectedCtx.settingsScope,
+        remote: injectedCtx.get?.('remote') ?? injectedCtx.remote,
+        connection,
+      }))
+    } catch {
+      // Configuration is optional; local workflows remain available.
+    }
     try {
       betterSidebarFiber = ctx.inject(['betterSidebar'], (injectedCtx) => {
         const betterSidebar = injectedCtx.get?.('betterSidebar') ?? injectedCtx.betterSidebar
@@ -92,7 +106,12 @@ export function apply(ctx) {
             try {
               layoutAdapter.dispose()
             } finally {
-              await store.dispose()
+              try {
+                await settingsFiber?.dispose?.()
+              } finally {
+                connectionSettings.dispose()
+                await store.dispose()
+              }
             }
           }
         }

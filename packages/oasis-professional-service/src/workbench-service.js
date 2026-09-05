@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto'
+import { createHash, randomUUID } from 'node:crypto'
 
 import { WORKBENCH_LIMITS } from './workbench-contract.js'
 import {
@@ -325,6 +325,23 @@ export function createWorkbenchService({
       const task = requireTask(current, taskId)
       const run = requireRun(task, runId)
       assertWritebackRun(run, artifactId)
+      const remote = run.mode === 'oasis-legacy'
+        ? {
+            executionId: run.executionId,
+            requestKeySha256: createHash('sha256').update(run.requestKey).digest('hex'),
+            provider: {
+              apiBaseOrigin: run.providerSnapshot.apiBaseOrigin,
+              apiId: run.providerSnapshot.apiId,
+              apiEndpoint: run.providerSnapshot.apiEndpoint,
+              apiProcess: run.providerSnapshot.apiProcess,
+              folderId: run.providerSnapshot.folderId,
+            },
+            files: {
+              status: run.result.fileStatus,
+              urls: [...run.result.fileUrls],
+            },
+          }
+        : undefined
       return requireWritebackManager().prepare({
         workspaceId,
         taskId,
@@ -338,6 +355,7 @@ export function createWorkbenchService({
         artifact: run.result.artifact,
         reviewStatus: run.review.status,
         relativeDirectory,
+        ...(remote ? { remote } : {}),
       })
     },
     async commitWriteback({ confirmationToken }) {

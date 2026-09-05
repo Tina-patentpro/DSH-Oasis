@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { isCanonicalOasisNonProductionOrigin } from './oasis-origin-policy.js'
+import { isCanonicalOasisNonProductionOrigin, isSafeOasisFileUrl } from './oasis-origin-policy.js'
 
 export const WORKBENCH_LIMITS = Object.freeze({
   maxTasksPerWorkspace: 32,
@@ -342,9 +342,10 @@ const httpOriginSchema = httpUrlSchema.refine(
   'must contain only a non-production HTTP(S) origin',
 )
 
-const nonProductionHttpUrlSchema = httpUrlSchema.refine((value) => (
-  isCanonicalOasisNonProductionOrigin(new URL(value).origin)
-), 'must target a non-production HTTP(S) origin')
+const nonProductionHttpUrlSchema = httpUrlSchema.refine(
+  isSafeOasisFileUrl,
+  'must be a non-production file URL without credentials, query or fragment',
+)
 
 export const oasisRemoteExecutionStatusSchema = z.enum([
   'prepared',
@@ -410,6 +411,47 @@ export const oasisProfessionalDetailSchema = z.object({
 
 export const oasisProfessionalStopResponseSchema = z.object({ stopped: z.boolean() }).strict()
 
+const oasisRunningWaterItemSchema = z.object({
+  id: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  linkId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  type: z.string().min(1).max(100).refine((value) => value.trim().length > 0),
+  money: z.number().finite(),
+  balance: z.number().finite(),
+  createTime: z.string().min(1).max(100).nullable().default(null),
+}).strict()
+
+export const oasisRunningWaterPageSchema = z.object({
+  total: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  items: z.array(oasisRunningWaterItemSchema),
+}).strict().refine((value) => value.total >= value.items.length, 'total must cover the returned page')
+
+export const oasisRunningWaterObservationSchema = z.object({
+  status: z.enum(['observed', 'not-observed', 'unverifiable']),
+  associationStatus: z.literal('unverified'),
+  runId: identifierSchema,
+  recordId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).nullable(),
+  scope: z.literal('current-page'),
+  total: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).nullable(),
+  item: oasisRunningWaterItemSchema.nullable(),
+  observedAt: timestampSchema,
+}).strict().superRefine((value, ctx) => {
+  if (value.status === 'observed' && (value.recordId === null || value.item === null)) {
+    ctx.addIssue({ code: 'custom', path: ['item'], message: 'observed running water requires one correlated item' })
+  }
+  if (value.status === 'observed' && (value.item?.linkId !== value.recordId || value.total === null || value.total < 1)) {
+    ctx.addIssue({ code: 'custom', path: ['item'], message: 'observed requires a matching candidate and a nonempty page' })
+  }
+  if (value.status === 'not-observed' && (value.recordId === null || value.item !== null)) {
+    ctx.addIssue({ code: 'custom', path: ['item'], message: 'not-observed running water requires a record id and no item' })
+  }
+  if (value.status === 'not-observed' && value.total === null) {
+    ctx.addIssue({ code: 'custom', path: ['total'], message: 'not-observed requires a validated page total' })
+  }
+  if (value.status === 'unverifiable' && (value.recordId !== null || value.total !== null || value.item !== null)) {
+    ctx.addIssue({ code: 'custom', path: ['status'], message: 'unverifiable running water cannot claim remote observations' })
+  }
+})
+
 const oasisProviderSnapshotSchema = z.object({
   apiBaseOrigin: httpOriginSchema,
   apiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
@@ -421,6 +463,8 @@ const oasisProviderSnapshotSchema = z.object({
 
 export const oasisRemoteExecutionSchema = z.object({
   executionId: identifierSchema,
+  recordId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).nullable().optional(),
+  recordIdSource: z.literal('create').nullable().optional(),
   requestKey: identifierSchema,
   status: oasisRemoteExecutionStatusSchema,
   inputSha: sha256Schema,
@@ -457,6 +501,9 @@ export const oasisRemoteExecutionSchema = z.object({
   submittedAt: timestampSchema.nullable(),
   completedAt: timestampSchema.nullable(),
 }).strict().superRefine((value, ctx) => {
+  if (value.recordIdSource === 'create' && !Number.isSafeInteger(value.recordId)) {
+    ctx.addIssue({ code: 'custom', path: ['recordId'], message: 'create provenance requires a record id' })
+  }
   if (value.status === 'completed') {
     if (value.completedAt === null) ctx.addIssue({ code: 'custom', path: ['completedAt'], message: 'completed execution requires completedAt' })
     if (value.submittedAt === null) ctx.addIssue({ code: 'custom', path: ['submittedAt'], message: 'completed execution requires submittedAt' })

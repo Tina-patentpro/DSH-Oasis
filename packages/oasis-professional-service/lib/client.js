@@ -2079,7 +2079,7 @@ window.__ModuleLoader__.load({
             })));
           }
         }
-
+        
         if (${id}.value === undefined) {
           if (${k} in input) {
             newResult[${k}] = undefined;
@@ -2087,7 +2087,7 @@ window.__ModuleLoader__.load({
         } else {
           newResult[${k}] = ${id}.value;
         }
-
+        
       `);
 					else if (!isOptionalIn) doc.write(`
         const ${id}_present = ${k} in input;
@@ -2122,7 +2122,7 @@ window.__ModuleLoader__.load({
             path: iss.path ? [${k}, ...iss.path] : [${k}]
           })));
         }
-
+        
         if (${id}.value === undefined) {
           if (${k} in input) {
             newResult[${k}] = undefined;
@@ -2130,7 +2130,7 @@ window.__ModuleLoader__.load({
         } else {
           newResult[${k}] = ${id}.value;
         }
-
+        
       `);
 				}
 				doc.write(`payload.value = newResult;`);
@@ -4779,6 +4779,26 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return false;
 			}
 		}
+		function normalizeOasisFileUrl(value) {
+			let url;
+			try {
+				if (typeof value !== "string" || value.length > 4096) throw new TypeError();
+				url = new URL(value);
+				normalizeOasisOrigin(url.origin);
+				if (url.username || url.password || url.search || url.hash) throw new TypeError();
+			} catch {
+				throw new TypeError("Remote file URL must be a non-production HTTP(S) URL without credentials, query or fragment");
+			}
+			return url.href;
+		}
+		function isSafeOasisFileUrl(value) {
+			try {
+				normalizeOasisFileUrl(value);
+				return true;
+			} catch {
+				return false;
+			}
+		}
 		//#endregion
 		//#region src/workbench-contract.js
 		const WORKBENCH_LIMITS = Object.freeze({
@@ -5082,7 +5102,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}
 		}, "must be an absolute HTTP(S) URL");
 		const httpOriginSchema = httpUrlSchema.refine(isCanonicalOasisNonProductionOrigin, "must contain only a non-production HTTP(S) origin");
-		const nonProductionHttpUrlSchema = httpUrlSchema.refine((value) => isCanonicalOasisNonProductionOrigin(new URL(value).origin), "must target a non-production HTTP(S) origin");
+		const nonProductionHttpUrlSchema = httpUrlSchema.refine(isSafeOasisFileUrl, "must be a non-production file URL without credentials, query or fragment");
 		const oasisRemoteExecutionStatusSchema = _enum([
 			"prepared",
 			"uploading",
@@ -5145,6 +5165,58 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			schemaHash: sha256Schema
 		}).strict();
 		const oasisProfessionalStopResponseSchema = object({ stopped: boolean() }).strict();
+		const oasisRunningWaterItemSchema = object({
+			id: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			linkId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			type: string().min(1).max(100).refine((value) => value.trim().length > 0),
+			money: number().finite(),
+			balance: number().finite(),
+			createTime: string().min(1).max(100).nullable().default(null)
+		}).strict();
+		object({
+			total: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			items: array(oasisRunningWaterItemSchema)
+		}).strict().refine((value) => value.total >= value.items.length, "total must cover the returned page");
+		const oasisRunningWaterObservationSchema = object({
+			status: _enum([
+				"observed",
+				"not-observed",
+				"unverifiable"
+			]),
+			associationStatus: literal("unverified"),
+			runId: identifierSchema,
+			recordId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).nullable(),
+			scope: literal("current-page"),
+			total: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).nullable(),
+			item: oasisRunningWaterItemSchema.nullable(),
+			observedAt: timestampSchema
+		}).strict().superRefine((value, ctx) => {
+			if (value.status === "observed" && (value.recordId === null || value.item === null)) ctx.addIssue({
+				code: "custom",
+				path: ["item"],
+				message: "observed running water requires one correlated item"
+			});
+			if (value.status === "observed" && (value.item?.linkId !== value.recordId || value.total === null || value.total < 1)) ctx.addIssue({
+				code: "custom",
+				path: ["item"],
+				message: "observed requires a matching candidate and a nonempty page"
+			});
+			if (value.status === "not-observed" && (value.recordId === null || value.item !== null)) ctx.addIssue({
+				code: "custom",
+				path: ["item"],
+				message: "not-observed running water requires a record id and no item"
+			});
+			if (value.status === "not-observed" && value.total === null) ctx.addIssue({
+				code: "custom",
+				path: ["total"],
+				message: "not-observed requires a validated page total"
+			});
+			if (value.status === "unverifiable" && (value.recordId !== null || value.total !== null || value.item !== null)) ctx.addIssue({
+				code: "custom",
+				path: ["status"],
+				message: "unverifiable running water cannot claim remote observations"
+			});
+		});
 		const oasisProviderSnapshotSchema = object({
 			apiBaseOrigin: httpOriginSchema,
 			apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
@@ -5155,6 +5227,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}).strict();
 		const oasisRemoteExecutionSchema = object({
 			executionId: identifierSchema,
+			recordId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).nullable().optional(),
+			recordIdSource: literal("create").nullable().optional(),
 			requestKey: identifierSchema,
 			status: oasisRemoteExecutionStatusSchema,
 			inputSha: sha256Schema,
@@ -5191,6 +5265,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			submittedAt: timestampSchema.nullable(),
 			completedAt: timestampSchema.nullable()
 		}).strict().superRefine((value, ctx) => {
+			if (value.recordIdSource === "create" && !Number.isSafeInteger(value.recordId)) ctx.addIssue({
+				code: "custom",
+				path: ["recordId"],
+				message: "create provenance requires a record id"
+			});
 			if (value.status === "completed") {
 				if (value.completedAt === null) ctx.addIssue({
 					code: "custom",
@@ -5993,7 +6072,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			display: "grid",
 			gap: 12
 		};
-		const fieldStyle = {
+		const fieldStyle$1 = {
 			display: "grid",
 			gap: 5,
 			fontSize: 12
@@ -6009,7 +6088,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const id = page.remoteExecutionOrder.at(-1);
 			return id ? page.remoteExecutions[id] : null;
 		}
-		function ProfessionalServicePanel({ state, page, operation, onSelectService = () => {}, onUpdateField = () => {}, onSelectFolder = () => {}, onConfirm = () => {}, onStart = () => {}, onContinue = () => {}, onStop = () => {} }) {
+		function ProfessionalServicePanel({ state, page, operation, onSelectService = () => {}, onUpdateField = () => {}, onSelectFolder = () => {}, onConfirm = () => {}, onStart = () => {}, onContinue = () => {}, onStop = () => {}, onObserveRunningWater = () => {} }) {
+			const configurationBlocked = state.professionalConfigurationBlocked === true;
+			const waiting = ["professional-run", "professional-continue"].includes(operation.activeOperation);
+			if (configurationBlocked) {
+				const execution = latestExecution(page);
+				return (0, react.createElement)("section", {
+					style: boxStyle,
+					"data-testid": "oasis-professional-service"
+				}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { role: "status" }, "请先完成上方“非生产服务连接配置”。设置保存后须重启隔离 Host 并刷新页面；本地工作流仍可继续使用。"), waiting && execution ? (0, react.createElement)("button", {
+					type: "button",
+					onClick: () => onStop(execution.executionId),
+					"data-testid": "oasis-professional-stop"
+				}, "停止本地等待") : null);
+			}
 			if (state.professionalStatus === "idle" || state.professionalStatus === "loading") return (0, react.createElement)("section", {
 				style: boxStyle,
 				"data-testid": "oasis-professional-service"
@@ -6025,25 +6117,29 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { style: {
 				margin: 0,
 				color: "#66706b"
-			} }, "Host 尚未配置非生产 API 地址。"));
+			} }, "Host 尚未启用非生产 API 地址。请展开上方连接配置，保存后重启隔离 Host 并刷新页面。"));
 			if (!bootstrap.credentialConfigured) return (0, react.createElement)("section", {
 				style: boxStyle,
 				"data-testid": "oasis-professional-service"
 			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { style: {
 				margin: 0,
 				color: "#8b2f24"
-			} }, "请在 DSH 凭证界面配置 JWT；凭证不会进入工作台状态。"));
+			} }, "请在上方连接配置中单独更新 JWT；凭证不会进入工作台状态。"));
 			const draft = page.professionalDraft;
 			const detail = operation.professionalDetail;
 			const execution = latestExecution(page);
 			const busy = operation.activeOperation !== null;
-			const canStart = detail && draft && operation.priceConfirmed && operation.externalTransferConfirmed && !busy;
-			const canContinue = execution && [
+			const canStart = !configurationBlocked && detail && draft && operation.priceConfirmed && operation.externalTransferConfirmed && !busy;
+			const canContinue = !configurationBlocked && execution && [
 				"submission-unknown",
 				"waiting-result",
 				"wait-stopped",
 				"auth-required"
 			].includes(execution.status) && !busy;
+			const activeRemoteRun = page.activeRunId === null ? null : page.runs[page.activeRunId];
+			const showRunningWater = activeRemoteRun?.mode === "oasis-legacy" && activeRemoteRun.status === "completed";
+			const canObserveRunningWater = showRunningWater && !busy;
+			const observation = operation.runningWaterObservation?.runId === activeRemoteRun?.runId ? operation.runningWaterObservation : null;
 			return (0, react.createElement)("section", {
 				style: boxStyle,
 				"data-testid": "oasis-professional-service"
@@ -6051,7 +6147,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				marginTop: 4,
 				color: "#66706b",
 				fontSize: 12
-			} }, `环境：非生产 · 余额：${bootstrap.balance ?? "未知"} · 价格仅作提交前快照`)), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, "服务"), (0, react.createElement)("select", {
+			} }, `环境：非生产 · 余额：${bootstrap.balance ?? "未知"} · 价格仅作提交前快照`)), (0, react.createElement)("label", { style: fieldStyle$1 }, (0, react.createElement)("span", null, "服务"), (0, react.createElement)("select", {
 				value: draft?.selectedApiEndpoint ?? "",
 				disabled: busy,
 				onChange: (event) => {
@@ -6072,7 +6168,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				gap: 10
 			} }, ...detail.inputFields.map((field) => (0, react.createElement)("label", {
 				key: field.fieldId,
-				style: fieldStyle
+				style: fieldStyle$1
 			}, (0, react.createElement)("span", null, field.label), field.control === "single-file" ? (0, react.createElement)("select", {
 				value: draft.formValues[field.fieldId] ?? "",
 				disabled: busy,
@@ -6088,7 +6184,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				style: controlStyle$1,
 				onChange: (event) => onUpdateField(field.fieldId, event.currentTarget.value),
 				"data-testid": `oasis-professional-field-${field.fieldId}`
-			}))), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, "项目文件夹"), (0, react.createElement)("select", {
+			}))), (0, react.createElement)("label", { style: fieldStyle$1 }, (0, react.createElement)("span", null, "项目文件夹（当前返回页）"), (0, react.createElement)("select", {
 				value: draft.folderId,
 				disabled: busy,
 				style: controlStyle$1,
@@ -6097,7 +6193,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, ...bootstrap.folders.map((folder) => (0, react.createElement)("option", {
 				key: folder.id,
 				value: folder.id
-			}, folder.name)))), (0, react.createElement)("div", { style: { fontSize: 12 } }, `参考价格：${detail.price}`), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, (0, react.createElement)("input", {
+			}, folder.name)))), (0, react.createElement)("div", { style: { fontSize: 12 } }, `参考价格：${detail.price}`), (0, react.createElement)("label", { style: fieldStyle$1 }, (0, react.createElement)("span", null, (0, react.createElement)("input", {
 				type: "checkbox",
 				checked: operation.priceConfirmed,
 				disabled: busy,
@@ -6105,7 +6201,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					priceConfirmed: event.currentTarget.checked,
 					externalTransferConfirmed: operation.externalTransferConfirmed
 				})
-			}), " 我已确认本次参考价格与余额快照")), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, (0, react.createElement)("input", {
+			}), " 我已确认本次参考价格与余额快照")), (0, react.createElement)("label", { style: fieldStyle$1 }, (0, react.createElement)("span", null, (0, react.createElement)("input", {
 				type: "checkbox",
 				checked: operation.externalTransferConfirmed,
 				disabled: busy,
@@ -6129,11 +6225,26 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				type: "button",
 				onClick: () => onContinue(execution.executionId),
 				"data-testid": "oasis-professional-continue"
-			}, "继续按原请求 key 对账") : null, busy ? (0, react.createElement)("button", {
+			}, "继续按原请求 key 对账") : null, ["professional-run", "professional-continue"].includes(operation.activeOperation) ? (0, react.createElement)("button", {
 				type: "button",
 				onClick: () => onStop(execution.executionId),
 				"data-testid": "oasis-professional-stop"
-			}, "停止本地等待") : null) : null, operation.error ? (0, react.createElement)("div", { role: "alert" }, operation.error) : null);
+			}, "停止本地等待") : null) : null, showRunningWater ? (0, react.createElement)("div", { style: {
+				borderTop: "1px solid #eceeec",
+				paddingTop: 10,
+				fontSize: 12
+			} }, (0, react.createElement)("button", {
+				type: "button",
+				disabled: !canObserveRunningWater,
+				onClick: () => onObserveRunningWater(activeRemoteRun.runId),
+				"data-testid": "oasis-professional-running-water"
+			}, operation.runningWaterStatus === "loading" ? "正在观察流水…" : "观察当前页流水"), (0, react.createElement)("div", { style: {
+				marginTop: 6,
+				color: "#66706b"
+			} }, "仅表示当前页观察结果；同 link_id 仅为候选，关联未验证，不代表结算、退款或资金锁定。"), observation ? (0, react.createElement)("div", {
+				role: "status",
+				style: { marginTop: 6 }
+			}, observation.status === "observed" ? `已观察到同 link_id 的候选流水（关联未验证）：${observation.item.type} ${observation.item.money}，余额 ${observation.item.balance}` : observation.status === "not-observed" ? "当前返回页未观察到同 link_id 候选；不能据此判断不存在或未结算。" : "没有来源已验证的创建记录 id，本次观察不可验证。") : null) : null, operation.error ? (0, react.createElement)("div", { role: "alert" }, operation.error) : null);
 		}
 		//#endregion
 		//#region src/client/RunPreview.js
@@ -6147,6 +6258,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}
 		function hasDraftDiverged(page, run) {
 			if (!run) return false;
+			if (run.mode === "oasis-legacy") {
+				const draft = page.professionalDraft;
+				if (!draft || draft.selectedApiId !== run.providerSnapshot.apiId || draft.selectedApiEndpoint !== run.providerSnapshot.apiEndpoint || draft.folderId !== run.providerSnapshot.folderId || JSON.stringify(draft.formValues) !== JSON.stringify(run.inputSnapshot.formValues)) return true;
+				const currentReferences = run.inputSnapshot.inputRefs.map((snapshot) => page.inputRefs.find((reference) => reference.referenceId === snapshot.referenceId));
+				return currentReferences.some((reference) => reference === void 0) || JSON.stringify(currentReferences.map(materialIdentity)) !== JSON.stringify(run.inputSnapshot.inputRefs.map(materialIdentity));
+			}
 			return JSON.stringify(page.formValues) !== JSON.stringify(run.inputSnapshot.formValues) || JSON.stringify(page.inputRefs.map(materialIdentity)) !== JSON.stringify(run.inputSnapshot.inputRefs.map(materialIdentity));
 		}
 		function generationDisabledReason({ syncStatus, validation, operation }) {
@@ -6174,6 +6291,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				operation
 			});
 			const run = page.activeRunId === null ? null : page.runs[page.activeRunId];
+			const remoteRun = run?.mode === "oasis-legacy";
 			const blocked = run?.result.contentStatus === "blocked";
 			return (0, react.createElement)("section", { "aria-labelledby": `oasis-run-title-${page.pageId}` }, (0, react.createElement)("div", { style: {
 				display: "flex",
@@ -6191,7 +6309,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				margin: "5px 0 0",
 				fontSize: 12,
 				color: "var(--dsw-alias-text-secondary, #66706b)"
-			} }, "本地确定性演练；结果必须经过人工审核。")), (0, react.createElement)("button", {
+			} }, remoteRun ? "非生产专业服务结果；远程内容和文件必须经过人工审核。" : "本地确定性演练；结果必须经过人工审核。")), (0, react.createElement)("button", {
 				type: "button",
 				disabled: disabledReason !== null,
 				onClick: onGenerate,
@@ -6257,7 +6375,29 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				alignItems: "center",
 				flexWrap: "wrap",
 				fontSize: 12
-			} }, (0, react.createElement)("strong", null, statusText(run.result.contentStatus)), (0, react.createElement)("span", null, run.completedAt), hasDraftDiverged(page, run) ? (0, react.createElement)("span", { style: { color: "#8a4b2f" } }, "草稿已偏离此运行；旧运行快照保持不变。") : (0, react.createElement)("span", { style: { color: "#2f6653" } }, "当前草稿与此运行输入一致。")), ...run.result.sections.map((section) => (0, react.createElement)("section", {
+			} }, (0, react.createElement)("strong", null, statusText(run.result.contentStatus)), (0, react.createElement)("span", null, run.completedAt), hasDraftDiverged(page, run) ? (0, react.createElement)("span", { style: { color: "#8a4b2f" } }, "草稿已偏离此运行；旧运行快照保持不变。") : (0, react.createElement)("span", { style: { color: "#2f6653" } }, "当前草稿与此运行输入一致。")), remoteRun ? (0, react.createElement)("section", { style: {
+				borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
+				paddingTop: 10,
+				display: "grid",
+				gap: 10
+			} }, (0, react.createElement)("h5", { style: {
+				margin: 0,
+				fontSize: 13
+			} }, "远程文字结果"), (0, react.createElement)("pre", { style: {
+				margin: 0,
+				whiteSpace: "pre-wrap",
+				overflowWrap: "anywhere",
+				font: "inherit",
+				fontSize: 13,
+				lineHeight: 1.65
+			} }, run.result.answerText), run.result.fileUrls.length > 0 ? (0, react.createElement)("div", null, (0, react.createElement)("strong", { style: { fontSize: 13 } }, "远程文件（未下载、未验证）"), (0, react.createElement)("ul", null, ...run.result.fileUrls.map((url, index) => (0, react.createElement)("li", {
+				key: index,
+				style: { overflowWrap: "anywhere" }
+			}, url)))) : null, (0, react.createElement)("p", { style: {
+				margin: 0,
+				fontSize: 12,
+				color: "var(--dsw-alias-text-secondary, #66706b)"
+			} }, "远程文件列表仅为服务响应记录；插件尚未下载、校验或写回这些二进制文件。")) : (0, react.createElement)("div", null, ...run.result.sections.map((section) => (0, react.createElement)("section", {
 				key: section.sectionId,
 				style: {
 					borderTop: "1px solid var(--dsw-alias-border-l2, #e0e3e1)",
@@ -6277,7 +6417,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				margin: 0,
 				fontSize: 12,
 				color: "var(--dsw-alias-text-secondary, #66706b)"
-			} }, run.result.disclaimer), blocked ? (0, react.createElement)("div", {
+			} }, run.result.disclaimer)), blocked ? (0, react.createElement)("div", {
 				role: "alert",
 				style: {
 					border: "1px solid #d7a69d",
@@ -6692,7 +6832,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function activeRun(page) {
 			return page.activeRunId === null ? null : page.runs[page.activeRunId];
 		}
-		function PanelPages({ state, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {} }) {
+		function PanelPages({ state, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {}, onObserveRunningWater = () => {} }) {
 			if (state.syncStatus === "idle" || state.syncStatus === "loading") return (0, react.createElement)("div", {
 				role: "status",
 				"aria-live": "polite",
@@ -6786,7 +6926,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						indexWarningManifest: null,
 						professionalDetail: null,
 						priceConfirmed: false,
-						externalTransferConfirmed: false
+						externalTransferConfirmed: false,
+						runningWaterStatus: "idle",
+						runningWaterObservation: null
 					};
 					const validation = validateWorkflowFormValues(workflow, page.formValues);
 					const operationDisabled = operation.activeOperation !== null;
@@ -6831,7 +6973,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						onConfirm: (value) => onProfessionalConfirm(page.pageId, value),
 						onStart: () => onStartProfessional(page.pageId),
 						onContinue: (executionId) => onContinueProfessional(page.pageId, executionId),
-						onStop: (executionId) => onStopProfessional(page.pageId, executionId)
+						onStop: (executionId) => onStopProfessional(page.pageId, executionId),
+						onObserveRunningWater: (runId) => onObserveRunningWater(page.pageId, runId)
 					})), (0, react.createElement)("div", { style: {
 						...surfaceStyle,
 						display: "grid",
@@ -6872,7 +7015,156 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, titleEditor, content);
 		}
 		//#endregion
+		//#region src/client/OasisConnectionSettings.js
+		const unavailable = Object.freeze({
+			connected: false,
+			settingsWritable: false,
+			credentialWritable: false,
+			apiBaseUrl: "",
+			downloadOrigins: []
+		});
+		const noSubscribe$1 = () => () => {};
+		const getUnavailable = () => unavailable;
+		const fieldStyle = {
+			display: "grid",
+			gap: 4,
+			fontSize: 12
+		};
+		const inputStyle = {
+			width: "100%",
+			boxSizing: "border-box",
+			font: "inherit",
+			padding: 6
+		};
+		function ConnectionSettingsForm({ snapshot, controller, apiDraft = "", downloadDraft = "", passwordRef, onApiDraft = () => {}, onDownloadDraft = () => {} }) {
+			const disabledSettings = !snapshot.settingsWritable || snapshot.busy;
+			const disabledCredential = !snapshot.credentialWritable || snapshot.settingsStatus !== "ready" || snapshot.busy;
+			const clearPassword = () => {
+				if (passwordRef.current) passwordRef.current.value = "";
+			};
+			return (0, react.createElement)("details", {
+				"data-testid": "oasis-connection-settings",
+				style: {
+					flexShrink: 0,
+					maxHeight: "50%",
+					overflowY: "auto",
+					padding: "10px 14px",
+					borderBottom: "1px solid #dedee1"
+				},
+				onToggle: (event) => {
+					if (!event.currentTarget.open) clearPassword();
+				}
+			}, (0, react.createElement)("summary", { style: {
+				cursor: "pointer",
+				fontSize: 13
+			} }, "非生产服务连接配置"), (0, react.createElement)("div", { style: {
+				display: "grid",
+				gap: 8,
+				paddingTop: 10
+			} }, (0, react.createElement)("p", {
+				role: "status",
+				style: {
+					margin: 0,
+					fontSize: 12
+				}
+			}, !snapshot.connected ? "尚未连接可配置的本机 Host；本地工作流仍可使用。" : snapshot.settingsStatus !== "ready" ? "公共配置服务不可用或配置引用不匹配；本地工作流仍可使用。" : "环境固定为非生产；普通设置和凭据分别保存。"), (0, react.createElement)("label", { style: fieldStyle }, "API origin", (0, react.createElement)("input", {
+				value: apiDraft,
+				disabled: disabledSettings,
+				style: inputStyle,
+				autoComplete: "off",
+				placeholder: "https://非生产服务域名",
+				onChange: (event) => onApiDraft(event.currentTarget.value)
+			})), (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabledSettings,
+				onClick: () => {
+					controller.saveApiBaseUrl(apiDraft);
+				}
+			}, "保存 API 地址"), (0, react.createElement)("label", { style: fieldStyle }, "允许的下载 origin（可空，每行一个）", (0, react.createElement)("textarea", {
+				value: downloadDraft,
+				rows: 2,
+				disabled: disabledSettings,
+				style: inputStyle,
+				onChange: (event) => onDownloadDraft(event.currentTarget.value)
+			})), (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabledSettings,
+				onClick: () => {
+					controller.saveDownloadOrigins(downloadDraft);
+				}
+			}, "保存下载来源"), (0, react.createElement)("p", { style: {
+				margin: 0,
+				fontSize: 12
+			} }, "保存设置后需手工重启 Host 并刷新页面；空 API 地址表示禁用远程服务。"), (0, react.createElement)("label", { style: fieldStyle }, "JWT · OASIS_USER_JWT", (0, react.createElement)("input", {
+				ref: passwordRef,
+				type: "password",
+				disabled: disabledCredential,
+				style: inputStyle,
+				autoComplete: "new-password",
+				spellCheck: false,
+				placeholder: "留空不更改已有凭据"
+			})), (0, react.createElement)("div", {
+				role: "status",
+				style: { fontSize: 12 }
+			}, snapshot.credentialStatus !== "ready" ? "凭据状态尚未确认。" : snapshot.credentialConfigured ? "凭据已配置（不读取或显示原值）。" : "尚未配置凭据。"), (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabledCredential,
+				"data-testid": "oasis-credential-save",
+				onClick: () => {
+					const value = passwordRef.current?.value ?? "";
+					clearPassword();
+					controller.updateCredential(value);
+				}
+			}, "更新凭据"), (0, react.createElement)("button", {
+				type: "button",
+				disabled: !snapshot.connected || snapshot.busy,
+				onClick: () => {
+					controller.refresh();
+				}
+			}, "刷新配置与目录状态"), snapshot.restartRequired ? (0, react.createElement)("div", { role: "status" }, "设置尚待重启生效；已暂停新业务提交，请重启 Host 并刷新页面。") : null, snapshot.notice ? (0, react.createElement)("div", { role: "status" }, snapshot.notice) : null, snapshot.error ? (0, react.createElement)("div", { role: "alert" }, snapshot.error) : null));
+		}
+		function OasisConnectionSettings({ controller, visible = true }) {
+			const snapshot = (0, react.useSyncExternalStore)(controller?.subscribe ?? noSubscribe$1, controller?.getSnapshot ?? getUnavailable, controller?.getSnapshot ?? getUnavailable);
+			const [apiDraft, setApiDraft] = (0, react.useState)(snapshot.apiBaseUrl);
+			const [downloadDraft, setDownloadDraft] = (0, react.useState)(snapshot.downloadOrigins.join("\n"));
+			const passwordRef = (0, react.useRef)(null);
+			(0, react.useEffect)(() => {
+				setApiDraft(snapshot.apiBaseUrl);
+			}, [snapshot.apiBaseUrl]);
+			const originsText = snapshot.downloadOrigins.join("\n");
+			(0, react.useEffect)(() => {
+				setDownloadDraft(originsText);
+			}, [originsText]);
+			(0, react.useEffect)(() => {
+				const input = passwordRef.current;
+				if (!visible || !snapshot.connected || !snapshot.credentialWritable) {
+					if (input) input.value = "";
+				}
+				return () => {
+					if (input) input.value = "";
+				};
+			}, [
+				visible,
+				snapshot.connected,
+				snapshot.credentialWritable,
+				controller
+			]);
+			if (!visible) return null;
+			return (0, react.createElement)(ConnectionSettingsForm, {
+				snapshot,
+				controller,
+				apiDraft,
+				downloadDraft,
+				passwordRef,
+				onApiDraft: setApiDraft,
+				onDownloadDraft: setDownloadDraft
+			});
+		}
+		//#endregion
 		//#region src/client/OasisWorkbenchSurface.js
+		const noConfiguration = Object.freeze({ canSubmit: true });
+		const getNoConfiguration = () => noConfiguration;
+		const noSubscribe = () => () => {};
 		const reducedMotionCss = `
   [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
   @media (prefers-reduced-motion: reduce) { [data-oasis-panel] { transition: none; } }
@@ -6974,6 +7266,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function OasisWorkbenchSurface({ store, focusTargets, layoutAdapter, workspaceId, workspaceItems, hostMode = "standalone", visible = true }) {
 			const state = (0, react.useSyncExternalStore)(store.subscribe, () => store.peekWorkspaceState(workspaceId), () => store.peekWorkspaceState(workspaceId));
 			const panelRef = (0, react.useRef)(null);
+			const configuration = (0, react.useSyncExternalStore)(store.connectionSettings?.subscribe ?? noSubscribe, store.connectionSettings?.getSnapshot ?? getNoConfiguration, store.connectionSettings?.getSnapshot ?? getNoConfiguration);
 			const titleRef = (0, react.useRef)(null);
 			const layout = (0, react.useSyncExternalStore)(layoutAdapter.subscribe, layoutAdapter.getSnapshot, layoutAdapter.getSnapshot);
 			(0, react.useEffect)(() => {
@@ -7066,8 +7359,15 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				onToggleExpanded: () => {
 					if (hostMode === "standalone") store.setPanelMode(workspaceId, state.panelMode === "expanded" ? "normal" : "expanded");
 				}
+			}), (0, react.createElement)(OasisConnectionSettings, {
+				key: workspaceId,
+				controller: store.connectionSettings,
+				visible
 			}), (0, react.createElement)(PanelPages, {
-				state,
+				state: {
+					...state,
+					professionalConfigurationBlocked: !configuration.canSubmit
+				},
 				effectiveMode,
 				onSelectWorkflow: (pageId, workflowId) => store.selectWorkflow(workspaceId, pageId, workflowId),
 				onRenamePage: (pageId, title) => store.renamePage(workspaceId, pageId, title),
@@ -7121,6 +7421,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				},
 				onStopProfessional: (pageId, executionId) => {
 					store.stopProfessional(workspaceId, pageId, executionId).catch(() => {});
+				},
+				onObserveRunningWater: (pageId, runId) => {
+					store.observeRunningWater(workspaceId, pageId, runId).catch(() => {});
 				}
 			}));
 		}
@@ -7721,6 +8024,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async stopProfessional(payload, signal) {
 					return unwrap(await connection.rpc.call(CHANNEL, "professional/stop", payload, signal), oasisProfessionalStopResponseSchema);
 				},
+				async observeRunningWater(payload, signal) {
+					const observation = unwrap(await connection.rpc.call(CHANNEL, "professional/running-water", payload, signal), oasisRunningWaterObservationSchema);
+					if (observation.runId !== payload.runId) throw new WorkbenchRemoteError("malformed-response", "Running-water response does not match the requested run", {});
+					return observation;
+				},
 				async addMaterial(payload, signal) {
 					return unwrap(await connection.rpc.call(CHANNEL, "material/add", payload, signal), workbenchReplaceResponseSchema);
 				},
@@ -8047,7 +8355,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			indexWarningManifest: null,
 			professionalDetail: null,
 			priceConfirmed: false,
-			externalTransferConfirmed: false
+			externalTransferConfirmed: false,
+			runningWaterStatus: "idle",
+			runningWaterObservation: null
 		});
 		function defaultCreateId() {
 			if (typeof globalThis.crypto?.randomUUID !== "function") throw new Error("crypto.randomUUID is required to create an Oasis task");
@@ -8056,7 +8366,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function errorMessage(error) {
 			return error instanceof Error ? error.message : String(error);
 		}
-		function createWorkbenchStore({ remote = null, createId = defaultCreateId, createRequestKey = defaultCreateId, clock = () => (/* @__PURE__ */ new Date()).toISOString(), workflowCatalog = null, saveDelayMs = 400, disposeDrainMs = 1e3, scheduler = globalThis } = {}) {
+		function createWorkbenchStore({ remote = null, connectionSettings = null, createId = defaultCreateId, createRequestKey = defaultCreateId, clock = () => (/* @__PURE__ */ new Date()).toISOString(), workflowCatalog = null, saveDelayMs = 400, disposeDrainMs = 1e3, scheduler = globalThis } = {}) {
 			if (!Number.isInteger(saveDelayMs) || saveDelayMs < 0) throw new TypeError("saveDelayMs must be a non-negative integer");
 			if (typeof createRequestKey !== "function") throw new TypeError("createRequestKey must be a function");
 			if (!Number.isSafeInteger(disposeDrainMs) || disposeDrainMs < 0) throw new TypeError("disposeDrainMs must be a non-negative safe integer");
@@ -8066,6 +8376,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const runtimes = /* @__PURE__ */ new Map();
 			const listeners = /* @__PURE__ */ new Set();
 			const controller = new AbortController();
+			const pendingObservations = /* @__PURE__ */ new Map();
 			const reducerEnvironment = {
 				createId,
 				now: clock
@@ -8073,6 +8384,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			let closing = false;
 			let disposed = false;
 			let disposePromise;
+			let professionalConfigurationGeneration = 0;
+			function assertProfessionalConfiguration(generation = professionalConfigurationGeneration) {
+				if (generation !== professionalConfigurationGeneration || connectionSettings !== null && !connectionSettings.getSnapshot().canSubmit) throw new Error("连接配置已变更或尚未就绪；请刷新目录并重新确认后再提交。");
+			}
 			function assertOpen() {
 				if (closing || disposed) throw new Error(disposed ? "workbench store is disposed" : "workbench store is closing");
 			}
@@ -8086,6 +8401,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						hydrationPromise: null,
 						catalogPromise: null,
 						professionalPromise: null,
+						professionalGeneration: 0,
 						drainPromise: null,
 						pendingActions: [],
 						pendingDraft: null,
@@ -8106,6 +8422,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				if (current === next) return current;
 				const frozen = Object.isFrozen(next) ? next : Object.freeze(next);
 				states.set(workspaceId, frozen);
+				for (const entry of pendingObservations.values()) if (entry.workspaceId === workspaceId && !frozen.pages.some((page) => page.pageId === entry.pageId)) invalidateObservation(entry);
 				publish();
 				return frozen;
 			}
@@ -8159,6 +8476,26 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					...current.pageOperations,
 					[pageId]: operation
 				}) }));
+			}
+			function observationIsCurrent(entry) {
+				return !closing && !disposed && !entry.controller.signal.aborted && pendingObservations.get(entry.key) === entry && knownWorkspaceIds.has(entry.workspaceId) && states.get(entry.workspaceId)?.pages.some((page) => page.pageId === entry.pageId);
+			}
+			function invalidateObservation(entry) {
+				if (pendingObservations.get(entry.key) !== entry) return;
+				pendingObservations.delete(entry.key);
+				entry.controller.abort();
+				const current = states.get(entry.workspaceId);
+				const operation = current?.pageOperations[entry.pageId];
+				if (operation?.activeOperation !== "running-water-observe") return;
+				const pageOperations = { ...current.pageOperations };
+				if (current.pages.some((page) => page.pageId === entry.pageId)) pageOperations[entry.pageId] = Object.freeze({
+					...operation,
+					activeOperation: null,
+					runningWaterStatus: "idle",
+					runningWaterObservation: null
+				});
+				else delete pageOperations[entry.pageId];
+				setState(entry.workspaceId, stateWith(current, { pageOperations: Object.freeze(pageOperations) }));
 			}
 			function operationErrorFeedback(error) {
 				const code = typeof error?.code === "string" ? error.code : null;
@@ -8407,7 +8744,35 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				if (!["create-page", "open-panel"].includes(action.type)) return void 0;
 				return after.pages.find((page) => !before.pages.some((item) => item.pageId === page.pageId));
 			}
-			return Object.freeze({
+			const store = {
+				connectionSettings,
+				async refreshProfessionalConfiguration(reload = false) {
+					if (closing || disposed) return;
+					professionalConfigurationGeneration += 1;
+					for (const entry of pendingObservations.values()) invalidateObservation(entry);
+					const workspaceIds = [...knownWorkspaceIds];
+					for (const workspaceId of workspaceIds) {
+						const runtime = runtimeFor(workspaceId);
+						runtime.professionalGeneration += 1;
+						runtime.professionalPromise = null;
+						const current = getCurrent(workspaceId);
+						const pageOperations = Object.fromEntries(Object.entries(current.pageOperations).map(([pageId, operation]) => [pageId, Object.freeze({
+							...operation,
+							professionalDetail: null,
+							priceConfirmed: false,
+							externalTransferConfirmed: false,
+							runningWaterStatus: "idle",
+							runningWaterObservation: null
+						})]));
+						setState(workspaceId, stateWith(current, {
+							professionalStatus: "idle",
+							professionalBootstrap: null,
+							professionalError: null,
+							pageOperations: Object.freeze(pageOperations)
+						}));
+					}
+					if (reload) await Promise.all(workspaceIds.map((workspaceId) => store.loadProfessionalBootstrap(workspaceId).catch(() => null)));
+				},
 				syncWorkspaces(workspaceItems) {
 					assertOpen();
 					const nextIds = new Set(Array.isArray(workspaceItems) ? workspaceItems.map((item) => item?.workspaceId).filter((id) => typeof id === "string") : []);
@@ -8416,6 +8781,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						knownWorkspaceIds.add(id);
 						if (!states.has(id)) states.set(id, initialState(id));
 					}
+					for (const entry of pendingObservations.values()) if (!nextIds.has(entry.workspaceId)) invalidateObservation(entry);
 				},
 				subscribe(listener) {
 					if (closing || disposed) return () => {};
@@ -8479,6 +8845,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					})).professionalBootstrap;
 					const runtime = runtimeFor(workspaceId);
 					if (runtime.professionalPromise) return runtime.professionalPromise;
+					const generation = ++runtime.professionalGeneration;
+					const isCurrent = () => !closing && !disposed && knownWorkspaceIds.has(workspaceId) && runtimes.get(workspaceId) === runtime && runtime.professionalGeneration === generation;
 					setState(workspaceId, stateWith(current, {
 						professionalStatus: "loading",
 						professionalError: null
@@ -8486,7 +8854,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					runtime.professionalPromise = (async () => {
 						try {
 							const bootstrap = await remote.getProfessionalBootstrap(controller.signal);
-							if (closing || disposed) return null;
+							if (!isCurrent()) return null;
 							setState(workspaceId, stateWith(getCurrent(workspaceId), {
 								professionalStatus: "ready",
 								professionalError: null,
@@ -8494,14 +8862,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							}));
 							return bootstrap;
 						} catch (error) {
-							if (!closing && !disposed && !controller.signal.aborted) setState(workspaceId, stateWith(getCurrent(workspaceId), {
+							if (isCurrent() && !controller.signal.aborted) setState(workspaceId, stateWith(getCurrent(workspaceId), {
 								professionalStatus: "error",
 								professionalError: errorMessage(error),
 								professionalBootstrap: null
 							}));
 							throw error;
 						} finally {
-							runtime.professionalPromise = null;
+							if (runtime.professionalGeneration === generation) runtime.professionalPromise = null;
 						}
 					})();
 					return runtime.professionalPromise;
@@ -8568,6 +8936,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async selectProfessionalService(workspaceId, pageId, apiEndpoint) {
 					assertOpen();
 					assertKnown(workspaceId);
+					assertProfessionalConfiguration();
+					const configurationGeneration = professionalConfigurationGeneration;
 					pageFor(workspaceId, pageId);
 					const bootstrap = getCurrent(workspaceId).professionalBootstrap;
 					if (!bootstrap?.remoteEnabled || !bootstrap.credentialConfigured) throw new Error("Professional service runtime is not ready");
@@ -8577,6 +8947,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					const folderId = bootstrap.folders.some((item) => item.id === existingFolderId) ? existingFolderId : bootstrap.folders[0]?.id;
 					if (!Number.isSafeInteger(folderId)) throw new Error("Professional service requires an available project folder");
 					const detail = await remote.getProfessionalDetail(apiEndpoint, controller.signal);
+					assertProfessionalConfiguration(configurationGeneration);
 					if (detail.id !== service.apiId || detail.name !== service.apiEndpoint) throw new Error("Professional service detail mismatch");
 					const next = dispatch(workspaceId, {
 						type: "select-professional-service",
@@ -8627,6 +8998,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async startProfessional(workspaceId, pageId) {
 					assertOpen();
 					assertKnown(workspaceId);
+					assertProfessionalConfiguration();
+					const configurationGeneration = professionalConfigurationGeneration;
 					if (!pageFor(workspaceId, pageId).professionalDraft) throw new Error("A professional service must be selected first");
 					const operation = operationFor(getCurrent(workspaceId), pageId);
 					if (operation.priceConfirmed !== true) throw new Error("Price confirmation is required");
@@ -8642,6 +9015,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					});
 					try {
 						await flushWorkspace(workspaceId);
+						assertProfessionalConfiguration(configurationGeneration);
 						const current = getCurrent(workspaceId);
 						if (current.syncStatus !== "ready") throw new Error("Workspace is not ready for professional execution");
 						applyAuthoritativeReplacement(workspaceId, await remote.startProfessional({
@@ -8655,6 +9029,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						const authoritativePage = pageFor(workspaceId, pageId);
 						const execution = Object.values(authoritativePage.remoteExecutions).find((item) => item.requestKey === requestKey);
 						if (!execution) throw new Error("Prepared professional execution is missing");
+						assertProfessionalConfiguration(configurationGeneration);
 						const applied = applyAuthoritativeReplacement(workspaceId, await remote.continueProfessional({
 							workspaceId,
 							taskId: pageId,
@@ -8680,11 +9055,16 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					}
 				},
 				async continueProfessional(workspaceId, pageId, executionId) {
-					return runPageOperation(workspaceId, pageId, "professional-continue", () => remote.continueProfessional({
-						workspaceId,
-						taskId: pageId,
-						executionId
-					}, controller.signal), (applied) => {
+					assertProfessionalConfiguration();
+					const configurationGeneration = professionalConfigurationGeneration;
+					return runPageOperation(workspaceId, pageId, "professional-continue", () => {
+						assertProfessionalConfiguration(configurationGeneration);
+						return remote.continueProfessional({
+							workspaceId,
+							taskId: pageId,
+							executionId
+						}, controller.signal);
+					}, (applied) => {
 						const execution = applied.pages.find((item) => item.pageId === pageId)?.remoteExecutions[executionId];
 						return {
 							requestKey: execution && ["completed", "failed"].includes(execution.status) ? null : operationFor(applied, pageId).requestKey,
@@ -8702,6 +9082,53 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						taskId: pageId,
 						executionId
 					}, controller.signal);
+				},
+				async observeRunningWater(workspaceId, pageId, runId) {
+					assertOpen();
+					assertKnown(workspaceId);
+					pageFor(workspaceId, pageId);
+					if (remote === null || typeof remote.observeRunningWater !== "function") throw new Error("Running-water observation requires the Oasis Host");
+					const existing = operationFor(getCurrent(workspaceId), pageId);
+					if (existing.activeOperation !== null || existing.runningWaterStatus === "loading") throw new Error("another page operation is already in progress");
+					const entry = {
+						key: JSON.stringify([workspaceId, pageId]),
+						workspaceId,
+						pageId,
+						controller: new AbortController()
+					};
+					pendingObservations.set(entry.key, entry);
+					updatePageOperation(workspaceId, pageId, {
+						activeOperation: "running-water-observe",
+						runningWaterStatus: "loading",
+						runningWaterObservation: null,
+						error: null,
+						errorCode: null
+					});
+					try {
+						if (!observationIsCurrent(entry)) return void 0;
+						const observation = await remote.observeRunningWater({
+							workspaceId,
+							taskId: pageId,
+							runId
+						}, entry.controller.signal);
+						if (observationIsCurrent(entry)) updatePageOperation(workspaceId, pageId, {
+							activeOperation: null,
+							runningWaterStatus: "ready",
+							runningWaterObservation: observation
+						});
+						return observation;
+					} catch (error) {
+						if (observationIsCurrent(entry)) updatePageOperation(workspaceId, pageId, {
+							activeOperation: null,
+							runningWaterStatus: "error",
+							runningWaterObservation: null,
+							error: errorMessage(error),
+							errorCode: typeof error?.code === "string" ? error.code : null
+						});
+						throw error;
+					} finally {
+						if (pendingObservations.get(entry.key) === entry) pendingObservations.delete(entry.key);
+					}
 				},
 				setMaterialDraft(workspaceId, pageId, materialPath, confirmed) {
 					return updatePageOperation(workspaceId, pageId, {
@@ -8897,6 +9324,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				dispose() {
 					if (disposePromise) return disposePromise;
 					closing = true;
+					for (const entry of pendingObservations.values()) invalidateObservation(entry);
 					const bestEffortDrains = Promise.all([...knownWorkspaceIds].map((workspaceId) => flushWorkspaceInternal(workspaceId))).catch(() => void 0);
 					let deadlineTimer = null;
 					const deadline = new Promise((resolveDeadline) => {
@@ -8927,6 +9355,282 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					})();
 					return disposePromise;
 				}
+			};
+			return Object.freeze(store);
+		}
+		//#endregion
+		//#region src/client/oasis-connection-settings.js
+		const REFERENCE = "OASIS_USER_JWT";
+		const initial = () => ({
+			connected: false,
+			settingsStatus: "unavailable",
+			settingsWritable: false,
+			apiBaseUrl: "",
+			downloadOrigins: Object.freeze([]),
+			credentialStatus: "unavailable",
+			credentialConfigured: false,
+			credentialWritable: false,
+			busy: false,
+			restartRequired: false,
+			notice: null,
+			error: null,
+			canSubmit: false
+		});
+		function createOasisConnectionSettings({ onInvalidated = () => {} } = {}) {
+			let snapshot = Object.freeze(initial());
+			const listeners = /* @__PURE__ */ new Set();
+			let scope = null;
+			let connection = null;
+			let generation = 0;
+			let credentialRead = 0;
+			let lastSettings = null;
+			let pendingWrite = false;
+			let disposed = false;
+			let detachCurrent = () => {};
+			function publish(patch) {
+				if (disposed) return;
+				const next = {
+					...snapshot,
+					...patch
+				};
+				next.canSubmit = next.connected && next.settingsStatus === "ready" && next.apiBaseUrl !== "" && next.credentialStatus === "ready" && next.credentialConfigured && !next.busy && !next.restartRequired;
+				snapshot = Object.freeze(next);
+				for (const listener of listeners) listener();
+			}
+			function invalidate(reload = false) {
+				try {
+					Promise.resolve(onInvalidated({ reload })).catch(() => {});
+				} catch {}
+			}
+			function readSettings() {
+				try {
+					const view = scope?.getSnapshot();
+					if (view?.status !== "ready" || view.mode !== "host") throw new Error("unavailable");
+					const value = view.value;
+					if (value?.environmentKind !== "non-production" || value.credentialRef !== REFERENCE || typeof value.apiBaseUrl !== "string" || !Array.isArray(value.downloadOrigins)) throw new Error("invalid");
+					const apiBaseUrl = value.apiBaseUrl === "" ? "" : normalizeOasisOrigin(value.apiBaseUrl);
+					const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisOrigin(origin)))]);
+					const settings = JSON.stringify([apiBaseUrl, downloadOrigins]);
+					const restartRequired = snapshot.restartRequired || lastSettings !== null && settings !== lastSettings;
+					lastSettings = settings;
+					publish({
+						settingsStatus: "ready",
+						settingsWritable: snapshot.connected && view.writable === true,
+						apiBaseUrl,
+						downloadOrigins,
+						restartRequired
+					});
+				} catch {
+					publish({
+						settingsStatus: "unavailable",
+						settingsWritable: false,
+						apiBaseUrl: "",
+						downloadOrigins: Object.freeze([])
+					});
+				}
+			}
+			async function refreshCredential() {
+				const current = generation;
+				const read = ++credentialRead;
+				const api = connection?.api?.credentials;
+				if (!snapshot.connected || typeof api?.describe !== "function") {
+					publish({
+						credentialStatus: "unavailable",
+						credentialConfigured: false,
+						credentialWritable: false
+					});
+					return false;
+				}
+				publish({
+					credentialStatus: "loading",
+					credentialWritable: false
+				});
+				try {
+					const response = await api.describe({ refs: [REFERENCE] });
+					if (disposed || current !== generation || read !== credentialRead) return false;
+					const info = response?.result?.ok === true ? response.result.value?.credentials?.[REFERENCE] : null;
+					if (typeof info?.configured !== "boolean" || typeof info.writable !== "boolean") throw new Error("invalid");
+					publish({
+						credentialStatus: "ready",
+						credentialConfigured: info.configured,
+						credentialWritable: info.writable && typeof api.set === "function"
+					});
+					return true;
+				} catch {
+					if (!disposed && current === generation && read === credentialRead) publish({
+						credentialStatus: "error",
+						credentialConfigured: false,
+						credentialWritable: false
+					});
+					return false;
+				}
+			}
+			async function write(kind, action) {
+				if (disposed || pendingWrite || !snapshot.connected || snapshot.settingsStatus !== "ready" || !(kind === "credential" ? snapshot.credentialWritable : snapshot.settingsWritable)) return false;
+				const current = generation;
+				pendingWrite = true;
+				publish({
+					busy: true,
+					error: null,
+					notice: null
+				});
+				invalidate();
+				try {
+					await action();
+					if (disposed || generation !== current) return false;
+					if (kind === "credential") {
+						const described = await refreshCredential();
+						if (disposed || generation !== current) return false;
+						publish({ notice: described ? "凭据已更新；后续操作使用新凭据。" : "凭据已写入，但状态读取失败；请刷新状态后再使用。" });
+						invalidate(described);
+					} else {
+						readSettings();
+						publish({
+							restartRequired: true,
+							notice: "设置已保存。请手工重启隔离 Host 并刷新页面后再提交任务。"
+						});
+					}
+					return true;
+				} catch {
+					if (!disposed && generation === current) publish({
+						error: kind === "credential" ? "凭据更新失败；请检查可写状态后重试。" : "设置保存失败；请刷新后检查冲突或输入。",
+						notice: null
+					});
+					return false;
+				} finally {
+					pendingWrite = false;
+					publish({
+						busy: false,
+						...kind === "settings" && current !== generation ? {
+							restartRequired: true,
+							notice: "连接已变更，设置保存结果待确认；请检查保存值、重启 Host 并刷新页面。"
+						} : {}
+					});
+				}
+			}
+			return Object.freeze({
+				getSnapshot: () => snapshot,
+				subscribe(listener) {
+					if (disposed) return () => {};
+					listeners.add(listener);
+					return () => listeners.delete(listener);
+				},
+				bind(services) {
+					if (disposed) return () => {};
+					detachCurrent();
+					const disposers = [];
+					let active = true;
+					const detach = () => {
+						if (!active) return;
+						active = false;
+						generation += 1;
+						credentialRead += 1;
+						for (const dispose of disposers.splice(0)) try {
+							dispose();
+						} catch {}
+						scope = null;
+						connection = null;
+						publish({
+							...initial(),
+							busy: pendingWrite,
+							restartRequired: snapshot.restartRequired
+						});
+						invalidate();
+					};
+					detachCurrent = detach;
+					try {
+						connection = services.connection;
+						if (connection?.isLoopback !== true || typeof connection.hostDescription?.subscribe !== "function" || typeof connection.hostDescription?.getSnapshot !== "function") throw new Error("unavailable");
+						scope = services.settingsScope.bind({ namespace: "oasis-professional-service" });
+						if (typeof scope?.set !== "function" || typeof scope?.subscribe !== "function") throw new Error("unavailable");
+						const onHost = () => {
+							if (!active) return;
+							generation += 1;
+							credentialRead += 1;
+							publish({
+								connected: connection.hostDescription.getSnapshot() != null,
+								credentialConfigured: false,
+								credentialWritable: false,
+								error: null,
+								notice: null
+							});
+							readSettings();
+							invalidate();
+							refreshCredential().then((ok) => {
+								if (active && ok) invalidate(true);
+							});
+						};
+						disposers.push(scope.subscribe(() => {
+							if (active) {
+								readSettings();
+								invalidate();
+							}
+						}));
+						disposers.push(connection.hostDescription.subscribe(onHost));
+						if (typeof services.remote?.$on === "function") disposers.push(services.remote.$on("credentials/reference-updated", (ref) => {
+							if (!active || ref !== REFERENCE) return;
+							invalidate();
+							refreshCredential().then((ok) => {
+								if (active && ok) invalidate(true);
+							});
+						}));
+						onHost();
+					} catch {
+						detach();
+					}
+					return detach;
+				},
+				async refresh() {
+					readSettings();
+					const ok = await refreshCredential();
+					if (ok) invalidate(true);
+					return ok;
+				},
+				async saveApiBaseUrl(value) {
+					let origin;
+					try {
+						origin = value.trim() === "" ? "" : normalizeOasisOrigin(value.trim());
+					} catch {
+						publish({
+							error: "API 地址必须是非生产 HTTP(S) origin，不含路径、凭据或查询参数。",
+							notice: null
+						});
+						return false;
+					}
+					return write("settings", () => scope.set("apiBaseUrl", origin));
+				},
+				async saveDownloadOrigins(value) {
+					let origins;
+					try {
+						origins = [...new Set(value.split(/\r?\n/u).map((item) => item.trim()).filter(Boolean).map((item) => normalizeOasisOrigin(item)))];
+					} catch {
+						publish({
+							error: "下载来源必须逐行填写非生产 HTTP(S) origin。",
+							notice: null
+						});
+						return false;
+					}
+					return write("settings", () => scope.set("downloadOrigins", origins));
+				},
+				async updateCredential(value) {
+					if (typeof value !== "string" || value.trim() === "") return false;
+					return write("credential", async () => {
+						try {
+							if ((await connection.api.credentials.set({
+								ref: REFERENCE,
+								value
+							}))?.result?.ok !== true) throw new Error("failed");
+						} finally {
+							value = "";
+						}
+					});
+				},
+				dispose() {
+					if (disposed) return;
+					detachCurrent();
+					disposed = true;
+					listeners.clear();
+				}
 			});
 		}
 		//#endregion
@@ -8938,7 +9642,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const slots = ctx.get?.("slots") ?? ctx.slots;
 			const connection = ctx.get?.("connection") ?? ctx.connection;
 			if (slots === void 0 || connection === void 0) return () => {};
-			const store = createWorkbenchStore({ remote: createWorkbenchRemote(connection) });
+			const connectionSettings = createOasisConnectionSettings({ onInvalidated: ({ reload }) => store.refreshProfessionalConfiguration(reload) });
+			const store = createWorkbenchStore({
+				remote: createWorkbenchRemote(connection),
+				connectionSettings
+			});
 			const focusTargets = /* @__PURE__ */ new Map();
 			const layoutAdapter = createLayoutAdapter();
 			const coordinator = createPanelHostCoordinator({ layoutAdapter });
@@ -8973,16 +9681,25 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				coordinator
 			})));
 			let betterSidebarFiber = null;
-			if (typeof ctx.inject === "function") try {
-				betterSidebarFiber = ctx.inject(["betterSidebar"], (injectedCtx) => {
-					const betterSidebar = injectedCtx.get?.("betterSidebar") ?? injectedCtx.betterSidebar;
-					return coordinator.attachBetterSidebar(betterSidebar, betterSidebarDescriptor);
-				});
-				if (typeof betterSidebarFiber?.dispose !== "function") coordinator.block("better-sidebar-injection-disposer-invalid");
-			} catch {
-				coordinator.block("better-sidebar-injection-failed");
-			}
-			else coordinator.reconcileExternalState();
+			let settingsFiber = null;
+			if (typeof ctx.inject === "function") {
+				try {
+					settingsFiber = ctx.inject(["settingsScope", "remote"], (injectedCtx) => connectionSettings.bind({
+						settingsScope: injectedCtx.get?.("settingsScope") ?? injectedCtx.settingsScope,
+						remote: injectedCtx.get?.("remote") ?? injectedCtx.remote,
+						connection
+					}));
+				} catch {}
+				try {
+					betterSidebarFiber = ctx.inject(["betterSidebar"], (injectedCtx) => {
+						const betterSidebar = injectedCtx.get?.("betterSidebar") ?? injectedCtx.betterSidebar;
+						return coordinator.attachBetterSidebar(betterSidebar, betterSidebarDescriptor);
+					});
+					if (typeof betterSidebarFiber?.dispose !== "function") coordinator.block("better-sidebar-injection-disposer-invalid");
+				} catch {
+					coordinator.block("better-sidebar-injection-failed");
+				}
+			} else coordinator.reconcileExternalState();
 			return async () => {
 				try {
 					await disposeBridge();
@@ -8999,7 +9716,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								try {
 									layoutAdapter.dispose();
 								} finally {
-									await store.dispose();
+									try {
+										await settingsFiber?.dispose?.();
+									} finally {
+										connectionSettings.dispose();
+										await store.dispose();
+									}
 								}
 							}
 						}

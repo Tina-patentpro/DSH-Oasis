@@ -5,7 +5,7 @@ import {
   computeOasisRemoteInputSha256,
   computeOasisRemoteResponseSha256,
 } from './workbench-domain.js'
-import { WORKBENCH_LIMITS } from './workbench-contract.js'
+import { oasisRunningWaterPageSchema, WORKBENCH_LIMITS } from './workbench-contract.js'
 import { getWorkflowDefinition } from './workflow-catalog.js'
 import { WorkspaceMaterialError } from './workspace-materials.js'
 
@@ -23,6 +23,28 @@ function requireExecution(task, executionId) {
   const execution = task.remoteExecutions[executionId]
   if (!execution) throw remoteError('REMOTE_EXECUTION_NOT_FOUND', 'Remote execution was not found', { executionId })
   return execution
+}
+
+function assertExecutionEnvironment(active, execution, run) {
+  if (active.apiBaseOrigin !== execution.apiBaseOrigin
+    || (run && run.providerSnapshot.apiBaseOrigin !== execution.apiBaseOrigin)) {
+    throw remoteError('REMOTE_ENVIRONMENT_MISMATCH', 'The active Oasis environment does not match this execution')
+  }
+}
+
+function resultIdentityError(execution, result) {
+  if (result?.key !== execution.requestKey) {
+    return { code: 'REMOTE_KEY_MISMATCH', message: 'Oasis result key does not match the original request' }
+  }
+  if (result.recordId !== undefined && result.recordId !== null
+    && (!Number.isSafeInteger(result.recordId) || result.recordId < 0)) {
+    return { code: 'REMOTE_RECORD_ID_INVALID', message: 'Oasis result record id is invalid' }
+  }
+  if (execution.recordIdSource === 'create' && Number.isSafeInteger(result.recordId)
+    && result.recordId !== execution.recordId) {
+    return { code: 'REMOTE_RECORD_ID_MISMATCH', message: 'Oasis result record id conflicts with the create response' }
+  }
+  return null
 }
 
 function safeFolder(value, expectedId) {
@@ -208,12 +230,13 @@ export function createOasisRemoteService({
     return inputs
   }
 
-  async function complete(workspaceId, taskId, executionId, result) {
+  async function complete(workspaceId, taskId, executionId, result, source) {
     const execution = requireExecution(requireTask(repository.get(workspaceId), taskId), executionId)
-    if (result?.key !== execution.requestKey) {
+    const identityError = resultIdentityError(execution, result)
+    if (identityError) {
       return setExecution(workspaceId, taskId, executionId, {
         status: 'failed',
-        safeError: { code: 'REMOTE_KEY_MISMATCH', message: 'Oasis result key does not match the original request' },
+        safeError: identityError,
       })
     }
     return mutateLatest(workspaceId, taskId, (current) => {
@@ -262,7 +285,10 @@ export function createOasisRemoteService({
       }
       const next = structuredClone(current)
       Object.assign(next.tasks[taskId].remoteExecutions[executionId], {
-        status: 'completed', safeError: null, updatedAt: completedAt, completedAt,
+        status: 'completed',
+        ...(source === 'create' && Number.isSafeInteger(result.recordId)
+          ? { recordId: result.recordId, recordIdSource: 'create' } : {}),
+        safeError: null, updatedAt: completedAt, completedAt,
       })
       next.tasks[taskId].runs[runId] = run
       next.tasks[taskId].runOrder.push(runId)
@@ -296,7 +322,7 @@ export function createOasisRemoteService({
           })
         }
         if (progress.status === 'completed' && progress.result !== null) {
-          return complete(workspaceId, taskId, executionId, progress.result)
+          return complete(workspaceId, taskId, executionId, progress.result, 'query')
         }
         await setExecution(workspaceId, taskId, executionId, { status: 'waiting-result', safeError: null })
         if (attempt + 1 < pollLimit) await sleep(pollIntervalMs, controller.signal)
@@ -428,6 +454,8 @@ export function createOasisRemoteService({
         next.tasks[taskId].remoteExecutionOrder.push(executionId)
         next.tasks[taskId].remoteExecutions[executionId] = {
           executionId,
+          recordId: null,
+          recordIdSource: null,
           requestKey,
           status: 'prepared',
           inputSha,
@@ -464,6 +492,7 @@ export function createOasisRemoteService({
         if (['completed', 'failed'].includes(execution.status)) {
           return { committed: true, current: repository.get(workspaceId) }
         }
+        assertExecutionEnvironment(active, execution)
         const detail = detailWithoutRaw(await active.client.getApiDetail(execution.serviceSnapshot.apiEndpoint))
         if (detail.schemaHash !== execution.serviceSnapshot.schemaHash || detail.id !== execution.serviceSnapshot.apiId) {
           return setExecution(workspaceId, taskId, executionId, {
@@ -534,7 +563,13 @@ export function createOasisRemoteService({
             })
             return poll(workspaceId, taskId, executionId, active.client)
           }
-          if (created.resolved === true) return complete(workspaceId, taskId, executionId, created.result)
+          if (created.resolved === true) return complete(workspaceId, taskId, executionId, created.result, 'create')
+          const identityError = resultIdentityError(execution, created.receipt)
+          if (identityError) return setExecution(workspaceId, taskId, executionId, { status: 'failed', safeError: identityError })
+          const recordId = created.receipt.recordId
+          if (Number.isSafeInteger(recordId)) {
+            await setExecution(workspaceId, taskId, executionId, { recordId, recordIdSource: 'create' })
+          }
           await setExecution(workspaceId, taskId, executionId, { status: 'waiting-result', safeError: null })
         }
         return poll(workspaceId, taskId, executionId, active.client)
@@ -551,6 +586,50 @@ export function createOasisRemoteService({
       const key = executionKey(workspaceId, taskId, executionId)
       waitControllers.get(key)?.abort()
       return { stopped: waitControllers.has(key) }
+    },
+
+    async observeRunningWater({ workspaceId, taskId, runId }) {
+      const task = requireTask(repository.get(workspaceId), taskId)
+      const run = task.runs[runId]
+      if (!run || run.mode !== 'oasis-legacy' || run.status !== 'completed') {
+        throw remoteError('REMOTE_RUN_NOT_FOUND', 'A completed remote run is required for running-water observation')
+      }
+      const execution = requireExecution(task, run.executionId)
+      const observedAt = clock()
+      if (!Number.isSafeInteger(execution.recordId) || execution.recordIdSource !== 'create') {
+        return {
+          status: 'unverifiable', runId, recordId: null, scope: 'current-page',
+          associationStatus: 'unverified',
+          total: null, item: null, observedAt,
+        }
+      }
+      const active = await runtime()
+      assertExecutionEnvironment(active, execution, run)
+      const parsed = oasisRunningWaterPageSchema.safeParse(await active.client.getRunningWater())
+      if (!parsed.success) throw remoteError('INVALID_RUNNING_WATER_RESPONSE', 'Oasis running-water page contains invalid fields')
+      const page = parsed.data
+      const matches = page.items.filter((item) => item.linkId === execution.recordId)
+      if (matches.length > 1) throw remoteError('RUNNING_WATER_AMBIGUOUS', 'The current page contains multiple candidates for this record id')
+      const match = matches[0]
+      return {
+        status: match ? 'observed' : 'not-observed',
+        associationStatus: 'unverified',
+        runId,
+        recordId: execution.recordId,
+        scope: 'current-page',
+        total: page.total,
+        item: match
+          ? {
+              id: match.id,
+              linkId: match.linkId,
+              type: match.type,
+              money: match.money,
+              balance: match.balance,
+              createTime: typeof match.createTime === 'string' ? match.createTime : null,
+            }
+          : null,
+        observedAt,
+      }
     },
   })
 }

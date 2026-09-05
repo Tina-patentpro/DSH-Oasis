@@ -55,7 +55,11 @@ export async function apply(ctx) {
   const settingsScope = registerOasisSettings(ctx)
   const repository = await openOasisWorkbenchRepository(ctx.storageDomain)
   const materialManager = createWorkspaceMaterialManager({ workspaceRegistry: ctx.workspaceRegistry })
-  const service = createWorkbenchService({ repository, materialManager })
+  const service = createWorkbenchService({
+    repository,
+    materialManager,
+    workspaceRegistry: ctx.workspaceRegistry,
+  })
   const professionalService = createOasisRemoteService({
     repository,
     materialManager,

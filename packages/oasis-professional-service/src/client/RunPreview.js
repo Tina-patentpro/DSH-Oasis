@@ -8,6 +8,21 @@ function materialIdentity(reference) {
 
 export function hasDraftDiverged(page, run) {
   if (!run) return false
+  if (run.mode === 'oasis-legacy') {
+    const draft = page.professionalDraft
+    if (
+      !draft
+      || draft.selectedApiId !== run.providerSnapshot.apiId
+      || draft.selectedApiEndpoint !== run.providerSnapshot.apiEndpoint
+      || draft.folderId !== run.providerSnapshot.folderId
+      || JSON.stringify(draft.formValues) !== JSON.stringify(run.inputSnapshot.formValues)
+    ) return true
+    const currentReferences = run.inputSnapshot.inputRefs.map((snapshot) => (
+      page.inputRefs.find((reference) => reference.referenceId === snapshot.referenceId)
+    ))
+    return currentReferences.some((reference) => reference === undefined)
+      || JSON.stringify(currentReferences.map(materialIdentity)) !== JSON.stringify(run.inputSnapshot.inputRefs.map(materialIdentity))
+  }
   return JSON.stringify(page.formValues) !== JSON.stringify(run.inputSnapshot.formValues)
     || JSON.stringify(page.inputRefs.map(materialIdentity)) !== JSON.stringify(run.inputSnapshot.inputRefs.map(materialIdentity))
 }
@@ -42,13 +57,16 @@ export function RunPreview({
 }) {
   const disabledReason = generationDisabledReason({ syncStatus, validation, operation })
   const run = page.activeRunId === null ? null : page.runs[page.activeRunId]
+  const remoteRun = run?.mode === 'oasis-legacy'
   const blocked = run?.result.contentStatus === 'blocked'
   return createElement('section', { 'aria-labelledby': `oasis-run-title-${page.pageId}` },
     createElement('div', { style: { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 12 } },
       createElement('div', null,
         createElement('h4', { id: `oasis-run-title-${page.pageId}`, style: { margin: 0, fontSize: 15 } }, '生成与结果'),
         createElement('p', { style: { margin: '5px 0 0', fontSize: 12, color: 'var(--dsw-alias-text-secondary, #66706b)' } },
-          '本地确定性演练；结果必须经过人工审核。')),
+          remoteRun
+            ? '非生产专业服务结果；远程内容和文件必须经过人工审核。'
+            : '本地确定性演练；结果必须经过人工审核。')),
       createElement('button', {
         type: 'button', disabled: disabledReason !== null, onClick: onGenerate,
         title: disabledReason ?? '基于已保存表单和已确认材料生成',
@@ -81,16 +99,28 @@ export function RunPreview({
         hasDraftDiverged(page, run)
           ? createElement('span', { style: { color: '#8a4b2f' } }, '草稿已偏离此运行；旧运行快照保持不变。')
           : createElement('span', { style: { color: '#2f6653' } }, '当前草稿与此运行输入一致。')),
-      ...run.result.sections.map((section) => createElement('section', {
-        key: section.sectionId,
-        style: { borderTop: '1px solid var(--dsw-alias-border-l2, #e0e3e1)', paddingTop: 10 },
-      },
-      createElement('h5', { style: { margin: '0 0 6px', fontSize: 13 } }, section.title),
-      createElement('pre', { style: { margin: 0, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', font: 'inherit', fontSize: 13, lineHeight: 1.65 } }, section.body))),
-      run.result.risks.length > 0 ? createElement('div', null,
-        createElement('strong', { style: { fontSize: 13 } }, '风险'),
-        createElement('ul', null, ...run.result.risks.map((risk, index) => createElement('li', { key: index }, risk)))) : null,
-      createElement('p', { style: { margin: 0, fontSize: 12, color: 'var(--dsw-alias-text-secondary, #66706b)' } }, run.result.disclaimer),
+      remoteRun
+        ? createElement('section', { style: { borderTop: '1px solid var(--dsw-alias-border-l2, #e0e3e1)', paddingTop: 10, display: 'grid', gap: 10 } },
+            createElement('h5', { style: { margin: 0, fontSize: 13 } }, '远程文字结果'),
+            createElement('pre', { style: { margin: 0, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', font: 'inherit', fontSize: 13, lineHeight: 1.65 } }, run.result.answerText),
+            run.result.fileUrls.length > 0
+              ? createElement('div', null,
+                  createElement('strong', { style: { fontSize: 13 } }, '远程文件（未下载、未验证）'),
+                  createElement('ul', null, ...run.result.fileUrls.map((url, index) => createElement('li', { key: index, style: { overflowWrap: 'anywhere' } }, url))))
+              : null,
+            createElement('p', { style: { margin: 0, fontSize: 12, color: 'var(--dsw-alias-text-secondary, #66706b)' } },
+              '远程文件列表仅为服务响应记录；插件尚未下载、校验或写回这些二进制文件。'))
+        : createElement('div', null,
+            ...run.result.sections.map((section) => createElement('section', {
+              key: section.sectionId,
+              style: { borderTop: '1px solid var(--dsw-alias-border-l2, #e0e3e1)', paddingTop: 10 },
+            },
+            createElement('h5', { style: { margin: '0 0 6px', fontSize: 13 } }, section.title),
+            createElement('pre', { style: { margin: 0, whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', font: 'inherit', fontSize: 13, lineHeight: 1.65 } }, section.body))),
+            run.result.risks.length > 0 ? createElement('div', null,
+              createElement('strong', { style: { fontSize: 13 } }, '风险'),
+              createElement('ul', null, ...run.result.risks.map((risk, index) => createElement('li', { key: index }, risk)))) : null,
+            createElement('p', { style: { margin: 0, fontSize: 12, color: 'var(--dsw-alias-text-secondary, #66706b)' } }, run.result.disclaimer)),
       blocked
         ? createElement('div', { role: 'alert', style: { border: '1px solid #d7a69d', borderRadius: 8, padding: 10, color: '#8b2f24' } },
             '该运行包含阻断结果；阻断结果不能批准或回写。请补充信息后生成新运行。')

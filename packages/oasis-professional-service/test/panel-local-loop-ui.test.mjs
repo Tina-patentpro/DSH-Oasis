@@ -169,6 +169,59 @@ test('disables generation for each unsafe state and keeps old snapshots immutabl
   assert.equal(allNodes(preview).some((node) => node?.props && Object.hasOwn(node.props, 'dangerouslySetInnerHTML')), false)
 })
 
+test('renders a completed remote result without pretending that its files were downloaded or verified', () => {
+  const reference = createMaterialReference()
+  const remoteRun = {
+    runId: 'remote-run-a',
+    requestKey: 'remote-request-a',
+    mode: 'oasis-legacy',
+    status: 'completed',
+    executionId: 'execution-a',
+    providerSnapshot: {
+      apiBaseOrigin: 'https://oasis-staging.example', apiId: 132, apiEndpoint: 'claims-v1',
+      apiProcess: '整理,撰写', folderId: 8, price: 3,
+    },
+    inputSnapshot: {
+      formValues: { User_input: '生成权利要求书', file: 'ref-a' },
+      inputRefs: [reference], sha256: 'b'.repeat(64), capturedAt: '2026-08-25T01:02:03.000Z',
+    },
+    result: {
+      answerText: '远程权利要求书草稿',
+      fileUrls: ['https://files-staging.example/result/claims.docx'],
+      fileStatus: 'undownloaded-unverified',
+      responseSha: 'c'.repeat(64),
+      artifact: createRunSnapshot().result.artifact,
+    },
+    review: { status: 'not-reviewed', note: '', updatedAt: '2026-08-25T01:02:03.000Z' },
+    writebacks: [],
+    createdAt: '2026-08-25T01:02:03.000Z',
+    completedAt: '2026-08-25T01:02:03.000Z',
+  }
+  const remotePage = page({
+    inputRefs: [reference],
+    professionalDraft: {
+      selectedApiEndpoint: 'claims-v1', selectedApiId: 132, schemaHash: 'd'.repeat(64),
+      formValues: { User_input: '生成权利要求书', file: 'ref-a' }, folderId: 8,
+      updatedAt: '2026-08-25T01:02:03.000Z',
+    },
+    activeRunId: remoteRun.runId,
+    runOrder: [remoteRun.runId],
+    runs: { [remoteRun.runId]: remoteRun },
+  })
+
+  assert.equal(hasDraftDiverged(remotePage, remoteRun), false)
+  const preview = RunPreview({
+    page: remotePage, operation: operation(), workflow,
+    validation: { valid: true, errors: {}, firstInvalidFieldId: null }, syncStatus: 'ready',
+    onGenerate: () => {}, onActivateRun: () => {}, onReviewNote: () => {}, onReview: () => {},
+  })
+  assert.match(textOf(preview), /远程权利要求书草稿/)
+  assert.match(textOf(preview), /未下载、未验证/)
+  assert.match(textOf(preview), /files-staging\.example\/result\/claims\.docx/)
+  assert.ok(allNodes(preview).find((node) => node?.props?.['data-testid'] === 'oasis-review-approve'))
+  assert.equal(allNodes(preview).some((node) => node?.props && Object.hasOwn(node.props, 'dangerouslySetInnerHTML')), false)
+})
+
 test('blocks approval/writeback for blocked output and requires a second writeback confirmation', () => {
   const blocked = createRunSnapshot({
     result: { ...createRunSnapshot().result, contentStatus: 'blocked' },
@@ -294,4 +347,57 @@ test('renders only Host-provided professional fields and requires both explicit 
   assert.deepEqual(confirmations, [{ priceConfirmed: true, externalTransferConfirmed: true }])
   assert.deepEqual(selected, [])
   assert.equal(allNodes(panel).some((node) => node?.props && Object.hasOwn(node.props, 'dangerouslySetInnerHTML')), false)
+})
+
+test('offers read-only running-water observation only for a completed remote run', () => {
+  const observed = []
+  const servicePage = page({
+    activeRunId: 'run-remote-a',
+    runOrder: ['run-remote-a'],
+    runs: {
+      'run-remote-a': {
+        runId: 'run-remote-a', mode: 'oasis-legacy', status: 'completed', executionId: 'execution-a',
+      },
+    },
+    remoteExecutionOrder: ['execution-a'],
+    remoteExecutions: {
+      'execution-a': { executionId: 'execution-a', status: 'completed' },
+    },
+  })
+  const state = {
+    professionalStatus: 'ready',
+    professionalBootstrap: {
+      environmentKind: 'non-production', remoteEnabled: true, credentialConfigured: true,
+      balance: 17, services: [], folders: [],
+    },
+  }
+  const panel = ProfessionalServicePanel({
+    state,
+    page: servicePage,
+    operation: operation({
+      runningWaterStatus: 'ready',
+      runningWaterObservation: {
+        status: 'observed', runId: 'run-remote-a', recordId: 90, scope: 'current-page', total: 1,
+        item: { id: 301, linkId: 90, type: '消费', money: 3, balance: 17, createTime: '2026-08-26 09:02:03' },
+        observedAt: '2026-08-26T01:02:03.000Z',
+      },
+    }),
+    onObserveRunningWater: (runId) => observed.push(runId),
+  })
+
+  const button = allNodes(panel).find((node) => node?.props?.['data-testid'] === 'oasis-professional-running-water')
+  assert.ok(button)
+  button.props.onClick()
+  assert.deepEqual(observed, ['run-remote-a'])
+  assert.match(textOf(panel), /仅表示当前页观察结果/)
+  assert.match(textOf(panel), /候选流水/)
+  assert.match(textOf(panel), /关联未验证/)
+  assert.match(textOf(panel), /不代表结算、退款或资金锁定/)
+  assert.match(textOf(panel), /消费/)
+  assert.doesNotMatch(textOf(panel), /username|uid|title/)
+  const waiting = ProfessionalServicePanel({
+    state, page: servicePage,
+    operation: operation({ activeOperation: 'running-water-observe', runningWaterStatus: 'loading' }),
+  })
+  assert.equal(allNodes(waiting).some((node) => node?.props?.['data-testid'] === 'oasis-professional-stop'), false)
 })

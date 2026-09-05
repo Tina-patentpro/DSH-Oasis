@@ -359,6 +359,13 @@ test('dispatches strict professional-service commands only through the Host serv
     async start(payload) { calls.push(['start', payload]); return replacement },
     async continue(payload) { calls.push(['continue', payload]); return replacement },
     async stop(payload) { calls.push(['stop', payload]); return { stopped: true } },
+    async observeRunningWater(payload) {
+      calls.push(['running-water', payload])
+      return {
+        status: 'not-observed', runId: 'run-remote-a', recordId: 90, scope: 'current-page', total: 0,
+        item: null, observedAt: '2026-08-26T01:02:03.000Z',
+      }
+    },
   }
   const handler = createWorkbenchRpcHandler({}, professional)
   const start = {
@@ -366,6 +373,7 @@ test('dispatches strict professional-service commands only through the Host serv
     requestKey: 'remote-a', priceConfirmed: true, externalTransferConfirmed: true,
   }
   const execution = { workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-a' }
+  const observation = { workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-remote-a' }
   assert.deepEqual(await handler('professional/bootstrap', {}), { ok: true, value: bootstrap })
   assert.deepEqual(await handler('professional/detail', { apiEndpoint: 'claims-v1' }), {
     ok: true, value: { apiEndpoint: 'claims-v1' },
@@ -373,7 +381,14 @@ test('dispatches strict professional-service commands only through the Host serv
   assert.deepEqual(await handler('professional/start', start), { ok: true, value: replacement })
   assert.deepEqual(await handler('professional/continue', execution), { ok: true, value: replacement })
   assert.deepEqual(await handler('professional/stop', execution), { ok: true, value: { stopped: true } })
-  assert.deepEqual(calls.map((call) => call[0]), ['bootstrap', 'detail', 'start', 'continue', 'stop'])
+  assert.deepEqual(await handler('professional/running-water', observation), {
+    ok: true,
+    value: {
+      status: 'not-observed', runId: 'run-remote-a', recordId: 90, scope: 'current-page', total: 0,
+      item: null, observedAt: '2026-08-26T01:02:03.000Z',
+    },
+  })
+  assert.deepEqual(calls.map((call) => call[0]), ['bootstrap', 'detail', 'start', 'continue', 'stop', 'running-water'])
 
   for (const [endpoint, payload] of [
     ['professional/bootstrap', { workspaceId: 'workspace-a' }],
@@ -382,10 +397,11 @@ test('dispatches strict professional-service commands only through the Host serv
     ['professional/start', { ...start, jwt: 'forbidden' }],
     ['professional/continue', { ...execution, expectedRevision: 3 }],
     ['professional/stop', { ...execution, executionId: '' }],
+    ['professional/running-water', { ...observation, runId: '' }],
   ]) {
     const result = await handler(endpoint, payload)
     assert.equal(result.ok, false)
     assert.equal(result.error.code, 'bad-request')
   }
-  assert.equal(calls.length, 5)
+  assert.equal(calls.length, 6)
 })

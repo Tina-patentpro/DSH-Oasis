@@ -68,6 +68,12 @@ const professionalExecutionPayloadSchema = z.object({
   executionId: workspaceIdSchema,
 }).strict()
 
+const professionalRunningWaterPayloadSchema = z.object({
+  workspaceId: workspaceIdSchema,
+  taskId: workspaceIdSchema,
+  runId: workspaceIdSchema,
+}).strict()
+
 const taskReviewPayloadSchema = z.object({
   ...materialCommandBase,
   runId: workspaceIdSchema,
@@ -197,6 +203,12 @@ export function createWorkbenchRpcHandler(service, professionalService = null) {
       const parsed = parsePayload(professionalExecutionPayloadSchema, payload)
       if (!parsed.success) return parsed
       return materialResult(() => professionalService.stop(parsed.data))
+    }
+
+    if (endpoint === 'professional/running-water') {
+      const parsed = parsePayload(professionalRunningWaterPayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => professionalService.observeRunningWater(parsed.data))
     }
 
     if (endpoint === 'material/add') {

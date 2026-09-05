@@ -3,6 +3,11 @@ import { createElement, useEffect, useLayoutEffect, useRef, useSyncExternalStore
 import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
 import { PanelChrome } from './PanelChrome.js'
 import { PanelPages } from './PanelPages.js'
+import { OasisConnectionSettings } from './OasisConnectionSettings.js'
+
+const noConfiguration = Object.freeze({ canSubmit: true })
+const getNoConfiguration = () => noConfiguration
+const noSubscribe = () => () => {}
 
 const reducedMotionCss = `
   [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
@@ -135,6 +140,11 @@ export function OasisWorkbenchSurface({
     () => store.peekWorkspaceState(workspaceId),
   )
   const panelRef = useRef(null)
+  const configuration = useSyncExternalStore(
+    store.connectionSettings?.subscribe ?? noSubscribe,
+    store.connectionSettings?.getSnapshot ?? getNoConfiguration,
+    store.connectionSettings?.getSnapshot ?? getNoConfiguration,
+  )
   const titleRef = useRef(null)
   const layout = useSyncExternalStore(
     layoutAdapter.subscribe,
@@ -224,8 +234,9 @@ export function OasisWorkbenchSurface({
       }
     },
   }),
+  createElement(OasisConnectionSettings, { key: workspaceId, controller: store.connectionSettings, visible }),
   createElement(PanelPages, {
-    state,
+    state: { ...state, professionalConfigurationBlocked: !configuration.canSubmit },
     effectiveMode,
     onSelectWorkflow: (pageId, workflowId) => store.selectWorkflow(workspaceId, pageId, workflowId),
     onRenamePage: (pageId, title) => store.renamePage(workspaceId, pageId, title),
@@ -273,6 +284,9 @@ export function OasisWorkbenchSurface({
     },
     onStopProfessional: (pageId, executionId) => {
       void store.stopProfessional(workspaceId, pageId, executionId).catch(() => {})
+    },
+    onObserveRunningWater: (pageId, runId) => {
+      void store.observeRunningWater(workspaceId, pageId, runId).catch(() => {})
     },
   }))
 }

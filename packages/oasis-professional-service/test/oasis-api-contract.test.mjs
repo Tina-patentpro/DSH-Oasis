@@ -20,6 +20,31 @@ import {
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
+test('F3 validates every raw ledger item before projection rather than coercing or dropping malformed data', () => {
+  const item = { id: 1, link_id: 90, type: '消费', money: 3, balance: 17 }
+  for (const patch of [{ link_id: '90' }, { money: '3' }, { balance: Infinity }, { create_time: {} }, { type: ' ' }]) {
+    assert.throws(() => normalizeRunningWater({ total: 2, items: [item, { ...item, ...patch }] }), { code: 'INVALID_RESPONSE' })
+  }
+  assert.throws(() => normalizeRunningWater({ total: 0, items: [item] }), { code: 'INVALID_RESPONSE' })
+})
+
+test('F1 rejects credential-bearing file URLs at upload and result boundaries without echoing them', async () => {
+  for (const url of [
+    'https://audit-user:AUDIT_SECRET@files-staging.example/result.docx',
+    'https://files-staging.example/result.docx?token=AUDIT_SECRET',
+    'https://files-staging.example/result.docx#AUDIT_SECRET',
+  ]) {
+    const client = createOasisApiClient({
+      baseUrl: 'https://oasis-staging.example', downloadOrigins: ['https://files-staging.example'],
+      resolveToken: async () => 'fake-test-token',
+      fetchImpl: async () => new Response(JSON.stringify({ data: { id: 90, key: 'f1-key', answer_text: 'text', file_url: url, saved_path: url } }), { status: 200 }),
+    })
+    const safeError = error => { assert.equal(String(error).includes('AUDIT_SECRET'), false); return true }
+    await assert.rejects(client.createWorkflow({ id: 132, key: 'f1-key', inputs: {}, apiProcess: '', folderId: 8 }), safeError)
+    await assert.rejects(client.uploadFile({ bytes: new Uint8Array([1]), fileName: 'a.md', mediaType: 'text/markdown' }), safeError)
+  }
+})
+
 test('ships the user-validated legacy API baseline with exact provenance and nine bounded endpoints', () => {
   const baseline = JSON.parse(readFileSync(
     resolve(packageRoot, 'docs/api/oasis-professional-service-baseline.json'),
@@ -165,7 +190,7 @@ test('normalizes both folder-list wrappers, workflow output variants, and runnin
   assert.throws(() => normalizeWorkflowCreateResult({ data: { answer_text: '', file_url: [] } }), /usable|result/i)
   assert.deepEqual(normalizeRunningWater({ total: 1, items: [{ id: 93, link_id: 99, type: '消费', money: 1, balance: 0 }] }), {
     total: 1,
-    items: [{ id: 93, linkId: 99, type: '消费', money: 1, balance: 0 }],
+    items: [{ id: 93, linkId: 99, type: '消费', money: 1, balance: 0, createTime: null }],
   })
 })
 
@@ -293,7 +318,7 @@ test('dispatches every bounded professional-service endpoint with fixed methods 
     ['/api/user/upload', { code: 200, data: { saved_path: 'https://files-staging.example/upload/a.docx' } }],
     ['/api/apicategories/create', { code: 200, data: { id: 90, key: 'task-a' } }],
     ['/api/apicategories/queryprocess/task-a', { code: 200, data: {
-      key: 'task-a', status: 'succeeded', is_completed: true, progress_percent: 100,
+      id: 91, key: 'task-a', status: 'succeeded', is_completed: true, progress_percent: 100,
       answer_text: '远程结果', file_url: 'https://files-staging.example/result/a.docx',
     } }],
     ['/api/user/runningwater/list', { code: 200, data: { total: 0, items: [] } }],
@@ -326,7 +351,7 @@ test('dispatches every bounded professional-service endpoint with fixed methods 
   assert.deepEqual(await client.queryProcess('task-a'), {
     key: 'task-a', status: 'completed', progressPercent: 100,
     result: {
-      key: 'task-a', answerText: '远程结果',
+      recordId: 91, key: 'task-a', answerText: '远程结果',
       fileUrls: ['https://files-staging.example/result/a.docx'],
     },
   })

@@ -224,6 +224,94 @@ test('prepare never embeds token, absolute paths, artifact body, or pricing data
   assert.equal(plan.metadata.review.status, 'approved')
 })
 
+test('prepare creates mode-aware remote metadata without a raw request key or pricing', async (t) => {
+  const { manager } = await createHarness(t)
+  const remoteArtifact = artifact('# 绿洲专业服务结果\n\n远程草稿\n')
+  const value = await manager.prepare(prepareInput({
+    runId: 'remote-run-a',
+    workflowId: undefined,
+    workflowVersion: undefined,
+    mode: 'oasis-legacy',
+    mockVersion: undefined,
+    artifact: remoteArtifact,
+    relativeDirectory: 'outputs\\remote-run-a',
+    remote: {
+      executionId: 'execution-a',
+      requestKeySha256: 'e'.repeat(64),
+      provider: {
+        apiBaseOrigin: 'https://oasis-staging.example',
+        apiId: 132,
+        apiEndpoint: 'claims-v1',
+        apiProcess: '整理,撰写',
+        folderId: 8,
+        price: 999,
+        extra: 'AUDIT_SECRET',
+      },
+      files: {
+        status: 'undownloaded-unverified',
+        urls: ['https://files-staging.example/result/claims.docx'],
+      },
+    },
+  }))
+  const plan = manager.consume(value.confirmationToken)
+  assert.equal(plan.metadata.execution.mode, 'oasis-legacy')
+  assert.equal(plan.metadata.execution.executionId, 'execution-a')
+  assert.equal(plan.metadata.execution.requestKeySha256, 'e'.repeat(64))
+  assert.equal(Object.hasOwn(plan.metadata, 'workflow'), false)
+  assert.deepEqual(plan.metadata.provider, {
+    apiBaseOrigin: 'https://oasis-staging.example',
+    apiId: 132,
+    apiEndpoint: 'claims-v1',
+    apiProcess: '整理,撰写',
+    folderId: 8,
+  })
+  assert.deepEqual(plan.metadata.remoteFiles, {
+    status: 'undownloaded-unverified',
+    urls: ['https://files-staging.example/result/claims.docx'],
+  })
+  const serialized = JSON.stringify(plan.metadata)
+  assert.equal(serialized.includes('remote-request-a'), false)
+  assert.equal(serialized.toLowerCase().includes('price'), false)
+  assert.equal(serialized.includes('AUDIT_SECRET'), false)
+})
+
+test('F1 rejects unsafe file URLs before creating a writeback target', async (t) => {
+  const { manager, workspaceRoot } = await createHarness(t)
+  for (const url of [
+    'https://audit-user:AUDIT_SECRET@files-staging.example/result.docx',
+    'https://files-staging.example/result.docx?token=AUDIT_SECRET',
+    'https://files-staging.example/result.docx#AUDIT_SECRET',
+  ]) {
+    await assert.rejects(manager.prepare(prepareInput({ mode: 'oasis-legacy', remote: {
+      executionId: 'execution-a', requestKeySha256: 'e'.repeat(64),
+      provider: { apiBaseOrigin: 'https://oasis-staging.example', apiId: 132, apiEndpoint: 'claims-v1', apiProcess: '', folderId: 8 },
+      files: { status: 'undownloaded-unverified', urls: [url] },
+    } })), error => error.code === 'WRITEBACK_SOURCE_INVALID' && !String(error).includes('AUDIT_SECRET'))
+    await assert.rejects(stat(join(workspaceRoot, 'outputs/run-a')), { code: 'ENOENT' })
+  }
+})
+
+test('remote writeback metadata rejects the production provider origin', async (t) => {
+  const { manager } = await createHarness(t)
+  await expectCode(manager.prepare(prepareInput({
+    runId: 'remote-run-a',
+    workflowId: undefined,
+    workflowVersion: undefined,
+    mode: 'oasis-legacy',
+    mockVersion: undefined,
+    relativeDirectory: 'outputs\\production-origin',
+    remote: {
+      executionId: 'execution-a',
+      requestKeySha256: 'e'.repeat(64),
+      provider: {
+        apiBaseOrigin: 'https://lzhxpy.oasisintwrite.com',
+        apiId: 132, apiEndpoint: 'claims-v1', apiProcess: '整理,撰写', folderId: 8,
+      },
+      files: { status: 'undownloaded-unverified', urls: [] },
+    },
+  })), 'WRITEBACK_SOURCE_INVALID')
+})
+
 test('publish fsyncs two verified files and commits with exactly one final rename', async (t) => {
   let committed = false
   const renameCalls = []

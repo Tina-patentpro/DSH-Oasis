@@ -101,6 +101,7 @@ export function PanelPages({
   onStartProfessional = () => {},
   onContinueProfessional = () => {},
   onStopProfessional = () => {},
+  onObserveRunningWater = () => {},
 }) {
   if (state.syncStatus === 'idle' || state.syncStatus === 'loading') {
     return createElement('div', { role: 'status', 'aria-live': 'polite', style: syncNoticeStyle }, '正在读取当前项目的绿洲任务页…')
@@ -162,6 +163,7 @@ export function PanelPages({
         writebackConfirmed: false, writebackPlan: null, requestKey: null, activeOperation: null,
         error: null, errorCode: null, feedback: null, materialsChanged: false, indexWarningManifest: null,
         professionalDetail: null, priceConfirmed: false, externalTransferConfirmed: false,
+        runningWaterStatus: 'idle', runningWaterObservation: null,
       }
       const validation = validateWorkflowFormValues(workflow, page.formValues)
       const operationDisabled = operation.activeOperation !== null
@@ -204,6 +206,7 @@ export function PanelPages({
           onStart: () => onStartProfessional(page.pageId),
           onContinue: (executionId) => onContinueProfessional(page.pageId, executionId),
           onStop: (executionId) => onStopProfessional(page.pageId, executionId),
+          onObserveRunningWater: (runId) => onObserveRunningWater(page.pageId, runId),
         })),
       createElement('div', { style: { ...surfaceStyle, display: 'grid', gap: 16, minWidth: 0 } },
         createElement(RunPreview, {
