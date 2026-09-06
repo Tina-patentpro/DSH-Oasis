@@ -12,7 +12,8 @@ export function ConnectionSettingsForm({
   onApiDraft = () => {}, onDownloadDraft = () => {},
 }) {
   const disabledSettings = !snapshot.settingsWritable || snapshot.busy
-  const disabledCredential = !snapshot.credentialWritable || snapshot.settingsStatus !== 'ready' || snapshot.busy
+  const disabledCredential = !snapshot.credentialWritable || !snapshot.settingsWritable
+    || snapshot.settingsStatus !== 'ready' || snapshot.apiBaseUrl === '' || snapshot.busy
   const clearPassword = () => { if (passwordRef.current) passwordRef.current.value = '' }
   return createElement('details', {
     'data-testid': 'oasis-connection-settings',
@@ -44,7 +45,10 @@ export function ConnectionSettingsForm({
     })),
     createElement('div', { role: 'status', style: { fontSize: 12 } },
       snapshot.credentialStatus !== 'ready' ? '凭据状态尚未确认。'
-        : snapshot.credentialConfigured ? '凭据已配置（不读取或显示原值）。' : '尚未配置凭据。'),
+        : snapshot.credentialConfigured ? '凭据已绑定当前 API 地址（不读取或显示原值）。'
+          : snapshot.credentialStored
+            ? '凭据已保存，但未绑定当前 API 地址；请重新输入凭据以激活。'
+            : '尚未配置凭据。'),
     createElement('button', {
       type: 'button', disabled: disabledCredential, 'data-testid': 'oasis-credential-save',
       onClick: () => {

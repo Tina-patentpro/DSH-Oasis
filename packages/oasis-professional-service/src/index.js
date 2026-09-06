@@ -76,6 +76,15 @@ export async function apply(ctx) {
           client: null,
         }
       }
+      if (!config.credentialBound) {
+        return {
+          enabled: true,
+          environmentKind: config.environmentKind,
+          apiBaseOrigin: config.apiBaseUrl,
+          credentialConfigured: false,
+          client: null,
+        }
+      }
       let credentialConfigured = true
       try {
         await resolveOasisJwt(ctx.credentials, config.credentialRef)

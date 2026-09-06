@@ -10,9 +10,10 @@ const skill = readFileSync(resolve(projectRoot, '.dsh/skills/dsh-plugin-developm
 const contracts = readFileSync(resolve(projectRoot, '.dsh/skills/dsh-plugin-development/references/official-contracts.md'), 'utf8')
 const combined = `${skill}\n${contracts}`
 
-test('requires a live whole-tree query followed by exact rooted Slot queries', () => {
-  assert.match(combined, /Slots\.listSubTree[^\n]*(?:不带|without)[^\n]*root/i)
-  assert.match(combined, /Slots\.listSubTree[^\n]*(?:带|with)[^\n]*root/i)
+test('requires targeted exact-root Slot evidence and expands only when evidence is insufficient', () => {
+  assert.match(combined, /Slots\.listSubTree[^\n]*精确[^\n]*root[^\n]*候选/i)
+  assert.match(combined, /证据[^\n]*不明确[^\n]*扩大[^\n]*全树/i)
+  assert.match(combined, /禁止[^\n]*全树扫描[^\n]*常驻诊断/i)
   assert.match(combined, /purpose[^\n]*kind[^\n]*scope/i)
   assert.match(combined, /current occupants|当前占用者/i)
 })

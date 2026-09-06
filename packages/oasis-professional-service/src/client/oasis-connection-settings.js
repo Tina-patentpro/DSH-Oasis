@@ -3,8 +3,9 @@ import { normalizeOasisOrigin } from '../oasis-origin-policy.js'
 const REFERENCE = 'OASIS_USER_JWT'
 const initial = () => ({
   connected: false, settingsStatus: 'unavailable', settingsWritable: false,
-  apiBaseUrl: '', downloadOrigins: Object.freeze([]),
-  credentialStatus: 'unavailable', credentialConfigured: false, credentialWritable: false,
+  apiBaseUrl: '', credentialOrigin: '', downloadOrigins: Object.freeze([]),
+  credentialStatus: 'unavailable', credentialStored: false,
+  credentialConfigured: false, credentialWritable: false,
   busy: false, restartRequired: false, notice: null, error: null, canSubmit: false,
 })
 
@@ -24,6 +25,10 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
   function publish(patch) {
     if (disposed) return
     const next = { ...snapshot, ...patch }
+    next.credentialConfigured = next.credentialStatus === 'ready'
+      && next.credentialStored === true
+      && next.apiBaseUrl !== ''
+      && next.credentialOrigin === next.apiBaseUrl
     next.canSubmit = next.connected && next.settingsStatus === 'ready'
       && next.apiBaseUrl !== '' && next.credentialStatus === 'ready'
       && next.credentialConfigured && !next.busy && !next.restartRequired
@@ -40,17 +45,21 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
       const view = scope?.getSnapshot()
       if (view?.status !== 'ready' || view.mode !== 'host') throw new Error('unavailable')
       const value = view.value
+      const rawCredentialOrigin = value?.credentialOrigin ?? ''
       if (value?.environmentKind !== 'non-production' || value.credentialRef !== REFERENCE
-        || typeof value.apiBaseUrl !== 'string' || !Array.isArray(value.downloadOrigins)) throw new Error('invalid')
+        || typeof value.apiBaseUrl !== 'string' || typeof rawCredentialOrigin !== 'string'
+        || !Array.isArray(value.downloadOrigins)) throw new Error('invalid')
       const apiBaseUrl = value.apiBaseUrl === '' ? '' : normalizeOasisOrigin(value.apiBaseUrl)
+      const credentialOrigin = rawCredentialOrigin === '' ? '' : normalizeOasisOrigin(rawCredentialOrigin)
       const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisOrigin(origin)))])
-      const settings = JSON.stringify([apiBaseUrl, downloadOrigins])
+      const settings = JSON.stringify([apiBaseUrl, credentialOrigin, downloadOrigins])
       const restartRequired = snapshot.restartRequired || (lastSettings !== null && settings !== lastSettings)
       lastSettings = settings
       publish({ settingsStatus: 'ready', settingsWritable: snapshot.connected && view.writable === true,
-        apiBaseUrl, downloadOrigins, restartRequired })
+        apiBaseUrl, credentialOrigin, downloadOrigins, restartRequired })
     } catch {
-      publish({ settingsStatus: 'unavailable', settingsWritable: false, apiBaseUrl: '', downloadOrigins: Object.freeze([]) })
+      publish({ settingsStatus: 'unavailable', settingsWritable: false, apiBaseUrl: '',
+        credentialOrigin: '', downloadOrigins: Object.freeze([]) })
     }
   }
 
@@ -59,7 +68,7 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
     const read = ++credentialRead
     const api = remote?.credentials
     if (!snapshot.connected || typeof api?.describe !== 'function') {
-      publish({ credentialStatus: 'unavailable', credentialConfigured: false, credentialWritable: false })
+      publish({ credentialStatus: 'unavailable', credentialStored: false, credentialWritable: false })
       return false
     }
     publish({ credentialStatus: 'loading', credentialWritable: false })
@@ -68,12 +77,12 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
       if (disposed || current !== generation || read !== credentialRead) return false
       const info = response?.ok === true ? response.value?.[REFERENCE] : null
       if (typeof info?.configured !== 'boolean' || typeof info.writable !== 'boolean') throw new Error('invalid')
-      publish({ credentialStatus: 'ready', credentialConfigured: info.configured,
+      publish({ credentialStatus: 'ready', credentialStored: info.configured,
         credentialWritable: info.writable && typeof api.set === 'function' })
       return true
     } catch {
       if (!disposed && current === generation && read === credentialRead) {
-        publish({ credentialStatus: 'error', credentialConfigured: false, credentialWritable: false })
+        publish({ credentialStatus: 'error', credentialStored: false, credentialWritable: false })
       }
       return false
     }
@@ -99,9 +108,17 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
         publish({ restartRequired: true, notice: '设置已保存。请手工重启隔离 Host 并刷新页面后再提交任务。' })
       }
       return true
-    } catch {
+    } catch (error) {
       if (!disposed && generation === current) {
-        publish({ error: kind === 'credential' ? '凭据更新失败；请检查可写状态后重试。' : '设置保存失败；请刷新后检查冲突或输入。', notice: null })
+        publish({
+          ...(error?.code === 'CREDENTIAL_ORIGIN_BINDING_FAILED' ? { credentialStored: true } : {}),
+          error: error?.code === 'CREDENTIAL_ORIGIN_BINDING_FAILED'
+            ? '凭据已写入，但未能绑定当前 API 地址；远程服务保持禁用，请刷新状态后重试。'
+            : kind === 'credential'
+              ? '凭据更新失败；请检查可写状态后重试。'
+              : '设置保存失败；请刷新后检查冲突或输入。',
+          notice: null,
+        })
       }
       return false
     } finally {
@@ -146,7 +163,7 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
           generation += 1
           credentialRead += 1
           publish({ connected: connection.generation.getSnapshot() != null,
-            credentialConfigured: false, credentialWritable: false, error: null, notice: null })
+            credentialStored: false, credentialWritable: false, error: null, notice: null })
           readSettings()
           invalidate()
           void refreshCredential().then((ok) => { if (active && ok) invalidate(true) })
@@ -188,10 +205,25 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
     },
     async updateCredential(value) {
       if (typeof value !== 'string' || value.trim() === '') return false
+      if (snapshot.apiBaseUrl === '' || !snapshot.settingsWritable) {
+        publish({ error: '请先在 DSH 设置 → 绿洲工作台保存当前 API 地址，再更新凭据。', notice: null })
+        value = ''
+        return false
+      }
+      const targetOrigin = snapshot.apiBaseUrl
       return write('credential', async () => {
         try {
           const response = await remote.credentials.set(REFERENCE, value)
           if (response?.ok !== true) throw new Error('failed')
+          if (snapshot.credentialOrigin !== targetOrigin) {
+            try {
+              await scope.set('credentialOrigin', targetOrigin)
+            } catch {
+              const error = new Error('credential origin binding failed')
+              error.code = 'CREDENTIAL_ORIGIN_BINDING_FAILED'
+              throw error
+            }
+          }
         } finally { value = '' }
       })
     },

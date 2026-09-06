@@ -9,6 +9,7 @@ export const OASIS_SETTINGS_NAMESPACE = 'oasis-professional-service'
 export const OASIS_SETTINGS_SCHEMA = z.object({
   environmentKind: z.const('non-production').default('non-production'),
   apiBaseUrl: z.string().default(''),
+  credentialOrigin: z.string().default(''),
   credentialRef: z.string().default(DEFAULT_CREDENTIAL_REF),
   downloadOrigins: z.array(z.string()).default([]),
 })
@@ -21,6 +22,10 @@ export function normalizeOasisRuntimeConfig(input = {}) {
   if (environmentKind !== 'non-production') throw new TypeError('Only non-production Oasis environments are supported')
   const rawBaseUrl = input.apiBaseUrl ?? ''
   const apiBaseUrl = rawBaseUrl === '' ? null : normalizeOasisOrigin(rawBaseUrl, 'apiBaseUrl')
+  const rawCredentialOrigin = input.credentialOrigin ?? ''
+  const credentialOrigin = rawCredentialOrigin === ''
+    ? null
+    : normalizeOasisOrigin(rawCredentialOrigin, 'credentialOrigin')
   const credentialName = input.credentialRef ?? DEFAULT_CREDENTIAL_REF
   credentialRef(credentialName)
   const rawDownloads = input.downloadOrigins ?? []
@@ -29,8 +34,10 @@ export function normalizeOasisRuntimeConfig(input = {}) {
   return Object.freeze({
     environmentKind,
     apiBaseUrl,
+    credentialOrigin,
     credentialRef: credentialName,
     downloadOrigins: Object.freeze(downloadOrigins),
+    credentialBound: apiBaseUrl !== null && credentialOrigin === apiBaseUrl,
     remoteEnabled: apiBaseUrl !== null,
   })
 }
@@ -40,6 +47,7 @@ export function registerOasisSettings(ctx, base = {}) {
   const entry = {
     environmentKind: 'non-production',
     apiBaseUrl: '',
+    credentialOrigin: '',
     credentialRef: DEFAULT_CREDENTIAL_REF,
     downloadOrigins: [],
     ...base,

@@ -24,7 +24,7 @@ test('configuration form offers separate writes and clears password before sendi
   const passwordRef = { current: { value: 'synthetic-token' } }
   const calls = []
   const form = ui.ConnectionSettingsForm({
-    snapshot: { connected: true, settingsStatus: 'ready', settingsWritable: true, credentialWritable: true, credentialStatus: 'ready', credentialConfigured: false, busy: false },
+    snapshot: { connected: true, settingsStatus: 'ready', settingsWritable: true, apiBaseUrl: 'http://127.0.0.1:6326', credentialWritable: true, credentialStatus: 'ready', credentialConfigured: false, busy: false },
     apiDraft: '', downloadDraft: '', passwordRef,
     onApiDraft() {}, onDownloadDraft() {},
     controller: {
@@ -87,4 +87,30 @@ test('configuration changes do not hide the stop-waiting action for an existing 
   assert.ok(stop, 'configuration refresh must not hide stop waiting')
   stop.props.onClick()
   assert.deepEqual(stopped, ['existing'])
+})
+
+test('professional service states direct users to the native DSH settings without test-only wording', () => {
+  const page = { remoteExecutionOrder: [], remoteExecutions: {} }
+  const operation = { activeOperation: null }
+  const panels = [
+    ProfessionalServicePanel({
+      state: { professionalConfigurationBlocked: true, professionalStatus: 'idle' }, page, operation,
+    }),
+    ProfessionalServicePanel({
+      state: {
+        professionalConfigurationBlocked: false, professionalStatus: 'ready',
+        professionalBootstrap: { remoteEnabled: false },
+      }, page, operation,
+    }),
+    ProfessionalServicePanel({
+      state: {
+        professionalConfigurationBlocked: false, professionalStatus: 'ready',
+        professionalBootstrap: { remoteEnabled: true, credentialConfigured: false },
+      }, page, operation,
+    }),
+  ]
+  const copy = panels.flatMap((panel) => nodes(panel))
+    .filter((value) => typeof value === 'string').join(' ')
+  assert.match(copy, /DSH 设置 → 绿洲工作台/)
+  assert.doesNotMatch(copy, /上方连接配置|隔离 Host/)
 })

@@ -4,12 +4,12 @@ import test from 'node:test'
 
 import { apply, inject, name } from '../src/index.js'
 
-function createHostFixture() {
+function createHostFixture(options = {}) {
   let registered
   let rpcRegistration
   let settingsRegistration
   const records = new Map()
-  const calls = { domainClose: 0, rpcDispose: 0, toolDispose: 0 }
+  const calls = { domainClose: 0, rpcDispose: 0, toolDispose: 0, credentialResolve: 0 }
   const domain = {
     table() {
       return {
@@ -53,13 +53,16 @@ function createHostFixture() {
       get() { return undefined },
     },
     settings: {
-      register(ns, schema, options) {
-        settingsRegistration = { ns, schema, options }
-        return { get: () => options.base }
+      register(ns, schema, registrationOptions) {
+        settingsRegistration = { ns, schema, options: registrationOptions }
+        return { get: () => options.runtimeSettings ?? registrationOptions.base }
       },
     },
     credentials: {
-      async resolve() { return undefined },
+      async resolve() {
+        calls.credentialResolve += 1
+        return options.credential ?? undefined
+      },
     },
   }
   return {
@@ -106,7 +109,7 @@ test('registers the current Host tool and loopback workbench RPC with owned clea
   assert.equal(value.externalSystems, 'not-invoked')
 
   await dispose()
-  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 1, toolDispose: 1 })
+  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 1, toolDispose: 1, credentialResolve: 0 })
 })
 
 test('unregisters the Host tool when RPC setup fails', async () => {
@@ -116,7 +119,49 @@ test('unregisters the Host tool when RPC setup fails', async () => {
   }
 
   await assert.rejects(apply(fixture.ctx), /RPC registration failed/)
-  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 0, toolDispose: 1 })
+  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 0, toolDispose: 1, credentialResolve: 0 })
+})
+
+test('an origin-mismatched credential cannot be resolved or used by automatic bootstrap', async () => {
+  const previousFetch = globalThis.fetch
+  let fetchCalls = 0
+  globalThis.fetch = async (url) => {
+    fetchCalls += 1
+    const path = new URL(url).pathname
+    const data = path === '/api/user/detail'
+      ? { balance: 100 }
+      : path === '/api/user/user/folderlist'
+        ? { total: 0, items: [] }
+        : {}
+    return { ok: true, status: 200, async json() { return { data } } }
+  }
+  const fixture = createHostFixture({
+    runtimeSettings: {
+      environmentKind: 'non-production',
+      apiBaseUrl: 'http://127.0.0.1:6326',
+      credentialOrigin: 'http://127.0.0.1:6327',
+      credentialRef: 'OASIS_USER_JWT',
+      downloadOrigins: [],
+    },
+    credential: { value: 'synthetic-token', source: 'test' },
+  })
+  let dispose
+  try {
+    dispose = await apply(fixture.ctx)
+    const result = await fixture.rpcRegistration.handler('professional/bootstrap', {})
+    assert.deepEqual(result, {
+      ok: true,
+      value: {
+        environmentKind: 'non-production', remoteEnabled: true, credentialConfigured: false,
+        balance: null, services: [], folders: [],
+      },
+    })
+    assert.equal(fixture.calls.credentialResolve, 0)
+    assert.equal(fetchCalls, 0)
+  } finally {
+    await dispose?.()
+    globalThis.fetch = previousFetch
+  }
 })
 
 test('wires the Host workspace registry into the safe writeback boundary', async () => {

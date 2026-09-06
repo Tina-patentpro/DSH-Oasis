@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-06T15:15:36+08:00",
+  "generatedAt": "2026-09-06T21:05:12+08:00",
   "evidenceBoundary": "fixed-version-installed-package-browser-and-static-contract; no model, professional API, upload, fee, or private Skill execution",
-  "projectRevision": "49c396a8478f80cf7dbee1596cb1de060c01b2cf",
-  "projectState": "stage-2 changes are present in the working tree and are not committed",
+  "projectRevision": "9823f7d19f9491622cf2dcbff624db8ebb601fe6",
+  "projectState": "stage-2 implementation is committed locally; audit repairs are verified, while authoritative commit, push, and release state must be checked from Git and release records",
   "targetCombination": {
     "globalDsh": "0.1.2-rc.1",
     "desktop": "2.0.5",
@@ -152,7 +152,7 @@
     },
     "nativeSettingsSection": {
       "status": "pass",
-      "proof": "DSH Settings rendered the Oasis section and reported non-production configuration with no credential value exposed"
+      "proof": "the rebuilt linked package rendered the Oasis section in native DSH Settings; the professional API remained disabled and no credential value was exposed"
     },
     "sidebarTabLifecycle": {
       "status": "pass",
@@ -171,8 +171,8 @@
       "proof": "actual rendering established conversation input entry, settings.section contribution, and Better Sidebar tab registration; no unrelated full Slot-tree scanner was added"
     },
     "screenshot": {
-      "path": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\docs\\release\\evidence\\2026-09-06-stage2-desktop-oasis-settings.png",
-      "sha256": "A75EF12D225E6DE9259ABBB3E0E5D0696CB945D5CC8FA25E56AA194FE6C0ACD0"
+      "path": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\docs\\release\\evidence\\2026-09-06-stage2-audit-repair-settings.png",
+      "sha256": "97ADA90145D0723BE83D9353234D90A4711AF964F071AC2D7D859C54096E7B91"
     }
   },
   "skillVisibility": {
@@ -186,13 +186,13 @@
     "decision": "do not install or run a private Oasis business Skill until G-SKILL is resolved"
   },
   "verification": {
-    "targetedCommand": "node --test test/package-contract.test.mjs test/bundle-contract.test.mjs test/client-build-contract.test.mjs test/slot-contract.test.mjs test/workspace-context-bridge.test.mjs test/panel-host-coordinator.test.mjs test/embedded-workspace-host.test.mjs test/client-panel-contract.test.mjs test/oasis-connection-settings.test.mjs test/oasis-connection-settings-ui.test.mjs test/oasis-runtime-config.test.mjs",
-    "targetedResult": "56 passed, 0 failed",
+    "targetedCommand": "node --test test/package-contract.test.mjs test/bundle-contract.test.mjs test/client-build-contract.test.mjs test/client-panel-contract.test.mjs test/slot-contract.test.mjs test/oasis-runtime-config.test.mjs test/oasis-connection-settings.test.mjs test/oasis-connection-settings-ui.test.mjs test/host-tool.test.mjs",
+    "targetedResult": "55 passed, 0 failed",
     "fullCommand": "pnpm run verify",
-    "fullResult": "build passed; 290 tests passed, 0 failed; npm pack --dry-run passed with 46 entries and no publish",
-    "builtClientSha256": "E91F58C2A33EF9F3B5FA7D98A9504E6355FDE05F384C33490FC1584299F43119",
-    "builtClientMapSha256": "5781276041BE2512D73F55F0FF3220B01F7F5B1888F726ADEDD87B6990F57A7C",
-    "protectedProfileAndApiBaseline": "fresh SHA-256 comparison matched all recorded values",
+    "fullResult": "build passed; 296 tests passed, 0 failed; npm pack --dry-run passed with 46 entries using the project-isolated npm cache; no publish",
+    "builtClientSha256": "708AF130EDE9AD3B2E35ED796F012C961C54E0E16A39771F984D155955808B33",
+    "builtClientMapSha256": "2A313BDF83CE6CCBD08A8F767D61258DD9686DAE8508C74BD7321C37348E8175",
+    "protectedProfileAndApiBaseline": "fresh SHA-256 comparison matched the protected web Profile, Better Sidebar manifest, and authoritative API document",
     "diffCheck": "passed"
   },
   "pendingEvidence": [

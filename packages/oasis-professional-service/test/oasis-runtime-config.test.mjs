@@ -12,8 +12,10 @@ test('defaults to disabled non-production integration with no base URL', () => {
   assert.deepEqual(normalizeOasisRuntimeConfig({}), {
     environmentKind: 'non-production',
     apiBaseUrl: null,
+    credentialOrigin: null,
     credentialRef: 'OASIS_USER_JWT',
     downloadOrigins: [],
+    credentialBound: false,
     remoteEnabled: false,
   })
 })
@@ -26,13 +28,31 @@ test('rejects the exact production origin and keeps API and download origins sep
   assert.deepEqual(normalizeOasisRuntimeConfig({
     environmentKind: 'non-production',
     apiBaseUrl: 'https://oasis-staging.example/',
+    credentialOrigin: 'https://oasis-staging.example/',
     credentialRef: 'OASIS_TEST_JWT',
     downloadOrigins: ['https://files-staging.example/'],
   }), {
     environmentKind: 'non-production',
     apiBaseUrl: 'https://oasis-staging.example',
+    credentialOrigin: 'https://oasis-staging.example',
     credentialRef: 'OASIS_TEST_JWT',
     downloadOrigins: ['https://files-staging.example'],
+    credentialBound: true,
+    remoteEnabled: true,
+  })
+})
+
+test('keeps a stored credential inactive when its bound origin differs from the API origin', () => {
+  assert.deepEqual(normalizeOasisRuntimeConfig({
+    apiBaseUrl: 'https://oasis-staging.example',
+    credentialOrigin: 'https://old-oasis-staging.example',
+  }), {
+    environmentKind: 'non-production',
+    apiBaseUrl: 'https://oasis-staging.example',
+    credentialOrigin: 'https://old-oasis-staging.example',
+    credentialRef: 'OASIS_USER_JWT',
+    downloadOrigins: [],
+    credentialBound: false,
     remoteEnabled: true,
   })
 })
@@ -68,6 +88,7 @@ test('registers a restart-applied DSH settings namespace without embedding a URL
   assert.equal(registration.ns, OASIS_SETTINGS_NAMESPACE)
   assert.equal(registration.options.applies, 'restart')
   assert.equal(registration.options.base.apiBaseUrl, '')
+  assert.equal(registration.options.base.credentialOrigin, '')
   assert.equal(JSON.stringify(registration.options.base).includes('Bearer '), false)
 })
 

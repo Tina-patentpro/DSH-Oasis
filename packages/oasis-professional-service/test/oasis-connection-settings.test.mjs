@@ -22,7 +22,11 @@ function fixture(options = {}) {
   let generation = { id: 1, host: { name: 'synthetic-host' } }
   let state = {
     status: 'ready', mode: 'host', writable: true,
-    value: { environmentKind: 'non-production', apiBaseUrl: 'http://127.0.0.1:1234', credentialRef: 'OASIS_USER_JWT', downloadOrigins: [] },
+    value: {
+      environmentKind: 'non-production', apiBaseUrl: 'http://127.0.0.1:1234',
+      credentialOrigin: options.credentialOrigin ?? 'http://127.0.0.1:1234',
+      credentialRef: 'OASIS_USER_JWT', downloadOrigins: [],
+    },
   }
   const scope = {
     getSnapshot: () => state,
@@ -68,6 +72,8 @@ test('settings and JWT are separate public writes; production and non-origin inp
   assert.equal(await f.controller.saveApiBaseUrl('https://test.invalid/path?token=x'), false)
   assert.equal(f.calls.filter((x) => x[0] === 'settings').length, 0)
   assert.equal(await f.controller.saveApiBaseUrl('http://127.0.0.1:4321/'), true)
+  assert.equal(f.controller.getSnapshot().credentialConfigured, false)
+  assert.equal(f.controller.getSnapshot().credentialStored, true)
   assert.equal(await f.controller.saveDownloadOrigins('https://files.invalid/\nhttps://files.invalid'), true)
   assert.deepEqual(f.calls.filter((x) => x[0] === 'settings'), [
     ['settings', 'apiBaseUrl', 'http://127.0.0.1:4321'], ['settings', 'downloadOrigins', ['https://files.invalid']],
@@ -110,6 +116,54 @@ test('empty JWT never deletes or writes; duplicate pending writes are rejected a
   f.controller.dispose()
 })
 
+test('a credential becomes active only after it is explicitly bound to the current API origin', async () => {
+  const f = fixture({ credentialOrigin: 'http://127.0.0.1:9999' })
+  await tick()
+  assert.equal(f.controller.getSnapshot().credentialStored, true)
+  assert.equal(f.controller.getSnapshot().credentialConfigured, false)
+  assert.equal(f.controller.getSnapshot().canSubmit, false)
+  assert.equal(await f.controller.updateCredential('synthetic-token'), true)
+  assert.ok(f.calls.some((call) => (
+    call[0] === 'settings' && call[1] === 'credentialOrigin' && call[2] === 'http://127.0.0.1:1234'
+  )))
+  assert.equal(f.controller.getSnapshot().credentialConfigured, true)
+  assert.equal(f.controller.getSnapshot().restartRequired, true)
+  assert.equal(f.controller.getSnapshot().canSubmit, false)
+  assert.doesNotMatch(JSON.stringify(f.controller.getSnapshot()), /synthetic-token/)
+  f.controller.dispose()
+})
+
+test('legacy settings without a credential origin remain writable but keep the credential inactive', async () => {
+  const f = fixture()
+  await tick()
+  f.change({
+    value: {
+      environmentKind: 'non-production', apiBaseUrl: 'http://127.0.0.1:1234',
+      credentialRef: 'OASIS_USER_JWT', downloadOrigins: [],
+    },
+  })
+  await f.controller.refresh()
+  assert.equal(f.controller.getSnapshot().settingsStatus, 'ready')
+  assert.equal(f.controller.getSnapshot().settingsWritable, true)
+  assert.equal(f.controller.getSnapshot().credentialStored, true)
+  assert.equal(f.controller.getSnapshot().credentialConfigured, false)
+  assert.equal(f.controller.getSnapshot().canSubmit, false)
+  f.controller.dispose()
+})
+
+test('a credential write whose origin binding fails remains inactive and reports a safe partial failure', async () => {
+  const f = fixture({ credentialOrigin: 'http://127.0.0.1:9999', saveError: true })
+  await tick()
+  assert.equal(await f.controller.updateCredential('synthetic-token'), false)
+  assert.equal(f.calls.filter((call) => call[0] === 'credential').length, 1)
+  assert.ok(f.calls.some((call) => call[0] === 'settings' && call[1] === 'credentialOrigin'))
+  assert.equal(f.controller.getSnapshot().credentialConfigured, false)
+  assert.equal(f.controller.getSnapshot().canSubmit, false)
+  assert.match(f.controller.getSnapshot().error, /已写入.*未能绑定/)
+  assert.doesNotMatch(JSON.stringify(f.controller.getSnapshot()), /synthetic-token|synthetic private error/)
+  f.controller.dispose()
+})
+
 test('disconnect ignores late credential reads, blocks writes, and reconnect refreshes; detach removes subscriptions', async () => {
   const pending = deferred()
   let count = 0
@@ -139,7 +193,7 @@ test('readonly/mismatched configuration and save failures remain fail-closed wit
   const before = f.calls.length
   assert.equal(await f.controller.saveApiBaseUrl(''), false)
   assert.equal(f.calls.length, before)
-  f.change({ value: { environmentKind: 'non-production', credentialRef: 'OTHER_REF', apiBaseUrl: '', downloadOrigins: [] } })
+  f.change({ value: { environmentKind: 'non-production', credentialRef: 'OTHER_REF', apiBaseUrl: '', credentialOrigin: '', downloadOrigins: [] } })
   assert.equal(f.controller.getSnapshot().canSubmit, false)
   assert.equal(f.controller.getSnapshot().settingsWritable, false)
   f.controller.dispose()
@@ -176,7 +230,7 @@ test('configuration refresh rejects old bootstrap responses without overwriting 
 test('external setting changes require a Host restart rather than enabling submission against old runtime settings', async () => {
   const f = fixture()
   await tick()
-  f.change({ value: { environmentKind: 'non-production', apiBaseUrl: 'http://127.0.0.1:5678', credentialRef: 'OASIS_USER_JWT', downloadOrigins: [] } })
+  f.change({ value: { environmentKind: 'non-production', apiBaseUrl: 'http://127.0.0.1:5678', credentialOrigin: 'http://127.0.0.1:1234', credentialRef: 'OASIS_USER_JWT', downloadOrigins: [] } })
   await f.controller.refresh()
   assert.equal(f.controller.getSnapshot().restartRequired, true)
   assert.equal(f.controller.getSnapshot().canSubmit, false)

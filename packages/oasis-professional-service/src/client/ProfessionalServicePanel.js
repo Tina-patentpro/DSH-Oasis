@@ -36,7 +36,7 @@ export function ProfessionalServicePanel({
     const execution = latestExecution(page)
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
       createElement('strong', null, '非生产专业服务'),
-      createElement('p', { role: 'status' }, '请先完成上方“非生产服务连接配置”。设置保存后须重启隔离 Host 并刷新页面；本地工作流仍可继续使用。'),
+      createElement('p', { role: 'status' }, '请前往 DSH 设置 → 绿洲工作台完成连接配置。设置保存后须重启 Host 并刷新页面；本地工作流仍可继续使用。'),
       waiting && execution ? createElement('button', {
         type: 'button', onClick: () => onStop(execution.executionId), 'data-testid': 'oasis-professional-stop',
       }, '停止本地等待') : null)
@@ -55,12 +55,12 @@ export function ProfessionalServicePanel({
   if (!bootstrap?.remoteEnabled) {
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
       createElement('strong', null, '非生产专业服务'),
-      createElement('p', { style: { margin: 0, color: '#66706b' } }, 'Host 尚未启用非生产 API 地址。请展开上方连接配置，保存后重启隔离 Host 并刷新页面。'))
+      createElement('p', { style: { margin: 0, color: '#66706b' } }, 'Host 尚未启用非生产 API 地址。请前往 DSH 设置 → 绿洲工作台保存，随后重启 Host 并刷新页面。'))
   }
   if (!bootstrap.credentialConfigured) {
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
       createElement('strong', null, '非生产专业服务'),
-      createElement('p', { style: { margin: 0, color: '#8b2f24' } }, '请在上方连接配置中单独更新 JWT；凭证不会进入工作台状态。'))
+      createElement('p', { style: { margin: 0, color: '#8b2f24' } }, '请前往 DSH 设置 → 绿洲工作台重新输入 JWT 并绑定当前 API 地址；凭证不会进入工作台状态。'))
   }
 
   const draft = page.professionalDraft

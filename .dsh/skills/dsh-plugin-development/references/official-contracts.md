@@ -92,7 +92,7 @@ Host可用`ctx.connection.rpc.handle(channel, handler, { authority })`注册logi
 
 Client模块通过包清单中的`dsh.client`被发现。当前会话输入右侧入口使用官方槽位`conversation.input.right`：
 
-Client编码前先调用`Slots.listSubTree`不带`root`查询全树，再调用`Slots.listSubTree`带精确`root`查询每个候选Slot。禁止猜测options；精确结果必须覆盖purpose、kind、scope、standard props、owner props、current occupants、replacement risk和descendants。
+Client编码前优先用`Slots.listSubTree`的精确`root`只查询本次受影响的候选Slot；仅当候选边界、owner或固定版本证据仍不明确时，才逐级扩大到相邻子树或全树。禁止把全树扫描建设成常驻诊断工具，也禁止猜测options；采用的精确结果必须覆盖purpose、kind、scope、standard props、owner props、current occupants、replacement risk和descendants。
 
 本项目当前决策：`conversation.input.right`采用`list`列表协议提供入口；`settings.section`提供原生设置页面；`shell.overlay`作为`list`增量桥接点保留 Workspace 上下文与历史兼容生命周期，但在固定 Sidebar 路径中不渲染独立面板；业务主工作区通过 Better Sidebar `0.18.0` 的公开服务注册。禁止默认注册`root`、`sidebar`、`conversation`、`details`；`details`是`single`单槽，禁止绿洲工作台注册或借用其几何。
 

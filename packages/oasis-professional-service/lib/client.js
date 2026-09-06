@@ -6096,7 +6096,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return (0, react.createElement)("section", {
 					style: boxStyle,
 					"data-testid": "oasis-professional-service"
-				}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { role: "status" }, "请先完成上方“非生产服务连接配置”。设置保存后须重启隔离 Host 并刷新页面；本地工作流仍可继续使用。"), waiting && execution ? (0, react.createElement)("button", {
+				}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { role: "status" }, "请前往 DSH 设置 → 绿洲工作台完成连接配置。设置保存后须重启 Host 并刷新页面；本地工作流仍可继续使用。"), waiting && execution ? (0, react.createElement)("button", {
 					type: "button",
 					onClick: () => onStop(execution.executionId),
 					"data-testid": "oasis-professional-stop"
@@ -6117,14 +6117,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { style: {
 				margin: 0,
 				color: "#66706b"
-			} }, "Host 尚未启用非生产 API 地址。请展开上方连接配置，保存后重启隔离 Host 并刷新页面。"));
+			} }, "Host 尚未启用非生产 API 地址。请前往 DSH 设置 → 绿洲工作台保存，随后重启 Host 并刷新页面。"));
 			if (!bootstrap.credentialConfigured) return (0, react.createElement)("section", {
 				style: boxStyle,
 				"data-testid": "oasis-professional-service"
 			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { style: {
 				margin: 0,
 				color: "#8b2f24"
-			} }, "请在上方连接配置中单独更新 JWT；凭证不会进入工作台状态。"));
+			} }, "请前往 DSH 设置 → 绿洲工作台重新输入 JWT 并绑定当前 API 地址；凭证不会进入工作台状态。"));
 			const draft = page.professionalDraft;
 			const detail = operation.professionalDetail;
 			const execution = latestExecution(page);
@@ -9206,8 +9206,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			settingsStatus: "unavailable",
 			settingsWritable: false,
 			apiBaseUrl: "",
+			credentialOrigin: "",
 			downloadOrigins: Object.freeze([]),
 			credentialStatus: "unavailable",
+			credentialStored: false,
 			credentialConfigured: false,
 			credentialWritable: false,
 			busy: false,
@@ -9234,6 +9236,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					...snapshot,
 					...patch
 				};
+				next.credentialConfigured = next.credentialStatus === "ready" && next.credentialStored === true && next.apiBaseUrl !== "" && next.credentialOrigin === next.apiBaseUrl;
 				next.canSubmit = next.connected && next.settingsStatus === "ready" && next.apiBaseUrl !== "" && next.credentialStatus === "ready" && next.credentialConfigured && !next.busy && !next.restartRequired;
 				snapshot = Object.freeze(next);
 				for (const listener of listeners) listener();
@@ -9248,16 +9251,23 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					const view = scope?.getSnapshot();
 					if (view?.status !== "ready" || view.mode !== "host") throw new Error("unavailable");
 					const value = view.value;
-					if (value?.environmentKind !== "non-production" || value.credentialRef !== REFERENCE || typeof value.apiBaseUrl !== "string" || !Array.isArray(value.downloadOrigins)) throw new Error("invalid");
+					const rawCredentialOrigin = value?.credentialOrigin ?? "";
+					if (value?.environmentKind !== "non-production" || value.credentialRef !== REFERENCE || typeof value.apiBaseUrl !== "string" || typeof rawCredentialOrigin !== "string" || !Array.isArray(value.downloadOrigins)) throw new Error("invalid");
 					const apiBaseUrl = value.apiBaseUrl === "" ? "" : normalizeOasisOrigin(value.apiBaseUrl);
+					const credentialOrigin = rawCredentialOrigin === "" ? "" : normalizeOasisOrigin(rawCredentialOrigin);
 					const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisOrigin(origin)))]);
-					const settings = JSON.stringify([apiBaseUrl, downloadOrigins]);
+					const settings = JSON.stringify([
+						apiBaseUrl,
+						credentialOrigin,
+						downloadOrigins
+					]);
 					const restartRequired = snapshot.restartRequired || lastSettings !== null && settings !== lastSettings;
 					lastSettings = settings;
 					publish({
 						settingsStatus: "ready",
 						settingsWritable: snapshot.connected && view.writable === true,
 						apiBaseUrl,
+						credentialOrigin,
 						downloadOrigins,
 						restartRequired
 					});
@@ -9266,6 +9276,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						settingsStatus: "unavailable",
 						settingsWritable: false,
 						apiBaseUrl: "",
+						credentialOrigin: "",
 						downloadOrigins: Object.freeze([])
 					});
 				}
@@ -9277,7 +9288,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				if (!snapshot.connected || typeof api?.describe !== "function") {
 					publish({
 						credentialStatus: "unavailable",
-						credentialConfigured: false,
+						credentialStored: false,
 						credentialWritable: false
 					});
 					return false;
@@ -9293,14 +9304,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (typeof info?.configured !== "boolean" || typeof info.writable !== "boolean") throw new Error("invalid");
 					publish({
 						credentialStatus: "ready",
-						credentialConfigured: info.configured,
+						credentialStored: info.configured,
 						credentialWritable: info.writable && typeof api.set === "function"
 					});
 					return true;
 				} catch {
 					if (!disposed && current === generation && read === credentialRead) publish({
 						credentialStatus: "error",
-						credentialConfigured: false,
+						credentialStored: false,
 						credentialWritable: false
 					});
 					return false;
@@ -9332,9 +9343,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						});
 					}
 					return true;
-				} catch {
+				} catch (error) {
 					if (!disposed && generation === current) publish({
-						error: kind === "credential" ? "凭据更新失败；请检查可写状态后重试。" : "设置保存失败；请刷新后检查冲突或输入。",
+						...error?.code === "CREDENTIAL_ORIGIN_BINDING_FAILED" ? { credentialStored: true } : {},
+						error: error?.code === "CREDENTIAL_ORIGIN_BINDING_FAILED" ? "凭据已写入，但未能绑定当前 API 地址；远程服务保持禁用，请刷新状态后重试。" : kind === "credential" ? "凭据更新失败；请检查可写状态后重试。" : "设置保存失败；请刷新后检查冲突或输入。",
 						notice: null
 					});
 					return false;
@@ -9392,7 +9404,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							credentialRead += 1;
 							publish({
 								connected: connection.generation.getSnapshot() != null,
-								credentialConfigured: false,
+								credentialStored: false,
 								credentialWritable: false,
 								error: null,
 								notice: null
@@ -9457,9 +9469,25 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				},
 				async updateCredential(value) {
 					if (typeof value !== "string" || value.trim() === "") return false;
+					if (snapshot.apiBaseUrl === "" || !snapshot.settingsWritable) {
+						publish({
+							error: "请先在 DSH 设置 → 绿洲工作台保存当前 API 地址，再更新凭据。",
+							notice: null
+						});
+						value = "";
+						return false;
+					}
+					const targetOrigin = snapshot.apiBaseUrl;
 					return write("credential", async () => {
 						try {
 							if ((await remote.credentials.set(REFERENCE, value))?.ok !== true) throw new Error("failed");
+							if (snapshot.credentialOrigin !== targetOrigin) try {
+								await scope.set("credentialOrigin", targetOrigin);
+							} catch {
+								const error = /* @__PURE__ */ new Error("credential origin binding failed");
+								error.code = "CREDENTIAL_ORIGIN_BINDING_FAILED";
+								throw error;
+							}
 						} finally {
 							value = "";
 						}
@@ -9497,7 +9525,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		};
 		function ConnectionSettingsForm({ snapshot, controller, apiDraft = "", downloadDraft = "", passwordRef, surface = "workbench", onApiDraft = () => {}, onDownloadDraft = () => {} }) {
 			const disabledSettings = !snapshot.settingsWritable || snapshot.busy;
-			const disabledCredential = !snapshot.credentialWritable || snapshot.settingsStatus !== "ready" || snapshot.busy;
+			const disabledCredential = !snapshot.credentialWritable || !snapshot.settingsWritable || snapshot.settingsStatus !== "ready" || snapshot.apiBaseUrl === "" || snapshot.busy;
 			const clearPassword = () => {
 				if (passwordRef.current) passwordRef.current.value = "";
 			};
@@ -9568,7 +9596,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			})), (0, react.createElement)("div", {
 				role: "status",
 				style: { fontSize: 12 }
-			}, snapshot.credentialStatus !== "ready" ? "凭据状态尚未确认。" : snapshot.credentialConfigured ? "凭据已配置（不读取或显示原值）。" : "尚未配置凭据。"), (0, react.createElement)("button", {
+			}, snapshot.credentialStatus !== "ready" ? "凭据状态尚未确认。" : snapshot.credentialConfigured ? "凭据已绑定当前 API 地址（不读取或显示原值）。" : snapshot.credentialStored ? "凭据已保存，但未绑定当前 API 地址；请重新输入凭据以激活。" : "尚未配置凭据。"), (0, react.createElement)("button", {
 				type: "button",
 				disabled: disabledCredential,
 				"data-testid": "oasis-credential-save",
