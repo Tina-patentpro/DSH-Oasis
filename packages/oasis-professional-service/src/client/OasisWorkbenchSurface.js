@@ -3,7 +3,6 @@ import { createElement, useEffect, useLayoutEffect, useRef, useSyncExternalStore
 import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
 import { PanelChrome } from './PanelChrome.js'
 import { PanelPages } from './PanelPages.js'
-import { OasisConnectionSettings } from './OasisConnectionSettings.js'
 
 const noConfiguration = Object.freeze({ canSubmit: true })
 const getNoConfiguration = () => noConfiguration
@@ -234,7 +233,6 @@ export function OasisWorkbenchSurface({
       }
     },
   }),
-  createElement(OasisConnectionSettings, { key: workspaceId, controller: store.connectionSettings, visible }),
   createElement(PanelPages, {
     state: { ...state, professionalConfigurationBlocked: !configuration.canSubmit },
     effectiveMode,

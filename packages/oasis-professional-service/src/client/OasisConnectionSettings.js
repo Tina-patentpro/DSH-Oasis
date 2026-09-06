@@ -8,6 +8,7 @@ const inputStyle = { width: '100%', boxSizing: 'border-box', font: 'inherit', pa
 
 export function ConnectionSettingsForm({
   snapshot, controller, apiDraft = '', downloadDraft = '', passwordRef,
+  surface = 'workbench',
   onApiDraft = () => {}, onDownloadDraft = () => {},
 }) {
   const disabledSettings = !snapshot.settingsWritable || snapshot.busy
@@ -15,7 +16,9 @@ export function ConnectionSettingsForm({
   const clearPassword = () => { if (passwordRef.current) passwordRef.current.value = '' }
   return createElement('details', {
     'data-testid': 'oasis-connection-settings',
-    style: { flexShrink: 0, maxHeight: '50%', overflowY: 'auto', padding: '10px 14px', borderBottom: '1px solid #dedee1' },
+    style: surface === 'settings'
+      ? { width: '100%', boxSizing: 'border-box' }
+      : { flexShrink: 0, maxHeight: '50%', overflowY: 'auto', padding: '10px 14px', borderBottom: '1px solid #dedee1' },
     onToggle: (event) => { if (!event.currentTarget.open) clearPassword() },
   },
   createElement('summary', { style: { cursor: 'pointer', fontSize: 13 } }, '非生产服务连接配置'),
@@ -59,7 +62,7 @@ export function ConnectionSettingsForm({
     snapshot.error ? createElement('div', { role: 'alert' }, snapshot.error) : null))
 }
 
-export function OasisConnectionSettings({ controller, visible = true }) {
+export function OasisConnectionSettings({ controller, visible = true, surface = 'workbench' }) {
   const snapshot = useSyncExternalStore(controller?.subscribe ?? noSubscribe, controller?.getSnapshot ?? getUnavailable, controller?.getSnapshot ?? getUnavailable)
   const [apiDraft, setApiDraft] = useState(snapshot.apiBaseUrl)
   const [downloadDraft, setDownloadDraft] = useState(snapshot.downloadOrigins.join('\n'))
@@ -74,7 +77,7 @@ export function OasisConnectionSettings({ controller, visible = true }) {
   }, [visible, snapshot.connected, snapshot.credentialWritable, controller])
   if (!visible) return null
   return createElement(ConnectionSettingsForm, {
-    snapshot, controller, apiDraft, downloadDraft, passwordRef,
+    snapshot, controller, apiDraft, downloadDraft, passwordRef, surface,
     onApiDraft: setApiDraft, onDownloadDraft: setDownloadDraft,
   })
 }

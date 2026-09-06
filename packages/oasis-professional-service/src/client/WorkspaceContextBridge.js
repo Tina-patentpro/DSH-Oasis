@@ -139,20 +139,6 @@ export function WorkspaceContextBridge(props) {
     return () => coordinator.clearWorkspaceContext()
   }, [coordinator, currentSessionId, workspaceItems])
 
-  useLayoutEffect(() => {
-    const MutationObserverClass = globalThis.MutationObserver
-    const body = globalThis.document?.body
-    if (typeof MutationObserverClass !== 'function' || !body) return undefined
-    const observer = new MutationObserverClass(() => coordinator.reconcileExternalState())
-    observer.observe(body, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['data-dsh-better-sidebar'],
-    })
-    return () => observer.disconnect()
-  }, [coordinator])
-
   useEffect(() => {
     if (hostSnapshot.mode !== 'better-sidebar') return
     const binding = resolveWorkspaceBinding({

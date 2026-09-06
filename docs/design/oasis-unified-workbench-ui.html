@@ -1,0 +1,1056 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>绿洲统一专业工作台 · 阶段 1 原型 V3.1</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17201d;
+      --muted: #68736e;
+      --line: #dfe5e2;
+      --line-soft: #edf1ef;
+      --paper: #ffffff;
+      --canvas: #f7f9f8;
+      --mint: #e5f7ef;
+      --mint-strong: #0d7b59;
+      --blue: #3c7ee8;
+      --blue-soft: #eaf2ff;
+      --amber: #9b6516;
+      --amber-soft: #fff7e8;
+      --danger: #a33b30;
+      --shadow: 0 14px 42px rgba(30, 57, 47, .08);
+      --sidebar-width: 520px;
+      font-family: "Noto Sans SC", "Microsoft YaHei UI", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 1120px; color: var(--ink); background: var(--canvas); }
+    button, input, textarea, select { font: inherit; }
+    button { color: inherit; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+      outline: 3px solid rgba(60, 126, 232, .24);
+      outline-offset: 2px;
+    }
+    .prototype-banner {
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-bottom: 1px solid #ead9af;
+      background: #fff8e7;
+      color: #6e531d;
+      font-size: 10px;
+      letter-spacing: .02em;
+    }
+
+    .prototype-banner strong {
+      padding: 2px 7px;
+      border: 1px solid #d8ba77;
+      border-radius: 999px;
+      font-size: 10px;
+      letter-spacing: .08em;
+    }
+
+    .app-shell {
+      height: calc(100vh - 24px);
+      display: grid;
+      grid-template-columns: 268px minmax(360px, 1fr) var(--sidebar-width);
+      overflow: hidden;
+      transition: grid-template-columns .28s ease;
+    }
+
+    body[data-wide="true"] { --sidebar-width: min(790px, 58vw); }
+
+    .dsh-rail {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      border-right: 1px solid var(--line);
+      background: #fbfcfb;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 23px 18px 16px;
+    }
+
+    .brand-mark { display: flex; align-items: center; gap: 9px; font-weight: 760; font-size: 18px; }
+    .brand-orbit {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50% 45% 55% 42%;
+      transform: rotate(-12deg);
+      background: #111b18;
+      color: white;
+      font-family: Georgia, serif;
+      font-size: 17px;
+    }
+    .brand small { padding: 2px 5px; border-radius: 3px; background: #1c2220; color: #fff; font-size: 8px; letter-spacing: .08em; }
+    .ghost-icon { border: 0; background: transparent; font-size: 18px; cursor: pointer; }
+
+    .new-chat {
+      margin: 0 14px 26px;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      cursor: pointer;
+    }
+
+    .rail-title { padding: 0 18px 10px; display: flex; justify-content: space-between; color: #79837f; font-size: 13px; }
+    .workspace { padding: 0 10px; }
+    .workspace-name { padding: 8px; font-size: 13px; font-weight: 650; }
+    .session { padding: 9px 12px 9px 28px; border-radius: 8px; color: #39423f; font-size: 12px; }
+    .session.active { background: #eef1ef; color: #16201d; }
+    .rail-spacer { flex: 1; }
+    .settings-link {
+      margin: 14px;
+      padding: 10px 8px;
+      border: 0;
+      display: flex;
+      gap: 9px;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .conversation-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      background:
+        radial-gradient(circle at 50% 46%, rgba(238, 246, 242, .8), transparent 27%),
+        #fff;
+    }
+    .conversation-card { width: min(580px, 78%); transform: translateY(-20px); }
+    .hero { margin-bottom: 24px; text-align: center; }
+    .hero h1 { margin: 0; font-family: Georgia, "Noto Serif SC", serif; font-size: 30px; font-weight: 600; }
+    .hero span { margin-left: 7px; padding: 3px 7px; border-radius: 999px; background: #eaf1ff; color: #315fae; font: 11px sans-serif; }
+    .chat-composer {
+      padding: 17px 17px 12px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+    .chat-composer textarea { width: 100%; min-height: 72px; resize: none; border: 0; outline: 0; color: #55605c; }
+    .composer-foot { display: flex; justify-content: space-between; align-items: center; color: #5e6965; font-size: 12px; }
+    .composer-pill { padding: 7px 10px; border-radius: 999px; background: #f4f6f5; }
+    .send { width: 34px; height: 34px; border: 0; border-radius: 50%; background: #a8c6f8; color: white; }
+    .draft-toast {
+      position: absolute;
+      left: 50%;
+      bottom: 28px;
+      transform: translate(-50%, 18px);
+      padding: 9px 13px;
+      border: 1px solid #bcdcca;
+      border-radius: 10px;
+      background: #effaf5;
+      color: #226549;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .2s ease;
+    }
+    .draft-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    .better-sidebar {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      container-name: oasis-sidebar;
+      container-type: inline-size;
+      border-left: 1px solid var(--line);
+      background: var(--paper);
+      box-shadow: -14px 0 40px rgba(26, 47, 40, .035);
+    }
+
+    .window-bar {
+      height: 38px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line-soft);
+      color: #64706b;
+      font-size: 12px;
+    }
+    .window-actions { display: flex; gap: 13px; align-items: center; }
+    .window-actions button { border: 0; background: transparent; cursor: pointer; }
+
+    .tab-bar {
+      height: 42px;
+      display: flex;
+      align-items: end;
+      gap: 4px;
+      padding: 0 10px;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+    .tab {
+      max-width: 220px;
+      padding: 11px 11px 9px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .tab.active { border-color: #18a174; color: #126b50; }
+    .tab-add { padding: 9px; border: 0; background: transparent; font-size: 19px; cursor: pointer; }
+
+    .sidebar-body { flex: 1; min-height: 0; overflow: auto; background: var(--canvas); }
+    .screen { display: none; min-height: 100%; }
+    .screen.active { display: block; }
+
+    .launcher { padding: 20px; }
+    .eyebrow { margin: 0 0 6px; color: #2d765c; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .section-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .section-head h2, .section-head h3 { margin: 0; font-family: Georgia, "Noto Serif SC", serif; font-weight: 600; }
+    .section-head p { margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .launcher-mark { color: #2d765c; font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+    .utility-grid { margin: 14px 0 18px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+    .utility {
+      min-height: 78px;
+      display: grid;
+      place-items: center;
+      gap: 4px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      transition: border-color .15s, transform .15s, box-shadow .15s;
+    }
+    .utility:hover { transform: translateY(-1px); border-color: #a8cdbc; box-shadow: 0 7px 18px rgba(42, 83, 67, .07); }
+    .utility-icon { font-size: 21px; }
+    .utility span:last-child { font-size: 12px; }
+
+    .domain-switch { display: flex; gap: 7px; padding: 2px 0 12px; overflow-x: auto; }
+    .domain-button {
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      white-space: nowrap;
+      color: #56625d;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .domain-button.active { border-color: #8fc2ff; background: #8fc2ff; color: white; }
+    .task-list { display: grid; gap: 7px; }
+    .task-button {
+      width: 100%;
+      padding: 11px 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: white;
+      text-align: left;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .task-button:hover, .task-button.active { border-color: #9ddcca; background: #e8fbf6; color: #14765a; }
+    .task-button[disabled] { background: #f7f9f8; color: #8d9793; cursor: not-allowed; }
+    .task-button[disabled]:hover { transform: none; border-color: var(--line); box-shadow: none; }
+    .task-button small { color: #8b9792; }
+
+    .workspace-screen { min-height: 100%; background: #f8faf9; }
+    .task-top {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 13px 15px 11px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .96);
+      backdrop-filter: blur(10px);
+    }
+    .task-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        "identity provider"
+        "summary mode";
+      align-items: center;
+      column-gap: 10px;
+      row-gap: 8px;
+    }
+    .task-identity { grid-area: identity; min-width: 0; display: flex; align-items: center; gap: 10px; }
+    .back-link { border: 0; background: transparent; color: #52605a; cursor: pointer; }
+    .task-title-wrap { flex: 1; min-width: 0; }
+    .task-title-wrap strong { display: block; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .task-title-wrap small { color: var(--muted); font-size: 10px; }
+
+    .segmented { grid-area: provider; justify-self: center; padding: 3px; display: inline-grid; grid-template-columns: 1fr 1fr; border-radius: 10px; background: #eef2f0; }
+    .provider {
+      padding: 7px 12px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #65706b;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .provider.active { background: white; color: #176f54; box-shadow: 0 2px 8px rgba(31, 66, 53, .10); }
+    .provider[disabled], .material-tab[disabled], .editor-mode[disabled] { opacity: .56; cursor: not-allowed; }
+    .mode-tabs { grid-area: mode; justify-self: end; display: none; gap: 4px; }
+    .mode-tab { padding: 6px 9px; border: 0; border-bottom: 2px solid transparent; background: transparent; font-size: 11px; cursor: pointer; }
+    .mode-tab.active { border-color: #198963; color: #157352; }
+
+    .execution-summary {
+      grid-area: summary;
+      justify-self: start;
+      max-width: 300px;
+      padding: 6px 9px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid #dce7e2;
+      border-radius: 999px;
+      background: #f5faf7;
+      color: #5f6c66;
+      font-size: 9px;
+      line-height: 1.35;
+    }
+    .execution-summary span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .summary-dot { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #2c9e76; box-shadow: 0 0 0 3px #e3f6ee; }
+    .summary-dot.api { background: #3e7bd6; box-shadow: 0 0 0 4px #e6effd; }
+
+    .task-grid { display: grid; grid-template-columns: minmax(0, 1fr); min-height: calc(100vh - 180px); }
+    body[data-wide="true"] .task-grid { grid-template-columns: minmax(280px, .95fr) minmax(300px, 1.05fr); }
+    .pane { min-width: 0; padding: 16px; }
+    .input-pane { border-right: 1px solid transparent; }
+    body[data-wide="true"] .input-pane { border-color: var(--line); }
+    .pane-title { margin: 0 0 4px; font-family: Georgia, "Noto Serif SC", serif; font-size: 17px; }
+    .pane-help { margin: 0 0 15px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .input-controls {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 7px;
+      margin-bottom: 11px;
+    }
+    .input-controls select, .input-controls button {
+      min-width: 0;
+      height: 34px;
+      padding: 0 9px;
+      border: 1px solid #d6dcda;
+      border-radius: 8px;
+      background: white;
+      color: #4f5b56;
+      font-size: 11px;
+    }
+    .input-controls button { cursor: pointer; }
+    .project-select { width: 100%; }
+    .input-control-pair { display: flex; gap: 6px; }
+    .input-control-pair button:first-child { width: 34px; padding: 0; font-size: 17px; }
+
+    .material-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px 4px;
+      align-items: flex-end;
+      padding-top: 2px;
+      border-bottom: 1px solid #d7dde5;
+    }
+    .material-tab {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 7px 11px;
+      border: 1px solid #d7dde5;
+      border-bottom-color: transparent;
+      border-radius: 10px 10px 0 0;
+      background: #f2f5f9;
+      color: #55615c;
+      font-size: 11px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .material-tab:hover { background: #e7edf3; }
+    .material-tab:focus-visible { outline: 2px solid #278f6c; outline-offset: 2px; }
+    .material-tab.active {
+      z-index: 1;
+      margin-bottom: -1px;
+      border-color: #9ed9c4;
+      border-bottom-color: white;
+      background: white;
+      color: #157352;
+      box-shadow: inset 0 2px 0 #20916c;
+    }
+    .material-tab.filled { padding-right: 20px; background: #eefaf3; color: #1f6b4f; border-color: #b9e8cd; }
+    .material-tab.filled::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #34a97e;
+    }
+    .material-tab.active.filled { background: white; border-color: #20916c; border-bottom-color: white; }
+
+    .material-panel {
+      padding-top: 10px;
+      border-top: 0;
+      background: white;
+    }
+    .editor-head { display: flex; align-items: center; justify-content: space-between; gap: 9px; margin-bottom: 8px; }
+    .editor-help { color: #7b8782; font-size: 10px; line-height: 1.45; }
+    .editor-modes { display: inline-flex; flex: 0 0 auto; padding: 2px; border-radius: 999px; background: #eef2f0; }
+    .editor-mode {
+      padding: 5px 8px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: #6a756f;
+      font-size: 9px;
+      cursor: pointer;
+    }
+    .editor-mode.active { background: #24342e; color: white; }
+    .material-editor {
+      width: 100%;
+      min-height: 252px;
+      padding: 12px 13px;
+      resize: vertical;
+      border: 1px solid #d6dcda;
+      border-radius: 14px;
+      background: white;
+      color: #2c3532;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+    .material-editor[readonly] { background: #f8faf9; color: #59655f; }
+    .input-actions { display: flex; flex-wrap: wrap; gap: 6px; margin: 9px 0 12px; }
+    .input-actions button {
+      padding: 6px 10px;
+      border: 1px solid #d7dfdb;
+      border-radius: 999px;
+      background: white;
+      color: #53605a;
+      font-size: 10px;
+      cursor: pointer;
+    }
+    .input-actions button[disabled] { color: #a9b1ae; background: #f2f4f3; cursor: not-allowed; }
+
+    .action-dock { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .generate {
+      width: 100%;
+      padding: 10px 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #176f54;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .generate[disabled] { background: #aab5b1; cursor: wait; }
+
+    .result-pane { background: #fff; }
+    .result-empty { min-height: 320px; display: grid; place-items: center; text-align: center; color: #7b8782; }
+    .empty-icon { width: 52px; height: 52px; margin: 0 auto 13px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 18px; background: #fafcfb; font-size: 24px; }
+    .result-card { display: none; }
+    .result-card.visible { display: block; }
+    .result-meta { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; color: #6f7a75; font-size: 10px; }
+    .result-source { padding: 3px 7px; border-radius: 999px; background: var(--mint); color: #176e52; }
+    .result-document { margin-top: 13px; padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: #fbfcfb; font-size: 12px; line-height: 1.75; }
+    .result-document h4 { margin: 0 0 10px; font-family: Georgia, "Noto Serif SC", serif; font-size: 16px; }
+    .result-actions { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 7px; }
+    .result-actions button {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .result-actions button.primary { border-color: #176f54; background: #176f54; color: white; }
+    .review-note { margin-top: 12px; padding: 9px 10px; border-radius: 9px; background: #f2f8f5; color: #496158; font-size: 11px; }
+    .status-line { display: none; padding: 12px; border: 1px solid #dce7e2; border-radius: 10px; background: white; color: #50605a; font-size: 11px; }
+    .status-line.visible { display: block; }
+    .spinner { width: 13px; height: 13px; display: inline-block; margin-right: 7px; vertical-align: -2px; border: 2px solid #cde6da; border-top-color: #1d8c68; border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .utility-screen, .settings-screen { padding: 24px; }
+    .placeholder-card { margin-top: 18px; padding: 20px; border: 1px solid var(--line); border-radius: 13px; background: white; }
+    .placeholder-card p { color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .settings-group { margin-top: 14px; padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: white; }
+    .settings-group label { display: grid; gap: 5px; margin-top: 12px; font-size: 11px; font-weight: 650; }
+    .settings-group input, .settings-group select { padding: 8px; border: 1px solid #d4dad7; border-radius: 8px; background: #fafcfb; }
+
+    body:not([data-wide="true"]) .result-pane { display: none; }
+    body:not([data-wide="true"])[data-mobile-pane="result"] .input-pane { display: none; }
+    body:not([data-wide="true"])[data-mobile-pane="result"] .result-pane { display: block; }
+    body:not([data-wide="true"]) .mode-tabs { display: flex; }
+
+    @container oasis-sidebar (min-width: 680px) {
+      .task-heading {
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        grid-template-areas: "identity provider summary";
+        row-gap: 0;
+      }
+      .execution-summary { justify-self: end; max-width: 100%; }
+    }
+
+    @media (max-width: 1280px) {
+      body { min-width: 980px; }
+      .app-shell { grid-template-columns: 230px minmax(300px, 1fr) var(--sidebar-width); }
+      body:not([data-wide="true"]) { --sidebar-width: 450px; }
+      .conversation-card { width: 82%; }
+    }
+  </style>
+</head>
+<body data-wide="false" data-mobile-pane="input">
+  <div class="prototype-banner" role="note">
+    <strong>V3.1 原型</strong>
+    <span>模拟数据</span>
+  </div>
+
+  <div class="app-shell">
+    <aside class="dsh-rail" aria-label="DSH 原生导航">
+      <div class="brand">
+        <div class="brand-mark"><span class="brand-orbit">◆</span>deepseek <small>HARNESS</small></div>
+        <button class="ghost-icon" type="button" aria-label="收起导航">◧</button>
+      </div>
+      <button class="new-chat" type="button">⊕ 新会话</button>
+      <div class="rail-title"><span>工作区</span><span>⌕ &nbsp; ☷ &nbsp; ⊞</span></div>
+      <div class="workspace">
+        <div class="workspace-name">▣ ZPC 软件</div>
+        <div class="session active">新会话</div>
+        <div class="session">车辆 CAN 数据保存…</div>
+        <div class="session">本机 Docker 模拟测试</div>
+        <div class="session">技术方案评审记录</div>
+      </div>
+      <div class="rail-spacer"></div>
+      <button id="settingsLink" class="settings-link" type="button"><span>⚙</span><span>设置</span></button>
+    </aside>
+
+    <main class="conversation-stage" aria-label="DSH 主对话">
+      <div class="conversation-card">
+        <div class="hero"><h1>探索未至之境 <span>预览版</span></h1></div>
+        <div class="chat-composer">
+          <textarea id="mainComposer" aria-label="主对话输入" placeholder="描述你想要构建的内容… / 调用指令 @ 文件或对话"></textarea>
+          <div class="composer-foot">
+            <span class="composer-pill">＋ &nbsp; 完全权限</span>
+            <span>DeepSeek-V4-Flash &nbsp; <button class="send" type="button" aria-label="发送">↑</button></span>
+          </div>
+        </div>
+      </div>
+      <div id="draftToast" class="draft-toast" role="status">已将审核版本加入主对话草稿，尚未发送。</div>
+    </main>
+
+    <aside class="better-sidebar" aria-label="Better Sidebar 专业工作区">
+      <div class="window-bar">
+        <span>绿洲 · Better Sidebar</span>
+        <div class="window-actions">
+          <button id="widthToggle" type="button" aria-label="展开 Sidebar" title="切换窄栏与展开状态">⇱</button>
+          <button type="button" aria-label="隐藏 Sidebar">◧</button>
+        </div>
+      </div>
+      <nav class="tab-bar" aria-label="Sidebar 标签">
+        <button id="homeTab" class="tab active" type="button">功能中心</button>
+        <button id="taskTab" class="tab" type="button" hidden>权利要求书生成 ×</button>
+        <button class="tab-add" type="button" aria-label="新建 Sidebar 标签">＋</button>
+      </nav>
+
+      <div class="sidebar-body">
+        <section id="launcherScreen" class="screen active launcher" aria-labelledby="launcherTitle">
+          <div class="section-head">
+            <h2 id="launcherTitle">功能中心</h2>
+            <span class="launcher-mark">Better Sidebar × Oasis</span>
+          </div>
+
+          <div class="utility-grid" aria-label="保留的 Sidebar 功能">
+            <button class="utility" type="button" data-utility="文件"><span class="utility-icon">▱</span><span>文件</span></button>
+            <button class="utility" type="button" data-utility="任务管理"><span class="utility-icon">◎</span><span>任务管理</span></button>
+            <button class="utility" type="button" data-utility="侧边对话"><span class="utility-icon">⊕</span><span>侧边对话</span></button>
+            <button class="utility" type="button" data-utility="浏览器"><span class="utility-icon">⊙</span><span>浏览器</span></button>
+          </div>
+
+          <div class="domain-switch" role="tablist" aria-label="专业业务域">
+            <button class="domain-button" type="button" role="tab" data-domain="研发">技术研发</button>
+            <button class="domain-button active" type="button" role="tab" data-domain="专利">专利撰写</button>
+            <button class="domain-button" type="button" role="tab" data-domain="辅助">辅助工具</button>
+          </div>
+          <div id="taskList" class="task-list" aria-live="polite"></div>
+        </section>
+
+        <section id="taskScreen" class="screen workspace-screen" aria-labelledby="taskTitle">
+          <header class="task-top">
+            <div class="task-heading">
+              <div class="task-identity">
+                <button id="backHome" class="back-link" type="button" aria-label="返回功能中心">←</button>
+                <div class="task-title-wrap">
+                  <strong id="taskTitle">权利要求书生成</strong>
+                  <small>当前项目：ZPC 软件 · 文字型任务</small>
+                </div>
+              </div>
+              <div class="segmented" role="radiogroup" aria-label="生成来源">
+                <button class="provider active" type="button" role="radio" aria-checked="true" data-provider="local">本地 Skills</button>
+                <button class="provider" type="button" role="radio" aria-checked="false" data-provider="api">专业 API</button>
+              </div>
+              <div class="execution-summary" aria-live="polite">
+                <span id="summaryDot" class="summary-dot"></span>
+                <span id="executionSummary">本地 Skills · 云模型可能联网并计费</span>
+              </div>
+              <div class="mode-tabs" role="tablist" aria-label="任务区视图">
+                <button class="mode-tab active" type="button" data-pane="input">输入</button>
+                <button class="mode-tab" type="button" data-pane="result">结果</button>
+              </div>
+            </div>
+          </header>
+
+          <div class="task-grid">
+            <section class="pane input-pane" aria-labelledby="inputTitle">
+              <h3 id="inputTitle" class="pane-title">输入材料</h3>
+              <div class="input-controls" aria-label="输入区操作">
+                <select class="project-select" aria-label="选择关联项目">
+                  <option>🔗 ZPC 软件</option>
+                  <option>取消关联项目</option>
+                </select>
+                <div class="input-control-pair">
+                  <button type="button" aria-label="新建项目">＋</button>
+                  <button type="button">新会话</button>
+                </div>
+                <select aria-label="选择布局模式">
+                  <option>自动</option>
+                  <option>上下</option>
+                </select>
+              </div>
+
+              <div id="materialTabs" class="material-tabs" role="tablist" aria-label="输入材料选项卡"></div>
+              <section id="materialPanel" class="material-panel" role="tabpanel" aria-labelledby="material-tab-claims">
+                <div class="editor-head">
+                  <span id="materialHelp" class="editor-help">专利申请的权利要求书内容</span>
+                  <div class="editor-modes" role="group" aria-label="输入编辑模式">
+                    <button class="editor-mode active" type="button" data-editor-mode="markdown">编辑 Markdown</button>
+                    <button class="editor-mode" type="button" data-editor-mode="preview">预览效果</button>
+                  </div>
+                </div>
+                <textarea id="materialEditor" class="material-editor" aria-label="权利要求书内容"></textarea>
+                <div class="input-actions" aria-label="当前材料操作">
+                  <button type="button" disabled title="原型不读取真实文件">读取</button>
+                  <button id="copyMaterialButton" type="button">复制文本</button>
+                  <button id="clearMaterialButton" type="button">清空</button>
+                </div>
+              </section>
+
+              <div class="action-dock">
+                <button id="generateButton" class="generate" type="button">生成模拟结果</button>
+              </div>
+            </section>
+
+            <section class="pane result-pane" aria-labelledby="resultTitle">
+              <h3 id="resultTitle" class="pane-title">生成结果</h3>
+              <div id="runningStatus" class="status-line"><span class="spinner"></span>正在生成模拟结果…来源和输入已锁定。</div>
+              <div id="resultEmpty" class="result-empty">
+                <div><div class="empty-icon">◇</div><strong>暂无生成内容</strong><p>在输入区点击“生成模拟结果”开始。</p></div>
+              </div>
+              <article id="resultCard" class="result-card">
+                <div class="result-meta"><span id="resultSource" class="result-source">本地 Skills</span><span>版本 1</span><span>待人工审核</span></div>
+                <div class="result-document">
+                  <h4>权利要求书（模拟节选）</h4>
+                  <p>1. 一种车辆控制器数据保存方法，其特征在于，包括：将待保存数据写入分段日志；针对所述分段日志生成一致性校验信息；在满足提交条件时更新活动索引；在检测到异常断电后的恢复启动时，根据所述一致性校验信息确定有效日志段，并重建所述活动索引。</p>
+                  <p><strong>待确认事项：</strong>提交条件、校验粒度和恢复状态转换仍需技术人员确认。本模拟文本不代表正式专利文件或法律结论。</p>
+                </div>
+                <div class="result-actions">
+                  <button id="reviewButton" type="button">审核此版本</button>
+                  <button id="saveButton" type="button">保存 Markdown</button>
+                  <button id="useInChatButton" class="primary" type="button">在对话中使用</button>
+                </div>
+                <div id="reviewNote" class="review-note">尚未审核。生成完成不等于专业审核通过。</div>
+              </article>
+            </section>
+          </div>
+        </section>
+
+        <section id="utilityScreen" class="screen utility-screen" aria-labelledby="utilityTitle">
+          <button class="back-link home-return" type="button">← 返回功能中心</button>
+          <div class="placeholder-card">
+            <p class="eyebrow">Better Sidebar Native</p>
+            <h2 id="utilityTitle">文件</h2>
+            <p id="utilityDescription">Better Sidebar 原生功能占位。</p>
+          </div>
+        </section>
+
+        <section id="settingsScreen" class="screen settings-screen" aria-labelledby="settingsTitle">
+          <button class="back-link home-return" type="button">← 返回功能中心</button>
+          <p class="eyebrow">DSH Settings Preview</p>
+          <h2 id="settingsTitle">绿洲工作台设置</h2>
+          <p class="pane-help">设置归入 DSH 原生设置页；这里仅示意信息分组，不保存任何值。</p>
+          <div class="settings-group">
+            <strong>生成默认值</strong>
+            <label>新任务默认来源<select><option>本地 Skills</option><option>专业 API</option></select></label>
+            <label>默认保存目录<input value="当前项目 / 生成结果" readonly></label>
+          </div>
+          <div class="settings-group">
+            <strong>专业 API</strong>
+            <label>连接状态<input value="未连接（模拟）" readonly></label>
+            <label>当前项目绑定<input value="待配置（模拟）" readonly></label>
+            <p class="pane-help">真实凭据由 DSH credentials 保存，不在任务页或普通配置中显示。</p>
+          </div>
+          <div class="settings-group">
+            <strong>Skills 可见性</strong>
+            <p class="pane-help">产品不提供业务 Skill 正文查看、编辑、导出或下载入口；本机管理员及逆向风险仍属于独立待确认门禁。</p>
+          </div>
+        </section>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const taskCatalog = {
+      '研发': ['技术问题拆解', '候选方案比较', '验证计划生成'],
+      '专利': ['权利要求书生成', '说明书生成', '申请文件检查'],
+      '辅助': ['材料完整性检查', '术语一致性检查', '待确认事项整理'],
+    };
+
+    const primaryPrototypeTask = '权利要求书生成';
+    const materialDefinitions = [
+      {
+        key: 'claims',
+        label: '权利要求书',
+        help: '专利申请的权利要求书内容',
+        placeholder: '请输入或粘贴权利要求书内容',
+        value: '1. 一种车辆控制器数据可靠保存方法，包括：写入分段日志、生成一致性校验信息，并在异常断电恢复时重建活动索引。',
+      },
+      {
+        key: 'technical-field',
+        label: '技术领域',
+        help: '说明方案所属或直接应用的技术领域',
+        placeholder: '请输入技术领域',
+        value: '本方案涉及嵌入式控制器的数据持久化与异常恢复技术。',
+      },
+      {
+        key: 'background',
+        label: '背景技术',
+        help: '描述已知方案和需要解决的客观问题',
+        placeholder: '请输入背景技术',
+        value: '现有方案在高频写入与突然断电组合场景下可能出现尾段损坏或索引不一致。',
+      },
+      {
+        key: 'benefits',
+        label: '有益效果',
+        help: '填写能够由技术方案直接支持的效果',
+        placeholder: '请输入有益效果；不要编造未提供的实验数据',
+        value: '',
+      },
+      {
+        key: 'implementation',
+        label: '具体实施方式',
+        help: '填写能够支持权利要求的实施细节',
+        placeholder: '请输入具体实施方式',
+        value: '控制器采用分段日志、双索引校验和断电恢复状态机完成数据提交与恢复。',
+      },
+      {
+        key: 'drawings',
+        label: '附图说明',
+        help: '登记附图名称及其表达的结构或流程',
+        placeholder: '请输入附图说明',
+        value: '',
+      },
+      {
+        key: 'instructions',
+        label: '用户指令',
+        help: '填写本次生成需要特别遵守的要求',
+        placeholder: '请输入补充要求',
+        value: '突出断电恢复步骤之间的约束关系，不编造未提供的实验数据。',
+      },
+    ];
+
+    const materialValues = Object.fromEntries(materialDefinitions.map((item) => [item.key, item.value]));
+
+    const body = document.body;
+    const screens = [...document.querySelectorAll('.screen')];
+    const launcherScreen = document.querySelector('#launcherScreen');
+    const taskScreen = document.querySelector('#taskScreen');
+    const utilityScreen = document.querySelector('#utilityScreen');
+    const settingsScreen = document.querySelector('#settingsScreen');
+    const homeTab = document.querySelector('#homeTab');
+    const taskTab = document.querySelector('#taskTab');
+    const taskList = document.querySelector('#taskList');
+    const taskTitle = document.querySelector('#taskTitle');
+    const executionSummary = document.querySelector('#executionSummary');
+    const summaryDot = document.querySelector('#summaryDot');
+    const generateButton = document.querySelector('#generateButton');
+    const runningStatus = document.querySelector('#runningStatus');
+    const resultEmpty = document.querySelector('#resultEmpty');
+    const resultCard = document.querySelector('#resultCard');
+    const resultSource = document.querySelector('#resultSource');
+    const reviewNote = document.querySelector('#reviewNote');
+    const materialTabs = document.querySelector('#materialTabs');
+    const materialPanel = document.querySelector('#materialPanel');
+    const materialEditor = document.querySelector('#materialEditor');
+    const materialHelp = document.querySelector('#materialHelp');
+    let currentDomain = '专利';
+    let currentTask = '权利要求书生成';
+    let currentProvider = 'local';
+    let currentMaterialKey = 'claims';
+    let editorMode = 'markdown';
+    let generationTimer = null;
+
+    function getMaterialDefinition(key) {
+      return materialDefinitions.find((item) => item.key === key) || materialDefinitions[0];
+    }
+
+    function renderMaterialTabs(focusKey = '') {
+      materialTabs.replaceChildren(...materialDefinitions.map((item, index) => {
+        const selected = item.key === currentMaterialKey;
+        const filled = Boolean(materialValues[item.key].trim());
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.id = `material-tab-${item.key}`;
+        button.className = ['material-tab', selected ? 'active' : '', filled ? 'filled' : ''].filter(Boolean).join(' ');
+        button.dataset.materialKey = item.key;
+        button.setAttribute('role', 'tab');
+        button.setAttribute('aria-selected', String(selected));
+        button.setAttribute('aria-controls', 'materialPanel');
+        button.tabIndex = selected ? 0 : -1;
+        button.textContent = item.label;
+        button.addEventListener('click', () => selectMaterial(item.key));
+        button.addEventListener('keydown', (event) => {
+          let nextIndex = null;
+          if (event.key === 'ArrowRight') nextIndex = (index + 1) % materialDefinitions.length;
+          if (event.key === 'ArrowLeft') nextIndex = (index - 1 + materialDefinitions.length) % materialDefinitions.length;
+          if (event.key === 'Home') nextIndex = 0;
+          if (event.key === 'End') nextIndex = materialDefinitions.length - 1;
+          if (nextIndex === null) return;
+          event.preventDefault();
+          selectMaterial(materialDefinitions[nextIndex].key, true);
+        });
+        return button;
+      }));
+      if (focusKey) document.querySelector(`#material-tab-${focusKey}`)?.focus();
+    }
+
+    function selectMaterial(key, focusTab = false) {
+      if (materialEditor.dataset.initialized === 'true') {
+        materialValues[currentMaterialKey] = materialEditor.value;
+      }
+      currentMaterialKey = key;
+      const item = getMaterialDefinition(key);
+      materialEditor.value = materialValues[key];
+      materialEditor.dataset.initialized = 'true';
+      materialEditor.placeholder = item.placeholder;
+      materialEditor.setAttribute('aria-label', `${item.label}内容`);
+      materialHelp.textContent = item.help;
+      materialPanel.setAttribute('aria-labelledby', `material-tab-${item.key}`);
+      renderMaterialTabs(focusTab ? key : '');
+    }
+
+    function setEditorMode(mode) {
+      editorMode = mode;
+      materialEditor.readOnly = mode === 'preview';
+      document.querySelectorAll('.editor-mode').forEach((button) => {
+        button.classList.toggle('active', button.dataset.editorMode === mode);
+      });
+    }
+
+    function showScreen(screen) {
+      screens.forEach((item) => item.classList.toggle('active', item === screen));
+      homeTab.classList.toggle('active', screen === launcherScreen);
+      taskTab.classList.toggle('active', screen === taskScreen);
+    }
+
+    function renderTasks() {
+      taskList.replaceChildren(...taskCatalog[currentDomain].map((name) => {
+        const available = name === primaryPrototypeTask;
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = `task-button${name === currentTask ? ' active' : ''}`;
+        button.innerHTML = `<span>${name}</span><small>${available ? '打开 →' : '后续模板'}</small>`;
+        button.disabled = !available;
+        if (available) button.addEventListener('click', () => openTask(name));
+        return button;
+      }));
+    }
+
+    function openTask(name) {
+      currentTask = name;
+      taskTitle.textContent = name;
+      taskTab.textContent = `${name} ×`;
+      taskTab.hidden = false;
+      resetResult();
+      renderTasks();
+      selectMaterial(currentMaterialKey);
+      showScreen(taskScreen);
+    }
+
+    function resetResult() {
+      clearTimeout(generationTimer);
+      setGenerationLocked(false);
+      generateButton.disabled = false;
+      generateButton.textContent = '生成模拟结果';
+      runningStatus.classList.remove('visible');
+      resultEmpty.style.display = 'grid';
+      resultCard.classList.remove('visible');
+      reviewNote.textContent = '尚未审核。生成完成不等于专业审核通过。';
+    }
+
+    function setGenerationLocked(locked) {
+      document.querySelectorAll('.provider, .material-tab, .editor-mode').forEach((control) => {
+        control.disabled = locked;
+      });
+      materialEditor.disabled = locked;
+    }
+
+    function showSyntheticResult(provider = currentProvider) {
+      setGenerationLocked(false);
+      runningStatus.classList.remove('visible');
+      resultEmpty.style.display = 'none';
+      resultCard.classList.add('visible');
+      resultSource.textContent = provider === 'api' ? '专业 API' : '本地 Skills';
+      generateButton.disabled = false;
+      generateButton.textContent = '生成新模拟版本';
+    }
+
+    function showHome() {
+      showScreen(launcherScreen);
+      renderTasks();
+    }
+
+    document.querySelectorAll('.domain-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        currentDomain = button.dataset.domain;
+        document.querySelectorAll('.domain-button').forEach((item) => {
+          const selected = item === button;
+          item.classList.toggle('active', selected);
+          item.setAttribute('aria-selected', String(selected));
+        });
+        renderTasks();
+      });
+    });
+
+    document.querySelectorAll('.provider').forEach((button) => {
+      button.addEventListener('click', () => {
+        currentProvider = button.dataset.provider;
+        document.querySelectorAll('.provider').forEach((item) => {
+          const selected = item === button;
+          item.classList.toggle('active', selected);
+          item.setAttribute('aria-checked', String(selected));
+        });
+        const api = currentProvider === 'api';
+        summaryDot.classList.toggle('api', api);
+        executionSummary.textContent = api
+          ? '专业 API · 资料发送至绿洲服务并可能计费'
+          : '本地 Skills · 云模型可能联网并计费';
+      });
+    });
+
+    materialEditor.addEventListener('input', () => {
+      materialValues[currentMaterialKey] = materialEditor.value;
+      const currentTab = document.querySelector(`#material-tab-${currentMaterialKey}`);
+      currentTab?.classList.toggle('filled', Boolean(materialEditor.value.trim()));
+    });
+
+    document.querySelectorAll('.editor-mode').forEach((button) => {
+      button.addEventListener('click', () => setEditorMode(button.dataset.editorMode));
+    });
+
+    document.querySelector('#copyMaterialButton').addEventListener('click', () => {
+    });
+
+    document.querySelector('#clearMaterialButton').addEventListener('click', () => {
+      materialValues[currentMaterialKey] = '';
+      materialEditor.value = '';
+      renderMaterialTabs();
+    });
+
+    document.querySelectorAll('.mode-tab').forEach((button) => {
+      button.addEventListener('click', () => {
+        body.dataset.mobilePane = button.dataset.pane;
+        document.querySelectorAll('.mode-tab').forEach((item) => item.classList.toggle('active', item === button));
+      });
+    });
+
+    document.querySelector('#widthToggle').addEventListener('click', (event) => {
+      const wide = body.dataset.wide !== 'true';
+      body.dataset.wide = String(wide);
+      event.currentTarget.textContent = wide ? '⇲' : '⇱';
+      event.currentTarget.setAttribute('aria-label', wide ? '收窄 Sidebar' : '展开 Sidebar');
+    });
+
+    generateButton.addEventListener('click', () => {
+      materialValues[currentMaterialKey] = materialEditor.value;
+      if (!materialValues.claims.trim()) {
+        selectMaterial('claims', true);
+        return;
+      }
+      const providerAtStart = currentProvider;
+      setGenerationLocked(true);
+      generateButton.disabled = true;
+      generateButton.textContent = '模拟生成中…';
+      runningStatus.classList.add('visible');
+      resultEmpty.style.display = 'none';
+      resultCard.classList.remove('visible');
+      body.dataset.mobilePane = 'result';
+      document.querySelectorAll('.mode-tab').forEach((item) => item.classList.toggle('active', item.dataset.pane === 'result'));
+      generationTimer = setTimeout(() => {
+        showSyntheticResult(providerAtStart);
+      }, 900);
+    });
+
+    document.querySelector('#reviewButton').addEventListener('click', () => {
+      reviewNote.textContent = '已模拟记录人工审核：可继续保存或加入对话。此状态不代表法律结论。';
+    });
+
+    document.querySelector('#saveButton').addEventListener('click', () => {
+      reviewNote.textContent = '模拟保存完成：未实际写入文件。生产版本将使用无覆盖写回。';
+    });
+
+    document.querySelector('#useInChatButton').addEventListener('click', () => {
+      const composer = document.querySelector('#mainComposer');
+      composer.value = `请基于绿洲专业任务“${currentTask}”的已审核版本继续分析（模拟引用，尚未发送）。`;
+      composer.focus();
+      const toast = document.querySelector('#draftToast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    });
+
+    document.querySelectorAll('.utility').forEach((button) => {
+      button.addEventListener('click', () => {
+        const name = button.dataset.utility;
+        document.querySelector('#utilityTitle').textContent = name;
+        document.querySelector('#utilityDescription').textContent = `Better Sidebar“${name}”原生功能占位。`;
+        showScreen(utilityScreen);
+      });
+    });
+
+    document.querySelectorAll('.home-return').forEach((button) => button.addEventListener('click', showHome));
+    document.querySelector('#backHome').addEventListener('click', showHome);
+    homeTab.addEventListener('click', showHome);
+    taskTab.addEventListener('click', () => showScreen(taskScreen));
+    document.querySelector('#settingsLink').addEventListener('click', () => showScreen(settingsScreen));
+
+    const previewParams = new URLSearchParams(location.search);
+    const previewView = previewParams.get('view');
+    if (previewParams.get('wide') === 'true' || ['task-wide', 'generation'].includes(previewView)) {
+      body.dataset.wide = 'true';
+      document.querySelector('#widthToggle').textContent = '⇲';
+    }
+    if (['task', 'task-wide', 'generation'].includes(previewView)) {
+      openTask(primaryPrototypeTask);
+      if (previewView === 'generation') showSyntheticResult('local');
+    } else {
+      renderTasks();
+    }
+  </script>
+</body>
+</html>

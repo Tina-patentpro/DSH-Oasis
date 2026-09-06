@@ -8,6 +8,7 @@ const implementation = existsSync(fileURLToPath(moduleUrl)) ? await import(modul
 const createPanelHostCoordinator = implementation.createPanelHostCoordinator ?? (() => ({
   subscribe() { return () => {} },
   getSnapshot() { return { mode: 'missing', reasonCode: 'module-missing' } },
+  expectBetterSidebar() {},
   attachBetterSidebar() { return () => {} },
   openBetterSidebar() { return false },
   reconcileExternalState() {},
@@ -32,7 +33,7 @@ test('switches through integrating and releasing while Better Sidebar owns the o
   const opened = []
   let registered = null
   const service = {
-    version: '0.15.2',
+    version: '0.18.0',
     features: ['targetedOpen', 'stateSubscription', 'tabMeta'],
     registerTab(descriptor) {
       order.push('register')
@@ -41,18 +42,21 @@ test('switches through integrating and releasing while Better Sidebar owns the o
     },
     openTab(seed, scope) { opened.push({ seed, scope }) },
   }
-  const coordinator = createPanelHostCoordinator({
-    layoutAdapter: layoutRecorder(order),
-    hasBetterSidebarMarker: () => false,
-  })
+  const coordinator = createPanelHostCoordinator({ layoutAdapter: layoutRecorder(order) })
   const modes = []
   coordinator.subscribe(() => modes.push(coordinator.getSnapshot().mode))
 
   assert.equal(coordinator.getSnapshot().mode, 'standalone')
+  coordinator.expectBetterSidebar()
+  assert.equal(coordinator.getSnapshot().mode, 'integrating')
   const detach = coordinator.attachBetterSidebar(service, DESCRIPTOR)
-  assert.deepEqual(order.slice(0, 2), ['release:better-sidebar-integrating', 'register'])
+  assert.deepEqual(order.slice(0, 3), [
+    'release:better-sidebar-expected',
+    'release:better-sidebar-integrating',
+    'register',
+  ])
   assert.equal(coordinator.getSnapshot().mode, 'better-sidebar')
-  assert.equal(coordinator.getSnapshot().serviceVersion, '0.15.2')
+  assert.equal(coordinator.getSnapshot().serviceVersion, '0.18.0')
   assert.equal(registered, DESCRIPTOR)
   assert.equal(coordinator.openBetterSidebar('session-a'), true)
   assert.deepEqual(opened, [{
@@ -61,9 +65,10 @@ test('switches through integrating and releasing while Better Sidebar owns the o
   }])
 
   detach()
-  assert.equal(coordinator.getSnapshot().mode, 'standalone')
-  assert.deepEqual(modes, ['integrating', 'better-sidebar', 'releasing', 'standalone'])
+  assert.equal(coordinator.getSnapshot().mode, 'integrating')
+  assert.deepEqual(modes, ['integrating', 'better-sidebar', 'releasing', 'integrating'])
   assert.deepEqual(order, [
+    'release:better-sidebar-expected',
     'release:better-sidebar-integrating',
     'register',
     'release:better-sidebar-open',
@@ -72,12 +77,9 @@ test('switches through integrating and releasing while Better Sidebar owns the o
   ])
 })
 
-test('fails closed for an invalid service, invalid registration disposer, or marker without service', () => {
-  let markerPresent = false
-  const coordinator = createPanelHostCoordinator({
-    layoutAdapter: layoutRecorder([]),
-    hasBetterSidebarMarker: () => markerPresent,
-  })
+test('fails closed for an invalid service or invalid registration disposer', () => {
+  const coordinator = createPanelHostCoordinator({ layoutAdapter: layoutRecorder([]) })
+  coordinator.expectBetterSidebar()
 
   coordinator.attachBetterSidebar({ registerTab() { return () => {} } }, DESCRIPTOR)
   assert.deepEqual(
@@ -91,29 +93,42 @@ test('fails closed for an invalid service, invalid registration disposer, or mar
     { mode: 'blocked', reasonCode: 'better-sidebar-registration-disposer-invalid' },
   )
   assert.equal(coordinator.openBetterSidebar('session-a'), false)
+})
 
-  markerPresent = true
-  coordinator.reconcileExternalState()
-  assert.equal(coordinator.getSnapshot().mode, 'blocked')
-  assert.equal(coordinator.getSnapshot().reasonCode, 'better-sidebar-marker-without-service')
-  markerPresent = false
-  coordinator.reconcileExternalState()
-  assert.equal(coordinator.getSnapshot().mode, 'standalone')
+test('keeps the fixed Sidebar composition integrating without private DOM inspection', () => {
+  const coordinator = createPanelHostCoordinator({ layoutAdapter: layoutRecorder([]) })
+  assert.equal(coordinator.reconcileExternalState().mode, 'standalone')
+  coordinator.expectBetterSidebar()
+  assert.equal(coordinator.reconcileExternalState().mode, 'integrating')
+})
+
+test('does not fall back to an unscoped open when targetedOpen is unavailable', () => {
+  const opened = []
+  const coordinator = createPanelHostCoordinator({ layoutAdapter: layoutRecorder([]) })
+  coordinator.expectBetterSidebar()
+  coordinator.attachBetterSidebar({
+    version: '0.18.0',
+    features: ['stateSubscription'],
+    registerTab() { return () => {} },
+    openTab(...args) { opened.push(args) },
+  }, DESCRIPTOR)
+
+  assert.equal(coordinator.openBetterSidebar('session-a'), false)
+  assert.deepEqual(opened, [])
+  assert.equal(coordinator.getSnapshot().mode, 'better-sidebar')
 })
 
 test('unregisters an active public tab when native open throws and remains idempotent on dispose', () => {
   const order = []
   const service = {
-    version: '0.15.2',
+    version: '0.18.0',
     features: ['targetedOpen'],
     registerTab() { return () => order.push('unregister') },
     openTab() { throw new Error('open failed') },
   }
-  const coordinator = createPanelHostCoordinator({
-    layoutAdapter: layoutRecorder(order),
-    hasBetterSidebarMarker: () => false,
-  })
+  const coordinator = createPanelHostCoordinator({ layoutAdapter: layoutRecorder(order) })
 
+  coordinator.expectBetterSidebar()
   coordinator.attachBetterSidebar(service, DESCRIPTOR)
   assert.equal(coordinator.openBetterSidebar('session-a'), false)
   assert.deepEqual(

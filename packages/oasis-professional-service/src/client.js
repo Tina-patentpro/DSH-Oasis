@@ -8,11 +8,13 @@ import { WorkspaceContextBridge } from './client/WorkspaceContextBridge.js'
 import { createWorkbenchRemote } from './client/workbench-remote.js'
 import { createWorkbenchStore } from './client/workbench-store.js'
 import { createOasisConnectionSettings } from './client/oasis-connection-settings.js'
+import { OasisSettingsSection } from './client/OasisSettingsSection.js'
 
 export const inject = ['slots', 'connection']
 
 const ENTRY_ID = 'oasis-professional-entry'
 const PANEL_ID = 'oasis-professional-panel'
+const SETTINGS_ID = 'oasis-professional-settings'
 
 export function apply(ctx) {
   const slots = ctx.get?.('slots') ?? ctx.slots
@@ -62,12 +64,24 @@ export function apply(ctx) {
       coordinator,
     }),
   ))
+  const disposeSettingsSection = slots.inject('settings.section', () => slots.register(
+    {
+      name: 'settings.section',
+      id: SETTINGS_ID,
+      order: 80,
+      label: '绿洲工作台',
+    },
+    (props) => createElement(OasisSettingsSection, {
+      ...props,
+      controller: connectionSettings,
+    }),
+  ))
 
   let betterSidebarFiber = null
   let settingsFiber = null
   if (typeof ctx.inject === 'function') {
     try {
-      settingsFiber = ctx.inject(['settingsScope', 'remote'], (injectedCtx) => connectionSettings.bind({
+      settingsFiber = ctx.inject(['settingsScope', 'remote.credentials'], (injectedCtx) => connectionSettings.bind({
         settingsScope: injectedCtx.get?.('settingsScope') ?? injectedCtx.settingsScope,
         remote: injectedCtx.get?.('remote') ?? injectedCtx.remote,
         connection,
@@ -76,6 +90,7 @@ export function apply(ctx) {
       // Configuration is optional; local workflows remain available.
     }
     try {
+      coordinator.expectBetterSidebar()
       betterSidebarFiber = ctx.inject(['betterSidebar'], (injectedCtx) => {
         const betterSidebar = injectedCtx.get?.('betterSidebar') ?? injectedCtx.betterSidebar
         return coordinator.attachBetterSidebar(betterSidebar, betterSidebarDescriptor)
@@ -92,25 +107,29 @@ export function apply(ctx) {
 
   return async () => {
     try {
-      await disposeBridge()
+      await disposeSettingsSection()
     } finally {
       try {
-        await disposeEntry()
+        await disposeBridge()
       } finally {
         try {
-          await betterSidebarFiber?.dispose?.()
+          await disposeEntry()
         } finally {
           try {
-            coordinator.dispose()
+            await betterSidebarFiber?.dispose?.()
           } finally {
             try {
-              layoutAdapter.dispose()
+              coordinator.dispose()
             } finally {
               try {
-                await settingsFiber?.dispose?.()
+                layoutAdapter.dispose()
               } finally {
-                connectionSettings.dispose()
-                await store.dispose()
+                try {
+                  await settingsFiber?.dispose?.()
+                } finally {
+                  connectionSettings.dispose()
+                  await store.dispose()
+                }
               }
             }
           }

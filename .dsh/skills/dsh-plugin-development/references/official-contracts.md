@@ -1,7 +1,9 @@
 # DSH插件官方接口参考
 
-核验日期：2026-08-25
-本机基线：`@deepseek-ai/dsh 0.1.1-rc.2`、`@deepseek-ai/dsh-workspace 0.1.1-rc.2`、Node.js `22.19.0`、pnpm `11.19.0`
+核验日期：2026-09-06
+当前项目基线：全局 `@deepseek-ai/dsh 0.1.2-rc.1`、anywhere-labs Desktop `2.0.5`、Desktop 内置 DSH `0.1.2-rc.1`、Better Sidebar `0.18.0`。Node.js 与 pnpm 以每次执行的工具链预检为准。
+
+历史基线：2026-08-25 曾按 `0.1.1-rc.2` 核验；下文明确标为历史的哈希仅用于追溯，不能作为当前合同。
 
 ## 证据优先级
 
@@ -63,7 +65,7 @@ Host插件导出`apply(ctx)`，需要工具注册表时导出`inject = ['tools']
 
 ## Domain Storage与Connection合同
 
-当前`0.1.1-rc.2`的`ctx.storageDomain.open(spec)`返回调用方拥有的Domain。读操作同步；同一Domain内的写操作串行，持久化成功后才更新内存并发布事件。调用方必须在卸载时调用幂等的`Domain.close()`；close会停止接收新写并排空已进入队列的写。Domain名、表名必须匹配`^[a-z][a-z0-9_]*$`，因此本项目实际使用`oasis_workbench` version `1`，不得使用含连字符的展示名。
+固定 `0.1.2-rc.1` 组合继续使用 `ctx.storageDomain.open(spec)` 和调用方拥有的 Domain；调用方必须在卸载时关闭 Domain。Domain名、表名匹配`^[a-z][a-z0-9_]*$`，因此本项目使用`oasis_workbench`，不得使用含连字符的展示名。写入语义仍须以本轮实际包与定向测试为准，不把旧版观察自动外推。
 
 Web Profile由DSH组合JSON backend。该backend为每个unit写人类可读JSON，并通过临时文件、fsync和原子rename提交；插件不得绕过Domain直接读写该文件。backend不提供跨进程锁或CAS，本项目只承诺单一DSH Host进程；禁止两个Host共享同一Storage根。
 
@@ -71,11 +73,11 @@ Host可用`ctx.connection.rpc.handle(channel, handler, { authority })`注册logi
 
 ## Workspace Registry合同
 
-当前`@deepseek-ai/dsh-workspace 0.1.1-rc.2`通过`ctx.workspaceRegistry`提供Host侧Workspace实体。插件必须直接注入`workspaceRegistry`并按显式`workspaceId`调用`get(WorkspaceId(id))`，不得按Client传入的绝对路径、Host `cwd`、项目标题或同名目录猜测归属。
+固定 `@deepseek-ai/dsh-workspace 0.1.2-rc.1` 通过`ctx.workspaceRegistry`提供Host侧Workspace实体。插件必须直接注入`workspaceRegistry`并按显式`workspaceId`查询，不得按Client传入的绝对路径、Host `cwd`、项目标题或同名目录猜测归属。
 
 `Workspace.path`是在创建时经`fs.realpath`得到且保持稳定的canonical现有目录；`Workspace.status()`每次实时检查该目录，返回`ok`或`missing-dir`，不修改Workspace记录。`Workspace.sessionIds`由注册表按session header canonical cwd过滤。插件只能把`Workspace.path`作为项目文件安全检查的起点，仍须对每个用户相对路径执行越界、symlink/junction、文件类型和TOCTOU复检。
 
-本机冻结证据：
+历史 `0.1.1-rc.2` 冻结证据（不可作为当前版本证明）：
 
 | 文件 | SHA-256 |
 |---|---|
@@ -92,20 +94,13 @@ Client模块通过包清单中的`dsh.client`被发现。当前会话输入右�
 
 Client编码前先调用`Slots.listSubTree`不带`root`查询全树，再调用`Slots.listSubTree`带精确`root`查询每个候选Slot。禁止猜测options；精确结果必须覆盖purpose、kind、scope、standard props、owner props、current occupants、replacement risk和descendants。
 
-本项目当前决策：`conversation.input.right`采用`list`列表协议提供入口；`shell.overlay`采用`list`增量协议提供Portal生命周期锚点。禁止默认注册`root`，禁止默认注册`sidebar`，禁止默认注册`conversation`，禁止默认注册`details`。`details`是`single`单槽，禁止绿洲工作台注册或调用`ctx.layout.openDetails()`借用其几何；隔离浏览器已证明后者会产生原生遮罩并阻断Overlay交互。
+本项目当前决策：`conversation.input.right`采用`list`列表协议提供入口；`settings.section`提供原生设置页面；`shell.overlay`作为`list`增量桥接点保留 Workspace 上下文与历史兼容生命周期，但在固定 Sidebar 路径中不渲染独立面板；业务主工作区通过 Better Sidebar `0.18.0` 的公开服务注册。禁止默认注册`root`、`sidebar`、`conversation`、`details`；`details`是`single`单槽，禁止绿洲工作台注册或借用其几何。
 
-### 固定版本布局适配例外
+### 固定版本客户端接线
 
-当前`0.1.1-rc.2`没有满足该产品右栏要求的公开布局API，因此允许项目自建一个版本化、单写入者最小适配器：
+固定组合已经提供 Better Sidebar 公开服务，绿洲插件不再使用 Portal/DOM 布局适配器。实际装配只通过 `ctx.betterSidebar.registerTab(...)` 注册一个绿洲 Tab，并在 capability 含 `targetedOpen` 时使用带 Session scope 的 `openTab(...)`。不能通过模拟点击、DOM 标记、私有 store 或无 scope fallback 打开。
 
-- React面板通过Portal挂到`document.body`，`shell.overlay`只维持插件生命周期；
-- 只用稳定属性与父子关系检测`#root`、root Slot、`[data-shell-overlay]`、sidebar Slot和conversation Slot；禁止哈希class与位置选择器；
-- normal给`#root`添加插件自有所有权属性，并用`--oasis-right-rail-width`推挤360px；expanded与hidden必须清除该推挤；
-- 窄于1024px或预计中栏小于520px时，请求的normal自动解析为expanded，但不改写用户请求状态；
-- 发现结构不唯一、其他布局所有者、CSS写入/几何验证失败时立即隐藏并恢复；HMR、异常和卸载同样清除Portal、style、属性、变量、observer与timer；
-- 除以上预算外不得修改DSH子节点、原生class、内容、顺序或`details`。
-
-设计只借鉴`DSH-better-sidebar`的Portal、`#root margin-right`、清理和生命周期恢复思路，不依赖或复制其文件、终端、Git、浏览器、编辑器功能。参考：`https://github.com/omdsh-dev/DSH-better-sidebar/blob/main/src/client/layout.css`与`https://github.com/omdsh-dev/DSH-better-sidebar/blob/main/src/client/index.tsx`。
+Better Sidebar 的“文件变动”和“终端”由其原生设置所有者保存为 `tabsEnabled.git=false`、`tabsEnabled.terminal=false`；重启隔离 Desktop 后，新建标签菜单只保留文件、任务管理、侧边对话、浏览器和绿洲工作台。该设置不是绿洲业务配置。
 
 ```js
 export const inject = ['slots']
@@ -119,6 +114,14 @@ export function apply(ctx) {
   )
 }
 ```
+
+`0.1.2-rc.1` 的连接与设置合同已发生漂移：
+
+- 活跃 Host 通过 `connection.generation.getSnapshot()/subscribe()` 观察，不再使用旧 `hostDescription`；
+- 凭据能力位于 `remote.credentials`，`describe([ref])` 返回 `{ ok, value: { [ref]: { configured, writable } } }`，`set(ref, value)` 直接返回响应；
+- loopback 同时核对 `connection.isLoopback` 与 `remote.$host.isLoopback`；
+- 设置 scope 直接用字符串 namespace 绑定，`settingsNamespace` 已从当前包移除；
+- 设置页面注册在 `settings.section`，Client 清单必须声明 `@deepseek-ai/dsh-client-ui-settings`。
 
 `./client`不是原始ESM源码入口。浏览器文件必须是lazy-CJS工厂，并以准确包名注册：
 
@@ -147,6 +150,10 @@ window.__ModuleLoader__.load({
 
 若未找到`.git`，当前工作目录作为项目根；因此测试命令必须从目标项目根执行。
 
+### Skill 正文可见性边界
+
+固定包 `@deepseek-ai/dsh-tool-skill 0.1.2-rc.1` 的原生工具结果直接返回 Skill 的完整 `content`，客户端 Skill 工具行还能展开显示结果。因此 `userInvocable=false`、scope 注册或不展示目录都不能保证普通产品路径不可取得正文。当前只能证明没有在绿洲 UI 中新增读取/导出入口，不能宣称原生 Skill 调用满足“用户可用但不可获取正文”。G-SKILL 未决时不得安装或运行真实私有业务 Skill。
+
 ## Windows隔离验证
 
 不要在开发烟雾测试中改写`C:\Users\<user>\.dsh\profiles\web`。在工作区使用隔离主页：
@@ -163,6 +170,8 @@ scripts\dsh-isolated.cmd --profile web --no-open --port 0
 ```
 
 隔离包装器应在调用CLI前设置隔离`DSH_HOME`，并按`DSH_BIN`、PATH、已知npm全局前缀的顺序寻找候选入口；候选必须能追溯到官方`@deepseek-ai/dsh`包及其声明的`bin.dsh`，再以当前Node、`shell:false`和原样参数启动。Home只允许项目`.dsh-test`或系统临时目录下`oasis-dsh-*`根，必须拒绝真实`~/.dsh`的祖先/自身/后代以及任一现有junction、symlink或重解析跳转。每次写入前先用`--print-home`确认实际路径。`dsh --dump-config`在当前CLI中会准备并写入Profile文件，所以只能对隔离`DSH_HOME`运行，不能当作对真实Profile的纯读取操作。
+
+`DSH_HOME` 隔离不等于 Skill 根隔离：本次固定 Desktop 的启动日志仍会扫描用户级 `.agents/skills`。不得把真实私有 Skill 放进可枚举的用户/Workspace Skill 目录，并且不能因 Profile 隔离就宣称 Skill 发现面已隔离。
 
 ## 验证层级
 

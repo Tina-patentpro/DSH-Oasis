@@ -13,6 +13,7 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
   const listeners = new Set()
   let scope = null
   let connection = null
+  let remote = null
   let generation = 0
   let credentialRead = 0
   let lastSettings = null
@@ -56,16 +57,16 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
   async function refreshCredential() {
     const current = generation
     const read = ++credentialRead
-    const api = connection?.api?.credentials
+    const api = remote?.credentials
     if (!snapshot.connected || typeof api?.describe !== 'function') {
       publish({ credentialStatus: 'unavailable', credentialConfigured: false, credentialWritable: false })
       return false
     }
     publish({ credentialStatus: 'loading', credentialWritable: false })
     try {
-      const response = await api.describe({ refs: [REFERENCE] })
+      const response = await api.describe([REFERENCE])
       if (disposed || current !== generation || read !== credentialRead) return false
-      const info = response?.result?.ok === true ? response.result.value?.credentials?.[REFERENCE] : null
+      const info = response?.ok === true ? response.value?.[REFERENCE] : null
       if (typeof info?.configured !== 'boolean' || typeof info.writable !== 'boolean') throw new Error('invalid')
       publish({ credentialStatus: 'ready', credentialConfigured: info.configured,
         credentialWritable: info.writable && typeof api.set === 'function' })
@@ -127,30 +128,33 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
         for (const dispose of disposers.splice(0)) { try { dispose() } catch {} }
         scope = null
         connection = null
+        remote = null
         publish({ ...initial(), busy: pendingWrite, restartRequired: snapshot.restartRequired })
         invalidate()
       }
       detachCurrent = detach
       try {
         connection = services.connection
-        if (connection?.isLoopback !== true || typeof connection.hostDescription?.subscribe !== 'function'
-          || typeof connection.hostDescription?.getSnapshot !== 'function') throw new Error('unavailable')
+        remote = services.remote
+        if (connection?.isLoopback !== true || remote?.$host?.isLoopback !== true
+          || typeof connection.generation?.subscribe !== 'function'
+          || typeof connection.generation?.getSnapshot !== 'function') throw new Error('unavailable')
         scope = services.settingsScope.bind({ namespace: 'oasis-professional-service' })
         if (typeof scope?.set !== 'function' || typeof scope?.subscribe !== 'function') throw new Error('unavailable')
         const onHost = () => {
           if (!active) return
           generation += 1
           credentialRead += 1
-          publish({ connected: connection.hostDescription.getSnapshot() != null,
+          publish({ connected: connection.generation.getSnapshot() != null,
             credentialConfigured: false, credentialWritable: false, error: null, notice: null })
           readSettings()
           invalidate()
           void refreshCredential().then((ok) => { if (active && ok) invalidate(true) })
         }
         disposers.push(scope.subscribe(() => { if (active) { readSettings(); invalidate() } }))
-        disposers.push(connection.hostDescription.subscribe(onHost))
-        if (typeof services.remote?.$on === 'function') {
-          disposers.push(services.remote.$on('credentials/reference-updated', (ref) => {
+        disposers.push(connection.generation.subscribe(onHost))
+        if (typeof remote.$on === 'function') {
+          disposers.push(remote.$on('credentials/reference-updated', (ref) => {
             if (!active || ref !== REFERENCE) return
             invalidate()
             void refreshCredential().then((ok) => { if (active && ok) invalidate(true) })
@@ -186,8 +190,8 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
       if (typeof value !== 'string' || value.trim() === '') return false
       return write('credential', async () => {
         try {
-          const response = await connection.api.credentials.set({ ref: REFERENCE, value })
-          if (response?.result?.ok !== true) throw new Error('failed')
+          const response = await remote.credentials.set(REFERENCE, value)
+          if (response?.ok !== true) throw new Error('failed')
         } finally { value = '' }
       })
     },

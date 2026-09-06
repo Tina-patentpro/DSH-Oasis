@@ -1,12 +1,11 @@
 import { credentialRef } from '@deepseek-ai/dsh-credentials'
-import { settingsNamespace } from '@deepseek-ai/dsh-settings'
 import z from '@deepseek-ai/schemastery'
 
 import { normalizeOasisOrigin } from './oasis-origin-policy.js'
 
 const DEFAULT_CREDENTIAL_REF = 'OASIS_USER_JWT'
 
-export const OASIS_SETTINGS_NAMESPACE = settingsNamespace('oasis-professional-service')
+export const OASIS_SETTINGS_NAMESPACE = 'oasis-professional-service'
 export const OASIS_SETTINGS_SCHEMA = z.object({
   environmentKind: z.const('non-production').default('non-production'),
   apiBaseUrl: z.string().default(''),

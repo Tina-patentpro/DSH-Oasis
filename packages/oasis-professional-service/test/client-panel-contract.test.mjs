@@ -50,15 +50,17 @@ test('registers additive entry and panel host slots but never details', async ()
 
   const dispose = apply(ctx)
   assert.deepEqual(inject, ['slots', 'connection'])
-  assert.deepEqual(injectedSlots.sort(), ['conversation.input.right', 'shell.overlay'])
+  assert.deepEqual(injectedSlots.sort(), ['conversation.input.right', 'settings.section', 'shell.overlay'])
   assert.equal(registrations.some(({ options }) => options.name === 'details'), false)
   assert.equal(registrations.every(({ options }) => options.id.startsWith('oasis-professional-')), true)
   const overlayRegistration = registrations.find(({ options }) => options.name === 'shell.overlay')
   assert.equal(overlayRegistration.component({}).type, WorkspaceContextBridge)
+  const settingsRegistration = registrations.find(({ options }) => options.name === 'settings.section')
+  assert.equal(settingsRegistration.options.label, '绿洲工作台')
   const disposal = dispose()
   assert.equal(typeof disposal?.then, 'function')
   await disposal
-  assert.equal(disposals.length, 2)
+  assert.equal(disposals.length, 3)
 })
 
 test('fails closed when the DSH Connection service is unavailable', () => {
@@ -77,7 +79,7 @@ test('registers the workbench through the public Better Sidebar tab service when
   let descriptor = null
   let unregisterCount = 0
   const betterSidebar = {
-    version: '0.15.2',
+    version: '0.18.0',
     features: ['targetedOpen', 'stateSubscription', 'tabMeta'],
     registerTab(value) {
       descriptor = value
@@ -101,7 +103,7 @@ test('registers the workbench through the public Better Sidebar tab service when
 
   const dispose = apply(ctx)
   try {
-    assert.deepEqual(injected, [['settingsScope', 'remote'], ['betterSidebar']])
+    assert.deepEqual(injected, [['settingsScope', 'remote.credentials'], ['betterSidebar']])
     assert.equal(descriptor?.id, 'oasis-professional-service:workbench')
     assert.equal(descriptor?.single, true)
     assert.equal(typeof descriptor?.component, 'function')
@@ -137,7 +139,7 @@ test('entry opens the targeted native Better Sidebar tab without opening the sta
   const workspaces = { items: [{ workspaceId: 'workspace-a', sessionIds: ['session-a'] }] }
   const opened = []
   const coordinator = {
-    getSnapshot: () => ({ mode: 'better-sidebar' }),
+    getSnapshot: () => ({ mode: 'better-sidebar', serviceFeatures: ['targetedOpen'] }),
     openBetterSidebar(sessionId) { opened.push(sessionId); return true },
   }
   const button = WorkbenchEntry({
@@ -153,6 +155,29 @@ test('entry opens the targeted native Better Sidebar tab without opening the sta
   assert.deepEqual(opened, ['session-a'])
   assert.equal(store.getWorkspaceState('workspace-a').panelMode, 'hidden')
   assert.equal(store.getWorkspaceState('workspace-a').pages.length, 0)
+})
+
+test('entry disables only the scoped Sidebar open action when targetedOpen is unavailable', () => {
+  const store = createWorkbenchStore()
+  const workspaces = { items: [{ workspaceId: 'workspace-a', sessionIds: ['session-a'] }] }
+  const opened = []
+  const coordinator = {
+    getSnapshot: () => ({ mode: 'better-sidebar', serviceFeatures: ['stateSubscription'] }),
+    openBetterSidebar(sessionId) { opened.push(sessionId); return true },
+  }
+  const button = WorkbenchEntry({
+    sessionId: 'session-a',
+    store,
+    coordinator,
+    focusTargets: new Map(),
+    useWorkspaces: (selector) => selector(workspaces),
+    usePanelHostSnapshot: readPanelHostSnapshot,
+  })
+
+  assert.equal(button.props.disabled, true)
+  assert.match(button.props.title, /按会话打开/)
+  button.props.onClick({ currentTarget: { focus() {} } })
+  assert.deepEqual(opened, [])
 })
 
 test('entry ref tracks the currently mounted trigger per workspace and removes stale nodes', () => {
@@ -222,14 +247,17 @@ test('embedded chrome leaves show, hide, expand, and restore controls to Better 
   assert.match(standalone, /oasis-panel-(?:hide|expand|restore)/)
 })
 
-test('Better Sidebar integration uses only its public service plus the fail-closed marker seam', () => {
+test('Better Sidebar integration uses only its public service and no private DOM seam', () => {
   const coordinatorSource = readFileSync(resolve(packageRoot, 'src/client/panel-host-coordinator.js'), 'utf8')
+  const bridgeSource = readFileSync(resolve(packageRoot, 'src/client/WorkspaceContextBridge.js'), 'utf8')
+  const clientSource = readFileSync(resolve(packageRoot, 'src/client.js'), 'utf8')
   const tabSource = readFileSync(resolve(packageRoot, 'src/client/OasisBetterSidebarTab.js'), 'utf8')
   assert.match(coordinatorSource, /registerTab/)
   assert.match(coordinatorSource, /openTab/)
-  assert.match(coordinatorSource, /\[data-dsh-better-sidebar\]/)
-  assert.doesNotMatch(coordinatorSource, /--dsh-sidebar|data-dsh-panel-host|\.click\(|activateTab|updateTab/)
-  assert.doesNotMatch(tabSource, /querySelector|#root|--dsh-sidebar|\.click\(/)
+  assert.match(clientSource, /expectBetterSidebar/)
+  for (const source of [coordinatorSource, bridgeSource, tabSource]) {
+    assert.doesNotMatch(source, /querySelector|MutationObserver|data-dsh-better-sidebar|#root|--dsh-sidebar|\.click\(|activateTab|updateTab/)
+  }
 })
 
 test('flushes drafts before task switch, confirmed history close, and panel hide', async () => {

@@ -8,6 +8,10 @@ const ui = await import('../src/client/OasisConnectionSettings.js').catch((error
   if (error.code !== 'ERR_MODULE_NOT_FOUND') throw error
   return {}
 })
+const settingsUi = await import('../src/client/OasisSettingsSection.js').catch((error) => {
+  if (error.code !== 'ERR_MODULE_NOT_FOUND') throw error
+  return {}
+})
 function nodes(value, result = []) {
   if (Array.isArray(value)) value.forEach((item) => nodes(item, result))
   else if (value && typeof value === 'object') { result.push(value); nodes(value.props?.children, result) }
@@ -50,21 +54,25 @@ test('disabled configuration is explanatory, not a disabled local workbench', ()
   assert.match(elements.filter((x) => typeof x === 'string').join(' '), /本地工作流/)
 })
 
-test('client optionally binds configuration service without adding Slot registrations and disposes it', async () => {
+test('client binds one configuration owner into the native DSH settings section and disposes it', async () => {
   const optional = []
   const slots = []
   const disposed = []
   const dispose = apply({
     connection: { rpc: { call: async () => ({ ok: true, value: {} }) } },
-    slots: { inject(_name, fn) { return fn() }, register(options) { slots.push(options.name); return () => {} } },
+    slots: { inject(_name, fn) { return fn() }, register(options, component) { slots.push({ options, component }); return () => {} } },
     inject(names) { optional.push(names); return { dispose: () => disposed.push(names) } },
   })
   assert.ok(optional.some((names) => names.includes('settingsScope')))
-  assert.deepEqual(slots.sort(), ['conversation.input.right', 'shell.overlay'])
+  assert.deepEqual(slots.map(({ options }) => options.name).sort(), ['conversation.input.right', 'settings.section', 'shell.overlay'])
+  const nativeSettings = slots.find(({ options }) => options.name === 'settings.section')
+  assert.equal(nativeSettings.options.id, 'oasis-professional-settings')
+  assert.equal(typeof settingsUi.OasisSettingsSection, 'function')
+  assert.equal(nativeSettings.component({ close() {} }).type, settingsUi.OasisSettingsSection)
   await dispose()
   assert.ok(disposed.some((names) => names.includes('settingsScope')))
   const source = await readFile(new URL('../src/client/OasisWorkbenchSurface.js', import.meta.url), 'utf8')
-  assert.match(source, /createElement\(OasisConnectionSettings/)
+  assert.doesNotMatch(source, /createElement\(OasisConnectionSettings/)
 })
 
 test('configuration changes do not hide the stop-waiting action for an existing remote execution', () => {

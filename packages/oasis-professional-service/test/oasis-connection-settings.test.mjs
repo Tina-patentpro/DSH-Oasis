@@ -17,9 +17,9 @@ function fixture(options = {}) {
   assert.equal(typeof module.createOasisConnectionSettings, 'function', 'D1 configuration controller must exist')
   const calls = []
   const listeners = new Set()
-  const hostListeners = new Set()
+  const generationListeners = new Set()
   const events = new Map()
-  let host = { name: 'synthetic-host' }
+  let generation = { id: 1, host: { name: 'synthetic-host' } }
   let state = {
     status: 'ready', mode: 'host', writable: true,
     value: { environmentKind: 'non-production', apiBaseUrl: 'http://127.0.0.1:1234', credentialRef: 'OASIS_USER_JWT', downloadOrigins: [] },
@@ -35,28 +35,28 @@ function fixture(options = {}) {
     },
   }
   const credentials = {
-    async describe(args) {
-      calls.push(['describe', args])
-      return options.describe?.() ?? { result: { ok: true, value: { credentials: { OASIS_USER_JWT: { configured: true, writable: true } } } } }
+    async describe(refs) {
+      calls.push(['describe', refs])
+      return options.describe?.() ?? { ok: true, value: { OASIS_USER_JWT: { configured: true, writable: true } } }
     },
-    async set(args) {
-      calls.push(['credential', args])
-      return options.set?.() ?? { result: { ok: true, value: {} } }
+    async set(ref, value) {
+      calls.push(['credential', ref, value])
+      return options.set?.() ?? { ok: true, value: undefined }
     },
   }
   const controller = module.createOasisConnectionSettings({ onInvalidated: options.onInvalidated })
   const detach = controller.bind({
     settingsScope: { bind(spec) { assert.deepEqual(spec, { namespace: 'oasis-professional-service' }); return scope } },
     connection: {
-      isLoopback: true, api: { credentials },
-      hostDescription: { getSnapshot: () => host, subscribe(fn) { hostListeners.add(fn); return () => hostListeners.delete(fn) } },
+      isLoopback: true,
+      generation: { getSnapshot: () => generation, subscribe(fn) { generationListeners.add(fn); return () => generationListeners.delete(fn) } },
     },
-    remote: { $on(name, fn) { events.set(name, fn); return () => events.delete(name) } },
+    remote: { $host: { isLoopback: true }, credentials, $on(name, fn) { events.set(name, fn); return () => events.delete(name) } },
   })
   return {
-    controller, calls, detach, listeners, hostListeners, events,
+    controller, calls, detach, listeners, generationListeners, events,
     change(patch) { state = { ...state, ...patch }; for (const fn of listeners) fn() },
-    connect(next) { host = next; for (const fn of hostListeners) fn() },
+    connect(next) { generation = next === undefined ? undefined : { id: (generation?.id ?? 1) + 1, host: next }; for (const fn of generationListeners) fn() },
   }
 }
 
@@ -83,7 +83,7 @@ test('settings and JWT are separate public writes; production and non-origin inp
 })
 
 test('a failed credential update is not success even when an old credential remains configured; no secret in state', async () => {
-  const f = fixture({ set: () => ({ result: { ok: false, error: { message: 'synthetic-jwt-must-not-echo' } } }) })
+  const f = fixture({ set: () => ({ ok: false, error: { message: 'synthetic-jwt-must-not-echo' } }) })
   await tick()
   assert.equal(await f.controller.updateCredential('synthetic-jwt-must-not-echo'), false)
   assert.equal(f.controller.getSnapshot().credentialConfigured, true)
@@ -102,7 +102,7 @@ test('empty JWT never deletes or writes; duplicate pending writes are rejected a
   const first = f.controller.updateCredential('synthetic-token')
   assert.equal(await f.controller.updateCredential('another-synthetic-token'), false)
   assert.equal(f.calls.filter((x) => x[0] === 'credential').length, 1)
-  pending.resolve({ result: { ok: true, value: {} } })
+  pending.resolve({ ok: true, value: undefined })
   assert.equal(await first, true)
   assert.ok(invalidations.some((x) => x.reload === true))
   assert.match(f.controller.getSnapshot().notice, /凭据已更新/)
@@ -113,9 +113,9 @@ test('empty JWT never deletes or writes; duplicate pending writes are rejected a
 test('disconnect ignores late credential reads, blocks writes, and reconnect refreshes; detach removes subscriptions', async () => {
   const pending = deferred()
   let count = 0
-  const f = fixture({ describe: () => ++count === 1 ? pending.promise : { result: { ok: true, value: { credentials: { OASIS_USER_JWT: { configured: false, writable: true } } } } } })
+  const f = fixture({ describe: () => ++count === 1 ? pending.promise : { ok: true, value: { OASIS_USER_JWT: { configured: false, writable: true } } } })
   f.connect(undefined)
-  pending.resolve({ result: { ok: true, value: { credentials: { OASIS_USER_JWT: { configured: true, writable: true } } } } })
+  pending.resolve({ ok: true, value: { OASIS_USER_JWT: { configured: true, writable: true } } })
   await tick()
   assert.equal(f.controller.getSnapshot().connected, false)
   assert.equal(f.controller.getSnapshot().credentialConfigured, false)
@@ -124,7 +124,7 @@ test('disconnect ignores late credential reads, blocks writes, and reconnect ref
   await tick()
   assert.equal(f.controller.getSnapshot().credentialConfigured, false)
   f.detach()
-  assert.equal(f.listeners.size + f.hostListeners.size + f.events.size, 0)
+  assert.equal(f.listeners.size + f.generationListeners.size + f.events.size, 0)
   assert.equal(f.controller.getSnapshot().canSubmit, false)
   f.controller.dispose()
 })

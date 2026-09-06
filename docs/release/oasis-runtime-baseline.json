@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-06T15:15:36+08:00",
+  "evidenceBoundary": "fixed-version-installed-package-browser-and-static-contract; no model, professional API, upload, fee, or private Skill execution",
+  "projectRevision": "49c396a8478f80cf7dbee1596cb1de060c01b2cf",
+  "projectState": "stage-2 changes are present in the working tree and are not committed",
+  "targetCombination": {
+    "globalDsh": "0.1.2-rc.1",
+    "desktop": "2.0.5",
+    "embeddedDsh": "0.1.2-rc.1",
+    "betterSidebar": "0.18.0"
+  },
+  "upstreamPins": {
+    "dsh": {
+      "tag": "dsh-v0.1.2-rc.1",
+      "commit": "a66e4702047846cdaa10c66c9d3df3951f5ea70d",
+      "source": "https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.1.2-rc.1"
+    },
+    "desktop": {
+      "tag": "v2.0.5",
+      "commit": "423406fe225442995902015cb6f10eed670ff115",
+      "source": "https://github.com/anywhere-labs/dsh-desktop/releases/tag/v2.0.5"
+    },
+    "betterSidebar": {
+      "tag": "v0.18.0",
+      "commit": "9e1a03452794532cda1f6ac677b72579dff48dfc",
+      "source": "https://github.com/omdsh-dev/DSH-better-sidebar/releases/tag/v0.18.0"
+    }
+  },
+  "installedEvidence": {
+    "globalDsh": {
+      "command": "C:\\Users\\TinaD\\AppData\\Roaming\\npm\\dsh.cmd --version",
+      "version": "0.1.2-rc.1",
+      "manifest": "C:\\Users\\TinaD\\AppData\\Roaming\\npm\\node_modules\\@deepseek-ai\\dsh\\package.json",
+      "manifestSha256": "606A68D02CF561BC7D6CE9BDF86AE2B06761E727B35959A363E856EA20F64805"
+    },
+    "desktop": {
+      "version": "2.0.5",
+      "manifest": "C:\\Users\\TinaD\\AppData\\Local\\Programs\\DSH Desktop\\resources\\app.asar.unpacked\\package.json",
+      "manifestSha256": "44D4F199BD697AA3E338CFFF7435F67415FF70B2419050CB10043CD5B5E57543"
+    },
+    "embeddedDsh": {
+      "version": "0.1.2-rc.1",
+      "manifest": "C:\\Users\\TinaD\\AppData\\Local\\Programs\\DSH Desktop\\resources\\app.asar.unpacked\\node_modules\\@deepseek-ai\\dsh\\package.json",
+      "manifestSha256": "FDB2C5F19720211EB1DAD0AE5A0A04E09F64CC15814374D5FB85A300BCA8F2E5"
+    },
+    "protectedWebProfileBaseline": {
+      "manifest": "C:\\Users\\TinaD\\.dsh\\profiles\\web\\package.json",
+      "manifestSha256": "DD032536932047EEE9BDCA38D788B9BD6A3FC6EB6EBD077B2E31A3FC64D5C8D3",
+      "betterSidebarManifestSha256": "EC23CE2215DB2BBD4604E0D7BF2D80CC83101CCE9BBA40534DAF28A46000BC33"
+    },
+    "isolatedDesktopProfile": {
+      "dshHome": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\.dsh-test\\stage2-desktop",
+      "userData": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\.dsh-test\\stage2-desktop-userdata",
+      "profileManifestSha256": "9F4AFEFC55D0AEEDCDD69786A2742D884C7CA2D9D5AD34A0EF07C2F3DB53CE9D",
+      "oasisManifestSha256": "683A1A28BCACED5638174ACA45F94B19C8D6A2D8468B66C94B3B512BB9D87091",
+      "betterSidebarManifestSha256": "EC23CE2215DB2BBD4604E0D7BF2D80CC83101CCE9BBA40534DAF28A46000BC33",
+      "bundles": [
+        "@deepseek-ai/dsh-base",
+        "@deepseek-ai/dsh-web-app",
+        "dsh-better-sidebar",
+        "oasis-professional-service"
+      ],
+      "settingsSha256": "A25FE2C09D3AE9AAC271AC35881C38A5B61FE2DD3A494C0CDCE46E0459DCFB80",
+      "settingsOwnership": {
+        "dsh-better-sidebar.tabsEnabled.git": false,
+        "dsh-better-sidebar.tabsEnabled.terminal": false
+      }
+    }
+  },
+  "desktopResolvedDependencies": {
+    "@deepseek-ai/cordis": "4.0.2",
+    "@deepseek-ai/dsh-client-connection": "0.1.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.1.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-layout": "0.1.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-settings": "0.1.2-rc.1",
+    "@deepseek-ai/dsh-credentials": "0.1.2-rc.1",
+    "@deepseek-ai/dsh-settings": "0.1.2-rc.1",
+    "@deepseek-ai/dsh-storage-domain": "0.1.2-rc.1",
+    "@deepseek-ai/dsh-tools": "0.1.2-rc.1",
+    "@deepseek-ai/dsh-workspace": "0.1.2-rc.1",
+    "@deepseek-ai/schemastery": "3.18.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "zod": "4.4.3",
+    "lockfileSha256": "21BC7005223243BCCC3241D86ACEEF6072ED5684B5A5F933F2D365BF7C6B156F"
+  },
+  "integrationPolicy": {
+    "sidebarService": "runtime structural injection through ctx.betterSidebar",
+    "sidebarPackageDependency": false,
+    "reactBundled": false,
+    "layoutOwner": "dsh-desktop-and-better-sidebar",
+    "settingsOwner": "dsh-settings",
+    "credentialOwner": "dsh-credentials",
+    "workspaceOwner": "dsh-workspace",
+    "forbiddenSlots": [
+      "root",
+      "sidebar",
+      "conversation",
+      "details"
+    ],
+    "forbiddenSidebarIntegrationCoupling": [
+      "host DOM selectors",
+      "MutationObserver layout detection",
+      "Better Sidebar private store",
+      "simulated clicks",
+      "unscoped openTab fallback"
+    ],
+    "legacyStandalonePanel": "retained only for historical compatibility and released before the fixed Better Sidebar path attaches; it is not the new product baseline"
+  },
+  "verifiedPublicContracts": {
+    "betterSidebar": [
+      "registerTab",
+      "openTab",
+      "openFile",
+      "getSnapshot",
+      "subscribeState",
+      "updateTab",
+      "targetedOpen"
+    ],
+    "clientConnection": [
+      "connection.generation.getSnapshot",
+      "connection.generation.subscribe",
+      "remote.$host.isLoopback"
+    ],
+    "credentials": [
+      "remote.credentials.describe([ref])",
+      "remote.credentials.set(ref, value)",
+      "credentials/reference-updated"
+    ],
+    "settings": [
+      "settings.section",
+      "settingsScope.bind({ namespace: string })"
+    ],
+    "host": [
+      "defineTool",
+      "credentialRef",
+      "SettingsProvider.register",
+      "defineDomain",
+      "domainTable"
+    ],
+    "removedSincePreviousBaseline": [
+      "@deepseek-ai/dsh-settings.settingsNamespace",
+      "connection.hostDescription",
+      "connection.api.credentials"
+    ]
+  },
+  "runtimeEvidence": {
+    "desktopFixedCombinationLoad": {
+      "status": "pass",
+      "proof": "isolated Desktop 2.0.5 restarted with embedded DSH 0.1.2-rc.1, Better Sidebar 0.18.0, and the linked Oasis bundle"
+    },
+    "nativeSettingsSection": {
+      "status": "pass",
+      "proof": "DSH Settings rendered the Oasis section and reported non-production configuration with no credential value exposed"
+    },
+    "sidebarTabLifecycle": {
+      "status": "pass",
+      "proof": "the installed Better Sidebar rendered one Oasis workbench tab and the workflow selection page"
+    },
+    "sidebarFeatureSelection": {
+      "status": "pass",
+      "proof": "after a real Desktop restart, the new-tab menu omitted git/file-changes and terminal while retaining files, task manager, side chat, browser, and Oasis"
+    },
+    "workspaceSwitchIsolation": {
+      "status": "pass",
+      "proof": "workspace-a retained its Oasis task after switching to an empty workspace-b and back; workspace-b did not inherit the task"
+    },
+    "relevantUiContracts": {
+      "status": "pass",
+      "proof": "actual rendering established conversation input entry, settings.section contribution, and Better Sidebar tab registration; no unrelated full Slot-tree scanner was added"
+    },
+    "screenshot": {
+      "path": "D:\\OneDrive\\4、董娣相关\\9、绿洲慧写4.0预研\\docs\\release\\evidence\\2026-09-06-stage2-desktop-oasis-settings.png",
+      "sha256": "A75EF12D225E6DE9259ABBB3E0E5D0696CB945D5CC8FA25E56AA194FE6C0ACD0"
+    }
+  },
+  "skillVisibility": {
+    "status": "g-skill-open-native-tool-result-exposes-content",
+    "proofBoundary": "fixed-package static contract; no model or private Skill was run",
+    "observations": [
+      "@deepseek-ai/dsh-tool-skill returns the complete Skill content in the tool result",
+      "the fixed client Skill UI can expand and display that result",
+      "the isolated Desktop still discovers user-level skill roots outside DSH_HOME"
+    ],
+    "decision": "do not install or run a private Oasis business Skill until G-SKILL is resolved"
+  },
+  "verification": {
+    "targetedCommand": "node --test test/package-contract.test.mjs test/bundle-contract.test.mjs test/client-build-contract.test.mjs test/slot-contract.test.mjs test/workspace-context-bridge.test.mjs test/panel-host-coordinator.test.mjs test/embedded-workspace-host.test.mjs test/client-panel-contract.test.mjs test/oasis-connection-settings.test.mjs test/oasis-connection-settings-ui.test.mjs test/oasis-runtime-config.test.mjs",
+    "targetedResult": "56 passed, 0 failed",
+    "fullCommand": "pnpm run verify",
+    "fullResult": "build passed; 290 tests passed, 0 failed; npm pack --dry-run passed with 46 entries and no publish",
+    "builtClientSha256": "E91F58C2A33EF9F3B5FA7D98A9504E6355FDE05F384C33490FC1584299F43119",
+    "builtClientMapSha256": "5781276041BE2512D73F55F0FF3220B01F7F5B1888F726ADEDD87B6990F57A7C",
+    "protectedProfileAndApiBaseline": "fresh SHA-256 comparison matched all recorded values",
+    "diffCheck": "passed"
+  },
+  "pendingEvidence": [
+    "user decision for the achievable local Skill confidentiality boundary",
+    "first real business template and validated common-input mapping",
+    "authorized professional API execution",
+    "authorized real model and private Skill execution",
+    "final branded Desktop package and upgrade recovery"
+  ],
+  "knownRisks": [
+    {
+      "id": "G_SKILL_OPEN",
+      "status": "blocks-stage-4-private-skill-delivery",
+      "handling": "Native Skill invocation exposes content in ordinary tool results; do not claim confidentiality or install the real Skill without a user decision and an architecture change or accepted residual risk."
+    },
+    {
+      "id": "API_BINDING_PENDING",
+      "status": "not-part-of-stage-2-runtime-proof",
+      "handling": "Keep the professional API disabled until the authoritative service catalog and template mapping are verified."
+    }
+  ]
+}

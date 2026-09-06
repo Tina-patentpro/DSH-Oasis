@@ -42,6 +42,10 @@ export function WorkbenchEntry({
 
   function openWorkbench(event) {
     if (workspaceId === null) return
+    if (
+      coordinator?.getSnapshot?.().mode === 'better-sidebar'
+      && !coordinator.getSnapshot().serviceFeatures?.includes('targetedOpen')
+    ) return
     store.syncWorkspaces(workspaceItems)
     focusTargets.set(workspaceId, event.currentTarget)
     if (coordinator?.getSnapshot?.().mode === 'better-sidebar') {
@@ -53,11 +57,15 @@ export function WorkbenchEntry({
   }
 
   const hostMode = hostSnapshot.mode
-  const hostUnavailable = ['integrating', 'releasing', 'blocked'].includes(hostMode)
+  const targetedOpenUnavailable = hostMode === 'better-sidebar'
+    && !hostSnapshot.serviceFeatures?.includes('targetedOpen')
+  const hostUnavailable = targetedOpenUnavailable || ['integrating', 'releasing', 'blocked'].includes(hostMode)
   const disabled = workspaceId === null || hostUnavailable
-  const unavailableTitle = hostMode === 'blocked'
-    ? '侧栏宿主冲突，绿洲工作台已安全阻断'
-    : '绿洲工作台正在切换侧栏宿主'
+  const unavailableTitle = targetedOpenUnavailable
+    ? '当前侧栏版本不支持按会话打开绿洲工作台'
+    : hostMode === 'blocked'
+      ? '侧栏宿主冲突，绿洲工作台已安全阻断'
+      : '绿洲工作台正在切换侧栏宿主'
 
   return createElement('button', {
     type: 'button',

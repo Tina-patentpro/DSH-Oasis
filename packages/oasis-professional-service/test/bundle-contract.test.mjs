@@ -27,6 +27,7 @@ test('declares one installable DSH bundle with host and web client faces', () =>
     '@deepseek-ai/dsh-client-connection',
     '@deepseek-ai/dsh-client-ui-conversation',
     '@deepseek-ai/dsh-client-ui-layout',
+    '@deepseek-ai/dsh-client-ui-settings',
   ])
 
   const patch = readFileSync(patchPath, 'utf8')

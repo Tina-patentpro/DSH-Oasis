@@ -18,14 +18,6 @@ function pendingWorkspaceContext(generation = 0) {
   })
 }
 
-export function hasBetterSidebarMarker(document = globalThis.document) {
-  try {
-    return (document?.querySelectorAll?.('[data-dsh-better-sidebar]')?.length ?? 0) > 0
-  } catch {
-    return true
-  }
-}
-
 function validService(service) {
   return service !== null
     && typeof service === 'object'
@@ -41,24 +33,20 @@ function validDescriptor(descriptor) {
     && typeof descriptor.component === 'function'
 }
 
-export function createPanelHostCoordinator({
-  layoutAdapter,
-  hasBetterSidebarMarker: markerPresent = () => hasBetterSidebarMarker(),
-} = {}) {
+export function createPanelHostCoordinator({ layoutAdapter } = {}) {
   if (!layoutAdapter || typeof layoutAdapter.releaseStandalone !== 'function') {
     throw new TypeError('layoutAdapter.releaseStandalone is required')
   }
-  if (typeof markerPresent !== 'function') throw new TypeError('hasBetterSidebarMarker must be a function')
 
   const listeners = new Set()
   let disposed = false
+  let expectsBetterSidebar = false
   let service = null
   let registrationDisposer = null
   let currentDetach = null
-  const initialMarker = markerPresent()
   let snapshot = Object.freeze({
-    mode: initialMarker ? 'blocked' : 'standalone',
-    reasonCode: initialMarker ? 'better-sidebar-marker-without-service' : null,
+    mode: 'standalone',
+    reasonCode: null,
     serviceVersion: null,
     serviceFeatures: Object.freeze([]),
     workspaceContext: pendingWorkspaceContext(),
@@ -91,13 +79,21 @@ export function createPanelHostCoordinator({
       if (snapshot.mode === 'blocked') return snapshot
       return publish({ mode: 'better-sidebar', reasonCode: null })
     }
-    const marker = markerPresent()
+    if (snapshot.mode === 'blocked') return snapshot
     return publish({
-      mode: marker ? 'blocked' : 'standalone',
-      reasonCode: marker ? 'better-sidebar-marker-without-service' : null,
+      mode: expectsBetterSidebar ? 'integrating' : 'standalone',
+      reasonCode: null,
       serviceVersion: null,
       serviceFeatures: Object.freeze([]),
     })
+  }
+
+  function expectBetterSidebar() {
+    if (disposed) return snapshot
+    expectsBetterSidebar = true
+    layoutAdapter.releaseStandalone('better-sidebar-expected')
+    if (snapshot.mode === 'blocked') return snapshot
+    return reconcileExternalState()
   }
 
   function attachBetterSidebar(nextService, descriptor) {
@@ -110,6 +106,7 @@ export function createPanelHostCoordinator({
       block('better-sidebar-descriptor-invalid')
       return () => {}
     }
+    expectsBetterSidebar = true
     if (service === nextService && currentDetach !== null) return currentDetach
     if (service !== null || registrationDisposer !== null) {
       block('better-sidebar-service-replaced-without-release')
@@ -172,17 +169,14 @@ export function createPanelHostCoordinator({
   function openBetterSidebar(sessionId) {
     if (disposed || snapshot.mode !== 'better-sidebar' || !validService(service)) return false
     if (typeof sessionId !== 'string' || sessionId.length === 0) return false
+    if (!snapshot.serviceFeatures.includes('targetedOpen')) return false
     layoutAdapter.releaseStandalone('better-sidebar-open')
     try {
       const seed = {
         type: OASIS_BETTER_SIDEBAR_TAB_ID,
         path: '.oasis/professional-workbench',
       }
-      if (snapshot.serviceFeatures.includes('targetedOpen')) {
-        service.openTab(seed, { sessionId })
-      } else {
-        service.openTab(seed)
-      }
+      service.openTab(seed, { sessionId })
       return true
     } catch {
       const detach = currentDetach
@@ -198,6 +192,7 @@ export function createPanelHostCoordinator({
       return () => listeners.delete(listener)
     },
     getSnapshot() { return snapshot },
+    expectBetterSidebar,
     attachBetterSidebar,
     openBetterSidebar,
     reconcileExternalState,

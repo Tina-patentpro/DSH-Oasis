@@ -7015,156 +7015,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, titleEditor, content);
 		}
 		//#endregion
-		//#region src/client/OasisConnectionSettings.js
-		const unavailable = Object.freeze({
-			connected: false,
-			settingsWritable: false,
-			credentialWritable: false,
-			apiBaseUrl: "",
-			downloadOrigins: []
-		});
-		const noSubscribe$1 = () => () => {};
-		const getUnavailable = () => unavailable;
-		const fieldStyle = {
-			display: "grid",
-			gap: 4,
-			fontSize: 12
-		};
-		const inputStyle = {
-			width: "100%",
-			boxSizing: "border-box",
-			font: "inherit",
-			padding: 6
-		};
-		function ConnectionSettingsForm({ snapshot, controller, apiDraft = "", downloadDraft = "", passwordRef, onApiDraft = () => {}, onDownloadDraft = () => {} }) {
-			const disabledSettings = !snapshot.settingsWritable || snapshot.busy;
-			const disabledCredential = !snapshot.credentialWritable || snapshot.settingsStatus !== "ready" || snapshot.busy;
-			const clearPassword = () => {
-				if (passwordRef.current) passwordRef.current.value = "";
-			};
-			return (0, react.createElement)("details", {
-				"data-testid": "oasis-connection-settings",
-				style: {
-					flexShrink: 0,
-					maxHeight: "50%",
-					overflowY: "auto",
-					padding: "10px 14px",
-					borderBottom: "1px solid #dedee1"
-				},
-				onToggle: (event) => {
-					if (!event.currentTarget.open) clearPassword();
-				}
-			}, (0, react.createElement)("summary", { style: {
-				cursor: "pointer",
-				fontSize: 13
-			} }, "非生产服务连接配置"), (0, react.createElement)("div", { style: {
-				display: "grid",
-				gap: 8,
-				paddingTop: 10
-			} }, (0, react.createElement)("p", {
-				role: "status",
-				style: {
-					margin: 0,
-					fontSize: 12
-				}
-			}, !snapshot.connected ? "尚未连接可配置的本机 Host；本地工作流仍可使用。" : snapshot.settingsStatus !== "ready" ? "公共配置服务不可用或配置引用不匹配；本地工作流仍可使用。" : "环境固定为非生产；普通设置和凭据分别保存。"), (0, react.createElement)("label", { style: fieldStyle }, "API origin", (0, react.createElement)("input", {
-				value: apiDraft,
-				disabled: disabledSettings,
-				style: inputStyle,
-				autoComplete: "off",
-				placeholder: "https://非生产服务域名",
-				onChange: (event) => onApiDraft(event.currentTarget.value)
-			})), (0, react.createElement)("button", {
-				type: "button",
-				disabled: disabledSettings,
-				onClick: () => {
-					controller.saveApiBaseUrl(apiDraft);
-				}
-			}, "保存 API 地址"), (0, react.createElement)("label", { style: fieldStyle }, "允许的下载 origin（可空，每行一个）", (0, react.createElement)("textarea", {
-				value: downloadDraft,
-				rows: 2,
-				disabled: disabledSettings,
-				style: inputStyle,
-				onChange: (event) => onDownloadDraft(event.currentTarget.value)
-			})), (0, react.createElement)("button", {
-				type: "button",
-				disabled: disabledSettings,
-				onClick: () => {
-					controller.saveDownloadOrigins(downloadDraft);
-				}
-			}, "保存下载来源"), (0, react.createElement)("p", { style: {
-				margin: 0,
-				fontSize: 12
-			} }, "保存设置后需手工重启 Host 并刷新页面；空 API 地址表示禁用远程服务。"), (0, react.createElement)("label", { style: fieldStyle }, "JWT · OASIS_USER_JWT", (0, react.createElement)("input", {
-				ref: passwordRef,
-				type: "password",
-				disabled: disabledCredential,
-				style: inputStyle,
-				autoComplete: "new-password",
-				spellCheck: false,
-				placeholder: "留空不更改已有凭据"
-			})), (0, react.createElement)("div", {
-				role: "status",
-				style: { fontSize: 12 }
-			}, snapshot.credentialStatus !== "ready" ? "凭据状态尚未确认。" : snapshot.credentialConfigured ? "凭据已配置（不读取或显示原值）。" : "尚未配置凭据。"), (0, react.createElement)("button", {
-				type: "button",
-				disabled: disabledCredential,
-				"data-testid": "oasis-credential-save",
-				onClick: () => {
-					const value = passwordRef.current?.value ?? "";
-					clearPassword();
-					controller.updateCredential(value);
-				}
-			}, "更新凭据"), (0, react.createElement)("button", {
-				type: "button",
-				disabled: !snapshot.connected || snapshot.busy,
-				onClick: () => {
-					controller.refresh();
-				}
-			}, "刷新配置与目录状态"), snapshot.restartRequired ? (0, react.createElement)("div", { role: "status" }, "设置尚待重启生效；已暂停新业务提交，请重启 Host 并刷新页面。") : null, snapshot.notice ? (0, react.createElement)("div", { role: "status" }, snapshot.notice) : null, snapshot.error ? (0, react.createElement)("div", { role: "alert" }, snapshot.error) : null));
-		}
-		function OasisConnectionSettings({ controller, visible = true }) {
-			const snapshot = (0, react.useSyncExternalStore)(controller?.subscribe ?? noSubscribe$1, controller?.getSnapshot ?? getUnavailable, controller?.getSnapshot ?? getUnavailable);
-			const [apiDraft, setApiDraft] = (0, react.useState)(snapshot.apiBaseUrl);
-			const [downloadDraft, setDownloadDraft] = (0, react.useState)(snapshot.downloadOrigins.join("\n"));
-			const passwordRef = (0, react.useRef)(null);
-			(0, react.useEffect)(() => {
-				setApiDraft(snapshot.apiBaseUrl);
-			}, [snapshot.apiBaseUrl]);
-			const originsText = snapshot.downloadOrigins.join("\n");
-			(0, react.useEffect)(() => {
-				setDownloadDraft(originsText);
-			}, [originsText]);
-			(0, react.useEffect)(() => {
-				const input = passwordRef.current;
-				if (!visible || !snapshot.connected || !snapshot.credentialWritable) {
-					if (input) input.value = "";
-				}
-				return () => {
-					if (input) input.value = "";
-				};
-			}, [
-				visible,
-				snapshot.connected,
-				snapshot.credentialWritable,
-				controller
-			]);
-			if (!visible) return null;
-			return (0, react.createElement)(ConnectionSettingsForm, {
-				snapshot,
-				controller,
-				apiDraft,
-				downloadDraft,
-				passwordRef,
-				onApiDraft: setApiDraft,
-				onDownloadDraft: setDownloadDraft
-			});
-		}
-		//#endregion
 		//#region src/client/OasisWorkbenchSurface.js
 		const noConfiguration = Object.freeze({ canSubmit: true });
 		const getNoConfiguration = () => noConfiguration;
-		const noSubscribe = () => () => {};
+		const noSubscribe$1 = () => () => {};
 		const reducedMotionCss = `
   [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
   @media (prefers-reduced-motion: reduce) { [data-oasis-panel] { transition: none; } }
@@ -7266,7 +7120,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function OasisWorkbenchSurface({ store, focusTargets, layoutAdapter, workspaceId, workspaceItems, hostMode = "standalone", visible = true }) {
 			const state = (0, react.useSyncExternalStore)(store.subscribe, () => store.peekWorkspaceState(workspaceId), () => store.peekWorkspaceState(workspaceId));
 			const panelRef = (0, react.useRef)(null);
-			const configuration = (0, react.useSyncExternalStore)(store.connectionSettings?.subscribe ?? noSubscribe, store.connectionSettings?.getSnapshot ?? getNoConfiguration, store.connectionSettings?.getSnapshot ?? getNoConfiguration);
+			const configuration = (0, react.useSyncExternalStore)(store.connectionSettings?.subscribe ?? noSubscribe$1, store.connectionSettings?.getSnapshot ?? getNoConfiguration, store.connectionSettings?.getSnapshot ?? getNoConfiguration);
 			const titleRef = (0, react.useRef)(null);
 			const layout = (0, react.useSyncExternalStore)(layoutAdapter.subscribe, layoutAdapter.getSnapshot, layoutAdapter.getSnapshot);
 			(0, react.useEffect)(() => {
@@ -7359,10 +7213,6 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				onToggleExpanded: () => {
 					if (hostMode === "standalone") store.setPanelMode(workspaceId, state.panelMode === "expanded" ? "normal" : "expanded");
 				}
-			}), (0, react.createElement)(OasisConnectionSettings, {
-				key: workspaceId,
-				controller: store.connectionSettings,
-				visible
 			}), (0, react.createElement)(PanelPages, {
 				state: {
 					...state,
@@ -7446,31 +7296,23 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				workspaceItems: Object.freeze([])
 			});
 		}
-		function hasBetterSidebarMarker(document = globalThis.document) {
-			try {
-				return (document?.querySelectorAll?.("[data-dsh-better-sidebar]")?.length ?? 0) > 0;
-			} catch {
-				return true;
-			}
-		}
 		function validService(service) {
 			return service !== null && typeof service === "object" && typeof service.registerTab === "function" && typeof service.openTab === "function";
 		}
 		function validDescriptor(descriptor) {
 			return descriptor !== null && typeof descriptor === "object" && descriptor.id === "oasis-professional-service:workbench" && descriptor.single === true && typeof descriptor.component === "function";
 		}
-		function createPanelHostCoordinator({ layoutAdapter, hasBetterSidebarMarker: markerPresent = () => hasBetterSidebarMarker() } = {}) {
+		function createPanelHostCoordinator({ layoutAdapter } = {}) {
 			if (!layoutAdapter || typeof layoutAdapter.releaseStandalone !== "function") throw new TypeError("layoutAdapter.releaseStandalone is required");
-			if (typeof markerPresent !== "function") throw new TypeError("hasBetterSidebarMarker must be a function");
 			const listeners = /* @__PURE__ */ new Set();
 			let disposed = false;
+			let expectsBetterSidebar = false;
 			let service = null;
 			let registrationDisposer = null;
 			let currentDetach = null;
-			const initialMarker = markerPresent();
 			let snapshot = Object.freeze({
-				mode: initialMarker ? "blocked" : "standalone",
-				reasonCode: initialMarker ? "better-sidebar-marker-without-service" : null,
+				mode: "standalone",
+				reasonCode: null,
 				serviceVersion: null,
 				serviceFeatures: Object.freeze([]),
 				workspaceContext: pendingWorkspaceContext()
@@ -7505,13 +7347,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						reasonCode: null
 					});
 				}
-				const marker = markerPresent();
+				if (snapshot.mode === "blocked") return snapshot;
 				return publish({
-					mode: marker ? "blocked" : "standalone",
-					reasonCode: marker ? "better-sidebar-marker-without-service" : null,
+					mode: expectsBetterSidebar ? "integrating" : "standalone",
+					reasonCode: null,
 					serviceVersion: null,
 					serviceFeatures: Object.freeze([])
 				});
+			}
+			function expectBetterSidebar() {
+				if (disposed) return snapshot;
+				expectsBetterSidebar = true;
+				layoutAdapter.releaseStandalone("better-sidebar-expected");
+				if (snapshot.mode === "blocked") return snapshot;
+				return reconcileExternalState();
 			}
 			function attachBetterSidebar(nextService, descriptor) {
 				if (disposed) return () => {};
@@ -7523,6 +7372,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					block("better-sidebar-descriptor-invalid");
 					return () => {};
 				}
+				expectsBetterSidebar = true;
 				if (service === nextService && currentDetach !== null) return currentDetach;
 				if (service !== null || registrationDisposer !== null) {
 					block("better-sidebar-service-replaced-without-release");
@@ -7584,14 +7434,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			function openBetterSidebar(sessionId) {
 				if (disposed || snapshot.mode !== "better-sidebar" || !validService(service)) return false;
 				if (typeof sessionId !== "string" || sessionId.length === 0) return false;
+				if (!snapshot.serviceFeatures.includes("targetedOpen")) return false;
 				layoutAdapter.releaseStandalone("better-sidebar-open");
 				try {
 					const seed = {
 						type: OASIS_BETTER_SIDEBAR_TAB_ID,
 						path: ".oasis/professional-workbench"
 					};
-					if (snapshot.serviceFeatures.includes("targetedOpen")) service.openTab(seed, { sessionId });
-					else service.openTab(seed);
+					service.openTab(seed, { sessionId });
 					return true;
 				} catch {
 					currentDetach?.();
@@ -7607,6 +7457,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				getSnapshot() {
 					return snapshot;
 				},
+				expectBetterSidebar,
 				attachBetterSidebar,
 				openBetterSidebar,
 				reconcileExternalState,
@@ -7789,19 +7640,6 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				currentSessionId,
 				workspaceItems
 			]);
-			(0, react.useLayoutEffect)(() => {
-				const MutationObserverClass = globalThis.MutationObserver;
-				const body = globalThis.document?.body;
-				if (typeof MutationObserverClass !== "function" || !body) return void 0;
-				const observer = new MutationObserverClass(() => coordinator.reconcileExternalState());
-				observer.observe(body, {
-					childList: true,
-					subtree: true,
-					attributes: true,
-					attributeFilter: ["data-dsh-better-sidebar"]
-				});
-				return () => observer.disconnect();
-			}, [coordinator]);
 			(0, react.useEffect)(() => {
 				if (hostSnapshot.mode !== "better-sidebar") return;
 				const binding = resolveWorkspaceBinding({
@@ -7933,6 +7771,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}
 			function openWorkbench(event) {
 				if (workspaceId === null) return;
+				if (coordinator?.getSnapshot?.().mode === "better-sidebar" && !coordinator.getSnapshot().serviceFeatures?.includes("targetedOpen")) return;
 				store.syncWorkspaces(workspaceItems);
 				focusTargets.set(workspaceId, event.currentTarget);
 				if (coordinator?.getSnapshot?.().mode === "better-sidebar") {
@@ -7943,13 +7782,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				store.openPanel(workspaceId);
 			}
 			const hostMode = hostSnapshot.mode;
-			const hostUnavailable = [
+			const targetedOpenUnavailable = hostMode === "better-sidebar" && !hostSnapshot.serviceFeatures?.includes("targetedOpen");
+			const hostUnavailable = targetedOpenUnavailable || [
 				"integrating",
 				"releasing",
 				"blocked"
 			].includes(hostMode);
 			const disabled = workspaceId === null || hostUnavailable;
-			const unavailableTitle = hostMode === "blocked" ? "侧栏宿主冲突，绿洲工作台已安全阻断" : "绿洲工作台正在切换侧栏宿主";
+			const unavailableTitle = targetedOpenUnavailable ? "当前侧栏版本不支持按会话打开绿洲工作台" : hostMode === "blocked" ? "侧栏宿主冲突，绿洲工作台已安全阻断" : "绿洲工作台正在切换侧栏宿主";
 			return (0, react.createElement)("button", {
 				type: "button",
 				ref: registerFocusTarget,
@@ -9381,6 +9221,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const listeners = /* @__PURE__ */ new Set();
 			let scope = null;
 			let connection = null;
+			let remote = null;
 			let generation = 0;
 			let credentialRead = 0;
 			let lastSettings = null;
@@ -9432,7 +9273,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			async function refreshCredential() {
 				const current = generation;
 				const read = ++credentialRead;
-				const api = connection?.api?.credentials;
+				const api = remote?.credentials;
 				if (!snapshot.connected || typeof api?.describe !== "function") {
 					publish({
 						credentialStatus: "unavailable",
@@ -9446,9 +9287,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					credentialWritable: false
 				});
 				try {
-					const response = await api.describe({ refs: [REFERENCE] });
+					const response = await api.describe([REFERENCE]);
 					if (disposed || current !== generation || read !== credentialRead) return false;
-					const info = response?.result?.ok === true ? response.result.value?.credentials?.[REFERENCE] : null;
+					const info = response?.ok === true ? response.value?.[REFERENCE] : null;
 					if (typeof info?.configured !== "boolean" || typeof info.writable !== "boolean") throw new Error("invalid");
 					publish({
 						credentialStatus: "ready",
@@ -9530,6 +9371,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						} catch {}
 						scope = null;
 						connection = null;
+						remote = null;
 						publish({
 							...initial(),
 							busy: pendingWrite,
@@ -9540,7 +9382,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					detachCurrent = detach;
 					try {
 						connection = services.connection;
-						if (connection?.isLoopback !== true || typeof connection.hostDescription?.subscribe !== "function" || typeof connection.hostDescription?.getSnapshot !== "function") throw new Error("unavailable");
+						remote = services.remote;
+						if (connection?.isLoopback !== true || remote?.$host?.isLoopback !== true || typeof connection.generation?.subscribe !== "function" || typeof connection.generation?.getSnapshot !== "function") throw new Error("unavailable");
 						scope = services.settingsScope.bind({ namespace: "oasis-professional-service" });
 						if (typeof scope?.set !== "function" || typeof scope?.subscribe !== "function") throw new Error("unavailable");
 						const onHost = () => {
@@ -9548,7 +9391,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							generation += 1;
 							credentialRead += 1;
 							publish({
-								connected: connection.hostDescription.getSnapshot() != null,
+								connected: connection.generation.getSnapshot() != null,
 								credentialConfigured: false,
 								credentialWritable: false,
 								error: null,
@@ -9566,8 +9409,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								invalidate();
 							}
 						}));
-						disposers.push(connection.hostDescription.subscribe(onHost));
-						if (typeof services.remote?.$on === "function") disposers.push(services.remote.$on("credentials/reference-updated", (ref) => {
+						disposers.push(connection.generation.subscribe(onHost));
+						if (typeof remote.$on === "function") disposers.push(remote.$on("credentials/reference-updated", (ref) => {
 							if (!active || ref !== REFERENCE) return;
 							invalidate();
 							refreshCredential().then((ok) => {
@@ -9616,10 +9459,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (typeof value !== "string" || value.trim() === "") return false;
 					return write("credential", async () => {
 						try {
-							if ((await connection.api.credentials.set({
-								ref: REFERENCE,
-								value
-							}))?.result?.ok !== true) throw new Error("failed");
+							if ((await remote.credentials.set(REFERENCE, value))?.ok !== true) throw new Error("failed");
 						} finally {
 							value = "";
 						}
@@ -9634,10 +9474,181 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			});
 		}
 		//#endregion
+		//#region src/client/OasisConnectionSettings.js
+		const unavailable = Object.freeze({
+			connected: false,
+			settingsWritable: false,
+			credentialWritable: false,
+			apiBaseUrl: "",
+			downloadOrigins: []
+		});
+		const noSubscribe = () => () => {};
+		const getUnavailable = () => unavailable;
+		const fieldStyle = {
+			display: "grid",
+			gap: 4,
+			fontSize: 12
+		};
+		const inputStyle = {
+			width: "100%",
+			boxSizing: "border-box",
+			font: "inherit",
+			padding: 6
+		};
+		function ConnectionSettingsForm({ snapshot, controller, apiDraft = "", downloadDraft = "", passwordRef, surface = "workbench", onApiDraft = () => {}, onDownloadDraft = () => {} }) {
+			const disabledSettings = !snapshot.settingsWritable || snapshot.busy;
+			const disabledCredential = !snapshot.credentialWritable || snapshot.settingsStatus !== "ready" || snapshot.busy;
+			const clearPassword = () => {
+				if (passwordRef.current) passwordRef.current.value = "";
+			};
+			return (0, react.createElement)("details", {
+				"data-testid": "oasis-connection-settings",
+				style: surface === "settings" ? {
+					width: "100%",
+					boxSizing: "border-box"
+				} : {
+					flexShrink: 0,
+					maxHeight: "50%",
+					overflowY: "auto",
+					padding: "10px 14px",
+					borderBottom: "1px solid #dedee1"
+				},
+				onToggle: (event) => {
+					if (!event.currentTarget.open) clearPassword();
+				}
+			}, (0, react.createElement)("summary", { style: {
+				cursor: "pointer",
+				fontSize: 13
+			} }, "非生产服务连接配置"), (0, react.createElement)("div", { style: {
+				display: "grid",
+				gap: 8,
+				paddingTop: 10
+			} }, (0, react.createElement)("p", {
+				role: "status",
+				style: {
+					margin: 0,
+					fontSize: 12
+				}
+			}, !snapshot.connected ? "尚未连接可配置的本机 Host；本地工作流仍可使用。" : snapshot.settingsStatus !== "ready" ? "公共配置服务不可用或配置引用不匹配；本地工作流仍可使用。" : "环境固定为非生产；普通设置和凭据分别保存。"), (0, react.createElement)("label", { style: fieldStyle }, "API origin", (0, react.createElement)("input", {
+				value: apiDraft,
+				disabled: disabledSettings,
+				style: inputStyle,
+				autoComplete: "off",
+				placeholder: "https://非生产服务域名",
+				onChange: (event) => onApiDraft(event.currentTarget.value)
+			})), (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabledSettings,
+				onClick: () => {
+					controller.saveApiBaseUrl(apiDraft);
+				}
+			}, "保存 API 地址"), (0, react.createElement)("label", { style: fieldStyle }, "允许的下载 origin（可空，每行一个）", (0, react.createElement)("textarea", {
+				value: downloadDraft,
+				rows: 2,
+				disabled: disabledSettings,
+				style: inputStyle,
+				onChange: (event) => onDownloadDraft(event.currentTarget.value)
+			})), (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabledSettings,
+				onClick: () => {
+					controller.saveDownloadOrigins(downloadDraft);
+				}
+			}, "保存下载来源"), (0, react.createElement)("p", { style: {
+				margin: 0,
+				fontSize: 12
+			} }, "保存设置后需手工重启 Host 并刷新页面；空 API 地址表示禁用远程服务。"), (0, react.createElement)("label", { style: fieldStyle }, "JWT · OASIS_USER_JWT", (0, react.createElement)("input", {
+				ref: passwordRef,
+				type: "password",
+				disabled: disabledCredential,
+				style: inputStyle,
+				autoComplete: "new-password",
+				spellCheck: false,
+				placeholder: "留空不更改已有凭据"
+			})), (0, react.createElement)("div", {
+				role: "status",
+				style: { fontSize: 12 }
+			}, snapshot.credentialStatus !== "ready" ? "凭据状态尚未确认。" : snapshot.credentialConfigured ? "凭据已配置（不读取或显示原值）。" : "尚未配置凭据。"), (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabledCredential,
+				"data-testid": "oasis-credential-save",
+				onClick: () => {
+					const value = passwordRef.current?.value ?? "";
+					clearPassword();
+					controller.updateCredential(value);
+				}
+			}, "更新凭据"), (0, react.createElement)("button", {
+				type: "button",
+				disabled: !snapshot.connected || snapshot.busy,
+				onClick: () => {
+					controller.refresh();
+				}
+			}, "刷新配置与目录状态"), snapshot.restartRequired ? (0, react.createElement)("div", { role: "status" }, "设置尚待重启生效；已暂停新业务提交，请重启 Host 并刷新页面。") : null, snapshot.notice ? (0, react.createElement)("div", { role: "status" }, snapshot.notice) : null, snapshot.error ? (0, react.createElement)("div", { role: "alert" }, snapshot.error) : null));
+		}
+		function OasisConnectionSettings({ controller, visible = true, surface = "workbench" }) {
+			const snapshot = (0, react.useSyncExternalStore)(controller?.subscribe ?? noSubscribe, controller?.getSnapshot ?? getUnavailable, controller?.getSnapshot ?? getUnavailable);
+			const [apiDraft, setApiDraft] = (0, react.useState)(snapshot.apiBaseUrl);
+			const [downloadDraft, setDownloadDraft] = (0, react.useState)(snapshot.downloadOrigins.join("\n"));
+			const passwordRef = (0, react.useRef)(null);
+			(0, react.useEffect)(() => {
+				setApiDraft(snapshot.apiBaseUrl);
+			}, [snapshot.apiBaseUrl]);
+			const originsText = snapshot.downloadOrigins.join("\n");
+			(0, react.useEffect)(() => {
+				setDownloadDraft(originsText);
+			}, [originsText]);
+			(0, react.useEffect)(() => {
+				const input = passwordRef.current;
+				if (!visible || !snapshot.connected || !snapshot.credentialWritable) {
+					if (input) input.value = "";
+				}
+				return () => {
+					if (input) input.value = "";
+				};
+			}, [
+				visible,
+				snapshot.connected,
+				snapshot.credentialWritable,
+				controller
+			]);
+			if (!visible) return null;
+			return (0, react.createElement)(ConnectionSettingsForm, {
+				snapshot,
+				controller,
+				apiDraft,
+				downloadDraft,
+				passwordRef,
+				surface,
+				onApiDraft: setApiDraft,
+				onDownloadDraft: setDownloadDraft
+			});
+		}
+		//#endregion
+		//#region src/client/OasisSettingsSection.js
+		function OasisSettingsSection({ controller }) {
+			return (0, react.createElement)("section", {
+				"data-testid": "oasis-settings-section",
+				"aria-label": "绿洲工作台设置",
+				style: {
+					display: "grid",
+					gap: 12,
+					minWidth: 0
+				}
+			}, (0, react.createElement)("h2", { style: {
+				margin: 0,
+				fontSize: 18
+			} }, "绿洲工作台"), (0, react.createElement)(OasisConnectionSettings, {
+				controller,
+				surface: "settings",
+				visible: true
+			}));
+		}
+		//#endregion
 		//#region src/client.js
 		const inject = ["slots", "connection"];
 		const ENTRY_ID = "oasis-professional-entry";
 		const PANEL_ID = "oasis-professional-panel";
+		const SETTINGS_ID = "oasis-professional-settings";
 		function apply(ctx) {
 			const slots = ctx.get?.("slots") ?? ctx.slots;
 			const connection = ctx.get?.("connection") ?? ctx.connection;
@@ -9680,17 +9691,27 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				layoutAdapter,
 				coordinator
 			})));
+			const disposeSettingsSection = slots.inject("settings.section", () => slots.register({
+				name: "settings.section",
+				id: SETTINGS_ID,
+				order: 80,
+				label: "绿洲工作台"
+			}, (props) => (0, react.createElement)(OasisSettingsSection, {
+				...props,
+				controller: connectionSettings
+			})));
 			let betterSidebarFiber = null;
 			let settingsFiber = null;
 			if (typeof ctx.inject === "function") {
 				try {
-					settingsFiber = ctx.inject(["settingsScope", "remote"], (injectedCtx) => connectionSettings.bind({
+					settingsFiber = ctx.inject(["settingsScope", "remote.credentials"], (injectedCtx) => connectionSettings.bind({
 						settingsScope: injectedCtx.get?.("settingsScope") ?? injectedCtx.settingsScope,
 						remote: injectedCtx.get?.("remote") ?? injectedCtx.remote,
 						connection
 					}));
 				} catch {}
 				try {
+					coordinator.expectBetterSidebar();
 					betterSidebarFiber = ctx.inject(["betterSidebar"], (injectedCtx) => {
 						const betterSidebar = injectedCtx.get?.("betterSidebar") ?? injectedCtx.betterSidebar;
 						return coordinator.attachBetterSidebar(betterSidebar, betterSidebarDescriptor);
@@ -9702,25 +9723,29 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			} else coordinator.reconcileExternalState();
 			return async () => {
 				try {
-					await disposeBridge();
+					await disposeSettingsSection();
 				} finally {
 					try {
-						await disposeEntry();
+						await disposeBridge();
 					} finally {
 						try {
-							await betterSidebarFiber?.dispose?.();
+							await disposeEntry();
 						} finally {
 							try {
-								coordinator.dispose();
+								await betterSidebarFiber?.dispose?.();
 							} finally {
 								try {
-									layoutAdapter.dispose();
+									coordinator.dispose();
 								} finally {
 									try {
-										await settingsFiber?.dispose?.();
+										layoutAdapter.dispose();
 									} finally {
-										connectionSettings.dispose();
-										await store.dispose();
+										try {
+											await settingsFiber?.dispose?.();
+										} finally {
+											connectionSettings.dispose();
+											await store.dispose();
+										}
 									}
 								}
 							}
