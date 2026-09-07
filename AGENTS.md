@@ -21,6 +21,8 @@ D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\plans\2026-09-05-oas
 
 2026-09-07 C3/C4：阶段 3 开发提交为 `12afb9dff84a67a6cf2a051b7f29afe4aec55190`。提交后审计发现并复现两处 P2：异步生成响应覆盖同项目另一任务未保存草稿、切换业务版本后仍插入晚到对话资料；已定向修复，328 项包测试与实际隔离 Desktop 对话草稿复验通过。报告见 `docs/evidence/2026-09-07-stage3-post-commit-audit.md`。该结论仅限合成阶段；不得据此开放真实 Skills/API。后续提交/推送以 Git 当前事实为准。
 
+阶段 3 修复已提交 `597189d`；随后非强制推送 main 被安全审查依据远端保全规则拒绝，尚未推送。不要通过其他工具/命令/分支绕过，须由用户人工推送后再只读核对远端 SHA。该外部门禁不撤销已完成的阶段 3 合成开发/审计/修复证据，不重复运行整批验证。
+
 阶段 3 连续目标 C1：`patches/desktop-2.0.5` 保存 Desktop 自有 frame-layer 最小补丁。已在项目内复制的 Desktop 2.0.5 的 compatibility 与 extended 两模式验证设置弹窗鼠标关闭及 36px frame 几何，取得 extended 设置截图。补丁不进入绿洲业务 DOM/Slot，系统安装不改；上游版本不变，自有 revision oasis-frame-1。
 
 阶段 3 C2 最新更新（2026-09-07）：原生 MarkdownText 组件包及 DSH Web 内嵌组件均已同步显式禁图策略；Web 使用新内容哈希资源，不能只修组件 npm 包就声称浏览器已更新。Sidebar 0.18.0 增加 opt-in safeFilePreview，普通页默认行为不变，安全页独立去重并持久化策略。绿洲按当前 Workspace 的已保存记录解析路径，通过公开 openFile 打开当前文件；当前可编辑文件不继承固定版本审核结论。

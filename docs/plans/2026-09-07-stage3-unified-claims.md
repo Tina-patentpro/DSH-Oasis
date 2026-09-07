@@ -227,3 +227,7 @@ Shell：cmd；包内命令工作目录为仓库的 `packages/oasis-professional-
 修复后定向 14/14、包 verify 构建与 328/328、pack dry-run 59 项，退出 0；实际隔离 Desktop 已加载修复构建，正常审核版本放入原生对话草稿且未发送。关闭后进程/端口为 0、真实 Profile 基线 changes=[]。完整审计/修复与证据边界见 `docs/evidence/2026-09-07-stage3-post-commit-audit.md`；精简新构建运行记录见 `output/playwright/stage3-20260907/audit-fix-runtime.json`。
 
 剩余为修复提交和非强制推送；不将这一步扩展为真实服务调用、真实 Profile 安装或产品发行。GitHub main 已只读核对为开发基线 `398e2b5b5cf31d8c8c3d96f094942e39fb1b3ec2`，如发生远端推进则停止推送而非强制覆盖。
+
+### 推送门禁结果
+
+修复已提交为 `597189d`。执行已授权的 `git push origin main:main` 时，安全审查在进程创建前拒绝：远端保全规则禁止代理修改既有远端默认分支。没有实施推送，不改用其他命令、工具或分支绕过。用户须在本项目目录人工执行 `git push origin main:main`；若远端有新提交而拒绝快进，不使用强制推送。人工操作后再只读核对远端 SHA。连续目标尚未全部完成，剩余仅此人工推送及核对，不重做已完成的开发/审计/运行。
