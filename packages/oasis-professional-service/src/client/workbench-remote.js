@@ -1,4 +1,6 @@
 import {
+  savedFileResponseSchema,
+  conversationDraftResponseSchema,
   oasisProfessionalBootstrapSchema,
   oasisProfessionalDetailSchema,
   oasisRunningWaterObservationSchema,
@@ -176,6 +178,30 @@ export function createWorkbenchRemote(connection) {
         payload,
         signal,
       ), workbenchReplaceResponseSchema)
+    },
+
+    async createUnifiedRun(payload, signal) {
+      return unwrap(await connection.rpc.call(CHANNEL, 'task/create-unified', payload, signal), workbenchReplaceResponseSchema)
+    },
+    async stopUnifiedRun(payload, signal) {
+      return unwrap(await connection.rpc.call(CHANNEL, 'task/stop-unified', payload, signal), workbenchReplaceResponseSchema)
+    },
+    async editUnifiedResult(payload, signal) {
+      return unwrap(await connection.rpc.call(CHANNEL, 'task/edit-result', payload, signal), workbenchReplaceResponseSchema)
+    },
+    async prepareConversationDraft(payload, signal) {
+      const result = unwrap(await connection.rpc.call(CHANNEL, 'artifact/conversation-draft', payload, signal), conversationDraftResponseSchema)
+      for (const key of ['workspaceId', 'taskId', 'runId', 'artifactId']) {
+        if (result[key] !== payload[key]) throw new WorkbenchRemoteError('malformed-response', 'Conversation artifact identity mismatch', {})
+      }
+      return result
+    },
+    async resolveSavedFile(payload, signal) {
+      const result = unwrap(await connection.rpc.call(CHANNEL, 'artifact/saved-file', payload, signal), savedFileResponseSchema)
+      for (const key of ['workspaceId', 'taskId', 'runId', 'artifactId', 'writebackId']) {
+        if (result[key] !== payload[key]) throw new WorkbenchRemoteError('malformed-response', 'Saved file identity mismatch', {})
+      }
+      return result
     },
 
     async prepareWriteback(payload, signal) {

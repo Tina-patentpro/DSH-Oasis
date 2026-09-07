@@ -1,4 +1,5 @@
 export const OASIS_BETTER_SIDEBAR_TAB_ID = 'oasis-professional-service:workbench'
+const nativeToolIds = ['editor', 'subagent', 'sidechat', 'browser']
 
 const HOST_MODES = Object.freeze([
   'standalone',
@@ -44,11 +45,14 @@ export function createPanelHostCoordinator({ layoutAdapter } = {}) {
   let service = null
   let registrationDisposer = null
   let currentDetach = null
+  let serviceContext = null
+  let nativeDisposers = []
   let snapshot = Object.freeze({
     mode: 'standalone',
     reasonCode: null,
     serviceVersion: null,
     serviceFeatures: Object.freeze([]),
+    nativeRevision: 0,
     workspaceContext: pendingWorkspaceContext(),
   })
 
@@ -96,7 +100,7 @@ export function createPanelHostCoordinator({ layoutAdapter } = {}) {
     return reconcileExternalState()
   }
 
-  function attachBetterSidebar(nextService, descriptor) {
+  function attachBetterSidebar(nextService, descriptor, context = null) {
     if (disposed) return () => {}
     if (!validService(nextService)) {
       block('better-sidebar-service-invalid')
@@ -129,6 +133,7 @@ export function createPanelHostCoordinator({ layoutAdapter } = {}) {
     }
 
     service = nextService
+    serviceContext = context
     registrationDisposer = disposer
     const features = Array.isArray(nextService.features)
       ? Object.freeze(nextService.features.filter((value) => typeof value === 'string'))
@@ -139,6 +144,13 @@ export function createPanelHostCoordinator({ layoutAdapter } = {}) {
       serviceVersion: typeof nextService.version === 'string' ? nextService.version : 'unknown',
       serviceFeatures: features,
     })
+    const changed = () => publish({ nativeRevision: snapshot.nativeRevision + 1 })
+    for (const subscribe of [nextService.subscribe, features.includes('stateSubscription') ? nextService.subscribeState : null]) {
+      if (typeof subscribe === 'function') {
+        const cleanup = subscribe.call(nextService, changed)
+        if (typeof cleanup === 'function') nativeDisposers.push(cleanup)
+      }
+    }
 
     let detached = false
     currentDetach = () => {
@@ -147,7 +159,9 @@ export function createPanelHostCoordinator({ layoutAdapter } = {}) {
       publish({ mode: 'releasing', reasonCode: null })
       layoutAdapter.releaseStandalone('better-sidebar-releasing')
       const registeredDisposer = registrationDisposer
+      for (const cleanup of nativeDisposers.splice(0)) { try { cleanup() } catch {} }
       service = null
+      serviceContext = null
       registrationDisposer = null
       currentDetach = null
       try {
@@ -186,6 +200,46 @@ export function createPanelHostCoordinator({ layoutAdapter } = {}) {
     }
   }
 
+  function nativeScope(workspaceId, type) {
+    if (disposed || snapshot.mode !== 'better-sidebar' || !nativeToolIds.includes(type)
+      || !snapshot.serviceFeatures.includes('targetedOpen')) return null
+    const context = snapshot.workspaceContext
+    if (context.status !== 'ready' || !context.currentSessionId) return null
+    const owners = context.workspaceItems.filter(item => item.sessionIds?.includes(context.currentSessionId))
+    if (owners.length !== 1 || owners[0].workspaceId !== workspaceId) return null
+    try {
+      const tab = service.getTabs?.().find(item => item.id === type && !item.hidden)
+      if (!tab || service.isTabEnabled?.(type) !== true) return null
+      const scope = { sessionId: context.currentSessionId }
+      if (tab.available) {
+        const view = service.getSnapshot?.()
+        if (!serviceContext || view?.sessionId !== scope.sessionId || !view.state
+          || tab.available(serviceContext, scope, view.state) !== true) return null
+      }
+      return scope
+    } catch { return null }
+  }
+
+  function openNativeTool(workspaceId, type) {
+    const scope = nativeScope(workspaceId, type)
+    if (!scope) return false
+    try { service.openTab({ type }, scope); return true } catch { return false }
+  }
+
+  function captureSavedFileTarget(workspaceId) {
+    const scope = nativeScope(workspaceId, 'editor')
+    if (!scope || !snapshot.serviceFeatures.includes('safeFilePreview')
+      || !snapshot.serviceFeatures.includes('openFile') || typeof service?.openFile !== 'function') return null
+    return Object.freeze({ workspaceId, scope, context: snapshot.workspaceContext, service })
+  }
+
+  function openSavedFile(target, file) {
+    if (!target || target.context !== snapshot.workspaceContext || target.service !== service
+      || file?.workspaceId !== target.workspaceId || file.kind !== 'current-file'
+      || typeof file.absolutePath !== 'string' || !captureSavedFileTarget(target.workspaceId)) return false
+    try { service.openFile(target.scope, file.absolutePath, undefined, { safePreview: true }); return true } catch { return false }
+  }
+
   return Object.freeze({
     subscribe(listener) {
       listeners.add(listener)
@@ -195,6 +249,12 @@ export function createPanelHostCoordinator({ layoutAdapter } = {}) {
     expectBetterSidebar,
     attachBetterSidebar,
     openBetterSidebar,
+    openNativeTool,
+    captureSavedFileTarget,
+    openSavedFile,
+    nativeAvailability(workspaceId) {
+      return Object.fromEntries(nativeToolIds.map(id => [id, nativeScope(workspaceId, id) !== null]))
+    },
     reconcileExternalState,
     updateWorkspaceContext(context) {
       if (!context || typeof context !== 'object') throw new TypeError('workspace context is required')

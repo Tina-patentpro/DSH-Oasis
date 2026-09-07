@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { isCanonicalOasisNonProductionOrigin, isSafeOasisFileUrl } from './oasis-origin-policy.js'
+import { CLAIMS_TEMPLATE_ID, claimsDraftValuesSchema, generationDraftSchema, generationSourceSchema, hasPendingUnifiedRun } from './generation-contract.js'
 
 export const WORKBENCH_LIMITS = Object.freeze({
   maxTasksPerWorkspace: 32,
@@ -81,7 +82,7 @@ export const workflowDefinitionSchema = z.object({
   workType: workTypeSchema,
   title: z.string().min(1).max(200),
   description: z.string().min(1).max(1000),
-  executionMode: z.literal('local-mock'),
+  executionMode: z.enum(['local-mock', 'unified-text']),
   materialPolicy: z.object({
     acceptedExtensions: z.array(z.string().regex(/^\.[a-z0-9]+$/)).max(32),
     maxFiles: z.number().int().positive().max(256),
@@ -105,6 +106,7 @@ export const workflowDefinitionSchema = z.object({
 export const workflowCatalogResponseSchema = z.object({
   schemaVersion: z.literal(1),
   workflows: z.array(workflowDefinitionSchema).max(16),
+  unifiedFixtureEnabled: z.boolean().optional(),
 }).strict()
 
 const jsonStringSchema = z.string().refine(
@@ -161,7 +163,7 @@ export const materialReferenceSchema = z.discriminatedUnion('kind', [
   legacyMaterialReferenceSchema,
 ])
 
-const writebackRelativePathSchema = z.string().min(1).max(1024).refine((value) => {
+export const writebackRelativePathSchema = z.string().min(1).max(1024).refine((value) => {
   if (
     value.includes('\0')
     || value.includes('/')
@@ -545,6 +547,44 @@ export const runSnapshotSchema = z.discriminatedUnion('mode', [
   oasisRemoteRunSnapshotSchema,
 ])
 
+export const unifiedRunSnapshotSchema = z.object({
+  runId: identifierSchema, requestKey: identifierSchema,
+  mode: z.literal('unified-fixture'), evidenceKind: z.literal('synthetic'), fixtureVersion: z.literal('1'),
+  source: generationSourceSchema, inputSchemaVersion: z.literal('1'),
+  workflowId: z.literal(CLAIMS_TEMPLATE_ID), workflowVersion: z.literal('1'),
+  status: z.enum(['prepared', 'completed', 'failed', 'stopped']),
+  parentRunId: identifierSchema.nullable(),
+  inputSnapshot: z.object({ formValues: claimsDraftValuesSchema, inputRefs: z.array(z.never()).length(0),
+    sha256: sha256Schema, capturedAt: timestampSchema }).strict(),
+  result: z.object({ contentStatus: z.literal('warning'), riskAssessment: z.literal('not-assessed'),
+    questionAssessment: z.literal('not-assessed'), artifact: artifactSchema }).strict().nullable(),
+  review: reviewSchema,
+  writebacks: z.array(writebackRecordSchema).max(WORKBENCH_LIMITS.maxWritebacksPerRun),
+  createdAt: timestampSchema, completedAt: timestampSchema.nullable(),
+}).strict().superRefine((run, ctx) => {
+  if (run.status === 'completed') {
+    if (run.result === null || run.completedAt === null) {
+      ctx.addIssue({ code: 'custom', message: 'completed generation requires an artifact and completion time' })
+    } else enforceReviewAndWritebacks(run, ctx)
+  } else if (run.result !== null || run.review.status !== 'not-reviewed' || run.writebacks.length || run.parentRunId !== null) {
+    ctx.addIssue({ code: 'custom', message: 'incomplete generation cannot contain result, edits, review or writebacks' })
+  }
+  if ((run.status === 'prepared') !== (run.completedAt === null)) {
+    ctx.addIssue({ code: 'custom', message: 'prepared and terminal completion time mismatch' })
+  }
+})
+
+export const conversationDraftResponseSchema = z.object({
+  workspaceId: identifierSchema, taskId: identifierSchema, runId: identifierSchema,
+  artifactId: z.string().regex(/^sha256:[a-f0-9]{64}$/), text: z.string().min(1).max(150000),
+}).strict()
+
+export const savedFileResponseSchema = z.object({
+  workspaceId: identifierSchema, taskId: identifierSchema, runId: identifierSchema,
+  artifactId: z.string().regex(/^sha256:[a-f0-9]{64}$/), writebackId: identifierSchema,
+  absolutePath: writebackAbsolutePathSchema, kind: z.literal('current-file'),
+}).strict()
+
 export const professionalDraftSchema = z.object({
   selectedApiEndpoint: identifierSchema,
   selectedApiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
@@ -554,7 +594,7 @@ export const professionalDraftSchema = z.object({
   updatedAt: timestampSchema,
 }).strict()
 
-export const workbenchEditableTaskSchema = z.object({
+const workbenchEditableTaskV3Schema = z.object({
   taskId: identifierSchema,
   title: z.string().min(1).max(200),
   workType: workTypeSchema.nullable(),
@@ -567,7 +607,7 @@ export const workbenchEditableTaskSchema = z.object({
   updatedAt: timestampSchema,
 }).strict()
 
-export const workbenchTaskSchema = z.object({
+const workbenchTaskV3Schema = z.object({
   taskId: identifierSchema,
   title: z.string().min(1).max(200),
   workType: workTypeSchema.nullable(),
@@ -710,9 +750,56 @@ export const workbenchTaskSchema = z.object({
   }
 })
 
+function enforceGenerationDraft(task, ctx) {
+  const claims = task.workflowId === CLAIMS_TEMPLATE_ID
+  if (!claims && task.generation !== null) {
+    ctx.addIssue({ code: 'custom', path: ['generation'], message: 'legacy tasks cannot be relabeled as Skills or API' })
+  }
+  if (claims) {
+    if (task.workflowVersion !== '1' || task.workType !== 'cn-invention-patent' || task.generation === null) {
+      ctx.addIssue({ code: 'custom', path: ['generation'], message: 'claims task requires its versioned generation draft' })
+    }
+    if (task.professionalDraft !== null) {
+      ctx.addIssue({ code: 'custom', path: ['professionalDraft'], message: 'unified task cannot contain a second professional form' })
+    }
+    if (!claimsDraftValuesSchema.safeParse(task.formValues).success) {
+      ctx.addIssue({ code: 'custom', path: ['formValues'], message: 'claims draft requires the seven bounded text fields' })
+    }
+  }
+  for (const [id, run] of Object.entries(task.runs ?? {})) {
+    if ((run.mode === 'unified-fixture') !== claims) {
+      ctx.addIssue({ code: 'custom', path: ['runs', id], message: 'unified evidence cannot be mixed with legacy tasks or runs' })
+    }
+    if (run.mode === 'unified-fixture' && run.parentRunId !== null) {
+      const parent = task.runs[run.parentRunId]
+      if (!parent || parent.mode !== run.mode || parent.status !== 'completed' || parent.source !== run.source
+        || parent.inputSnapshot.sha256 !== run.inputSnapshot.sha256
+        || task.runOrder.indexOf(run.parentRunId) >= task.runOrder.indexOf(id)) {
+        ctx.addIssue({ code: 'custom', path: ['runs', id], message: 'edited artifact must retain an earlier completed parent and input' })
+      }
+    }
+  }
+}
+
+export const workbenchEditableTaskSchema = workbenchEditableTaskV3Schema.extend({
+  generation: generationDraftSchema.nullable(),
+}).superRefine(enforceGenerationDraft)
+
+export const workbenchTaskSchema = workbenchTaskV3Schema.safeExtend({
+  generation: generationDraftSchema.nullable(),
+  runs: z.record(identifierSchema, z.discriminatedUnion('mode', [localRunSnapshotSchema, oasisRemoteRunSnapshotSchema, unifiedRunSnapshotSchema])),
+}).superRefine(enforceGenerationDraft)
+
 const panelModeSchema = z.enum(['hidden', 'normal', 'expanded'])
 
 function enforceWorkspaceInvariants(value, ctx) {
+  const activeTasks = Object.values(value.tasks).filter(task => hasPendingUnifiedRun(task)
+    || Object.values(task.remoteExecutions ?? {}).some(isOasisRemoteExecutionUnresolved))
+  const pendingUnified = Object.values(value.tasks).flatMap(task => Object.values(task.runs ?? {}))
+    .filter(run => run.mode === 'unified-fixture' && run.status === 'prepared').length
+  if (pendingUnified > 1 || (pendingUnified && activeTasks.length > 1)) {
+    ctx.addIssue({ code: 'custom', path: ['tasks'], message: 'Workspace already has an active generation' })
+  }
   const seen = new Set()
   for (const [index, taskId] of value.taskOrder.entries()) {
     if (seen.has(taskId)) {
@@ -747,7 +834,7 @@ const editableStateFields = {
   panelMode: panelModeSchema,
   activeTaskId: identifierSchema.nullable(),
   taskOrder: z.array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
-  tasks: z.record(identifierSchema, workbenchEditableTaskSchema),
+  tasks: z.record(identifierSchema, workbenchEditableTaskV3Schema),
 }
 
 const recordStateFields = {
@@ -755,18 +842,30 @@ const recordStateFields = {
   panelMode: panelModeSchema,
   activeTaskId: identifierSchema.nullable(),
   taskOrder: z.array(identifierSchema).max(WORKBENCH_LIMITS.maxTasksPerWorkspace),
-  tasks: z.record(identifierSchema, workbenchTaskSchema),
+  tasks: z.record(identifierSchema, workbenchTaskV3Schema),
 }
 
-export const workbenchEditableDraftSchema = z.object(editableStateFields).strict().superRefine(enforceWorkspaceInvariants)
+export const workbenchEditableDraftV3Schema = z.object(editableStateFields).strict().superRefine(enforceWorkspaceInvariants)
+export const workbenchEditableDraftV4Schema = z.object({
+  ...editableStateFields,
+  schemaVersion: z.literal(4),
+  tasks: z.record(identifierSchema, workbenchEditableTaskSchema),
+}).strict().superRefine(enforceWorkspaceInvariants)
+export const workbenchEditableDraftSchema = z.discriminatedUnion('schemaVersion', [workbenchEditableDraftV3Schema, workbenchEditableDraftV4Schema])
 export const workbenchDraftSchema = workbenchEditableDraftSchema
 
-export const workbenchRecordSchema = z.object({
+export const workbenchRecordV3Schema = z.object({
   ...recordStateFields,
   workspaceId: identifierSchema,
   revision: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
   updatedAt: timestampSchema,
 }).strict().superRefine(enforceWorkspaceInvariants)
+
+export const workbenchRecordV4Schema = workbenchRecordV3Schema.safeExtend({
+  schemaVersion: z.literal(4),
+  tasks: z.record(identifierSchema, workbenchTaskSchema),
+})
+export const workbenchRecordSchema = z.discriminatedUnion('schemaVersion', [workbenchRecordV3Schema, workbenchRecordV4Schema])
 
 const workbenchTaskV2Schema = z.object({
   taskId: identifierSchema,

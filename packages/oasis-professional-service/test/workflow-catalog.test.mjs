@@ -7,18 +7,19 @@ import {
   validateWorkflowForm,
 } from '../src/workflow-catalog.js'
 
-test('publishes two deeply frozen versioned local-mock workflows', () => {
+test('retains two deeply frozen historical local-mock workflows alongside unified claims', () => {
   const catalog = getWorkflowCatalog()
+  const legacy = catalog.workflows.filter(w => w.executionMode === 'local-mock')
   assert.equal(catalog.schemaVersion, 1)
-  assert.deepEqual(catalog.workflows.map(({ workflowId, workflowVersion, workType }) => ({
+  assert.deepEqual(legacy.map(({ workflowId, workflowVersion, workType }) => ({
     workflowId, workflowVersion, workType,
   })), [
     { workflowId: 'technical-rd', workflowVersion: '1', workType: 'technical-rd' },
     { workflowId: 'cn-invention-patent', workflowVersion: '1', workType: 'cn-invention-patent' },
   ])
-  assert.equal(catalog.workflows.every((workflow) => workflow.executionMode === 'local-mock'), true)
+  assert.equal(legacy.length, 2)
   assert.equal(catalog.workflows.every((workflow) => workflow.materialPolicy.contentReadMode === 'metadata-only'), true)
-  assert.deepEqual(catalog.workflows.map(({ outputSections }) => outputSections), [
+  assert.deepEqual(legacy.map(({ outputSections }) => outputSections), [
     ['problem-decomposition', 'candidate-solutions', 'risks', 'verification-plan', 'deliverables'],
     ['terminology', 'support-matrix', 'claim-strategy', 'claims-outline', 'specification-outline', 'questions'],
   ])
@@ -32,7 +33,7 @@ test('filters by work type without mutating or sharing a writable result', () =>
   assert.equal(technical.workflows.length, 1)
   assert.equal(technical.workflows[0].workflowId, 'technical-rd')
   assert.throws(() => technical.workflows.push({}), TypeError)
-  assert.equal(getWorkflowCatalog().workflows.length, 2)
+  assert.equal(getWorkflowCatalog().workflows.length, 3)
 })
 
 test('uses only the bounded form DSL and unique field identifiers', () => {

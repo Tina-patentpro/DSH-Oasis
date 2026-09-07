@@ -1,12 +1,14 @@
-import { createElement, useEffect, useLayoutEffect, useRef, useSyncExternalStore } from 'react'
+import { createElement, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react'
 
 import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
+import { hasPendingUnifiedRun } from '../generation-contract.js'
 import { PanelChrome } from './PanelChrome.js'
 import { PanelPages } from './PanelPages.js'
 
 const noConfiguration = Object.freeze({ canSubmit: true })
 const getNoConfiguration = () => noConfiguration
 const noSubscribe = () => () => {}
+const zero = () => 0
 
 const reducedMotionCss = `
   [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
@@ -30,6 +32,8 @@ export function createPanelActions({
     async closePage(pageId) {
       const page = store.getWorkspaceState(workspaceId).pages.find((item) => item.pageId === pageId)
       if (!page) return false
+      if (hasPendingUnifiedRun(page) || (page.generation && (store.getWorkspaceState(workspaceId).pageOperations?.[pageId]?.activeOperation
+        || store.getWorkspaceState(workspaceId).pageOperations?.[pageId]?.generationUncertain))) return false
       if (page.remoteExecutionOrder?.some((executionId) => (
         isOasisRemoteExecutionUnresolved(page.remoteExecutions?.[executionId])
       ))) return false
@@ -126,6 +130,8 @@ function sectionStyle(hostMode, layout, effectiveMode) {
 
 export function OasisWorkbenchSurface({
   store,
+  markdownRenderer,
+  coordinator,
   focusTargets,
   layoutAdapter,
   workspaceId,
@@ -133,12 +139,16 @@ export function OasisWorkbenchSurface({
   hostMode = 'standalone',
   visible = true,
 }) {
+  const [center, setCenter] = useState(false)
   const state = useSyncExternalStore(
     store.subscribe,
     () => store.peekWorkspaceState(workspaceId),
     () => store.peekWorkspaceState(workspaceId),
   )
   const panelRef = useRef(null)
+  useSyncExternalStore(store.conversationDrafts?.subscribe ?? noSubscribe,
+    store.conversationDrafts?.getSnapshot ?? zero, store.conversationDrafts?.getSnapshot ?? zero)
+  const conversationUnavailableReason = store.conversationDrafts?.unavailableReason(workspaceId) ?? (store.conversationDrafts ? null : '当前对话输入接口不可用')
   const configuration = useSyncExternalStore(
     store.connectionSettings?.subscribe ?? noSubscribe,
     store.connectionSettings?.getSnapshot ?? getNoConfiguration,
@@ -223,9 +233,11 @@ export function OasisWorkbenchSurface({
       layoutStatus: hostMode === 'embedded' ? 'better-sidebar-owned' : layout.status,
     },
     titleRef,
-    onActivatePage: (pageId) => { void actions.activatePage(pageId).catch(() => {}) },
+    onOpenFunctionCenter: () => setCenter(true),
+    showFunctionCenter: center || state.pages.find(page => page.pageId === state.activePageId)?.view === 'chooser',
+    onActivatePage: (pageId) => { setCenter(false); void actions.activatePage(pageId).catch(() => {}) },
     onClosePage: (pageId) => { void actions.closePage(pageId).catch(() => {}) },
-    onCreatePage: () => store.createPage(workspaceId),
+    onCreatePage: () => { setCenter(false); store.createPage(workspaceId) },
     onHide: () => { if (hostMode === 'standalone') void actions.hidePanel().catch(() => {}) },
     onToggleExpanded: () => {
       if (hostMode === 'standalone') {
@@ -234,12 +246,30 @@ export function OasisWorkbenchSurface({
     },
   }),
   createElement(PanelPages, {
-    state: { ...state, professionalConfigurationBlocked: !configuration.canSubmit },
+    markdownRenderer,
+    savedFileUnavailableReason: coordinator?.captureSavedFileTarget(workspaceId) ? null : '安全文件预览不可用',
+    onOpenSavedFile: (pageId, runId, writebackId) => store.openSavedFile(workspaceId, pageId, runId, writebackId),
+    showFunctionCenter: center,
+    nativeAvailability: coordinator?.nativeAvailability(workspaceId) ?? {},
+    onOpenNative: type => coordinator?.openNativeTool(workspaceId, type) === true,
+    state: { ...state, professionalConfigurationBlocked: !configuration.canSubmit, conversationUnavailableReason },
     effectiveMode,
-    onSelectWorkflow: (pageId, workflowId) => store.selectWorkflow(workspaceId, pageId, workflowId),
+    onSelectWorkflow: (pageId, workflowId) => {
+      if (store.getWorkspaceState(workspaceId).pages.find(page => page.pageId === pageId)?.workflowId) {
+        store.createPage(workspaceId)
+        pageId = store.getWorkspaceState(workspaceId).activePageId
+      }
+      store.selectWorkflow(workspaceId, pageId, workflowId)
+      setCenter(false)
+    },
     onRenamePage: (pageId, title) => store.renamePage(workspaceId, pageId, title),
     onReload: () => store.reloadWorkspace(workspaceId),
     onUpdateForm: (pageId, fieldId, value) => store.updateFormValue(workspaceId, pageId, fieldId, value),
+    onSetGenerationSource: (pageId, source) => store.setGenerationSource(workspaceId, pageId, source),
+    onObserveUnified: pageId => { void store.observeUnifiedRun(workspaceId, pageId).catch(() => {}) },
+    onStopUnified: (pageId, runId) => { void store.stopUnifiedRun(workspaceId, pageId, runId).catch(() => {}) },
+    onEditResult: (pageId, runId, body) => store.editUnifiedResult(workspaceId, pageId, runId, body),
+    onUseInConversation: (pageId, runId) => store.useInConversation(workspaceId, pageId, runId),
     onMaterialDraft: (pageId, path, confirmed) => store.setMaterialDraft(workspaceId, pageId, path, confirmed),
     onAddMaterial: (pageId) => { void store.addMaterial(workspaceId, pageId).catch(() => {}) },
     onRefreshMaterial: (pageId, referenceId) => {

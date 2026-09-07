@@ -1,6 +1,7 @@
 import { createElement, useSyncExternalStore } from 'react'
 
 import { resolveWorkspaceId } from './project-resolution.js'
+import { ConversationInputRegistration } from './ConversationInputRegistration.js'
 
 const STANDALONE_HOST_SNAPSHOT = Object.freeze({ mode: 'standalone' })
 const subscribeStandaloneHost = () => () => {}
@@ -19,6 +20,8 @@ export function WorkbenchEntry({
   store,
   focusTargets,
   useWorkspaces,
+  useInput,
+  inputActions,
   coordinator = null,
   usePanelHostSnapshot = useLivePanelHostSnapshot,
 }) {
@@ -91,5 +94,7 @@ export function WorkbenchEntry({
       cursor: disabled ? 'not-allowed' : 'pointer',
       opacity: disabled ? 0.5 : 1,
     },
-  }, '研发 / 专利')
+  }, '研发 / 专利', createElement(ConversationInputRegistration, {
+    bridge: store.conversationDrafts, workspaceId, sessionId, useInput, inputActions,
+  }))
 }

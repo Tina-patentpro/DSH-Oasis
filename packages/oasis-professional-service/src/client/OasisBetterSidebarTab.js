@@ -33,6 +33,7 @@ function EmbeddedStatus({ status, reasonCode }) {
 
 export function OasisBetterSidebarTab({
   scope,
+  markdownRenderer,
   visible,
   coordinator,
   store,
@@ -63,6 +64,8 @@ export function OasisBetterSidebarTab({
   }
 
   return createElement(OasisWorkbenchSurface, {
+    markdownRenderer,
+    coordinator,
     store,
     focusTargets,
     layoutAdapter,
@@ -75,6 +78,7 @@ export function OasisBetterSidebarTab({
 
 export function createOasisBetterSidebarDescriptor({
   coordinator,
+  markdownRenderer,
   store,
   focusTargets,
   layoutAdapter,
@@ -86,6 +90,7 @@ export function createOasisBetterSidebarDescriptor({
     single: true,
     component: (props) => createElement(OasisBetterSidebarTab, {
       ...props,
+      markdownRenderer,
       coordinator,
       store,
       focusTargets,

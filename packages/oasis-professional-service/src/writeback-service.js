@@ -202,6 +202,18 @@ function createMetadata(input, artifactSizeBytes) {
       execution: { mode: input.mode, mockVersion: input.mockVersion },
     })
   }
+  if (input.mode === 'unified-fixture') {
+    const info = input.unified
+    if (!info || info.evidenceKind !== 'synthetic' || info.fixtureVersion !== '1' || info.inputSchemaVersion !== '1'
+      || !['local-skill', 'oasis-api'].includes(info.source)) {
+      throw writebackError('WRITEBACK_SOURCE_INVALID', 'Synthetic provenance is required')
+    }
+    return Object.freeze({ ...common,
+      workflow: { workflowId: input.workflowId, workflowVersion: input.workflowVersion },
+      execution: { mode: input.mode, source: info.source, evidenceKind: info.evidenceKind,
+        fixtureVersion: info.fixtureVersion, inputSchemaVersion: info.inputSchemaVersion, parentRunId: info.parentRunId },
+    })
+  }
   if (input.mode === 'oasis-legacy') {
     const remote = input.remote
     if (
@@ -577,5 +589,26 @@ export function createWritebackManager({
     return withTargetLock(plan.absoluteTarget, () => publishConsumedPlan(plan))
   }
 
-  return Object.freeze({ consume, prepare, publish })
+  async function resolveSavedFile(workspaceId, relativePath) {
+    const normalized = validateWritebackRelativeDirectory(relativePath)
+    if (!normalized.toLowerCase().endsWith('.md')) throw writebackError('WRITEBACK_FILE_INVALID', 'Only saved Markdown can be opened')
+    const root = await resolveWorkspaceRoot(workspaceRegistry, fileSystem, workspaceId)
+    const segments = normalized.split('\\')
+    let target = root
+    for (const [index, segment] of segments.entries()) {
+      target = resolve(target, segment)
+      const stat = await fileSystem.lstat(target)
+      const canonical = await fileSystem.realpath(target)
+      if (!isWithinRoot(root, canonical) || stat.isSymbolicLink() || pathKey(canonical) !== pathKey(target)) {
+        throw writebackError('WRITEBACK_REPARSE_POINT', 'Saved file path was redirected')
+      }
+      if (index < segments.length - 1 ? !stat.isDirectory() : !stat.isFile() || stat.nlink > 1) {
+        throw writebackError('WRITEBACK_FILE_INVALID', 'Saved file is no longer a regular Workspace file')
+      }
+    }
+    // This resolves the current file, not an immutable reviewed-content snapshot.
+    return target
+  }
+
+  return Object.freeze({ consume, prepare, publish, resolveSavedFile })
 }

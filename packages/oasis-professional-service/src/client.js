@@ -9,6 +9,8 @@ import { createWorkbenchRemote } from './client/workbench-remote.js'
 import { createWorkbenchStore } from './client/workbench-store.js'
 import { createOasisConnectionSettings } from './client/oasis-connection-settings.js'
 import { OasisSettingsSection } from './client/OasisSettingsSection.js'
+import { createConversationDraftBridge } from './client/conversation-draft-bridge.js'
+export { createConversationDraftBridge } from './client/conversation-draft-bridge.js'
 
 export const inject = ['slots', 'connection']
 
@@ -16,7 +18,7 @@ const ENTRY_ID = 'oasis-professional-entry'
 const PANEL_ID = 'oasis-professional-panel'
 const SETTINGS_ID = 'oasis-professional-settings'
 
-export function apply(ctx) {
+export function apply(ctx, { markdownRenderer } = {}) {
   const slots = ctx.get?.('slots') ?? ctx.slots
   const connection = ctx.get?.('connection') ?? ctx.connection
   if (slots === undefined || connection === undefined) return () => {}
@@ -24,11 +26,13 @@ export function apply(ctx) {
   const connectionSettings = createOasisConnectionSettings({
     onInvalidated: ({ reload }) => store.refreshProfessionalConfiguration(reload),
   })
-  const store = createWorkbenchStore({ remote: createWorkbenchRemote(connection), connectionSettings })
   const focusTargets = new Map()
   const layoutAdapter = createLayoutAdapter()
   const coordinator = createPanelHostCoordinator({ layoutAdapter })
+  const conversationDrafts = createConversationDraftBridge(() => coordinator.getSnapshot().workspaceContext)
+  const store = createWorkbenchStore({ remote: createWorkbenchRemote(connection), connectionSettings, conversationDrafts, nativeFiles: coordinator })
   const betterSidebarDescriptor = createOasisBetterSidebarDescriptor({
+    markdownRenderer,
     coordinator,
     store,
     focusTargets,
@@ -93,7 +97,7 @@ export function apply(ctx) {
       coordinator.expectBetterSidebar()
       betterSidebarFiber = ctx.inject(['betterSidebar'], (injectedCtx) => {
         const betterSidebar = injectedCtx.get?.('betterSidebar') ?? injectedCtx.betterSidebar
-        return coordinator.attachBetterSidebar(betterSidebar, betterSidebarDescriptor)
+        return coordinator.attachBetterSidebar(betterSidebar, betterSidebarDescriptor, injectedCtx)
       })
       if (typeof betterSidebarFiber?.dispose !== 'function') {
         coordinator.block('better-sidebar-injection-disposer-invalid')
@@ -128,6 +132,7 @@ export function apply(ctx) {
                   await settingsFiber?.dispose?.()
                 } finally {
                   connectionSettings.dispose()
+                  conversationDrafts.dispose()
                   await store.dispose()
                 }
               }

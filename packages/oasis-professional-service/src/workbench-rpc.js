@@ -51,6 +51,11 @@ const taskCreatePayloadSchema = z.object({
   requestKey: workspaceIdSchema,
 }).strict()
 
+const unifiedRunPayloadSchema = z.object({ ...materialCommandBase, runId: workspaceIdSchema }).strict()
+const artifactSelectionPayloadSchema = unifiedRunPayloadSchema.extend({ artifactId: z.string().regex(/^sha256:[a-f0-9]{64}$/) }).strict()
+const savedFilePayloadSchema = artifactSelectionPayloadSchema.extend({ writebackId: workspaceIdSchema }).strict()
+const editResultPayloadSchema = artifactSelectionPayloadSchema.extend({ requestKey: workspaceIdSchema, body: z.string().min(1).max(100000) }).strict()
+
 const professionalDetailPayloadSchema = z.object({
   apiEndpoint: workspaceIdSchema,
 }).strict()
@@ -233,6 +238,32 @@ export function createWorkbenchRpcHandler(service, professionalService = null) {
       const parsed = parsePayload(taskCreatePayloadSchema, payload)
       if (!parsed.success) return parsed
       return materialResult(() => service.createRun(parsed.data))
+    }
+
+    if (endpoint === 'task/create-unified') {
+      const parsed = parsePayload(taskCreatePayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => service.createUnifiedRun(parsed.data))
+    }
+    if (endpoint === 'task/stop-unified') {
+      const parsed = parsePayload(unifiedRunPayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => service.stopUnifiedRun(parsed.data))
+    }
+    if (endpoint === 'task/edit-result') {
+      const parsed = parsePayload(editResultPayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => service.editUnifiedResult(parsed.data))
+    }
+    if (endpoint === 'artifact/conversation-draft') {
+      const parsed = parsePayload(artifactSelectionPayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => service.prepareConversationDraft(parsed.data))
+    }
+    if (endpoint === 'artifact/saved-file') {
+      const parsed = parsePayload(savedFilePayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => service.resolveSavedFile(parsed.data))
     }
 
     if (endpoint === 'task/review') {

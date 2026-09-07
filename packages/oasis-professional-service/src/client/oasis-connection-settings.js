@@ -1,9 +1,11 @@
 import { normalizeOasisOrigin } from '../oasis-origin-policy.js'
+import { normalizeGenerationPreferences } from '../generation-preferences.js'
 
 const REFERENCE = 'OASIS_USER_JWT'
 const initial = () => ({
   connected: false, settingsStatus: 'unavailable', settingsWritable: false,
   apiBaseUrl: '', credentialOrigin: '', downloadOrigins: Object.freeze([]),
+  ...normalizeGenerationPreferences(),
   credentialStatus: 'unavailable', credentialStored: false,
   credentialConfigured: false, credentialWritable: false,
   busy: false, restartRequired: false, notice: null, error: null, canSubmit: false,
@@ -52,14 +54,15 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
       const apiBaseUrl = value.apiBaseUrl === '' ? '' : normalizeOasisOrigin(value.apiBaseUrl)
       const credentialOrigin = rawCredentialOrigin === '' ? '' : normalizeOasisOrigin(rawCredentialOrigin)
       const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisOrigin(origin)))])
+      const preferences = normalizeGenerationPreferences(value)
       const settings = JSON.stringify([apiBaseUrl, credentialOrigin, downloadOrigins])
       const restartRequired = snapshot.restartRequired || (lastSettings !== null && settings !== lastSettings)
       lastSettings = settings
       publish({ settingsStatus: 'ready', settingsWritable: snapshot.connected && view.writable === true,
-        apiBaseUrl, credentialOrigin, downloadOrigins, restartRequired })
+        apiBaseUrl, credentialOrigin, downloadOrigins, restartRequired, ...preferences })
     } catch {
       publish({ settingsStatus: 'unavailable', settingsWritable: false, apiBaseUrl: '',
-        credentialOrigin: '', downloadOrigins: Object.freeze([]) })
+        credentialOrigin: '', downloadOrigins: Object.freeze([]), ...normalizeGenerationPreferences() })
     }
   }
 
@@ -94,7 +97,7 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
     const current = generation
     pendingWrite = true
     publish({ busy: true, error: null, notice: null })
-    invalidate()
+    if (kind !== 'preference') invalidate()
     try {
       await action()
       if (disposed || generation !== current) return false
@@ -103,6 +106,9 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
         if (disposed || generation !== current) return false
         publish({ notice: described ? '凭据已更新；后续操作使用新凭据。' : '凭据已写入，但状态读取失败；请刷新状态后再使用。' })
         invalidate(described)
+      } else if (kind === 'preference') {
+        readSettings()
+        publish({ notice: '已保存，仅用于新任务。' })
       } else {
         readSettings()
         publish({ restartRequired: true, notice: '设置已保存。请手工重启隔离 Host 并刷新页面后再提交任务。' })
@@ -194,6 +200,15 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
         return false
       }
       return write('settings', () => scope.set('apiBaseUrl', origin))
+    },
+    async savePreference(key, value) {
+      if (!['defaultGenerationSource', 'outputDirectoryPrefix'].includes(key)) return false
+      let normalized
+      try { normalized = normalizeGenerationPreferences({ [key]: value })[key] } catch {
+        publish({ error: key === 'outputDirectoryPrefix' ? '请填写安全的项目内相对目录，或留空。' : '请选择本地 Skills 或专业 API。', notice: null })
+        return false
+      }
+      return write('preference', () => scope.set(key, normalized))
     },
     async saveDownloadOrigins(value) {
       let origins

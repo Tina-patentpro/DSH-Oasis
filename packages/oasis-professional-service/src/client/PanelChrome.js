@@ -1,6 +1,7 @@
 import { createElement } from 'react'
 
 import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
+import { hasPendingUnifiedRun } from '../generation-contract.js'
 import { CodexPanelIcon } from './codex-icons.js'
 
 const iconButtonStyle = {
@@ -29,7 +30,7 @@ function IconButton({ label, icon, onClick, testId, disabled = false }) {
 }
 
 function hasUnresolvedRemoteExecution(page) {
-  return page.remoteExecutionOrder?.some((executionId) => (
+  return hasPendingUnifiedRun(page) || page.remoteExecutionOrder?.some((executionId) => (
     isOasisRemoteExecutionUnresolved(page.remoteExecutions?.[executionId])
   )) === true
 }
@@ -87,6 +88,8 @@ export function PanelChrome({
   onCreatePage,
   onHide,
   onToggleExpanded,
+  onOpenFunctionCenter,
+  showFunctionCenter = false,
 }) {
   const effectiveExpanded = state.effectiveMode === 'expanded'
   const autoExpanded = state.panelMode === 'normal' && effectiveExpanded
@@ -172,6 +175,8 @@ export function PanelChrome({
       overflowX: 'auto',
     },
   },
+  onOpenFunctionCenter ? createElement('button', { type: 'button', onClick: onOpenFunctionCenter, disabled: !canPersist,
+    'aria-pressed': showFunctionCenter, style: { ...iconButtonStyle, width: 'auto', padding: '6px 8px', flexShrink: 0 } }, '功能中心') : null,
   ...state.pages.map((page) => createElement('div', {
     key: page.pageId,
     role: 'presentation',

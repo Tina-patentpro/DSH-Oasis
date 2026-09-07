@@ -319,8 +319,10 @@ test('publishes catalog through the service without leaking the repository', () 
     materialManager: createMaterialManager(),
   })
   const catalog = service.getWorkflowCatalog('cn-invention-patent')
-  assert.equal(catalog.workflows.length, 1)
-  assert.equal(catalog.workflows[0].workflowId, 'cn-invention-patent')
+  assert.deepEqual(catalog.workflows.map((workflow) => workflow.workflowId), [
+    'patent-claims',
+    'cn-invention-patent',
+  ])
   assert.equal(Object.hasOwn(service, 'repository'), false)
   assert.equal(Object.isFrozen(service), true)
 })

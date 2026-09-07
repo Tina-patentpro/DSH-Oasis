@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
+import { resolve } from 'node:path'
 
 import { apply, inject, name } from '../src/index.js'
 
@@ -168,6 +169,28 @@ test('wires the Host workspace registry into the safe writeback boundary', async
   const source = await readFile(new URL('../src/index.js', import.meta.url), 'utf8')
   assert.match(
     source,
-    /createWorkbenchService\(\{\s*repository,\s*materialManager,\s*workspaceRegistry:\s*ctx\.workspaceRegistry,?\s*\}\)/,
+    /createWorkbenchService\(\{\s*repository,\s*materialManager,\s*workspaceRegistry:\s*ctx\.workspaceRegistry,/,
   )
+})
+
+test('isolated synthetic Host disables legacy bootstrap before resolving any credential or API request', async () => {
+  const oldHome = process.env.DSH_HOME; const oldFixture = process.env.OASIS_UNIFIED_FIXTURE
+  process.env.DSH_HOME = resolve('../../.dsh-test/stage2-desktop'); process.env.OASIS_UNIFIED_FIXTURE = '1'
+  const fixture = createHostFixture({ runtimeSettings: {
+    environmentKind: 'non-production', apiBaseUrl: 'http://127.0.0.1:6326', credentialOrigin: 'http://127.0.0.1:6326',
+    credentialRef: 'OASIS_USER_JWT', downloadOrigins: [],
+  } })
+  let dispose
+  try {
+    dispose = await apply(fixture.ctx)
+    const catalog = await fixture.rpcRegistration.handler('workflow/catalog', {})
+    assert.equal(catalog.value.unifiedFixtureEnabled, true)
+    const response = await fixture.rpcRegistration.handler('professional/bootstrap', {})
+    assert.equal(response.value.remoteEnabled, false)
+    assert.equal(fixture.calls.credentialResolve, 0)
+  } finally {
+    await dispose?.()
+    if (oldHome === undefined) delete process.env.DSH_HOME; else process.env.DSH_HOME = oldHome
+    if (oldFixture === undefined) delete process.env.OASIS_UNIFIED_FIXTURE; else process.env.OASIS_UNIFIED_FIXTURE = oldFixture
+  }
 })

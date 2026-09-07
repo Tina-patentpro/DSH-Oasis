@@ -119,12 +119,12 @@ test('migrates stored v2 records to detached frozen v3 ledgers without inventing
   assert.deepEqual(migrated.tasks['task-a'].remoteExecutions, {})
   assert.deepEqual(source, createStoredV2Record(), 'migration must not mutate v2 input')
   assert.equal(Object.isFrozen(migrated.tasks['task-a']), true)
-  assert.equal(parseStoredWorkbenchRecord('workspace-a', source).schemaVersion, 3)
+  assert.equal(parseStoredWorkbenchRecord('workspace-a', source).schemaVersion, 4)
 })
 
-test('creates v3 workspaces and keeps remote execution ledgers outside editable drafts', () => {
+test('creates v4 workspaces and keeps historical remote ledgers outside editable drafts', () => {
   const empty = createEmptyWorkbenchRecord('workspace-a')
-  assert.equal(empty.schemaVersion, 3)
+  assert.equal(empty.schemaVersion, 4)
 
   const migrated = migrateWorkbenchRecordV2ToV3(createStoredV2Record())
   const draft = recordToEditableDraft(migrated)

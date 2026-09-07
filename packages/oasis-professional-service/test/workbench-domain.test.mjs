@@ -28,21 +28,21 @@ test('keeps the fixed DSH Domain identity while the record schema advances', () 
   assert.deepEqual(Object.keys(oasisWorkbenchDomainSpec.tables), ['workspaces'])
 })
 
-test('projects a deterministic deeply frozen schema-v3 revision-zero state', () => {
+test('projects a deterministic deeply frozen schema-v4 revision-zero state', () => {
   const value = createEmptyWorkbenchRecord('workspace-a')
-  assert.deepEqual(value, createV3Record('workspace-a', 0, { empty: true }))
+  assert.deepEqual(value, { ...createV3Record('workspace-a', 0, { empty: true }), schemaVersion: 4 })
   assert.equal(Object.isFrozen(value), true)
   assert.equal(Object.isFrozen(value.taskOrder), true)
   assert.equal(Object.isFrozen(value.tasks), true)
   assert.throws(() => value.taskOrder.push('task-a'), TypeError)
 })
 
-test('parses complete and stored records into detached frozen schema-v3 values', () => {
+test('parses complete historical records and upgrades storage reads to v4', () => {
   for (const source of [createV3Record(), createLegacyRecord()]) {
     const parsed = source.schemaVersion === 3
       ? parseWorkbenchRecord('workspace-a', source)
       : parseStoredWorkbenchRecord('workspace-a', source)
-    assert.equal(parsed.schemaVersion, 3)
+    assert.equal(parsed.schemaVersion, source.schemaVersion === 3 ? 3 : 4)
     assert.notEqual(parsed, source)
     assert.equal(Object.isFrozen(parsed.tasks['task-a']), true)
   }
@@ -59,7 +59,7 @@ test('accepts only the Client-owned editable projection', () => {
 })
 
 test('rejects unknown versions, identity mismatch, invalid calendar times, and unsafe revisions', () => {
-  assert.throws(() => parseStoredWorkbenchRecord('workspace-a', { ...createV3Record(), schemaVersion: 4 }), /unsupported/i)
+  assert.throws(() => parseStoredWorkbenchRecord('workspace-a', { ...createV3Record(), schemaVersion: 5 }), /unsupported/i)
   assert.throws(() => parseWorkbenchRecord('workspace-b', createV3Record()), /workspaceId/i)
 
   const invalidTime = createV3Record()

@@ -64,6 +64,28 @@ function fixture(options = {}) {
   }
 }
 
+test('new-task preferences use the native settings owner without enabling generation or requiring an API restart', async () => {
+  const f = fixture()
+  await tick()
+  assert.equal(f.controller.getSnapshot().defaultGenerationSource, 'local-skill')
+  assert.equal(f.controller.getSnapshot().outputDirectoryPrefix, '')
+  assert.equal(typeof f.controller.savePreference, 'function')
+  assert.equal(await f.controller.savePreference('defaultGenerationSource', 'oasis-api'), true)
+  assert.equal(await f.controller.savePreference('outputDirectoryPrefix', '产物/草稿'), true)
+  assert.equal(f.controller.getSnapshot().defaultGenerationSource, 'oasis-api')
+  assert.equal(f.controller.getSnapshot().outputDirectoryPrefix, '产物\\草稿')
+  assert.equal(f.controller.getSnapshot().restartRequired, false)
+  const before = f.calls.length
+  for (const value of ['../escape', 'C:\\outside', '\\\\server\\share', 'NUL', 'bad:stream']) {
+    assert.equal(await f.controller.savePreference('outputDirectoryPrefix', value), false)
+  }
+  assert.equal(await f.controller.savePreference('defaultGenerationSource', 'auto'), false)
+  assert.equal(await f.controller.savePreference('credentialRef', 'OTHER'), false)
+  assert.equal(f.calls.length, before)
+  assert.equal(f.calls.some(call => call[0] === 'credential'), false)
+  f.controller.dispose()
+})
+
 test('settings and JWT are separate public writes; production and non-origin inputs never reach the Host', async () => {
   const f = fixture()
   await tick()

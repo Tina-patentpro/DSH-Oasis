@@ -91,33 +91,48 @@ function createStorageFixture({ beforePut } = {}) {
   return { storageDomain, records, calls }
 }
 
-test('missing and legacy reads publish v3 without materializing a row', async () => {
+test('v4 Host rejects changes to the input of an unresolved legacy execution', async () => {
+  const fixture = createStorageFixture()
+  const current = createV3Record('workspace-a', 4)
+  current.tasks['task-a'].remoteExecutionOrder = ['execution-a']
+  current.tasks['task-a'].remoteExecutions = { 'execution-a': createUnresolvedRemoteExecution() }
+  fixture.records.set('workspace-a', current)
+  const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
+  try {
+    const draft = recordToEditableDraft(current)
+    draft.tasks['task-a'].formValues = { objective: 'changed during unknown execution' }
+    await assert.rejects(repository.replaceEditable('workspace-a', 4, draft), /unresolved|locked/i)
+    assert.equal(fixture.calls.put.length, 0)
+  } finally { await repository.close() }
+})
+
+test('missing and legacy reads publish v4 without materializing a row', async () => {
   const fixture = createStorageFixture()
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
-  assert.equal(repository.get('workspace-a').schemaVersion, 3)
+  assert.equal(repository.get('workspace-a').schemaVersion, 4)
   assert.equal(fixture.calls.put.length, 0)
 
   fixture.records.set('workspace-b', createLegacyRecord('workspace-b'))
   const migrated = repository.get('workspace-b')
-  assert.equal(migrated.schemaVersion, 3)
+  assert.equal(migrated.schemaVersion, 4)
   assert.equal(fixture.records.get('workspace-b').schemaVersion, 1)
   assert.equal(fixture.calls.put.length, 0)
   await repository.close()
 })
 
-test('first editable replacement materializes schema v3 with Host identity and time', async () => {
+test('first editable replacement materializes schema v4 with Host identity and time', async () => {
   const fixture = createStorageFixture()
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
   const result = await repository.replaceEditable('workspace-a', 0, createEditableDraft())
 
   assert.equal(result.committed, true)
-  assert.equal(result.current.schemaVersion, 3)
+  assert.equal(result.current.schemaVersion, 4)
   assert.equal(result.current.workspaceId, 'workspace-a')
   assert.equal(result.current.revision, 1)
   assert.equal(result.current.updatedAt, NOW)
   assert.deepEqual(result.current.tasks['task-a'].inputRefs, [])
   assert.deepEqual(result.current.tasks['task-a'].runs, {})
-  assert.equal(fixture.records.get('workspace-a').schemaVersion, 3)
+  assert.equal(fixture.records.get('workspace-a').schemaVersion, 4)
   await repository.close()
 })
 
@@ -245,14 +260,14 @@ test('serializes same-Workspace replacements and isolates Workspaces', async () 
   await repository.close()
 })
 
-test('explicit editable mutation upgrades a stored v1 row to v3', async () => {
+test('explicit editable mutation upgrades a stored v1 row to v4', async () => {
   const fixture = createStorageFixture()
   fixture.records.set('workspace-a', createLegacyRecord())
   const repository = await openOasisWorkbenchRepository(fixture.storageDomain, { clock: () => NOW })
   const current = repository.get('workspace-a')
   const result = await repository.replaceEditable('workspace-a', current.revision, recordToEditableDraft(current))
-  assert.equal(result.current.schemaVersion, 3)
-  assert.equal(fixture.records.get('workspace-a').schemaVersion, 3)
+  assert.equal(result.current.schemaVersion, 4)
+  assert.equal(fixture.records.get('workspace-a').schemaVersion, 4)
   await repository.close()
 })
 

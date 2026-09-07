@@ -5,54 +5,14 @@ import { ProfessionalServicePanel } from './ProfessionalServicePanel.js'
 import { RunPreview } from './RunPreview.js'
 import { WorkflowForm, validateWorkflowFormValues } from './WorkflowForm.js'
 import { WritebackPanel } from './WritebackPanel.js'
+import { UnifiedGenerationPage } from './UnifiedGenerationPage.js'
+import { FunctionCenter } from './FunctionCenter.js'
 
 const surfaceStyle = {
   border: '1px solid var(--dsw-alias-border-l2, #dfe2e0)',
   borderRadius: 12,
   padding: 16,
   background: 'var(--dsw-alias-bg-base, #fff)',
-}
-
-const cardStyle = {
-  width: '100%',
-  textAlign: 'left',
-  border: '1px solid var(--dsw-alias-border-l2, #d7d9d8)',
-  borderRadius: 12,
-  padding: 16,
-  background: 'var(--dsw-alias-bg-base, #fff)',
-  color: 'var(--dsw-alias-text-primary, #1f2623)',
-  cursor: 'pointer',
-}
-
-function WorkflowChooser({ state, onSelect }) {
-  if (state.catalogStatus === 'idle' || state.catalogStatus === 'loading') {
-    return createElement('div', { role: 'status', 'aria-live': 'polite', style: { padding: 20 } }, '正在读取 Host 工作流目录…')
-  }
-  if (state.catalogStatus === 'error') {
-    return createElement('div', { role: 'alert', tabIndex: -1, style: { padding: 20, color: '#8b2f24' } },
-      '工作流目录读取失败。不会使用 Client 内置卡片替代 Host 定义。')
-  }
-  return createElement('div', { style: { padding: 20 } },
-    createElement('div', { style: { marginBottom: 18 } },
-      createElement('p', { style: { margin: 0, color: '#2f6653', fontSize: 11, letterSpacing: '.08em', fontWeight: 700 } }, 'OASIS PROFESSIONAL LOOP'),
-      createElement('h3', { style: { margin: '6px 0', fontSize: 19 } }, '选择工作流'),
-      createElement('p', { style: { margin: 0, color: 'var(--dsw-alias-text-secondary, #66706b)', fontSize: 13, lineHeight: 1.6 } },
-        '选择后，本任务页将在原位转为 schema 驱动的材料、生成、审核与回写工作区。')),
-    createElement('div', { style: { display: 'grid', gap: 10 } },
-      ...state.workflows.map((workflow) => createElement('button', {
-        key: `${workflow.workflowId}@${workflow.workflowVersion}`,
-        type: 'button',
-        'data-testid': `oasis-workflow-${workflow.workflowId}`,
-        onClick: () => onSelect(workflow.workflowId),
-        style: cardStyle,
-      },
-      createElement('span', { style: { display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'baseline' } },
-        createElement('strong', { style: { fontSize: 15 } }, workflow.title),
-        createElement('code', { style: { fontSize: 10, color: '#607068' } }, `v${workflow.workflowVersion}`)),
-      createElement('span', { style: { display: 'block', marginTop: 6, color: 'var(--dsw-alias-text-secondary, #66706b)', fontSize: 12, lineHeight: 1.55 } }, workflow.description)))),
-    state.workflows.length === 0
-      ? createElement('div', { role: 'status', style: { color: '#66706b', fontSize: 13 } }, 'Host 当前未提供可用工作流。')
-      : null)
 }
 
 const syncNoticeStyle = {
@@ -77,11 +37,16 @@ function activeRun(page) {
 
 export function PanelPages({
   state,
+  markdownRenderer,
+  savedFileUnavailableReason = '安全文件预览不可用', onOpenSavedFile = () => {},
+  showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false,
   effectiveMode = 'normal',
   onSelectWorkflow,
   onRenamePage,
   onReload,
   onUpdateForm = () => {},
+  onSetGenerationSource = () => {},
+  onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {},
   onMaterialDraft = () => {},
   onAddMaterial = () => {},
   onRefreshMaterial = () => {},
@@ -145,9 +110,10 @@ export function PanelPages({
   }))
 
   let content
-  if (page.view === 'chooser') {
-    content = createElement(WorkflowChooser, {
+  if (page.view === 'chooser' || showFunctionCenter) {
+    content = createElement(FunctionCenter, {
       state,
+      nativeAvailability, onOpenNative,
       onSelect: (workflowId) => onSelectWorkflow(page.pageId, workflowId),
     })
   } else {
@@ -168,7 +134,17 @@ export function PanelPages({
       const validation = validateWorkflowFormValues(workflow, page.formValues)
       const operationDisabled = operation.activeOperation !== null
       const run = activeRun(page)
-      content = createElement('div', {
+      content = workflow.executionMode === 'unified-text' && page.generation
+        ? createElement(UnifiedGenerationPage, {
+            key: page.pageId, page, workflow, markdownRenderer, workspaceId: state.workspaceId, syncStatus: state.syncStatus, operation,
+            onRenamePage, onUpdateForm, onSetGenerationSource,
+            fixtureEnabled: state.unifiedFixtureEnabled === true,
+            conversationUnavailableReason: state.conversationUnavailableReason === undefined ? '当前对话输入接口不可用' : state.conversationUnavailableReason,
+            onGenerate, onObserveUnified, onStopUnified, onEditResult, onUseInConversation,
+            savedFileUnavailableReason, onOpenSavedFile,
+            onActivateRun, onReview, onWritebackDraft, onPrepareWriteback, onWritebackConfirm, onCommitWriteback,
+          })
+        : createElement('div', {
         'data-workspace-layout': true,
         'data-mode': effectiveMode,
         style: {
@@ -234,5 +210,5 @@ export function PanelPages({
     role: 'tabpanel',
     'aria-labelledby': `oasis-tab-${page.pageId}`,
     style: { flex: 1, minHeight: 0, overflow: 'auto', background: 'var(--dsw-alias-bg-subtle, #f5f7f5)' },
-  }, titleEditor, content)
+  }, page.generation || page.view === 'chooser' || showFunctionCenter ? null : titleEditor, content)
 }

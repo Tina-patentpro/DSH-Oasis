@@ -6,6 +6,8 @@ import {
   parseWorkbenchRecord,
 } from './workbench-domain.js'
 import { isOasisRemoteExecutionUnresolved } from './workbench-contract.js'
+import { canonicalJson } from './local-mock-runner.js'
+import { hasPendingUnifiedRun } from './generation-contract.js'
 
 function assertExpectedRevision(value) {
   if (!Number.isSafeInteger(value) || value < 0) {
@@ -51,14 +53,22 @@ function assertWorkflowTransitions(current, candidate) {
 function assertUnresolvedRemoteExecutionsPreserved(current, draft) {
   const retainedTaskIds = new Set(draft.taskOrder)
   for (const taskId of current.taskOrder) {
-    if (retainedTaskIds.has(taskId)) continue
     const task = current.tasks[taskId]
-    const unresolved = task.remoteExecutionOrder.some((executionId) => (
+    const unresolved = hasPendingUnifiedRun(task) || task.remoteExecutionOrder.some((executionId) => (
       isOasisRemoteExecutionUnresolved(task.remoteExecutions[executionId])
     ))
-    if (unresolved) {
+    if (unresolved && !retainedTaskIds.has(taskId)) {
       throw new Error('tasks with an unresolved remote execution cannot be removed')
     }
+    const next = draft.tasks[taskId]
+    if (task.generation !== null && next && next.generation == null) {
+      throw new Error('generation metadata cannot be cleared by an older draft')
+    }
+    if (unresolved && next && (
+      canonicalJson(task.formValues) !== canonicalJson(next.formValues)
+      || canonicalJson(task.generation) !== canonicalJson(next.generation ?? null)
+      || canonicalJson(task.professionalDraft) !== canonicalJson(next.professionalDraft)
+    )) throw new Error('task input is locked by an unresolved remote execution')
   }
 }
 
@@ -73,6 +83,7 @@ function mergeEditableDraft(current, draft) {
       }
       tasks[taskId] = {
         ...editable,
+        generation: editable.generation ?? null,
         inputRefs: [],
         runOrder: [],
         runs: {},
@@ -84,6 +95,7 @@ function mergeEditableDraft(current, draft) {
 
     tasks[taskId] = {
       ...editable,
+      generation: editable.generation ?? null,
       inputRefs: previous.inputRefs,
       runOrder: previous.runOrder,
       runs: previous.runs,
@@ -92,7 +104,7 @@ function mergeEditableDraft(current, draft) {
     }
   }
   return {
-    schemaVersion: 3,
+    schemaVersion: 4,
     panelMode: draft.panelMode,
     activeTaskId: draft.activeTaskId,
     taskOrder: draft.taskOrder,
@@ -148,7 +160,7 @@ class OasisWorkbenchRepository {
     } = candidate
     const next = parseWorkbenchRecord(workspaceId, {
       ...body,
-      schemaVersion: 3,
+      schemaVersion: 4,
       workspaceId,
       revision: current.revision + 1,
       updatedAt: this.#clock(),

@@ -7,11 +7,12 @@ const CLIENT_EXTERNALS = [
   'react-dom',
   'react-dom/client',
   '@deepseek-ai/cordis',
+  '@deepseek-ai/dsh-client-ui-primitives',
 ]
 
 export default defineConfig({
   name: `${PLUGIN_ID}/client`,
-  entry: { client: 'src/client.js' },
+  entry: { client: 'src/client-entry.js' },
   outDir: 'lib',
   format: 'cjs',
   platform: 'browser',

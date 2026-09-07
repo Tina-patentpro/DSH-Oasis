@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto'
+import { unifiedInputSha256 } from './unified-fixture.js'
 
 import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain'
 
@@ -8,6 +9,7 @@ import {
   workbenchEditableDraftSchema,
   workbenchRecordSchema,
   workbenchRecordV2Schema,
+  workbenchRecordV3Schema,
   workbenchTaskSchema,
 } from './workbench-contract.js'
 import {
@@ -72,7 +74,7 @@ function assertRunIntegrity(record) {
     }
     for (const runId of task.runOrder) {
       const run = task.runs[runId]
-      const inputSha256 = run.mode === 'local-mock'
+      const inputSha256 = run.mode === 'unified-fixture' ? unifiedInputSha256(run) : run.mode === 'local-mock'
         ? computeCanonicalInputSha256({
             mockVersion: run.mockVersion,
             workflowId: run.workflowId,
@@ -88,6 +90,8 @@ function assertRunIntegrity(record) {
       if (inputSha256 !== run.inputSnapshot.sha256) {
         throw new Error(`input integrity mismatch for task ${taskId} run ${runId}`)
       }
+
+      if (run.mode === 'unified-fixture' && run.status !== 'completed') continue
 
       const artifactSha256 = createHash('sha256')
         .update(run.result.artifact.body, 'utf8')
@@ -109,7 +113,7 @@ function assertRunIntegrity(record) {
         if (canonicalJson(expectedResult) !== canonicalJson(run.result)) {
           throw new Error(`result integrity mismatch for task ${taskId} run ${runId}`)
         }
-      } else {
+      } else if (run.mode === 'oasis-legacy') {
         const responseSha256 = computeOasisRemoteResponseSha256({
           answerText: run.result.answerText,
           fileUrls: run.result.fileUrls,
@@ -137,7 +141,7 @@ export function computeOasisRemoteResponseSha256({ answerText, fileUrls }) {
 
 export function createEmptyWorkbenchRecord(workspaceId) {
   return parseWorkbenchRecord(workspaceId, {
-    schemaVersion: 3,
+    schemaVersion: 4,
     workspaceId,
     revision: 0,
     panelMode: 'hidden',
@@ -221,14 +225,26 @@ export function parseStoredWorkbenchRecord(workspaceId, input) {
   if (input?.schemaVersion === 1) {
     return assertWorkspaceIdentity(
       workspaceId,
-      migrateWorkbenchRecordV2ToV3(migrateWorkbenchRecordV1ToV2(input)),
+      migrateWorkbenchRecordV3ToV4(migrateWorkbenchRecordV2ToV3(migrateWorkbenchRecordV1ToV2(input))),
     )
   }
   if (input?.schemaVersion === 2) {
-    return assertWorkspaceIdentity(workspaceId, migrateWorkbenchRecordV2ToV3(input))
+    return assertWorkspaceIdentity(workspaceId, migrateWorkbenchRecordV3ToV4(migrateWorkbenchRecordV2ToV3(input)))
   }
   if (input?.schemaVersion === 3) {
+    return assertWorkspaceIdentity(workspaceId, migrateWorkbenchRecordV3ToV4(input))
+  }
+  if (input?.schemaVersion === 4) {
     return parseWorkbenchRecord(workspaceId, input)
   }
   throw new Error(`unsupported workbench schemaVersion: ${String(input?.schemaVersion)}`)
+}
+
+export function migrateWorkbenchRecordV3ToV4(input) {
+  const previous = parseDetached(workbenchRecordV3Schema, input)
+  return parseWorkbenchRecord(previous.workspaceId, {
+    ...previous,
+    schemaVersion: 4,
+    tasks: Object.fromEntries(previous.taskOrder.map(id => [id, { ...previous.tasks[id], generation: null }])),
+  })
 }

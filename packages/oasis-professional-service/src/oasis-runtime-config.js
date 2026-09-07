@@ -2,6 +2,7 @@ import { credentialRef } from '@deepseek-ai/dsh-credentials'
 import z from '@deepseek-ai/schemastery'
 
 import { normalizeOasisOrigin } from './oasis-origin-policy.js'
+import { normalizeGenerationPreferences } from './generation-preferences.js'
 
 const DEFAULT_CREDENTIAL_REF = 'OASIS_USER_JWT'
 
@@ -12,12 +13,15 @@ export const OASIS_SETTINGS_SCHEMA = z.object({
   credentialOrigin: z.string().default(''),
   credentialRef: z.string().default(DEFAULT_CREDENTIAL_REF),
   downloadOrigins: z.array(z.string()).default([]),
+  defaultGenerationSource: z.string().default('local-skill'),
+  outputDirectoryPrefix: z.string().default(''),
 })
 
 export function normalizeOasisRuntimeConfig(input = {}) {
   if (input === null || typeof input !== 'object' || Array.isArray(input)) {
     throw new TypeError('Oasis runtime config must be an object')
   }
+  normalizeGenerationPreferences(input)
   const environmentKind = input.environmentKind ?? 'non-production'
   if (environmentKind !== 'non-production') throw new TypeError('Only non-production Oasis environments are supported')
   const rawBaseUrl = input.apiBaseUrl ?? ''
@@ -50,6 +54,8 @@ export function registerOasisSettings(ctx, base = {}) {
     credentialOrigin: '',
     credentialRef: DEFAULT_CREDENTIAL_REF,
     downloadOrigins: [],
+    defaultGenerationSource: 'local-skill',
+    outputDirectoryPrefix: '',
     ...base,
   }
   normalizeOasisRuntimeConfig(entry)

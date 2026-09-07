@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
+import { createElement } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { apply } from '../src/client.js'
 import { ProfessionalServicePanel } from '../src/client/ProfessionalServicePanel.js'
 
@@ -18,6 +20,16 @@ function nodes(value, result = []) {
   else if (typeof value === 'string') result.push(value)
   return result
 }
+
+test('native settings include new-task preferences without exposing an executable Skill or alternate model form', () => {
+  const html = renderToStaticMarkup(createElement(settingsUi.OasisSettingsSection, { controller: {
+    subscribe: () => () => {}, getSnapshot: () => ({ connected: true, settingsWritable: true,
+      defaultGenerationSource: 'oasis-api', outputDirectoryPrefix: '产物', apiBaseUrl: '', downloadOrigins: [] }),
+  } }))
+  assert.match(html, /默认生成来源/)
+  assert.match(html, /保存目录前缀/)
+  assert.doesNotMatch(html, /Skill 正文|模型密钥/)
+})
 
 test('configuration form offers separate writes and clears password before sending and when collapsed', () => {
   assert.equal(typeof ui.ConnectionSettingsForm, 'function', 'D1 settings form must exist')

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
+import { renderToStaticMarkup } from 'react-dom/server'
 
 import {
   WorkflowForm,
@@ -276,9 +277,11 @@ test('uses the remote catalog in the chooser and one business tree for normal/ex
     state, effectiveMode: 'normal', onSelectWorkflow: () => {}, onRenamePage: () => {}, onReload: () => {},
   })
   const chooserComponent = allNodes(chooser).find((node) => typeof node?.type === 'function')
-  const renderedChooser = chooserComponent.type(chooserComponent.props)
-  assert.match(textOf(renderedChooser), /目录工作流/)
-  assert.doesNotMatch(textOf(renderedChooser), /中国发明专利撰写/)
+  const renderedChooser = renderToStaticMarkup(chooserComponent)
+  assert.match(renderedChooser, /功能中心/)
+  assert.match(renderedChooser, /待接入/)
+  assert.doesNotMatch(renderedChooser, /data-testid="oasis-workflow-patent-claims"/)
+  assert.doesNotMatch(renderedChooser, /中国发明专利撰写/)
   assert.equal(allNodes(chooser).find((node) => node?.props?.['data-workspace-layout'])?.props?.['data-mode'], undefined)
 
   const source = await readFile(new URL('../src/client/PanelPages.js', import.meta.url), 'utf8')

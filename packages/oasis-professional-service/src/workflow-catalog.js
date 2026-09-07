@@ -1,10 +1,24 @@
 import { z } from 'zod'
+import { CLAIMS_FIELDS, CLAIMS_TEMPLATE_ID } from './generation-contract.js'
 
 import {
   workflowCatalogResponseSchema,
 } from './workbench-contract.js'
 
 const WORKFLOW_DEFINITIONS = [
+  {
+    workflowId: CLAIMS_TEMPLATE_ID,
+    workflowVersion: '1',
+    workType: 'cn-invention-patent',
+    title: '权利要求书生成',
+    description: '可审阅的文字草稿。',
+    executionMode: 'unified-text',
+    materialPolicy: {
+      acceptedExtensions: [], maxFiles: 1, maxFileBytes: 1, contentReadMode: 'metadata-only',
+    },
+    outputSections: ['claims'],
+    form: { fields: CLAIMS_FIELDS },
+  },
   {
     workflowId: 'technical-rd',
     workflowVersion: '1',

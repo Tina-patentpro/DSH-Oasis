@@ -89,6 +89,10 @@ test('registers a restart-applied DSH settings namespace without embedding a URL
   assert.equal(registration.options.applies, 'restart')
   assert.equal(registration.options.base.apiBaseUrl, '')
   assert.equal(registration.options.base.credentialOrigin, '')
+  assert.equal(registration.options.base.defaultGenerationSource, 'local-skill')
+  assert.equal(registration.options.base.outputDirectoryPrefix, '')
+  assert.throws(() => registration.options.validate({ outputDirectoryPrefix: '../outside' }))
+  assert.throws(() => registration.options.validate({ defaultGenerationSource: 'auto' }))
   assert.equal(JSON.stringify(registration.options.base).includes('Bearer '), false)
 })
 

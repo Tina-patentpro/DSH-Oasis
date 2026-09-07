@@ -1,4 +1,5 @@
 import { createElement } from 'react'
+import { SafeMarkdownPreview } from './SafeMarkdownPreview.js'
 
 const fieldShellStyle = {
   display: 'grid',
@@ -96,7 +97,45 @@ function controlFor({ pageId, field, value, error, firstInvalidFieldId, disabled
   ...field.options.map((option) => createElement('option', { key: option.value, value: option.value }, option.label)))
 }
 
-export function WorkflowForm({ pageId, workflow, values, validation, disabled, onChange }) {
+export function WorkflowForm({ pageId, workflow, values, validation, disabled, onChange,
+  presentation = 'stacked', activeFieldId, onActivateField = () => {}, preview = false, markdownRenderer }) {
+  if (presentation === 'tabs') {
+    const fields = workflow.form.fields
+    const active = fields.find(f => f.fieldId === activeFieldId) ?? fields[0]
+    if (!active) return null
+    const activeId = `oasis-field-${pageId}-${active.fieldId}`
+    const error = validation.errors[active.fieldId]
+    return createElement('section', { 'aria-label': '输入材料' },
+      createElement('div', { role: 'tablist', 'aria-label': '材料字段', style: { display: 'flex', flexWrap: 'wrap', gap: 4, borderBottom: '1px solid #cfddd7', marginBottom: 12 } },
+        ...fields.map((field, index) => createElement('button', {
+          key: field.fieldId, type: 'button', role: 'tab', id: `oasis-material-tab-${pageId}-${field.fieldId}`,
+          'aria-selected': field.fieldId === active.fieldId, 'aria-controls': `oasis-material-editor-${pageId}`,
+          tabIndex: field.fieldId === active.fieldId ? 0 : -1,
+          onClick: () => onActivateField(field.fieldId),
+          onKeyDown: event => {
+            const next = event.key === 'Home' ? 0 : event.key === 'End' ? fields.length - 1
+              : event.key === 'ArrowRight' ? (index + 1) % fields.length
+                : event.key === 'ArrowLeft' ? (index + fields.length - 1) % fields.length : null
+            if (next === null) return
+            event.preventDefault()
+            onActivateField(fields[next].fieldId)
+            event.currentTarget.parentElement?.children[next]?.focus()
+          },
+          style: { border: '1px solid #cfddd7', borderTop: field.fieldId === active.fieldId ? '3px solid #219772' : '1px solid #cfddd7',
+            borderRadius: '9px 9px 0 0', padding: '8px 10px', font: 'inherit', fontSize: 12, cursor: 'pointer',
+            background: field.fieldId === active.fieldId ? 'var(--dsw-alias-bg-base, #fff)' : 'var(--dsw-alias-bg-subtle, #f1f5f4)',
+            color: 'var(--dsw-alias-text-primary, #243b34)' },
+        }, field.label, typeof values[field.fieldId] === 'string' && values[field.fieldId].trim()
+          ? createElement('span', { 'aria-label': '已填写', style: { color: '#219772', paddingLeft: 4 } }, '•') : null,
+        validation.errors[field.fieldId] ? createElement('span', { 'aria-label': '待填写或修正', style: { color: '#b42318', paddingLeft: 3 } }, '＊') : null))),
+      createElement('div', { role: 'tabpanel', id: `oasis-material-editor-${pageId}`, 'aria-labelledby': `oasis-material-tab-${pageId}-${active.fieldId}` },
+        createElement('label', { htmlFor: activeId, style: { display: 'block', fontSize: 12, marginBottom: 8 } }, active.label),
+        preview
+          ? createElement(SafeMarkdownPreview, { markdownRenderer, style: { ...controlStyle, minHeight: 240 }, text: values[active.fieldId] || '暂无内容' })
+          : controlFor({ pageId, field: active, value: values[active.fieldId], error, firstInvalidFieldId: validation.firstInvalidFieldId, disabled, onChange }),
+        createElement('span', { id: `${activeId}-description`, style: { fontSize: 11, color: 'var(--dsw-alias-text-secondary, #66706b)' } }, `最多 ${active.maxChars} 字符`),
+        error ? createElement('span', { id: `${activeId}-error`, role: 'status', style: { display: 'block', color: '#b42318', fontSize: 12 } }, error) : null))
+  }
   return createElement('section', { 'aria-labelledby': `oasis-form-title-${pageId}` },
     createElement('div', { style: { marginBottom: 16 } },
       createElement('h4', { id: `oasis-form-title-${pageId}`, style: { margin: 0, fontSize: 15 } }, '工作流输入'),

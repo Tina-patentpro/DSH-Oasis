@@ -4,6 +4,8 @@ import {
   reduceWorkspaceState,
   workspaceStateToDraft,
 } from './workbench-model.js'
+import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
+import { generationUnavailableReason, hasPendingUnifiedRun } from '../generation-contract.js'
 
 export const EMPTY_WORKSPACE_STATE = createInitialWorkspaceState(null)
 
@@ -42,6 +44,8 @@ function errorMessage(error) {
 export function createWorkbenchStore({
   remote = null,
   connectionSettings = null,
+  conversationDrafts = null,
+  nativeFiles = null,
   createId = defaultCreateId,
   createRequestKey = defaultCreateId,
   clock = () => new Date().toISOString(),
@@ -143,6 +147,7 @@ export function createWorkbenchStore({
       catalogStatus: 'ready',
       catalogError: null,
       workflows: workflowCatalog.workflows,
+      unifiedFixtureEnabled: workflowCatalog.unifiedFixtureEnabled === true,
     })
   }
 
@@ -151,6 +156,7 @@ export function createWorkbenchStore({
       catalogStatus: current.catalogStatus,
       catalogError: current.catalogError,
       workflows: current.workflows,
+      unifiedFixtureEnabled: current.unifiedFixtureEnabled === true,
       professionalStatus: current.professionalStatus,
       professionalError: current.professionalError,
       professionalBootstrap: current.professionalBootstrap,
@@ -162,6 +168,22 @@ export function createWorkbenchStore({
     const page = getCurrent(workspaceId).pages.find((item) => item.pageId === pageId)
     if (!page) throw new Error('unknown page')
     return page
+  }
+
+  function assertInputEditable(workspaceId, pageId) {
+    const page = pageFor(workspaceId, pageId)
+    if (operationFor(getCurrent(workspaceId), pageId).activeOperation !== null
+      || operationFor(getCurrent(workspaceId), pageId).generationUncertain || hasPendingUnifiedRun(page)
+      || page.remoteExecutionOrder.some(id => isOasisRemoteExecutionUnresolved(page.remoteExecutions[id]))) {
+      throw new Error('任务处理中或结果未确认，输入与来源已锁定')
+    }
+  }
+
+  function invalidateInputConfirmations(workspaceId, pageId) {
+    updatePageOperation(workspaceId, pageId, {
+      priceConfirmed: false, externalTransferConfirmed: false, requestKey: null,
+      writebackConfirmed: false, writebackPlan: null, error: null, errorCode: null, feedback: null,
+    })
   }
 
   function operationFor(state, pageId) {
@@ -521,6 +543,7 @@ export function createWorkbenchStore({
 
   const store = {
     connectionSettings,
+    conversationDrafts,
 
     async refreshProfessionalConfiguration(reload = false) {
       if (closing || disposed) return
@@ -600,12 +623,14 @@ export function createWorkbenchStore({
           if (workflows === null) throw new Error('Malformed workflow catalog response')
           setState(workspaceId, stateWith(getCurrent(workspaceId), {
             catalogStatus: 'ready', catalogError: null, workflows,
+            unifiedFixtureEnabled: response.unifiedFixtureEnabled === true,
           }))
           return workflows
         } catch (error) {
           if (!closing && !disposed && !controller.signal.aborted) {
             setState(workspaceId, stateWith(getCurrent(workspaceId), {
-              catalogStatus: 'error', catalogError: errorMessage(error), workflows: [],
+            catalogStatus: 'error', catalogError: errorMessage(error), workflows: [],
+            unifiedFixtureEnabled: false,
             }))
           }
           throw error
@@ -706,11 +731,28 @@ export function createWorkbenchStore({
       if (current.catalogStatus !== 'ready') throw new Error('workflow catalog is not ready')
       const workflow = current.workflows.find((item) => item.workflowId === workflowId)
       if (!workflow) throw new Error(`workflow catalog does not contain ${workflowId}`)
-      return dispatch(workspaceId, { type: 'select-workflow', pageId, workflow })
+      const preference = connectionSettings?.getSnapshot?.()
+      dispatch(workspaceId, { type: 'select-workflow', pageId, workflow,
+        defaultGenerationSource: preference?.defaultGenerationSource ?? 'local-skill' })
+      if (workflow.executionMode === 'unified-text' && preference?.outputDirectoryPrefix) {
+        updatePageOperation(workspaceId, pageId, { writebackDirectory: `${preference.outputDirectoryPrefix}\\${pageId}` })
+      }
+      return getCurrent(workspaceId)
     },
 
     updateFormValue(workspaceId, pageId, fieldId, value) {
-      return dispatch(workspaceId, { type: 'update-form-value', pageId, fieldId, value })
+      assertInputEditable(workspaceId, pageId)
+      dispatch(workspaceId, { type: 'update-form-value', pageId, fieldId, value })
+      invalidateInputConfirmations(workspaceId, pageId)
+      return getCurrent(workspaceId)
+    },
+
+    setGenerationSource(workspaceId, pageId, source) {
+      assertInputEditable(workspaceId, pageId)
+      const previous = pageFor(workspaceId, pageId).generation?.source
+      dispatch(workspaceId, { type: 'set-generation-source', pageId, source })
+      if (source !== previous) invalidateInputConfirmations(workspaceId, pageId)
+      return getCurrent(workspaceId)
     },
 
     async selectProfessionalService(workspaceId, pageId, apiEndpoint) {
@@ -957,6 +999,20 @@ export function createWorkbenchStore({
 
     async createRun(workspaceId, pageId) {
       const page = pageFor(workspaceId, pageId)
+      if (page.generation) {
+        if (!getCurrent(workspaceId).unifiedFixtureEnabled) throw new Error(generationUnavailableReason(page.generation.source))
+        assertInputEditable(workspaceId, pageId)
+        const requestKey = createRequestKey()
+        updatePageOperation(workspaceId, pageId, { requestKey })
+        try {
+          return await runPageOperation(workspaceId, pageId, 'run-create', current => remote.createUnifiedRun({
+            workspaceId, taskId: pageId, expectedRevision: current.revision, requestKey,
+          }, controller.signal), () => ({ requestKey: null, feedback: 'run-completed', generationUncertain: false }))
+        } catch (error) {
+          if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { generationUncertain: true })
+          throw error
+        }
+      }
       if (page.workflowId === null) throw new Error('A workflow must be selected before generation')
       const operation = operationFor(getCurrent(workspaceId), pageId)
       const requestKey = operation.requestKey ?? createRequestKey()
@@ -979,6 +1035,59 @@ export function createWorkbenchStore({
       return updatePageOperation(workspaceId, pageId, {
         reviewNote: String(note), error: null, errorCode: null, feedback: null,
       })
+    },
+
+    async observeUnifiedRun(workspaceId, pageId) {
+      return runPageOperation(workspaceId, pageId, 'run-observe', async () => ({
+        committed: true, current: await remote.get(workspaceId, controller.signal),
+      }), () => ({ generationUncertain: false, requestKey: null, feedback: 'run-observed' }))
+    },
+    async stopUnifiedRun(workspaceId, pageId, runId) {
+      return runPageOperation(workspaceId, pageId, 'run-stop', current => remote.stopUnifiedRun({
+        workspaceId, taskId: pageId, runId, expectedRevision: current.revision,
+      }, controller.signal), () => ({ generationUncertain: false, requestKey: null, feedback: 'run-stopped' }))
+    },
+    async editUnifiedResult(workspaceId, pageId, runId, body) {
+      assertInputEditable(workspaceId, pageId)
+      const run = pageFor(workspaceId, pageId).runs[runId]
+      if (!run || run.status !== 'completed') throw new Error('请选择已完成版本')
+      const requestKey = createRequestKey()
+      return runPageOperation(workspaceId, pageId, 'result-edit', current => remote.editUnifiedResult({
+        workspaceId, taskId: pageId, runId, artifactId: run.result.artifact.artifactId,
+        expectedRevision: current.revision, requestKey, body,
+      }, controller.signal), () => ({ feedback: 'result-edited', writebackPlan: null, writebackConfirmed: false, reviewNote: '' }))
+    },
+    async useInConversation(workspaceId, pageId, runId) {
+      if (!conversationDrafts) throw new Error('当前对话输入接口不可用')
+      const target = conversationDrafts.capture(workspaceId)
+      const run = pageFor(workspaceId, pageId).runs[runId]
+      if (!run?.result || run.review.status !== 'approved') throw new Error('请先审核所选版本')
+      await flushWorkspace(workspaceId)
+      const current = getCurrent(workspaceId)
+      const result = await remote.prepareConversationDraft({ workspaceId, taskId: pageId, runId,
+        artifactId: run.result.artifact.artifactId, expectedRevision: current.revision }, controller.signal)
+      if (closing || disposed) return false
+      conversationDrafts.insert(target, result)
+      updatePageOperation(workspaceId, pageId, { feedback: 'conversation-draft-ready' })
+      return true
+    },
+    async openSavedFile(workspaceId, pageId, runId, writebackId) {
+      const target = nativeFiles?.captureSavedFileTarget(workspaceId)
+      if (!target) throw new Error('安全文件预览不可用')
+      const run = pageFor(workspaceId, pageId).runs[runId]
+      if (!run?.result || run.review.status !== 'approved' || !run.writebacks.some(item => item.writebackId === writebackId)) {
+        throw new Error('请选择已审核并保存的版本')
+      }
+      await flushWorkspace(workspaceId)
+      const current = getCurrent(workspaceId)
+      const result = await remote.resolveSavedFile({ workspaceId, taskId: pageId, runId, writebackId,
+        artifactId: run.result.artifact.artifactId, expectedRevision: current.revision }, controller.signal)
+      if (closing || disposed) return false
+      const latest = getCurrent(workspaceId)
+      const page = latest.pages.find(item => item.pageId === pageId)
+      if (latest.revision !== current.revision || latest.activePageId !== pageId || page?.activeRunId !== runId
+        || !nativeFiles.openSavedFile(target, result)) throw new Error('当前任务或项目已变化，请重新打开文件')
+      return true
     },
 
     async reviewRun(workspaceId, pageId, runId, status, note) {
@@ -1100,6 +1209,7 @@ export function createWorkbenchStore({
     },
 
     closePage(workspaceId, pageId) {
+      if (pageFor(workspaceId, pageId).generation) assertInputEditable(workspaceId, pageId)
       return dispatch(workspaceId, { type: 'close-page', pageId })
     },
 

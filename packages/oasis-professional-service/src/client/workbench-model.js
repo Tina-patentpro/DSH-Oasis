@@ -1,4 +1,5 @@
 import { workbenchRecordSchema } from '../workbench-contract.js'
+import { CLAIMS_SCHEMA_VERSION, generationSourceSchema } from '../generation-contract.js'
 
 const PANEL_MODES = new Set(['hidden', 'normal', 'expanded'])
 
@@ -27,6 +28,7 @@ function taskToPage(task) {
     inputRefs: detached(task.inputRefs),
     formValues: detached(task.formValues),
     professionalDraft: detached(task.professionalDraft),
+    generation: detached(task.generation ?? null),
     activeRunId: task.activeRunId,
     runOrder: detached(task.runOrder),
     runs: detached(task.runs),
@@ -47,6 +49,7 @@ function pageToEditableTask(page) {
     workflowVersion: page.workflowVersion,
     formValues: detached(page.formValues),
     professionalDraft: detached(page.professionalDraft),
+    generation: detached(page.generation ?? null),
     activeRunId: page.activeRunId,
     createdAt: page.createdAt,
     updatedAt: page.updatedAt,
@@ -98,7 +101,7 @@ export function workspaceStateToDraft(state) {
   const tasks = {}
   for (const page of state.pages) tasks[page.pageId] = pageToEditableTask(page)
   return deepFreeze({
-    schemaVersion: 3,
+    schemaVersion: 4,
     panelMode: state.panelMode,
     activeTaskId: state.activePageId,
     taskOrder: state.pages.map((page) => page.pageId),
@@ -120,6 +123,7 @@ function createPage(state, env) {
     inputRefs: [],
     formValues: {},
     professionalDraft: null,
+    generation: null,
     activeRunId: null,
     runOrder: [],
     runs: {},
@@ -157,6 +161,9 @@ export function reduceWorkspaceState(state, action, env) {
     const workflow = action.workflow
     const formValues = initialFormValues(workflow)
     if (!state.pages.some((page) => page.pageId === action.pageId)) throw new Error('unknown page')
+    if (state.pages.find(page => page.pageId === action.pageId).workflowId !== null) {
+      throw new Error('selected workflow is immutable; create a new task instead')
+    }
     next = {
       ...state,
       activePageId: action.pageId,
@@ -168,11 +175,21 @@ export function reduceWorkspaceState(state, action, env) {
             workflowId: workflow.workflowId,
             workflowVersion: workflow.workflowVersion,
             formValues,
+            generation: workflow.executionMode === 'unified-text'
+              ? { inputSchemaVersion: CLAIMS_SCHEMA_VERSION, source: generationSourceSchema.parse(action.defaultGenerationSource ?? 'local-skill') }
+              : null,
             updatedAt: env.now(),
             view: 'workspace',
           }
         : page),
     }
+  } else if (action.type === 'set-generation-source') {
+    const source = generationSourceSchema.parse(action.source)
+    const page = state.pages.find(item => item.pageId === action.pageId)
+    if (!page?.generation) throw new Error('source switching requires a unified task')
+    if (page.generation.source === source) return state
+    next = { ...state, pages: state.pages.map(item => item.pageId === action.pageId
+      ? { ...item, generation: { ...item.generation, source }, updatedAt: env.now() } : item) }
   } else if (action.type === 'update-form-value') {
     const page = state.pages.find((item) => item.pageId === action.pageId)
     if (!page) throw new Error('unknown page')

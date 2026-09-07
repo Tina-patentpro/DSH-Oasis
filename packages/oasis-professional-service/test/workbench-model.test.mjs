@@ -47,7 +47,10 @@ test('maps Host evidence to pages but excludes it from editable replacement draf
   assert.equal(state.pages[0].runs['run-a'].result.contentStatus, 'warning')
 
   const draft = workspaceStateToDraft(state)
-  assert.deepEqual(draft, recordToEditableDraft(record))
+  const expected = recordToEditableDraft(record)
+  expected.schemaVersion = 4
+  for (const task of Object.values(expected.tasks)) task.generation = null
+  assert.deepEqual(draft, expected)
   assert.equal(Object.hasOwn(draft.tasks['task-a'], 'inputRefs'), false)
   assert.equal(Object.hasOwn(draft.tasks['task-a'], 'runs'), false)
 })
@@ -58,7 +61,7 @@ test('fails closed when a persisted record contains malformed evidence', () => {
   assert.throws(() => recordToWorkspaceState(malformed))
 })
 
-test('creates tasks with durable schema-v3 defaults before workflow selection', () => {
+test('creates tasks with durable schema-v4 defaults before workflow selection', () => {
   const state = recordToWorkspaceState(createV3Record('workspace-a', 0, { empty: true }))
   const next = reduceWorkspaceState(state, { type: 'create-page' }, {
     createId: () => 'task-created',
@@ -73,6 +76,7 @@ test('creates tasks with durable schema-v3 defaults before workflow selection', 
     inputRefs: [],
     formValues: {},
     professionalDraft: null,
+    generation: null,
     activeRunId: null,
     runOrder: [],
     runs: {},
@@ -82,7 +86,7 @@ test('creates tasks with durable schema-v3 defaults before workflow selection', 
     updatedAt: NOW,
     view: 'chooser',
   })
-  assert.equal(workspaceStateToDraft(next).schemaVersion, 3)
+  assert.equal(workspaceStateToDraft(next).schemaVersion, 4)
 })
 
 test('selects a remote workflow definition in place, updates form values, renames, and closes deterministically', () => {

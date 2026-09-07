@@ -16,6 +16,7 @@ import {
   WorkspaceMaterialError,
 } from './workspace-materials.js'
 import { createWritebackManager } from './writeback-service.js'
+import { createUnifiedGenerationService } from './unified-generation-service.js'
 
 function serviceError(code, message, details = {}) {
   return new WorkspaceMaterialError(code, message, details)
@@ -82,6 +83,8 @@ export function createWorkbenchService({
   runIdFactory = () => `run-${randomUUID()}`,
   localMockRunner = runLocalMock,
   writebackManager,
+  unifiedFixtureEnabled = false,
+  unifiedFixtureRunner,
 } = {}) {
   if (!repository || typeof repository.get !== 'function') {
     throw new TypeError('repository.get is required')
@@ -115,6 +118,7 @@ export function createWorkbenchService({
   }
 
   function assertWritebackRun(run, artifactId) {
+    if (!run.result || run.status !== 'completed') throw serviceError('RUN_NOT_COMPLETED', '请选择已完成的文字结果')
     if (run.result.artifact.artifactId !== artifactId) {
       throw serviceError('WRITEBACK_ARTIFACT_MISMATCH', 'Writeback artifact does not belong to the selected run')
     }
@@ -154,6 +158,7 @@ export function createWorkbenchService({
   }
 
   return Object.freeze({
+    ...createUnifiedGenerationService({ repository, enabled: unifiedFixtureEnabled, clock, runIdFactory, runner: unifiedFixtureRunner }),
     getState(workspaceId) {
       return repository.get(workspaceId)
     },
@@ -161,7 +166,7 @@ export function createWorkbenchService({
       return repository.replaceEditable(workspaceId, expectedRevision, state)
     },
     getWorkflowCatalog(workType) {
-      return getWorkflowCatalog(workType)
+      return { ...getWorkflowCatalog(workType), unifiedFixtureEnabled: unifiedFixtureEnabled === true }
     },
     addMaterial({ workspaceId, taskId, expectedRevision, relativePath, confirmed }) {
       if (confirmed !== true) {
@@ -225,6 +230,9 @@ export function createWorkbenchService({
       return repository.mutate(workspaceId, expectedRevision, async (current) => {
         const task = requireTask(current, taskId)
         const workflow = workflowForTask(task)
+        if (workflow.executionMode !== 'local-mock') {
+          throw serviceError('GENERATION_NOT_ENABLED', '统一模板生成尚未启用；不能使用旧演练入口')
+        }
         const formValues = validateAuthoritativeForm(task)
         const inputRefs = await materials.recheckAll(workspaceId, task.inputRefs, workflow.materialPolicy)
         const now = clock()
@@ -296,6 +304,7 @@ export function createWorkbenchService({
       return repository.mutate(workspaceId, expectedRevision, (current) => {
         const task = requireTask(current, taskId)
         const run = requireRun(task, runId)
+        if (!run.result || run.status !== 'completed') throw serviceError('RUN_NOT_COMPLETED', '请选择已完成的文字结果')
         if (status === 'approved' && run.result.contentStatus === 'blocked') {
           throw serviceError('RUN_BLOCKED', 'Blocked run cannot be approved', { runId })
         }
@@ -351,12 +360,29 @@ export function createWorkbenchService({
         workflowVersion: run.workflowVersion,
         mode: run.mode,
         mockVersion: run.mockVersion,
+        ...(run.mode === 'unified-fixture' ? { unified: { source: run.source, evidenceKind: run.evidenceKind,
+          fixtureVersion: run.fixtureVersion, inputSchemaVersion: run.inputSchemaVersion, parentRunId: run.parentRunId } } : {}),
         inputSha256: run.inputSnapshot.sha256,
         artifact: run.result.artifact,
         reviewStatus: run.review.status,
         relativeDirectory,
         ...(remote ? { remote } : {}),
       })
+    },
+    async resolveSavedFile({ workspaceId, taskId, runId, artifactId, writebackId, expectedRevision }) {
+      const current = repository.get(workspaceId)
+      if (current.revision !== expectedRevision) throw serviceError('REVISION_CONFLICT', '请先刷新任务状态')
+      const run = requireRun(requireTask(current, taskId), runId)
+      if (run.status !== 'completed' || !run.result || run.result.artifact.artifactId !== artifactId
+        || run.review.status !== 'approved' || run.result.contentStatus === 'blocked') {
+        throw serviceError('WRITEBACK_ARTIFACT_MISMATCH', '请选择已审核并保存的文字版本')
+      }
+      const record = run.writebacks.find(item => item.writebackId === writebackId && item.artifactId === artifactId)
+      const file = record?.files.find(item => item.mediaType === 'text/markdown')
+      if (!file) throw serviceError('WRITEBACK_NOT_FOUND', '未找到所选版本的已保存文件')
+      const absolutePath = await requireWritebackManager().resolveSavedFile(workspaceId, file.relativePath)
+      if (repository.get(workspaceId).revision !== expectedRevision) throw serviceError('REVISION_CONFLICT', '任务状态已变化')
+      return { workspaceId, taskId, runId, artifactId, writebackId, absolutePath, kind: 'current-file' }
     },
     async commitWriteback({ confirmationToken }) {
       const manager = requireWritebackManager()

@@ -23,6 +23,8 @@ test('builds the browser face as a DSH lazy-CJS module', () => {
   assert.match(bundle, /window\.__ModuleLoader__\.load\(\{\s*id:\s*["']oasis-professional-service["']/)
   assert.match(bundle, /require\(["']react["']\)/)
   assert.match(bundle, /require\(["']react-dom["']\)/)
+  assert.match(bundle, /require\(["']@deepseek-ai\/dsh-client-ui-primitives["']\)/)
+  assert.doesNotMatch(bundle, /function renderSettled\(/, 'must use the host renderer, not bundle a private copy')
   assert.match(bundle, /return module\.exports/)
 })
 

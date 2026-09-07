@@ -1,5 +1,7 @@
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import { randomUUID } from 'node:crypto'
+import { isUnifiedFixtureEnvironment } from './unified-fixture-environment.js'
+export { isUnifiedFixtureEnvironment } from './unified-fixture-environment.js'
 
 import { createOasisApiClient } from './oasis-api-contract.js'
 import { createOasisRemoteService } from './oasis-remote-service.js'
@@ -55,10 +57,12 @@ export async function apply(ctx) {
   const settingsScope = registerOasisSettings(ctx)
   const repository = await openOasisWorkbenchRepository(ctx.storageDomain)
   const materialManager = createWorkspaceMaterialManager({ workspaceRegistry: ctx.workspaceRegistry })
+  const fixtureEnabled = isUnifiedFixtureEnvironment()
   const service = createWorkbenchService({
     repository,
     materialManager,
     workspaceRegistry: ctx.workspaceRegistry,
+    unifiedFixtureEnabled: fixtureEnabled,
   })
   const professionalService = createOasisRemoteService({
     repository,
@@ -66,6 +70,7 @@ export async function apply(ctx) {
     executionIdFactory: randomUUID,
     runIdFactory: randomUUID,
     async getRuntime() {
+      if (fixtureEnabled) return { enabled: false, environmentKind: 'non-production', apiBaseOrigin: null, credentialConfigured: false, client: null }
       const config = normalizeOasisRuntimeConfig(settingsScope.get())
       if (!config.remoteEnabled) {
         return {

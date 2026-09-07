@@ -68,11 +68,11 @@ test('renders loading, conflict, and transport failure as distinct accessible st
 
 test('exposes task rename and explicit close controls while preserving saving feedback', () => {
   const page = {
-    pageId: 'task-a', title: '原任务', workflowId: null, view: 'chooser',
+    pageId: 'task-a', title: '原任务', workflowId: 'historical-template', view: 'workspace',
   }
   const renamed = []
   const pages = PanelPages({
-    state: baseState({ syncStatus: 'saving', activePageId: 'task-a', pages: [page] }),
+    state: baseState({ syncStatus: 'saving', activePageId: 'task-a', pages: [page], workflows: [] }),
     onRenamePage: (pageId, title) => renamed.push([pageId, title]),
     onSelectWorkflow: () => {},
   })
