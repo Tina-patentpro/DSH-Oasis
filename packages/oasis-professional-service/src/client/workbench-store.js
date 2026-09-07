@@ -106,6 +106,7 @@ export function createWorkbenchStore({
         pendingDraft: null,
         saveTimer: null,
         saveGeneration: 0,
+        editGeneration: 0,
       }
       runtimes.set(workspaceId, runtime)
     }
@@ -280,9 +281,10 @@ export function createWorkbenchStore({
             const latest = getCurrent(workspaceId)
             setState(workspaceId, stateWith(latest, {
               revision: committed.revision,
-              syncStatus: runtime.pendingDraft !== null ? 'saving' : 'ready',
+              syncStatus: latest.syncStatus === 'conflict' ? 'conflict' : runtime.pendingDraft !== null ? 'saving' : 'ready',
               syncError: null,
-              conflictCurrent: null,
+              conflictCurrent: latest.syncStatus === 'conflict'
+                ? (latest.conflictCurrent?.revision > committed.revision ? latest.conflictCurrent : committed) : null,
             }))
             continue
           }
@@ -361,6 +363,9 @@ export function createWorkbenchStore({
         ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current)),
         current,
       )
+      if (current.syncStatus === 'conflict' || current.revision > authoritative.revision) {
+        preserveDraftConflict(workspaceId, authoritative)
+      }
       setState(workspaceId, authoritative)
       return authoritative
     }
@@ -377,6 +382,20 @@ export function createWorkbenchStore({
       throw error
     }
     throw new Error('Malformed Oasis workbench mutation result')
+  }
+
+  function preserveDraftConflict(workspaceId, authoritative) {
+    const runtime = runtimeFor(workspaceId)
+    clearScheduledSave(runtime)
+    runtime.pendingDraft = null
+    const current = getCurrent(workspaceId)
+    setState(workspaceId, stateWith(current, {
+      syncStatus: 'conflict', syncError: null,
+      conflictCurrent: current.conflictCurrent?.revision > authoritative.revision ? current.conflictCurrent : authoritative,
+    }))
+    const error = new Error('Workspace revision conflict; local draft retained')
+    error.code = 'revision-conflict'
+    throw error
   }
 
   async function runPageOperation(workspaceId, pageId, operationName, operation, onSuccess) {
@@ -397,8 +416,12 @@ export function createWorkbenchStore({
       if (current.syncStatus !== 'ready') {
         throw new Error(`Workspace is not ready for ${operationName}`)
       }
+      const editGeneration = runtimeFor(workspaceId).editGeneration
       const result = await operation(current)
       if (closing || disposed || controller.signal.aborted) return getCurrent(workspaceId)
+      if (runtimeFor(workspaceId).editGeneration !== editGeneration && result?.current) {
+        preserveDraftConflict(workspaceId, ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current)))
+      }
       const applied = applyAuthoritativeReplacement(workspaceId, result)
       updatePageOperation(workspaceId, pageId, {
         activeOperation: null,
@@ -437,6 +460,7 @@ export function createWorkbenchStore({
     const current = getCurrent(workspaceId)
     const next = reduceWorkspaceState(current, action, reducerEnvironment)
     if (next === current) return current
+    runtimeFor(workspaceId).editGeneration += 1
     const saving = stateWith(next, {
       syncStatus: remote === null ? 'ready' : 'saving',
       syncError: null,
@@ -1067,6 +1091,12 @@ export function createWorkbenchStore({
       const result = await remote.prepareConversationDraft({ workspaceId, taskId: pageId, runId,
         artifactId: run.result.artifact.artifactId, expectedRevision: current.revision }, controller.signal)
       if (closing || disposed) return false
+      const latest = getCurrent(workspaceId)
+      const page = latest.pages.find(item => item.pageId === pageId)
+      if (latest.syncStatus !== 'ready' || latest.revision !== current.revision || latest.activePageId !== pageId
+        || page?.activeRunId !== runId || page.runs[runId]?.review.status !== 'approved') {
+        throw new Error('当前任务或审核版本已变化，请重新准备对话资料')
+      }
       conversationDrafts.insert(target, result)
       updatePageOperation(workspaceId, pageId, { feedback: 'conversation-draft-ready' })
       return true

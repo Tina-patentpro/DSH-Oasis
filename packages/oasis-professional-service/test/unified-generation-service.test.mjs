@@ -36,6 +36,64 @@ export async function fixtureHarness(options = {}) {
   return { repository, service, state, command, draft, records }
 }
 
+test('late conversation preparation cannot insert after the selected version changes', async () => {
+  const h = await fixtureHarness({ unifiedFixtureEnabled: true })
+  let release, entered
+  const started = new Promise(resolve => { entered = resolve })
+  let inserted = 0
+  const handler = createWorkbenchRpcHandler(h.service)
+  const remote = createWorkbenchRemote({ rpc: { async call(channel, endpoint, payload) {
+    const response = await handler(endpoint, payload)
+    if (endpoint === 'artifact/conversation-draft') { entered(); await new Promise(resolve => { release = resolve }) }
+    return response
+  } } })
+  const store = createWorkbenchStore({ remote, saveDelayMs: 60000, clock: () => NOW,
+    conversationDrafts: { capture: () => ({}), insert() { inserted += 1 } },
+  })
+  try {
+    store.syncWorkspaces([{ workspaceId: 'workspace-a' }])
+    await store.hydrateWorkspace('workspace-a'); await store.loadWorkflowCatalog('workspace-a')
+    await store.createRun('workspace-a', 'task-a')
+    const first = store.getWorkspaceState('workspace-a').pages[0].activeRunId
+    await store.reviewRun('workspace-a', 'task-a', first, 'approved', '')
+    await store.editUnifiedResult('workspace-a', 'task-a', first, '另一个固定版本')
+    const second = store.getWorkspaceState('workspace-a').pages[0].activeRunId
+    store.activateRun('workspace-a', 'task-a', first)
+    const pending = store.useInConversation('workspace-a', 'task-a', first)
+    await started
+    store.activateRun('workspace-a', 'task-a', second)
+    release()
+    await assert.rejects(pending, /变化/)
+    assert.equal(inserted, 0)
+  } finally { await store.dispose(); await h.repository.close() }
+})
+
+test('a generation response preserves an unsaved sibling draft instead of replacing it', async () => {
+  let release, entered
+  const started = new Promise(resolve => { entered = resolve })
+  const h = await fixtureHarness({ unifiedFixtureEnabled: true, unifiedFixtureRunner: async () => {
+    entered(); return new Promise(resolve => { release = resolve })
+  } })
+  const handler = createWorkbenchRpcHandler(h.service)
+  const remote = createWorkbenchRemote({ rpc: { call: (channel, endpoint, payload) => handler(endpoint, payload) } })
+  const store = createWorkbenchStore({ remote, saveDelayMs: 60000, clock: () => NOW, createId: () => 'task-b' })
+  try {
+    store.syncWorkspaces([{ workspaceId: 'workspace-a' }])
+    await store.hydrateWorkspace('workspace-a'); await store.loadWorkflowCatalog('workspace-a')
+    store.createPage('workspace-a'); store.selectWorkflow('workspace-a', 'task-b', 'patent-claims')
+    await store.whenSettled('workspace-a')
+    const pending = store.createRun('workspace-a', 'task-a')
+    await started
+    store.updateFormValue('workspace-a', 'task-b', 'claims', '必须保留的未保存材料')
+    release('已经生成的合成正文')
+    await pending.catch(error => { assert.match(error.message, /conflict/i) })
+    const state = store.getWorkspaceState('workspace-a')
+    assert.equal(state.pages.find(page => page.pageId === 'task-b').formValues.claims, '必须保留的未保存材料')
+    assert.equal(state.syncStatus, 'conflict')
+    assert.equal(h.state().tasks['task-a'].runs[h.state().tasks['task-a'].activeRunId].status, 'completed')
+  } finally { await store.dispose(); await h.repository.close() }
+})
+
 test('fixture capability is off by default and real generation is never a fallback', async () => {
   const h = await fixtureHarness()
   try {
