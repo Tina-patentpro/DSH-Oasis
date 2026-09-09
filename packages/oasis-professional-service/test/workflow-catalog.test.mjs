@@ -33,7 +33,7 @@ test('filters by work type without mutating or sharing a writable result', () =>
   assert.equal(technical.workflows.length, 1)
   assert.equal(technical.workflows[0].workflowId, 'technical-rd')
   assert.throws(() => technical.workflows.push({}), TypeError)
-  assert.equal(getWorkflowCatalog().workflows.length, 3)
+  assert.equal(getWorkflowCatalog().workflows.length, 4)
 })
 
 test('uses only the bounded form DSL and unique field identifiers', () => {

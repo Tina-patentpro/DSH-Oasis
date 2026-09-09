@@ -1,5 +1,6 @@
 import {
   savedFileResponseSchema,
+  localGenerationPreviewSchema,
   conversationDraftResponseSchema,
   oasisProfessionalBootstrapSchema,
   oasisProfessionalDetailSchema,
@@ -182,6 +183,22 @@ export function createWorkbenchRemote(connection) {
 
     async createUnifiedRun(payload, signal) {
       return unwrap(await connection.rpc.call(CHANNEL, 'task/create-unified', payload, signal), workbenchReplaceResponseSchema)
+    },
+    async selectClaimsUpstream(payload, signal) {
+      return unwrap(await connection.rpc.call(CHANNEL, 'task/select-upstream', payload, signal), workbenchReplaceResponseSchema)
+    },
+    async prepareLocalRun(payload, signal) {
+      const result = unwrap(await connection.rpc.call(CHANNEL, 'task/prepare-local', payload, signal), localGenerationPreviewSchema)
+      for (const key of ['workspaceId', 'taskId', 'sessionId', 'expectedRevision']) {
+        if (result[key] !== payload[key]) throw new WorkbenchRemoteError('INVALID_RESPONSE', '生成确认范围不一致')
+      }
+      return result
+    },
+    async createLocalRun(payload, signal) {
+      return unwrap(await connection.rpc.call(CHANNEL, 'task/create-local', payload, signal), workbenchReplaceResponseSchema)
+    },
+    async observeLocalRun(payload, signal) {
+      return unwrap(await connection.rpc.call(CHANNEL, 'task/observe-local', payload, signal), workbenchReplaceResponseSchema)
     },
     async stopUnifiedRun(payload, signal) {
       return unwrap(await connection.rpc.call(CHANNEL, 'task/stop-unified', payload, signal), workbenchReplaceResponseSchema)

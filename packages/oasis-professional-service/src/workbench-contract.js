@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { isCanonicalOasisNonProductionOrigin, isSafeOasisFileUrl } from './oasis-origin-policy.js'
-import { CLAIMS_TEMPLATE_ID, claimsDraftValuesSchema, generationDraftSchema, generationSourceSchema, hasPendingUnifiedRun } from './generation-contract.js'
+import { CLAIMS_TEMPLATE_ID, claimsDraftValuesSchema, claimsV2DraftValuesSchema, claimsInputVersion, claimsUpstreamSnapshotSchema, generationDraftSchema, generationSourceSchema, hasPendingUnifiedRun, isUnifiedRun } from './generation-contract.js'
 
 export const WORKBENCH_LIMITS = Object.freeze({
   maxTasksPerWorkspace: 32,
@@ -107,6 +107,8 @@ export const workflowCatalogResponseSchema = z.object({
   schemaVersion: z.literal(1),
   workflows: z.array(workflowDefinitionSchema).max(16),
   unifiedFixtureEnabled: z.boolean().optional(),
+  localGenerationEnabled: z.boolean().optional(),
+  localGenerationKind: z.enum(['native-offline', 'native-model']).nullable().optional(),
 }).strict()
 
 const jsonStringSchema = z.string().refine(
@@ -550,11 +552,13 @@ export const runSnapshotSchema = z.discriminatedUnion('mode', [
 export const unifiedRunSnapshotSchema = z.object({
   runId: identifierSchema, requestKey: identifierSchema,
   mode: z.literal('unified-fixture'), evidenceKind: z.literal('synthetic'), fixtureVersion: z.literal('1'),
-  source: generationSourceSchema, inputSchemaVersion: z.literal('1'),
-  workflowId: z.literal(CLAIMS_TEMPLATE_ID), workflowVersion: z.literal('1'),
+  source: generationSourceSchema, inputSchemaVersion: z.enum(['1', 'claims-disclosure-2']),
+  workflowId: z.literal(CLAIMS_TEMPLATE_ID), workflowVersion: z.enum(['1', '2']),
+  compositionVersion: z.literal('2').optional(), workflowRunUid: z.string().uuid().optional(),
   status: z.enum(['prepared', 'completed', 'failed', 'stopped']),
   parentRunId: identifierSchema.nullable(),
-  inputSnapshot: z.object({ formValues: claimsDraftValuesSchema, inputRefs: z.array(z.never()).length(0),
+  inputSnapshot: z.object({ formValues: z.union([claimsDraftValuesSchema, claimsV2DraftValuesSchema]), inputRefs: z.array(z.never()).length(0),
+    upstreamSnapshot: claimsUpstreamSnapshotSchema.optional(),
     sha256: sha256Schema, capturedAt: timestampSchema }).strict(),
   result: z.object({ contentStatus: z.literal('warning'), riskAssessment: z.literal('not-assessed'),
     questionAssessment: z.literal('not-assessed'), artifact: artifactSchema }).strict().nullable(),
@@ -562,6 +566,16 @@ export const unifiedRunSnapshotSchema = z.object({
   writebacks: z.array(writebackRecordSchema).max(WORKBENCH_LIMITS.maxWritebacksPerRun),
   createdAt: timestampSchema, completedAt: timestampSchema.nullable(),
 }).strict().superRefine((run, ctx) => {
+  const v2 = run.workflowVersion === '2'
+  if (Boolean(run.compositionVersion) !== Boolean(run.workflowRunUid) || run.compositionVersion && !v2
+    || !run.compositionVersion && run.inputSnapshot.upstreamSnapshot && run.inputSnapshot.upstreamSnapshot.status !== 'missing') {
+    ctx.addIssue({ code: 'custom', message: 'cumulative composition identity mismatch' })
+  }
+  if (run.inputSchemaVersion !== claimsInputVersion(run.workflowVersion)
+    || !(v2 ? claimsV2DraftValuesSchema : claimsDraftValuesSchema).safeParse(run.inputSnapshot.formValues).success
+    || v2 !== (run.inputSnapshot.upstreamSnapshot !== undefined)) {
+    ctx.addIssue({ code: 'custom', message: 'generation input and workflow contract mismatch' })
+  }
   if (run.status === 'completed') {
     if (run.result === null || run.completedAt === null) {
       ctx.addIssue({ code: 'custom', message: 'completed generation requires an artifact and completion time' })
@@ -573,6 +587,41 @@ export const unifiedRunSnapshotSchema = z.object({
     ctx.addIssue({ code: 'custom', message: 'prepared and terminal completion time mismatch' })
   }
 })
+
+export const dshLocalRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
+  mode: z.literal('dsh-local'), source: z.literal('local-skill'), evidenceKind: z.enum(['native-offline', 'native-model']),
+  fixtureVersion: z.never().optional(), executionVersion: z.enum(['1', '2']),
+  status: z.enum(['prepared', 'completed', 'failed', 'unknown']),
+  failureCode: z.enum(['GENERATION_FAILED', 'ABORTED', 'TIMED_OUT', 'INVALID_OUTPUT', 'INVALID_INPUT',
+    'MODEL_UNAVAILABLE', 'MODEL_LIMITED', 'INTERRUPTED']).nullable(),
+  contextSnapshot: z.object({ sessionId: identifierSchema,
+    route: z.object({ provider: identifierSchema, model: identifierSchema, reasoningEffort: z.string().min(1).max(64).optional() }).strict(),
+    instructionVersion: identifierSchema, instructionSha256: sha256Schema,
+    skillProvenance: z.object({ skillId: z.literal('flow-2-6'), skillVersion: z.enum(['public-4e2-1', '0.2.0']),
+      inputSchemaVersion: z.literal('claims-disclosure-2'), outputSchemaVersion: z.literal('claims-cumulative-2'),
+      executionContractVersion: z.literal('single-call-cumulative-1'), manifestSha256: sha256Schema, assemblySha256: sha256Schema,
+    }).strict().optional(),
+  }).strict(),
+}).superRefine((run, ctx) => {
+  if (run.evidenceKind === 'native-model' && (run.workflowVersion !== '2' || run.compositionVersion !== '2'
+    || run.contextSnapshot.skillProvenance?.skillVersion !== '0.2.0')) {
+    ctx.addIssue({ code: 'custom', message: 'real model requires formal contract 2 resources' })
+  }
+  if (run.executionVersion !== run.workflowVersion || (run.workflowVersion === '2') !== Boolean(run.contextSnapshot.skillProvenance)
+    || (run.contextSnapshot.skillProvenance && run.contextSnapshot.instructionSha256 !== run.contextSnapshot.skillProvenance.assemblySha256)) {
+    ctx.addIssue({ code: 'custom', message: 'local resource provenance contract mismatch' })
+  }
+  if ((['failed', 'unknown'].includes(run.status)) !== (run.failureCode !== null)) {
+    ctx.addIssue({ code: 'custom', message: 'local failure requires a safe failure code' })
+  }
+})
+
+export const localGenerationPreviewSchema = z.object({
+  workspaceId: identifierSchema, taskId: identifierSchema, sessionId: identifierSchema,
+  expectedRevision: z.number().int().nonnegative(), sha256: sha256Schema,
+  route: z.object({ provider: identifierSchema, model: identifierSchema, reasoningEffort: z.string().min(1).max(64).optional() }).strict(),
+  upstreamIncluded: z.boolean(), characterCount: z.number().int().nonnegative(),
+}).strict()
 
 export const conversationDraftResponseSchema = z.object({
   workspaceId: identifierSchema, taskId: identifierSchema, runId: identifierSchema,
@@ -756,21 +805,26 @@ function enforceGenerationDraft(task, ctx) {
     ctx.addIssue({ code: 'custom', path: ['generation'], message: 'legacy tasks cannot be relabeled as Skills or API' })
   }
   if (claims) {
-    if (task.workflowVersion !== '1' || task.workType !== 'cn-invention-patent' || task.generation === null) {
+    if (task.workflowVersion !== '2' && task.generation?.upstream) ctx.addIssue({ code: 'custom', message: 'upstream requires claims v2' })
+    if (!['1', '2'].includes(task.workflowVersion) || task.workType !== 'cn-invention-patent' || task.generation === null
+      || task.generation?.inputSchemaVersion !== claimsInputVersion(task.workflowVersion)) {
       ctx.addIssue({ code: 'custom', path: ['generation'], message: 'claims task requires its versioned generation draft' })
     }
     if (task.professionalDraft !== null) {
       ctx.addIssue({ code: 'custom', path: ['professionalDraft'], message: 'unified task cannot contain a second professional form' })
     }
-    if (!claimsDraftValuesSchema.safeParse(task.formValues).success) {
-      ctx.addIssue({ code: 'custom', path: ['formValues'], message: 'claims draft requires the seven bounded text fields' })
+    if (!(task.workflowVersion === '2' ? claimsV2DraftValuesSchema : claimsDraftValuesSchema).safeParse(task.formValues).success) {
+      ctx.addIssue({ code: 'custom', path: ['formValues'], message: 'claims draft requires its versioned bounded text fields' })
     }
   }
   for (const [id, run] of Object.entries(task.runs ?? {})) {
-    if ((run.mode === 'unified-fixture') !== claims) {
+    if (isUnifiedRun(run) && (run.workflowVersion !== task.workflowVersion || run.inputSchemaVersion !== task.generation?.inputSchemaVersion)) {
+      ctx.addIssue({ code: 'custom', path: ['runs', id], message: 'run workflow must match task workflow' })
+    }
+    if (isUnifiedRun(run) !== claims) {
       ctx.addIssue({ code: 'custom', path: ['runs', id], message: 'unified evidence cannot be mixed with legacy tasks or runs' })
     }
-    if (run.mode === 'unified-fixture' && run.parentRunId !== null) {
+    if (isUnifiedRun(run) && run.parentRunId !== null) {
       const parent = task.runs[run.parentRunId]
       if (!parent || parent.mode !== run.mode || parent.status !== 'completed' || parent.source !== run.source
         || parent.inputSnapshot.sha256 !== run.inputSnapshot.sha256
@@ -787,7 +841,7 @@ export const workbenchEditableTaskSchema = workbenchEditableTaskV3Schema.extend(
 
 export const workbenchTaskSchema = workbenchTaskV3Schema.safeExtend({
   generation: generationDraftSchema.nullable(),
-  runs: z.record(identifierSchema, z.discriminatedUnion('mode', [localRunSnapshotSchema, oasisRemoteRunSnapshotSchema, unifiedRunSnapshotSchema])),
+  runs: z.record(identifierSchema, z.discriminatedUnion('mode', [localRunSnapshotSchema, oasisRemoteRunSnapshotSchema, unifiedRunSnapshotSchema, dshLocalRunSnapshotSchema])),
 }).superRefine(enforceGenerationDraft)
 
 const panelModeSchema = z.enum(['hidden', 'normal', 'expanded'])
@@ -796,7 +850,7 @@ function enforceWorkspaceInvariants(value, ctx) {
   const activeTasks = Object.values(value.tasks).filter(task => hasPendingUnifiedRun(task)
     || Object.values(task.remoteExecutions ?? {}).some(isOasisRemoteExecutionUnresolved))
   const pendingUnified = Object.values(value.tasks).flatMap(task => Object.values(task.runs ?? {}))
-    .filter(run => run.mode === 'unified-fixture' && run.status === 'prepared').length
+    .filter(run => hasPendingUnifiedRun({ runs: { run } })).length
   if (pendingUnified > 1 || (pendingUnified && activeTasks.length > 1)) {
     ctx.addIssue({ code: 'custom', path: ['tasks'], message: 'Workspace already has an active generation' })
   }

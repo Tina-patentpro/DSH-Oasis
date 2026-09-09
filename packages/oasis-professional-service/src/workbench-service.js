@@ -17,6 +17,8 @@ import {
 } from './workspace-materials.js'
 import { createWritebackManager } from './writeback-service.js'
 import { createUnifiedGenerationService } from './unified-generation-service.js'
+import { createLocalGenerationService } from './local-generation-service.js'
+import { createClaimsUpstreamService } from './claims-upstream.js'
 
 function serviceError(code, message, details = {}) {
   return new WorkspaceMaterialError(code, message, details)
@@ -85,6 +87,7 @@ export function createWorkbenchService({
   writebackManager,
   unifiedFixtureEnabled = false,
   unifiedFixtureRunner,
+  localGeneration,
 } = {}) {
   if (!repository || typeof repository.get !== 'function') {
     throw new TypeError('repository.get is required')
@@ -157,8 +160,18 @@ export function createWorkbenchService({
     }
   }
 
+  const upstream = createClaimsUpstreamService({ repository, workspaceRegistry, clock })
+  const unified = createUnifiedGenerationService({ repository, enabled: unifiedFixtureEnabled, clock, runIdFactory, runner: unifiedFixtureRunner, upstream })
+  const local = createLocalGenerationService({ repository, runtime: localGeneration, clock, runIdFactory, upstream })
   return Object.freeze({
-    ...createUnifiedGenerationService({ repository, enabled: unifiedFixtureEnabled, clock, runIdFactory, runner: unifiedFixtureRunner }),
+    ...unified, ...local,
+    get localGenerationEnabled() { return local.localGenerationEnabled },
+    get localGenerationKind() { return local.localGenerationKind },
+    selectClaimsUpstream: upstream.selectClaimsUpstream,
+    stopUnifiedRun(command) {
+      const run = repository.get(command.workspaceId).tasks[command.taskId]?.runs[command.runId]
+      return run?.mode === 'dsh-local' ? local.stopLocalRun(command) : unified.stopUnifiedRun(command)
+    },
     getState(workspaceId) {
       return repository.get(workspaceId)
     },
@@ -166,7 +179,8 @@ export function createWorkbenchService({
       return repository.replaceEditable(workspaceId, expectedRevision, state)
     },
     getWorkflowCatalog(workType) {
-      return { ...getWorkflowCatalog(workType), unifiedFixtureEnabled: unifiedFixtureEnabled === true }
+      return { ...getWorkflowCatalog(workType), unifiedFixtureEnabled: unifiedFixtureEnabled === true,
+        localGenerationEnabled: local.localGenerationEnabled, localGenerationKind: local.localGenerationKind }
     },
     addMaterial({ workspaceId, taskId, expectedRevision, relativePath, confirmed }) {
       if (confirmed !== true) {
@@ -362,6 +376,9 @@ export function createWorkbenchService({
         mockVersion: run.mockVersion,
         ...(run.mode === 'unified-fixture' ? { unified: { source: run.source, evidenceKind: run.evidenceKind,
           fixtureVersion: run.fixtureVersion, inputSchemaVersion: run.inputSchemaVersion, parentRunId: run.parentRunId } } : {}),
+        ...(run.mode === 'dsh-local' ? { local: { source: run.source, evidenceKind: run.evidenceKind,
+          executionVersion: run.executionVersion, inputSchemaVersion: run.inputSchemaVersion, parentRunId: run.parentRunId,
+          contextSnapshot: run.contextSnapshot } } : {}),
         inputSha256: run.inputSnapshot.sha256,
         artifact: run.result.artifact,
         reviewStatus: run.review.status,

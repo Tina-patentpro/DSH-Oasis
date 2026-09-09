@@ -4803,13 +4803,27 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		//#endregion
 		//#region src/generation-contract.js
 		const CLAIMS_TEMPLATE_ID = "patent-claims";
+		const CLAIMS_V2_SCHEMA_VERSION = "claims-disclosure-2";
+		const claimsInputVersion = (version) => version === "2" ? CLAIMS_V2_SCHEMA_VERSION : "1";
 		const generationSourceSchema = _enum(["local-skill", "oasis-api"]);
+		const claimsUpstreamReferenceSchema = object({
+			kind: literal("project-file"),
+			relativePath: string().min(1).max(1024),
+			displayName: string().min(1).max(255),
+			mediaType: literal("text/markdown"),
+			sizeBytes: number().int().positive().max(65536),
+			sha256: string().regex(/^[a-f0-9]{64}$/)
+		}).strict();
 		function hasPendingUnifiedRun(task) {
-			return Object.values(task?.runs ?? {}).some((run) => run.mode === "unified-fixture" && run.status === "prepared");
+			return Object.values(task?.runs ?? {}).some((run) => isUnifiedRun(run) && (run.status === "prepared" || run.mode === "dsh-local" && run.status === "unknown"));
+		}
+		function isUnifiedRun(run) {
+			return ["unified-fixture", "dsh-local"].includes(run?.mode);
 		}
 		const generationDraftSchema = object({
-			inputSchemaVersion: literal("1"),
-			source: generationSourceSchema
+			inputSchemaVersion: _enum(["1", CLAIMS_V2_SCHEMA_VERSION]),
+			source: generationSourceSchema,
+			upstream: claimsUpstreamReferenceSchema.optional()
 		}).strict();
 		const CLAIMS_FIELDS = Object.freeze([
 			[
@@ -4863,9 +4877,56 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			description: ""
 		})));
 		const claimsDraftValuesSchema = object(Object.fromEntries(CLAIMS_FIELDS.map((f) => [f.fieldId, string().max(f.maxChars)]))).strict();
+		const CLAIMS_V2_FIELDS = Object.freeze([
+			[
+				"disclosure_text",
+				"技术交底",
+				2e4,
+				true
+			],
+			[
+				"drawings_text",
+				"附图说明",
+				12e3,
+				false
+			],
+			[
+				"claim_requirements_text",
+				"撰写要求",
+				8e3,
+				false
+			],
+			[
+				"user_input",
+				"用户指令",
+				4e3,
+				false
+			]
+		].map(([fieldId, label, maxChars, required]) => Object.freeze({
+			fieldId,
+			label,
+			maxChars,
+			required,
+			control: "long-text",
+			description: ""
+		})));
+		const claimsV2DraftValuesSchema = object(Object.fromEntries(CLAIMS_V2_FIELDS.map((f) => [f.fieldId, string().max(f.maxChars)]))).strict();
+		const claimsUpstreamSnapshotSchema = union([object({
+			status: literal("missing"),
+			reason: literal("not-connected")
+		}).strict(), object({
+			status: _enum(["accepted", "warning"]),
+			body: string().min(1).max(24e3),
+			relativePath: string().min(1).max(1024),
+			sha256: string().regex(/^[a-f0-9]{64}$/),
+			sourceNode: literal("Flow-1-5").nullable(),
+			workflowRunUid: string().uuid().nullable(),
+			generatedAt: string().max(64).nullable(),
+			issues: array(string().max(128)).max(8)
+		}).strict()]);
 		function generationUnavailableReason(source) {
 			generationSourceSchema.parse(source);
-			return source === "local-skill" ? "本地 Skills 未启用：保密边界待确认" : "专业 API 未启用：服务绑定待核实";
+			return source === "local-skill" ? "本地 Skills 未启用：请在 DSH 设置中启用并重启 Host；需可用的会话模型" : "专业 API 未启用：服务绑定待核实";
 		}
 		//#endregion
 		//#region src/workbench-contract.js
@@ -4957,7 +5018,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		const workflowCatalogResponseSchema = object({
 			schemaVersion: literal(1),
 			workflows: array(workflowDefinitionSchema).max(16),
-			unifiedFixtureEnabled: boolean().optional()
+			unifiedFixtureEnabled: boolean().optional(),
+			localGenerationEnabled: boolean().optional(),
+			localGenerationKind: _enum(["native-offline", "native-model"]).nullable().optional()
 		}).strict();
 		const jsonStringSchema = string().refine((value) => utf8Bytes(value) <= WORKBENCH_LIMITS.maxJsonStringBytes, `JSON strings must not exceed ${WORKBENCH_LIMITS.maxJsonStringBytes} UTF-8 bytes`);
 		const jsonPrimitiveSchema = union([
@@ -5400,9 +5463,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			evidenceKind: literal("synthetic"),
 			fixtureVersion: literal("1"),
 			source: generationSourceSchema,
-			inputSchemaVersion: literal("1"),
+			inputSchemaVersion: _enum(["1", "claims-disclosure-2"]),
 			workflowId: literal(CLAIMS_TEMPLATE_ID),
-			workflowVersion: literal("1"),
+			workflowVersion: _enum(["1", "2"]),
+			compositionVersion: literal("2").optional(),
+			workflowRunUid: string().uuid().optional(),
 			status: _enum([
 				"prepared",
 				"completed",
@@ -5411,8 +5476,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			]),
 			parentRunId: identifierSchema.nullable(),
 			inputSnapshot: object({
-				formValues: claimsDraftValuesSchema,
+				formValues: union([claimsDraftValuesSchema, claimsV2DraftValuesSchema]),
 				inputRefs: array(never()).length(0),
+				upstreamSnapshot: claimsUpstreamSnapshotSchema.optional(),
 				sha256: sha256Schema,
 				capturedAt: timestampSchema
 			}).strict(),
@@ -5427,6 +5493,15 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			createdAt: timestampSchema,
 			completedAt: timestampSchema.nullable()
 		}).strict().superRefine((run, ctx) => {
+			const v2 = run.workflowVersion === "2";
+			if (Boolean(run.compositionVersion) !== Boolean(run.workflowRunUid) || run.compositionVersion && !v2 || !run.compositionVersion && run.inputSnapshot.upstreamSnapshot && run.inputSnapshot.upstreamSnapshot.status !== "missing") ctx.addIssue({
+				code: "custom",
+				message: "cumulative composition identity mismatch"
+			});
+			if (run.inputSchemaVersion !== claimsInputVersion(run.workflowVersion) || !(v2 ? claimsV2DraftValuesSchema : claimsDraftValuesSchema).safeParse(run.inputSnapshot.formValues).success || v2 !== (run.inputSnapshot.upstreamSnapshot !== void 0)) ctx.addIssue({
+				code: "custom",
+				message: "generation input and workflow contract mismatch"
+			});
 			if (run.status === "completed") {
 				if (run.result === null || run.completedAt === null) ctx.addIssue({
 					code: "custom",
@@ -5442,6 +5517,75 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				message: "prepared and terminal completion time mismatch"
 			});
 		});
+		const dshLocalRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
+			mode: literal("dsh-local"),
+			source: literal("local-skill"),
+			evidenceKind: _enum(["native-offline", "native-model"]),
+			fixtureVersion: never().optional(),
+			executionVersion: _enum(["1", "2"]),
+			status: _enum([
+				"prepared",
+				"completed",
+				"failed",
+				"unknown"
+			]),
+			failureCode: _enum([
+				"GENERATION_FAILED",
+				"ABORTED",
+				"TIMED_OUT",
+				"INVALID_OUTPUT",
+				"INVALID_INPUT",
+				"MODEL_UNAVAILABLE",
+				"MODEL_LIMITED",
+				"INTERRUPTED"
+			]).nullable(),
+			contextSnapshot: object({
+				sessionId: identifierSchema,
+				route: object({
+					provider: identifierSchema,
+					model: identifierSchema,
+					reasoningEffort: string().min(1).max(64).optional()
+				}).strict(),
+				instructionVersion: identifierSchema,
+				instructionSha256: sha256Schema,
+				skillProvenance: object({
+					skillId: literal("flow-2-6"),
+					skillVersion: _enum(["public-4e2-1", "0.2.0"]),
+					inputSchemaVersion: literal("claims-disclosure-2"),
+					outputSchemaVersion: literal("claims-cumulative-2"),
+					executionContractVersion: literal("single-call-cumulative-1"),
+					manifestSha256: sha256Schema,
+					assemblySha256: sha256Schema
+				}).strict().optional()
+			}).strict()
+		}).superRefine((run, ctx) => {
+			if (run.evidenceKind === "native-model" && (run.workflowVersion !== "2" || run.compositionVersion !== "2" || run.contextSnapshot.skillProvenance?.skillVersion !== "0.2.0")) ctx.addIssue({
+				code: "custom",
+				message: "real model requires formal contract 2 resources"
+			});
+			if (run.executionVersion !== run.workflowVersion || run.workflowVersion === "2" !== Boolean(run.contextSnapshot.skillProvenance) || run.contextSnapshot.skillProvenance && run.contextSnapshot.instructionSha256 !== run.contextSnapshot.skillProvenance.assemblySha256) ctx.addIssue({
+				code: "custom",
+				message: "local resource provenance contract mismatch"
+			});
+			if (["failed", "unknown"].includes(run.status) !== (run.failureCode !== null)) ctx.addIssue({
+				code: "custom",
+				message: "local failure requires a safe failure code"
+			});
+		});
+		const localGenerationPreviewSchema = object({
+			workspaceId: identifierSchema,
+			taskId: identifierSchema,
+			sessionId: identifierSchema,
+			expectedRevision: number().int().nonnegative(),
+			sha256: sha256Schema,
+			route: object({
+				provider: identifierSchema,
+				model: identifierSchema,
+				reasoningEffort: string().min(1).max(64).optional()
+			}).strict(),
+			upstreamIncluded: boolean(),
+			characterCount: number().int().nonnegative()
+		}).strict();
 		const conversationDraftResponseSchema = object({
 			workspaceId: identifierSchema,
 			taskId: identifierSchema,
@@ -5705,7 +5849,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				message: "legacy tasks cannot be relabeled as Skills or API"
 			});
 			if (claims) {
-				if (task.workflowVersion !== "1" || task.workType !== "cn-invention-patent" || task.generation === null) ctx.addIssue({
+				if (task.workflowVersion !== "2" && task.generation?.upstream) ctx.addIssue({
+					code: "custom",
+					message: "upstream requires claims v2"
+				});
+				if (!["1", "2"].includes(task.workflowVersion) || task.workType !== "cn-invention-patent" || task.generation === null || task.generation?.inputSchemaVersion !== claimsInputVersion(task.workflowVersion)) ctx.addIssue({
 					code: "custom",
 					path: ["generation"],
 					message: "claims task requires its versioned generation draft"
@@ -5715,19 +5863,24 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					path: ["professionalDraft"],
 					message: "unified task cannot contain a second professional form"
 				});
-				if (!claimsDraftValuesSchema.safeParse(task.formValues).success) ctx.addIssue({
+				if (!(task.workflowVersion === "2" ? claimsV2DraftValuesSchema : claimsDraftValuesSchema).safeParse(task.formValues).success) ctx.addIssue({
 					code: "custom",
 					path: ["formValues"],
-					message: "claims draft requires the seven bounded text fields"
+					message: "claims draft requires its versioned bounded text fields"
 				});
 			}
 			for (const [id, run] of Object.entries(task.runs ?? {})) {
-				if (run.mode === "unified-fixture" !== claims) ctx.addIssue({
+				if (isUnifiedRun(run) && (run.workflowVersion !== task.workflowVersion || run.inputSchemaVersion !== task.generation?.inputSchemaVersion)) ctx.addIssue({
+					code: "custom",
+					path: ["runs", id],
+					message: "run workflow must match task workflow"
+				});
+				if (isUnifiedRun(run) !== claims) ctx.addIssue({
 					code: "custom",
 					path: ["runs", id],
 					message: "unified evidence cannot be mixed with legacy tasks or runs"
 				});
-				if (run.mode === "unified-fixture" && run.parentRunId !== null) {
+				if (isUnifiedRun(run) && run.parentRunId !== null) {
 					const parent = task.runs[run.parentRunId];
 					if (!parent || parent.mode !== run.mode || parent.status !== "completed" || parent.source !== run.source || parent.inputSnapshot.sha256 !== run.inputSnapshot.sha256 || task.runOrder.indexOf(run.parentRunId) >= task.runOrder.indexOf(id)) ctx.addIssue({
 						code: "custom",
@@ -5743,7 +5896,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			runs: record(identifierSchema, discriminatedUnion("mode", [
 				localRunSnapshotSchema,
 				oasisRemoteRunSnapshotSchema,
-				unifiedRunSnapshotSchema
+				unifiedRunSnapshotSchema,
+				dshLocalRunSnapshotSchema
 			]))
 		}).superRefine(enforceGenerationDraft);
 		const panelModeSchema = _enum([
@@ -5753,7 +5907,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		]);
 		function enforceWorkspaceInvariants(value, ctx) {
 			const activeTasks = Object.values(value.tasks).filter((task) => hasPendingUnifiedRun(task) || Object.values(task.remoteExecutions ?? {}).some(isOasisRemoteExecutionUnresolved));
-			const pendingUnified = Object.values(value.tasks).flatMap((task) => Object.values(task.runs ?? {})).filter((run) => run.mode === "unified-fixture" && run.status === "prepared").length;
+			const pendingUnified = Object.values(value.tasks).flatMap((task) => Object.values(task.runs ?? {})).filter((run) => hasPendingUnifiedRun({ runs: { run } })).length;
 			if (pendingUnified > 1 || pendingUnified && activeTasks.length > 1) ctx.addIssue({
 				code: "custom",
 				path: ["tasks"],
@@ -7126,7 +7280,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			background: "var(--dsw-alias-bg-base, #fff)",
 			color: "inherit"
 		};
-		function ResultVersion({ page, run, operation, disabled, markdownRenderer, onReview = () => {}, onEditResult = () => {}, conversationUnavailableReason = null, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, onUseInConversation = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {} }) {
+		function ResultVersion({ page, run, operation, disabled, readOnlyDisabled = disabled, markdownRenderer, onReview = () => {}, onEditResult = () => {}, conversationUnavailableReason = null, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, onUseInConversation = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {} }) {
 			const [editing, setEditing] = (0, react.useState)(false);
 			const [body, setBody] = (0, react.useState)(run.result.artifact.body);
 			const [error, setError] = (0, react.useState)(null);
@@ -7141,7 +7295,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return (0, react.createElement)("article", { style: {
 				display: "grid",
 				gap: 12
-			} }, (0, react.createElement)("div", { style: { fontSize: 12 } }, `${run.source === "local-skill" ? "本地 Skills" : "专业 API"} · 合成验收 · ${run.review.status === "approved" ? "已审核" : "待审核"}`), editing ? (0, react.createElement)("textarea", {
+			} }, (0, react.createElement)("div", { style: { fontSize: 12 } }, `${run.source === "local-skill" ? "本地 Skills" : "专业 API"} · ${run.evidenceKind === "native-model" ? "原生模型生成" : run.mode === "dsh-local" ? "原生离线验收" : "合成验收"} · ${run.review.status === "approved" ? "已审核" : "待审核"}`), editing ? (0, react.createElement)("textarea", {
 				"aria-label": "修订结果",
 				value: body,
 				maxLength: 1e5,
@@ -7181,7 +7335,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				type: "button",
 				style: button$1,
 				title: conversationUnavailableReason ?? void 0,
-				disabled: disabled || editing || run.review.status !== "approved" || conversationUnavailableReason !== null,
+				disabled: readOnlyDisabled || editing || run.review.status !== "approved" || conversationUnavailableReason !== null,
 				onClick: () => action(() => onUseInConversation(page.pageId, run.runId))
 			}, "在对话中使用")), error || operation.error ? (0, react.createElement)("div", { role: "alert" }, error ?? `操作未完成（${operation.errorCode ?? "连接失败"}）`) : null, operation.feedback === "conversation-draft-ready" ? (0, react.createElement)("div", { role: "status" }, "已放入对话草稿，尚未发送。") : null, run.writebacks.length ? (0, react.createElement)("section", {
 				"aria-label": "已保存文件",
@@ -7204,7 +7358,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				type: "button",
 				style: button$1,
 				title: savedFileUnavailableReason ?? void 0,
-				disabled: disabled || editing || run.review.status !== "approved" || savedFileUnavailableReason !== null,
+				disabled: readOnlyDisabled || editing || run.review.status !== "approved" || savedFileUnavailableReason !== null,
 				onClick: () => action(() => onOpenSavedFile(page.pageId, run.runId, record.writebackId))
 			}, "打开当前文件"))), (0, react.createElement)("small", null, "当前文件可编辑，不沿用审核结论。")) : null, (0, react.createElement)(WritebackPanel, {
 				run,
@@ -7230,7 +7384,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				key: id,
 				type: "button",
 				style: button$1,
-				disabled: props.disabled,
+				disabled: props.readOnlyDisabled ?? props.disabled,
 				"aria-current": id === page.activeRunId ? "true" : void 0,
 				onClick: () => onActivateRun(page.pageId, id)
 			}, `版本 ${index + 1}`))), run?.status === "completed" && run.result ? (0, react.createElement)(ResultVersion, {
@@ -7241,7 +7395,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}) : (0, react.createElement)("p", {
 				role: "status",
 				style: { fontSize: 13 }
-			}, !run ? "暂无生成内容" : run.status === "prepared" ? "合成运行未完成；请查看原运行，不会自动重发。" : run.status === "stopped" ? "合成运行已结束，未保存结果。" : "合成失败，未取得正文。"));
+			}, !run ? "暂无生成内容" : run.mode === "dsh-local" ? run.status === "prepared" ? run.evidenceKind === "native-model" ? "原生模型生成中…" : "原生离线生成中…" : run.status === "unknown" ? `运行状态未确认（${run.failureCode}）；已停止本地等待，不代表提供方取消或退款，不会自动重发。` : `未取得有效正文（${run.failureCode}），不会自动重试。` : run.status === "prepared" ? "合成运行未完成；请查看原运行，不会自动重发。" : run.status === "stopped" ? "合成运行已结束，未保存结果。" : "合成失败，未取得正文。"));
 		}
 		//#endregion
 		//#region src/client/UnifiedGenerationPage.js
@@ -7272,15 +7426,38 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   .oasis-unified .generation-result { border-left: 1px solid var(--dsw-alias-border-l2, #dfe6e2); }
 }
 `;
-		function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus, operation, fixtureEnabled = false, markdownRenderer, onRenamePage = () => {}, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onGenerate = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, ...resultActions }) {
+		function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus, operation, fixtureEnabled = false, localGenerationEnabled = false, localGenerationKind = null, markdownRenderer, onRenamePage = () => {}, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onGenerate = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, ...resultActions }) {
 			const [activeFieldId, setActiveFieldId] = (0, react.useState)(workflow.form.fields[0]?.fieldId);
 			const [view, setView] = (0, react.useState)("input");
 			const [preview, setPreview] = (0, react.useState)(false);
+			const [upstreamPath, setUpstreamPath] = (0, react.useState)(page.generation.upstream?.relativePath ?? "");
 			const source = page.generation.source;
+			const local = localGenerationEnabled && source === "local-skill";
+			const real = local && localGenerationKind === "native-model";
+			const confirmation = operation.localModelPreview;
+			const [confirmed, setConfirmed] = (0, react.useState)(false);
+			(0, react.useEffect)(() => {
+				setConfirmed(false);
+			}, [confirmation?.sha256]);
 			const locked = !["ready", "saving"].includes(syncStatus) || operation.activeOperation !== null || operation.generationUncertain || hasPendingUnifiedRun(page) || page.remoteExecutionOrder.some((id) => isOasisRemoteExecutionUnresolved(page.remoteExecutions[id]));
+			const readOnlyDisabled = syncStatus !== "ready" || operation.activeOperation !== null || operation.generationUncertain === true;
 			const validation = validateWorkflowFormValues(workflow, page.formValues);
-			const reason = !fixtureEnabled ? generationUnavailableReason(source) : operation.generationUncertain ? "结果未确认，请查看原运行" : hasPendingUnifiedRun(page) ? "原合成运行尚未结束" : !validation.valid ? "请填写必填材料" : null;
-			const pending = Object.values(page.runs).find((run) => run.mode === "unified-fixture" && run.status === "prepared");
+			const reason = real && page.workflowVersion !== "2" ? "请新建权利要求任务，历史任务仅供查看" : !fixtureEnabled && !local ? generationUnavailableReason(source) : operation.generationUncertain ? "结果未确认，请查看原运行" : hasPendingUnifiedRun(page) ? "原运行未决，请查看状态；不会自动重发" : !validation.valid ? "请填写必填材料" : null;
+			const pending = Object.values(page.runs).find((run) => hasPendingUnifiedRun({ runs: { run } }));
+			(0, react.useEffect)(() => {
+				if (pending?.mode !== "dsh-local" || pending.status !== "prepared" || operation.activeOperation !== null || operation.error || syncStatus !== "ready") return;
+				const timer = setTimeout(() => {
+					Promise.resolve(onObserveUnified(page.pageId)).catch(() => {});
+				}, 1e3);
+				return () => clearTimeout(timer);
+			}, [
+				pending,
+				operation.activeOperation,
+				operation.error,
+				syncStatus,
+				onObserveUnified,
+				page.pageId
+			]);
 			return (0, react.createElement)("div", {
 				className: "oasis-unified",
 				"data-testid": "oasis-unified-page"
@@ -7309,7 +7486,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}), (0, react.createElement)("div", {
 				className: "generation-notice",
 				role: "status"
-			}, fixtureEnabled ? "合成验收 · 无真实调用" : source === "local-skill" ? "本地 Skills · 未启用" : "专业 API · 待绑定"), (0, react.createElement)("div", {
+			}, real ? "本地 Skills · 使用 DSH 模型" : local ? "原生离线验收 · 无真实调用" : fixtureEnabled ? "合成验收 · 无真实调用" : source === "local-skill" ? "本地 Skills · 未启用" : "专业 API · 待绑定"), (0, react.createElement)("div", {
 				className: "generation-views",
 				"aria-label": "输入与结果视图"
 			}, ...[["input", "输入"], ["result", "结果"]].map(([id, label]) => (0, react.createElement)("button", {
@@ -7320,7 +7497,28 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, label)))), (0, react.createElement)("div", { className: "generation-panes" }, (0, react.createElement)("section", {
 				className: "generation-pane",
 				"data-visible": view === "input"
-			}, (0, react.createElement)("h3", null, "输入材料"), (0, react.createElement)("div", { className: "editor-tools" }, (0, react.createElement)("button", {
+			}, (0, react.createElement)("h3", null, "输入材料"), page.workflowVersion === "2" ? (0, react.createElement)("div", { style: {
+				fontSize: 11,
+				marginBottom: 8
+			} }, (0, react.createElement)("label", null, "上游累计文稿", (0, react.createElement)("input", {
+				"aria-label": "上游 Markdown 相对路径",
+				value: upstreamPath,
+				placeholder: "当前项目内的 .md 路径",
+				disabled: locked,
+				style: {
+					width: "100%",
+					minWidth: 0
+				},
+				onChange: (e) => setUpstreamPath(e.currentTarget.value)
+			})), (0, react.createElement)("button", {
+				type: "button",
+				disabled: locked || !upstreamPath.trim(),
+				onClick: () => Promise.resolve(onSelectClaimsUpstream(page.pageId, upstreamPath.trim())).catch(() => {})
+			}, "确认读取"), page.generation.upstream ? (0, react.createElement)("button", {
+				type: "button",
+				disabled: locked,
+				onClick: () => Promise.resolve(onSelectClaimsUpstream(page.pageId, null)).catch(() => {})
+			}, "取消选择") : null, (0, react.createElement)("div", { role: "status" }, page.generation.upstream ? `已确认：${page.generation.upstream.displayName} · ${page.generation.upstream.sha256.slice(0, 8)}` : "上游累计材料：未选择"), (0, react.createElement)("div", null, "仅读取所选文件；明确替换请在用户指令单独写一行“替换：内容ID”。")) : null, (0, react.createElement)("div", { className: "editor-tools" }, (0, react.createElement)("button", {
 				type: "button",
 				"aria-pressed": !preview,
 				onClick: () => setPreview(false)
@@ -7340,13 +7538,33 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				preview,
 				markdownRenderer,
 				onChange: (fieldId, value) => onUpdateForm(page.pageId, fieldId, value)
-			}), (0, react.createElement)("div", { className: "generation-submit" }, (0, react.createElement)("button", {
+			}), (0, react.createElement)("div", { className: "generation-submit" }, real && confirmation ? (0, react.createElement)("div", {
+				role: "group",
+				"aria-label": "本次模型调用确认",
+				style: {
+					fontSize: 12,
+					marginBottom: 8,
+					overflowWrap: "anywhere"
+				}
+			}, (0, react.createElement)("div", null, `模型：${confirmation.route.provider} / ${confirmation.route.model}${confirmation.route.reasoningEffort ? ` / ${confirmation.route.reasoningEffort}` : ""}`), (0, react.createElement)("div", null, `发送四选项卡文本${confirmation.upstreamIncluded ? "及已选择的上游全文" : "（未选上游文稿）"}，共 ${confirmation.characterCount} 字符，另含内置 Skill flow-2-6/0.2.0。`), (0, react.createElement)("label", null, (0, react.createElement)("input", {
+				type: "checkbox",
+				checked: confirmed,
+				disabled: locked,
+				onChange: (event) => setConfirmed(event.currentTarget.checked)
+			}), "我确认向上述模型发送材料和 Skill；云端模型可能产生费用，金额由 DSH 模型配置决定。"), (0, react.createElement)("button", {
+				type: "button",
+				disabled: locked || !confirmed || reason !== null,
+				onClick: () => {
+					setConfirmed(false);
+					onGenerate(page.pageId, true);
+				}
+			}, "确认并生成")) : null, (0, react.createElement)("button", {
 				type: "button",
 				"data-testid": "oasis-unified-generate",
 				disabled: locked || syncStatus !== "ready" || reason !== null,
 				title: reason ?? void 0,
 				onClick: () => onGenerate(page.pageId)
-			}, operation.activeOperation === "run-create" ? "生成中…" : fixtureEnabled ? "生成合成样本" : "生成"), reason ? (0, react.createElement)("p", {
+			}, operation.activeOperation === "run-create" ? "生成中…" : real ? confirmation ? "重新核对模型与材料" : "核对模型与材料" : local ? "生成离线样本" : fixtureEnabled ? "生成合成样本" : "生成"), reason ? (0, react.createElement)("p", {
 				role: "status",
 				style: {
 					margin: "8px 0 0",
@@ -7356,11 +7574,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				type: "button",
 				disabled: operation.activeOperation !== null,
 				onClick: () => onObserveUnified(page.pageId)
-			}, "查看原运行"), pending ? (0, react.createElement)("button", {
+			}, "查看原运行"), pending?.status === "prepared" ? (0, react.createElement)("button", {
 				type: "button",
 				disabled: operation.activeOperation !== null,
 				onClick: () => onStopUnified(page.pageId, pending.runId)
-			}, "结束未完成合成") : null) : null)), (0, react.createElement)("section", {
+			}, pending.mode === "dsh-local" ? "停止等待" : "结束未完成合成") : null) : null)), (0, react.createElement)("section", {
 				className: "generation-pane generation-result",
 				"data-visible": view === "result"
 			}, (0, react.createElement)("h3", null, "生成结果"), (0, react.createElement)(UnifiedResultPanel, {
@@ -7368,6 +7586,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				operation,
 				markdownRenderer,
 				disabled: locked || syncStatus !== "ready",
+				readOnlyDisabled,
 				...resultActions
 			}))));
 		}
@@ -7541,7 +7760,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function activeRun(page) {
 			return page.activeRunId === null ? null : page.runs[page.activeRunId];
 		}
-		function PanelPages({ state, markdownRenderer, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {}, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {}, onObserveRunningWater = () => {} }) {
+		function PanelPages({ state, markdownRenderer, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {}, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {}, onObserveRunningWater = () => {} }) {
 			if (state.syncStatus === "idle" || state.syncStatus === "loading") return (0, react.createElement)("div", {
 				role: "status",
 				"aria-live": "polite",
@@ -7655,7 +7874,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						onRenamePage,
 						onUpdateForm,
 						onSetGenerationSource,
+						onSelectClaimsUpstream,
 						fixtureEnabled: state.unifiedFixtureEnabled === true,
+						localGenerationEnabled: state.localGenerationEnabled === true,
+						localGenerationKind: state.localGenerationKind,
 						conversationUnavailableReason: state.conversationUnavailableReason === void 0 ? "当前对话输入接口不可用" : state.conversationUnavailableReason,
 						onGenerate,
 						onObserveUnified,
@@ -7986,6 +8208,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				onReload: () => store.reloadWorkspace(workspaceId),
 				onUpdateForm: (pageId, fieldId, value) => store.updateFormValue(workspaceId, pageId, fieldId, value),
 				onSetGenerationSource: (pageId, source) => store.setGenerationSource(workspaceId, pageId, source),
+				onSelectClaimsUpstream: (pageId, path) => store.selectClaimsUpstream(workspaceId, pageId, path),
 				onObserveUnified: (pageId) => {
 					store.observeUnifiedRun(workspaceId, pageId).catch(() => {});
 				},
@@ -8004,8 +8227,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				onRemoveMaterial: (pageId, referenceId, confirmed) => {
 					if (confirmed) store.removeMaterial(workspaceId, pageId, referenceId, true).catch(() => {});
 				},
-				onGenerate: (pageId) => {
-					store.createRun(workspaceId, pageId).catch(() => {});
+				onGenerate: (pageId, confirmed = false) => {
+					store.createRun(workspaceId, pageId, confirmed).catch(() => {});
 				},
 				onActivateRun: (pageId, runId) => store.activateRun(workspaceId, pageId, runId),
 				onReviewNote: (pageId, note) => store.setReviewNote(workspaceId, pageId, note),
@@ -8766,6 +8989,25 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async createUnifiedRun(payload, signal) {
 					return unwrap(await connection.rpc.call(CHANNEL, "task/create-unified", payload, signal), workbenchReplaceResponseSchema);
 				},
+				async selectClaimsUpstream(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "task/select-upstream", payload, signal), workbenchReplaceResponseSchema);
+				},
+				async prepareLocalRun(payload, signal) {
+					const result = unwrap(await connection.rpc.call(CHANNEL, "task/prepare-local", payload, signal), localGenerationPreviewSchema);
+					for (const key of [
+						"workspaceId",
+						"taskId",
+						"sessionId",
+						"expectedRevision"
+					]) if (result[key] !== payload[key]) throw new WorkbenchRemoteError("INVALID_RESPONSE", "生成确认范围不一致");
+					return result;
+				},
+				async createLocalRun(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "task/create-local", payload, signal), workbenchReplaceResponseSchema);
+				},
+				async observeLocalRun(payload, signal) {
+					return unwrap(await connection.rpc.call(CHANNEL, "task/observe-local", payload, signal), workbenchReplaceResponseSchema);
+				},
 				async stopUnifiedRun(payload, signal) {
 					return unwrap(await connection.rpc.call(CHANNEL, "task/stop-unified", payload, signal), workbenchReplaceResponseSchema);
 				},
@@ -8973,7 +9215,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						workflowVersion: workflow.workflowVersion,
 						formValues,
 						generation: workflow.executionMode === "unified-text" ? {
-							inputSchemaVersion: "1",
+							inputSchemaVersion: claimsInputVersion(workflow.workflowVersion),
 							source: generationSourceSchema.parse(action.defaultGenerationSource ?? "local-skill")
 						} : null,
 						updatedAt: env.now(),
@@ -9120,6 +9362,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			writebackConfirmed: false,
 			writebackPlan: null,
 			requestKey: null,
+			localModelPreview: null,
 			activeOperation: null,
 			error: null,
 			errorCode: null,
@@ -9139,7 +9382,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function errorMessage(error) {
 			return error instanceof Error ? error.message : String(error);
 		}
-		function createWorkbenchStore({ remote = null, connectionSettings = null, conversationDrafts = null, nativeFiles = null, createId = defaultCreateId, createRequestKey = defaultCreateId, clock = () => (/* @__PURE__ */ new Date()).toISOString(), workflowCatalog = null, saveDelayMs = 400, disposeDrainMs = 1e3, scheduler = globalThis } = {}) {
+		function createWorkbenchStore({ remote = null, connectionSettings = null, conversationDrafts = null, getGenerationSession = null, nativeFiles = null, createId = defaultCreateId, createRequestKey = defaultCreateId, clock = () => (/* @__PURE__ */ new Date()).toISOString(), workflowCatalog = null, saveDelayMs = 400, disposeDrainMs = 1e3, scheduler = globalThis } = {}) {
 			if (!Number.isInteger(saveDelayMs) || saveDelayMs < 0) throw new TypeError("saveDelayMs must be a non-negative integer");
 			if (typeof createRequestKey !== "function") throw new TypeError("createRequestKey must be a function");
 			if (!Number.isSafeInteger(disposeDrainMs) || disposeDrainMs < 0) throw new TypeError("disposeDrainMs must be a non-negative safe integer");
@@ -9216,7 +9459,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					catalogStatus: "ready",
 					catalogError: null,
 					workflows: workflowCatalog.workflows,
-					unifiedFixtureEnabled: workflowCatalog.unifiedFixtureEnabled === true
+					unifiedFixtureEnabled: workflowCatalog.unifiedFixtureEnabled === true,
+					localGenerationEnabled: workflowCatalog.localGenerationEnabled === true,
+					localGenerationKind: workflowCatalog.localGenerationKind ?? null
 				});
 			}
 			function preserveClientState(recordState, current) {
@@ -9225,6 +9470,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					catalogError: current.catalogError,
 					workflows: current.workflows,
 					unifiedFixtureEnabled: current.unifiedFixtureEnabled === true,
+					localGenerationEnabled: current.localGenerationEnabled === true,
+					localGenerationKind: current.localGenerationKind ?? null,
 					professionalStatus: current.professionalStatus,
 					professionalError: current.professionalError,
 					professionalBootstrap: current.professionalBootstrap,
@@ -9245,6 +9492,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					priceConfirmed: false,
 					externalTransferConfirmed: false,
 					requestKey: null,
+					localModelPreview: null,
 					writebackConfirmed: false,
 					writebackPlan: null,
 					error: null,
@@ -9571,6 +9819,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						const pageOperations = Object.fromEntries(Object.entries(current.pageOperations).map(([pageId, operation]) => [pageId, Object.freeze({
 							...operation,
 							professionalDetail: null,
+							localModelPreview: null,
 							priceConfirmed: false,
 							externalTransferConfirmed: false,
 							runningWaterStatus: "idle",
@@ -9630,7 +9879,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								catalogStatus: "ready",
 								catalogError: null,
 								workflows,
-								unifiedFixtureEnabled: response.unifiedFixtureEnabled === true
+								unifiedFixtureEnabled: response.unifiedFixtureEnabled === true,
+								localGenerationEnabled: response.localGenerationEnabled === true,
+								localGenerationKind: response.localGenerationKind ?? null
 							}));
 							return workflows;
 						} catch (error) {
@@ -9638,7 +9889,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								catalogStatus: "error",
 								catalogError: errorMessage(error),
 								workflows: [],
-								unifiedFixtureEnabled: false
+								unifiedFixtureEnabled: false,
+								localGenerationEnabled: false,
+								localGenerationKind: null
 							}));
 							throw error;
 						} finally {
@@ -9764,6 +10017,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					});
 					if (source !== previous) invalidateInputConfirmations(workspaceId, pageId);
 					return getCurrent(workspaceId);
+				},
+				async selectClaimsUpstream(workspaceId, pageId, relativePath) {
+					assertInputEditable(workspaceId, pageId);
+					invalidateInputConfirmations(workspaceId, pageId);
+					return runPageOperation(workspaceId, pageId, "upstream-select", (current) => remote.selectClaimsUpstream({
+						workspaceId,
+						taskId: pageId,
+						expectedRevision: current.revision,
+						relativePath,
+						confirmed: true
+					}, controller.signal), () => ({
+						feedback: relativePath === null ? "已取消上游文稿" : "已确认上游文稿",
+						error: null
+					}));
 				},
 				async selectProfessionalService(workspaceId, pageId, apiEndpoint) {
 					assertOpen();
@@ -10013,26 +10280,81 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						feedback: "material-removed"
 					}));
 				},
-				async createRun(workspaceId, pageId) {
+				async createRun(workspaceId, pageId, confirmed = false) {
 					const page = pageFor(workspaceId, pageId);
 					if (page.generation) {
-						if (!getCurrent(workspaceId).unifiedFixtureEnabled) throw new Error(generationUnavailableReason(page.generation.source));
+						const local = getCurrent(workspaceId).localGenerationEnabled && page.generation.source === "local-skill";
+						if (!local && !getCurrent(workspaceId).unifiedFixtureEnabled) throw new Error(generationUnavailableReason(page.generation.source));
 						assertInputEditable(workspaceId, pageId);
+						const real = local && getCurrent(workspaceId).localGenerationKind === "native-model";
+						if (real && !confirmed) {
+							updatePageOperation(workspaceId, pageId, {
+								activeOperation: "model-preview",
+								localModelPreview: null,
+								error: null
+							});
+							try {
+								await flushWorkspace(workspaceId);
+								const current = getCurrent(workspaceId);
+								if (current.syncStatus !== "ready") throw new Error("请先保存材料再确认");
+								const generation = runtimeFor(workspaceId).editGeneration;
+								const configurationGeneration = professionalConfigurationGeneration;
+								const sessionId = getGenerationSession?.(workspaceId);
+								const preview = await remote.prepareLocalRun({
+									workspaceId,
+									taskId: pageId,
+									sessionId,
+									expectedRevision: current.revision
+								}, controller.signal);
+								if (closing || disposed) return;
+								if (professionalConfigurationGeneration !== configurationGeneration || runtimeFor(workspaceId).editGeneration !== generation || getCurrent(workspaceId).revision !== current.revision || getGenerationSession?.(workspaceId) !== sessionId) throw new Error("材料或会话已变更，请重新确认");
+								updatePageOperation(workspaceId, pageId, { localModelPreview: preview });
+								return getCurrent(workspaceId);
+							} catch (error) {
+								if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { error: errorMessage(error) });
+								throw error;
+							} finally {
+								if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { activeOperation: null });
+							}
+						}
+						const preview = real ? operationFor(getCurrent(workspaceId), pageId).localModelPreview : null;
+						if (real && (!preview || preview.expectedRevision !== getCurrent(workspaceId).revision || preview.sessionId !== getGenerationSession?.(workspaceId))) throw new Error("请重新确认当前模型与材料");
 						const requestKey = createRequestKey();
 						updatePageOperation(workspaceId, pageId, { requestKey });
 						try {
-							return await runPageOperation(workspaceId, pageId, "run-create", (current) => remote.createUnifiedRun({
-								workspaceId,
-								taskId: pageId,
-								expectedRevision: current.revision,
-								requestKey
-							}, controller.signal), () => ({
+							return await runPageOperation(workspaceId, pageId, "run-create", (current) => {
+								const payload = {
+									workspaceId,
+									taskId: pageId,
+									expectedRevision: current.revision,
+									requestKey
+								};
+								return local ? remote.createLocalRun({
+									...payload,
+									sessionId: getGenerationSession?.(workspaceId),
+									...real ? { confirmation: {
+										sha256: preview.sha256,
+										confirmed: true
+									} } : {}
+								}, controller.signal) : remote.createUnifiedRun(payload, controller.signal);
+							}, () => ({
 								requestKey: null,
-								feedback: "run-completed",
+								localModelPreview: null,
+								feedback: local ? "run-prepared" : "run-completed",
 								generationUncertain: false
 							}));
 						} catch (error) {
-							if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { generationUncertain: true });
+							const notStarted = real && [
+								"GENERATION_CONFIRMATION_REQUIRED",
+								"GENERATION_CONFIRMATION_STALE",
+								"GENERATION_CONTEXT_UNAVAILABLE",
+								"GENERATION_NOT_ENABLED",
+								"BUILTIN_SKILL_UNAVAILABLE"
+							].includes(error?.code);
+							if (!closing && !disposed) updatePageOperation(workspaceId, pageId, {
+								generationUncertain: !notStarted,
+								localModelPreview: null
+							});
 							throw error;
 						}
 					}
@@ -10060,10 +10382,19 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					});
 				},
 				async observeUnifiedRun(workspaceId, pageId) {
-					return runPageOperation(workspaceId, pageId, "run-observe", async () => ({
-						committed: true,
-						current: await remote.get(workspaceId, controller.signal)
-					}), () => ({
+					return runPageOperation(workspaceId, pageId, "run-observe", async (current) => {
+						const page = pageFor(workspaceId, pageId);
+						const pending = Object.values(page.runs).find((run) => run.mode === "dsh-local" && ["prepared", "unknown"].includes(run.status));
+						return pending ? remote.observeLocalRun({
+							workspaceId,
+							taskId: pageId,
+							runId: pending.runId,
+							expectedRevision: current.revision
+						}, controller.signal) : {
+							committed: true,
+							current: await remote.get(workspaceId, controller.signal)
+						};
+					}, () => ({
 						generationUncertain: false,
 						requestKey: null,
 						feedback: "run-observed"
@@ -10322,6 +10653,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			credentialOrigin: "",
 			downloadOrigins: Object.freeze([]),
 			...normalizeGenerationPreferences(),
+			localModelEnabled: false,
 			credentialStatus: "unavailable",
 			credentialStored: false,
 			credentialConfigured: false,
@@ -10371,10 +10703,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					const credentialOrigin = rawCredentialOrigin === "" ? "" : normalizeOasisOrigin(rawCredentialOrigin);
 					const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisOrigin(origin)))]);
 					const preferences = normalizeGenerationPreferences(value);
+					const localModelEnabled = value.localModelEnabled ?? false;
+					if (typeof localModelEnabled !== "boolean") throw new Error("invalid");
 					const settings = JSON.stringify([
 						apiBaseUrl,
 						credentialOrigin,
-						downloadOrigins
+						downloadOrigins,
+						localModelEnabled
 					]);
 					const restartRequired = snapshot.restartRequired || lastSettings !== null && settings !== lastSettings;
 					lastSettings = settings;
@@ -10385,6 +10720,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						credentialOrigin,
 						downloadOrigins,
 						restartRequired,
+						localModelEnabled,
 						...preferences
 					});
 				} catch {
@@ -10394,6 +10730,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						apiBaseUrl: "",
 						credentialOrigin: "",
 						downloadOrigins: Object.freeze([]),
+						localModelEnabled: false,
 						...normalizeGenerationPreferences()
 					});
 				}
@@ -10573,6 +10910,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						return false;
 					}
 					return write("settings", () => scope.set("apiBaseUrl", origin));
+				},
+				async saveLocalModelEnabled(value) {
+					if (typeof value !== "boolean") return false;
+					return write("settings", () => scope.set("localModelEnabled", value));
 				},
 				async savePreference(key, value) {
 					if (!["defaultGenerationSource", "outputDirectoryPrefix"].includes(key)) return false;
@@ -10836,7 +11177,15 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				onClick: () => {
 					controller.savePreference("outputDirectoryPrefix", prefix);
 				}
-			}, "保存目录偏好"), (0, react.createElement)("small", null, "仅用于新任务；保存文件仍需逐次确认。"), snapshot.error ? (0, react.createElement)("div", { role: "alert" }, snapshot.error) : null, snapshot.notice ? (0, react.createElement)("div", { role: "status" }, snapshot.notice) : null);
+			}, "保存目录偏好"), (0, react.createElement)("small", null, "仅用于新任务；保存文件仍需逐次确认。"), (0, react.createElement)("label", null, (0, react.createElement)("input", {
+				type: "checkbox",
+				"aria-label": "启用本地 Skills 真实模型生成",
+				checked: snapshot.localModelEnabled === true,
+				disabled,
+				onChange: (event) => {
+					controller.saveLocalModelEnabled(event.currentTarget.checked);
+				}
+			}), "启用本地 Skills 真实模型生成"), (0, react.createElement)("small", null, "重启 Host 后生效；使用 DSH 当前会话模型。云端模型会接收材料和内置 Skill，可能产生费用，每次生成前确认。"), snapshot.error ? (0, react.createElement)("div", { role: "alert" }, snapshot.error) : null, snapshot.notice ? (0, react.createElement)("div", { role: "status" }, snapshot.notice) : null);
 		}
 		function OasisSettingsSection({ controller }) {
 			return (0, react.createElement)("section", {
@@ -10949,7 +11298,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				remote: createWorkbenchRemote(connection),
 				connectionSettings,
 				conversationDrafts,
-				nativeFiles: coordinator
+				nativeFiles: coordinator,
+				getGenerationSession(workspaceId) {
+					const context = coordinator.getSnapshot().workspaceContext;
+					if (context?.status !== "ready" || resolveWorkspaceId(context.currentSessionId, context.workspaceItems) !== workspaceId) throw new Error("当前项目与会话不可用");
+					return context.currentSessionId;
+				}
 			});
 			const betterSidebarDescriptor = createOasisBetterSidebarDescriptor({
 				markdownRenderer,

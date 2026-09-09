@@ -3,38 +3,14 @@ import test from 'node:test'
 import { mkdtemp, readFile, rm } from 'node:fs/promises'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
-import { createWorkbenchService } from '../src/workbench-service.js'
-import { openOasisWorkbenchRepository } from '../src/workbench-repository.js'
 import { parseStoredWorkbenchRecord } from '../src/workbench-domain.js'
-import { recordToWorkspaceState, workspaceStateToDraft } from '../src/client/workbench-model.js'
-import { createV3Record, NOW } from './workbench-fixtures.mjs'
+import { NOW } from './workbench-fixtures.mjs'
+import { fixtureHarness } from './unified-generation-harness.mjs'
 import { createWorkbenchStore } from '../src/client/workbench-store.js'
 import { createWorkbenchRemote } from '../src/client/workbench-remote.js'
 import { createWorkbenchRpcHandler } from '../src/workbench-rpc.js'
 import { createConversationDraftBridge } from '../src/client/conversation-draft-bridge.js'
 
-export async function fixtureHarness(options = {}) {
-  const original = structuredClone(parseStoredWorkbenchRecord('workspace-a', createV3Record()))
-  Object.assign(original.tasks['task-a'], {
-    workType: 'cn-invention-patent', workflowId: 'patent-claims', workflowVersion: '1',
-    generation: { inputSchemaVersion: '1', source: 'local-skill' },
-    formValues: { claims: '一种控制器数据保存方法。', technicalField: '控制器', background: '', benefits: '', embodiments: '', drawings: '', instructions: '' },
-  })
-  const records = new Map([['workspace-a', original]])
-  const repository = await openOasisWorkbenchRepository({ async open() { return {
-    table() { return { get: id => records.get(id), async put(id, value) { records.set(id, value) } } }, async close() {},
-  } } }, { clock: () => NOW })
-  let sequence = 0
-  const service = createWorkbenchService({ repository, clock: () => NOW,
-    runIdFactory: () => `run-${++sequence}`,
-    materialManager: { confirm() { throw Error('no files') }, refresh() { throw Error('no files') }, recheckAll() { throw Error('no files') } },
-    ...options,
-  })
-  const state = () => repository.get('workspace-a')
-  const command = (extra = {}) => ({ workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: state().revision, requestKey: `request-${sequence + 1}`, ...extra })
-  const draft = () => structuredClone(workspaceStateToDraft(recordToWorkspaceState(state())))
-  return { repository, service, state, command, draft, records }
-}
 
 test('late conversation preparation cannot insert after the selected version changes', async () => {
   const h = await fixtureHarness({ unifiedFixtureEnabled: true })
@@ -84,11 +60,11 @@ test('a generation response preserves an unsaved sibling draft instead of replac
     await store.whenSettled('workspace-a')
     const pending = store.createRun('workspace-a', 'task-a')
     await started
-    store.updateFormValue('workspace-a', 'task-b', 'claims', '必须保留的未保存材料')
+    store.updateFormValue('workspace-a', 'task-b', 'disclosure_text', '必须保留的未保存材料')
     release('已经生成的合成正文')
     await pending.catch(error => { assert.match(error.message, /conflict/i) })
     const state = store.getWorkspaceState('workspace-a')
-    assert.equal(state.pages.find(page => page.pageId === 'task-b').formValues.claims, '必须保留的未保存材料')
+    assert.equal(state.pages.find(page => page.pageId === 'task-b').formValues.disclosure_text, '必须保留的未保存材料')
     assert.equal(state.syncStatus, 'conflict')
     assert.equal(h.state().tasks['task-a'].runs[h.state().tasks['task-a'].activeRunId].status, 'completed')
   } finally { await store.dispose(); await h.repository.close() }

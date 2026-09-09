@@ -22,6 +22,10 @@ function NewTaskPreferences({ controller }) {
       style: { display: 'block', boxSizing: 'border-box', width: '100%', padding: 8, marginTop: 5 } })),
     createElement('button', { type: 'button', disabled, onClick: () => { void controller.savePreference('outputDirectoryPrefix', prefix) } }, '保存目录偏好'),
     createElement('small', null, '仅用于新任务；保存文件仍需逐次确认。'),
+    createElement('label', null, createElement('input', { type: 'checkbox', 'aria-label': '启用本地 Skills 真实模型生成',
+      checked: snapshot.localModelEnabled === true, disabled,
+      onChange: event => { void controller.saveLocalModelEnabled(event.currentTarget.checked) } }), '启用本地 Skills 真实模型生成'),
+    createElement('small', null, '重启 Host 后生效；使用 DSH 当前会话模型。云端模型会接收材料和内置 Skill，可能产生费用，每次生成前确认。'),
     snapshot.error ? createElement('div', { role: 'alert' }, snapshot.error) : null,
     snapshot.notice ? createElement('div', { role: 'status' }, snapshot.notice) : null)
 }

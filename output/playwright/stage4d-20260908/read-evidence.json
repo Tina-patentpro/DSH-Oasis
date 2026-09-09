@@ -1,0 +1,142 @@
+{
+  "generatedAt": "2026-09-08T04:00:47.296Z",
+  "scope": "public-sample-only-single-agent",
+  "zip": [
+    {
+      "name": "session.jsonl",
+      "bytes": 1270,
+      "sha256": "b952a688d63a86651166c7cbe492f3c46ede13d0cc57a3b3b6bc36854751eb68",
+      "markers": {
+        "instruction": false,
+        "rawError": false
+      },
+      "containsExpectedSession": true,
+      "events": [
+        "session",
+        "permission/preset",
+        "sandbox/mode",
+        "approval/policy",
+        "session/end-seed",
+        "model/selection",
+        "model/selection",
+        "model/selection",
+        "session/end-seed",
+        "command/run",
+        "command/done"
+      ]
+    },
+    {
+      "name": "subagents/session-cbfda42f-5f9a-45f2-8490-b820eddf0907/session.jsonl",
+      "bytes": 1093,
+      "sha256": "612961d296f74adf6be3b486e59792817ecba7fdf5c0f13e9c56109975cac61e",
+      "markers": {
+        "instruction": false,
+        "rawError": false
+      },
+      "containsExpectedSession": true,
+      "events": [
+        "session",
+        "permission/preset",
+        "sandbox/mode",
+        "approval/policy",
+        "session/end-seed",
+        "subagent/descriptor",
+        "session/end-seed",
+        "session/title"
+      ]
+    }
+  ],
+  "domainMarkers": {
+    "instruction": false,
+    "rawError": false
+  },
+  "files": [
+    {
+      "path": "packages/oasis-professional-service/lib/client.js",
+      "bytes": 426008,
+      "sha256": "b3be7e5ad2340b432a2f4b491486f6fbd10d3d9cf7a76f5b5dbcf6685158744b",
+      "markers": {
+        "instruction": false,
+        "rawError": false
+      }
+    },
+    {
+      "path": "packages/oasis-professional-service/lib/client.js.map",
+      "bytes": 831261,
+      "sha256": "88be27cf7d93acf209e215b865b9efdc21c982cc96e131d0a54b7a89f9a75143",
+      "markers": {
+        "instruction": false,
+        "rawError": false
+      }
+    },
+    {
+      "path": "packages/oasis-professional-service/src/native-offline-runtime.js",
+      "bytes": 2995,
+      "sha256": "907adf7ad422693e88d6454e9af3fb4004b72ed3b20e379a6fbaa9076df2cde3",
+      "markers": {
+        "instruction": true,
+        "rawError": true
+      }
+    },
+    {
+      "path": "packages/oasis-professional-service/src/dsh-generation-adapter.js",
+      "bytes": 9310,
+      "sha256": "43da7e6bae23e42818041e8579a23dccb22bb901c211e7970472f229ffb4b2df",
+      "markers": {
+        "instruction": false,
+        "rawError": false
+      }
+    },
+    {
+      "path": ".dsh-test/stage2-workspaces/workspace-b/stage4c-native-20260908/patent-claims.md",
+      "bytes": 159,
+      "sha256": "c596d96019c3f45ec554195a23533b8e5285d40dba1a1f5a27b37b234ed5715a",
+      "markers": {
+        "instruction": false,
+        "rawError": false
+      }
+    },
+    {
+      "path": ".dsh-test/stage2-workspaces/workspace-b/stage4c-native-20260908/patent-claims.oasis.json",
+      "bytes": 1324,
+      "sha256": "0d25ea72a943216cb5b364e51dc186a208bca2523f48bc01af72b098c1954407",
+      "markers": {
+        "instruction": false,
+        "rawError": false
+      }
+    }
+  ],
+  "sessions": [
+    {
+      "path": ".dsh-test/stage2-desktop/sessions/--D-OneDrive-4~3001~8463~5A23~76F8~5173-9~3001~7EFF~6D32~6167~51994.0~9884~7814-.dsh-test-stage2-workspaces-workspace-a--/session-fa523f28-868a-439a-8fd9-a79734182fae/session.jsonl.zstd",
+      "sha256": "4eda3eb9dc1dcfe3ac5a58b846572de117c579653e44169496db795d7f4495a1",
+      "bytes": 468,
+      "markers": {
+        "instruction": false,
+        "rawError": false
+      }
+    },
+    {
+      "path": ".dsh-test/stage2-desktop/sessions/--D-OneDrive-4~3001~8463~5A23~76F8~5173-9~3001~7EFF~6D32~6167~51994.0~9884~7814-.dsh-test-stage2-workspaces-workspace-b--/session-7f3f7cca-8a9e-4078-bb6f-3cd65c8004b4/session.jsonl.zstd",
+      "sha256": "b1c6399dd7e436e0942cdd7cd1ed8babea0177ac6250cefc981cc96247ceabdf",
+      "bytes": 1057,
+      "markers": {
+        "instruction": false,
+        "rawError": false
+      }
+    },
+    {
+      "path": ".dsh-test/stage2-desktop/sessions/--D-OneDrive-4~3001~8463~5A23~76F8~5173-9~3001~7EFF~6D32~6167~51994.0~9884~7814-.dsh-test-stage2-workspaces-workspace-b--/session-cbfda42f-5f9a-45f2-8490-b820eddf0907/session.jsonl.zstd",
+      "sha256": "49ed357812eb04122bcc56bb3f80e1b674f6cc6710d9eadea422bb802bd9be38",
+      "bytes": 732,
+      "markers": {
+        "instruction": false,
+        "rawError": false
+      }
+    }
+  ],
+  "runCount": 4,
+  "runsUnchanged": true,
+  "exportUiDownloadConfirmed": false,
+  "nativeExportEndpointConfirmed": true
+}

@@ -1,0 +1,90 @@
+- complementary:
+  - button "新建会话"
+  - button "收起侧边栏":
+    - img
+  - button "新建会话":
+    - img
+    - text: 新会话
+  - text: 工作区
+  - button "搜索会话":
+    - img
+  - textbox "搜索会话…"
+  - button "视图选项":
+    - img
+  - button "添加工作区":
+    - img
+  - tree "会话":
+    - treeitem "workspace-b" [expanded]:
+      - img
+      - text: workspace-b
+    - treeitem "workspace-a" [expanded]:
+      - img
+      - text: workspace-a
+    - treeitem "新会话" [selected]
+  - button "设置":
+    - img
+    - text: 设置
+- main:
+  - text: 探索未至之境 预览版
+  - button "选择工作区":
+    - img
+    - text: workspace-a
+    - img
+  - button "标准模式":
+    - img
+    - text: 标准模式
+    - img
+  - textbox "描述你想要构建的内容… / 调用指令 @ 文件或对话"
+  - button "指令":
+    - img
+  - button "访问模式，当前：工作区内修改": 工作区内修改
+  - button "打开技术研发与中国发明专利工作台": 研发 / 专利
+  - button "选择模型，当前 绿洲离线文字":
+    - text: 绿洲离线文字
+    - img
+  - button "发送消息" [disabled]
+- complementary:
+  - text: 详情
+  - button "关闭详情"
+  - text: 点击消息流中的工具行查看详情
+- banner:
+  - text: DSH Desktop
+  - button "当前版本 v2.0.5": v2.0.5
+  - 'button "桌面外观与行为: 扩展窗口"': 扩展窗口
+  - button "打开 DSH 终端"
+  - button "重启选项"
+  - button "开发者选项"
+- button "展开底部面板":
+  - img
+- button "展开侧边栏":
+  - img
+- img
+- text: Files
+- button "关闭":
+  - img
+- button "新建标签页":
+  - img
+- textbox "按文件名搜索…"
+- button "刷新":
+  - img
+- button "上传文件":
+  - img
+- button "上传文件夹":
+  - img
+- img
+- text: workspace-a
+- button "stage4e2-api-20260908":
+  - img
+  - text: stage4e2-api-20260908
+- button "stage4e2-local-20260908":
+  - img
+  - text: stage4e2-local-20260908
+- button "stage4e3-api-20260909":
+  - img
+  - text: stage4e3-api-20260909
+- button "stage4e3-input":
+  - img
+  - text: stage4e3-input
+- button "stage4e3-local-20260909":
+  - img
+  - text: stage4e3-local-20260909

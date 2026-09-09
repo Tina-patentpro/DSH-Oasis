@@ -321,8 +321,10 @@ test('publishes catalog through the service without leaking the repository', () 
   const catalog = service.getWorkflowCatalog('cn-invention-patent')
   assert.deepEqual(catalog.workflows.map((workflow) => workflow.workflowId), [
     'patent-claims',
+    'patent-claims',
     'cn-invention-patent',
   ])
+  assert.deepEqual(catalog.workflows.filter(w => w.workflowId === 'patent-claims').map(w => w.workflowVersion), ['2', '1'])
   assert.equal(Object.hasOwn(service, 'repository'), false)
   assert.equal(Object.isFrozen(service), true)
 })

@@ -266,6 +266,7 @@ export function OasisWorkbenchSurface({
     onReload: () => store.reloadWorkspace(workspaceId),
     onUpdateForm: (pageId, fieldId, value) => store.updateFormValue(workspaceId, pageId, fieldId, value),
     onSetGenerationSource: (pageId, source) => store.setGenerationSource(workspaceId, pageId, source),
+    onSelectClaimsUpstream: (pageId, path) => store.selectClaimsUpstream(workspaceId, pageId, path),
     onObserveUnified: pageId => { void store.observeUnifiedRun(workspaceId, pageId).catch(() => {}) },
     onStopUnified: (pageId, runId) => { void store.stopUnifiedRun(workspaceId, pageId, runId).catch(() => {}) },
     onEditResult: (pageId, runId, body) => store.editUnifiedResult(workspaceId, pageId, runId, body),
@@ -278,7 +279,7 @@ export function OasisWorkbenchSurface({
     onRemoveMaterial: (pageId, referenceId, confirmed) => {
       if (confirmed) void store.removeMaterial(workspaceId, pageId, referenceId, true).catch(() => {})
     },
-    onGenerate: (pageId) => { void store.createRun(workspaceId, pageId).catch(() => {}) },
+    onGenerate: (pageId, confirmed = false) => { void store.createRun(workspaceId, pageId, confirmed).catch(() => {}) },
     onActivateRun: (pageId, runId) => store.activateRun(workspaceId, pageId, runId),
     onReviewNote: (pageId, note) => store.setReviewNote(workspaceId, pageId, note),
     onReview: (pageId, runId, status, note) => {

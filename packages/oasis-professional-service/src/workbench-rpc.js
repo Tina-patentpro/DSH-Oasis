@@ -245,6 +245,28 @@ export function createWorkbenchRpcHandler(service, professionalService = null) {
       if (!parsed.success) return parsed
       return materialResult(() => service.createUnifiedRun(parsed.data))
     }
+    if (endpoint === 'task/select-upstream') {
+      const parsed = parsePayload(z.object({ ...materialCommandBase, relativePath: z.string().min(1).max(1024).nullable(), confirmed: z.literal(true) }).strict(), payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => service.selectClaimsUpstream(parsed.data))
+    }
+    if (endpoint === 'task/prepare-local') {
+      const parsed = parsePayload(z.object({ ...materialCommandBase, sessionId: workspaceIdSchema }).strict(), payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => service.prepareLocalRun(parsed.data))
+    }
+    if (endpoint === 'task/create-local') {
+      const parsed = parsePayload(taskCreatePayloadSchema.extend({ sessionId: workspaceIdSchema,
+        confirmation: z.object({ sha256: z.string().regex(/^[a-f0-9]{64}$/), confirmed: z.literal(true) }).strict().optional(),
+      }).strict(), payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => service.createLocalRun(parsed.data))
+    }
+    if (endpoint === 'task/observe-local') {
+      const parsed = parsePayload(unifiedRunPayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => service.observeLocalRun(parsed.data))
+    }
     if (endpoint === 'task/stop-unified') {
       const parsed = parsePayload(unifiedRunPayloadSchema, payload)
       if (!parsed.success) return parsed

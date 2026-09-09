@@ -15,6 +15,7 @@ export const OASIS_SETTINGS_SCHEMA = z.object({
   downloadOrigins: z.array(z.string()).default([]),
   defaultGenerationSource: z.string().default('local-skill'),
   outputDirectoryPrefix: z.string().default(''),
+  localModelEnabled: z.boolean().default(false),
 })
 
 export function normalizeOasisRuntimeConfig(input = {}) {
@@ -22,6 +23,8 @@ export function normalizeOasisRuntimeConfig(input = {}) {
     throw new TypeError('Oasis runtime config must be an object')
   }
   normalizeGenerationPreferences(input)
+  const localModelEnabled = input.localModelEnabled ?? false
+  if (typeof localModelEnabled !== 'boolean') throw new TypeError('localModelEnabled must be boolean')
   const environmentKind = input.environmentKind ?? 'non-production'
   if (environmentKind !== 'non-production') throw new TypeError('Only non-production Oasis environments are supported')
   const rawBaseUrl = input.apiBaseUrl ?? ''
@@ -36,6 +39,7 @@ export function normalizeOasisRuntimeConfig(input = {}) {
   if (!Array.isArray(rawDownloads)) throw new TypeError('downloadOrigins must be an array')
   const downloadOrigins = [...new Set(rawDownloads.map((value) => normalizeOasisOrigin(value, 'downloadOrigins entry')))]
   return Object.freeze({
+    localModelEnabled,
     environmentKind,
     apiBaseUrl,
     credentialOrigin,
@@ -56,6 +60,7 @@ export function registerOasisSettings(ctx, base = {}) {
     downloadOrigins: [],
     defaultGenerationSource: 'local-skill',
     outputDirectoryPrefix: '',
+    localModelEnabled: false,
     ...base,
   }
   normalizeOasisRuntimeConfig(entry)

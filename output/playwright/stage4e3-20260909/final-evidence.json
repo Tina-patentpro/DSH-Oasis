@@ -1,0 +1,64 @@
+{
+  "generatedAt": "2026-09-08T23:05:12.263Z",
+  "taskId": "f8d56f91-6b95-4c93-abff-d99e5f37da65",
+  "runs": [
+    {
+      "runId": "run-c45f56cd-5687-4a3d-b776-ad34af562e5f",
+      "workflowRunUid": "f681f72c-eda5-4a8c-8c49-e72f61b76cca",
+      "evidenceKind": "native-offline",
+      "artifactSha256": "4d62792ca5dac8f7f8cc718d8f7bb923cc9a751ba7dd3cdc14501da49f0b2575",
+      "filename": "claims_20260909065614_f681f72c.md",
+      "upstreamSha256": "da281670dea37e44d34aad3825686f2ff9d4c7c3f348fa8c727016d74be3fe1e"
+    },
+    {
+      "runId": "run-52d4768b-ab73-49da-928a-24cbddc3817d",
+      "workflowRunUid": "f681f72c-eda5-4a8c-8c49-e72f61b76cca",
+      "evidenceKind": "native-offline",
+      "artifactSha256": "6b9497ae9d21c63717e663c366309b5eaac1b9cc5a80abb3debc83364a497718",
+      "filename": "claims_20260909065614_f681f72c.md",
+      "upstreamSha256": "da281670dea37e44d34aad3825686f2ff9d4c7c3f348fa8c727016d74be3fe1e"
+    },
+    {
+      "runId": "run-48a57f75-91eb-4b14-8f90-fe4da14b5b29",
+      "workflowRunUid": "1ef8afaf-94c0-4336-abd1-d805a0d0e9fa",
+      "evidenceKind": "synthetic",
+      "artifactSha256": "a59faecfd89b4ac34858d4c8d6a15c27fc643250d1277a1fd85d9329b5b6353b",
+      "filename": "claims_20260909065822_1ef8afaf.md",
+      "upstreamSha256": "da281670dea37e44d34aad3825686f2ff9d4c7c3f348fa8c727016d74be3fe1e"
+    }
+  ],
+  "saved": [
+    {
+      "relativePath": ".dsh-test/stage2-workspaces/workspace-a/stage4e3-local-20260909/claims_20260909065614_f681f72c.md",
+      "sha256": "6b9497ae9d21c63717e663c366309b5eaac1b9cc5a80abb3debc83364a497718"
+    },
+    {
+      "relativePath": ".dsh-test/stage2-workspaces/workspace-a/stage4e3-api-20260909/claims_20260909065822_1ef8afaf.md",
+      "sha256": "a59faecfd89b4ac34858d4c8d6a15c27fc643250d1277a1fd85d9329b5b6353b"
+    }
+  ],
+  "packageFiles": 72,
+  "existingConversationDraftUnchanged": true,
+  "newConversationInsertionTested": false,
+  "changedBaselineFiles": [
+    "packages\\oasis-professional-service\\src\\claims-v2-result.js",
+    "packages\\oasis-professional-service\\src\\client\\OasisWorkbenchSurface.js",
+    "packages\\oasis-professional-service\\src\\client\\PanelPages.js",
+    "packages\\oasis-professional-service\\src\\client\\UnifiedGenerationPage.js",
+    "packages\\oasis-professional-service\\src\\client\\workbench-remote.js",
+    "packages\\oasis-professional-service\\src\\client\\workbench-store.js",
+    "packages\\oasis-professional-service\\src\\dsh-generation-adapter.js",
+    "packages\\oasis-professional-service\\src\\generation-contract.js",
+    "packages\\oasis-professional-service\\src\\local-generation-service.js",
+    "packages\\oasis-professional-service\\src\\native-offline-runtime.js",
+    "packages\\oasis-professional-service\\src\\unified-fixture.js",
+    "packages\\oasis-professional-service\\src\\unified-generation-service.js",
+    "packages\\oasis-professional-service\\src\\workbench-contract.js",
+    "packages\\oasis-professional-service\\src\\workbench-rpc.js",
+    "packages\\oasis-professional-service\\src\\workbench-service.js",
+    "packages\\oasis-professional-service\\test\\claims-upstream.test.mjs",
+    "packages\\oasis-professional-service\\test\\claims-v2.test.mjs",
+    "packages\\oasis-professional-service\\lib\\client.js",
+    "packages\\oasis-professional-service\\lib\\client.js.map"
+  ]
+}

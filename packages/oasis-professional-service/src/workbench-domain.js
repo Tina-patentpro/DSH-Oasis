@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto'
 import { unifiedInputSha256 } from './unified-fixture.js'
+import { isUnifiedRun } from './generation-contract.js'
 
 import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain'
 
@@ -74,7 +75,7 @@ function assertRunIntegrity(record) {
     }
     for (const runId of task.runOrder) {
       const run = task.runs[runId]
-      const inputSha256 = run.mode === 'unified-fixture' ? unifiedInputSha256(run) : run.mode === 'local-mock'
+      const inputSha256 = isUnifiedRun(run) ? unifiedInputSha256(run) : run.mode === 'local-mock'
         ? computeCanonicalInputSha256({
             mockVersion: run.mockVersion,
             workflowId: run.workflowId,
@@ -91,7 +92,7 @@ function assertRunIntegrity(record) {
         throw new Error(`input integrity mismatch for task ${taskId} run ${runId}`)
       }
 
-      if (run.mode === 'unified-fixture' && run.status !== 'completed') continue
+      if (isUnifiedRun(run) && run.status !== 'completed') continue
 
       const artifactSha256 = createHash('sha256')
         .update(run.result.artifact.body, 'utf8')

@@ -15,3 +15,7 @@ export function isUnifiedFixtureEnvironment(env = process.env) {
     return lstatSync(expected).isDirectory()
   } catch { return false }
 }
+
+export function isNativeOfflineEnvironment(env = process.env) {
+  return env.OASIS_NATIVE_OFFLINE === '1' && isUnifiedFixtureEnvironment({ ...env, OASIS_UNIFIED_FIXTURE: '1' })
+}

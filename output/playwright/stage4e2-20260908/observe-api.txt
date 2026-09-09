@@ -1,0 +1,129 @@
+- complementary:
+  - button "新建会话"
+  - button "收起侧边栏":
+    - img
+  - button "新建会话":
+    - img
+    - text: 新会话
+  - text: 工作区
+  - button "搜索会话":
+    - img
+  - textbox "搜索会话…"
+  - button "视图选项":
+    - img
+  - button "添加工作区":
+    - img
+  - tree "会话":
+    - treeitem "workspace-b" [expanded]:
+      - img
+      - text: workspace-b
+    - treeitem "workspace-a":
+      - img
+      - text: workspace-a
+  - button "设置":
+    - img
+    - text: 设置
+- main:
+  - text: 探索未至之境 预览版
+  - button "选择工作区":
+    - img
+    - text: workspace-a
+    - img
+  - button "标准模式":
+    - img
+    - text: 标准模式
+    - img
+  - textbox "当前模型不可用，请先选择模型" [disabled]
+  - button "指令" [disabled]:
+    - img
+  - button "访问模式，当前：工作区内修改" [disabled]: 工作区内修改
+  - button "打开技术研发与中国发明专利工作台": 研发 / 专利
+  - button "选择模型，当前 oasis-offline/text":
+    - text: oasis-offline/text
+    - img
+  - button "发送消息" [disabled]
+- complementary:
+  - text: 详情
+  - button "关闭详情"
+  - text: 点击消息流中的工具行查看详情
+- banner:
+  - text: DSH Desktop
+  - button "当前版本 v2.0.5": v2.0.5
+  - 'button "桌面外观与行为: 扩展窗口"': 扩展窗口
+  - button "打开 DSH 终端"
+  - button "重启选项"
+  - button "开发者选项"
+- button "展开底部面板":
+  - img
+- button "折叠侧边栏":
+  - img
+- img
+- text: Files
+- button "关闭":
+  - img
+- text: 绿洲专业工作台
+- button "关闭":
+  - img
+- img
+- text: claims_20260908201927_f9fad394.md
+- button "关闭":
+  - img
+- button "新建标签页":
+  - img
+- region "绿洲专业工作台":
+  - heading "绿洲专业工作台" [level=2]
+  - status: 与当前DSH项目关联 · 已与当前DSH项目同步
+  - tablist "绿洲任务页":
+    - button "功能中心"
+    - tab "新任务"
+    - button "关闭任务页 新任务": ×
+    - tab "阶段4E2-四选项卡文字" [selected]
+    - button "关闭任务页 阶段4E2-四选项卡文字": ×
+    - button "新建任务页": +
+  - tabpanel "阶段4E2-四选项卡文字":
+    - textbox "任务名称": 阶段4E2-四选项卡文字
+    - text: 项目：a4571242-cc92-44ae-8904-e85533dc6e48
+    - radiogroup "生成来源":
+      - radio "本地 Skills"
+      - radio "专业 API" [checked]
+    - status: 合成验收 · 无真实调用
+    - button "输入"
+    - button "结果" [pressed]
+    - heading "生成结果" [level=3]
+    - navigation "结果版本":
+      - button "版本 1"
+      - button "版本 2"
+      - button "版本 3"
+    - article:
+      - text: 专业 API · 合成验收 · 待审核
+      - heading "权利要求书累计文稿" [level=1]
+      - heading "文档信息" [level=2]
+      - list:
+        - listitem: 节点：flow-2-6
+        - listitem: 输出合同：claims-cumulative-2
+        - listitem: 时间：2026-09-08T12:24:16.289Z（文件名为上海时间）
+        - listitem: run_uid8：3f3bf784
+        - listitem: 上游累计材料缺失：尚未接入；文件正文未读取。
+        - listitem: 当前仅为公开离线样本，不是私有 Skill 业务验收。
+      - heading "核心结论" [level=2]
+      - paragraph: 公开样本：仅验证合同 2 的文字交付链路。
+      - paragraph: 模型建议状态：completed_with_warnings / not_recommended_for_filing（未经核实，不代表人工审核）。
+      - heading "核心结果" [level=2]
+      - list:
+        - listitem: 公开合成权利要求样本：公开验收交底：控制器将数据分段写入日志，校验后更新索引。
+      - heading "特征矩阵" [level=3]
+      - paragraph: 公开样本；逐特征专业分析未评估。
+      - heading "从属回退" [level=3]
+      - paragraph: 公开样本；从属回退未评估。
+      - heading "T4 与初检" [level=3]
+      - paragraph: 公开样本；说明书尚未生成；T4 专业检查未评估。
+      - heading "下游读取区" [level=2]
+      - paragraph: 本区保留实际输入和模型建议；未合并不存在的上游累计文档。结构数据在人工编辑后不再具有原响应校验含义。
+      - paragraph: "{ \"input\": { \"upstream_snapshot\": { \"status\": \"missing\", \"reason\": \"not-connected\" }, \"disclosure_text\": \"公开验收交底：控制器将数据分段写入日志，校验后更新索引。\", \"drawings_text\": \"公开验收：图1为日志与索引关系示意。\", \"claim_requirements_text\": \"仅验证文字链路，不作为申报文本。\", \"user_input\": \"保留待确认项。\" }, \"snapshotUpdates\": [] }"
+      - heading "风险与待确认事项" [level=2]
+      - paragraph: Host 提示：上游累计材料缺失；本样本风险及问题未评估，不能据此申报。
+      - paragraph: "{ \"warnings\": [ { \"warningId\": \"public-unassessed\", \"inheritedFrom\": \"\", \"problem\": \"上游累计材料缺失，专业质量未评估。\", \"affectedContent\": \"全部输出\", \"currentHandling\": \"仅供隔离验收\", \"modelCompletion\": \"未评估\", \"deliverableImpact\": \"不可用于申报\", \"recommendedAction\": \"另行专业核验\", \"status\": \"open\" } ], \"modelCompletions\": [] }"
+      - text: 风险未评估 · 待确认问题未评估
+      - button "编辑结果"
+      - button "审核此版本"
+      - button "在对话中使用" [disabled]

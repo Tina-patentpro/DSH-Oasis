@@ -10,6 +10,7 @@ import {
 
 test('defaults to disabled non-production integration with no base URL', () => {
   assert.deepEqual(normalizeOasisRuntimeConfig({}), {
+    localModelEnabled: false,
     environmentKind: 'non-production',
     apiBaseUrl: null,
     credentialOrigin: null,
@@ -32,6 +33,7 @@ test('rejects the exact production origin and keeps API and download origins sep
     credentialRef: 'OASIS_TEST_JWT',
     downloadOrigins: ['https://files-staging.example/'],
   }), {
+    localModelEnabled: false,
     environmentKind: 'non-production',
     apiBaseUrl: 'https://oasis-staging.example',
     credentialOrigin: 'https://oasis-staging.example',
@@ -47,6 +49,7 @@ test('keeps a stored credential inactive when its bound origin differs from the 
     apiBaseUrl: 'https://oasis-staging.example',
     credentialOrigin: 'https://old-oasis-staging.example',
   }), {
+    localModelEnabled: false,
     environmentKind: 'non-production',
     apiBaseUrl: 'https://oasis-staging.example',
     credentialOrigin: 'https://old-oasis-staging.example',

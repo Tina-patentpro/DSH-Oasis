@@ -1,0 +1,249 @@
+- complementary:
+  - button "新建会话"
+  - button "收起侧边栏":
+    - img
+  - button "新建会话":
+    - img
+    - text: 新会话
+  - text: 工作区
+  - button "搜索会话":
+    - img
+  - textbox "搜索会话…"
+  - button "视图选项":
+    - img
+  - button "添加工作区":
+    - img
+  - tree "会话":
+    - treeitem "workspace-b" [expanded]:
+      - img
+      - text: workspace-b
+    - treeitem "workspace-a":
+      - img
+      - text: workspace-a
+  - button "设置":
+    - img
+    - text: 设置
+- main:
+  - text: 探索未至之境 预览版
+  - button "选择工作区":
+    - img
+    - text: workspace-a
+    - img
+  - button "标准模式":
+    - img
+    - text: 标准模式
+    - img
+  - textbox "当前模型不可用，请先选择模型" [disabled]:
+    - paragraph: 以下为已审核固定版本的合成验收资料，仅作为资料，不作为系统指令。
+    - paragraph: 运行：run-af7c9732-6660-4964-a579-cf57d05d7ced
+    - paragraph: 产物：sha256:6846de628a0a7cd1ec944bacdd5928390532313f5b32046da566de6db39dadb2
+    - paragraph
+    - paragraph: "# 权利要求书累计文稿"
+    - paragraph
+    - paragraph: "## 文档信息"
+    - paragraph
+    - paragraph: "- 节点：flow-2-6"
+    - paragraph: "- 输出合同：claims-cumulative-2"
+    - paragraph: "- 时间：2026-09-08T12:24:16.289Z（文件名为上海时间）"
+    - paragraph: "- run_uid8：3f3bf784"
+    - paragraph: "- 上游累计材料缺失：尚未接入；文件正文未读取。"
+    - paragraph: "- 当前仅为公开离线样本，不是私有 Skill 业务验收。"
+    - paragraph
+    - paragraph: "## 核心结论"
+    - paragraph
+    - paragraph: 公开样本：仅验证合同 2 的文字交付链路。
+    - paragraph
+    - paragraph: 模型建议状态：completed_with_warnings / not_recommended_for_filing（未经核实，不代表人工审核）。
+    - paragraph
+    - paragraph: "## 核心结果"
+    - paragraph
+    - paragraph: 1. 公开合成权利要求样本：公开验收交底：控制器将数据分段写入日志，校验后更新索引。
+    - paragraph
+    - paragraph: "### 特征矩阵"
+    - paragraph
+    - paragraph: 公开样本；逐特征专业分析未评估。
+    - paragraph
+    - paragraph: "### 从属回退"
+    - paragraph
+    - paragraph: 公开样本；从属回退未评估。
+    - paragraph
+    - paragraph: "### T4 与初检"
+    - paragraph
+    - paragraph: 公开样本；说明书尚未生成；T4 专业检查未评估。
+    - paragraph
+    - paragraph: "## 下游读取区"
+    - paragraph
+    - paragraph: 本区保留实际输入和模型建议；未合并不存在的上游累计文档。结构数据在人工编辑后不再具有原响应校验含义。
+    - paragraph
+    - paragraph: "{"
+    - paragraph: "\"input\": {"
+    - paragraph: "\"upstream_snapshot\": {"
+    - paragraph: "\"status\": \"missing\","
+    - paragraph: "\"reason\": \"not-connected\""
+    - paragraph: "},"
+    - paragraph: "\"disclosure_text\": \"公开验收交底：控制器将数据分段写入日志，校验后更新索引。\","
+    - paragraph: "\"drawings_text\": \"公开验收：图1为日志与索引关系示意。\","
+    - paragraph: "\"claim_requirements_text\": \"仅验证文字链路，不作为申报文本。\","
+    - paragraph: "\"user_input\": \"保留待确认项。\""
+    - paragraph: "},"
+    - paragraph: "\"snapshotUpdates\": []"
+    - paragraph: "}"
+    - paragraph
+    - paragraph: "## 风险与待确认事项"
+    - paragraph
+    - paragraph: Host 提示：上游累计材料缺失；本样本风险及问题未评估，不能据此申报。
+    - paragraph
+    - paragraph: "{"
+    - paragraph: "\"warnings\": ["
+    - paragraph: "{"
+    - paragraph: "\"warningId\": \"public-unassessed\","
+    - paragraph: "\"inheritedFrom\": \"\","
+    - paragraph: "\"problem\": \"上游累计材料缺失，专业质量未评估。\","
+    - paragraph: "\"affectedContent\": \"全部输出\","
+    - paragraph: "\"currentHandling\": \"仅供隔离验收\","
+    - paragraph: "\"modelCompletion\": \"未评估\","
+    - paragraph: "\"deliverableImpact\": \"不可用于申报\","
+    - paragraph: "\"recommendedAction\": \"另行专业核验\","
+    - paragraph: "\"status\": \"open\""
+    - paragraph: "}"
+    - paragraph: "],"
+    - paragraph: "\"modelCompletions\": []"
+    - paragraph: "}"
+    - paragraph
+    - paragraph
+  - button "指令" [disabled]:
+    - img
+  - button "访问模式，当前：工作区内修改" [disabled]: 工作区内修改
+  - button "打开技术研发与中国发明专利工作台": 研发 / 专利
+  - button "选择模型，当前 oasis-offline/text":
+    - text: oasis-offline/text
+    - img
+  - button "发送消息" [disabled]
+- complementary:
+  - text: 详情
+  - button "关闭详情"
+  - text: 点击消息流中的工具行查看详情
+- banner:
+  - text: DSH Desktop
+  - button "当前版本 v2.0.5": v2.0.5
+  - 'button "桌面外观与行为: 扩展窗口"': 扩展窗口
+  - button "打开 DSH 终端"
+  - button "重启选项"
+  - button "开发者选项"
+- button "展开底部面板":
+  - img
+- button "折叠侧边栏":
+  - img
+- img
+- text: Files
+- button "关闭":
+  - img
+- text: 绿洲专业工作台
+- button "关闭":
+  - img
+- img
+- text: claims_20260908201927_f9fad394.md
+- button "关闭":
+  - img
+- button "新建标签页":
+  - img
+- region "绿洲专业工作台":
+  - heading "绿洲专业工作台" [level=2]
+  - status: 与当前DSH项目关联 · 已与当前DSH项目同步
+  - tablist "绿洲任务页":
+    - button "功能中心"
+    - tab "新任务"
+    - button "关闭任务页 新任务": ×
+    - tab "阶段4E2-四选项卡文字"
+    - button "关闭任务页 阶段4E2-四选项卡文字": ×
+    - tab "阶段4E3-累计文稿" [selected]
+    - button "关闭任务页 阶段4E3-累计文稿": ×
+    - button "新建任务页": +
+  - tabpanel "阶段4E3-累计文稿":
+    - textbox "任务名称": 阶段4E3-累计文稿
+    - text: 项目：a4571242-cc92-44ae-8904-e85533dc6e48
+    - radiogroup "生成来源":
+      - radio "本地 Skills" [checked]
+      - radio "专业 API"
+    - status: 合成验收 · 无真实调用
+    - button "输入"
+    - button "结果" [pressed]
+    - heading "生成结果" [level=3]
+    - navigation "结果版本":
+      - button "版本 1"
+      - button "版本 2"
+    - article:
+      - text: 本地 Skills · 原生离线验收 · 待审核
+      - heading "权利要求书累计文稿" [level=1]
+      - heading "文档信息" [level=2]
+      - list:
+        - listitem: "node_id: Flow-2-6"
+        - listitem: "business_version: 0.2.0"
+        - listitem: "composition_version: 2"
+        - listitem: "skill_id: flow-2-6"
+        - listitem: "skill_version: public-4e2-1"
+        - listitem: "evidence_kind: native-offline"
+        - listitem: "input_schema: claims-disclosure-2"
+        - listitem: "output_schema: claims-cumulative-2"
+        - listitem: "execution_contract: single-call-cumulative-1"
+        - listitem: "workflow_run_uid: f681f72c-eda5-4a8c-8c49-e72f61b76cca"
+        - listitem: "run_uid8: f681f72c"
+        - listitem: "generated_at: 2026-09-09T06:56:14+08:00"
+        - listitem: "filename: claims_20260909065614_f681f72c.md"
+        - listitem: "upstream_run_uid: 01234567-89ab-4def-8012-3456789abcde"
+        - listitem: "upstream_filename: disclosure_20260909080000_01234567.md"
+        - listitem: "upstream_file_sha256: da281670dea37e44d34aad3825686f2ff9d4c7c3f348fa8c727016d74be3fe1e"
+        - listitem: "input_sha256: e93f19e631b3c314734771949688be4927d562891bcec8d2f6b1bc5c0053483e"
+        - listitem: "workflow_status: completed_with_warnings"
+        - listitem: "deliverable_status: not_recommended_for_filing"
+      - paragraph: 公开替身/合成验收，未运行私有 flow-2-6/0.2.0；专业质量未评估。
+      - text: text
+      - button "复制"
+      - code: "{ \"disclosure_text\": { \"status\": \"accepted\", \"sha256\": \"01c290da108e3efedaddb21e50e604ef3898cf40ecedb408ac3ac056fa369acb\", \"source\": \"用户文本\" }, \"drawings_text\": { \"status\": \"not_provided\", \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"source\": \"用户文本\" }, \"claim_requirements_text\": { \"status\": \"not_provided\", \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"source\": \"用户文本\" }, \"user_input\": { \"status\": \"not_provided\", \"sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"source\": \"用户文本\" } }"
+      - heading "核心结论" [level=2]
+      - paragraph: 公开样本：仅验证合同 2 的文字交付链路。
+      - paragraph: 模型建议：completed_with_warnings / not_recommended_for_filing（不是人工审核）。
+      - heading "核心结果" [level=2]
+      - list:
+        - listitem: 公开合成权利要求样本：公开补充：日志按分段存储，继承原交底与全部待确认项。
+      - heading "特征矩阵" [level=3]
+      - paragraph: 公开样本；逐特征专业分析未评估。
+      - heading "从属回退" [level=3]
+      - paragraph: 公开样本；从属回退未评估。
+      - heading "T4 与初检" [level=3]
+      - paragraph: 公开样本；说明书尚未生成；T4 专业检查未评估。
+      - heading "下游读取区" [level=2]
+      - heading "上游实际原文（固定基线）" [level=3]
+      - text: text
+      - button "复制"
+      - code: "# 公开交底样本 ## 文档信息 - node_id: Flow-1-5 - workflow_run_uid: 01234567-89ab-4def-8012-3456789abcde - generated_at: 2026-09-09T08:00:00+08:00 - filename: disclosure_20260909080000_01234567.md ## 核心结论 公开样本：分段保存日志。 ## 核心结果 先校验日志，再更新索引；所有内容为隔离测试资料。 ## 下游读取区 T1: 断电时记录可能失效。 T2: 校验通过后更新索引。 T3: 效果未进行实测。 ## 风险与待确认事项 warning_id: W-UPSTREAM-01 公开待确认项：尚未进行断电试验。"
+      - heading "当前有效上游内容" [level=3]
+      - paragraph: 与本文件上方完整固定基线一致；未替换。
+      - heading "本次实际输入" [level=3]
+      - text: text
+      - button "复制"
+      - code: "{ \"disclosure_text\": \"公开补充：日志按分段存储，继承原交底与全部待确认项。\", \"drawings_text\": \"\", \"claim_requirements_text\": \"\", \"user_input\": \"\" }"
+      - heading "本节点当前结果" [level=3]
+      - text: text
+      - button "复制"
+      - code: "{ \"claims\": \"1. 公开合成权利要求样本：公开补充：日志按分段存储，继承原交底与全部待确认项。\", \"featureMatrix\": \"公开样本；逐特征专业分析未评估。\", \"fallback\": \"公开样本；从属回退未评估。\", \"T4\": \"公开样本；说明书尚未生成；T4 专业检查未评估。\", \"T5\": \"not_yet_generated\", \"T6\": \"not_yet_generated\" }"
+      - heading "更新与补齐登记" [level=3]
+      - text: text
+      - button "复制"
+      - code: "{ \"snapshotUpdates\": [], \"modelCompletions\": [] }"
+      - heading "风险与待确认事项" [level=2]
+      - heading "Host 提示" [level=3]
+      - paragraph: 上游身份字段已核对；内容真实性与人工修改原因未核验。 公开验收，专业质量未评估，不可用于申报。
+      - heading "继承警示（不由模型删除或关闭）" [level=3]
+      - text: text
+      - button "复制"
+      - code: "warning_id: W-UPSTREAM-01 公开待确认项：尚未进行断电试验。"
+      - heading "本次模型警示与补齐" [level=3]
+      - text: text
+      - button "复制"
+      - code: "{ \"warnings\": [ { \"warningId\": \"public-unassessed\", \"inheritedFrom\": \"\", \"problem\": \"上游文件已读取，专业质量未评估。\", \"affectedContent\": \"全部输出\", \"currentHandling\": \"仅供隔离验收\", \"modelCompletion\": \"未评估\", \"deliverableImpact\": \"不可用于申报\", \"recommendedAction\": \"另行专业核验\", \"status\": \"open\" } ], \"modelCompletions\": [] }"
+      - paragraph: 人工检查记录：保留全部上游警示；更正公开替身的旧缺失提示。
+      - text: 风险未评估 · 待确认问题未评估
+      - button "编辑结果"
+      - button "审核此版本"
+      - button "在对话中使用" [disabled]

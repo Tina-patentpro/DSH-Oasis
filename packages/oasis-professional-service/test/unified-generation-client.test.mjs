@@ -7,7 +7,7 @@ import { createWorkbenchRpcHandler } from '../src/workbench-rpc.js'
 import { createWorkbenchStore } from '../src/client/workbench-store.js'
 import { PanelPages } from '../src/client/PanelPages.js'
 import { PanelChrome } from '../src/client/PanelChrome.js'
-import { getWorkflowCatalog } from '../src/workflow-catalog.js'
+import { getWorkflowCatalog, getWorkflowDefinition } from '../src/workflow-catalog.js'
 import { NOW } from './workbench-fixtures.mjs'
 import { createEmptyWorkbenchRecord } from '../src/workbench-domain.js'
 
@@ -28,7 +28,7 @@ test('unified RPC is separate from legacy create, strictly validated and read-on
 })
 
 test('same page renders both sources through shared generation, review and save controls with explicit synthetic evidence', () => {
-  const workflow = getWorkflowCatalog().workflows.find(w => w.workflowId === 'patent-claims')
+  const workflow = getWorkflowDefinition('patent-claims', '1')
   for (const source of ['local-skill', 'oasis-api']) {
     const run = { runId: 'run-a', mode: 'unified-fixture', status: 'completed', evidenceKind: 'synthetic', source,
       result: { contentStatus: 'warning', riskAssessment: 'not-assessed', questionAssessment: 'not-assessed',
@@ -88,7 +88,7 @@ test('store routes enabled unified generation once and does not retry after unce
     assert.equal(store.getWorkspaceState('workspace-a').unifiedFixtureEnabled, true)
     assert.equal(typeof store.stopUnifiedRun, 'function')
     assert.equal(typeof store.editUnifiedResult, 'function')
-    store.updateFormValue('workspace-a', 'task-a', 'claims', '输入')
+    store.updateFormValue('workspace-a', 'task-a', 'disclosure_text', '输入')
     await store.whenSettled('workspace-a')
     await assert.rejects(store.createRun('workspace-a', 'task-a'), /uncertain/)
     await assert.rejects(store.createRun('workspace-a', 'task-a'), /锁定/)

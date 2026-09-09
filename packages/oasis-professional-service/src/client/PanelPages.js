@@ -46,6 +46,7 @@ export function PanelPages({
   onReload,
   onUpdateForm = () => {},
   onSetGenerationSource = () => {},
+  onSelectClaimsUpstream = () => {},
   onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {},
   onMaterialDraft = () => {},
   onAddMaterial = () => {},
@@ -137,8 +138,10 @@ export function PanelPages({
       content = workflow.executionMode === 'unified-text' && page.generation
         ? createElement(UnifiedGenerationPage, {
             key: page.pageId, page, workflow, markdownRenderer, workspaceId: state.workspaceId, syncStatus: state.syncStatus, operation,
-            onRenamePage, onUpdateForm, onSetGenerationSource,
+            onRenamePage, onUpdateForm, onSetGenerationSource, onSelectClaimsUpstream,
             fixtureEnabled: state.unifiedFixtureEnabled === true,
+            localGenerationEnabled: state.localGenerationEnabled === true,
+            localGenerationKind: state.localGenerationKind,
             conversationUnavailableReason: state.conversationUnavailableReason === undefined ? '当前对话输入接口不可用' : state.conversationUnavailableReason,
             onGenerate, onObserveUnified, onStopUnified, onEditResult, onUseInConversation,
             savedFileUnavailableReason, onOpenSavedFile,

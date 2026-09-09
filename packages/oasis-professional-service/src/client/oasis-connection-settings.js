@@ -6,6 +6,7 @@ const initial = () => ({
   connected: false, settingsStatus: 'unavailable', settingsWritable: false,
   apiBaseUrl: '', credentialOrigin: '', downloadOrigins: Object.freeze([]),
   ...normalizeGenerationPreferences(),
+  localModelEnabled: false,
   credentialStatus: 'unavailable', credentialStored: false,
   credentialConfigured: false, credentialWritable: false,
   busy: false, restartRequired: false, notice: null, error: null, canSubmit: false,
@@ -55,14 +56,16 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
       const credentialOrigin = rawCredentialOrigin === '' ? '' : normalizeOasisOrigin(rawCredentialOrigin)
       const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisOrigin(origin)))])
       const preferences = normalizeGenerationPreferences(value)
-      const settings = JSON.stringify([apiBaseUrl, credentialOrigin, downloadOrigins])
+      const localModelEnabled = value.localModelEnabled ?? false
+      if (typeof localModelEnabled !== 'boolean') throw new Error('invalid')
+      const settings = JSON.stringify([apiBaseUrl, credentialOrigin, downloadOrigins, localModelEnabled])
       const restartRequired = snapshot.restartRequired || (lastSettings !== null && settings !== lastSettings)
       lastSettings = settings
       publish({ settingsStatus: 'ready', settingsWritable: snapshot.connected && view.writable === true,
-        apiBaseUrl, credentialOrigin, downloadOrigins, restartRequired, ...preferences })
+        apiBaseUrl, credentialOrigin, downloadOrigins, restartRequired, localModelEnabled, ...preferences })
     } catch {
       publish({ settingsStatus: 'unavailable', settingsWritable: false, apiBaseUrl: '',
-        credentialOrigin: '', downloadOrigins: Object.freeze([]), ...normalizeGenerationPreferences() })
+        credentialOrigin: '', downloadOrigins: Object.freeze([]), localModelEnabled: false, ...normalizeGenerationPreferences() })
     }
   }
 
@@ -200,6 +203,10 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
         return false
       }
       return write('settings', () => scope.set('apiBaseUrl', origin))
+    },
+    async saveLocalModelEnabled(value) {
+      if (typeof value !== 'boolean') return false
+      return write('settings', () => scope.set('localModelEnabled', value))
     },
     async savePreference(key, value) {
       if (!['defaultGenerationSource', 'outputDirectoryPrefix'].includes(key)) return false

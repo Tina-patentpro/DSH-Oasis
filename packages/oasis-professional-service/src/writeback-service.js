@@ -204,7 +204,9 @@ function createMetadata(input, artifactSizeBytes) {
   }
   if (input.mode === 'unified-fixture') {
     const info = input.unified
-    if (!info || info.evidenceKind !== 'synthetic' || info.fixtureVersion !== '1' || info.inputSchemaVersion !== '1'
+    if (!info || info.evidenceKind !== 'synthetic' || info.fixtureVersion !== '1'
+      || !['1', '2'].includes(input.workflowVersion)
+      || info.inputSchemaVersion !== (input.workflowVersion === '2' ? 'claims-disclosure-2' : '1')
       || !['local-skill', 'oasis-api'].includes(info.source)) {
       throw writebackError('WRITEBACK_SOURCE_INVALID', 'Synthetic provenance is required')
     }
@@ -212,6 +214,23 @@ function createMetadata(input, artifactSizeBytes) {
       workflow: { workflowId: input.workflowId, workflowVersion: input.workflowVersion },
       execution: { mode: input.mode, source: info.source, evidenceKind: info.evidenceKind,
         fixtureVersion: info.fixtureVersion, inputSchemaVersion: info.inputSchemaVersion, parentRunId: info.parentRunId },
+    })
+  }
+  if (input.mode === 'dsh-local') {
+    const info = input.local
+    if (!info || info.source !== 'local-skill' || !['native-offline', 'native-model'].includes(info.evidenceKind)
+      || !['1', '2'].includes(input.workflowVersion) || info.executionVersion !== input.workflowVersion
+      || info.inputSchemaVersion !== (input.workflowVersion === '2' ? 'claims-disclosure-2' : '1')
+      || !/^[a-f0-9]{64}$/.test(info.contextSnapshot?.instructionSha256)
+      || (input.workflowVersion === '2' && (info.contextSnapshot?.skillProvenance?.skillId !== 'flow-2-6'
+        || info.contextSnapshot.skillProvenance.assemblySha256 !== info.contextSnapshot.instructionSha256))) {
+      throw writebackError('WRITEBACK_SOURCE_INVALID', 'Native offline provenance is required')
+    }
+    return Object.freeze({ ...common,
+      workflow: { workflowId: input.workflowId, workflowVersion: input.workflowVersion },
+      execution: { mode: input.mode, source: info.source, evidenceKind: info.evidenceKind,
+        executionVersion: info.executionVersion, inputSchemaVersion: info.inputSchemaVersion, parentRunId: info.parentRunId,
+        contextSnapshot: structuredClone(info.contextSnapshot) },
     })
   }
   if (input.mode === 'oasis-legacy') {

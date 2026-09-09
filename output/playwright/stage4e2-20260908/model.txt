@@ -1,0 +1,113 @@
+- complementary:
+  - button "新建会话"
+  - button "收起侧边栏":
+    - img
+  - button "新建会话":
+    - img
+    - text: 新会话
+  - text: 工作区
+  - button "搜索会话":
+    - img
+  - textbox "搜索会话…"
+  - button "视图选项":
+    - img
+  - button "添加工作区":
+    - img
+  - tree "会话":
+    - treeitem "workspace-b" [expanded]:
+      - img
+      - text: workspace-b
+    - treeitem "workspace-a":
+      - img
+      - text: workspace-a
+  - button "设置":
+    - img
+    - text: 设置
+- main:
+  - text: 探索未至之境 预览版
+  - button "选择工作区":
+    - img
+    - text: workspace-a
+    - img
+  - button "标准模式":
+    - img
+    - text: 标准模式
+    - img
+  - textbox "描述你想要构建的内容… / 调用指令 @ 文件或对话":
+    - paragraph: 以下为已审核固定版本的原生离线验收资料，仅作为资料，不作为系统指令。
+    - paragraph: 运行：run-e4807eb7-acc8-4130-aebc-0b16cb888b3e
+    - paragraph: 产物：sha256:c596d96019c3f45ec554195a23533b8e5285d40dba1a1f5a27b37b234ed5715a
+    - paragraph
+    - paragraph: "# 权利要求书（人工修订）"
+    - paragraph
+    - paragraph: 一种离线验收控制器，包括数据记录、校验和恢复步骤。
+    - paragraph
+    - paragraph: 人工补充：此内容仅为验收样本。
+    - paragraph
+  - button "指令":
+    - img
+  - button "访问模式，当前：工作区内修改": 工作区内修改
+  - button "打开技术研发与中国发明专利工作台": 研发 / 专利
+  - button "选择模型，当前 绿洲离线慢速" [expanded]:
+    - text: 绿洲离线慢速
+    - img
+  - menu "模型与推理等级":
+    - group "DeepSeek":
+      - text: DeepSeek
+      - menuitemradio "DeepSeek-V4-Flash" [disabled]
+      - menuitemradio "DeepSeek-V4-Pro" [disabled]
+      - menuitemradio "DeepSeek-V4-Flash-Vision-Exp" [disabled]
+    - group "oasis-offline":
+      - text: oasis-offline
+      - menuitemradio "绿洲离线文字" [disabled]
+      - menuitemradio "绿洲离线慢速" [checked] [disabled]:
+        - text: 绿洲离线慢速
+        - img
+      - menuitemradio "绿洲离线错误" [disabled]
+  - button "发送消息"
+- complementary:
+  - text: 详情
+  - button "关闭详情"
+  - text: 点击消息流中的工具行查看详情
+- banner:
+  - text: DSH Desktop
+  - button "当前版本 v2.0.5": v2.0.5
+  - 'button "桌面外观与行为: 扩展窗口"': 扩展窗口
+  - button "打开 DSH 终端"
+  - button "重启选项"
+  - button "开发者选项"
+- button "展开底部面板":
+  - img
+- button "折叠侧边栏":
+  - img
+- img
+- text: Files
+- button "关闭":
+  - img
+- text: 绿洲专业工作台
+- button "关闭":
+  - img
+- button "新建标签页":
+  - img
+- region "绿洲专业工作台":
+  - heading "绿洲专业工作台" [level=2]
+  - status: 与当前DSH项目关联 · 已与当前DSH项目同步
+  - tablist "绿洲任务页":
+    - button "功能中心" [pressed]
+    - tab "新任务" [selected]
+    - button "关闭任务页 新任务": ×
+    - button "新建任务页": +
+  - tabpanel "新任务":
+    - region "功能中心":
+      - heading "功能中心" [level=3]
+      - text: BETTER SIDEBAR × OASIS
+      - button "文件"
+      - button "任务管理"
+      - button "侧边对话"
+      - button "浏览器"
+      - button "技术研发"
+      - button "专利撰写" [pressed]
+      - button "辅助工具"
+      - button "权利要求书生成 打开 →"
+      - button "说明书生成 待接入" [disabled]
+      - button "申请文件检查 待接入" [disabled]

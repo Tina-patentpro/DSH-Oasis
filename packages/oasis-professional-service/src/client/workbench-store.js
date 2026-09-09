@@ -17,6 +17,7 @@ const EMPTY_PAGE_OPERATION = Object.freeze({
   writebackConfirmed: false,
   writebackPlan: null,
   requestKey: null,
+  localModelPreview: null,
   activeOperation: null,
   error: null,
   errorCode: null,
@@ -45,6 +46,7 @@ export function createWorkbenchStore({
   remote = null,
   connectionSettings = null,
   conversationDrafts = null,
+  getGenerationSession = null,
   nativeFiles = null,
   createId = defaultCreateId,
   createRequestKey = defaultCreateId,
@@ -149,6 +151,8 @@ export function createWorkbenchStore({
       catalogError: null,
       workflows: workflowCatalog.workflows,
       unifiedFixtureEnabled: workflowCatalog.unifiedFixtureEnabled === true,
+      localGenerationEnabled: workflowCatalog.localGenerationEnabled === true,
+      localGenerationKind: workflowCatalog.localGenerationKind ?? null,
     })
   }
 
@@ -158,6 +162,8 @@ export function createWorkbenchStore({
       catalogError: current.catalogError,
       workflows: current.workflows,
       unifiedFixtureEnabled: current.unifiedFixtureEnabled === true,
+      localGenerationEnabled: current.localGenerationEnabled === true,
+      localGenerationKind: current.localGenerationKind ?? null,
       professionalStatus: current.professionalStatus,
       professionalError: current.professionalError,
       professionalBootstrap: current.professionalBootstrap,
@@ -183,6 +189,7 @@ export function createWorkbenchStore({
   function invalidateInputConfirmations(workspaceId, pageId) {
     updatePageOperation(workspaceId, pageId, {
       priceConfirmed: false, externalTransferConfirmed: false, requestKey: null,
+      localModelPreview: null,
       writebackConfirmed: false, writebackPlan: null, error: null, errorCode: null, feedback: null,
     })
   }
@@ -580,7 +587,7 @@ export function createWorkbenchStore({
         runtime.professionalPromise = null
         const current = getCurrent(workspaceId)
         const pageOperations = Object.fromEntries(Object.entries(current.pageOperations).map(([pageId, operation]) => [
-          pageId, Object.freeze({ ...operation, professionalDetail: null,
+          pageId, Object.freeze({ ...operation, professionalDetail: null, localModelPreview: null,
             priceConfirmed: false, externalTransferConfirmed: false,
             runningWaterStatus: 'idle', runningWaterObservation: null }),
         ]))
@@ -648,6 +655,8 @@ export function createWorkbenchStore({
           setState(workspaceId, stateWith(getCurrent(workspaceId), {
             catalogStatus: 'ready', catalogError: null, workflows,
             unifiedFixtureEnabled: response.unifiedFixtureEnabled === true,
+            localGenerationEnabled: response.localGenerationEnabled === true,
+            localGenerationKind: response.localGenerationKind ?? null,
           }))
           return workflows
         } catch (error) {
@@ -655,6 +664,8 @@ export function createWorkbenchStore({
             setState(workspaceId, stateWith(getCurrent(workspaceId), {
             catalogStatus: 'error', catalogError: errorMessage(error), workflows: [],
             unifiedFixtureEnabled: false,
+            localGenerationEnabled: false,
+            localGenerationKind: null,
             }))
           }
           throw error
@@ -777,6 +788,13 @@ export function createWorkbenchStore({
       dispatch(workspaceId, { type: 'set-generation-source', pageId, source })
       if (source !== previous) invalidateInputConfirmations(workspaceId, pageId)
       return getCurrent(workspaceId)
+    },
+    async selectClaimsUpstream(workspaceId, pageId, relativePath) {
+      assertInputEditable(workspaceId, pageId)
+      invalidateInputConfirmations(workspaceId, pageId)
+      return runPageOperation(workspaceId, pageId, 'upstream-select', current => remote.selectClaimsUpstream({
+        workspaceId, taskId: pageId, expectedRevision: current.revision, relativePath, confirmed: true,
+      }, controller.signal), () => ({ feedback: relativePath === null ? '已取消上游文稿' : '已确认上游文稿', error: null }))
     },
 
     async selectProfessionalService(workspaceId, pageId, apiEndpoint) {
@@ -1021,19 +1039,52 @@ export function createWorkbenchStore({
       )
     },
 
-    async createRun(workspaceId, pageId) {
+    async createRun(workspaceId, pageId, confirmed = false) {
       const page = pageFor(workspaceId, pageId)
       if (page.generation) {
-        if (!getCurrent(workspaceId).unifiedFixtureEnabled) throw new Error(generationUnavailableReason(page.generation.source))
+        const local = getCurrent(workspaceId).localGenerationEnabled && page.generation.source === 'local-skill'
+        if (!local && !getCurrent(workspaceId).unifiedFixtureEnabled) throw new Error(generationUnavailableReason(page.generation.source))
         assertInputEditable(workspaceId, pageId)
+        const real = local && getCurrent(workspaceId).localGenerationKind === 'native-model'
+        if (real && !confirmed) {
+          updatePageOperation(workspaceId, pageId, { activeOperation: 'model-preview', localModelPreview: null, error: null })
+          try {
+            await flushWorkspace(workspaceId)
+            const current = getCurrent(workspaceId)
+            if (current.syncStatus !== 'ready') throw new Error('请先保存材料再确认')
+            const generation = runtimeFor(workspaceId).editGeneration
+            const configurationGeneration = professionalConfigurationGeneration
+            const sessionId = getGenerationSession?.(workspaceId)
+            const preview = await remote.prepareLocalRun({ workspaceId, taskId: pageId, sessionId, expectedRevision: current.revision }, controller.signal)
+            if (closing || disposed) return
+            if (professionalConfigurationGeneration !== configurationGeneration
+              || runtimeFor(workspaceId).editGeneration !== generation || getCurrent(workspaceId).revision !== current.revision
+              || getGenerationSession?.(workspaceId) !== sessionId) throw new Error('材料或会话已变更，请重新确认')
+            updatePageOperation(workspaceId, pageId, { localModelPreview: preview })
+            return getCurrent(workspaceId)
+          } catch (error) {
+            if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { error: errorMessage(error) })
+            throw error
+          } finally {
+            if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { activeOperation: null })
+          }
+        }
+        const preview = real ? operationFor(getCurrent(workspaceId), pageId).localModelPreview : null
+        if (real && (!preview || preview.expectedRevision !== getCurrent(workspaceId).revision
+          || preview.sessionId !== getGenerationSession?.(workspaceId))) throw new Error('请重新确认当前模型与材料')
         const requestKey = createRequestKey()
         updatePageOperation(workspaceId, pageId, { requestKey })
         try {
-          return await runPageOperation(workspaceId, pageId, 'run-create', current => remote.createUnifiedRun({
-            workspaceId, taskId: pageId, expectedRevision: current.revision, requestKey,
-          }, controller.signal), () => ({ requestKey: null, feedback: 'run-completed', generationUncertain: false }))
+          return await runPageOperation(workspaceId, pageId, 'run-create', current => {
+            const payload = { workspaceId, taskId: pageId, expectedRevision: current.revision, requestKey }
+            return local ? remote.createLocalRun({ ...payload, sessionId: getGenerationSession?.(workspaceId),
+              ...(real ? { confirmation: { sha256: preview.sha256, confirmed: true } } : {}) }, controller.signal)
+              : remote.createUnifiedRun(payload, controller.signal)
+          }, () => ({ requestKey: null, localModelPreview: null, feedback: local ? 'run-prepared' : 'run-completed', generationUncertain: false }))
         } catch (error) {
-          if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { generationUncertain: true })
+          const notStarted = real && ['GENERATION_CONFIRMATION_REQUIRED', 'GENERATION_CONFIRMATION_STALE',
+            'GENERATION_CONTEXT_UNAVAILABLE', 'GENERATION_NOT_ENABLED', 'BUILTIN_SKILL_UNAVAILABLE'].includes(error?.code)
+          if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { generationUncertain: !notStarted, localModelPreview: null })
           throw error
         }
       }
@@ -1062,9 +1113,12 @@ export function createWorkbenchStore({
     },
 
     async observeUnifiedRun(workspaceId, pageId) {
-      return runPageOperation(workspaceId, pageId, 'run-observe', async () => ({
-        committed: true, current: await remote.get(workspaceId, controller.signal),
-      }), () => ({ generationUncertain: false, requestKey: null, feedback: 'run-observed' }))
+      return runPageOperation(workspaceId, pageId, 'run-observe', async current => {
+        const page = pageFor(workspaceId, pageId)
+        const pending = Object.values(page.runs).find(run => run.mode === 'dsh-local' && ['prepared', 'unknown'].includes(run.status))
+        return pending ? remote.observeLocalRun({ workspaceId, taskId: pageId, runId: pending.runId, expectedRevision: current.revision }, controller.signal)
+          : { committed: true, current: await remote.get(workspaceId, controller.signal) }
+      }, () => ({ generationUncertain: false, requestKey: null, feedback: 'run-observed' }))
     },
     async stopUnifiedRun(workspaceId, pageId, runId) {
       return runPageOperation(workspaceId, pageId, 'run-stop', current => remote.stopUnifiedRun({

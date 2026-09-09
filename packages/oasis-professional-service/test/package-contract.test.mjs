@@ -26,6 +26,7 @@ test('pins the verified development dependency versions', () => {
     '@deepseek-ai/dsh-client-ui-primitives': '0.1.2-rc.1',
     '@deepseek-ai/dsh-client-ui-settings': '0.1.2-rc.1',
     '@deepseek-ai/dsh-credentials': '0.1.2-rc.1',
+    '@deepseek-ai/dsh-llm': '0.1.2-rc.1',
     '@deepseek-ai/dsh-settings': '0.1.2-rc.1',
     '@deepseek-ai/dsh-storage-domain': '0.1.2-rc.1',
     '@deepseek-ai/dsh-tools': '0.1.2-rc.1',

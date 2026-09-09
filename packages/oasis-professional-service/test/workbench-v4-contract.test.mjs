@@ -82,7 +82,7 @@ test('Host refuses new claims through the old mock execution path before reading
 })
 
 test('Host catalog provides claims with seven ordered text tabs, not a real Skill or API binding', () => {
-  const workflow = getWorkflowCatalog().workflows.find(w => w.workflowId === 'patent-claims')
+  const workflow = getWorkflowCatalog().workflows.find(w => w.workflowId === 'patent-claims' && w.workflowVersion === '1')
   assert.ok(workflow, 'confirmed claims template must be present')
   assert.equal(workflow.executionMode, 'unified-text')
   assert.equal(workflow.title, '权利要求书生成')

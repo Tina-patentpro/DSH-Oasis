@@ -4,8 +4,9 @@ import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { WorkflowForm, validateWorkflowFormValues } from '../src/client/WorkflowForm.js'
 import { PanelPages } from '../src/client/PanelPages.js'
+import { UnifiedGenerationPage } from '../src/client/UnifiedGenerationPage.js'
 import { createWorkbenchStore } from '../src/client/workbench-store.js'
-import { getWorkflowCatalog } from '../src/workflow-catalog.js'
+import { getWorkflowCatalog, getWorkflowDefinition } from '../src/workflow-catalog.js'
 import { recordToWorkspaceState, workspaceStateToDraft } from '../src/client/workbench-model.js'
 import { createEmptyWorkbenchRecord } from '../src/workbench-domain.js'
 import { NOW } from './workbench-fixtures.mjs'
@@ -16,10 +17,40 @@ function nodes(root) {
   return [root, ...nodes(root?.props?.children)]
 }
 
+test('an unknown local run locks mutations but not approved historical result access', () => {
+  const workflow = getWorkflowDefinition('patent-claims', '1')
+  const completed = { runId: 'done', mode: 'dsh-local', status: 'completed', source: 'local-skill',
+    review: { status: 'approved' }, result: { artifact: { body: '# Reviewed sample' } },
+    writebacks: [{ writebackId: 'saved', files: [{ mediaType: 'text/markdown', relativePath: 'saved/claims.md' }] }] }
+  const page = { pageId: 'task', title: 'Claims', generation: { source: 'local-skill' },
+    formValues: { claims: 'Public sample' }, remoteExecutionOrder: [], remoteExecutions: {},
+    runs: { done: completed, pending: { runId: 'pending', mode: 'dsh-local', status: 'unknown', failureCode: 'ABORTED' } },
+    runOrder: ['done', 'pending'], activeRunId: 'done' }
+  const operation = { activeOperation: null, writebackDirectory: '' }
+  const props = { page, workflow, workspaceId: 'workspace', syncStatus: 'ready', operation, localGenerationEnabled: true,
+    savedFileUnavailableReason: null, conversationUnavailableReason: null }
+  function disabled(html, label) {
+    const tag = [...html.matchAll(/<button\b([^>]*)>([^<]*)<\/button>/g)].find(match => match[2] === label)
+    assert.ok(tag, `button exists: ${label}`)
+    return /\bdisabled/.test(tag[1])
+  }
+  const html = renderToStaticMarkup(createElement(UnifiedGenerationPage, props))
+  for (const label of ['版本 1', '版本 2', '在对话中使用', '打开当前文件']) assert.equal(disabled(html, label), false, label)
+  for (const label of ['生成离线样本', '编辑结果', '审核此版本', '准备回写清单']) assert.equal(disabled(html, label), true, label)
+  const unavailable = renderToStaticMarkup(createElement(UnifiedGenerationPage, { ...props, conversationUnavailableReason: '已有草稿', savedFileUnavailableReason: '不可用' }))
+  assert.equal(disabled(unavailable, '在对话中使用'), true)
+  assert.equal(disabled(unavailable, '打开当前文件'), true)
+  for (const update of [{ syncStatus: 'saving' }, { operation: { ...operation, activeOperation: 'conversation-prepare' } }]) {
+    const busy = renderToStaticMarkup(createElement(UnifiedGenerationPage, { ...props, ...update }))
+    for (const label of ['版本 1', '在对话中使用', '打开当前文件']) assert.equal(disabled(busy, label), true)
+  }
+  assert.equal(page.runs.pending.status, 'unknown')
+})
+
 test('material preview uses a capable native renderer with images disabled, otherwise plain text', () => {
   const calls = []
   function NativeRenderer(props) { calls.push(props); return createElement('strong', null, 'native-rich-preview') }
-  const workflow = getWorkflowCatalog().workflows.find(w => w.workflowId === 'patent-claims')
+  const workflow = getWorkflowDefinition('patent-claims', '1')
   const values = { claims: '# Material ![x](https://example.invalid/x)' }
   const props = { pageId: 'p', workflow, values, validation: validateWorkflowFormValues(workflow, values),
     presentation: 'tabs', activeFieldId: 'claims', preview: true, markdownRenderer: NativeRenderer }
@@ -43,14 +74,14 @@ test('native default source and output prefix only seed newly selected tasks', a
   try {
     store.syncWorkspaces([{ workspaceId: 'a' }])
     store.createPage('a'); store.selectWorkflow('a', 'task-1', 'patent-claims')
-    store.updateFormValue('a', 'task-1', 'claims', '保留原稿')
+    store.updateFormValue('a', 'task-1', 'disclosure_text', '保留原稿')
     assert.equal(store.getWorkspaceState('a').pages[0].generation.source, 'oasis-api')
     assert.equal(store.getWorkspaceState('a').pageOperations['task-1'].writebackDirectory, '产物\\task-1')
     preferences = { defaultGenerationSource: 'local-skill', outputDirectoryPrefix: '新产物' }
     store.createPage('a'); store.selectWorkflow('a', 'task-2', 'patent-claims')
     const state = store.getWorkspaceState('a')
     assert.equal(state.pages[0].generation.source, 'oasis-api')
-    assert.equal(state.pages[0].formValues.claims, '保留原稿')
+    assert.equal(state.pages[0].formValues.disclosure_text, '保留原稿')
     assert.equal(state.pages[1].generation.source, 'local-skill')
     assert.equal(state.pageOperations['task-1'].writebackDirectory, '产物\\task-1')
     assert.equal(state.pageOperations['task-2'].writebackDirectory, '新产物\\task-2')
@@ -59,7 +90,7 @@ test('native default source and output prefix only seed newly selected tasks', a
 })
 
 test('tabbed materials render exactly one editor and preserve inactive values with keyboard selection', () => {
-  const workflow = getWorkflowCatalog().workflows.find(w => w.workflowId === 'patent-claims')
+  const workflow = getWorkflowDefinition('patent-claims', '1')
   const values = Object.fromEntries(workflow.form.fields.map(f => [f.fieldId, f.label]))
   const original = structuredClone(values)
   const activated = []
@@ -83,7 +114,7 @@ test('tabbed materials render exactly one editor and preserve inactive values wi
 })
 
 test('claims page has a single form, source switch and disabled generation, without the legacy API panel', () => {
-  const workflow = getWorkflowCatalog().workflows.find(w => w.workflowId === 'patent-claims')
+  const workflow = getWorkflowDefinition('patent-claims', '1')
   const page = {
     pageId: 'task-a', title: workflow.title, workflowId: workflow.workflowId, workflowVersion: '1', workType: workflow.workType,
     generation: { inputSchemaVersion: '1', source: 'local-skill' },
@@ -102,6 +133,15 @@ test('claims page has a single form, source switch and disabled generation, with
     assert.doesNotMatch(html, /观察当前页流水|提交专业服务|登记材料|API origin/)
     assert.match(html, /min-width: 680px/)
   }
+  state.localGenerationEnabled = true
+  page.formValues.claims = '公开离线输入'
+  page.generation.source = 'local-skill'
+  const localHtml = renderToStaticMarkup(createElement(PanelPages, { state, effectiveMode: 'embedded' }))
+  assert.match(localHtml, /原生离线验收/)
+  assert.doesNotMatch(localHtml, /data-testid="oasis-unified-generate"[^>]*disabled/)
+  page.generation.source = 'oasis-api'
+  const apiHtml = renderToStaticMarkup(createElement(PanelPages, { state, effectiveMode: 'embedded' }))
+  assert.match(apiHtml, /data-testid="oasis-unified-generate"[^>]*disabled/)
 })
 
 test('source switching preserves one persisted draft, clears confirmations, and never generates', async () => {
@@ -124,7 +164,7 @@ test('source switching preserves one persisted draft, clears confirmations, and 
     store.createPage('workspace-a')
     assert.ok(getWorkflowCatalog().workflows.some(w => w.workflowId === 'patent-claims'))
     store.selectWorkflow('workspace-a', 'task-a', 'patent-claims')
-    store.updateFormValue('workspace-a', 'task-a', 'claims', '保留草稿')
+    store.updateFormValue('workspace-a', 'task-a', 'disclosure_text', '保留草稿')
     assert.equal(typeof store.setGenerationSource, 'function')
     store.setProfessionalConfirmations('workspace-a', 'task-a', { priceConfirmed: true, externalTransferConfirmed: true })
     store.setGenerationSource('workspace-a', 'task-a', 'oasis-api')
@@ -133,8 +173,8 @@ test('source switching preserves one persisted draft, clears confirmations, and 
     store.setGenerationSource('workspace-a', 'task-a', 'local-skill')
     await store.whenSettled('workspace-a')
     const state = recordToWorkspaceState(stored)
-    assert.equal(state.pages[0].formValues.claims, '保留草稿')
-    assert.deepEqual(state.pages[0].generation, { inputSchemaVersion: '1', source: 'local-skill' })
+    assert.equal(state.pages[0].formValues.disclosure_text, '保留草稿')
+    assert.deepEqual(state.pages[0].generation, { inputSchemaVersion: 'claims-disclosure-2', source: 'local-skill' })
     assert.equal(workspaceStateToDraft(state).schemaVersion, 4)
     assert.equal(calls.every(c => c === 'save'), true)
     await assert.rejects(() => store.createRun('workspace-a', 'task-a'), /未启用|not enabled/i)

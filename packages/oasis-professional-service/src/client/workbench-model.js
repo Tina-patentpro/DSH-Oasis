@@ -1,5 +1,5 @@
 import { workbenchRecordSchema } from '../workbench-contract.js'
-import { CLAIMS_SCHEMA_VERSION, generationSourceSchema } from '../generation-contract.js'
+import { claimsInputVersion, generationSourceSchema } from '../generation-contract.js'
 
 const PANEL_MODES = new Set(['hidden', 'normal', 'expanded'])
 
@@ -176,7 +176,7 @@ export function reduceWorkspaceState(state, action, env) {
             workflowVersion: workflow.workflowVersion,
             formValues,
             generation: workflow.executionMode === 'unified-text'
-              ? { inputSchemaVersion: CLAIMS_SCHEMA_VERSION, source: generationSourceSchema.parse(action.defaultGenerationSource ?? 'local-skill') }
+              ? { inputSchemaVersion: claimsInputVersion(workflow.workflowVersion), source: generationSourceSchema.parse(action.defaultGenerationSource ?? 'local-skill') }
               : null,
             updatedAt: env.now(),
             view: 'workspace',

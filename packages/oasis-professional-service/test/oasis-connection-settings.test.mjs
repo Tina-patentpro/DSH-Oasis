@@ -64,6 +64,19 @@ function fixture(options = {}) {
   }
 }
 
+test('local model enable uses the same native settings owner and requires restart without touching credentials', async () => {
+  const f = fixture()
+  await tick()
+  assert.equal(f.controller.getSnapshot().localModelEnabled, false)
+  assert.equal(await f.controller.saveLocalModelEnabled('true'), false)
+  assert.equal(await f.controller.saveLocalModelEnabled(true), true)
+  assert.equal(f.controller.getSnapshot().localModelEnabled, true)
+  assert.equal(f.controller.getSnapshot().restartRequired, true)
+  assert.deepEqual(f.calls.filter(c => c[0] === 'settings'), [['settings', 'localModelEnabled', true]])
+  assert.equal(f.calls.some(c => c[0] === 'credential'), false)
+  f.controller.dispose()
+})
+
 test('new-task preferences use the native settings owner without enabling generation or requiring an API restart', async () => {
   const f = fixture()
   await tick()

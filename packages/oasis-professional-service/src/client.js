@@ -10,6 +10,7 @@ import { createWorkbenchStore } from './client/workbench-store.js'
 import { createOasisConnectionSettings } from './client/oasis-connection-settings.js'
 import { OasisSettingsSection } from './client/OasisSettingsSection.js'
 import { createConversationDraftBridge } from './client/conversation-draft-bridge.js'
+import { resolveWorkspaceId } from './client/project-resolution.js'
 export { createConversationDraftBridge } from './client/conversation-draft-bridge.js'
 
 export const inject = ['slots', 'connection']
@@ -30,7 +31,15 @@ export function apply(ctx, { markdownRenderer } = {}) {
   const layoutAdapter = createLayoutAdapter()
   const coordinator = createPanelHostCoordinator({ layoutAdapter })
   const conversationDrafts = createConversationDraftBridge(() => coordinator.getSnapshot().workspaceContext)
-  const store = createWorkbenchStore({ remote: createWorkbenchRemote(connection), connectionSettings, conversationDrafts, nativeFiles: coordinator })
+  const store = createWorkbenchStore({ remote: createWorkbenchRemote(connection), connectionSettings, conversationDrafts, nativeFiles: coordinator,
+    getGenerationSession(workspaceId) {
+      const context = coordinator.getSnapshot().workspaceContext
+      if (context?.status !== 'ready' || resolveWorkspaceId(context.currentSessionId, context.workspaceItems) !== workspaceId) {
+        throw new Error('当前项目与会话不可用')
+      }
+      return context.currentSessionId
+    },
+  })
   const betterSidebarDescriptor = createOasisBetterSidebarDescriptor({
     markdownRenderer,
     coordinator,
