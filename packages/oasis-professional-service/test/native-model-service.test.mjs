@@ -11,8 +11,46 @@ import { createWorkbenchRpcHandler } from '../src/workbench-rpc.js'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { PanelPages } from '../src/client/PanelPages.js'
+import { UnifiedResultPanel } from '../src/client/UnifiedResultPanel.js'
+import { parseStoredWorkbenchRecord } from '../src/workbench-domain.js'
 
 const sessionId = 'session-a'
+
+test('result-contract failure keeps bounded execution summary and legacy records remain unchanged', async () => {
+  const h = await harness()
+  try {
+    let calls = 0
+    const summary = { finishKind: 'stop', usage: { inputTokens: 12, outputTokens: 34 } }
+    h.runtime.adapter.generate = async () => { calls++; return { status: 'completed', body: 'NOT_JSON_BODY_CANARY', executionSummary: summary } }
+    const preview = await h.service.prepareLocalRun(h.command())
+    await h.service.createLocalRun(h.command({ confirmation: { sha256: preview.sha256, confirmed: true } }))
+    for (let i = 0; i < 100 && h.state().tasks['task-a'].runs['run-1'].status === 'prepared'; i++) await new Promise(r => setTimeout(r, 5))
+    const record = h.state()
+    const run = record.tasks['task-a'].runs['run-1']
+    assert.equal(run.status, 'failed'); assert.equal(run.failureCode, 'INVALID_OUTPUT'); assert.equal(run.result, null)
+    assert.deepEqual(run.executionSummary, { ...summary, failureStage: 'result-contract' })
+    assert.equal(calls, 1)
+    assert.ok(!JSON.stringify(record).includes('NOT_JSON_BODY_CANARY'))
+    const render = value => renderToStaticMarkup(createElement(UnifiedResultPanel, {
+      page: { pageId: 'task-a', activeRunId: 'run-1', runs: { 'run-1': value }, runOrder: ['run-1'] }, operation: {} }))
+    assert.match(render(run), /结果格式不符合业务要求/)
+    assert.match(render(run), /12/); assert.match(render(run), /34/)
+    assert.doesNotMatch(render(run), /达到输出上限/)
+    assert.match(render({ ...run, executionSummary: { failureStage: 'stream', finishKind: 'max-tokens' } }), /达到输出上限/)
+    assert.match(render({ ...run, status: 'unknown', failureCode: 'TIMED_OUT', executionSummary: undefined }), /运行状态未确认/)
+    const legacy = structuredClone(record)
+    delete legacy.tasks['task-a'].runs['run-1'].executionSummary
+    assert.deepEqual(parseStoredWorkbenchRecord('workspace-a', legacy), legacy)
+    assert.match(render(legacy.tasks['task-a'].runs['run-1']), /未记录/)
+    for (const invalid of [{ finishKind: 'RAW_SECRET' }, { failureStage: 'RAW_SECRET' },
+      { usage: { inputTokens: -1 } }, { usage: { outputTokens: '12' } }, { usage: { totalTokens: Infinity } },
+      { usage: { extra: 'RAW_SECRET' } }, { rawBody: 'RAW_SECRET' }]) {
+      const bad = structuredClone(record)
+      bad.tasks['task-a'].runs['run-1'].executionSummary = invalid
+      assert.throws(() => parseStoredWorkbenchRecord('workspace-a', bad))
+    }
+  } finally { await h.service.closeLocalGeneration(); await h.repository.close() }
+})
 async function harness() {
   let calls = 0
   const context = { sessionId, route: { provider: 'test-provider', model: 'test-model' } }
@@ -44,6 +82,7 @@ test('same UI previews before confirmation and invalidates confirmation on input
     assert.match(html, /test-model/)
     assert.match(html, /确认并生成/)
     assert.match(html, /可能产生费用/)
+    assert.match(html, /flow-2-6\/0\.2\.2/)
     assert.equal((html.match(/<textarea/g) ?? []).length, 1)
     store.updateFormValue('workspace-a', 'task-a', 'user_input', '追加起草要求')
     await store.whenSettled('workspace-a')
@@ -110,6 +149,7 @@ test('real path requires matching explicit confirmation, never dispatches during
     const run = h.state().tasks['task-a'].runs['run-1']
     assert.equal(run.status, 'completed')
     assert.equal(run.evidenceKind, 'native-model')
+    assert.equal(run.contextSnapshot.skillProvenance.skillVersion, '0.2.2')
     assert.match(run.result.artifact.body, /原生模型/)
     assert.doesNotMatch(run.result.artifact.body, /结果为离线合成|公开替身\/合成验收/)
     assert.equal(h.calls(), 1)

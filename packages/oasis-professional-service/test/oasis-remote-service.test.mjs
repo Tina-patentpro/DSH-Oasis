@@ -82,10 +82,10 @@ function createClient(overrides = {}) {
   }
 }
 
-function createHarness({ client = createClient(), pollLimit = 2 } = {}) {
-  const record = createV3Record('workspace-a', 1, { withEvidence: true })
+function createHarness({ client = createClient(), pollLimit = 2, initial } = {}) {
+  const record = initial ?? createV3Record('workspace-a', 1, { withEvidence: true })
   const task = record.tasks['task-a']
-  task.inputRefs = [createMaterialReference()]
+  if (!initial) task.inputRefs = [createMaterialReference()]
   const repository = createRepository(record)
   const materialManager = {
     async recheckAll(_workspaceId, references) { return structuredClone(references) },
@@ -140,6 +140,94 @@ async function prepareRemote(harness) {
 
 const REMOTE_EXECUTION = { workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-remote-a' }
 const REMOTE_RUN = { workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-remote-a' }
+
+test('explicit production mode persists into execution and result and blocks mode changes', async () => {
+  const h = createHarness()
+  h.runtime.environmentKind = 'production'
+  h.runtime.apiBaseOrigin = 'https://lzhxpy.oasisintwrite.com'
+  assert.equal((await h.service.getBootstrap()).environmentKind, 'production')
+  await prepareRemote(h)
+  assert.equal(h.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a'].environmentKind, 'production')
+  h.runtime.environmentKind = 'non-production'
+  await assert.rejects(h.service.continue(REMOTE_EXECUTION), { code: 'REMOTE_ENVIRONMENT_MISMATCH' })
+  assert.equal(h.client.calls.filter(([name]) => name === 'create').length, 0)
+  h.runtime.environmentKind = 'production'
+  await h.service.continue(REMOTE_EXECUTION)
+  const record = h.repository.get()
+  assert.equal(record.tasks['task-a'].runs['run-remote-a'].providerSnapshot.environmentKind, 'production')
+})
+
+test('5A create authentication failure never resubmits after continue, stop or storage reload', async (t) => {
+  t.mock.method(globalThis, 'fetch', () => { throw new Error('Network forbidden in 5A') })
+  const client = createClient({
+    async createWorkflow(input) {
+      this.calls.push(['create', structuredClone(input)])
+      throw Object.assign(new Error('synthetic authentication failure'), { code: 'AUTH_REQUIRED' })
+    },
+  })
+  const h = createHarness({ client, pollLimit: 1 })
+  await prepareRemote(h)
+  await h.service.continue(REMOTE_EXECUTION)
+  const first = h.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a']
+  assert.equal(first.status, 'auth-required')
+  await h.service.continue(REMOTE_EXECUTION)
+  await h.service.stop(REMOTE_EXECUTION)
+  const restored = createHarness({ client, pollLimit: 1, initial: JSON.parse(JSON.stringify(h.repository.get())) })
+  await restored.service.continue(REMOTE_EXECUTION)
+  assert.equal(client.calls.filter(([name]) => name === 'create').length, 1)
+  assert.equal(first.submittedAt, NOW)
+  const last = restored.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a']
+  assert.equal(last.submittedAt, first.submittedAt)
+  assert.equal(last.requestKey, first.requestKey)
+  assert.deepEqual(client.calls.filter(([name]) => name === 'query'), [
+    ['query', first.requestKey], ['query', first.requestKey],
+  ])
+  assert.equal(client.calls.filter(([name]) => name === 'upload').length, 1)
+})
+
+test('5A polling authentication failure preserves submission through credential recovery and reload', async (t) => {
+  t.mock.method(globalThis, 'fetch', () => { throw new Error('Network forbidden in 5A') })
+  let queryAuthorized = false
+  const client = createClient({
+    async createWorkflow(input) {
+      this.calls.push(['create', structuredClone(input)])
+      return { resolved: false, receipt: { key: input.key } }
+    },
+    async queryProcess(key) {
+      this.calls.push(['query', key])
+      if (!queryAuthorized) throw Object.assign(new Error('synthetic query auth'), { code: 'AUTH_REQUIRED' })
+      return { key, status: 'running', progressPercent: 50, result: null }
+    },
+  })
+  const h = createHarness({ client, pollLimit: 1 })
+  await prepareRemote(h)
+  await h.service.continue(REMOTE_EXECUTION)
+  assert.equal(h.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a'].submittedAt, NOW)
+  h.runtime.credentialConfigured = false
+  await assert.rejects(h.service.continue(REMOTE_EXECUTION), { code: 'AUTH_REQUIRED' })
+  queryAuthorized = true
+  const restored = createHarness({ client, pollLimit: 1, initial: JSON.parse(JSON.stringify(h.repository.get())) })
+  await restored.service.continue(REMOTE_EXECUTION)
+  assert.equal(client.calls.filter(([name]) => name === 'create').length, 1)
+  assert.equal(restored.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a'].submittedAt, NOW)
+})
+
+test('5A pre-dispatch missing credentials permits exactly one first create after configuration', async (t) => {
+  t.mock.method(globalThis, 'fetch', () => { throw new Error('Network forbidden in 5A') })
+  const h = createHarness()
+  await prepareRemote(h)
+  h.runtime.credentialConfigured = false
+  const before = h.repository.get()
+  await assert.rejects(h.service.continue(REMOTE_EXECUTION), { code: 'AUTH_REQUIRED' })
+  assert.deepEqual(h.repository.get(), before)
+  assert.equal(h.client.calls.filter(([name]) => name === 'create').length, 0)
+  assert.equal(before.tasks['task-a'].remoteExecutions['execution-remote-a'].submittedAt, null)
+  h.runtime.credentialConfigured = true
+  await h.service.continue(REMOTE_EXECUTION)
+  await h.service.continue(REMOTE_EXECUTION)
+  assert.equal(h.client.calls.filter(([name]) => name === 'create').length, 1)
+  assert.equal(h.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a'].status, 'completed')
+})
 
 test('F3 rejects malformed nonmatching normalized ledger items before claiming a miss', async () => {
   const h = createHarness({ client: createClient({ async getRunningWater() {

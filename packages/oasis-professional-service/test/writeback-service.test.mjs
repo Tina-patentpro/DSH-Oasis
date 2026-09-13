@@ -312,6 +312,20 @@ test('remote writeback metadata rejects the production provider origin', async (
   })), 'WRITEBACK_SOURCE_INVALID')
 })
 
+test('explicit production writeback retains its environment marker', async (t) => {
+  const { manager } = await createHarness(t)
+  const value = await manager.prepare(prepareInput({
+    runId: 'remote-run-a', workflowId: undefined, workflowVersion: undefined,
+    mode: 'oasis-legacy', mockVersion: undefined, relativeDirectory: 'outputs\\online',
+    remote: { executionId: 'execution-a', requestKeySha256: 'e'.repeat(64),
+      provider: { environmentKind: 'production', apiBaseOrigin: 'https://lzhxpy.oasisintwrite.com',
+        apiId: 132, apiEndpoint: 'claims-v1', apiProcess: '', folderId: 8 },
+      files: { status: 'undownloaded-unverified', urls: ['https://lzhxpy.oasisintwrite.com/a.txt'] },
+    },
+  }))
+  assert.equal(manager.consume(value.confirmationToken).metadata.provider.environmentKind, 'production')
+})
+
 test('publish fsyncs two verified files and commits with exactly one final rename', async (t) => {
   let committed = false
   const renameCalls = []

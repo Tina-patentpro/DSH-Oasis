@@ -1,6 +1,7 @@
 import { z } from 'zod'
+import { localExecutionSummarySchema } from './local-run-summary.js'
 
-import { isCanonicalOasisNonProductionOrigin, isSafeOasisFileUrl } from './oasis-origin-policy.js'
+import { normalizeOasisOrigin, normalizeOasisFileUrl } from './oasis-origin-policy.js'
 import { CLAIMS_TEMPLATE_ID, claimsDraftValuesSchema, claimsV2DraftValuesSchema, claimsInputVersion, claimsUpstreamSnapshotSchema, generationDraftSchema, generationSourceSchema, hasPendingUnifiedRun, isUnifiedRun } from './generation-contract.js'
 
 export const WORKBENCH_LIMITS = Object.freeze({
@@ -341,15 +342,15 @@ const httpUrlSchema = z.string().min(1).max(4096).refine((value) => {
   }
 }, 'must be an absolute HTTP(S) URL')
 
-const httpOriginSchema = httpUrlSchema.refine(
-  isCanonicalOasisNonProductionOrigin,
-  'must contain only a non-production HTTP(S) origin',
-)
-
-const nonProductionHttpUrlSchema = httpUrlSchema.refine(
-  isSafeOasisFileUrl,
-  'must be a non-production file URL without credentials, query or fragment',
-)
+function validateRemoteEnvironment(value, ctx, urls = []) {
+  const environment = value.environmentKind ?? 'non-production'
+  try {
+    if (normalizeOasisOrigin(value.apiBaseOrigin, 'origin', environment) !== value.apiBaseOrigin) throw new Error()
+    for (const url of urls) normalizeOasisFileUrl(url, environment)
+  } catch {
+    ctx.addIssue({ code: 'custom', message: 'Invalid production/non-production origin or file URL for recorded environment' })
+  }
+}
 
 export const oasisRemoteExecutionStatusSchema = z.enum([
   'prepared',
@@ -390,7 +391,7 @@ const oasisServiceFieldSchema = z.object({
 }).strict()
 
 export const oasisProfessionalBootstrapSchema = z.object({
-  environmentKind: z.literal('non-production'),
+  environmentKind: z.enum(['non-production', 'production']),
   remoteEnabled: z.boolean(),
   credentialConfigured: z.boolean(),
   balance: z.number().nonnegative().finite().nullable(),
@@ -457,15 +458,17 @@ export const oasisRunningWaterObservationSchema = z.object({
 })
 
 const oasisProviderSnapshotSchema = z.object({
-  apiBaseOrigin: httpOriginSchema,
+  environmentKind: z.enum(['non-production', 'production']).optional(),
+  apiBaseOrigin: httpUrlSchema,
   apiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
   apiEndpoint: identifierSchema,
   apiProcess: z.string().max(4000),
   folderId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
   price: z.number().nonnegative().finite(),
-}).strict()
+}).strict().superRefine((value, ctx) => validateRemoteEnvironment(value, ctx))
 
 export const oasisRemoteExecutionSchema = z.object({
+  environmentKind: z.enum(['non-production', 'production']).optional(),
   executionId: identifierSchema,
   recordId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).nullable().optional(),
   recordIdSource: z.literal('create').nullable().optional(),
@@ -473,7 +476,7 @@ export const oasisRemoteExecutionSchema = z.object({
   status: oasisRemoteExecutionStatusSchema,
   inputSha: sha256Schema,
   formValues: jsonRootObjectSchema,
-  apiBaseOrigin: httpOriginSchema,
+  apiBaseOrigin: httpUrlSchema,
   serviceSnapshot: z.object({
     apiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
     apiEndpoint: identifierSchema,
@@ -492,7 +495,7 @@ export const oasisRemoteExecutionSchema = z.object({
   uploadedFiles: z.array(z.object({
     fieldId: identifierSchema,
     referenceId: identifierSchema,
-    url: nonProductionHttpUrlSchema,
+    url: httpUrlSchema,
     sha256: sha256Schema,
     uploadedAt: timestampSchema,
   }).strict()).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
@@ -505,6 +508,7 @@ export const oasisRemoteExecutionSchema = z.object({
   submittedAt: timestampSchema.nullable(),
   completedAt: timestampSchema.nullable(),
 }).strict().superRefine((value, ctx) => {
+  validateRemoteEnvironment(value, ctx, value.uploadedFiles.map(file => file.url))
   if (value.recordIdSource === 'create' && !Number.isSafeInteger(value.recordId)) {
     ctx.addIssue({ code: 'custom', path: ['recordId'], message: 'create provenance requires a record id' })
   }
@@ -533,7 +537,7 @@ export const oasisRemoteRunSnapshotSchema = z.object({
   }).strict(),
   result: z.object({
     answerText: jsonStringSchema,
-    fileUrls: z.array(nonProductionHttpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
+    fileUrls: z.array(httpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
     fileStatus: z.literal('undownloaded-unverified'),
     responseSha: sha256Schema,
     artifact: artifactSchema,
@@ -542,7 +546,10 @@ export const oasisRemoteRunSnapshotSchema = z.object({
   writebacks: z.array(writebackRecordSchema).max(WORKBENCH_LIMITS.maxWritebacksPerRun),
   createdAt: timestampSchema,
   completedAt: timestampSchema,
-}).strict().superRefine((value, ctx) => enforceReviewAndWritebacks(value, ctx))
+}).strict().superRefine((value, ctx) => {
+  validateRemoteEnvironment(value.providerSnapshot, ctx, value.result.fileUrls)
+  enforceReviewAndWritebacks(value, ctx)
+})
 
 export const runSnapshotSchema = z.discriminatedUnion('mode', [
   localRunSnapshotSchema,
@@ -591,20 +598,21 @@ export const unifiedRunSnapshotSchema = z.object({
 export const dshLocalRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
   mode: z.literal('dsh-local'), source: z.literal('local-skill'), evidenceKind: z.enum(['native-offline', 'native-model']),
   fixtureVersion: z.never().optional(), executionVersion: z.enum(['1', '2']),
+  executionSummary: localExecutionSummarySchema.optional(),
   status: z.enum(['prepared', 'completed', 'failed', 'unknown']),
   failureCode: z.enum(['GENERATION_FAILED', 'ABORTED', 'TIMED_OUT', 'INVALID_OUTPUT', 'INVALID_INPUT',
     'MODEL_UNAVAILABLE', 'MODEL_LIMITED', 'INTERRUPTED']).nullable(),
   contextSnapshot: z.object({ sessionId: identifierSchema,
     route: z.object({ provider: identifierSchema, model: identifierSchema, reasoningEffort: z.string().min(1).max(64).optional() }).strict(),
     instructionVersion: identifierSchema, instructionSha256: sha256Schema,
-    skillProvenance: z.object({ skillId: z.literal('flow-2-6'), skillVersion: z.enum(['public-4e2-1', '0.2.0']),
+    skillProvenance: z.object({ skillId: z.literal('flow-2-6'), skillVersion: z.enum(['public-4e2-1', '0.2.0', '0.2.1', '0.2.2']),
       inputSchemaVersion: z.literal('claims-disclosure-2'), outputSchemaVersion: z.literal('claims-cumulative-2'),
       executionContractVersion: z.literal('single-call-cumulative-1'), manifestSha256: sha256Schema, assemblySha256: sha256Schema,
     }).strict().optional(),
   }).strict(),
 }).superRefine((run, ctx) => {
   if (run.evidenceKind === 'native-model' && (run.workflowVersion !== '2' || run.compositionVersion !== '2'
-    || run.contextSnapshot.skillProvenance?.skillVersion !== '0.2.0')) {
+    || !['0.2.0', '0.2.1', '0.2.2'].includes(run.contextSnapshot.skillProvenance?.skillVersion))) {
     ctx.addIssue({ code: 'custom', message: 'real model requires formal contract 2 resources' })
   }
   if (run.executionVersion !== run.workflowVersion || (run.workflowVersion === '2') !== Boolean(run.contextSnapshot.skillProvenance)
@@ -614,6 +622,10 @@ export const dshLocalRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
   if ((['failed', 'unknown'].includes(run.status)) !== (run.failureCode !== null)) {
     ctx.addIssue({ code: 'custom', message: 'local failure requires a safe failure code' })
   }
+  if (run.status === 'prepared' && run.executionSummary !== undefined
+    || run.status === 'completed' && run.executionSummary?.failureStage !== undefined) {
+    ctx.addIssue({ code: 'custom', message: 'execution summary does not match run state' })
+  }
 })
 
 export const localGenerationPreviewSchema = z.object({
@@ -621,6 +633,7 @@ export const localGenerationPreviewSchema = z.object({
   expectedRevision: z.number().int().nonnegative(), sha256: sha256Schema,
   route: z.object({ provider: identifierSchema, model: identifierSchema, reasoningEffort: z.string().min(1).max(64).optional() }).strict(),
   upstreamIncluded: z.boolean(), characterCount: z.number().int().nonnegative(),
+  skill: z.object({ id: z.literal('flow-2-6'), version: z.enum(['public-4e2-1', '0.2.0', '0.2.1', '0.2.2']) }).strict().nullable(),
 }).strict()
 
 export const conversationDraftResponseSchema = z.object({
@@ -718,6 +731,7 @@ const workbenchTaskV3Schema = z.object({
         const provider = run.providerSnapshot
         if (
           execution.serviceSnapshot.apiId !== provider.apiId
+          || (execution.environmentKind ?? 'non-production') !== (provider.environmentKind ?? 'non-production')
           || execution.apiBaseOrigin !== provider.apiBaseOrigin
           || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint
           || execution.serviceSnapshot.apiProcess !== provider.apiProcess

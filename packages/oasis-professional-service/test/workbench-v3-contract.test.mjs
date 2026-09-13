@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
 import test from 'node:test'
+import { oasisRemoteExecutionSchema } from '../src/workbench-contract.js'
 
 import {
   computeOasisRemoteInputSha256,
@@ -46,6 +47,15 @@ function createRemoteExecution(inputSha = computeOasisRemoteInputSha256({
     completedAt: NOW,
   }
 }
+
+test('explicit production execution validates without allowing unmarked production records', () => {
+  const execution = createRemoteExecution()
+  execution.apiBaseOrigin = 'https://lzhxpy.oasisintwrite.com'
+  execution.environmentKind = 'production'
+  assert.equal(oasisRemoteExecutionSchema.parse(execution).environmentKind, 'production')
+  delete execution.environmentKind
+  assert.throws(() => oasisRemoteExecutionSchema.parse(execution))
+})
 
 function addCompletedRemoteRun(record) {
   const task = record.tasks['task-a']

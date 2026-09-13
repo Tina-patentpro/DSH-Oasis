@@ -1,5 +1,6 @@
 import { validateWorkflowForm } from './workflow-catalog.js'
 import { claimsUpstreamSnapshotSchema } from './generation-contract.js'
+import { normalizeLocalExecutionSummary } from './local-run-summary.js'
 
 const MAX_TEXT = 100000
 const MAX_BLOCKS = 1024
@@ -67,7 +68,7 @@ function freezeTree(value) {
 }
 
 // Guard the native assembler's tolerant defaults; never buffer reasoning or replay data.
-function textConsumer(BlockAssembler) {
+function textConsumer(BlockAssembler, summary) {
   const assembler = new BlockAssembler()
   const blocks = new Map()
   let size = 0
@@ -78,13 +79,20 @@ function textConsumer(BlockAssembler) {
       if (chunk.type === 'finish') {
         finished = true
         const kind = chunk.reason?.kind
+        Object.assign(summary, normalizeLocalExecutionSummary({ finishKind: kind }))
         if (kind === 'error') invalid(providerCode(chunk.reason.failure))
         if (kind === 'aborted') invalid('ABORTED')
         if (kind !== 'stop') invalid('INVALID_OUTPUT')
         assembler.push({ type: 'finish', reason: { kind: 'stop' } })
         return
       }
-      if (chunk.type === 'usage') return
+      if (chunk.type === 'usage') {
+        const safe = normalizeLocalExecutionSummary({ usage: Object.getOwnPropertyDescriptor(chunk, 'usage')?.value })
+        // The last usage event is a snapshot, not a delta; never sum repeated events.
+        delete summary.usage
+        Object.assign(summary, safe)
+        return
+      }
       const type = chunk.type
       if (!['block-start', 'block-end', 'text-delta', 'reasoning-delta'].includes(type)) invalid('INVALID_OUTPUT')
       const index = chunk.index
@@ -136,6 +144,8 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
     let exhausted = false
     let stopped
     let rejectStop
+    const summary = {}
+    let failureStage = 'preparation'
     const controller = new AbortController()
     const stopPromise = new Promise((_, reject) => { rejectStop = reject })
     stopPromise.catch(() => {})
@@ -156,7 +166,7 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
     }
     const wait = action => Promise.race([stopPromise, Promise.resolve().then(() => { check(); return action() })])
     try {
-      const consumer = textConsumer(BlockAssembler)
+      const consumer = textConsumer(BlockAssembler, summary)
       const message = freezeTree(createUserMessage({ content: [{ type: 'text', text: request.text }] }))
       const prepared = await wait(() => {
         started = true
@@ -168,6 +178,7 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
       const options = Object.freeze({ ...config, system: request.system, sessionId: request.sessionId,
         messages: Object.freeze([message]), signal: controller.signal })
       iterator = prepared.stream(options)[Symbol.asyncIterator]()
+      failureStage = 'stream'
       while (true) {
         const item = await wait(() => iterator.next())
         check()
@@ -177,13 +188,14 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
       }
       const body = consumer.result()
       check()
-      return { status: 'completed', body, model: { provider: config.provider, model: config.model } }
+      return { status: 'completed', body, model: { provider: config.provider, model: config.model },
+        executionSummary: normalizeLocalExecutionSummary(summary) }
     } catch (error) {
       let code = stopped ?? 'GENERATION_FAILED'
       try {
         code = stopped ?? (error instanceof AdapterFailure ? error.code : providerCode(error))
       } catch { /* Error prototype access must not escape the safe result boundary either. */ }
-      return failure(code, started)
+      return { ...failure(code, started), executionSummary: normalizeLocalExecutionSummary({ ...summary, failureStage }) }
     } finally {
       clearTimeout(timer)
       request.signal.removeEventListener('abort', onAbort)

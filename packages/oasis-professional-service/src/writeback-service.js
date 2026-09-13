@@ -20,7 +20,7 @@ import {
 } from 'node:path'
 
 import { WorkspaceMaterialError } from './workspace-materials.js'
-import { isCanonicalOasisNonProductionOrigin, isSafeOasisFileUrl } from './oasis-origin-policy.js'
+import { isCanonicalOasisOrigin, isSafeOasisFileUrl } from './oasis-origin-policy.js'
 
 const DEFAULT_TOKEN_TTL_MS = 10 * 60 * 1000
 const DEFAULT_MAX_TOKENS = 128
@@ -240,14 +240,14 @@ function createMetadata(input, artifactSizeBytes) {
       || typeof remote.executionId !== 'string'
       || !/^[a-f0-9]{64}$/.test(remote.requestKeySha256)
       || typeof remote.provider?.apiBaseOrigin !== 'string'
-      || !isCanonicalOasisNonProductionOrigin(remote.provider.apiBaseOrigin)
+      || !isCanonicalOasisOrigin(remote.provider.apiBaseOrigin, remote.provider.environmentKind ?? 'non-production')
       || !Number.isSafeInteger(remote.provider?.apiId)
       || typeof remote.provider?.apiEndpoint !== 'string'
       || typeof remote.provider?.apiProcess !== 'string'
       || !Number.isSafeInteger(remote.provider?.folderId)
       || remote.files?.status !== 'undownloaded-unverified'
       || !Array.isArray(remote.files?.urls)
-      || remote.files.urls.some((value) => !isSafeOasisFileUrl(value))
+      || remote.files.urls.some((value) => !isSafeOasisFileUrl(value, remote.provider.environmentKind ?? 'non-production'))
     ) {
       throw writebackError('WRITEBACK_SOURCE_INVALID', 'Remote writeback source is incomplete or unsafe')
     }
@@ -259,6 +259,7 @@ function createMetadata(input, artifactSizeBytes) {
         requestKeySha256: remote.requestKeySha256,
       },
       provider: {
+        ...(remote.provider.environmentKind ? { environmentKind: remote.provider.environmentKind } : {}),
         apiBaseOrigin: remote.provider.apiBaseOrigin,
         apiId: remote.provider.apiId,
         apiEndpoint: remote.provider.apiEndpoint,

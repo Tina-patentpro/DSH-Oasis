@@ -4,6 +4,31 @@ import { SafeMarkdownPreview } from './SafeMarkdownPreview.js'
 
 const button = { border: '1px solid var(--dsw-alias-border-l2, #d7d9d8)', borderRadius: 7, padding: '7px 10px', background: 'var(--dsw-alias-bg-base, #fff)', color: 'inherit' }
 
+function LocalExecutionSummary({ run }) {
+  if (run?.mode !== 'dsh-local' || run.status === 'prepared') return null
+  const summary = run.executionSummary
+  const stages = { preparation: '调用准备', stream: '流处理', 'result-contract': '结果格式校验' }
+  const finishes = { stop: '正常结束', 'max-tokens': '输出上限', 'tool-calls': '工具调用', error: '提供方错误', aborted: '中止' }
+  const counters = { inputTokens: '输入（不含缓存命中）', cacheReadTokens: '缓存命中', outputTokens: '输出', reasoningTokens: '其中推理', totalTokens: '总计' }
+  const usage = Object.entries(counters).filter(([key]) => Number.isSafeInteger(summary?.usage?.[key]) && summary.usage[key] >= 0)
+    .map(([key, label]) => `${label} ${summary.usage[key]}`).join(' · ')
+  return createElement('details', { style: { fontSize: 12, marginTop: 8 } },
+    createElement('summary', null, run.parentRunId ? '原始调用记录（非新增调用）' : '调用记录'),
+    run.status !== 'completed' ? createElement('div', null, `失败阶段：${stages[summary?.failureStage] ?? '未记录'}`) : null,
+    createElement('div', null, `结束原因：${finishes[summary?.finishKind] ?? '未记录'}`),
+    createElement('div', null, `用量：${usage || '未记录'}`),
+    usage ? createElement('small', null, '提供方报告的 tokens；不代表实扣或退款。') : null)
+}
+
+function localFailureText(run) {
+  if (run.executionSummary?.failureStage === 'result-contract') return '结果格式不符合业务要求，未保存产物；不会自动重试。'
+  if (run.executionSummary?.failureStage === 'stream' && run.executionSummary?.finishKind === 'max-tokens') {
+    return '模型达到输出上限，未取得完整结果；不会自动重试。'
+  }
+  if (run.failureCode === 'INVALID_OUTPUT' && run.executionSummary?.failureStage === 'stream') return '模型输出流未通过校验，未保存产物；不会自动重试。'
+  return `未取得有效正文（${run.failureCode}），不会自动重试。`
+}
+
 function ResultVersion({ page, run, operation, disabled, readOnlyDisabled = disabled, markdownRenderer, onReview = () => {}, onEditResult = () => {},
   conversationUnavailableReason = null,
   savedFileUnavailableReason = '安全文件预览不可用', onOpenSavedFile = () => {},
@@ -60,7 +85,8 @@ export function UnifiedResultPanel({ page, onActivateRun = () => {}, ...props })
       : createElement('p', { role: 'status', style: { fontSize: 13 } }, !run ? '暂无生成内容'
         : run.mode === 'dsh-local' ? run.status === 'prepared' ? run.evidenceKind === 'native-model' ? '原生模型生成中…' : '原生离线生成中…' : run.status === 'unknown'
           ? `运行状态未确认（${run.failureCode}）；已停止本地等待，不代表提供方取消或退款，不会自动重发。`
-          : `未取得有效正文（${run.failureCode}），不会自动重试。`
+          : localFailureText(run)
         : run.status === 'prepared' ? '合成运行未完成；请查看原运行，不会自动重发。'
-          : run.status === 'stopped' ? '合成运行已结束，未保存结果。' : '合成失败，未取得正文。'))
+          : run.status === 'stopped' ? '合成运行已结束，未保存结果。' : '合成失败，未取得正文。'),
+    createElement(LocalExecutionSummary, { run }))
 }

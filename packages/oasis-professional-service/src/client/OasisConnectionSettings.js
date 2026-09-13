@@ -22,15 +22,20 @@ export function ConnectionSettingsForm({
       : { flexShrink: 0, maxHeight: '50%', overflowY: 'auto', padding: '10px 14px', borderBottom: '1px solid #dedee1' },
     onToggle: (event) => { if (!event.currentTarget.open) clearPassword() },
   },
-  createElement('summary', { style: { cursor: 'pointer', fontSize: 13 } }, '非生产服务连接配置'),
+  createElement('summary', { style: { cursor: 'pointer', fontSize: 13 } }, '专业服务连接配置'),
   createElement('div', { style: { display: 'grid', gap: 8, paddingTop: 10 } },
     createElement('p', { role: 'status', style: { margin: 0, fontSize: 12 } },
       !snapshot.connected ? '尚未连接可配置的本机 Host；本地工作流仍可使用。'
         : snapshot.settingsStatus !== 'ready' ? '公共配置服务不可用或配置引用不匹配；本地工作流仍可使用。'
-          : '环境固定为非生产；普通设置和凭据分别保存。'),
+          : `环境：${snapshot.environmentKind === 'production' ? '线上服务' : '非生产'}；普通设置和凭据分别保存。`),
+    createElement('label', { style: fieldStyle }, '服务环境', createElement('select', {
+      'aria-label': '服务环境', value: snapshot.environmentKind ?? 'non-production', disabled: disabledSettings,
+      onChange: event => { clearPassword(); void controller.saveEnvironmentKind(event.currentTarget.value) },
+    }, createElement('option', { value: 'non-production' }, '非生产'), createElement('option', { value: 'production' }, '线上服务'))),
+    createElement('small', null, '切换环境会清空地址和下载来源并解除凭据绑定；不会自动上传或生成。'),
     createElement('label', { style: fieldStyle }, 'API origin', createElement('input', {
       value: apiDraft, disabled: disabledSettings, style: inputStyle, autoComplete: 'off',
-      placeholder: 'https://非生产服务域名', onChange: (event) => onApiDraft(event.currentTarget.value),
+      placeholder: snapshot.environmentKind === 'production' ? 'https://lzhxpy.oasisintwrite.com' : 'https://非生产服务域名', onChange: (event) => onApiDraft(event.currentTarget.value),
     })),
     createElement('button', { type: 'button', disabled: disabledSettings, onClick: () => { void controller.saveApiBaseUrl(apiDraft) } }, '保存 API 地址'),
     createElement('label', { style: fieldStyle }, '允许的下载 origin（可空，每行一个）', createElement('textarea', {

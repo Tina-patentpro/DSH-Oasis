@@ -27,6 +27,7 @@ function requireExecution(task, executionId) {
 
 function assertExecutionEnvironment(active, execution, run) {
   if (active.apiBaseOrigin !== execution.apiBaseOrigin
+    || (active.environmentKind ?? 'non-production') !== (execution.environmentKind ?? 'non-production')
     || (run && run.providerSnapshot.apiBaseOrigin !== execution.apiBaseOrigin)) {
     throw remoteError('REMOTE_ENVIRONMENT_MISMATCH', 'The active Oasis environment does not match this execution')
   }
@@ -251,6 +252,7 @@ export function createOasisRemoteService({
       const fileUrls = Array.isArray(result.fileUrls) ? [...result.fileUrls] : []
       const runId = runIdFactory()
       const providerSnapshot = {
+        ...(currentExecution.environmentKind ? { environmentKind: currentExecution.environmentKind } : {}),
         apiBaseOrigin: currentExecution.apiBaseOrigin,
         apiId: currentExecution.serviceSnapshot.apiId,
         apiEndpoint: currentExecution.serviceSnapshot.apiEndpoint,
@@ -349,13 +351,13 @@ export function createOasisRemoteService({
       const active = await getRuntime()
       if (!active || active.enabled !== true) {
         return {
-          environmentKind: 'non-production', remoteEnabled: false,
+          environmentKind: active?.environmentKind ?? 'non-production', remoteEnabled: false,
           credentialConfigured: false, balance: null, services: [], folders: [],
         }
       }
       if (active.credentialConfigured !== true || !active.client) {
         return {
-          environmentKind: 'non-production', remoteEnabled: true,
+          environmentKind: active.environmentKind ?? 'non-production', remoteEnabled: true,
           credentialConfigured: false, balance: null, services: [], folders: [],
         }
       }
@@ -365,7 +367,7 @@ export function createOasisRemoteService({
         active.client.getFolderList(),
       ])
       return {
-        environmentKind: 'non-production',
+        environmentKind: active.environmentKind ?? 'non-production',
         remoteEnabled: true,
         credentialConfigured: true,
         balance: safeBalance(user.balance),
@@ -424,6 +426,7 @@ export function createOasisRemoteService({
         workflowPolicy(task),
       )
       const providerSnapshot = {
+        ...(active.environmentKind === 'production' ? { environmentKind: 'production' } : {}),
         apiBaseOrigin: active.apiBaseOrigin,
         apiId: selected.apiId,
         apiEndpoint: selected.apiEndpoint,
@@ -453,6 +456,7 @@ export function createOasisRemoteService({
         const next = structuredClone(current)
         next.tasks[taskId].remoteExecutionOrder.push(executionId)
         next.tasks[taskId].remoteExecutions[executionId] = {
+          ...(active.environmentKind === 'production' ? { environmentKind: 'production' } : {}),
           executionId,
           recordId: null,
           recordIdSource: null,
@@ -553,7 +557,8 @@ export function createOasisRemoteService({
           } catch (error) {
             if (error?.code === 'AUTH_REQUIRED') {
               return setExecution(workspaceId, taskId, executionId, {
-                status: 'auth-required', submittedAt: null,
+                // Authentication failure cannot prove that the attempted create had no effect.
+                status: 'auth-required',
                 safeError: { code: 'AUTH_REQUIRED', message: 'Oasis authentication is required' },
               })
             }

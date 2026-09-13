@@ -1,4 +1,4 @@
-import { normalizeOasisFileUrl, normalizeOasisOrigin } from './oasis-origin-policy.js'
+import { normalizeOasisFileUrl, normalizeOasisOrigin, normalizeOasisDownloadOrigin } from './oasis-origin-policy.js'
 import { oasisRunningWaterPageSchema } from './workbench-contract.js'
 
 const ENDPOINTS = [
@@ -107,6 +107,16 @@ export function assertNoForbiddenCredentialFields(value, path = '$') {
     assertNoForbiddenCredentialFields(child, `${path}.${key}`)
   }
   return value
+}
+
+function stripLegacyEmptyDetailCredentials(payload) {
+  const data = record(unwrapData(payload, 'API detail response'), 'API detail data')
+  const clean = { ...data }
+  // The original detail API emits these two empty placeholders, not credentials.
+  for (const key of ['api_key', 'credentials']) {
+    if (Object.hasOwn(clean, key) && (clean[key] === null || clean[key] === '')) delete clean[key]
+  }
+  return Object.hasOwn(payload, 'data') ? { ...payload, data: clean } : clean
 }
 
 export function normalizeCategoryCatalog(response) {
@@ -293,25 +303,26 @@ export function normalizeRunningWater(response) {
 
 export function createOasisApiClient({
   baseUrl,
+  environmentKind = 'non-production',
   downloadOrigins = [],
   fetchImpl = globalThis.fetch,
   resolveToken,
 }) {
   if (typeof fetchImpl !== 'function') throw new TypeError('fetchImpl is required')
   if (typeof resolveToken !== 'function') throw new TypeError('resolveToken is required')
-  const origin = new URL(normalizeOasisOrigin(baseUrl, 'baseUrl'))
+  const origin = new URL(normalizeOasisOrigin(baseUrl, 'baseUrl', environmentKind))
   if (!Array.isArray(downloadOrigins)) throw new TypeError('downloadOrigins must be an array')
   const allowedOrigins = new Set([
     origin.origin,
-    ...downloadOrigins.map((value) => normalizeOasisOrigin(value, 'downloadOrigins entry')),
+    ...downloadOrigins.map((value) => normalizeOasisDownloadOrigin(value, 'downloadOrigins entry', environmentKind)),
   ])
 
   function assertAllowedUrl(value, label) {
     let url
     try {
-      url = new URL(normalizeOasisFileUrl(value))
+      url = new URL(normalizeOasisFileUrl(value, environmentKind))
     } catch {
-      fail('UNTRUSTED_REMOTE_URL', `${label} is not a safe non-production file URL`)
+      fail('UNTRUSTED_REMOTE_URL', `${label} does not satisfy the file URL environment policy`)
     }
     if (!['http:', 'https:'].includes(url.protocol) || !allowedOrigins.has(url.origin)) {
       fail('UNTRUSTED_REMOTE_URL', `${label} origin is not allowed`)
@@ -354,6 +365,9 @@ export function createOasisApiClient({
     }
     if (!response.ok || (Object.hasOwn(payload, 'code') && ![0, 200].includes(payload.code))) {
       fail('REMOTE_ERROR', 'Oasis API request failed', { status: response.status, code: payload.code })
+    }
+    if (method === 'POST' && path === '/api/apicategories/apidetail') {
+      payload = stripLegacyEmptyDetailCredentials(payload)
     }
     assertNoForbiddenCredentialFields(payload)
     return payload

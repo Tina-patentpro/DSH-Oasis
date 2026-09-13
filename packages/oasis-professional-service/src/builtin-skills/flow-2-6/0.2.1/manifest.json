@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "skillId": "flow-2-6",
+  "skillVersion": "0.2.1",
+  "inputSchemaVersion": "claims-disclosure-2",
+  "outputSchemaVersion": "claims-cumulative-2",
+  "executionContractVersion": "single-call-cumulative-1",
+  "resources": [
+    {
+      "path": "SKILL.md",
+      "role": "instruction",
+      "sha256": "87bce634fe9042c692cf19e48fe76923c57c788390491ff26ea49c351a342886"
+    },
+    {
+      "path": "references/drafting-rules.md",
+      "role": "reference",
+      "sha256": "d53870bd2ba5b0a1a9c3ae0c894ae8a4548affc1c2f07503360b703e619011b1"
+    },
+    {
+      "path": "references/special-domain-boundary.md",
+      "role": "reference",
+      "sha256": "ee2cccad227a1e2be2694633517f340b63b3fefe88102995f78b53ba06b046b6"
+    },
+    {
+      "path": "assets/claims-output-template.md",
+      "role": "output-template",
+      "sha256": "1c89945da2aa213885e33054f055d3f115a18da26a5a773c5f1db7153a4b5723"
+    }
+  ]
+}

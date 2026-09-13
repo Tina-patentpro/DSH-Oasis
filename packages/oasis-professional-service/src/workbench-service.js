@@ -353,6 +353,7 @@ export function createWorkbenchService({
             executionId: run.executionId,
             requestKeySha256: createHash('sha256').update(run.requestKey).digest('hex'),
             provider: {
+              ...(run.providerSnapshot.environmentKind ? { environmentKind: run.providerSnapshot.environmentKind } : {}),
               apiBaseOrigin: run.providerSnapshot.apiBaseOrigin,
               apiId: run.providerSnapshot.apiId,
               apiEndpoint: run.providerSnapshot.apiEndpoint,

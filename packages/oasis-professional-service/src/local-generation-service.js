@@ -5,6 +5,7 @@ import { validateWorkflowForm } from './workflow-catalog.js'
 import { createUnifiedResult, unifiedInputSha256 } from './unified-fixture.js'
 import { WorkspaceMaterialError } from './workspace-materials.js'
 import { missingUpstream } from './claims-v2-result.js'
+import { normalizeLocalExecutionSummary } from './local-run-summary.js'
 
 const fail = (code, message) => { throw new WorkspaceMaterialError(code, message) }
 const safeCodes = new Set(['GENERATION_FAILED', 'ABORTED', 'TIMED_OUT', 'INVALID_OUTPUT', 'INVALID_INPUT', 'MODEL_UNAVAILABLE', 'MODEL_LIMITED'])
@@ -30,7 +31,7 @@ export function createLocalGenerationService({ repository, runtime, clock, runId
     if (!context || context.sessionId !== sessionId) fail('GENERATION_CONTEXT_UNAVAILABLE', '当前会话不可用；未开始生成。')
     try { if (task.workflowVersion === '2') bundle = await runtime.loadClaimsV2Skill() }
     catch { fail('BUILTIN_SKILL_UNAVAILABLE', '内置 Skill 资源不可用；未开始生成。') }
-    if (runtime.evidenceKind === 'native-model' && (bundle?.provenance.skillId !== 'flow-2-6' || bundle?.provenance.skillVersion !== '0.2.0')) {
+    if (runtime.evidenceKind === 'native-model' && (bundle?.provenance.skillId !== 'flow-2-6' || bundle?.provenance.skillVersion !== '0.2.2')) {
       fail('BUILTIN_SKILL_UNAVAILABLE', '正式内置 Skill 不可用；未开始生成。')
     }
     const instruction = structuredClone(bundle?.instruction ?? runtime.instruction)
@@ -74,6 +75,7 @@ export function createLocalGenerationService({ repository, runtime, clock, runId
       const { snapshot } = await prepareSnapshot(command, taskFor(record, command.taskId))
       return { workspaceId: command.workspaceId, taskId: command.taskId, sessionId: command.sessionId,
         expectedRevision: command.expectedRevision, sha256: confirmationHash(command, snapshot), route: snapshot.contextSnapshot.route,
+        skill: snapshot.contextSnapshot.skillProvenance ? { id: snapshot.contextSnapshot.skillProvenance.skillId, version: snapshot.contextSnapshot.skillProvenance.skillVersion } : null,
         upstreamIncluded: snapshot.inputSnapshot.upstreamSnapshot?.status !== 'missing',
         characterCount: Object.values(snapshot.inputSnapshot.formValues).join('').length + (snapshot.inputSnapshot.upstreamSnapshot?.body?.length ?? 0) }
     },
@@ -126,12 +128,15 @@ export function createLocalGenerationService({ repository, runtime, clock, runId
           const output = await runtime.adapter.generate({ runId: admitted.runId, sessionId,
             formValues: admitted.inputSnapshot.formValues, instruction, route: context.route, signal: controller.signal,
             ...(admitted.workflowVersion === '2' ? { workflowVersion: '2', upstreamSnapshot: admitted.inputSnapshot.upstreamSnapshot } : {}) })
+          const executionSummary = normalizeLocalExecutionSummary(output.executionSummary)
           if (output.status === 'completed') {
-            try { change = { status: 'completed', failureCode: null, result: createUnifiedResult(output.body, admitted) } }
-            catch { change = { status: 'failed', failureCode: 'INVALID_OUTPUT', result: null } }
+            delete executionSummary.failureStage
+            try { change = { status: 'completed', failureCode: null, result: createUnifiedResult(output.body, admitted), executionSummary } }
+            catch { change = { status: 'failed', failureCode: 'INVALID_OUTPUT', result: null,
+              executionSummary: { ...executionSummary, failureStage: 'result-contract' } } }
           }
           else change = { status: output.status === 'unknown' ? 'unknown' : 'failed',
-            failureCode: safeCodes.has(output.code) ? output.code : 'GENERATION_FAILED', result: null }
+            failureCode: safeCodes.has(output.code) ? output.code : 'GENERATION_FAILED', result: null, executionSummary }
         } catch { change = { status: 'unknown', failureCode: 'GENERATION_FAILED', result: null } }
         await settle(workspaceId, taskId, admitted.runId, change)
       }).catch(() => { /* Durable prepared stays unresolved on storage failure; observation never replays. */ })

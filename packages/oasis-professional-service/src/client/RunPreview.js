@@ -65,7 +65,7 @@ export function RunPreview({
         createElement('h4', { id: `oasis-run-title-${page.pageId}`, style: { margin: 0, fontSize: 15 } }, '生成与结果'),
         createElement('p', { style: { margin: '5px 0 0', fontSize: 12, color: 'var(--dsw-alias-text-secondary, #66706b)' } },
           remoteRun
-            ? '非生产专业服务结果；远程内容和文件必须经过人工审核。'
+            ? `${run.providerSnapshot?.environmentKind === 'production' ? '线上' : '非生产'}专业服务结果；远程内容和文件必须经过人工审核。`
             : '本地确定性演练；结果必须经过人工审核。')),
       createElement('button', {
         type: 'button', disabled: disabledReason !== null, onClick: onGenerate,

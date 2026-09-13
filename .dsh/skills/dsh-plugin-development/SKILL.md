@@ -13,10 +13,10 @@ description: Use when creating, updating, packaging, installing, or validating a
 
 ## 开始前
 
-1. 读取目标PRD、AGENTS.md和当前工作区，不吸收无关文件。
-2. 运行`dsh --version`、`node --version`、`pnpm --version`，记录兼容基线。
-3. 读取当前`@deepseek-ai/dsh/package.json`及目标Profile中的已安装插件示例。
-4. 再查官方DeepSeek Harness开发文档；若官方`master`与本机包冲突，以匹配当前安装版本的实际导出和运行结果为准。
+1. 读取有效 AGENTS.md 与本次目标文件；仅在需求/业务合同不明时查相关 PRD，继续阶段工作时按需查当前状态，不默认回读完整历史。
+2. 涉及代码、构建或运行兼容时，核对实际 `dsh --version`、`node --version`、`pnpm --version`；纯开发文档修订不启动 DSH、不安装或修改 Profile。
+3. 接口或装配任务读取当前 `@deepseek-ai/dsh/package.json` 及相关导出；仅 Profile 兼容目标才只读枚举其实际组合，不遍读插件示例。
+4. 需要外部接口/版本证据时查官方文档；若官方 `master` 与本机包冲突，以匹配当前安装版本的实际导出和运行结果为准。
 5. 建立目标契约：本轮贡献Host、Client、Bundle、Profile还是Skill，以及明确不做什么。
 
 ## 架构选择
@@ -29,12 +29,12 @@ description: Use when creating, updating, packaging, installing, or validating a
 
 ## 实施流程
 
-1. 先写一个会因目标能力缺失而失败的测试，并确认红灯原因。
+1. 行为变更先写会因目标能力缺失而失败的测试并确认红灯原因；纯指引修订使用相关合同、链接和边界检查，不虚构运行红绿灯。
 2. 实现最小Host行为；纯逻辑与Cordis适配分离。
 3. 如需要Client，优先复用固定包类型定义、已有 live Slot 证据和目标 Desktop 实际渲染，只查询本次入口涉及的节点；不得为此新建永久诊断器。候选 Slot 仍须记录 purpose、kind、scope、options、occupants 与 replacement risk，未经证实不得注册。
-4. 完成`package.json`、`cordis.patch.yml`和导出清单；本地`link:`开发前在插件目录执行`pnpm install`与`pnpm run build`，不要手写或覆盖用户Profile清单。
-5. 使用工作区内隔离的`DSH_HOME`安装和启动测试Profile；不得修改用户现有Profile。
-6. 依次验证：单元/合同测试、Bundle安装、Host加载、Client模块提供、浏览器实际渲染与控制台、Skill发现。每层只声明本层证据。
+4. 包装/构建目标核对 `package.json`、`cordis.patch.yml` 与导出清单，按需运行已有构建。依赖缺失先报告，安装必须在明确批准的范围内；不因文档任务执行 `pnpm install`，不手写或覆盖用户 Profile 清单。
+5. 仅当已批准的目标需要安装/运行验证时，使用工作区内隔离的 `DSH_HOME` 安装和启动测试 Profile；不得修改用户现有 Profile。
+6. 按目标选择单元/合同测试、Bundle 安装、Host 加载、Client 模块提供、浏览器渲染/控制台或 Skill 发现；完整集成交付不得省略其必需层。每层只声明本层证据。
 
 ## Slot硬边界
 
@@ -51,7 +51,7 @@ description: Use when creating, updating, packaging, installing, or validating a
 - 插件只保留调用现有接口、展示任务状态、获取产物和本地安全写回的集成边界。
 - 未经明确授权，不写用户`~/.dsh/profiles`、不安装到真实Profile、不发布npm包。
 - 任何文件写回必须限定在用户确认的项目根目录，禁止静默覆盖。
-- 业务 Skill 的普通本地调用若经过原生 Skill 工具，其工具结果会包含完整 `content`，现有客户端还可展开查看该结果；因此“用户可用但普通产品路径不可取得正文”不能仅靠隐藏目录、`userInvocable=false`或 scope 达成。未通过 G-SKILL 前只允许非秘密样本和静态契约核对，不安装真实私有 Skill。
+- 业务 Skill 的普通本地调用若经过原生 Skill 工具，其工具结果会包含完整 `content`，现有客户端还可展开查看该结果；因此“用户可用但普通产品路径不可取得正文”不能仅靠隐藏目录、`userInvocable=false`或 scope 达成。本项目已按最新 AGENTS 决定取消 G-SKILL 正文保密门禁，不再要求其确认/验证，也不称其技术通过。凭据、用户材料、Workspace 归属、费用授权和真实 Profile 保全仍有效；门禁取消本身不是安装或调用授权。
 
 ## 第三方布局插件兼容门禁
 

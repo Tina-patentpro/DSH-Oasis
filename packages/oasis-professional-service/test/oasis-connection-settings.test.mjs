@@ -64,6 +64,22 @@ function fixture(options = {}) {
   }
 }
 
+test('explicit environment switch disables the API and unbinds credentials before changing mode', async () => {
+  const f = fixture(); await tick()
+  assert.equal(await f.controller.saveEnvironmentKind('production'), true)
+  assert.deepEqual(f.calls.filter(c => c[0] === 'settings'), [
+    ['settings', 'apiBaseUrl', ''], ['settings', 'credentialOrigin', ''],
+    ['settings', 'downloadOrigins', []], ['settings', 'environmentKind', 'production'],
+  ])
+  assert.equal(f.controller.getSnapshot().environmentKind, 'production')
+  assert.equal(f.controller.getSnapshot().credentialConfigured, false)
+  assert.equal(f.controller.getSnapshot().restartRequired, true)
+  assert.equal(await f.controller.saveApiBaseUrl('https://lzhxpy.oasisintwrite.com'), true)
+  assert.equal(await f.controller.saveApiBaseUrl('https://other.example'), false)
+  assert.equal(f.calls.some(c => c[0] === 'credential'), false)
+  f.controller.dispose()
+})
+
 test('local model enable uses the same native settings owner and requires restart without touching credentials', async () => {
   const f = fixture()
   await tick()

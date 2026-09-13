@@ -1,14 +1,14 @@
 import { credentialRef } from '@deepseek-ai/dsh-credentials'
 import z from '@deepseek-ai/schemastery'
 
-import { normalizeOasisOrigin } from './oasis-origin-policy.js'
+import { normalizeOasisOrigin, normalizeOasisDownloadOrigin } from './oasis-origin-policy.js'
 import { normalizeGenerationPreferences } from './generation-preferences.js'
 
 const DEFAULT_CREDENTIAL_REF = 'OASIS_USER_JWT'
 
 export const OASIS_SETTINGS_NAMESPACE = 'oasis-professional-service'
 export const OASIS_SETTINGS_SCHEMA = z.object({
-  environmentKind: z.const('non-production').default('non-production'),
+  environmentKind: z.union([z.const('non-production'), z.const('production')]).default('non-production'),
   apiBaseUrl: z.string().default(''),
   credentialOrigin: z.string().default(''),
   credentialRef: z.string().default(DEFAULT_CREDENTIAL_REF),
@@ -26,18 +26,18 @@ export function normalizeOasisRuntimeConfig(input = {}) {
   const localModelEnabled = input.localModelEnabled ?? false
   if (typeof localModelEnabled !== 'boolean') throw new TypeError('localModelEnabled must be boolean')
   const environmentKind = input.environmentKind ?? 'non-production'
-  if (environmentKind !== 'non-production') throw new TypeError('Only non-production Oasis environments are supported')
+  if (!['non-production', 'production'].includes(environmentKind)) throw new TypeError('Unsupported Oasis environment')
   const rawBaseUrl = input.apiBaseUrl ?? ''
-  const apiBaseUrl = rawBaseUrl === '' ? null : normalizeOasisOrigin(rawBaseUrl, 'apiBaseUrl')
+  const apiBaseUrl = rawBaseUrl === '' ? null : normalizeOasisOrigin(rawBaseUrl, 'apiBaseUrl', environmentKind)
   const rawCredentialOrigin = input.credentialOrigin ?? ''
   const credentialOrigin = rawCredentialOrigin === ''
     ? null
-    : normalizeOasisOrigin(rawCredentialOrigin, 'credentialOrigin')
+    : normalizeOasisOrigin(rawCredentialOrigin, 'credentialOrigin', environmentKind)
   const credentialName = input.credentialRef ?? DEFAULT_CREDENTIAL_REF
   credentialRef(credentialName)
   const rawDownloads = input.downloadOrigins ?? []
   if (!Array.isArray(rawDownloads)) throw new TypeError('downloadOrigins must be an array')
-  const downloadOrigins = [...new Set(rawDownloads.map((value) => normalizeOasisOrigin(value, 'downloadOrigins entry')))]
+  const downloadOrigins = [...new Set(rawDownloads.map((value) => normalizeOasisDownloadOrigin(value, 'downloadOrigins entry', environmentKind)))]
   return Object.freeze({
     localModelEnabled,
     environmentKind,

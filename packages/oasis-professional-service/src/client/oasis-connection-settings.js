@@ -1,8 +1,9 @@
-import { normalizeOasisOrigin } from '../oasis-origin-policy.js'
+import { normalizeOasisOrigin, normalizeOasisDownloadOrigin } from '../oasis-origin-policy.js'
 import { normalizeGenerationPreferences } from '../generation-preferences.js'
 
 const REFERENCE = 'OASIS_USER_JWT'
 const initial = () => ({
+  environmentKind: 'non-production',
   connected: false, settingsStatus: 'unavailable', settingsWritable: false,
   apiBaseUrl: '', credentialOrigin: '', downloadOrigins: Object.freeze([]),
   ...normalizeGenerationPreferences(),
@@ -49,20 +50,21 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
       if (view?.status !== 'ready' || view.mode !== 'host') throw new Error('unavailable')
       const value = view.value
       const rawCredentialOrigin = value?.credentialOrigin ?? ''
-      if (value?.environmentKind !== 'non-production' || value.credentialRef !== REFERENCE
+      if (!['non-production', 'production'].includes(value?.environmentKind) || value.credentialRef !== REFERENCE
         || typeof value.apiBaseUrl !== 'string' || typeof rawCredentialOrigin !== 'string'
         || !Array.isArray(value.downloadOrigins)) throw new Error('invalid')
-      const apiBaseUrl = value.apiBaseUrl === '' ? '' : normalizeOasisOrigin(value.apiBaseUrl)
-      const credentialOrigin = rawCredentialOrigin === '' ? '' : normalizeOasisOrigin(rawCredentialOrigin)
-      const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisOrigin(origin)))])
+      const environmentKind = value.environmentKind
+      const apiBaseUrl = value.apiBaseUrl === '' ? '' : normalizeOasisOrigin(value.apiBaseUrl, 'API', environmentKind)
+      const credentialOrigin = rawCredentialOrigin === '' ? '' : normalizeOasisOrigin(rawCredentialOrigin, 'credential', environmentKind)
+      const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisDownloadOrigin(origin, 'download', environmentKind)))])
       const preferences = normalizeGenerationPreferences(value)
       const localModelEnabled = value.localModelEnabled ?? false
       if (typeof localModelEnabled !== 'boolean') throw new Error('invalid')
-      const settings = JSON.stringify([apiBaseUrl, credentialOrigin, downloadOrigins, localModelEnabled])
+      const settings = JSON.stringify([environmentKind, apiBaseUrl, credentialOrigin, downloadOrigins, localModelEnabled])
       const restartRequired = snapshot.restartRequired || (lastSettings !== null && settings !== lastSettings)
       lastSettings = settings
       publish({ settingsStatus: 'ready', settingsWritable: snapshot.connected && view.writable === true,
-        apiBaseUrl, credentialOrigin, downloadOrigins, restartRequired, localModelEnabled, ...preferences })
+        environmentKind, apiBaseUrl, credentialOrigin, downloadOrigins, restartRequired, localModelEnabled, ...preferences })
     } catch {
       publish({ settingsStatus: 'unavailable', settingsWritable: false, apiBaseUrl: '',
         credentialOrigin: '', downloadOrigins: Object.freeze([]), localModelEnabled: false, ...normalizeGenerationPreferences() })
@@ -196,10 +198,22 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
       if (ok) invalidate(true)
       return ok
     },
+    async saveEnvironmentKind(value) {
+      if (!['non-production', 'production'].includes(value)) return false
+      if (value === snapshot.environmentKind) return true
+      const targetScope = scope
+      const targetGeneration = generation
+      return write('settings', async () => {
+        for (const [key, next] of [['apiBaseUrl', ''], ['credentialOrigin', ''], ['downloadOrigins', []], ['environmentKind', value]]) {
+          if (disposed || scope !== targetScope || generation !== targetGeneration) throw new Error('Host changed during environment switch')
+          await targetScope.set(key, next)
+        }
+      })
+    },
     async saveApiBaseUrl(value) {
       let origin
-      try { origin = value.trim() === '' ? '' : normalizeOasisOrigin(value.trim()) } catch {
-        publish({ error: 'API 地址必须是非生产 HTTP(S) origin，不含路径、凭据或查询参数。', notice: null })
+      try { origin = value.trim() === '' ? '' : normalizeOasisOrigin(value.trim(), 'API', snapshot.environmentKind) } catch {
+        publish({ error: 'API 地址必须符合所选环境，线上仅允许指定 HTTPS 地址，不含路径或凭据。', notice: null })
         return false
       }
       return write('settings', () => scope.set('apiBaseUrl', origin))
@@ -219,8 +233,8 @@ export function createOasisConnectionSettings({ onInvalidated = () => {} } = {})
     },
     async saveDownloadOrigins(value) {
       let origins
-      try { origins = [...new Set(value.split(/\r?\n/u).map((item) => item.trim()).filter(Boolean).map((item) => normalizeOasisOrigin(item)))] } catch {
-        publish({ error: '下载来源必须逐行填写非生产 HTTP(S) origin。', notice: null })
+      try { origins = [...new Set(value.split(/\r?\n/u).map((item) => item.trim()).filter(Boolean).map((item) => normalizeOasisDownloadOrigin(item, 'download', snapshot.environmentKind)))] } catch {
+        publish({ error: '下载来源须逐行填写安全 origin；线上环境只允许 HTTPS。', notice: null })
         return false
       }
       return write('settings', () => scope.set('downloadOrigins', origins))

@@ -43,7 +43,8 @@ test('provider error becomes a fixed safe result without instruction, stack or c
   const result = await adapter.generate(input())
   assert.equal(result?.code, 'MODEL_UNAVAILABLE')
   assert.equal(result.status, 'failed')
-  assert.deepEqual(Object.keys(result).sort(), ['code', 'message', 'status'])
+  assert.deepEqual(Object.keys(result).sort(), ['code', 'executionSummary', 'message', 'status'])
+  assert.deepEqual(result.executionSummary, { failureStage: 'preparation' })
   assert.ok(!JSON.stringify(result).includes(CANARY))
   assert.equal(attempts, 1)
 })
@@ -59,7 +60,7 @@ test('only valid final text is returned; frozen seven-field snapshot stays user 
   request.instruction.body = 'changed'
   release()
   const result = await resultPromise
-  assert.deepEqual(result, { status: 'completed', body: '可审阅文字', model: { provider: 'offline', model: 'text' } })
+  assert.deepEqual(result, { status: 'completed', body: '可审阅文字', model: { provider: 'offline', model: 'text' }, executionSummary: { finishKind: 'stop' } })
   assert.equal(seen.prepares.length, 1)
   assert.equal(seen.streams.length, 1)
   const options = seen.streams[0]
@@ -125,6 +126,30 @@ test('reasoning and replay metadata never enter the assembler or returned object
   const result = await adapter.generate(input())
   assert.equal(result.body, '正文')
   assert.ok(!JSON.stringify(result).includes(CANARY))
+})
+
+test('bounded execution summary retains finish and numeric usage without getters or raw values', async () => {
+  for (const kind of ['stop', 'max-tokens']) {
+    let getterCalls = 0
+    const usage = { inputTokens: 12, outputTokens: 34, totalTokens: 46, cacheReadTokens: 0,
+      reasoningTokens: -1, extra: CANARY }
+    Object.defineProperty(usage, 'secret', { get() { getterCalls++; throw Error(CANARY) } })
+    const { adapter } = harness({ chunks: [text('正文'), { type: 'usage', usage }, finish(kind)] })
+    const result = await adapter.generate(input())
+    assert.deepEqual(result.executionSummary, { finishKind: kind,
+      usage: { inputTokens: 12, outputTokens: 34, totalTokens: 46, cacheReadTokens: 0 },
+      ...(kind === 'stop' ? {} : { failureStage: 'stream' }) })
+    assert.equal(result.status, kind === 'stop' ? 'completed' : 'failed')
+    if (kind !== 'stop') assert.equal(result.body, undefined)
+    assert.equal(getterCalls, 0)
+    assert.ok(!JSON.stringify(result).includes(CANARY))
+  }
+  let accessed = false
+  const usage = { inputTokens: NaN, outputTokens: Infinity, cacheReadTokens: '2', totalTokens: Number.MAX_SAFE_INTEGER + 1 }
+  Object.defineProperty(usage, 'reasoningTokens', { get() { accessed = true; throw Error(CANARY) } })
+  const { adapter } = harness({ chunks: [text('正文'), { type: 'usage', usage }, finish()] })
+  assert.deepEqual((await adapter.generate(input())).executionSummary, { finishKind: 'stop' })
+  assert.equal(accessed, false)
 })
 
 test('error codes are allowlisted for throws and finish chunks, including hostile getters', async () => {

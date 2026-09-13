@@ -152,9 +152,11 @@ window.__ModuleLoader__.load({
 
 ### Skill 正文可见性边界
 
-固定包 `@deepseek-ai/dsh-tool-skill 0.1.2-rc.1` 的原生工具结果直接返回 Skill 的完整 `content`，客户端 Skill 工具行还能展开显示结果。因此 `userInvocable=false`、scope 注册或不展示目录都不能保证普通产品路径不可取得正文。当前只能证明没有在绿洲 UI 中新增读取/导出入口，不能宣称原生 Skill 调用满足“用户可用但不可获取正文”。G-SKILL 未决时不得安装或运行真实私有业务 Skill。
+固定包 `@deepseek-ai/dsh-tool-skill 0.1.2-rc.1` 的原生工具结果直接返回 Skill 的完整 `content`，客户端 Skill 工具行还能展开显示结果。因此 `userInvocable=false`、scope 注册或不展示目录都不能保证普通产品路径不可取得正文。当前只能证明没有在绿洲 UI 中新增读取/导出入口，不能宣称原生 Skill 调用满足“用户可用但不可获取正文”。本项目最新 AGENTS 已取消 G-SKILL 正文保密要求，旧限制仅作历史，不再作为安装/运行前置门禁；不把取消写成技术通过。凭据、材料、Workspace、费用授权与 Profile 保全仍必须满足。
 
 ## Windows隔离验证
+
+仅已批准的安装/运行目标使用以下示例；纯文档修订不运行安装、启动或 dump-config。依赖安装不因示例出现而获得授权。
 
 不要在开发烟雾测试中改写`C:\Users\<user>\.dsh\profiles\web`。在工作区使用隔离主页：
 
@@ -171,7 +173,7 @@ scripts\dsh-isolated.cmd --profile web --no-open --port 0
 
 隔离包装器应在调用CLI前设置隔离`DSH_HOME`，并按`DSH_BIN`、PATH、已知npm全局前缀的顺序寻找候选入口；候选必须能追溯到官方`@deepseek-ai/dsh`包及其声明的`bin.dsh`，再以当前Node、`shell:false`和原样参数启动。Home只允许项目`.dsh-test`或系统临时目录下`oasis-dsh-*`根，必须拒绝真实`~/.dsh`的祖先/自身/后代以及任一现有junction、symlink或重解析跳转。每次写入前先用`--print-home`确认实际路径。`dsh --dump-config`在当前CLI中会准备并写入Profile文件，所以只能对隔离`DSH_HOME`运行，不能当作对真实Profile的纯读取操作。
 
-`DSH_HOME` 隔离不等于 Skill 根隔离：本次固定 Desktop 的启动日志仍会扫描用户级 `.agents/skills`。不得把真实私有 Skill 放进可枚举的用户/Workspace Skill 目录，并且不能因 Profile 隔离就宣称 Skill 发现面已隔离。
+`DSH_HOME` 隔离不等于 Skill 根隔离：本次固定 Desktop 的启动日志仍会扫描用户级 `.agents/skills`。不能因 Profile 隔离就宣称 Skill 发现面已隔离。业务资源仍由绿洲 Host 加载，不因取消保密要求自动迁移或注册到原生 Skill 目录；凭据和用户材料仍不得进入可枚举资源。
 
 ## 验证层级
 

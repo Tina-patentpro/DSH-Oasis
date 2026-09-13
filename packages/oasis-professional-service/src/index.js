@@ -119,6 +119,7 @@ export async function apply(ctx) {
         credentialConfigured,
         client: credentialConfigured
           ? createOasisApiClient({
+              environmentKind: config.environmentKind,
               baseUrl: config.apiBaseUrl,
               downloadOrigins: config.downloadOrigins,
               resolveToken: () => resolveOasisJwt(ctx.credentials, config.credentialRef),

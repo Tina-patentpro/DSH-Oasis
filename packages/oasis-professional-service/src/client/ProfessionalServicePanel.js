@@ -35,7 +35,7 @@ export function ProfessionalServicePanel({
   if (configurationBlocked) {
     const execution = latestExecution(page)
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
-      createElement('strong', null, '非生产专业服务'),
+      createElement('strong', null, '专业服务'),
       createElement('p', { role: 'status' }, '请前往 DSH 设置 → 绿洲工作台完成连接配置。设置保存后须重启 Host 并刷新页面；本地工作流仍可继续使用。'),
       waiting && execution ? createElement('button', {
         type: 'button', onClick: () => onStop(execution.executionId), 'data-testid': 'oasis-professional-stop',
@@ -43,23 +43,23 @@ export function ProfessionalServicePanel({
   }
   if (state.professionalStatus === 'idle' || state.professionalStatus === 'loading') {
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
-      createElement('strong', null, '非生产专业服务'),
+      createElement('strong', null, '专业服务'),
       createElement('div', { role: 'status' }, '正在读取 Host 专业服务目录…'))
   }
   if (state.professionalStatus === 'error') {
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
-      createElement('strong', null, '非生产专业服务'),
+      createElement('strong', null, '专业服务'),
       createElement('div', { role: 'alert' }, '专业服务目录读取失败；本地工作流仍可继续使用。'))
   }
   const bootstrap = state.professionalBootstrap
   if (!bootstrap?.remoteEnabled) {
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
-      createElement('strong', null, '非生产专业服务'),
-      createElement('p', { style: { margin: 0, color: '#66706b' } }, 'Host 尚未启用非生产 API 地址。请前往 DSH 设置 → 绿洲工作台保存，随后重启 Host 并刷新页面。'))
+      createElement('strong', null, '专业服务'),
+      createElement('p', { style: { margin: 0, color: '#66706b' } }, 'Host 尚未启用专业 API 地址。请前往 DSH 设置 → 绿洲工作台保存，随后重启 Host 并刷新页面。'))
   }
   if (!bootstrap.credentialConfigured) {
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
-      createElement('strong', null, '非生产专业服务'),
+      createElement('strong', null, '专业服务'),
       createElement('p', { style: { margin: 0, color: '#8b2f24' } }, '请前往 DSH 设置 → 绿洲工作台重新输入 JWT 并绑定当前 API 地址；凭证不会进入工作台状态。'))
   }
 
@@ -79,9 +79,9 @@ export function ProfessionalServicePanel({
 
   return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
     createElement('div', null,
-      createElement('strong', null, '非生产专业服务'),
+      createElement('strong', null, '专业服务'),
       createElement('div', { style: { marginTop: 4, color: '#66706b', fontSize: 12 } },
-        `环境：非生产 · 余额：${bootstrap.balance ?? '未知'} · 价格仅作提交前快照`)),
+        `环境：${bootstrap.environmentKind === 'production' ? '线上服务' : '非生产'} · 余额：${bootstrap.balance ?? '未知'} · 价格仅作提交前快照`)),
     createElement('label', { style: fieldStyle },
       createElement('span', null, '服务'),
       createElement('select', {
@@ -147,7 +147,7 @@ export function ProfessionalServicePanel({
                   externalTransferConfirmed: event.currentTarget.checked,
                 }),
               }),
-              ' 我确认所选材料将上传至已配置的非生产绿洲环境')),
+              ` 我确认所选材料将上传至已配置的${bootstrap.environmentKind === 'production' ? '线上' : '非生产'}绿洲环境`)),
           createElement('button', {
             type: 'button', disabled: !canStart, onClick: onStart,
             'data-testid': 'oasis-professional-start',

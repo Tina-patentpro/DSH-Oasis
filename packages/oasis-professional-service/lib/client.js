@@ -4756,10 +4756,37 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function superRefine(fn, params) {
 			return /* @__PURE__ */ _superRefine(fn, params);
 		}
+		//#endregion
+		//#region src/local-run-summary.js
+		const finishKinds = [
+			"stop",
+			"max-tokens",
+			"tool-calls",
+			"error",
+			"aborted"
+		];
+		const failureStages = [
+			"preparation",
+			"stream",
+			"result-contract"
+		];
+		const tokenFields = [
+			"inputTokens",
+			"outputTokens",
+			"totalTokens",
+			"cacheReadTokens",
+			"reasoningTokens"
+		];
+		const count = number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+		const localExecutionSummarySchema = object({
+			failureStage: _enum(failureStages).optional(),
+			finishKind: _enum(finishKinds).optional(),
+			usage: object(Object.fromEntries(tokenFields.map((key) => [key, count.optional()]))).strict().optional()
+		}).strict();
 		function canonicalHostname(url) {
 			return url.hostname.toLocaleLowerCase("en-US").replace(/\.+$/u, "");
 		}
-		function normalizeOasisOrigin(value, label = "origin") {
+		function normalizeHttpOrigin(value, label) {
 			let url;
 			try {
 				url = new URL(value);
@@ -4768,37 +4795,35 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}
 			if (!["http:", "https:"].includes(url.protocol)) throw new TypeError(`${label} must use HTTP(S)`);
 			if (url.username || url.password || url.search || url.hash || !["", "/"].includes(url.pathname)) throw new TypeError(`${label} must contain only an origin`);
-			const hostname = canonicalHostname(url);
-			if (hostname === "lzhxpy.oasisintwrite.com") throw new TypeError("The Oasis production origin is forbidden");
-			url.hostname = hostname;
+			url.hostname = canonicalHostname(url);
+			return url;
+		}
+		function normalizeOasisOrigin(value, label = "origin", environmentKind = "non-production") {
+			const url = normalizeHttpOrigin(value, label);
+			if (!["non-production", "production"].includes(environmentKind)) throw new TypeError("Unsupported Oasis environment");
+			if (environmentKind === "production") {
+				if (url.origin !== `https://lzhxpy.oasisintwrite.com`) throw new TypeError("Production API must use the approved HTTPS origin");
+			} else if (url.hostname === "lzhxpy.oasisintwrite.com") throw new TypeError("The Oasis production origin is forbidden");
 			return url.origin;
 		}
-		function isCanonicalOasisNonProductionOrigin(value) {
-			try {
-				return normalizeOasisOrigin(value) === value;
-			} catch {
-				return false;
-			}
+		function normalizeOasisDownloadOrigin(value, label = "download origin", environmentKind = "non-production") {
+			if (environmentKind === "non-production") return normalizeOasisOrigin(value, label);
+			if (environmentKind !== "production") throw new TypeError("Unsupported Oasis environment");
+			const url = normalizeHttpOrigin(value, label);
+			if (url.protocol !== "https:") throw new TypeError("Production files require HTTPS");
+			return url.origin;
 		}
-		function normalizeOasisFileUrl(value) {
+		function normalizeOasisFileUrl(value, environmentKind = "non-production") {
 			let url;
 			try {
 				if (typeof value !== "string" || value.length > 4096) throw new TypeError();
 				url = new URL(value);
-				normalizeOasisOrigin(url.origin);
+				normalizeOasisDownloadOrigin(url.origin, "file origin", environmentKind);
 				if (url.username || url.password || url.search || url.hash) throw new TypeError();
 			} catch {
-				throw new TypeError("Remote file URL must be a non-production HTTP(S) URL without credentials, query or fragment");
+				throw new TypeError("Remote file URL must satisfy the environment policy without credentials, query or fragment (non-production by default)");
 			}
 			return url.href;
-		}
-		function isSafeOasisFileUrl(value) {
-			try {
-				normalizeOasisFileUrl(value);
-				return true;
-			} catch {
-				return false;
-			}
 		}
 		//#endregion
 		//#region src/generation-contract.js
@@ -5233,8 +5258,18 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return false;
 			}
 		}, "must be an absolute HTTP(S) URL");
-		const httpOriginSchema = httpUrlSchema.refine(isCanonicalOasisNonProductionOrigin, "must contain only a non-production HTTP(S) origin");
-		const nonProductionHttpUrlSchema = httpUrlSchema.refine(isSafeOasisFileUrl, "must be a non-production file URL without credentials, query or fragment");
+		function validateRemoteEnvironment(value, ctx, urls = []) {
+			const environment = value.environmentKind ?? "non-production";
+			try {
+				if (normalizeOasisOrigin(value.apiBaseOrigin, "origin", environment) !== value.apiBaseOrigin) throw new Error();
+				for (const url of urls) normalizeOasisFileUrl(url, environment);
+			} catch {
+				ctx.addIssue({
+					code: "custom",
+					message: "Invalid production/non-production origin or file URL for recorded environment"
+				});
+			}
+		}
 		const oasisRemoteExecutionStatusSchema = _enum([
 			"prepared",
 			"uploading",
@@ -5275,7 +5310,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			])
 		}).strict();
 		const oasisProfessionalBootstrapSchema = object({
-			environmentKind: literal("non-production"),
+			environmentKind: _enum(["non-production", "production"]),
 			remoteEnabled: boolean(),
 			credentialConfigured: boolean(),
 			balance: number().nonnegative().finite().nullable(),
@@ -5350,14 +5385,16 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			});
 		});
 		const oasisProviderSnapshotSchema = object({
-			apiBaseOrigin: httpOriginSchema,
+			environmentKind: _enum(["non-production", "production"]).optional(),
+			apiBaseOrigin: httpUrlSchema,
 			apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
 			apiEndpoint: identifierSchema,
 			apiProcess: string().max(4e3),
 			folderId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
 			price: number().nonnegative().finite()
-		}).strict();
+		}).strict().superRefine((value, ctx) => validateRemoteEnvironment(value, ctx));
 		const oasisRemoteExecutionSchema = object({
+			environmentKind: _enum(["non-production", "production"]).optional(),
 			executionId: identifierSchema,
 			recordId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).nullable().optional(),
 			recordIdSource: literal("create").nullable().optional(),
@@ -5365,7 +5402,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			status: oasisRemoteExecutionStatusSchema,
 			inputSha: sha256Schema,
 			formValues: jsonRootObjectSchema,
-			apiBaseOrigin: httpOriginSchema,
+			apiBaseOrigin: httpUrlSchema,
 			serviceSnapshot: object({
 				apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
 				apiEndpoint: identifierSchema,
@@ -5384,7 +5421,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			uploadedFiles: array(object({
 				fieldId: identifierSchema,
 				referenceId: identifierSchema,
-				url: nonProductionHttpUrlSchema,
+				url: httpUrlSchema,
 				sha256: sha256Schema,
 				uploadedAt: timestampSchema
 			}).strict()).max(WORKBENCH_LIMITS.maxInputRefsPerTask),
@@ -5397,6 +5434,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			submittedAt: timestampSchema.nullable(),
 			completedAt: timestampSchema.nullable()
 		}).strict().superRefine((value, ctx) => {
+			validateRemoteEnvironment(value, ctx, value.uploadedFiles.map((file) => file.url));
 			if (value.recordIdSource === "create" && !Number.isSafeInteger(value.recordId)) ctx.addIssue({
 				code: "custom",
 				path: ["recordId"],
@@ -5445,7 +5483,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}).strict(),
 			result: object({
 				answerText: jsonStringSchema,
-				fileUrls: array(nonProductionHttpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
+				fileUrls: array(httpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
 				fileStatus: literal("undownloaded-unverified"),
 				responseSha: sha256Schema,
 				artifact: artifactSchema
@@ -5454,7 +5492,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			writebacks: array(writebackRecordSchema).max(WORKBENCH_LIMITS.maxWritebacksPerRun),
 			createdAt: timestampSchema,
 			completedAt: timestampSchema
-		}).strict().superRefine((value, ctx) => enforceReviewAndWritebacks(value, ctx));
+		}).strict().superRefine((value, ctx) => {
+			validateRemoteEnvironment(value.providerSnapshot, ctx, value.result.fileUrls);
+			enforceReviewAndWritebacks(value, ctx);
+		});
 		const runSnapshotSchema = discriminatedUnion("mode", [localRunSnapshotSchema, oasisRemoteRunSnapshotSchema]);
 		const unifiedRunSnapshotSchema = object({
 			runId: identifierSchema,
@@ -5523,6 +5564,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			evidenceKind: _enum(["native-offline", "native-model"]),
 			fixtureVersion: never().optional(),
 			executionVersion: _enum(["1", "2"]),
+			executionSummary: localExecutionSummarySchema.optional(),
 			status: _enum([
 				"prepared",
 				"completed",
@@ -5550,7 +5592,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				instructionSha256: sha256Schema,
 				skillProvenance: object({
 					skillId: literal("flow-2-6"),
-					skillVersion: _enum(["public-4e2-1", "0.2.0"]),
+					skillVersion: _enum([
+						"public-4e2-1",
+						"0.2.0",
+						"0.2.1",
+						"0.2.2"
+					]),
 					inputSchemaVersion: literal("claims-disclosure-2"),
 					outputSchemaVersion: literal("claims-cumulative-2"),
 					executionContractVersion: literal("single-call-cumulative-1"),
@@ -5559,7 +5606,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				}).strict().optional()
 			}).strict()
 		}).superRefine((run, ctx) => {
-			if (run.evidenceKind === "native-model" && (run.workflowVersion !== "2" || run.compositionVersion !== "2" || run.contextSnapshot.skillProvenance?.skillVersion !== "0.2.0")) ctx.addIssue({
+			if (run.evidenceKind === "native-model" && (run.workflowVersion !== "2" || run.compositionVersion !== "2" || ![
+				"0.2.0",
+				"0.2.1",
+				"0.2.2"
+			].includes(run.contextSnapshot.skillProvenance?.skillVersion))) ctx.addIssue({
 				code: "custom",
 				message: "real model requires formal contract 2 resources"
 			});
@@ -5570,6 +5621,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			if (["failed", "unknown"].includes(run.status) !== (run.failureCode !== null)) ctx.addIssue({
 				code: "custom",
 				message: "local failure requires a safe failure code"
+			});
+			if (run.status === "prepared" && run.executionSummary !== void 0 || run.status === "completed" && run.executionSummary?.failureStage !== void 0) ctx.addIssue({
+				code: "custom",
+				message: "execution summary does not match run state"
 			});
 		});
 		const localGenerationPreviewSchema = object({
@@ -5584,7 +5639,16 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				reasoningEffort: string().min(1).max(64).optional()
 			}).strict(),
 			upstreamIncluded: boolean(),
-			characterCount: number().int().nonnegative()
+			characterCount: number().int().nonnegative(),
+			skill: object({
+				id: literal("flow-2-6"),
+				version: _enum([
+					"public-4e2-1",
+					"0.2.0",
+					"0.2.1",
+					"0.2.2"
+				])
+			}).strict().nullable()
 		}).strict();
 		const conversationDraftResponseSchema = object({
 			workspaceId: identifierSchema,
@@ -5720,7 +5784,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							message: "remote run must match its Host execution snapshot"
 						});
 						const provider = run.providerSnapshot;
-						if (execution.serviceSnapshot.apiId !== provider.apiId || execution.apiBaseOrigin !== provider.apiBaseOrigin || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint || execution.serviceSnapshot.apiProcess !== provider.apiProcess || execution.folderSnapshot.folderId !== provider.folderId || execution.priceSnapshot.price !== provider.price) ctx.addIssue({
+						if (execution.serviceSnapshot.apiId !== provider.apiId || (execution.environmentKind ?? "non-production") !== (provider.environmentKind ?? "non-production") || execution.apiBaseOrigin !== provider.apiBaseOrigin || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint || execution.serviceSnapshot.apiProcess !== provider.apiProcess || execution.folderSnapshot.folderId !== provider.folderId || execution.priceSnapshot.price !== provider.price) ctx.addIssue({
 							code: "custom",
 							path: [
 								"runs",
@@ -6460,7 +6524,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return (0, react.createElement)("section", {
 					style: boxStyle,
 					"data-testid": "oasis-professional-service"
-				}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { role: "status" }, "请前往 DSH 设置 → 绿洲工作台完成连接配置。设置保存后须重启 Host 并刷新页面；本地工作流仍可继续使用。"), waiting && execution ? (0, react.createElement)("button", {
+				}, (0, react.createElement)("strong", null, "专业服务"), (0, react.createElement)("p", { role: "status" }, "请前往 DSH 设置 → 绿洲工作台完成连接配置。设置保存后须重启 Host 并刷新页面；本地工作流仍可继续使用。"), waiting && execution ? (0, react.createElement)("button", {
 					type: "button",
 					onClick: () => onStop(execution.executionId),
 					"data-testid": "oasis-professional-stop"
@@ -6469,23 +6533,23 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			if (state.professionalStatus === "idle" || state.professionalStatus === "loading") return (0, react.createElement)("section", {
 				style: boxStyle,
 				"data-testid": "oasis-professional-service"
-			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("div", { role: "status" }, "正在读取 Host 专业服务目录…"));
+			}, (0, react.createElement)("strong", null, "专业服务"), (0, react.createElement)("div", { role: "status" }, "正在读取 Host 专业服务目录…"));
 			if (state.professionalStatus === "error") return (0, react.createElement)("section", {
 				style: boxStyle,
 				"data-testid": "oasis-professional-service"
-			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("div", { role: "alert" }, "专业服务目录读取失败；本地工作流仍可继续使用。"));
+			}, (0, react.createElement)("strong", null, "专业服务"), (0, react.createElement)("div", { role: "alert" }, "专业服务目录读取失败；本地工作流仍可继续使用。"));
 			const bootstrap = state.professionalBootstrap;
 			if (!bootstrap?.remoteEnabled) return (0, react.createElement)("section", {
 				style: boxStyle,
 				"data-testid": "oasis-professional-service"
-			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { style: {
+			}, (0, react.createElement)("strong", null, "专业服务"), (0, react.createElement)("p", { style: {
 				margin: 0,
 				color: "#66706b"
-			} }, "Host 尚未启用非生产 API 地址。请前往 DSH 设置 → 绿洲工作台保存，随后重启 Host 并刷新页面。"));
+			} }, "Host 尚未启用专业 API 地址。请前往 DSH 设置 → 绿洲工作台保存，随后重启 Host 并刷新页面。"));
 			if (!bootstrap.credentialConfigured) return (0, react.createElement)("section", {
 				style: boxStyle,
 				"data-testid": "oasis-professional-service"
-			}, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("p", { style: {
+			}, (0, react.createElement)("strong", null, "专业服务"), (0, react.createElement)("p", { style: {
 				margin: 0,
 				color: "#8b2f24"
 			} }, "请前往 DSH 设置 → 绿洲工作台重新输入 JWT 并绑定当前 API 地址；凭证不会进入工作台状态。"));
@@ -6507,11 +6571,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return (0, react.createElement)("section", {
 				style: boxStyle,
 				"data-testid": "oasis-professional-service"
-			}, (0, react.createElement)("div", null, (0, react.createElement)("strong", null, "非生产专业服务"), (0, react.createElement)("div", { style: {
+			}, (0, react.createElement)("div", null, (0, react.createElement)("strong", null, "专业服务"), (0, react.createElement)("div", { style: {
 				marginTop: 4,
 				color: "#66706b",
 				fontSize: 12
-			} }, `环境：非生产 · 余额：${bootstrap.balance ?? "未知"} · 价格仅作提交前快照`)), (0, react.createElement)("label", { style: fieldStyle$1 }, (0, react.createElement)("span", null, "服务"), (0, react.createElement)("select", {
+			} }, `环境：${bootstrap.environmentKind === "production" ? "线上服务" : "非生产"} · 余额：${bootstrap.balance ?? "未知"} · 价格仅作提交前快照`)), (0, react.createElement)("label", { style: fieldStyle$1 }, (0, react.createElement)("span", null, "服务"), (0, react.createElement)("select", {
 				value: draft?.selectedApiEndpoint ?? "",
 				disabled: busy,
 				onChange: (event) => {
@@ -6573,7 +6637,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					priceConfirmed: operation.priceConfirmed,
 					externalTransferConfirmed: event.currentTarget.checked
 				})
-			}), " 我确认所选材料将上传至已配置的非生产绿洲环境")), (0, react.createElement)("button", {
+			}), ` 我确认所选材料将上传至已配置的${bootstrap.environmentKind === "production" ? "线上" : "非生产"}绿洲环境`)), (0, react.createElement)("button", {
 				type: "button",
 				disabled: !canStart,
 				onClick: onStart,
@@ -6673,7 +6737,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				margin: "5px 0 0",
 				fontSize: 12,
 				color: "var(--dsw-alias-text-secondary, #66706b)"
-			} }, remoteRun ? "非生产专业服务结果；远程内容和文件必须经过人工审核。" : "本地确定性演练；结果必须经过人工审核。")), (0, react.createElement)("button", {
+			} }, remoteRun ? `${run.providerSnapshot?.environmentKind === "production" ? "线上" : "非生产"}专业服务结果；远程内容和文件必须经过人工审核。` : "本地确定性演练；结果必须经过人工审核。")), (0, react.createElement)("button", {
 				type: "button",
 				disabled: disabledReason !== null,
 				onClick: onGenerate,
@@ -7280,6 +7344,39 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			background: "var(--dsw-alias-bg-base, #fff)",
 			color: "inherit"
 		};
+		function LocalExecutionSummary({ run }) {
+			if (run?.mode !== "dsh-local" || run.status === "prepared") return null;
+			const summary = run.executionSummary;
+			const stages = {
+				preparation: "调用准备",
+				stream: "流处理",
+				"result-contract": "结果格式校验"
+			};
+			const finishes = {
+				stop: "正常结束",
+				"max-tokens": "输出上限",
+				"tool-calls": "工具调用",
+				error: "提供方错误",
+				aborted: "中止"
+			};
+			const usage = Object.entries({
+				inputTokens: "输入（不含缓存命中）",
+				cacheReadTokens: "缓存命中",
+				outputTokens: "输出",
+				reasoningTokens: "其中推理",
+				totalTokens: "总计"
+			}).filter(([key]) => Number.isSafeInteger(summary?.usage?.[key]) && summary.usage[key] >= 0).map(([key, label]) => `${label} ${summary.usage[key]}`).join(" · ");
+			return (0, react.createElement)("details", { style: {
+				fontSize: 12,
+				marginTop: 8
+			} }, (0, react.createElement)("summary", null, run.parentRunId ? "原始调用记录（非新增调用）" : "调用记录"), run.status !== "completed" ? (0, react.createElement)("div", null, `失败阶段：${stages[summary?.failureStage] ?? "未记录"}`) : null, (0, react.createElement)("div", null, `结束原因：${finishes[summary?.finishKind] ?? "未记录"}`), (0, react.createElement)("div", null, `用量：${usage || "未记录"}`), usage ? (0, react.createElement)("small", null, "提供方报告的 tokens；不代表实扣或退款。") : null);
+		}
+		function localFailureText(run) {
+			if (run.executionSummary?.failureStage === "result-contract") return "结果格式不符合业务要求，未保存产物；不会自动重试。";
+			if (run.executionSummary?.failureStage === "stream" && run.executionSummary?.finishKind === "max-tokens") return "模型达到输出上限，未取得完整结果；不会自动重试。";
+			if (run.failureCode === "INVALID_OUTPUT" && run.executionSummary?.failureStage === "stream") return "模型输出流未通过校验，未保存产物；不会自动重试。";
+			return `未取得有效正文（${run.failureCode}），不会自动重试。`;
+		}
 		function ResultVersion({ page, run, operation, disabled, readOnlyDisabled = disabled, markdownRenderer, onReview = () => {}, onEditResult = () => {}, conversationUnavailableReason = null, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, onUseInConversation = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {} }) {
 			const [editing, setEditing] = (0, react.useState)(false);
 			const [body, setBody] = (0, react.useState)(run.result.artifact.body);
@@ -7395,7 +7492,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}) : (0, react.createElement)("p", {
 				role: "status",
 				style: { fontSize: 13 }
-			}, !run ? "暂无生成内容" : run.mode === "dsh-local" ? run.status === "prepared" ? run.evidenceKind === "native-model" ? "原生模型生成中…" : "原生离线生成中…" : run.status === "unknown" ? `运行状态未确认（${run.failureCode}）；已停止本地等待，不代表提供方取消或退款，不会自动重发。` : `未取得有效正文（${run.failureCode}），不会自动重试。` : run.status === "prepared" ? "合成运行未完成；请查看原运行，不会自动重发。" : run.status === "stopped" ? "合成运行已结束，未保存结果。" : "合成失败，未取得正文。"));
+			}, !run ? "暂无生成内容" : run.mode === "dsh-local" ? run.status === "prepared" ? run.evidenceKind === "native-model" ? "原生模型生成中…" : "原生离线生成中…" : run.status === "unknown" ? `运行状态未确认（${run.failureCode}）；已停止本地等待，不代表提供方取消或退款，不会自动重发。` : localFailureText(run) : run.status === "prepared" ? "合成运行未完成；请查看原运行，不会自动重发。" : run.status === "stopped" ? "合成运行已结束，未保存结果。" : "合成失败，未取得正文。"), (0, react.createElement)(LocalExecutionSummary, { run }));
 		}
 		//#endregion
 		//#region src/client/UnifiedGenerationPage.js
@@ -7546,7 +7643,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					marginBottom: 8,
 					overflowWrap: "anywhere"
 				}
-			}, (0, react.createElement)("div", null, `模型：${confirmation.route.provider} / ${confirmation.route.model}${confirmation.route.reasoningEffort ? ` / ${confirmation.route.reasoningEffort}` : ""}`), (0, react.createElement)("div", null, `发送四选项卡文本${confirmation.upstreamIncluded ? "及已选择的上游全文" : "（未选上游文稿）"}，共 ${confirmation.characterCount} 字符，另含内置 Skill flow-2-6/0.2.0。`), (0, react.createElement)("label", null, (0, react.createElement)("input", {
+			}, (0, react.createElement)("div", null, `模型：${confirmation.route.provider} / ${confirmation.route.model}${confirmation.route.reasoningEffort ? ` / ${confirmation.route.reasoningEffort}` : ""}`), (0, react.createElement)("div", null, `发送四选项卡文本${confirmation.upstreamIncluded ? "及已选择的上游全文" : "（未选上游文稿）"}，共 ${confirmation.characterCount} 字符${confirmation.skill ? `，另含内置 Skill ${confirmation.skill.id}/${confirmation.skill.version}` : ""}。`), (0, react.createElement)("label", null, (0, react.createElement)("input", {
 				type: "checkbox",
 				checked: confirmed,
 				disabled: locked,
@@ -10646,6 +10743,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		//#region src/client/oasis-connection-settings.js
 		const REFERENCE = "OASIS_USER_JWT";
 		const initial = () => ({
+			environmentKind: "non-production",
 			connected: false,
 			settingsStatus: "unavailable",
 			settingsWritable: false,
@@ -10698,14 +10796,16 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (view?.status !== "ready" || view.mode !== "host") throw new Error("unavailable");
 					const value = view.value;
 					const rawCredentialOrigin = value?.credentialOrigin ?? "";
-					if (value?.environmentKind !== "non-production" || value.credentialRef !== REFERENCE || typeof value.apiBaseUrl !== "string" || typeof rawCredentialOrigin !== "string" || !Array.isArray(value.downloadOrigins)) throw new Error("invalid");
-					const apiBaseUrl = value.apiBaseUrl === "" ? "" : normalizeOasisOrigin(value.apiBaseUrl);
-					const credentialOrigin = rawCredentialOrigin === "" ? "" : normalizeOasisOrigin(rawCredentialOrigin);
-					const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisOrigin(origin)))]);
+					if (!["non-production", "production"].includes(value?.environmentKind) || value.credentialRef !== REFERENCE || typeof value.apiBaseUrl !== "string" || typeof rawCredentialOrigin !== "string" || !Array.isArray(value.downloadOrigins)) throw new Error("invalid");
+					const environmentKind = value.environmentKind;
+					const apiBaseUrl = value.apiBaseUrl === "" ? "" : normalizeOasisOrigin(value.apiBaseUrl, "API", environmentKind);
+					const credentialOrigin = rawCredentialOrigin === "" ? "" : normalizeOasisOrigin(rawCredentialOrigin, "credential", environmentKind);
+					const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisDownloadOrigin(origin, "download", environmentKind)))]);
 					const preferences = normalizeGenerationPreferences(value);
 					const localModelEnabled = value.localModelEnabled ?? false;
 					if (typeof localModelEnabled !== "boolean") throw new Error("invalid");
 					const settings = JSON.stringify([
+						environmentKind,
 						apiBaseUrl,
 						credentialOrigin,
 						downloadOrigins,
@@ -10716,6 +10816,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					publish({
 						settingsStatus: "ready",
 						settingsWritable: snapshot.connected && view.writable === true,
+						environmentKind,
 						apiBaseUrl,
 						credentialOrigin,
 						downloadOrigins,
@@ -10898,13 +10999,30 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (ok) invalidate(true);
 					return ok;
 				},
+				async saveEnvironmentKind(value) {
+					if (!["non-production", "production"].includes(value)) return false;
+					if (value === snapshot.environmentKind) return true;
+					const targetScope = scope;
+					const targetGeneration = generation;
+					return write("settings", async () => {
+						for (const [key, next] of [
+							["apiBaseUrl", ""],
+							["credentialOrigin", ""],
+							["downloadOrigins", []],
+							["environmentKind", value]
+						]) {
+							if (disposed || scope !== targetScope || generation !== targetGeneration) throw new Error("Host changed during environment switch");
+							await targetScope.set(key, next);
+						}
+					});
+				},
 				async saveApiBaseUrl(value) {
 					let origin;
 					try {
-						origin = value.trim() === "" ? "" : normalizeOasisOrigin(value.trim());
+						origin = value.trim() === "" ? "" : normalizeOasisOrigin(value.trim(), "API", snapshot.environmentKind);
 					} catch {
 						publish({
-							error: "API 地址必须是非生产 HTTP(S) origin，不含路径、凭据或查询参数。",
+							error: "API 地址必须符合所选环境，线上仅允许指定 HTTPS 地址，不含路径或凭据。",
 							notice: null
 						});
 						return false;
@@ -10932,10 +11050,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async saveDownloadOrigins(value) {
 					let origins;
 					try {
-						origins = [...new Set(value.split(/\r?\n/u).map((item) => item.trim()).filter(Boolean).map((item) => normalizeOasisOrigin(item)))];
+						origins = [...new Set(value.split(/\r?\n/u).map((item) => item.trim()).filter(Boolean).map((item) => normalizeOasisDownloadOrigin(item, "download", snapshot.environmentKind)))];
 					} catch {
 						publish({
-							error: "下载来源必须逐行填写非生产 HTTP(S) origin。",
+							error: "下载来源须逐行填写安全 origin；线上环境只允许 HTTPS。",
 							notice: null
 						});
 						return false;
@@ -11022,7 +11140,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, (0, react.createElement)("summary", { style: {
 				cursor: "pointer",
 				fontSize: 13
-			} }, "非生产服务连接配置"), (0, react.createElement)("div", { style: {
+			} }, "专业服务连接配置"), (0, react.createElement)("div", { style: {
 				display: "grid",
 				gap: 8,
 				paddingTop: 10
@@ -11032,12 +11150,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					margin: 0,
 					fontSize: 12
 				}
-			}, !snapshot.connected ? "尚未连接可配置的本机 Host；本地工作流仍可使用。" : snapshot.settingsStatus !== "ready" ? "公共配置服务不可用或配置引用不匹配；本地工作流仍可使用。" : "环境固定为非生产；普通设置和凭据分别保存。"), (0, react.createElement)("label", { style: fieldStyle }, "API origin", (0, react.createElement)("input", {
+			}, !snapshot.connected ? "尚未连接可配置的本机 Host；本地工作流仍可使用。" : snapshot.settingsStatus !== "ready" ? "公共配置服务不可用或配置引用不匹配；本地工作流仍可使用。" : `环境：${snapshot.environmentKind === "production" ? "线上服务" : "非生产"}；普通设置和凭据分别保存。`), (0, react.createElement)("label", { style: fieldStyle }, "服务环境", (0, react.createElement)("select", {
+				"aria-label": "服务环境",
+				value: snapshot.environmentKind ?? "non-production",
+				disabled: disabledSettings,
+				onChange: (event) => {
+					clearPassword();
+					controller.saveEnvironmentKind(event.currentTarget.value);
+				}
+			}, (0, react.createElement)("option", { value: "non-production" }, "非生产"), (0, react.createElement)("option", { value: "production" }, "线上服务"))), (0, react.createElement)("small", null, "切换环境会清空地址和下载来源并解除凭据绑定；不会自动上传或生成。"), (0, react.createElement)("label", { style: fieldStyle }, "API origin", (0, react.createElement)("input", {
 				value: apiDraft,
 				disabled: disabledSettings,
 				style: inputStyle,
 				autoComplete: "off",
-				placeholder: "https://非生产服务域名",
+				placeholder: snapshot.environmentKind === "production" ? "https://lzhxpy.oasisintwrite.com" : "https://非生产服务域名",
 				onChange: (event) => onApiDraft(event.currentTarget.value)
 			})), (0, react.createElement)("button", {
 				type: "button",
