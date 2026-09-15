@@ -1,3 +1,4 @@
+import { createConnectionFixture } from './connection-fixture.mjs'
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { fixtureHarness } from './unified-generation-harness.mjs'
@@ -99,7 +100,7 @@ test('same Store RPC page uses local admission, observation, review and no-overw
   const h = await fixtureHarness({ localGeneration: runtime(async () => ({ status: 'completed', body: '离线保存正文', model: context().route })),
     workspaceRegistry: { get: () => ({ path: root, async status() { return 'ok' } }) } })
   const handler = createWorkbenchRpcHandler(h.service)
-  const remote = createWorkbenchRemote({ rpc: { call: (_channel, endpoint, payload) => handler(endpoint, payload) } })
+  const remote = createWorkbenchRemote(createConnectionFixture(handler))
   const store = createWorkbenchStore({ remote, getGenerationSession: () => 'session-a', saveDelayMs: 0 })
   try {
     store.syncWorkspaces([{ workspaceId: 'workspace-a' }])

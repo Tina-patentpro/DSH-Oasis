@@ -60,7 +60,7 @@ test('switches through integrating and releasing while Better Sidebar owns the o
   assert.equal(registered, DESCRIPTOR)
   assert.equal(coordinator.openBetterSidebar('session-a'), true)
   assert.deepEqual(opened, [{
-    seed: { type: DESCRIPTOR.id, path: '.oasis/professional-workbench' },
+    seed: { type: DESCRIPTOR.id },
     scope: { sessionId: 'session-a' },
   }])
 

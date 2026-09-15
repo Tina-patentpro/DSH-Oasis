@@ -1,13 +1,12 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
-import { resolve } from 'node:path'
 
 import { apply, inject, name } from '../src/index.js'
 
 function createHostFixture(options = {}) {
   let registered
-  let rpcRegistration
+  const routes = new Map()
   let settingsRegistration
   const records = new Map()
   const calls = { domainClose: 0, rpcDispose: 0, toolDispose: 0, credentialResolve: 0 }
@@ -41,10 +40,12 @@ function createHostFixture(options = {}) {
       },
     },
     connection: {
-      rpc: {
-        handle(channel, handler, options) {
-          rpcRegistration = { channel, handler, options }
+      fetch: {
+        register(route) {
+          assert.equal(routes.has(route.path), false)
+          routes.set(route.path, route)
           return async () => {
+            routes.delete(route.path)
             calls.rpcDispose += 1
           }
         },
@@ -70,12 +71,21 @@ function createHostFixture(options = {}) {
     ctx,
     calls,
     get registered() { return registered },
-    get rpcRegistration() { return rpcRegistration },
+    routes,
+    async dispatch(endpoint, payload) {
+      const path = '/api/oasis-workbench/' + endpoint
+      const response = await routes.get(path).fetch(new Request('http://127.0.0.1' + path, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ type: 'client-request', rpcId: 'host-test', method: 'oasis-workbench/' + endpoint, payload }),
+      }))
+      assert.equal(response.status, 200)
+      return (await response.json()).result
+    },
     get settingsRegistration() { return settingsRegistration },
   }
 }
 
-test('registers the current Host tool and loopback workbench RPC with owned cleanup', async () => {
+test('registers the current Host tool and owned Connection routes with cleanup', async () => {
   const fixture = createHostFixture()
   const dispose = await apply(fixture.ctx)
 
@@ -84,13 +94,12 @@ test('registers the current Host tool and loopback workbench RPC with owned clea
   assert.equal(fixture.settingsRegistration?.ns, 'oasis-professional-service')
   assert.equal(fixture.settingsRegistration?.options.applies, 'restart')
   assert.equal(fixture.registered?.name, 'oasis_workbench_status')
-  assert.equal(fixture.rpcRegistration.channel, '/oasis-workbench')
-  assert.deepEqual(fixture.rpcRegistration.options, { authority: 'loopback' })
+  assert.equal(fixture.routes.size, 25)
 
-  const stateResult = await fixture.rpcRegistration.handler('state/get', { workspaceId: 'workspace-a' })
+  const stateResult = await fixture.dispatch('state/get', { workspaceId: 'workspace-a' })
   assert.equal(stateResult.ok, true)
   assert.equal(stateResult.value.revision, 0)
-  const professional = await fixture.rpcRegistration.handler('professional/bootstrap', {})
+  const professional = await fixture.dispatch('professional/bootstrap', {})
   assert.deepEqual(professional, {
     ok: true,
     value: {
@@ -110,12 +119,13 @@ test('registers the current Host tool and loopback workbench RPC with owned clea
   assert.equal(value.externalSystems, 'not-invoked')
 
   await dispose()
-  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 1, toolDispose: 1, credentialResolve: 0 })
+  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 25, toolDispose: 1, credentialResolve: 0 })
+  assert.equal(fixture.routes.size, 0)
 })
 
 test('unregisters the Host tool when RPC setup fails', async () => {
   const fixture = createHostFixture()
-  fixture.ctx.connection.rpc.handle = () => {
+  fixture.ctx.connection.fetch.register = () => {
     throw new Error('RPC registration failed')
   }
 
@@ -149,7 +159,7 @@ test('an origin-mismatched credential cannot be resolved or used by automatic bo
   let dispose
   try {
     dispose = await apply(fixture.ctx)
-    const result = await fixture.rpcRegistration.handler('professional/bootstrap', {})
+    const result = await fixture.dispatch('professional/bootstrap', {})
     assert.deepEqual(result, {
       ok: true,
       value: {
@@ -175,7 +185,7 @@ test('wires the Host workspace registry into the safe writeback boundary', async
 
 test('isolated synthetic Host disables legacy bootstrap before resolving any credential or API request', async () => {
   const oldHome = process.env.DSH_HOME; const oldFixture = process.env.OASIS_UNIFIED_FIXTURE
-  process.env.DSH_HOME = resolve('../../.dsh-test/stage2-desktop'); process.env.OASIS_UNIFIED_FIXTURE = '1'
+  process.env.DSH_HOME = String.raw`D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\.dsh-test\isolated-dev-20260913\home`; process.env.OASIS_UNIFIED_FIXTURE = '1'
   const fixture = createHostFixture({ runtimeSettings: {
     environmentKind: 'non-production', apiBaseUrl: 'http://127.0.0.1:6326', credentialOrigin: 'http://127.0.0.1:6326',
     credentialRef: 'OASIS_USER_JWT', downloadOrigins: [],
@@ -183,9 +193,9 @@ test('isolated synthetic Host disables legacy bootstrap before resolving any cre
   let dispose
   try {
     dispose = await apply(fixture.ctx)
-    const catalog = await fixture.rpcRegistration.handler('workflow/catalog', {})
+    const catalog = await fixture.dispatch('workflow/catalog', {})
     assert.equal(catalog.value.unifiedFixtureEnabled, true)
-    const response = await fixture.rpcRegistration.handler('professional/bootstrap', {})
+    const response = await fixture.dispatch('professional/bootstrap', {})
     assert.equal(response.value.remoteEnabled, false)
     assert.equal(fixture.calls.credentialResolve, 0)
   } finally {

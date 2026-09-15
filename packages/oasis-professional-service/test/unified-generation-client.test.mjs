@@ -1,3 +1,4 @@
+import { createConnectionFixture } from './connection-fixture.mjs'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { createElement } from 'react'
@@ -18,7 +19,7 @@ test('unified RPC is separate from legacy create, strictly validated and read-on
     prepareConversationDraft(p) { calls.push(p); return reply },
     createUnifiedRun() { throw Error('must not generate on read') },
   })
-  const remote = createWorkbenchRemote({ rpc: { call: (channel, endpoint, payload) => handler(endpoint, payload) } })
+  const remote = createWorkbenchRemote(createConnectionFixture(handler))
   assert.equal(typeof remote.prepareConversationDraft, 'function')
   const payload = { ...reply, expectedRevision: 1 }; delete payload.text
   assert.deepEqual(await remote.prepareConversationDraft(payload), reply)

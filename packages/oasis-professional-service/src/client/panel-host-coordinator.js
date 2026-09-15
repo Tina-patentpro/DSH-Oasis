@@ -188,7 +188,6 @@ export function createPanelHostCoordinator({ layoutAdapter } = {}) {
     try {
       const seed = {
         type: OASIS_BETTER_SIDEBAR_TAB_ID,
-        path: '.oasis/professional-workbench',
       }
       service.openTab(seed, { sessionId })
       return true

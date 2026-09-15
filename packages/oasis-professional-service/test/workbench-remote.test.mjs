@@ -31,7 +31,7 @@ test('F3 verifies the response run identity and correlated fields in addition to
   }
 })
 
-test('uses the dedicated DSH Connection channel for schema-v3 get and replace', async () => {
+test('uses the owned namespace on the shared DSH Connection channel for schema-v3 get and replace', async () => {
   const calls = []
   const connection = {
     rpc: {
@@ -39,7 +39,7 @@ test('uses the dedicated DSH Connection channel for schema-v3 get and replace', 
         calls.push({ channel, endpoint, payload, signal })
         return {
           ok: true,
-          value: endpoint === 'state/get'
+          value: endpoint === 'oasis-workbench/state/get'
             ? createV3Record('workspace-a', 3, { empty: true })
             : { committed: true, current: createV3Record('workspace-a', 4, { empty: true }) },
         }
@@ -56,9 +56,9 @@ test('uses the dedicated DSH Connection channel for schema-v3 get and replace', 
     current: createV3Record('workspace-a', 4, { empty: true }),
   })
   assert.deepEqual(calls, [
-    { channel: '/oasis-workbench', endpoint: 'state/get', payload: { workspaceId: 'workspace-a' }, signal },
+    { channel: '/api', endpoint: 'oasis-workbench/state/get', payload: { workspaceId: 'workspace-a' }, signal },
     {
-      channel: '/oasis-workbench', endpoint: 'state/replace',
+      channel: '/api', endpoint: 'oasis-workbench/state/replace',
       payload: { workspaceId: 'workspace-a', expectedRevision: 3, state: draft }, signal,
     },
   ])
@@ -105,7 +105,7 @@ test('loads and strictly validates the Host workflow catalog', async () => {
   const signal = new AbortController().signal
   assert.deepEqual(await remote.getWorkflowCatalog('technical-rd', signal), value)
   assert.deepEqual(calls, [{
-    channel: '/oasis-workbench', endpoint: 'workflow/catalog', payload: { workType: 'technical-rd' }, signal,
+    channel: '/api', endpoint: 'oasis-workbench/workflow/catalog', payload: { workType: 'technical-rd' }, signal,
   }])
 
   const malformed = createWorkbenchRemote({ rpc: { async call() { return { ok: true, value: { schemaVersion: 1 } } } } })
@@ -152,9 +152,9 @@ test('calls strict material endpoints and validates their authoritative replacem
   assert.deepEqual(await remote.refreshMaterial(refresh, signal), value)
   assert.deepEqual(await remote.removeMaterial(remove, signal), value)
   assert.deepEqual(calls, [
-    { channel: '/oasis-workbench', endpoint: 'material/add', payload: add, signal },
-    { channel: '/oasis-workbench', endpoint: 'material/refresh', payload: refresh, signal },
-    { channel: '/oasis-workbench', endpoint: 'material/remove', payload: remove, signal },
+    { channel: '/api', endpoint: 'oasis-workbench/material/add', payload: add, signal },
+    { channel: '/api', endpoint: 'oasis-workbench/material/refresh', payload: refresh, signal },
+    { channel: '/api', endpoint: 'oasis-workbench/material/remove', payload: remove, signal },
   ])
 
   const malformed = createWorkbenchRemote({ rpc: { async call() { return { ok: true, value: { committed: true } } } } })
@@ -184,8 +184,8 @@ test('calls task create and review endpoints and validates authoritative replace
   assert.deepEqual(await remote.createRun(create, signal), value)
   assert.deepEqual(await remote.reviewRun(review, signal), value)
   assert.deepEqual(calls, [
-    { channel: '/oasis-workbench', endpoint: 'task/create', payload: create, signal },
-    { channel: '/oasis-workbench', endpoint: 'task/review', payload: review, signal },
+    { channel: '/api', endpoint: 'oasis-workbench/task/create', payload: create, signal },
+    { channel: '/api', endpoint: 'oasis-workbench/task/review', payload: review, signal },
   ])
 
   const malformed = createWorkbenchRemote({ rpc: { async call() { return { ok: true, value: { committed: true } } } } })
@@ -224,7 +224,7 @@ test('calls two-phase writeback endpoints and fails closed on malformed manifest
     rpc: {
       async call(channel, endpoint, payload, signal) {
         calls.push({ channel, endpoint, payload, signal })
-        return { ok: true, value: endpoint === 'artifact/prepare-writeback' ? prepared : committed }
+        return { ok: true, value: endpoint === 'oasis-workbench/artifact/prepare-writeback' ? prepared : committed }
       },
     },
   })
@@ -236,9 +236,9 @@ test('calls two-phase writeback endpoints and fails closed on malformed manifest
   assert.deepEqual(await remote.prepareWriteback(prepare, signal), prepared)
   assert.deepEqual(await remote.commitWriteback('secret-token', signal), committed)
   assert.deepEqual(calls, [
-    { channel: '/oasis-workbench', endpoint: 'artifact/prepare-writeback', payload: prepare, signal },
+    { channel: '/api', endpoint: 'oasis-workbench/artifact/prepare-writeback', payload: prepare, signal },
     {
-      channel: '/oasis-workbench', endpoint: 'artifact/commit-writeback',
+      channel: '/api', endpoint: 'oasis-workbench/artifact/commit-writeback',
       payload: { confirmationToken: 'secret-token' }, signal,
     },
   ])
@@ -271,10 +271,10 @@ test('calls professional-service Host endpoints and validates every response bou
   }
   const remote = createWorkbenchRemote({ rpc: { async call(channel, endpoint, payload, signal) {
     calls.push({ channel, endpoint, payload, signal })
-    if (endpoint === 'professional/bootstrap') return { ok: true, value: bootstrap }
-    if (endpoint === 'professional/detail') return { ok: true, value: detail }
-    if (endpoint === 'professional/stop') return { ok: true, value: { stopped: true } }
-    if (endpoint === 'professional/running-water') return { ok: true, value: observation }
+    if (endpoint === 'oasis-workbench/professional/bootstrap') return { ok: true, value: bootstrap }
+    if (endpoint === 'oasis-workbench/professional/detail') return { ok: true, value: detail }
+    if (endpoint === 'oasis-workbench/professional/stop') return { ok: true, value: { stopped: true } }
+    if (endpoint === 'oasis-workbench/professional/running-water') return { ok: true, value: observation }
     return { ok: true, value: replacement }
   } } })
   const signal = new AbortController().signal
@@ -291,8 +291,8 @@ test('calls professional-service Host endpoints and validates every response bou
   assert.deepEqual(await remote.stopProfessional(execution, signal), { stopped: true })
   assert.deepEqual(await remote.observeRunningWater(observe, signal), observation)
   assert.deepEqual(calls.map((call) => call.endpoint), [
-    'professional/bootstrap', 'professional/detail', 'professional/start',
-    'professional/continue', 'professional/stop', 'professional/running-water',
+    'oasis-workbench/professional/bootstrap', 'oasis-workbench/professional/detail', 'oasis-workbench/professional/start',
+    'oasis-workbench/professional/continue', 'oasis-workbench/professional/stop', 'oasis-workbench/professional/running-water',
   ])
 
   const malformed = createWorkbenchRemote({ rpc: { async call() {

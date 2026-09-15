@@ -1,3 +1,4 @@
+import { createConnectionFixture } from './connection-fixture.mjs'
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { fixtureHarness } from './unified-generation-harness.mjs'
@@ -69,7 +70,7 @@ test('real generation is default OFF and rejects non-boolean configuration', () 
 test('same UI previews before confirmation and invalidates confirmation on input edits', async () => {
   const h = await harness()
   const handler = createWorkbenchRpcHandler(h.service)
-  const remote = createWorkbenchRemote({ rpc: { call: (_channel, endpoint, payload) => handler(endpoint, payload) } })
+  const remote = createWorkbenchRemote(createConnectionFixture(handler))
   const store = createWorkbenchStore({ remote, getGenerationSession: () => sessionId,
     workflowCatalog: { ...getWorkflowCatalog(), localGenerationEnabled: true, localGenerationKind: 'native-model' }, saveDelayMs: 0 })
   try {
@@ -122,7 +123,7 @@ test('fresh revision cannot reuse an old input confirmation and unknown runs can
 test('native model confirmation is invalidated by a configuration refresh', async () => {
   const h = await harness()
   const handler = createWorkbenchRpcHandler(h.service)
-  const remote = createWorkbenchRemote({ rpc: { call: (_channel, endpoint, payload) => handler(endpoint, payload) } })
+  const remote = createWorkbenchRemote(createConnectionFixture(handler))
   const store = createWorkbenchStore({ remote, getGenerationSession: () => sessionId,
     workflowCatalog: { ...getWorkflowCatalog(), localGenerationEnabled: true, localGenerationKind: 'native-model' } })
   try {

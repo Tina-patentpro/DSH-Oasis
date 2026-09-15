@@ -1,0 +1,38 @@
+## 1. Isolation gate
+- [x] 1.1 Capture current daily and old-copy protection baselines and source snapshot.
+- [x] 1.2 Prepare private pinned runtime and test launcher confinement and duplicate rejection.
+- [x] 1.3 Verify daily-first coexistence, independent ports, synthetic file save and normal exit/restart.
+- [x] 1.4 Obtain user-operated reverse-order and UI evidence.
+
+## 2. Upgrade after the gate
+- [x] 2.4 Promote accepted adaptations to main source under the user-approved 2026-09-15 promotion plan; preserve candidate installations, isolate build/test dependencies, reproduce lib hashes and document fixed-candidate integration entry separately. Fresh targeted tests 75/75, full verify 424 passed / 2 legacy skips, 13 patch outputs match installation; no real API or release.
+- [x] 2.0 Adapt native attachment input at the registration boundary and run offline guard regression (S3A; runtime acceptance pending).
+- [ ] 2.1 Adapt public Sidebar, connection and attachment contracts; preserve safety capabilities.
+- [x] 2.1a Adapt owned exact Connection routes and native Sidebar page opening; verify offline against target framework code.
+- [x] 2.1b Fail closed on absent target rich-preview/safe-file capability; do not claim restoration.
+- [x] 2.1c Install the candidate after normal exit and verify scoped Desktop business behavior and required rich-preview/file capability; see completed 2.1c2 and 2.1c3 evidence.
+- [x] 2.1c1 Back up exited candidate state, install the verified package, preserve old dependencies, refresh pins and verify actual startup health.
+- [x] 2.1c2 Obtain authenticated Desktop business-panel UI evidence; do not substitute outer HTTP rejection or renderer health.
+- [x] 2.1c2a Receive user screenshots of native Oasis panel/function center and confirm the authoritative isolated workspace-a binding; template actions remain pending.
+- [x] 2.1c2b Receive user confirmation of shared-form source switching and retained synthetic input; verify the scoped draft persisted with zero generation runs. Restart recovery and result actions remain pending.
+- [x] 2.1c2c Receive installed Desktop synthetic result screenshot and verify one completed fixture run with matching persisted body hash. Review, Markdown writeback and conversation draft remain pending.
+- [x] 2.1c2d Verify persisted approval and one writeback with both saved file hashes; receive UI evidence of prepared, unsent conversation draft in workspace-a. Restart recovery remains pending.
+- [x] 2.1c2e Verify a new healthy Desktop startup, unchanged persisted task/file hashes and restored unsent composer draft; receive daily-normal user report. Reopened workbench task UI remains pending.
+- [x] 2.1c2f Receive explicit user confirmation that the reopened result, review and saved path are retained, completing the normal-restart UI gate. Cross-version migration/rollback and safe-preview restoration are separate.
+- [x] 2.2 Verify scoped business source switching, artifacts, A/B isolation and preserved offline API work without real calls; this does not enable actual API generation.
+- [x] 2.2a Preserve and pass affected offline business contracts through the new transport.
+- [x] 2.3 Verify pinned candidate packaging, fixed-candidate business recovery and storage-level side-path restore. User declined additional cross-version Desktop rehearsal on 2026-09-15; that excluded item remains unverified, not passed.
+- [x] 2.3a Recheck 34476 protected/candidate/artifact files after UI recovery; run read-only integrity and identity parsing against three old/current workspace records. This is preflight only, not a clone migration/rollback.
+- [x] 2.3b After normal developer exit, capture a consistent backup including newly approved business output before any clone rehearsal or candidate replacement.
+- [x] 2.3c Exercise actual old/new native JSON backend/domain modules sequentially against isolated data clones, preserve run evidence, and restore bytes/files into fresh sibling paths. Full Desktop switch/rollback is not covered.
+- [x] 2.2b Obtain current installed Desktop workspace-a → workspace-b → workspace-a UI isolation evidence without generation or sending. User confirmed B independent and A retained; unsent composer content is not a sent chat history.
+- [x] 2.1c3 Restore opt-in safe rich Markdown and safe file opening in the target package; installed Desktop screenshots and round-3 live resource control complete the scoped rich-preview/file gate. This does not prove all network channels or viewers.
+- [x] 2.1c3a Prepare hash-gated Sidebar safe-native-files-2 across both distributed core entrypoints, editor chunk, sources and declarations (11 files); 24 targeted tests and syntax builds exit 0. Outputs remain uninstalled; normal developer exit required before a fresh backup and Sidebar-only installation.
+- [x] 2.1c3b After user-confirmed daily upgrade completion and candidate exit, capture new daily baseline and exited candidate checkpoint; install only 11 Sidebar files with matching dependency pins, verify preserved data and healthy new candidate startup. Completed 2026-09-15; supersedes the uninstalled state above. Markdown core remains unchanged.
+- [x] 2.1c3c Receive installed Desktop evidence that the existing reviewed workspace-a Markdown opens in the native file tab. Screenshot shows expected plain text; read-only receipt confirms unchanged single synthetic run, approval and writeback hashes. No send operation was performed by this task; an empty composer screenshot alone is not send evidence. Rich Markdown remains separate.
+- [x] 2.1c3d After explicit approval, prepare isolated pinned test dependencies; actual Markdown SSR plus policy regressions pass 13/13. Create uninstalled archive candidate and verify all 22094 members, with only two intended content changes. Electron archive policy and installed browser acceptance remain pending.
+- [x] 2.1c3e After explicit EXE-resource scope approval, preserve all fuse settings, update only the fixed-size integrity hash in a new paired candidate, verify 64 resources and 14 non-resource sections, back up and install the pair with matching pins. Fresh startup healthy; approved artifacts and daily baseline unchanged.
+- [x] 2.1c3f Obtain installed Desktop rich Markdown screenshots and round-3 same-live-server resource control: safe=0 requests, ordinary=3 image requests, unchanged fixtures. Scope is tested loopback resources and ordinary Markdown viewer, not all network channels/viewers. Acceptance archived and temporary server stopped; original reviewed artifact hashes remain unchanged.
+- [x] 2.3d Run exact isolated package verify after preserving build outputs: 450 passed, 2 legacy-path skips, 0 failures, pack dry-run exit 0; additional native Markdown SSR 5/5 passed. Rebuilt lib, package and lock hashes unchanged. Full Desktop upgrade/rollback remains pending.
+- [x] 2.3e Prepare a create-only fixed-candidate business recovery clone from the latest checkpoint, preserving business bytes and mapping all Workspace paths inside the clone. Credentials/chat caches are not activated. Private launcher preflight and main-process launch exit 0; this is preparation only.
+- [x] 2.3f Complete fixed-candidate recovery Host/renderer and A/B restored business UI: user confirmed B independent and A result/review/path retained; fresh receipt exit 0, original run and saved hashes equal checkpoint. This slice does not prove chat-cache migration or cross-version Desktop rollback.

@@ -49,9 +49,15 @@ export function createWorkbenchRemote(connection) {
     throw new TypeError('DSH connection.rpc.call is required')
   }
 
+  // Only the owned wire namespace changes; payload and result contracts stay intact.
+  const call = (channel, endpoint, payload, signal) => {
+    if (channel !== CHANNEL) throw new TypeError('Unexpected workbench channel')
+    return connection.rpc.call('/api', `oasis-workbench/${endpoint}`, payload, signal)
+  }
+
   return Object.freeze({
     async get(workspaceId, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'state/get',
         { workspaceId },
@@ -60,7 +66,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async replace(workspaceId, expectedRevision, state, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'state/replace',
         { workspaceId, expectedRevision, state },
@@ -70,7 +76,7 @@ export function createWorkbenchRemote(connection) {
 
     async getWorkflowCatalog(workType, signal) {
       const payload = workType === undefined ? {} : { workType }
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'workflow/catalog',
         payload,
@@ -79,7 +85,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async getProfessionalBootstrap(signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'professional/bootstrap',
         {},
@@ -88,7 +94,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async getProfessionalDetail(apiEndpoint, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'professional/detail',
         { apiEndpoint },
@@ -97,7 +103,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async startProfessional(payload, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'professional/start',
         payload,
@@ -106,7 +112,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async continueProfessional(payload, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'professional/continue',
         payload,
@@ -115,7 +121,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async stopProfessional(payload, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'professional/stop',
         payload,
@@ -124,7 +130,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async observeRunningWater(payload, signal) {
-      const observation = unwrap(await connection.rpc.call(
+      const observation = unwrap(await call(
         CHANNEL,
         'professional/running-water',
         payload,
@@ -137,7 +143,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async addMaterial(payload, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'material/add',
         payload,
@@ -146,7 +152,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async refreshMaterial(payload, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'material/refresh',
         payload,
@@ -155,7 +161,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async removeMaterial(payload, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'material/remove',
         payload,
@@ -164,7 +170,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async createRun(payload, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'task/create',
         payload,
@@ -173,7 +179,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async reviewRun(payload, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'task/review',
         payload,
@@ -182,39 +188,39 @@ export function createWorkbenchRemote(connection) {
     },
 
     async createUnifiedRun(payload, signal) {
-      return unwrap(await connection.rpc.call(CHANNEL, 'task/create-unified', payload, signal), workbenchReplaceResponseSchema)
+      return unwrap(await call(CHANNEL, 'task/create-unified', payload, signal), workbenchReplaceResponseSchema)
     },
     async selectClaimsUpstream(payload, signal) {
-      return unwrap(await connection.rpc.call(CHANNEL, 'task/select-upstream', payload, signal), workbenchReplaceResponseSchema)
+      return unwrap(await call(CHANNEL, 'task/select-upstream', payload, signal), workbenchReplaceResponseSchema)
     },
     async prepareLocalRun(payload, signal) {
-      const result = unwrap(await connection.rpc.call(CHANNEL, 'task/prepare-local', payload, signal), localGenerationPreviewSchema)
+      const result = unwrap(await call(CHANNEL, 'task/prepare-local', payload, signal), localGenerationPreviewSchema)
       for (const key of ['workspaceId', 'taskId', 'sessionId', 'expectedRevision']) {
         if (result[key] !== payload[key]) throw new WorkbenchRemoteError('INVALID_RESPONSE', '生成确认范围不一致')
       }
       return result
     },
     async createLocalRun(payload, signal) {
-      return unwrap(await connection.rpc.call(CHANNEL, 'task/create-local', payload, signal), workbenchReplaceResponseSchema)
+      return unwrap(await call(CHANNEL, 'task/create-local', payload, signal), workbenchReplaceResponseSchema)
     },
     async observeLocalRun(payload, signal) {
-      return unwrap(await connection.rpc.call(CHANNEL, 'task/observe-local', payload, signal), workbenchReplaceResponseSchema)
+      return unwrap(await call(CHANNEL, 'task/observe-local', payload, signal), workbenchReplaceResponseSchema)
     },
     async stopUnifiedRun(payload, signal) {
-      return unwrap(await connection.rpc.call(CHANNEL, 'task/stop-unified', payload, signal), workbenchReplaceResponseSchema)
+      return unwrap(await call(CHANNEL, 'task/stop-unified', payload, signal), workbenchReplaceResponseSchema)
     },
     async editUnifiedResult(payload, signal) {
-      return unwrap(await connection.rpc.call(CHANNEL, 'task/edit-result', payload, signal), workbenchReplaceResponseSchema)
+      return unwrap(await call(CHANNEL, 'task/edit-result', payload, signal), workbenchReplaceResponseSchema)
     },
     async prepareConversationDraft(payload, signal) {
-      const result = unwrap(await connection.rpc.call(CHANNEL, 'artifact/conversation-draft', payload, signal), conversationDraftResponseSchema)
+      const result = unwrap(await call(CHANNEL, 'artifact/conversation-draft', payload, signal), conversationDraftResponseSchema)
       for (const key of ['workspaceId', 'taskId', 'runId', 'artifactId']) {
         if (result[key] !== payload[key]) throw new WorkbenchRemoteError('malformed-response', 'Conversation artifact identity mismatch', {})
       }
       return result
     },
     async resolveSavedFile(payload, signal) {
-      const result = unwrap(await connection.rpc.call(CHANNEL, 'artifact/saved-file', payload, signal), savedFileResponseSchema)
+      const result = unwrap(await call(CHANNEL, 'artifact/saved-file', payload, signal), savedFileResponseSchema)
       for (const key of ['workspaceId', 'taskId', 'runId', 'artifactId', 'writebackId']) {
         if (result[key] !== payload[key]) throw new WorkbenchRemoteError('malformed-response', 'Saved file identity mismatch', {})
       }
@@ -222,7 +228,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async prepareWriteback(payload, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'artifact/prepare-writeback',
         payload,
@@ -231,7 +237,7 @@ export function createWorkbenchRemote(connection) {
     },
 
     async commitWriteback(confirmationToken, signal) {
-      return unwrap(await connection.rpc.call(
+      return unwrap(await call(
         CHANNEL,
         'artifact/commit-writeback',
         { confirmationToken },

@@ -436,7 +436,7 @@ window.__ModuleLoader__.load({
 			});
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js
+		//#region node_modules/zod/v4/core/core.js
 		var _a$1;
 		function $constructor(name, initializer, params) {
 			function init(inst, def) {
@@ -495,7 +495,7 @@ window.__ModuleLoader__.load({
 			return globalConfig;
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js
+		//#region node_modules/zod/v4/core/util.js
 		function getEnumValues(entries) {
 			const numericValues = Object.values(entries).filter((v) => typeof v === "number");
 			return Object.entries(entries).filter(([k, _]) => numericValues.indexOf(+k) === -1).map(([_, v]) => v);
@@ -809,7 +809,7 @@ window.__ModuleLoader__.load({
 			return { ...iss };
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/errors.js
+		//#region node_modules/zod/v4/core/errors.js
 		const initializer$1 = (inst, def) => {
 			inst.name = "$ZodError";
 			Object.defineProperty(inst, "_zod", {
@@ -869,7 +869,7 @@ window.__ModuleLoader__.load({
 			return fieldErrors;
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/parse.js
+		//#region node_modules/zod/v4/core/parse.js
 		const _parse = (_Err) => (schema, value, _ctx, _params) => {
 			const ctx = _ctx ? {
 				..._ctx,
@@ -983,7 +983,7 @@ window.__ModuleLoader__.load({
 			return _safeParseAsync(_Err)(schema, value, _ctx);
 		};
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/regexes.js
+		//#region node_modules/zod/v4/core/regexes.js
 		/**
 		* @deprecated CUID v1 is deprecated by its authors due to information leakage
 		* (timestamps embedded in the id). Use {@link cuid2} instead.
@@ -1048,7 +1048,7 @@ window.__ModuleLoader__.load({
 		const lowercase = /^[^A-Z]*$/;
 		const uppercase = /^[^a-z]*$/;
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js
+		//#region node_modules/zod/v4/core/checks.js
 		const $ZodCheck = /*@__PURE__*/ $constructor("$ZodCheck", (inst, def) => {
 			var _a;
 			inst._zod ?? (inst._zod = {});
@@ -1410,7 +1410,7 @@ window.__ModuleLoader__.load({
 			};
 		});
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/doc.js
+		//#region node_modules/zod/v4/core/doc.js
 		var Doc = class {
 			constructor(args = []) {
 				this.content = [];
@@ -1441,14 +1441,14 @@ window.__ModuleLoader__.load({
 			}
 		};
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/versions.js
+		//#region node_modules/zod/v4/core/versions.js
 		const version = {
 			major: 4,
 			minor: 4,
 			patch: 3
 		};
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js
+		//#region node_modules/zod/v4/core/schemas.js
 		const $ZodType = /*@__PURE__*/ $constructor("$ZodType", (inst, def) => {
 			var _a;
 			inst ?? (inst = {});
@@ -2750,7 +2750,7 @@ window.__ModuleLoader__.load({
 			}
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/registries.js
+		//#region node_modules/zod/v4/core/registries.js
 		var _a;
 		var $ZodRegistry = class {
 			constructor() {
@@ -2797,7 +2797,7 @@ window.__ModuleLoader__.load({
 		(_a = globalThis).__zod_globalRegistry ?? (_a.__zod_globalRegistry = registry());
 		const globalRegistry = globalThis.__zod_globalRegistry;
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/api.js
+		//#region node_modules/zod/v4/core/api.js
 		// @__NO_SIDE_EFFECTS__
 		function _string(Class, params) {
 			return new Class({
@@ -3309,7 +3309,7 @@ window.__ModuleLoader__.load({
 			return ch;
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/to-json-schema.js
+		//#region node_modules/zod/v4/core/to-json-schema.js
 		function initializeContext(params) {
 			let target = params?.target ?? "draft-2020-12";
 			if (target === "draft-4") target = "draft-04";
@@ -3604,7 +3604,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return finalize(ctx, schema);
 		};
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/json-schema-processors.js
+		//#region node_modules/zod/v4/core/json-schema-processors.js
 		const formatMap = {
 			guid: "uuid",
 			url: "uri",
@@ -3876,7 +3876,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			seen.ref = def.innerType;
 		};
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/iso.js
+		//#region node_modules/zod/v4/classic/iso.js
 		const ZodISODateTime = /*@__PURE__*/ $constructor("ZodISODateTime", (inst, def) => {
 			$ZodISODateTime.init(inst, def);
 			ZodStringFormat.init(inst, def);
@@ -3906,7 +3906,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return /* @__PURE__ */ _isoDuration(ZodISODuration, params);
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/errors.js
+		//#region node_modules/zod/v4/classic/errors.js
 		const initializer = (inst, issues) => {
 			$ZodError.init(inst, issues);
 			inst.name = "ZodError";
@@ -3928,7 +3928,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		};
 		const ZodRealError = /*@__PURE__*/ $constructor("ZodError", initializer, { Parent: Error });
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/parse.js
+		//#region node_modules/zod/v4/classic/parse.js
 		const parse = /* @__PURE__ */ _parse(ZodRealError);
 		const parseAsync = /* @__PURE__ */ _parseAsync(ZodRealError);
 		const safeParse = /* @__PURE__ */ _safeParse(ZodRealError);
@@ -3942,7 +3942,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		const safeEncodeAsync = /* @__PURE__ */ _safeEncodeAsync(ZodRealError);
 		const safeDecodeAsync = /* @__PURE__ */ _safeDecodeAsync(ZodRealError);
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js
+		//#region node_modules/zod/v4/classic/schemas.js
 		const _installedGroups = /* @__PURE__ */ new WeakMap();
 		function _installLazyMethods(inst, group, methods) {
 			const proto = Object.getPrototypeOf(inst);
@@ -8547,10 +8547,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				if (!snapshot.serviceFeatures.includes("targetedOpen")) return false;
 				layoutAdapter.releaseStandalone("better-sidebar-open");
 				try {
-					const seed = {
-						type: OASIS_BETTER_SIDEBAR_TAB_ID,
-						path: ".oasis/professional-workbench"
-					};
+					const seed = { type: OASIS_BETTER_SIDEBAR_TAB_ID };
 					service.openTab(seed, { sessionId });
 					return true;
 				} catch {
@@ -8914,6 +8911,16 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			});
 		}
 		//#endregion
+		//#region src/client/native-composer-input.js
+		function normalizeNativeComposerInput(input) {
+			if (!Number.isSafeInteger(input?.draftRev) || input.draftRev < 0) return void 0;
+			return {
+				...input,
+				imageIds: Array.isArray(input.attachmentIds) ? input.attachmentIds : void 0,
+				occurrences: Array.isArray(input.occurrences) ? input.occurrences : void 0
+			};
+		}
+		//#endregion
 		//#region src/client/ConversationInputRegistration.js
 		function LiveRegistration({ bridge, workspaceId, sessionId, useInput, inputActions }) {
 			const input = useInput((value) => value);
@@ -8926,7 +8933,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				workspaceId,
 				sessionId,
 				inputActions,
-				read: () => live.current
+				read: () => normalizeNativeComposerInput(live.current)
 			}), [
 				bridge,
 				workspaceId,
@@ -9033,64 +9040,67 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}
 		function createWorkbenchRemote(connection) {
 			if (typeof connection?.rpc?.call !== "function") throw new TypeError("DSH connection.rpc.call is required");
+			const call = (channel, endpoint, payload, signal) => {
+				if (channel !== CHANNEL) throw new TypeError("Unexpected workbench channel");
+				return connection.rpc.call("/api", `oasis-workbench/${endpoint}`, payload, signal);
+			};
 			return Object.freeze({
 				async get(workspaceId, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "state/get", { workspaceId }, signal), workbenchGetResponseSchema);
+					return unwrap(await call(CHANNEL, "state/get", { workspaceId }, signal), workbenchGetResponseSchema);
 				},
 				async replace(workspaceId, expectedRevision, state, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "state/replace", {
+					return unwrap(await call(CHANNEL, "state/replace", {
 						workspaceId,
 						expectedRevision,
 						state
 					}, signal), workbenchReplaceResponseSchema);
 				},
 				async getWorkflowCatalog(workType, signal) {
-					const payload = workType === void 0 ? {} : { workType };
-					return unwrap(await connection.rpc.call(CHANNEL, "workflow/catalog", payload, signal), workflowCatalogResponseSchema);
+					return unwrap(await call(CHANNEL, "workflow/catalog", workType === void 0 ? {} : { workType }, signal), workflowCatalogResponseSchema);
 				},
 				async getProfessionalBootstrap(signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "professional/bootstrap", {}, signal), oasisProfessionalBootstrapSchema);
+					return unwrap(await call(CHANNEL, "professional/bootstrap", {}, signal), oasisProfessionalBootstrapSchema);
 				},
 				async getProfessionalDetail(apiEndpoint, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "professional/detail", { apiEndpoint }, signal), oasisProfessionalDetailSchema);
+					return unwrap(await call(CHANNEL, "professional/detail", { apiEndpoint }, signal), oasisProfessionalDetailSchema);
 				},
 				async startProfessional(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "professional/start", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "professional/start", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async continueProfessional(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "professional/continue", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "professional/continue", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async stopProfessional(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "professional/stop", payload, signal), oasisProfessionalStopResponseSchema);
+					return unwrap(await call(CHANNEL, "professional/stop", payload, signal), oasisProfessionalStopResponseSchema);
 				},
 				async observeRunningWater(payload, signal) {
-					const observation = unwrap(await connection.rpc.call(CHANNEL, "professional/running-water", payload, signal), oasisRunningWaterObservationSchema);
+					const observation = unwrap(await call(CHANNEL, "professional/running-water", payload, signal), oasisRunningWaterObservationSchema);
 					if (observation.runId !== payload.runId) throw new WorkbenchRemoteError("malformed-response", "Running-water response does not match the requested run", {});
 					return observation;
 				},
 				async addMaterial(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "material/add", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "material/add", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async refreshMaterial(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "material/refresh", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "material/refresh", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async removeMaterial(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "material/remove", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "material/remove", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async createRun(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "task/create", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "task/create", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async reviewRun(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "task/review", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "task/review", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async createUnifiedRun(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "task/create-unified", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "task/create-unified", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async selectClaimsUpstream(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "task/select-upstream", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "task/select-upstream", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async prepareLocalRun(payload, signal) {
-					const result = unwrap(await connection.rpc.call(CHANNEL, "task/prepare-local", payload, signal), localGenerationPreviewSchema);
+					const result = unwrap(await call(CHANNEL, "task/prepare-local", payload, signal), localGenerationPreviewSchema);
 					for (const key of [
 						"workspaceId",
 						"taskId",
@@ -9100,19 +9110,19 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					return result;
 				},
 				async createLocalRun(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "task/create-local", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "task/create-local", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async observeLocalRun(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "task/observe-local", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "task/observe-local", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async stopUnifiedRun(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "task/stop-unified", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "task/stop-unified", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async editUnifiedResult(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "task/edit-result", payload, signal), workbenchReplaceResponseSchema);
+					return unwrap(await call(CHANNEL, "task/edit-result", payload, signal), workbenchReplaceResponseSchema);
 				},
 				async prepareConversationDraft(payload, signal) {
-					const result = unwrap(await connection.rpc.call(CHANNEL, "artifact/conversation-draft", payload, signal), conversationDraftResponseSchema);
+					const result = unwrap(await call(CHANNEL, "artifact/conversation-draft", payload, signal), conversationDraftResponseSchema);
 					for (const key of [
 						"workspaceId",
 						"taskId",
@@ -9122,7 +9132,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					return result;
 				},
 				async resolveSavedFile(payload, signal) {
-					const result = unwrap(await connection.rpc.call(CHANNEL, "artifact/saved-file", payload, signal), savedFileResponseSchema);
+					const result = unwrap(await call(CHANNEL, "artifact/saved-file", payload, signal), savedFileResponseSchema);
 					for (const key of [
 						"workspaceId",
 						"taskId",
@@ -9133,10 +9143,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					return result;
 				},
 				async prepareWriteback(payload, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "artifact/prepare-writeback", payload, signal), writebackPrepareResponseSchema);
+					return unwrap(await call(CHANNEL, "artifact/prepare-writeback", payload, signal), writebackPrepareResponseSchema);
 				},
 				async commitWriteback(confirmationToken, signal) {
-					return unwrap(await connection.rpc.call(CHANNEL, "artifact/commit-writeback", { confirmationToken }, signal), writebackCommitResponseSchema);
+					return unwrap(await call(CHANNEL, "artifact/commit-writeback", { confirmationToken }, signal), writebackCommitResponseSchema);
 				}
 			});
 		}

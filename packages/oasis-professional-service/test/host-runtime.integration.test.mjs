@@ -52,13 +52,26 @@ class ConnectionStub extends Service {
     super(ctx, 'connection')
     connectionStub = this
     this.disposed = 0
-    this.registration = undefined
-    this.rpc = {
-      handle: (channel, handler, options) => {
-        this.registration = { channel, handler, options }
-        return async () => { this.disposed += 1 }
+    this.routes = new Map()
+    this.fetch = {
+      register: (route) => {
+        assert.equal(this.routes.has(route.path), false)
+        this.routes.set(route.path, route)
+        return () => { this.routes.delete(route.path); this.disposed += 1 }
       },
     }
+  }
+
+  async dispatch(endpoint, payload) {
+    const path = '/api/oasis-workbench/' + endpoint
+    const response = await this.routes.get(path).fetch(new Request('http://127.0.0.1' + path, {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ type: 'client-request', rpcId: 'host-fixture', method: 'oasis-workbench/' + endpoint, payload }),
+    }))
+    assert.equal(response.status, 200)
+    const envelope = await response.json()
+    assert.equal(envelope.rpcId, 'host-fixture')
+    return envelope.result
   }
 }
 
@@ -132,17 +145,16 @@ test('real Cordis tools service lists and executes oasis_workbench_status', asyn
     assert.equal(value.capabilityLevel, 'local-professional-loop')
     assert.deepEqual(value.supportedWorkTypes, ['technical-rd', 'cn-invention-patent'])
 
-    assert.equal(connectionStub.registration.channel, '/oasis-workbench')
-    assert.deepEqual(connectionStub.registration.options, { authority: 'loopback' })
-    const state = await connectionStub.registration.handler('state/get', { workspaceId: 'workspace-a' })
+    assert.equal(connectionStub.routes.size, 25)
+    const state = await connectionStub.dispatch('state/get', { workspaceId: 'workspace-a' })
     assert.equal(state.ok, true)
     assert.equal(state.value.revision, 0)
 
-    const created = await connectionStub.registration.handler('state/replace', {
+    const created = await connectionStub.dispatch('state/replace', {
       workspaceId: 'workspace-a', expectedRevision: 0, state: createEditableDraft(),
     })
     assert.equal(created.value.current.revision, 1)
-    const added = await connectionStub.registration.handler('material/add', {
+    const added = await connectionStub.dispatch('material/add', {
       workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: 1,
       relativePath: 'materials\\spec.md', confirmed: true,
     })
@@ -155,6 +167,7 @@ test('real Cordis tools service lists and executes oasis_workbench_status', asyn
     await rm(tempRoot, { recursive: true, force: true })
   }
 
-  assert.equal(connectionStub.disposed, 1)
+  assert.equal(connectionStub.disposed, 25)
+  assert.equal(connectionStub.routes.size, 0)
   assert.equal(storageDomainStub.closed, 1)
 })

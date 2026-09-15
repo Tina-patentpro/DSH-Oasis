@@ -1,3 +1,4 @@
+import { createConnectionFixture } from './connection-fixture.mjs'
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises'
@@ -38,7 +39,7 @@ test('saved-file open resolves only an owned persisted Markdown record, without 
       workspaceRegistry: { get(id) { return id === 'a' ? { path: root, status: async () => 'ok' } : undefined } },
     })
     const handler = createWorkbenchRpcHandler(service)
-    const remote = createWorkbenchRemote({ rpc: { call: (_channel, endpoint, payload) => handler(endpoint, payload) } })
+    const remote = createWorkbenchRemote(createConnectionFixture(handler))
     const payload = { workspaceId: 'a', taskId: 'task-a', runId: 'run-a', writebackId: 'wb-a', artifactId: run.result.artifact.artifactId, expectedRevision: 1 }
     assert.equal(typeof remote.resolveSavedFile, 'function')
     const result = await remote.resolveSavedFile(payload)

@@ -14,7 +14,8 @@ import {
   resolveOasisJwt,
 } from './oasis-runtime-config.js'
 import { openOasisWorkbenchRepository } from './workbench-repository.js'
-import { createWorkbenchRpcHandler, OASIS_WORKBENCH_RPC_CHANNEL } from './workbench-rpc.js'
+import { createWorkbenchRpcHandler } from './workbench-rpc.js'
+import { registerWorkbenchRoutes } from './workbench-connection.js'
 import { createWorkbenchService } from './workbench-service.js'
 import { createWorkspaceMaterialManager } from './workspace-materials.js'
 
@@ -132,10 +133,9 @@ export async function apply(ctx) {
   let disposeRpc
   try {
     disposeTool = registerStatusTool(ctx)
-    disposeRpc = ctx.connection.rpc.handle(
-      OASIS_WORKBENCH_RPC_CHANNEL,
+    disposeRpc = registerWorkbenchRoutes(
+      ctx.connection,
       createWorkbenchRpcHandler(service, professionalService),
-      { authority: 'loopback' },
     )
   } catch (error) {
     try {

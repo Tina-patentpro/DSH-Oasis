@@ -1,3 +1,4 @@
+import { createConnectionFixture } from './connection-fixture.mjs'
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { mkdtemp, readFile, rm } from 'node:fs/promises'
@@ -18,11 +19,11 @@ test('late conversation preparation cannot insert after the selected version cha
   const started = new Promise(resolve => { entered = resolve })
   let inserted = 0
   const handler = createWorkbenchRpcHandler(h.service)
-  const remote = createWorkbenchRemote({ rpc: { async call(channel, endpoint, payload) {
+  const remote = createWorkbenchRemote(createConnectionFixture(async (endpoint, payload) => {
     const response = await handler(endpoint, payload)
     if (endpoint === 'artifact/conversation-draft') { entered(); await new Promise(resolve => { release = resolve }) }
     return response
-  } } })
+  }))
   const store = createWorkbenchStore({ remote, saveDelayMs: 60000, clock: () => NOW,
     conversationDrafts: { capture: () => ({}), insert() { inserted += 1 } },
   })
@@ -51,7 +52,7 @@ test('a generation response preserves an unsaved sibling draft instead of replac
     entered(); return new Promise(resolve => { release = resolve })
   } })
   const handler = createWorkbenchRpcHandler(h.service)
-  const remote = createWorkbenchRemote({ rpc: { call: (channel, endpoint, payload) => handler(endpoint, payload) } })
+  const remote = createWorkbenchRemote(createConnectionFixture(handler))
   const store = createWorkbenchStore({ remote, saveDelayMs: 60000, clock: () => NOW, createId: () => 'task-b' })
   try {
     store.syncWorkspaces([{ workspaceId: 'workspace-a' }])
@@ -190,7 +191,7 @@ test('store to RPC to Host closes the two-source synthetic loop and prepares nat
     workspaceRegistry: { get: id => id === 'workspace-a' ? { path: root, async status() { return 'ok' } } : null },
   })
   const handler = createWorkbenchRpcHandler(h.service)
-  const remote = createWorkbenchRemote({ rpc: { call: (channel, endpoint, payload) => handler(endpoint, payload) } })
+  const remote = createWorkbenchRemote(createConnectionFixture(handler))
   const drafts = createConversationDraftBridge(() => ({ status: 'ready', currentSessionId: 'session-a', workspaceItems: [{ workspaceId: 'workspace-a', sessionIds: ['session-a'] }] }))
   let text = ''
   drafts.register({ workspaceId: 'workspace-a', sessionId: 'session-a', read: () => ({ draft: text, draftRev: 0, phase: 'plain', imageIds: [], occurrences: [] }), inputActions: {

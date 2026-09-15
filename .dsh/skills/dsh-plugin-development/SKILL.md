@@ -9,7 +9,7 @@ description: Use when creating, updating, packaging, installing, or validating a
 
 先确认当前安装版本和真实接口，再写代码。DSH处于开发者预览阶段，旧会话、旧示例或`master`文档都不能替代本机版本证据。
 
-本项目当前固定组合为：全局 DSH `0.1.2-rc.1`、anywhere-labs Desktop `2.0.5`、Desktop 内置 DSH `0.1.2-rc.1`、Better Sidebar `0.18.0`。不得自动追随 `latest`，也不得用全局 CLI 版本替代 Desktop 内置运行时证据。
+本项目当前固定隔离开发组合为：anywhere-labs Desktop `2.0.9`（固定 EXE/ASAR 配对）、Desktop 内置 DSH / 插件开发依赖 `0.1.5-rc.1`（Markdown `resourcePolicyVersion=1`）、Better Sidebar `0.19.1 + safe-native-files-2`、Cordis `4.0.2`。全局 CLI 未由本任务修改；日常独立安装的用户报告版本见 AGENTS，不作为开发依赖来源。不得自动追随 `latest`，也不得用全局 CLI 版本替代 Desktop 内置运行时证据。
 
 ## 开始前
 
@@ -42,7 +42,7 @@ description: Use when creating, updating, packaging, installing, or validating a
 - 禁止默认注册结构单槽：`root`、`sidebar`、`conversation`、`details`，因为这些注册会替换DSH原生界面及其后代Slot。
 - `conversation.input.right`是当前入口的`list`列表协议；`settings.section`由 `@deepseek-ai/dsh-client-ui-settings` 提供，用于绿洲原生设置页；`shell.overlay`仍是`list`增量协议，只承载 Workspace 上下文桥接和历史兼容生命周期，在固定 Sidebar 路径中不渲染独立面板或接管布局。
 - `details`是`single`单槽，禁止绿洲工作台注册，也不得用`openDetails`借用其几何；真实浏览器已证明该调用会产生遮罩并阻断Overlay交互。
-- 当前固定组合由 Better Sidebar `0.18.0` 作为唯一右栏布局所有者；绿洲只调用其 `registerTab`、定向 `openTab`、状态订阅和生命周期接口。禁止 `querySelector`、`MutationObserver`、模拟点击、私有 store、哈希 class 或 `#root` 样式接管。
+- 当前固定组合由 Better Sidebar `0.19.1` 对接原生 keyed Tab，绿洲只调用其 `registerTab`、定向 `openTab({ type }, { sessionId })`、状态订阅和生命周期接口；业务页不携带文件 `path`，不伪装文件地址。安全文件使用补丁提供的独立资源身份与 `safeFilePreview` capability。禁止 `querySelector`、`MutationObserver`、模拟点击、私有 store、哈希 class 或 `#root` 样式接管。
 - 若 `targetedOpen` 等必需 capability 缺失，只禁用受影响动作并明确提示；不得退化为无 scope 打开或抢占原生结构单槽。
 
 ## 项目边界
@@ -57,7 +57,7 @@ description: Use when creating, updating, packaging, installing, or validating a
 
 - 关闭布局兼容结论前，必须只读枚举目标Profile的真实Bundle组合；精简隔离Profile的绿色结果不能替代目标组合证据。
 - 第三方布局插件提供公开服务时，优先使用其公开注册与生命周期接口；禁止通过私有DOM、构建哈希class、模拟点击或内部store实现所谓兼容。
-- 当前产品基线必须在精确 Better Sidebar `0.18.0` 中验证；历史独立面板只作兼容读取路径，不是新产品主路径。
+- 当前产品基线必须在精确 Better Sidebar `0.19.1 + safe-native-files-2` 中验证；历史独立面板只作兼容读取路径，不是新产品主路径。补丁重放必须匹配原始输入哈希，不能对已打补丁字节重复应用；历史 references 中旧版组合不覆盖当前 AGENTS。
 - 固定版 Sidebar 提供 `registerTab`、`openTab`、`openFile`、`getSnapshot`、`subscribeState`、`updateTab`；运行前仍按 `features` 检查 `targetedOpen` 等必需 capability。
 - “文件变动”和“终端”由 Better Sidebar 自己的原生设置 `tabsEnabled.git=false`、`tabsEnabled.terminal=false` 管理；绿洲插件不得复制这两个设置或删除 Sidebar 代码。
 - 未取得有效公开服务时必须 fail-closed，不得让两个布局所有者同时存在。

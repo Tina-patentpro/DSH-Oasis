@@ -34,14 +34,16 @@ D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\plans\2026-09-05-oas
 
 | 组成 | 唯一当前目标版本 |
 |---|---|
-| 全局 DSH | 0.1.2-rc.1 |
-| anywhere-labs Desktop | v2.0.5 |
-| Desktop 内置 DSH | 0.1.2-rc.1 |
-| Better Sidebar | 0.18.0 |
+| 开发副本 anywhere-labs Desktop | v2.0.9，固定 EXE/ASAR 完整性配对 |
+| 开发副本 Desktop 内置 DSH / 插件开发依赖 | 0.1.5-rc.1，Markdown resourcePolicyVersion=1 补丁 |
+| 开发副本 Better Sidebar | 0.19.1 + safe-native-files-2 |
+| Cordis | 4.0.2 |
+
+这是已批准的隔离开发组合，不是自动更新日常安装的指令。全局 CLI 历史基线为 0.1.2-rc.1，本任务未修改；日常 DSH 由用户独立升级并报告为 2.0.10 / 0.1.5-rc.2 / Sidebar 0.19.1，不用它替代开发目标的验证。固定候选 pin 与补丁入口见 D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\plans\2026-09-15-promote-isolated-dsh-source.md。
 
 上游来源：
-- https://github.com/anywhere-labs/dsh-desktop/tree/v2.0.5
-- https://github.com/omdsh-dev/DSH-better-sidebar/tree/v0.18.0
+- https://github.com/anywhere-labs/dsh-desktop/tree/v2.0.9
+- https://github.com/omdsh-dev/DSH-better-sidebar/tree/v0.19.1
 - https://github.com/deepseek-ai/deepseek-harness
 
 Desktop 内置运行时必须独立核对，不拿全局 CLI 版本替代。

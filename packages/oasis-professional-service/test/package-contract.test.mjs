@@ -20,17 +20,19 @@ test('does not expose stale week-one or week-two phase labels in current runtime
 test('pins the verified development dependency versions', () => {
   assert.deepEqual(manifest.devDependencies, {
     '@deepseek-ai/cordis': '4.0.2',
-    '@deepseek-ai/dsh-client-connection': '0.1.2-rc.1',
-    '@deepseek-ai/dsh-client-ui-conversation': '0.1.2-rc.1',
-    '@deepseek-ai/dsh-client-ui-layout': '0.1.2-rc.1',
-    '@deepseek-ai/dsh-client-ui-primitives': '0.1.2-rc.1',
-    '@deepseek-ai/dsh-client-ui-settings': '0.1.2-rc.1',
-    '@deepseek-ai/dsh-credentials': '0.1.2-rc.1',
-    '@deepseek-ai/dsh-llm': '0.1.2-rc.1',
-    '@deepseek-ai/dsh-settings': '0.1.2-rc.1',
-    '@deepseek-ai/dsh-storage-domain': '0.1.2-rc.1',
-    '@deepseek-ai/dsh-tools': '0.1.2-rc.1',
-    '@deepseek-ai/dsh-workspace': '0.1.2-rc.1',
+    '@deepseek-ai/dsh-client-connection': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-client-ui-conversation': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-client-ui-layout': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-client-ui-primitives': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-client-ui-settings': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-credentials': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-llm': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-settings': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-scope': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-storage': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-storage-domain': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-tools': '0.1.5-rc.1',
+    '@deepseek-ai/dsh-workspace': '0.1.5-rc.1',
     '@deepseek-ai/schemastery': '3.18.2',
     react: '18.3.1',
     'react-dom': '18.3.1',
@@ -45,9 +47,9 @@ test('accepts the fixed Desktop React runtime without bundling a second copy', (
 })
 
 test('declares direct Host peers for settings, credentials, and their schema runtime', () => {
-  assert.equal(manifest.peerDependencies['@deepseek-ai/dsh-credentials'], '0.1.2-rc.1')
-  assert.equal(manifest.peerDependencies['@deepseek-ai/dsh-client-ui-settings'], '0.1.2-rc.1')
-  assert.equal(manifest.peerDependencies['@deepseek-ai/dsh-settings'], '0.1.2-rc.1')
+  assert.equal(manifest.peerDependencies['@deepseek-ai/dsh-credentials'], '0.1.5-rc.1')
+  assert.equal(manifest.peerDependencies['@deepseek-ai/dsh-client-ui-settings'], '0.1.5-rc.1')
+  assert.equal(manifest.peerDependencies['@deepseek-ai/dsh-settings'], '0.1.5-rc.1')
   assert.equal(manifest.peerDependencies['@deepseek-ai/schemastery'], '^3.18.2')
   assert.ok(manifest.dsh.client.inject.includes('@deepseek-ai/dsh-client-ui-settings'))
 })
