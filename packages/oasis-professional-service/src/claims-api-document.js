@@ -27,18 +27,34 @@ export function prepareClaimsApiDocument(snapshot) {
   }
 }
 
+function textInputs(values) {
+  const instructions = [
+    ['撰写要求', values.claim_requirements_text], ['用户指令', values.user_input],
+  ].filter(([, value]) => value.length > 0).map(([title, value]) => `【${title}】\n${value}`).join('\n\n')
+  return {
+    ...(values.drawings_text.length > 0 ? { drawings_explain_TD: values.drawings_text } : {}),
+    ...(instructions.length > 0 ? { User_input: instructions } : {}),
+  }
+}
+
+export function prepareClaimsApiMapping(snapshot) {
+  const document = prepareClaimsApiDocument(snapshot)
+  return {
+    version: 'claims-document-2',
+    document: { fieldId: 'Technical_Disclosure_file', fileName: document.fileName,
+      mediaType: document.mediaType, byteLength: document.bytes.byteLength, sha256: document.sha256 },
+    textInputs: textInputs(readValues(snapshot)),
+  }
+}
+
 export function buildClaimsApiDocumentInputs(snapshot, uploadedUrl, allowedOrigins, environmentKind = 'non-production') {
   const values = readValues(snapshot)
   const url = normalizeOasisFileUrl(uploadedUrl, environmentKind)
   if (!Array.isArray(allowedOrigins) || !allowedOrigins.map(origin => normalizeOasisDownloadOrigin(origin, 'download', environmentKind)).includes(new URL(url).origin)) {
     throw new TypeError('Upload URL origin is not approved')
   }
-  const instructions = [
-    ['撰写要求', values.claim_requirements_text], ['用户指令', values.user_input],
-  ].filter(([, value]) => value.length > 0).map(([title, value]) => `【${title}】\n${value}`).join('\n\n')
   return {
     Technical_Disclosure_file: { type: 'document', transfer_method: 'remote_url', url },
-    drawings_explain_TD: values.drawings_text,
-    User_input: instructions,
+    ...textInputs(values),
   }
 }

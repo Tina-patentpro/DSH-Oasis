@@ -459,6 +459,7 @@ export const oasisRunningWaterObservationSchema = z.object({
 
 const oasisProviderSnapshotSchema = z.object({
   environmentKind: z.enum(['non-production', 'production']).optional(),
+  accountId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
   apiBaseOrigin: httpUrlSchema,
   apiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
   apiEndpoint: identifierSchema,
@@ -469,6 +470,7 @@ const oasisProviderSnapshotSchema = z.object({
 
 export const oasisRemoteExecutionSchema = z.object({
   environmentKind: z.enum(['non-production', 'production']).optional(),
+  accountId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
   executionId: identifierSchema,
   recordId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).nullable().optional(),
   recordIdSource: z.literal('create').nullable().optional(),
@@ -731,6 +733,7 @@ const workbenchTaskV3Schema = z.object({
         const provider = run.providerSnapshot
         if (
           execution.serviceSnapshot.apiId !== provider.apiId
+          || execution.accountId !== provider.accountId
           || (execution.environmentKind ?? 'non-production') !== (provider.environmentKind ?? 'non-production')
           || execution.apiBaseOrigin !== provider.apiBaseOrigin
           || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 
 import { createOasisRemoteService } from '../src/oasis-remote-service.js'
-import { parseWorkbenchRecord } from '../src/workbench-domain.js'
+import { parseWorkbenchRecord, computeOasisRemoteInputSha256 } from '../src/workbench-domain.js'
 import { createMaterialReference, createV3Record, NOW } from './workbench-fixtures.mjs'
 
 const SERVICE = Object.freeze({
@@ -55,7 +55,7 @@ function createClient(overrides = {}) {
   const calls = []
   return {
     calls,
-    async getUserDetail() { calls.push(['user']); return { balance: 20 } },
+    async getUserDetail() { calls.push(['user']); return { id: 101, balance: 20 } },
     async getCategoryCatalog() { calls.push(['catalog']); return [SERVICE] },
     async getApiDetail(name) { calls.push(['detail', name]); return structuredClone(DETAIL) },
     async getFolderList() { calls.push(['folders']); return { total: 1, items: [{ id: 8, name: '测试项目' }] } },
@@ -140,6 +140,77 @@ async function prepareRemote(harness) {
 
 const REMOTE_EXECUTION = { workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-remote-a' }
 const REMOTE_RUN = { workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-remote-a' }
+
+test('S6 new execution and result bind the authenticated account into input integrity', async () => {
+  const h = createHarness()
+  await prepareRemote(h)
+  assert.equal(h.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a'].accountId, 101)
+  await h.service.continue(REMOTE_EXECUTION)
+  const record = h.repository.get()
+  assert.equal(record.tasks['task-a'].runs['run-remote-a'].providerSnapshot.accountId, 101)
+  const tampered = structuredClone(record)
+  tampered.tasks['task-a'].remoteExecutions['execution-remote-a'].accountId = 202
+  assert.throws(() => parseWorkbenchRecord('workspace-a', tampered))
+})
+
+test('S6 different account cannot continue an existing operation or observe its ledger', async () => {
+  const h = createHarness()
+  await prepareRemote(h)
+  const before = JSON.stringify(h.repository.get())
+  h.client.getUserDetail = async () => ({ id: 202, balance: 20 })
+  await assert.rejects(h.service.continue(REMOTE_EXECUTION), { code: 'REMOTE_ACCOUNT_MISMATCH' })
+  assert.equal(JSON.stringify(h.repository.get()), before)
+  assert.equal(h.client.calls.filter(([name]) => ['upload', 'create', 'query'].includes(name)).length, 0)
+  h.client.getUserDetail = async () => ({ id: 101, balance: 20 })
+  await h.service.continue(REMOTE_EXECUTION)
+  h.client.getUserDetail = async () => ({ id: 202, balance: 20 })
+  await assert.rejects(h.service.observeRunningWater(REMOTE_RUN), { code: 'REMOTE_ACCOUNT_MISMATCH' })
+  assert.equal(h.client.calls.filter(([name]) => name === 'running-water').length, 0)
+})
+
+test('S6 legacy unbound execution remains readable without silently acquiring the current account', async () => {
+  const h = createHarness()
+  await prepareRemote(h)
+  const legacy = h.repository.get()
+  const execution = legacy.tasks['task-a'].remoteExecutions['execution-remote-a']
+  // Construct historical-format synthetic data; no stored user record is migrated.
+  delete execution.accountId
+  execution.inputSha = computeOasisRemoteInputSha256({
+    providerSnapshot: { apiBaseOrigin: execution.apiBaseOrigin, apiId: execution.serviceSnapshot.apiId,
+      apiEndpoint: execution.serviceSnapshot.apiEndpoint, apiProcess: execution.serviceSnapshot.apiProcess,
+      folderId: execution.folderSnapshot.folderId, price: execution.priceSnapshot.price },
+    formValues: execution.formValues, inputRefs: execution.materialSnapshots,
+  })
+  h.repository.replace(legacy)
+  const bytes = JSON.stringify(h.repository.get()), calls = h.client.calls.length
+  await assert.rejects(h.service.continue(REMOTE_EXECUTION), { code: 'REMOTE_ACCOUNT_UNVERIFIED' })
+  assert.equal(h.client.calls.length, calls)
+  assert.equal(JSON.stringify(h.repository.get()), bytes)
+  assert.equal(Object.hasOwn(h.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a'], 'accountId'), false)
+})
+
+test('S6 an old request key cannot be rebound to another authenticated account', async () => {
+  const h = createHarness()
+  await prepareRemote(h)
+  const before = JSON.stringify(h.repository.get())
+  h.client.getUserDetail = async () => ({ id: 202, balance: 20 })
+  await assert.rejects(h.service.start({ workspaceId: 'workspace-a', taskId: 'task-a',
+    expectedRevision: h.repository.get().revision, requestKey: 'remote-request-a',
+    priceConfirmed: true, externalTransferConfirmed: true }), { code: 'IDEMPOTENCY_CONFLICT' })
+  assert.equal(JSON.stringify(h.repository.get()), before)
+})
+
+for (const id of [undefined, '101', -1, 1.5, Number.MAX_SAFE_INTEGER + 1]) {
+  test(`S6 refuses a new execution with invalid authenticated account id ${id}`, async () => {
+    const h = createHarness({ client: createClient({ getUserDetail: async () => ({ id, balance: 20 }) }) })
+    await configureDraft(h)
+    const before = JSON.stringify(h.repository.get())
+    await assert.rejects(h.service.start({ workspaceId: 'workspace-a', taskId: 'task-a',
+      expectedRevision: h.repository.get().revision, requestKey: 'account-test',
+      priceConfirmed: true, externalTransferConfirmed: true }), { code: 'REMOTE_ACCOUNT_UNVERIFIED' })
+    assert.equal(JSON.stringify(h.repository.get()), before)
+  })
+}
 
 test('explicit production mode persists into execution and result and blocks mode changes', async () => {
   const h = createHarness()

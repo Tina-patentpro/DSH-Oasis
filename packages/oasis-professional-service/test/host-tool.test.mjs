@@ -94,7 +94,7 @@ test('registers the current Host tool and owned Connection routes with cleanup',
   assert.equal(fixture.settingsRegistration?.ns, 'oasis-professional-service')
   assert.equal(fixture.settingsRegistration?.options.applies, 'restart')
   assert.equal(fixture.registered?.name, 'oasis_workbench_status')
-  assert.equal(fixture.routes.size, 25)
+  assert.equal(fixture.routes.size, 29)
 
   const stateResult = await fixture.dispatch('state/get', { workspaceId: 'workspace-a' })
   assert.equal(stateResult.ok, true)
@@ -119,7 +119,7 @@ test('registers the current Host tool and owned Connection routes with cleanup',
   assert.equal(value.externalSystems, 'not-invoked')
 
   await dispose()
-  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 25, toolDispose: 1, credentialResolve: 0 })
+  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 29, toolDispose: 1, credentialResolve: 0 })
   assert.equal(fixture.routes.size, 0)
 })
 
@@ -181,6 +181,54 @@ test('wires the Host workspace registry into the safe writeback boundary', async
     source,
     /createWorkbenchService\(\{\s*repository,\s*materialManager,\s*workspaceRegistry:\s*ctx\.workspaceRegistry,/,
   )
+})
+
+test('S6 Host refuses a replacement credential during an existing bootstrap operation', async (t) => {
+  const fixture = createHostFixture({ runtimeSettings: {
+    environmentKind: 'non-production', apiBaseUrl: 'https://oasis-staging.example',
+    credentialOrigin: 'https://oasis-staging.example', credentialRef: 'OASIS_USER_JWT', downloadOrigins: [],
+  } })
+  let reads = 0, requests = 0
+  fixture.ctx.credentials.resolve = async () => ({ value: ++reads === 1 ? 'synthetic-account-a' : 'synthetic-account-b' })
+  t.mock.method(globalThis, 'fetch', async () => {
+    requests += 1
+    throw new Error('Synthetic fetch must not be reached after account switch')
+  })
+  const dispose = await apply(fixture.ctx)
+  try {
+    await assert.rejects(fixture.dispatch('professional/bootstrap', {}))
+    assert.equal(requests, 0, 'old operation must not use the new account credential')
+  } finally { await dispose() }
+})
+
+test('S6 actual Host binding read is scoped and confirm cannot bypass disabled runtime', async () => {
+  const fixture = createHostFixture()
+  const workspace = { path: 'D:\\synthetic\\a', status: async () => 'ok' }
+  fixture.ctx.workspaceRegistry.get = id => id === 'workspace-a' ? workspace : undefined
+  fixture.ctx.settings.describe = () => [{ ns: 'oasis-professional-service', revision: 0,
+    value: fixture.settingsRegistration.options.base }]
+  fixture.ctx.settings.writable = true
+  fixture.ctx.settings.update = () => { throw new Error('No settings write allowed') }
+  const dispose = await apply(fixture.ctx)
+  try {
+    const read = await fixture.dispatch('professional/binding/get', { workspaceId: 'workspace-a' })
+    assert.deepEqual(read, { ok: true, value: { workspaceId: 'workspace-a', workspacePath: workspace.path,
+      settingsRevision: 0, binding: null, status: 'unbound' } })
+    const denied = await fixture.dispatch('professional/binding/confirm', {
+      workspaceId: 'workspace-a', workspacePath: workspace.path, expectedSettingsRevision: 0,
+      confirmed: true, accountId: 101, environmentKind: 'non-production',
+      apiBaseOrigin: 'https://oasis-staging.example', folderId: 8, apiId: 39,
+      apiEndpoint: 'synthetic-claims', apiProcess: 'one', schemaHash: 'a'.repeat(64),
+    })
+    assert.equal(denied.ok, false)
+    assert.equal(denied.error.code, 'REMOTE_DISABLED')
+    assert.equal(fixture.calls.credentialResolve, 0)
+    const preparation = await fixture.dispatch('task/prepare-api', { workspaceId: 'workspace-a', taskId: 'task-a',
+      expectedRevision: 0, expectedSettingsRevision: 0 })
+    assert.equal(preparation.ok, false)
+    assert.equal(preparation.error.code, 'WORKSPACE_BINDING_REQUIRED')
+    assert.equal(fixture.calls.credentialResolve, 0)
+  } finally { await dispose() }
 })
 
 test('isolated synthetic Host disables legacy bootstrap before resolving any credential or API request', async () => {

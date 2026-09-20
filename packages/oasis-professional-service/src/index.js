@@ -11,7 +11,7 @@ import { createPluginStatus } from './status.js'
 import {
   normalizeOasisRuntimeConfig,
   registerOasisSettings,
-  resolveOasisJwt,
+  captureOasisRuntimeCredential,
 } from './oasis-runtime-config.js'
 import { openOasisWorkbenchRepository } from './workbench-repository.js'
 import { createWorkbenchRpcHandler } from './workbench-rpc.js'
@@ -83,6 +83,8 @@ export async function apply(ctx) {
   const professionalService = createOasisRemoteService({
     repository,
     materialManager,
+    settings: ctx.settings,
+    workspaceRegistry: ctx.workspaceRegistry,
     executionIdFactory: randomUUID,
     runIdFactory: randomUUID,
     async getRuntime() {
@@ -107,8 +109,9 @@ export async function apply(ctx) {
         }
       }
       let credentialConfigured = true
+      let resolveToken
       try {
-        await resolveOasisJwt(ctx.credentials, config.credentialRef)
+        resolveToken = await captureOasisRuntimeCredential(settingsScope, ctx.credentials, config)
       } catch (error) {
         if (error?.code !== 'AUTH_REQUIRED') throw error
         credentialConfigured = false
@@ -118,12 +121,13 @@ export async function apply(ctx) {
         environmentKind: config.environmentKind,
         apiBaseOrigin: config.apiBaseUrl,
         credentialConfigured,
+        assertCurrent: credentialConfigured ? async () => { await resolveToken() } : null,
         client: credentialConfigured
           ? createOasisApiClient({
               environmentKind: config.environmentKind,
               baseUrl: config.apiBaseUrl,
               downloadOrigins: config.downloadOrigins,
-              resolveToken: () => resolveOasisJwt(ctx.credentials, config.credentialRef),
+              resolveToken,
             })
           : null,
       }

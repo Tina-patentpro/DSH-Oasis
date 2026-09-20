@@ -5386,6 +5386,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		});
 		const oasisProviderSnapshotSchema = object({
 			environmentKind: _enum(["non-production", "production"]).optional(),
+			accountId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
 			apiBaseOrigin: httpUrlSchema,
 			apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
 			apiEndpoint: identifierSchema,
@@ -5395,6 +5396,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}).strict().superRefine((value, ctx) => validateRemoteEnvironment(value, ctx));
 		const oasisRemoteExecutionSchema = object({
 			environmentKind: _enum(["non-production", "production"]).optional(),
+			accountId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
 			executionId: identifierSchema,
 			recordId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).nullable().optional(),
 			recordIdSource: literal("create").nullable().optional(),
@@ -5784,7 +5786,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							message: "remote run must match its Host execution snapshot"
 						});
 						const provider = run.providerSnapshot;
-						if (execution.serviceSnapshot.apiId !== provider.apiId || (execution.environmentKind ?? "non-production") !== (provider.environmentKind ?? "non-production") || execution.apiBaseOrigin !== provider.apiBaseOrigin || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint || execution.serviceSnapshot.apiProcess !== provider.apiProcess || execution.folderSnapshot.folderId !== provider.folderId || execution.priceSnapshot.price !== provider.price) ctx.addIssue({
+						if (execution.serviceSnapshot.apiId !== provider.apiId || execution.accountId !== provider.accountId || (execution.environmentKind ?? "non-production") !== (provider.environmentKind ?? "non-production") || execution.apiBaseOrigin !== provider.apiBaseOrigin || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint || execution.serviceSnapshot.apiProcess !== provider.apiProcess || execution.folderSnapshot.folderId !== provider.folderId || execution.priceSnapshot.price !== provider.price) ctx.addIssue({
 							code: "custom",
 							path: [
 								"runs",

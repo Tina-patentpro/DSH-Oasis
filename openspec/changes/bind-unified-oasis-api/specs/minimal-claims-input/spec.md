@@ -1,0 +1,9 @@
+# User-confirmed TXT and minimal-input contract
+
+On 2026-09-20 the user explicitly confirmed that the selected claims service accepts TXT and permits minimal input with other chapter fields omitted. This resolves the prior design-input question. Do not ask for the same confirmation again or require a separate service explanation before continuing offline integration. It does not constitute an observed upload/generation result or authorize a new external call, installation or fee.
+
+The existing single claims-disclosure-2 draft remains authoritative. Nonblank technical disclosure is still required but need not contain full sections or satisfy a new minimum length. Preserve its UTF-8 bytes. Empty optional drawings and combined instructions are omitted from the API inputs rather than sent as empty strings or fabricated defaults. Nonempty values retain their original whitespace/content; requirement and instruction boundaries retain the existing headings. Do not infer additional chapters or accept/drop unsupported upstream material.
+
+Update the mapping identity from claims-document-1 to claims-document-2 so previously displayed preparation hashes cannot authorize the new mapping, even when all optional fields were filled and the mapped values happen to match. Historical snapshots, records and hashes remain untouched. This change only affects the pure mapper and its existing Host preparation consumer; actual upload/create/common result integration and UI remain pending. Existing unverified/non-submittable responses are not promoted to live verification by this user statement.
+
+Validation: minimal disclosure emits exactly one file input, independently populated optional fields remain lossless, complete-input mapping remains compatible, old preparation is rejected before credential/network access, and existing client/preflight/no-replay regressions remain green. Real API tests require a separately scoped material/target/budget approval.

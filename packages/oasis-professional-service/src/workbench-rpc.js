@@ -7,6 +7,7 @@ import {
   writebackRecoveryManifestSchema,
 } from './workbench-contract.js'
 import { WorkspaceMaterialError } from './workspace-materials.js'
+import { workspaceApiBindingCommandSchema } from './oasis-workspace-binding.js'
 
 export const OASIS_WORKBENCH_RPC_CHANNEL = '/oasis-workbench'
 
@@ -186,6 +187,18 @@ export function createWorkbenchRpcHandler(service, professionalService = null) {
       return materialResult(() => professionalService.getBootstrap())
     }
 
+    if (endpoint === 'professional/binding/get') {
+      const parsed = parsePayload(getPayloadSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => professionalService.getWorkspaceBinding(parsed.data))
+    }
+
+    if (endpoint === 'professional/binding/confirm') {
+      const parsed = parsePayload(workspaceApiBindingCommandSchema, payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => professionalService.bindWorkspace(parsed.data))
+    }
+
     if (endpoint === 'professional/detail') {
       const parsed = parsePayload(professionalDetailPayloadSchema, payload)
       if (!parsed.success) return parsed
@@ -254,6 +267,21 @@ export function createWorkbenchRpcHandler(service, professionalService = null) {
       const parsed = parsePayload(z.object({ ...materialCommandBase, sessionId: workspaceIdSchema }).strict(), payload)
       if (!parsed.success) return parsed
       return materialResult(() => service.prepareLocalRun(parsed.data))
+    }
+    if (endpoint === 'task/prepare-api') {
+      const parsed = parsePayload(z.object({ ...materialCommandBase,
+        expectedSettingsRevision: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+      }).strict(), payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => professionalService.prepareClaimsMapping(parsed.data))
+    }
+    if (endpoint === 'task/check-api') {
+      const parsed = parsePayload(z.object({ ...materialCommandBase,
+        expectedSettingsRevision: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+        preparationSha256: z.string().regex(/^[a-f0-9]{64}$/), remoteReadConfirmed: z.literal(true),
+      }).strict(), payload)
+      if (!parsed.success) return parsed
+      return materialResult(() => professionalService.checkClaimsMapping(parsed.data))
     }
     if (endpoint === 'task/create-local') {
       const parsed = parsePayload(taskCreatePayloadSchema.extend({ sessionId: workspaceIdSchema,

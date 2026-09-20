@@ -9,6 +9,27 @@ import {
   createV3Record,
 } from './workbench-fixtures.mjs'
 
+test('S6 binding routes validate displayed identity and confirmation before reaching Host', async () => {
+  const calls = []
+  const handler = createWorkbenchRpcHandler({}, {
+    async getWorkspaceBinding(input) { calls.push(input); return { status: 'unbound' } },
+    async bindWorkspace(input) { calls.push(input); return { status: 'unverified' } },
+  })
+  const command = { workspaceId: 'a', workspacePath: 'D:\\synthetic\\a', expectedSettingsRevision: 0,
+    confirmed: true, accountId: 101, environmentKind: 'non-production',
+    apiBaseOrigin: 'https://oasis-staging.example', folderId: 8, apiId: 39,
+    apiEndpoint: 'synthetic-claims', apiProcess: 'one', schemaHash: 'a'.repeat(64) }
+  assert.deepEqual(await handler('professional/binding/get', { workspaceId: 'a' }), { ok: true, value: { status: 'unbound' } })
+  assert.deepEqual(await handler('professional/binding/confirm', command), { ok: true, value: { status: 'unverified' } })
+  for (const patch of [{ confirmed: false }, { accountId: '101' }, { schemaHash: 'wrong' },
+    { expectedSettingsRevision: -1 }, { jwt: 'synthetic-forbidden' }, { workspaceId: ' a ' }]) {
+    const response = await handler('professional/binding/confirm', { ...command, ...patch })
+    assert.equal(response.ok, false)
+    assert.equal(response.error.code, 'bad-request')
+  }
+  assert.equal(calls.length, 2)
+})
+
 test('dispatches state endpoints with a schema-v3 editable replacement', async () => {
   const calls = []
   const service = {

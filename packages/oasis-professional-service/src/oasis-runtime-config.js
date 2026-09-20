@@ -3,6 +3,7 @@ import z from '@deepseek-ai/schemastery'
 
 import { normalizeOasisOrigin, normalizeOasisDownloadOrigin } from './oasis-origin-policy.js'
 import { normalizeGenerationPreferences } from './generation-preferences.js'
+import { parseWorkspaceApiBindings } from './oasis-workspace-binding.js'
 
 const DEFAULT_CREDENTIAL_REF = 'OASIS_USER_JWT'
 
@@ -16,6 +17,13 @@ export const OASIS_SETTINGS_SCHEMA = z.object({
   defaultGenerationSource: z.string().default('local-skill'),
   outputDirectoryPrefix: z.string().default(''),
   localModelEnabled: z.boolean().default(false),
+  workspaceApiBindings: z.array(z.object({
+    workspaceId: z.string(), workspacePath: z.string(),
+    environmentKind: z.union([z.const('non-production'), z.const('production')]),
+    apiBaseOrigin: z.string(), accountId: z.number(), folderId: z.number(),
+    apiId: z.number(), apiEndpoint: z.string(), apiProcess: z.string(),
+    schemaHash: z.string(), folderName: z.string(), confirmedAt: z.string(),
+  })).default([]),
 })
 
 export function normalizeOasisRuntimeConfig(input = {}) {
@@ -23,6 +31,7 @@ export function normalizeOasisRuntimeConfig(input = {}) {
     throw new TypeError('Oasis runtime config must be an object')
   }
   normalizeGenerationPreferences(input)
+  parseWorkspaceApiBindings(input.workspaceApiBindings)
   const localModelEnabled = input.localModelEnabled ?? false
   if (typeof localModelEnabled !== 'boolean') throw new TypeError('localModelEnabled must be boolean')
   const environmentKind = input.environmentKind ?? 'non-production'
@@ -61,6 +70,7 @@ export function registerOasisSettings(ctx, base = {}) {
     defaultGenerationSource: 'local-skill',
     outputDirectoryPrefix: '',
     localModelEnabled: false,
+    workspaceApiBindings: [],
     ...base,
   }
   normalizeOasisRuntimeConfig(entry)
@@ -80,4 +90,37 @@ export async function resolveOasisJwt(credentials, referenceName) {
     throw error
   }
   return hit.value
+}
+
+// Capture a single operation, not a persisted credential or account binding.
+export async function captureOasisRuntimeCredential(settingsScope, credentials, config) {
+  const identity = value => JSON.stringify([
+    value.environmentKind, value.apiBaseUrl, value.credentialOrigin, value.credentialRef,
+    [...value.downloadOrigins].sort(),
+  ])
+  const captured = identity(config)
+  let invalidated = false
+  const changed = () => {
+    invalidated = true
+    const error = new Error('Oasis runtime configuration or credential changed; prepare a new operation')
+    error.code = 'REMOTE_RUNTIME_CHANGED'
+    return error
+  }
+  const assertConfig = () => {
+    if (invalidated) throw changed()
+    let current
+    try { current = normalizeOasisRuntimeConfig(settingsScope.get()) } catch { throw changed() }
+    if (identity(current) !== captured) throw changed()
+  }
+  if (!config.credentialBound) throw changed()
+  assertConfig()
+  const token = await resolveOasisJwt(credentials, config.credentialRef)
+  assertConfig()
+  return async () => {
+    assertConfig()
+    const current = await resolveOasisJwt(credentials, config.credentialRef)
+    assertConfig()
+    if (current !== token) throw changed()
+    return token
+  }
 }

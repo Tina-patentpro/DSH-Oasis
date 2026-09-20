@@ -60,6 +60,7 @@ function assertRunIntegrity(record) {
       const executionInputSha256 = computeOasisRemoteInputSha256({
         providerSnapshot: {
           ...(execution.environmentKind ? { environmentKind: execution.environmentKind } : {}),
+          ...(execution.accountId !== undefined ? { accountId: execution.accountId } : {}),
           apiBaseOrigin: execution.apiBaseOrigin,
           apiId: execution.serviceSnapshot.apiId,
           apiEndpoint: execution.serviceSnapshot.apiEndpoint,

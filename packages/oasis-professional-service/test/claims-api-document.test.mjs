@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { prepareClaimsApiDocument, buildClaimsApiDocumentInputs } from '../src/claims-api-document.js'
+import { prepareClaimsApiDocument, prepareClaimsApiMapping, buildClaimsApiDocumentInputs } from '../src/claims-api-document.js'
 import { createOasisApiClient } from '../src/oasis-api-contract.js'
 
 const snapshot = () => ({ inputSchemaVersion: 'claims-disclosure-2', values: {
@@ -31,9 +31,37 @@ test('maps only approved fields with distinct requirement headings', () => {
   })
   s.values.drawings_text = ''; s.values.claim_requirements_text = ''; s.values.user_input = ''
   const inputs = buildClaimsApiDocumentInputs(s, 'https://files-staging.example/a.txt', origins)
-  assert.equal(inputs.User_input, '')
-  assert.equal(inputs.drawings_explain_TD, '')
+  assert.equal(Object.hasOwn(inputs, 'User_input'), false)
+  assert.equal(Object.hasOwn(inputs, 'drawings_explain_TD'), false)
   assert.equal(Object.hasOwn(inputs, 'technical_solutions'), false)
+})
+
+test('minimal disclosure produces only a TXT file input without fabricated chapters or optional empty fields', () => {
+  const s = { inputSchemaVersion: 'claims-disclosure-2', values: {
+    disclosure_text: '连接件', drawings_text: '', claim_requirements_text: '', user_input: '',
+  } }
+  const before = structuredClone(s)
+  assert.equal(new TextDecoder().decode(prepareClaimsApiDocument(s).bytes), '连接件')
+  assert.deepEqual(prepareClaimsApiMapping(s).textInputs, {})
+  assert.deepEqual(buildClaimsApiDocumentInputs(s, 'https://files-staging.example/a.txt', origins), {
+    Technical_Disclosure_file: { type: 'document', transfer_method: 'remote_url', url: 'https://files-staging.example/a.txt' },
+  })
+  assert.deepEqual(s, before)
+})
+
+for (const [field, content, expected] of [
+  ['drawings_text', '图 1\r\n', { drawings_explain_TD: '图 1\r\n' }],
+  ['claim_requirements_text', ' 保留要求 ', { User_input: '【撰写要求】\n 保留要求 ' }],
+  ['user_input', '\t保留指令\n', { User_input: '【用户指令】\n\t保留指令\n' }],
+]) test(`minimal mapping preserves independently supplied ${field}`, () => {
+  const s = { inputSchemaVersion: 'claims-disclosure-2', values: {
+    disclosure_text: '连接件', drawings_text: '', claim_requirements_text: '', user_input: '', [field]: content,
+  } }
+  assert.deepEqual(prepareClaimsApiMapping(s).textInputs, expected)
+  const inputs = buildClaimsApiDocumentInputs(s, 'https://files-staging.example/a.txt', origins)
+  const { Technical_Disclosure_file, ...text } = inputs
+  assert.deepEqual(text, expected)
+  assert.equal(Technical_Disclosure_file.url, 'https://files-staging.example/a.txt')
 })
 
 test('rejects missing upload, unsafe or unapproved URLs', () => {

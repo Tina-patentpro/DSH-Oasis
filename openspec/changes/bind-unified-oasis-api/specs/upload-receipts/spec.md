@@ -1,0 +1,13 @@
+# Existing execution checkpoints and upload receipts (S6 3b prerequisite)
+
+Before wiring unified claims into the existing remote engine, make that engine's upload and submission checkpoints fail closed. Reuse current execution statuses and uploadedFiles; do not add a second state machine or new persistent schema.
+
+- Every internal execution mutation must be acknowledged as committed before any following upload, create or query. A revision conflict raises a bounded domain error and does not retry an external request. Storage exceptions propagate without dispatching the next side effect.
+- Read/recheck local material before entering `uploading`. Persist `uploading` before dispatching upload. Receipt persistence atomically appends the receipt and leaves `uploading` for `prepared`. A restored `uploading` execution has an unknown upload outcome and cannot automatically re-upload. This also covers historical uploading records without inventing receipt provenance.
+- Any error after invoking upload, including AUTH_REQUIRED, is an unknown outcome; there is no automatic retry. Missing credentials detected before dispatch remain recoverable through the existing runtime gate. Persisted receipts survive a later checkpoint failure and are reused rather than uploaded again.
+- Receipt field ids must name selected file fields and match frozen form selection before skipping an upload or constructing create inputs. Reuse the existing repository checks for unique field ids and material reference/hash integrity; do not duplicate or weaken them. Existing records are not migrated or rehashed. Records already rejected by repository integrity remain rejected; otherwise-readable receipts for unknown/unselected fields cannot authorize a new create.
+- Existing submittedAt protection and original-key-only reconciliation are retained. Concurrent callers share the existing operation. Multiple Hosts writing one storage remain unsupported; these changes are not cross-process locking.
+
+Tests use the real repository and synthetic transport/materials, exercising upload dispatch, lost receipts, rejected intent/submission commits, reload, successful receipt reuse and malformed receipts. No real API calls, credentials, installation, UI changes, Git commit or daily DSH changes are authorized by this slice.
+
+Ruling: finish this safety prerequisite before activating the unified API path, because merely passing a prepared draft into the current loop could duplicate material uploads or uncheckpointed creates. Cost: task 3b and S6 remain incomplete pending verified mapping/execution/result integration. Self-review only under the project's single-agent rule; no claim of independent review.
