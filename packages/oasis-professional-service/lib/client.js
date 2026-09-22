@@ -4757,75 +4757,6 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return /* @__PURE__ */ _superRefine(fn, params);
 		}
 		//#endregion
-		//#region src/local-run-summary.js
-		const finishKinds = [
-			"stop",
-			"max-tokens",
-			"tool-calls",
-			"error",
-			"aborted"
-		];
-		const failureStages = [
-			"preparation",
-			"stream",
-			"result-contract"
-		];
-		const tokenFields = [
-			"inputTokens",
-			"outputTokens",
-			"totalTokens",
-			"cacheReadTokens",
-			"reasoningTokens"
-		];
-		const count = number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
-		const localExecutionSummarySchema = object({
-			failureStage: _enum(failureStages).optional(),
-			finishKind: _enum(finishKinds).optional(),
-			usage: object(Object.fromEntries(tokenFields.map((key) => [key, count.optional()]))).strict().optional()
-		}).strict();
-		function canonicalHostname(url) {
-			return url.hostname.toLocaleLowerCase("en-US").replace(/\.+$/u, "");
-		}
-		function normalizeHttpOrigin(value, label) {
-			let url;
-			try {
-				url = new URL(value);
-			} catch {
-				throw new TypeError(`${label} must be an absolute HTTP(S) origin`);
-			}
-			if (!["http:", "https:"].includes(url.protocol)) throw new TypeError(`${label} must use HTTP(S)`);
-			if (url.username || url.password || url.search || url.hash || !["", "/"].includes(url.pathname)) throw new TypeError(`${label} must contain only an origin`);
-			url.hostname = canonicalHostname(url);
-			return url;
-		}
-		function normalizeOasisOrigin(value, label = "origin", environmentKind = "non-production") {
-			const url = normalizeHttpOrigin(value, label);
-			if (!["non-production", "production"].includes(environmentKind)) throw new TypeError("Unsupported Oasis environment");
-			if (environmentKind === "production") {
-				if (url.origin !== `https://lzhxpy.oasisintwrite.com`) throw new TypeError("Production API must use the approved HTTPS origin");
-			} else if (url.hostname === "lzhxpy.oasisintwrite.com") throw new TypeError("The Oasis production origin is forbidden");
-			return url.origin;
-		}
-		function normalizeOasisDownloadOrigin(value, label = "download origin", environmentKind = "non-production") {
-			if (environmentKind === "non-production") return normalizeOasisOrigin(value, label);
-			if (environmentKind !== "production") throw new TypeError("Unsupported Oasis environment");
-			const url = normalizeHttpOrigin(value, label);
-			if (url.protocol !== "https:") throw new TypeError("Production files require HTTPS");
-			return url.origin;
-		}
-		function normalizeOasisFileUrl(value, environmentKind = "non-production") {
-			let url;
-			try {
-				if (typeof value !== "string" || value.length > 4096) throw new TypeError();
-				url = new URL(value);
-				normalizeOasisDownloadOrigin(url.origin, "file origin", environmentKind);
-				if (url.username || url.password || url.search || url.hash) throw new TypeError();
-			} catch {
-				throw new TypeError("Remote file URL must satisfy the environment policy without credentials, query or fragment (non-production by default)");
-			}
-			return url.href;
-		}
-		//#endregion
 		//#region src/generation-contract.js
 		const CLAIMS_TEMPLATE_ID = "patent-claims";
 		const CLAIMS_V2_SCHEMA_VERSION = "claims-disclosure-2";
@@ -4843,7 +4774,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return Object.values(task?.runs ?? {}).some((run) => isUnifiedRun(run) && (run.status === "prepared" || run.mode === "dsh-local" && run.status === "unknown"));
 		}
 		function isUnifiedRun(run) {
-			return ["unified-fixture", "dsh-local"].includes(run?.mode);
+			return [
+				"unified-fixture",
+				"dsh-local",
+				"oasis-api"
+			].includes(run?.mode);
 		}
 		const generationDraftSchema = object({
 			inputSchemaVersion: _enum(["1", CLAIMS_V2_SCHEMA_VERSION]),
@@ -4951,8 +4886,187 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}).strict()]);
 		function generationUnavailableReason(source) {
 			generationSourceSchema.parse(source);
-			return source === "local-skill" ? "本地 Skills 未启用：请在 DSH 设置中启用并重启 Host；需可用的会话模型" : "专业 API 未启用：服务绑定待核实";
+			return source === "local-skill" ? "DSH 模型服务暂不可用：请检查当前项目会话及 DSH 模型设置" : "专业 API 未启用：服务绑定待核实";
 		}
+		//#endregion
+		//#region src/oasis-origin-policy.js
+		const OASIS_PRODUCTION_HOSTNAME = "lzhxpy.oasisintwrite.com";
+		function canonicalHostname(url) {
+			return url.hostname.toLocaleLowerCase("en-US").replace(/\.+$/u, "");
+		}
+		function normalizeHttpOrigin(value, label) {
+			let url;
+			try {
+				url = new URL(value);
+			} catch {
+				throw new TypeError(`${label} must be an absolute HTTP(S) origin`);
+			}
+			if (!["http:", "https:"].includes(url.protocol)) throw new TypeError(`${label} must use HTTP(S)`);
+			if (url.username || url.password || url.search || url.hash || !["", "/"].includes(url.pathname)) throw new TypeError(`${label} must contain only an origin`);
+			url.hostname = canonicalHostname(url);
+			return url;
+		}
+		function normalizeOasisOrigin(value, label = "origin", environmentKind = "non-production") {
+			const url = normalizeHttpOrigin(value, label);
+			if (!["non-production", "production"].includes(environmentKind)) throw new TypeError("Unsupported Oasis environment");
+			if (environmentKind === "production") {
+				if (url.origin !== `https://lzhxpy.oasisintwrite.com`) throw new TypeError("Production API must use the approved HTTPS origin");
+			} else if (url.hostname === "lzhxpy.oasisintwrite.com") throw new TypeError("The Oasis production origin is forbidden");
+			return url.origin;
+		}
+		function normalizeOasisDownloadOrigin(value, label = "download origin", environmentKind = "non-production") {
+			if (environmentKind === "non-production") return normalizeOasisOrigin(value, label);
+			if (environmentKind !== "production") throw new TypeError("Unsupported Oasis environment");
+			const url = normalizeHttpOrigin(value, label);
+			if (url.protocol !== "https:") throw new TypeError("Production files require HTTPS");
+			return url.origin;
+		}
+		function normalizeOasisFileUrl(value, environmentKind = "non-production") {
+			let url;
+			try {
+				if (typeof value !== "string" || value.length > 4096) throw new TypeError();
+				url = new URL(value);
+				normalizeOasisDownloadOrigin(url.origin, "file origin", environmentKind);
+				if (url.username || url.password || url.search || url.hash) throw new TypeError();
+			} catch {
+				throw new TypeError("Remote file URL must satisfy the environment policy without credentials, query or fragment (non-production by default)");
+			}
+			return url.href;
+		}
+		//#endregion
+		//#region src/oasis-workspace-binding.js
+		const id$2 = number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+		const label = string().min(1).max(256).refine((value) => value.trim() === value);
+		const workspaceApiBindingFields = {
+			workspaceId: label,
+			workspacePath: string().min(1).max(4096),
+			environmentKind: _enum(["non-production", "production"]),
+			apiBaseOrigin: string().min(1).max(2048),
+			accountId: id$2,
+			folderId: id$2,
+			apiId: id$2,
+			apiEndpoint: label,
+			apiProcess: string().max(4e3),
+			schemaHash: string().regex(/^[a-f0-9]{64}$/)
+		};
+		object({
+			...workspaceApiBindingFields,
+			expectedSettingsRevision: id$2,
+			confirmed: literal(true)
+		}).strict();
+		const workspaceApiBindingSchema = object({
+			...workspaceApiBindingFields,
+			folderName: string().min(1).max(200),
+			confirmedAt: string().datetime()
+		}).strict().superRefine((value, ctx) => {
+			try {
+				if (normalizeOasisOrigin(value.apiBaseOrigin, "binding origin", value.environmentKind) !== value.apiBaseOrigin) throw new Error();
+			} catch {
+				ctx.addIssue({
+					code: "custom",
+					path: ["apiBaseOrigin"],
+					message: "Invalid canonical binding origin"
+				});
+			}
+		});
+		//#endregion
+		//#region src/claims-api-execution-contract.js
+		const sha = string().regex(/^[a-f0-9]{64}$/);
+		const id$1 = string().min(1).max(256);
+		const revision = number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+		const workspaceBindingReadSchema = object({
+			workspaceId: id$1,
+			workspacePath: string().min(1).max(4096),
+			settingsRevision: revision,
+			binding: workspaceApiBindingSchema.nullable(),
+			status: _enum(["unbound", "unverified"])
+		}).strict();
+		const workspaceBindingSavedSchema = object({
+			binding: workspaceApiBindingSchema,
+			status: literal("unverified")
+		}).strict();
+		const claimsApiSnapshotSchema = object({
+			workspaceId: id$1,
+			workspacePath: string().min(1).max(4096),
+			taskId: id$1,
+			expectedRevision: revision,
+			expectedSettingsRevision: revision,
+			workflowId: literal("patent-claims"),
+			workflowVersion: literal("2"),
+			source: literal("oasis-api"),
+			binding: workspaceApiBindingSchema,
+			inputSchemaVersion: literal("claims-disclosure-2"),
+			values: claimsV2DraftValuesSchema,
+			mapping: object({
+				version: literal("claims-document-2"),
+				document: object({
+					fieldId: literal("Technical_Disclosure_file"),
+					fileName: literal("technical-disclosure.txt"),
+					mediaType: literal("text/plain;charset=utf-8"),
+					byteLength: number().int().positive().max(8e4),
+					sha256: sha
+				}).strict(),
+				textInputs: object({
+					drawings_explain_TD: string().max(12e3).optional(),
+					User_input: string().max(12100).optional()
+				}).strict()
+			}).strict(),
+			allowedUploadOrigins: array(string().min(1).max(2048)).max(256)
+		}).strict();
+		const claimsApiPreparationSchema = object({
+			status: literal("unverified"),
+			canSubmit: literal(false),
+			blockers: array(string().max(256)).max(16),
+			snapshot: claimsApiSnapshotSchema,
+			preparationSha256: sha
+		}).strict();
+		const claimsApiPreviewSchema = object({
+			workspaceId: id$1,
+			taskId: id$1,
+			expectedRevision: revision,
+			expectedSettingsRevision: revision,
+			confirmationToken: string().uuid(),
+			expiresAt: string().datetime(),
+			preparationSha256: sha,
+			apiBaseOrigin: string().min(1).max(2048),
+			environmentKind: _enum(["non-production", "production"]),
+			accountId: revision,
+			folderId: revision,
+			folderName: string().min(1).max(200),
+			apiEndpoint: id$1,
+			price: number().nonnegative().finite(),
+			balance: number().nonnegative().finite(),
+			documentBytes: number().int().positive().max(8e4),
+			characterCount: number().int().nonnegative().max(44e3),
+			mappingVersion: literal("claims-document-2")
+		}).strict();
+		//#endregion
+		//#region src/local-run-summary.js
+		const finishKinds = [
+			"stop",
+			"max-tokens",
+			"tool-calls",
+			"error",
+			"aborted"
+		];
+		const failureStages = [
+			"preparation",
+			"stream",
+			"result-contract"
+		];
+		const tokenFields = [
+			"inputTokens",
+			"outputTokens",
+			"totalTokens",
+			"cacheReadTokens",
+			"reasoningTokens"
+		];
+		const count = number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+		const localExecutionSummarySchema = object({
+			failureStage: _enum(failureStages).optional(),
+			finishKind: _enum(finishKinds).optional(),
+			usage: object(Object.fromEntries(tokenFields.map((key) => [key, count.optional()]))).strict().optional()
+		}).strict();
 		//#endregion
 		//#region src/workbench-contract.js
 		const WORKBENCH_LIMITS = Object.freeze({
@@ -5044,6 +5158,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			schemaVersion: literal(1),
 			workflows: array(workflowDefinitionSchema).max(16),
 			unifiedFixtureEnabled: boolean().optional(),
+			apiExecutionAvailable: boolean().optional(),
 			localGenerationEnabled: boolean().optional(),
 			localGenerationKind: _enum(["native-offline", "native-model"]).nullable().optional()
 		}).strict();
@@ -5103,7 +5218,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		const writebackRecordSchema = object({
 			writebackId: identifierSchema,
 			artifactId: identifierSchema,
-			relativeDirectory: writebackRelativePathSchema,
+			relativeDirectory: union([literal("."), writebackRelativePathSchema]),
 			files: array(writebackFileSchema).length(WORKBENCH_LIMITS.maxWritebackFiles),
 			reviewStatus: literal("approved"),
 			committedAt: timestampSchema
@@ -5113,7 +5228,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const mediaTypes = /* @__PURE__ */ new Set();
 			for (const [index, file] of value.files.entries()) {
 				const path = file.relativePath.toLocaleLowerCase("en-US");
-				if (!path.startsWith(prefix)) ctx.addIssue({
+				if (value.relativeDirectory === "." ? path.includes("\\") : !path.startsWith(prefix)) ctx.addIssue({
 					code: "custom",
 					path: [
 						"files",
@@ -5151,7 +5266,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			taskId: identifierSchema,
 			runId: identifierSchema,
 			artifactId: identifierSchema,
-			relativeDirectory: writebackRelativePathSchema,
+			relativeDirectory: union([literal("."), writebackRelativePathSchema]),
 			files: array(writebackFileSchema).length(WORKBENCH_LIMITS.maxWritebackFiles)
 		}).strict().extend({
 			absoluteTarget: writebackAbsolutePathSchema,
@@ -5320,6 +5435,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				name: string().min(1).max(200)
 			}).strict()).max(1e3)
 		}).strict();
+		const workspaceBindingOptionsSchema = oasisProfessionalBootstrapSchema.extend({
+			workspaceId: identifierSchema,
+			workspacePath: string().min(1).max(4096),
+			settingsRevision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			accountId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			apiBaseOrigin: httpUrlSchema
+		}).strict();
 		const oasisProfessionalDetailSchema = object({
 			id: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
 			name: identifierSchema,
@@ -5395,6 +5517,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			price: number().nonnegative().finite()
 		}).strict().superRefine((value, ctx) => validateRemoteEnvironment(value, ctx));
 		const oasisRemoteExecutionSchema = object({
+			unifiedClaims: claimsApiSnapshotSchema.optional(),
 			environmentKind: _enum(["non-production", "production"]).optional(),
 			accountId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
 			executionId: identifierSchema,
@@ -5437,6 +5560,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			completedAt: timestampSchema.nullable()
 		}).strict().superRefine((value, ctx) => {
 			validateRemoteEnvironment(value, ctx, value.uploadedFiles.map((file) => file.url));
+			if (value.unifiedClaims) {
+				const s = value.unifiedClaims, b = s.binding;
+				if (value.materialSnapshots.length || s.workspaceId !== b.workspaceId || s.workspacePath !== b.workspacePath || value.accountId !== b.accountId || value.apiBaseOrigin !== b.apiBaseOrigin || value.environmentKind !== b.environmentKind || value.folderSnapshot.folderId !== b.folderId || value.serviceSnapshot.apiId !== b.apiId || value.serviceSnapshot.apiEndpoint !== b.apiEndpoint || value.serviceSnapshot.apiProcess !== b.apiProcess || value.serviceSnapshot.schemaHash !== b.schemaHash || JSON.stringify(value.formValues) !== JSON.stringify(s.mapping.textInputs)) ctx.addIssue({
+					code: "custom",
+					message: "unified API execution snapshot mismatch"
+				});
+			}
 			if (value.recordIdSource === "create" && !Number.isSafeInteger(value.recordId)) ctx.addIssue({
 				code: "custom",
 				path: ["recordId"],
@@ -5558,6 +5688,32 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			if (run.status === "prepared" !== (run.completedAt === null)) ctx.addIssue({
 				code: "custom",
 				message: "prepared and terminal completion time mismatch"
+			});
+		});
+		const oasisApiRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
+			mode: literal("oasis-api"),
+			source: literal("oasis-api"),
+			evidenceKind: _enum(["non-production-api", "production-api"]),
+			fixtureVersion: never().optional(),
+			workflowVersion: literal("2"),
+			inputSchemaVersion: literal("claims-disclosure-2"),
+			compositionVersion: never().optional(),
+			workflowRunUid: never().optional(),
+			status: literal("completed"),
+			executionId: identifierSchema,
+			executionInputSha: sha256Schema,
+			providerSnapshot: oasisProviderSnapshotSchema,
+			remoteResponse: object({
+				answerText: string().min(1).max(1e5).refine((value) => value.trim().length > 0),
+				fileUrls: array(httpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems),
+				responseSha: sha256Schema,
+				fileStatus: literal("undownloaded-unverified")
+			}).strict()
+		}).superRefine((run, ctx) => {
+			validateRemoteEnvironment(run.providerSnapshot, ctx, run.remoteResponse.fileUrls);
+			if (!run.result || run.evidenceKind !== (run.providerSnapshot.environmentKind === "production" ? "production-api" : "non-production-api") || run.parentRunId === null && run.result.artifact.body !== run.remoteResponse.answerText) ctx.addIssue({
+				code: "custom",
+				message: "unified API result provenance mismatch"
 			});
 		});
 		const dshLocalRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
@@ -5754,8 +5910,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					],
 					message: "run workflow must match task workflow"
 				});
-				if (run.mode === "oasis-legacy") {
-					if (remoteRunExecutionIds.has(run.executionId)) ctx.addIssue({
+				if (run.mode === "oasis-legacy" || run.mode === "oasis-api") {
+					const original = run.mode === "oasis-legacy" || run.parentRunId === null;
+					if (original && remoteRunExecutionIds.has(run.executionId)) ctx.addIssue({
 						code: "custom",
 						path: [
 							"runs",
@@ -5764,7 +5921,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						],
 						message: "remote execution can produce only one completed run"
 					});
-					remoteRunExecutionIds.add(run.executionId);
+					if (original) remoteRunExecutionIds.add(run.executionId);
 					const execution = value.remoteExecutions[run.executionId];
 					if (!execution || execution.status !== "completed") ctx.addIssue({
 						code: "custom",
@@ -5776,7 +5933,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						message: "remote run requires a completed Host execution"
 					});
 					else {
-						if (execution.requestKey !== run.requestKey || execution.inputSha !== run.inputSnapshot.sha256) ctx.addIssue({
+						if (original && execution.requestKey !== run.requestKey || execution.inputSha !== (run.mode === "oasis-api" ? run.executionInputSha : run.inputSnapshot.sha256)) ctx.addIssue({
 							code: "custom",
 							path: [
 								"runs",
@@ -5786,6 +5943,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							message: "remote run must match its Host execution snapshot"
 						});
 						const provider = run.providerSnapshot;
+						if (run.mode === "oasis-api") {
+							const parent = run.parentRunId === null ? null : value.runs[run.parentRunId];
+							if (!execution.unifiedClaims || execution.unifiedClaims.taskId !== value.taskId || JSON.stringify(run.inputSnapshot.formValues) !== JSON.stringify(execution.unifiedClaims.values) || run.parentRunId !== null && (!parent || parent.mode !== "oasis-api" || parent.executionId !== run.executionId || JSON.stringify(parent.remoteResponse) !== JSON.stringify(run.remoteResponse))) ctx.addIssue({
+								code: "custom",
+								message: "unified API run must match original execution and parent"
+							});
+						}
 						if (execution.serviceSnapshot.apiId !== provider.apiId || execution.accountId !== provider.accountId || (execution.environmentKind ?? "non-production") !== (provider.environmentKind ?? "non-production") || execution.apiBaseOrigin !== provider.apiBaseOrigin || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint || execution.serviceSnapshot.apiProcess !== provider.apiProcess || execution.folderSnapshot.folderId !== provider.folderId || execution.priceSnapshot.price !== provider.price) ctx.addIssue({
 							code: "custom",
 							path: [
@@ -5879,7 +6043,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					});
 					uploadedFields.add(upload.fieldId);
 					const reference = execution.materialSnapshots.find((item) => item.referenceId === upload.referenceId);
-					if (!reference || reference.sha256 !== upload.sha256) ctx.addIssue({
+					const derived = execution.unifiedClaims?.mapping.document;
+					const validDerived = derived && upload.fieldId === derived.fieldId && upload.referenceId === `derived-txt:${derived.sha256}` && upload.sha256 === derived.sha256;
+					if (derived ? !validDerived : !reference || reference.sha256 !== upload.sha256) ctx.addIssue({
 						code: "custom",
 						path: [
 							"remoteExecutions",
@@ -5963,7 +6129,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				localRunSnapshotSchema,
 				oasisRemoteRunSnapshotSchema,
 				unifiedRunSnapshotSchema,
-				dshLocalRunSnapshotSchema
+				dshLocalRunSnapshotSchema,
+				oasisApiRunSnapshotSchema
 			]))
 		}).superRefine(enforceGenerationDraft);
 		const panelModeSchema = _enum([
@@ -5994,6 +6161,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				});
 			}
 			for (const [mapKey, task] of Object.entries(value.tasks)) {
+				for (const execution of Object.values(task.remoteExecutions ?? {})) {
+					const scope = execution.unifiedClaims;
+					if (scope && (scope.taskId !== mapKey || value.workspaceId !== void 0 && scope.workspaceId !== value.workspaceId)) ctx.addIssue({
+						code: "custom",
+						path: ["tasks", mapKey],
+						message: "API execution belongs to another Workspace or task"
+					});
+				}
 				if (!seen.has(mapKey)) ctx.addIssue({
 					code: "custom",
 					path: ["tasks", mapKey],
@@ -6502,7 +6677,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			display: "grid",
 			gap: 12
 		};
-		const fieldStyle$1 = {
+		const fieldStyle = {
 			display: "grid",
 			gap: 5,
 			fontSize: 12
@@ -6526,7 +6701,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return (0, react.createElement)("section", {
 					style: boxStyle,
 					"data-testid": "oasis-professional-service"
-				}, (0, react.createElement)("strong", null, "专业服务"), (0, react.createElement)("p", { role: "status" }, "请前往 DSH 设置 → 绿洲工作台完成连接配置。设置保存后须重启 Host 并刷新页面；本地工作流仍可继续使用。"), waiting && execution ? (0, react.createElement)("button", {
+				}, (0, react.createElement)("strong", null, "专业服务"), (0, react.createElement)("p", { role: "status" }, "请前往 DSH 设置 → 绿洲工作台登录账户并确认项目绑定；本地工作流仍可继续使用。"), waiting && execution ? (0, react.createElement)("button", {
 					type: "button",
 					onClick: () => onStop(execution.executionId),
 					"data-testid": "oasis-professional-stop"
@@ -6554,7 +6729,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, (0, react.createElement)("strong", null, "专业服务"), (0, react.createElement)("p", { style: {
 				margin: 0,
 				color: "#8b2f24"
-			} }, "请前往 DSH 设置 → 绿洲工作台重新输入 JWT 并绑定当前 API 地址；凭证不会进入工作台状态。"));
+			} }, "请前往 DSH 设置 → 绿洲工作台登录账户；登录信息不会进入工作台状态。"));
 			const draft = page.professionalDraft;
 			const detail = operation.professionalDetail;
 			const execution = latestExecution(page);
@@ -6577,7 +6752,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				marginTop: 4,
 				color: "#66706b",
 				fontSize: 12
-			} }, `环境：${bootstrap.environmentKind === "production" ? "线上服务" : "非生产"} · 余额：${bootstrap.balance ?? "未知"} · 价格仅作提交前快照`)), (0, react.createElement)("label", { style: fieldStyle$1 }, (0, react.createElement)("span", null, "服务"), (0, react.createElement)("select", {
+			} }, `环境：${bootstrap.environmentKind === "production" ? "线上服务" : "非生产"} · 余额：${bootstrap.balance ?? "未知"} · 价格仅作提交前快照`)), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, "服务"), (0, react.createElement)("select", {
 				value: draft?.selectedApiEndpoint ?? "",
 				disabled: busy,
 				onChange: (event) => {
@@ -6598,7 +6773,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				gap: 10
 			} }, ...detail.inputFields.map((field) => (0, react.createElement)("label", {
 				key: field.fieldId,
-				style: fieldStyle$1
+				style: fieldStyle
 			}, (0, react.createElement)("span", null, field.label), field.control === "single-file" ? (0, react.createElement)("select", {
 				value: draft.formValues[field.fieldId] ?? "",
 				disabled: busy,
@@ -6614,7 +6789,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				style: controlStyle$1,
 				onChange: (event) => onUpdateField(field.fieldId, event.currentTarget.value),
 				"data-testid": `oasis-professional-field-${field.fieldId}`
-			}))), (0, react.createElement)("label", { style: fieldStyle$1 }, (0, react.createElement)("span", null, "项目文件夹（当前返回页）"), (0, react.createElement)("select", {
+			}))), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, "项目文件夹（当前返回页）"), (0, react.createElement)("select", {
 				value: draft.folderId,
 				disabled: busy,
 				style: controlStyle$1,
@@ -6623,7 +6798,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, ...bootstrap.folders.map((folder) => (0, react.createElement)("option", {
 				key: folder.id,
 				value: folder.id
-			}, folder.name)))), (0, react.createElement)("div", { style: { fontSize: 12 } }, `参考价格：${detail.price}`), (0, react.createElement)("label", { style: fieldStyle$1 }, (0, react.createElement)("span", null, (0, react.createElement)("input", {
+			}, folder.name)))), (0, react.createElement)("div", { style: { fontSize: 12 } }, `参考价格：${detail.price}`), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, (0, react.createElement)("input", {
 				type: "checkbox",
 				checked: operation.priceConfirmed,
 				disabled: busy,
@@ -6631,7 +6806,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					priceConfirmed: event.currentTarget.checked,
 					externalTransferConfirmed: operation.externalTransferConfirmed
 				})
-			}), " 我已确认本次参考价格与余额快照")), (0, react.createElement)("label", { style: fieldStyle$1 }, (0, react.createElement)("span", null, (0, react.createElement)("input", {
+			}), " 我已确认本次参考价格与余额快照")), (0, react.createElement)("label", { style: fieldStyle }, (0, react.createElement)("span", null, (0, react.createElement)("input", {
 				type: "checkbox",
 				checked: operation.externalTransferConfirmed,
 				disabled: busy,
@@ -7200,7 +7375,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			background: "var(--dsw-alias-bg-base, #fff)",
 			color: "inherit"
 		};
-		function WritebackPanel({ run, operation, disabled, onDraft, onPrepare, onConfirm, onCommit }) {
+		function WritebackPanel({ run, operation, disabled, onPrepare, onConfirm, onCommit }) {
 			if (!run || run.result.contentStatus === "blocked" || run.review.status !== "approved") return null;
 			const prepared = operation.writebackPlan;
 			const commitDisabled = disabled || !prepared || !operation.writebackConfirmed;
@@ -7219,27 +7394,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				margin: 0,
 				fontSize: 12,
 				color: "var(--dsw-alias-text-secondary, #66706b)"
-			} }, "仅可创建全新目录；不会覆盖既有路径。人工批准与回写均不构成专业或法律结论。"), (0, react.createElement)("label", {
-				htmlFor: "oasis-writeback-directory",
-				style: {
-					fontSize: 13,
-					fontWeight: 650
-				}
-			}, "Workspace 内新目录"), (0, react.createElement)("input", {
-				id: "oasis-writeback-directory",
-				value: operation.writebackDirectory,
-				disabled,
-				onChange: (event) => onDraft(event.currentTarget.value, false),
-				style: {
-					width: "100%",
-					boxSizing: "border-box",
-					border: "1px solid #d7d9d8",
-					borderRadius: 8,
-					padding: 9
-				}
-			}), (0, react.createElement)("button", {
+			} }, "保存到当前 DSH 项目目录，使用 DSH 文件管理查看与编辑。同名文件不会覆盖；专业 API 文件名以 _OIW 结尾。审核与保存不构成专业或法律结论。"), (0, react.createElement)("button", {
 				type: "button",
-				disabled: disabled || operation.writebackDirectory.trim().length === 0,
+				disabled,
 				onClick: onPrepare,
 				style: buttonStyle
 			}, operation.activeOperation === "writeback-prepare" ? "正在准备…" : "准备回写清单"), prepared ? (0, react.createElement)("div", { style: {
@@ -7265,7 +7422,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				checked: operation.writebackConfirmed,
 				disabled,
 				onChange: (event) => onConfirm(event.currentTarget.checked)
-			}), (0, react.createElement)("span", null, "我已复核绝对目标路径和两份文件哈希，同意创建该全新目录。")), (0, react.createElement)("button", {
+			}), (0, react.createElement)("span", null, "我已复核项目路径和两份文件哈希，同意在当前项目中创建新文件。")), (0, react.createElement)("button", {
 				type: "button",
 				"data-testid": "oasis-writeback-commit",
 				disabled: commitDisabled,
@@ -7276,11 +7433,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					color: "#fff",
 					borderColor: "#245d47"
 				}
-			}, operation.activeOperation === "writeback-commit" ? "正在提交…" : "确认创建新目录")) : null, (0, react.createElement)("div", {
+			}, operation.activeOperation === "writeback-commit" ? "正在提交…" : "确认保存到项目")) : null, (0, react.createElement)("div", {
 				role: operation.feedback === "index-warning" ? "alert" : "status",
 				"aria-live": "polite",
 				style: { fontSize: 12 }
-			}, operation.feedback === "writeback-success" ? "回写成功：新目录和索引均已提交。" : "", operation.feedback === "conflict" ? "版本或目标路径冲突：未执行覆盖，请重新准备。" : "", operation.feedback === "index-warning" ? "文件已创建，但任务索引更新失败；请按恢复清单人工核对。" : ""), operation.indexWarningManifest ? (0, react.createElement)("div", { style: {
+			}, operation.feedback === "writeback-success" ? "保存成功：项目文件和索引均已提交。" : "", operation.feedback === "conflict" ? "版本或目标路径冲突：未执行覆盖，请重新准备。" : "", operation.feedback === "index-warning" ? "文件或索引未完整提交；已创建文件予以保留，请按恢复清单人工核对，不要自动重试。" : ""), operation.indexWarningManifest ? (0, react.createElement)("div", { style: {
 				border: "1px solid #d7a69d",
 				borderRadius: 8,
 				padding: 9,
@@ -7339,7 +7496,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}
 		//#endregion
 		//#region src/client/UnifiedResultPanel.js
-		const button$1 = {
+		const button$2 = {
 			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
 			borderRadius: 7,
 			padding: "7px 10px",
@@ -7394,7 +7551,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return (0, react.createElement)("article", { style: {
 				display: "grid",
 				gap: 12
-			} }, (0, react.createElement)("div", { style: { fontSize: 12 } }, `${run.source === "local-skill" ? "本地 Skills" : "专业 API"} · ${run.evidenceKind === "native-model" ? "原生模型生成" : run.mode === "dsh-local" ? "原生离线验收" : "合成验收"} · ${run.review.status === "approved" ? "已审核" : "待审核"}`), editing ? (0, react.createElement)("textarea", {
+			} }, (0, react.createElement)("div", { style: { fontSize: 12 } }, `${run.source === "local-skill" ? "本地 Skills" : "专业 API"} · ${run.mode === "oasis-api" ? run.evidenceKind === "production-api" ? "生产 API 响应" : "非生产 API 响应" : run.evidenceKind === "native-model" ? "原生模型生成" : run.mode === "dsh-local" ? "原生离线验收" : "合成验收"} · ${run.review.status === "approved" ? "已审核" : "待审核"}`), run.mode === "oasis-api" ? (0, react.createElement)("small", null, `服务 ${run.providerSnapshot.apiEndpoint}；远端文件 ${run.remoteResponse.fileUrls.length} 个，仅记录来源，未下载/未验证，不视为已交付。`) : null, editing ? (0, react.createElement)("textarea", {
 				"aria-label": "修订结果",
 				value: body,
 				maxLength: 1e5,
@@ -7417,22 +7574,22 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				gap: 6
 			} }, (0, react.createElement)("button", {
 				type: "button",
-				style: button$1,
+				style: button$2,
 				disabled,
 				onClick: () => setEditing(!editing)
 			}, editing ? "放弃编辑" : "编辑结果"), editing ? (0, react.createElement)("button", {
 				type: "button",
-				style: button$1,
+				style: button$2,
 				disabled: disabled || !body.trim() || body === run.result.artifact.body,
 				onClick: () => action(() => onEditResult(page.pageId, run.runId, body))
 			}, "保存为新版本") : null, (0, react.createElement)("button", {
 				type: "button",
-				style: button$1,
+				style: button$2,
 				disabled: disabled || editing || run.review.status === "approved",
 				onClick: () => action(() => onReview(page.pageId, run.runId, "approved", ""))
 			}, "审核此版本"), (0, react.createElement)("button", {
 				type: "button",
-				style: button$1,
+				style: button$2,
 				title: conversationUnavailableReason ?? void 0,
 				disabled: readOnlyDisabled || editing || run.review.status !== "approved" || conversationUnavailableReason !== null,
 				onClick: () => action(() => onUseInConversation(page.pageId, run.runId))
@@ -7455,7 +7612,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				overflowWrap: "anywhere"
 			} }, record.files.find((file) => file.mediaType === "text/markdown")?.relativePath), (0, react.createElement)("button", {
 				type: "button",
-				style: button$1,
+				style: button$2,
 				title: savedFileUnavailableReason ?? void 0,
 				disabled: readOnlyDisabled || editing || run.review.status !== "approved" || savedFileUnavailableReason !== null,
 				onClick: () => action(() => onOpenSavedFile(page.pageId, run.runId, record.writebackId))
@@ -7482,7 +7639,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, ...page.runOrder.map((id, index) => (0, react.createElement)("button", {
 				key: id,
 				type: "button",
-				style: button$1,
+				style: button$2,
 				disabled: props.readOnlyDisabled ?? props.disabled,
 				"aria-current": id === page.activeRunId ? "true" : void 0,
 				onClick: () => onActivateRun(page.pageId, id)
@@ -7525,7 +7682,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   .oasis-unified .generation-result { border-left: 1px solid var(--dsw-alias-border-l2, #dfe6e2); }
 }
 `;
-		function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus, operation, fixtureEnabled = false, localGenerationEnabled = false, localGenerationKind = null, markdownRenderer, onRenamePage = () => {}, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onGenerate = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, ...resultActions }) {
+		function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus, operation, fixtureEnabled = false, apiExecutionAvailable = false, apiConfigurationReady = true, localGenerationEnabled = false, localGenerationKind = null, markdownRenderer, onRenamePage = () => {}, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onGenerate = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, ...resultActions }) {
 			const [activeFieldId, setActiveFieldId] = (0, react.useState)(workflow.form.fields[0]?.fieldId);
 			const [view, setView] = (0, react.useState)("input");
 			const [preview, setPreview] = (0, react.useState)(false);
@@ -7533,15 +7690,22 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const source = page.generation.source;
 			const local = localGenerationEnabled && source === "local-skill";
 			const real = local && localGenerationKind === "native-model";
-			const confirmation = operation.localModelPreview;
+			const api = source === "oasis-api" && apiExecutionAvailable && !fixtureEnabled;
+			const confirmation = api ? operation.apiPreview : operation.localModelPreview;
 			const [confirmed, setConfirmed] = (0, react.useState)(false);
 			(0, react.useEffect)(() => {
 				setConfirmed(false);
-			}, [confirmation?.sha256]);
+			}, [
+				confirmation?.sha256,
+				confirmation?.confirmationToken,
+				source
+			]);
 			const locked = !["ready", "saving"].includes(syncStatus) || operation.activeOperation !== null || operation.generationUncertain || hasPendingUnifiedRun(page) || page.remoteExecutionOrder.some((id) => isOasisRemoteExecutionUnresolved(page.remoteExecutions[id]));
 			const readOnlyDisabled = syncStatus !== "ready" || operation.activeOperation !== null || operation.generationUncertain === true;
 			const validation = validateWorkflowFormValues(workflow, page.formValues);
-			const reason = real && page.workflowVersion !== "2" ? "请新建权利要求任务，历史任务仅供查看" : !fixtureEnabled && !local ? generationUnavailableReason(source) : operation.generationUncertain ? "结果未确认，请查看原运行" : hasPendingUnifiedRun(page) ? "原运行未决，请查看状态；不会自动重发" : !validation.valid ? "请填写必填材料" : null;
+			const pendingApi = Object.values(page.remoteExecutions).find((e) => e.unifiedClaims && isOasisRemoteExecutionUnresolved(e));
+			const latestApi = [...page.remoteExecutionOrder].reverse().map((id) => page.remoteExecutions[id]).find((e) => e.unifiedClaims);
+			const reason = (real || api) && page.workflowVersion !== "2" ? "请新建权利要求任务，历史任务仅供查看" : api && !apiConfigurationReady ? "请先在 DSH 设置 → 绿洲工作台登录账户" : api && (page.generation.upstream || page.inputRefs.length) ? "当前 API 映射不支持上游/文件引用；请先取消选择，不会静默忽略材料" : !fixtureEnabled && !local && !api ? generationUnavailableReason(source) : operation.generationUncertain ? "结果未确认，请查看原运行" : hasPendingUnifiedRun(page) || pendingApi ? "原运行未决，请查看状态；不会自动重发" : !validation.valid ? "请填写必填材料" : null;
 			const pending = Object.values(page.runs).find((run) => hasPendingUnifiedRun({ runs: { run } }));
 			(0, react.useEffect)(() => {
 				if (pending?.mode !== "dsh-local" || pending.status !== "prepared" || operation.activeOperation !== null || operation.error || syncStatus !== "ready") return;
@@ -7585,7 +7749,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}), (0, react.createElement)("div", {
 				className: "generation-notice",
 				role: "status"
-			}, real ? "本地 Skills · 使用 DSH 模型" : local ? "原生离线验收 · 无真实调用" : fixtureEnabled ? "合成验收 · 无真实调用" : source === "local-skill" ? "本地 Skills · 未启用" : "专业 API · 待绑定"), (0, react.createElement)("div", {
+			}, real ? "本地 Skills · 使用 DSH 模型" : local ? "原生离线验收 · 无真实调用" : fixtureEnabled ? "合成验收 · 无真实调用" : api ? "专业 API · 逐次确认上传与费用" : source === "local-skill" ? "本地 Skills · 模型服务暂不可用" : "专业 API · 待绑定"), (0, react.createElement)("div", {
 				className: "generation-views",
 				"aria-label": "输入与结果视图"
 			}, ...[["input", "输入"], ["result", "结果"]].map(([id, label]) => (0, react.createElement)("button", {
@@ -7637,7 +7801,27 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				preview,
 				markdownRenderer,
 				onChange: (fieldId, value) => onUpdateForm(page.pageId, fieldId, value)
-			}), (0, react.createElement)("div", { className: "generation-submit" }, real && confirmation ? (0, react.createElement)("div", {
+			}), (0, react.createElement)("div", { className: "generation-submit" }, api && confirmation ? (0, react.createElement)("div", {
+				role: "group",
+				"aria-label": "本次 API 调用确认",
+				style: {
+					fontSize: 12,
+					marginBottom: 8,
+					overflowWrap: "anywhere"
+				}
+			}, (0, react.createElement)("div", null, `目的地：${confirmation.apiBaseOrigin} · ${confirmation.environmentKind === "production" ? "生产" : "非生产"}`), (0, react.createElement)("div", null, `账户 ${confirmation.accountId} · 目录 ${confirmation.folderName} (${confirmation.folderId}) · 服务 ${confirmation.apiEndpoint}`), (0, react.createElement)("div", null, `技术交底以 technical-disclosure.txt 上传（${confirmation.documentBytes} 字节）；四字段共 ${confirmation.characterCount} 字符，未填字段省略。参考费用 ${confirmation.price}，余额 ${confirmation.balance}。`), (0, react.createElement)("label", null, (0, react.createElement)("input", {
+				type: "checkbox",
+				checked: confirmed,
+				disabled: locked,
+				onChange: (event) => setConfirmed(event.currentTarget.checked)
+			}), "我确认将本次材料上传至上述服务并生成，可能产生费用；失败不自动切换或重发。"), (0, react.createElement)("button", {
+				type: "button",
+				disabled: locked || !confirmed || reason !== null,
+				onClick: () => {
+					setConfirmed(false);
+					onGenerate(page.pageId, true);
+				}
+			}, "确认上传并生成")) : null, real && confirmation ? (0, react.createElement)("div", {
 				role: "group",
 				"aria-label": "本次模型调用确认",
 				style: {
@@ -7663,17 +7847,24 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				disabled: locked || syncStatus !== "ready" || reason !== null,
 				title: reason ?? void 0,
 				onClick: () => onGenerate(page.pageId)
-			}, operation.activeOperation === "run-create" ? "生成中…" : real ? confirmation ? "重新核对模型与材料" : "核对模型与材料" : local ? "生成离线样本" : fixtureEnabled ? "生成合成样本" : "生成"), reason ? (0, react.createElement)("p", {
+			}, ["run-create", "api-create"].includes(operation.activeOperation) ? "生成中…" : api ? "核对服务与材料（读取账户与目录）" : real ? confirmation ? "重新核对模型与材料" : "核对模型与材料" : local ? "生成离线样本" : fixtureEnabled ? "生成合成样本" : "生成"), operation.error ? (0, react.createElement)("p", { role: "alert" }, `操作未完成（${operation.errorCode ?? "确认或连接失效"}）。请核对原生设置中的项目绑定和当前材料；不会自动重试。`) : null, latestApi ? (0, react.createElement)("p", {
+				role: "status",
+				style: { fontSize: 12 }
+			}, `API 原运行：${latestApi.status}${latestApi.safeError ? `（${latestApi.safeError.code}）` : ""}。停止等待不代表后端取消或退款。`) : null, reason ? (0, react.createElement)("p", {
 				role: "status",
 				style: {
 					margin: "8px 0 0",
 					fontSize: 12
 				}
-			}, reason) : null, pending || operation.generationUncertain ? (0, react.createElement)("div", null, (0, react.createElement)("button", {
+			}, reason) : null, pending || pendingApi || operation.generationUncertain ? (0, react.createElement)("div", null, (0, react.createElement)("button", {
 				type: "button",
 				disabled: operation.activeOperation !== null,
 				onClick: () => onObserveUnified(page.pageId)
-			}, "查看原运行"), pending?.status === "prepared" ? (0, react.createElement)("button", {
+			}, "查看原运行"), pendingApi && (pendingApi.submittedAt !== null || ["prepared", "ready-to-submit"].includes(pendingApi.status)) ? (0, react.createElement)("button", {
+				type: "button",
+				disabled: operation.activeOperation !== null,
+				onClick: () => onStopUnified(page.pageId, pendingApi.executionId)
+			}, pendingApi.submittedAt === null ? "放弃提交前准备（保留回执）" : "停止本地等待") : null, pending?.status === "prepared" ? (0, react.createElement)("button", {
 				type: "button",
 				disabled: operation.activeOperation !== null,
 				onClick: () => onStopUnified(page.pageId, pending.runId)
@@ -7713,7 +7904,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				icon: "◉"
 			}
 		]);
-		const button = {
+		const button$1 = {
 			border: "1px solid var(--dsw-alias-border-l2, #dce4df)",
 			borderRadius: 10,
 			padding: 12,
@@ -7722,7 +7913,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			cursor: "pointer",
 			font: "inherit"
 		};
-		function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = () => false, onSelect = () => {} }) {
+		function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = () => false, onSelect = () => {}, onImport }) {
 			const [category, setCategory] = (0, react.useState)("patent");
 			const [notice, setNotice] = (0, react.useState)(null);
 			const ready = state.catalogStatus === "ready";
@@ -7761,14 +7952,18 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			} }, "功能中心"), (0, react.createElement)("small", { style: {
 				color: "#307560",
 				fontSize: 10
-			} }, "BETTER SIDEBAR × OASIS")), (0, react.createElement)("div", { style: {
+			} }, "BETTER SIDEBAR × OASIS")), onImport ? (0, react.createElement)("button", {
+				type: "button",
+				onClick: onImport,
+				style: button$1
+			}, "从网站导入") : null, (0, react.createElement)("div", { style: {
 				display: "grid",
 				gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
 				gap: 8
 			} }, ...NATIVE_TOOLS.map((tool) => (0, react.createElement)("button", {
 				key: tool.id,
 				type: "button",
-				style: button,
+				style: button$1,
 				disabled: nativeAvailability[tool.id] !== true,
 				title: nativeAvailability[tool.id] === true ? void 0 : "原生功能不可用或已在侧边卡片设置中关闭",
 				onClick: () => {
@@ -7799,10 +7994,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				"aria-pressed": category === id,
 				onClick: () => setCategory(id),
 				style: {
-					...button,
+					...button$1,
 					borderRadius: 18,
 					padding: "7px 12px",
-					background: category === id ? "#90bfff" : button.background,
+					background: category === id ? "#90bfff" : button$1.background,
 					color: category === id ? "#fff" : "inherit"
 				}
 			}, label))), (0, react.createElement)("div", { style: {
@@ -7817,7 +8012,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					"data-testid": supported ? `oasis-workflow-${task.id}` : void 0,
 					onClick: () => onSelect(task.id),
 					style: {
-						...button,
+						...button$1,
 						display: "flex",
 						justifyContent: "space-between",
 						textAlign: "left",
@@ -7859,7 +8054,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		function activeRun(page) {
 			return page.activeRunId === null ? null : page.runs[page.activeRunId];
 		}
-		function PanelPages({ state, markdownRenderer, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {}, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {}, onObserveRunningWater = () => {} }) {
+		function PanelPages({ state, markdownRenderer, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, onImport, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {}, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {}, onObserveRunningWater = () => {} }) {
 			if (state.syncStatus === "idle" || state.syncStatus === "loading") return (0, react.createElement)("div", {
 				role: "status",
 				"aria-live": "polite",
@@ -7888,7 +8083,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			if (!page) return (0, react.createElement)("div", { style: {
 				padding: 20,
 				color: "#66706b"
-			} }, "请新建任务页。");
+			} }, "请新建任务页。", onImport ? (0, react.createElement)("button", {
+				type: "button",
+				onClick: onImport
+			}, "从网站导入") : null);
 			const titleEditor = (0, react.createElement)("div", { style: {
 				padding: "14px 20px",
 				display: "grid",
@@ -7926,6 +8124,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}));
 			let content;
 			if (page.view === "chooser" || showFunctionCenter) content = (0, react.createElement)(FunctionCenter, {
+				onImport,
 				state,
 				nativeAvailability,
 				onOpenNative,
@@ -7975,6 +8174,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						onSetGenerationSource,
 						onSelectClaimsUpstream,
 						fixtureEnabled: state.unifiedFixtureEnabled === true,
+						apiExecutionAvailable: state.apiExecutionAvailable === true,
+						apiConfigurationReady: state.professionalConfigurationBlocked !== true,
 						localGenerationEnabled: state.localGenerationEnabled === true,
 						localGenerationKind: state.localGenerationKind,
 						conversationUnavailableReason: state.conversationUnavailableReason === void 0 ? "当前对话输入接口不可用" : state.conversationUnavailableReason,
@@ -8073,10 +8274,426 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, page.generation || page.view === "chooser" || showFunctionCenter ? null : titleEditor, content);
 		}
 		//#endregion
+		//#region src/client/OasisAccountSettings.js
+		function OasisAccountSettings({ controller }) {
+			const snapshot = (0, react.useSyncExternalStore)(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
+			const [mode, setMode] = (0, react.useState)("sms");
+			const [remaining, setRemaining] = (0, react.useState)(snapshot.retryAfterSeconds ?? 0);
+			const phone = (0, react.useRef)(null), secret = (0, react.useRef)(null);
+			const disabled = !snapshot.connected || !snapshot.credentialWritable || snapshot.busy;
+			const clear = () => {
+				if (secret.current) secret.current.value = "";
+			};
+			(0, react.useEffect)(() => {
+				setRemaining(snapshot.retryAfterSeconds ?? 0);
+				const timer = setInterval(() => setRemaining((value) => Math.max(0, value - 1)), 1e3);
+				return () => clearInterval(timer);
+			}, [snapshot.retryAfterSeconds]);
+			(0, react.useEffect)(() => {
+				const input = secret.current;
+				if (!snapshot.connected && input) input.value = "";
+				return () => {
+					if (input) input.value = "";
+				};
+			}, [snapshot.connected, controller]);
+			return (0, react.createElement)("section", {
+				"aria-label": "绿洲账户",
+				style: {
+					display: "grid",
+					gap: 10
+				}
+			}, (0, react.createElement)("h3", null, "绿洲账户"), (0, react.createElement)("p", null, "专业 API 使用网站账户登录；本地 Skills 不需要登录。服务地址随版本维护，无需配置。"), !snapshot.connected || snapshot.credentialStatus !== "ready" ? (0, react.createElement)("p", { role: "status" }, "登录服务尚未就绪，请检查本机 Host 连接或刷新状态。") : !snapshot.credentialWritable ? (0, react.createElement)("p", { role: "status" }, "当前模式未开放账户登录或凭据不可写；本地 Skills 不受影响。") : null, snapshot.credentialConfigured ? (0, react.createElement)("div", null, (0, react.createElement)("p", { role: "status" }, `已登录 · 账户 ${snapshot.accountId}`), (0, react.createElement)("button", {
+				type: "button",
+				disabled: snapshot.busy,
+				onClick: () => {
+					clear();
+					controller.logout();
+				}
+			}, "退出本插件账户")) : (0, react.createElement)("form", {
+				onSubmit: (event) => {
+					event.preventDefault();
+					const payload = {
+						mode,
+						phone: phone.current?.value.trim() ?? "",
+						confirmed: true,
+						[mode === "sms" ? "code" : "password"]: secret.current?.value ?? ""
+					};
+					clear();
+					controller.login(payload);
+				},
+				style: {
+					display: "grid",
+					gap: 10
+				}
+			}, (0, react.createElement)("label", null, "登录方式 ", (0, react.createElement)("select", {
+				value: mode,
+				disabled,
+				onChange: (event) => {
+					clear();
+					setMode(event.target.value);
+				}
+			}, (0, react.createElement)("option", { value: "sms" }, "手机验证码"), (0, react.createElement)("option", { value: "password" }, "手机号与密码"))), (0, react.createElement)("label", null, "手机号 ", (0, react.createElement)("input", {
+				ref: phone,
+				type: "tel",
+				autoComplete: "username",
+				required: true,
+				pattern: "1[3-9][0-9]{9}",
+				maxLength: 11,
+				disabled
+			})), mode === "sms" ? (0, react.createElement)("button", {
+				type: "button",
+				disabled: disabled || remaining > 0,
+				onClick: () => {
+					controller.sendSms({
+						phone: phone.current?.value.trim() ?? "",
+						confirmed: true
+					});
+				}
+			}, remaining > 0 ? `${remaining} 秒后可重新发送` : "发送验证码") : null, (0, react.createElement)("label", null, mode === "sms" ? "验证码 " : "密码 ", (0, react.createElement)("input", {
+				key: mode,
+				ref: secret,
+				type: mode === "sms" ? "text" : "password",
+				required: true,
+				autoComplete: mode === "sms" ? "one-time-code" : "current-password",
+				maxLength: mode === "sms" ? 8 : 256,
+				disabled
+			})), (0, react.createElement)("small", null, "点击发送或登录，仅将对应登录信息发送到绿洲网站服务；不上传项目材料、不生成内容。"), (0, react.createElement)("button", {
+				type: "submit",
+				disabled
+			}, "登录")), (0, react.createElement)("button", {
+				type: "button",
+				disabled: !snapshot.connected || snapshot.busy,
+				onClick: () => {
+					clear();
+					controller.refresh();
+				}
+			}, "刷新登录状态"), snapshot.error ? (0, react.createElement)("div", { role: "alert" }, snapshot.error) : null, snapshot.notice ? (0, react.createElement)("div", { role: "status" }, snapshot.notice) : null);
+		}
+		//#endregion
+		//#region src/client/website-import-controller.js
+		const empty = () => ({
+			busy: false,
+			session: null,
+			projects: [],
+			totalProjects: 0,
+			projectPage: 1,
+			parentId: 0,
+			keyword: "",
+			project: null,
+			kind: "history",
+			itemPage: 1,
+			totalItems: 0,
+			items: [],
+			selected: [],
+			result: null,
+			error: null,
+			submitted: false
+		});
+		const explanations = {
+			IMPORT_WORKSPACE_BUSY: "当前项目有未结束的生成，请先处理原任务，再导入。",
+			AUTH_REQUIRED: "请先在此窗口登录绿洲账户。",
+			IMPORT_ACCOUNT_CHANGED: "账户已变化，请重新读取项目。",
+			IMPORT_LINK_CONFLICT: "当前本地项目已关联其他网站项目或账户；不会替换原关联，请使用对应本地项目。",
+			IMPORT_OWNERSHIP: "网站返回的项目或文件归属无法验证，已阻止导入。",
+			IMPORT_REQUEST_FAILED: "网站接口读取失败或暂不支持；没有把失败当作空列表。请稍后明确重试。",
+			IMPORT_UNSAFE_PATH: "目录或文件名不安全，已阻止写入。",
+			IMPORT_TOO_LARGE: "所选文件超过本次大小限制。",
+			IMPORT_WORKSPACE_CHANGED: "本地项目已变化，请重新打开导入。",
+			IMPORT_EXPIRED: "选择已过期，请重新读取。",
+			IMPORT_INCOMPLETE_CHECK_MANIFEST: "导入中断。请在当前项目中查看 .oasis-import- 开头的清单，核对已保存和未完成文件。"
+		};
+		function createWebsiteImportController({ remote, getWorkspaceId, getAccountRevision }) {
+			let snapshot = Object.freeze(empty()), generation = 0, disposed = false;
+			const listeners = /* @__PURE__ */ new Set();
+			const publish = (changes) => {
+				if (disposed) return;
+				snapshot = Object.freeze({
+					...snapshot,
+					...changes
+				});
+				for (const cb of listeners) cb();
+			};
+			function current(session) {
+				return session && session.workspaceId === getWorkspaceId() && session.accountRevision === getAccountRevision();
+			}
+			const clear = () => {
+				generation++;
+				publish(empty());
+			};
+			async function operation(fn) {
+				if (snapshot.busy || disposed) return false;
+				const g = generation;
+				publish({
+					busy: true,
+					error: null
+				});
+				try {
+					const patch = await fn();
+					if (disposed || g !== generation) return false;
+					if (!current(patch?.session ?? snapshot.session)) {
+						clear();
+						return false;
+					}
+					publish(patch);
+					return true;
+				} catch (error) {
+					if (!disposed && g === generation) publish({ error: explanations[error?.code] ?? "操作未完成；请检查连接和导入清单，不会自动重试。" });
+					return false;
+				} finally {
+					if (g === generation) publish({ busy: false });
+				}
+			}
+			async function browse({ page = 1, parentId = snapshot.parentId, keyword = snapshot.keyword } = {}) {
+				if (!current(snapshot.session)) {
+					clear();
+					return false;
+				}
+				return operation(async () => {
+					const result = await remote.websiteImport("projects", {
+						token: snapshot.session.token,
+						parentId,
+						page,
+						keyword
+					});
+					return {
+						projects: result.items,
+						totalProjects: result.total,
+						projectPage: page,
+						parentId,
+						keyword
+					};
+				});
+			}
+			async function items({ project = snapshot.project, kind = snapshot.kind, page = 1 } = {}) {
+				if (!current(snapshot.session) || !project || snapshot.submitted) return false;
+				if (project.id !== snapshot.project?.id) publish({
+					selected: [],
+					items: [],
+					totalItems: 0,
+					project,
+					result: null
+				});
+				return operation(async () => {
+					const result = await remote.websiteImport("items", {
+						token: snapshot.session.token,
+						folderId: project.id,
+						kind,
+						page
+					});
+					if (result.folderId !== project.id) throw Error("scope");
+					return {
+						project,
+						kind,
+						itemPage: page,
+						items: result.items,
+						totalItems: result.total
+					};
+				});
+			}
+			return Object.freeze({
+				subscribe(cb) {
+					listeners.add(cb);
+					return () => listeners.delete(cb);
+				},
+				getSnapshot: () => snapshot,
+				invalidate: clear,
+				async start() {
+					if (snapshot.busy) return false;
+					clear();
+					return operation(async () => {
+						const session = await remote.websiteImport("open", {
+							workspaceId: getWorkspaceId(),
+							confirmed: true
+						});
+						if (!current(session)) throw Error("scope");
+						const result = await remote.websiteImport("projects", {
+							token: session.token,
+							parentId: 0,
+							page: 1,
+							keyword: ""
+						});
+						return {
+							session,
+							projects: result.items,
+							totalProjects: result.total
+						};
+					});
+				},
+				browse,
+				items,
+				selectProject: (project) => items({
+					project,
+					kind: "history",
+					page: 1
+				}),
+				toggle(key) {
+					if (snapshot.busy || snapshot.submitted || !current(snapshot.session) || !snapshot.items.some((v) => v.key === key && v.downloadable)) return;
+					const selected = new Set(snapshot.selected);
+					if (selected.has(key)) selected.delete(key);
+					else if (selected.size < 100) selected.add(key);
+					publish({ selected: [...selected] });
+				},
+				async commit() {
+					if (!current(snapshot.session)) {
+						clear();
+						return false;
+					}
+					if (!snapshot.project || !snapshot.selected.length || snapshot.submitted || snapshot.busy) return false;
+					const { session, project, selected } = snapshot;
+					return operation(async () => {
+						publish({ submitted: true });
+						const result = await remote.websiteImport("commit", {
+							token: session.token,
+							folderId: project.id,
+							keys: selected,
+							confirmed: true
+						});
+						if (result.workspaceId !== session.workspaceId || result.folderId !== project.id) throw Error("scope");
+						return { result };
+					});
+				},
+				dispose() {
+					disposed = true;
+					generation++;
+					listeners.clear();
+				}
+			});
+		}
+		//#endregion
+		//#region src/client/WebsiteImportDialog.js
+		const button = {
+			padding: "8px 12px",
+			border: "1px solid #cfd8d3",
+			borderRadius: 8,
+			background: "var(--dsw-alias-bg-base, white)",
+			color: "inherit",
+			font: "inherit",
+			cursor: "pointer"
+		};
+		function WebsiteImportDialog({ workspaceId, remote, accountController, onClose, onOpenFiles }) {
+			const account = (0, react.useSyncExternalStore)(accountController.subscribe, accountController.getSnapshot, accountController.getSnapshot);
+			const scope = (0, react.useRef)({
+				workspaceId,
+				accountRevision: account.accountRevision
+			});
+			scope.current = {
+				workspaceId,
+				accountRevision: account.accountRevision
+			};
+			const controller = (0, react.useMemo)(() => createWebsiteImportController({
+				remote,
+				getWorkspaceId: () => scope.current.workspaceId,
+				getAccountRevision: () => scope.current.accountRevision
+			}), [remote]);
+			const state = (0, react.useSyncExternalStore)(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
+			const dialog = (0, react.useRef)(null), busy = (0, react.useRef)(false);
+			busy.current = state.busy;
+			const [keyword, setKeyword] = (0, react.useState)("");
+			(0, react.useEffect)(() => {
+				controller.invalidate();
+			}, [
+				controller,
+				workspaceId,
+				account.accountRevision
+			]);
+			(0, react.useEffect)(() => () => controller.dispose(), [controller]);
+			(0, react.useEffect)(() => {
+				const node = dialog.current;
+				node?.showModal();
+				return () => node?.close();
+			}, []);
+			const btn = (text, fn, disabled = false) => (0, react.createElement)("button", {
+				type: "button",
+				style: button,
+				disabled: disabled || state.busy,
+				onClick: () => {
+					fn();
+				}
+			}, text);
+			return (0, react.createElement)("dialog", {
+				ref: dialog,
+				"aria-labelledby": "oasis-import-title",
+				onCancel: (event) => {
+					event.preventDefault();
+					if (!busy.current) onClose();
+				},
+				style: {
+					width: "min(1000px, 90vw)",
+					maxHeight: "85vh",
+					padding: 24,
+					border: "1px solid #cfd8d3",
+					borderRadius: 16,
+					background: "var(--dsw-alias-bg-base, white)",
+					color: "var(--dsw-alias-text-primary, #202123)",
+					overflow: "auto"
+				}
+			}, (0, react.createElement)("header", { style: {
+				display: "flex",
+				justifyContent: "space-between",
+				alignItems: "center"
+			} }, (0, react.createElement)("h2", { id: "oasis-import-title" }, "从网站导入到当前项目"), btn("关闭", onClose)), (0, react.createElement)("p", null, "在此选择网站项目及文件，无需打开网站。只下载勾选内容，不上传本地材料、不生成、不自动同步。"), !account.credentialConfigured ? (0, react.createElement)(OasisAccountSettings, { controller: accountController }) : (0, react.createElement)("p", null, `已登录绿洲账户 ${account.accountId}`), btn(state.session ? "重新读取项目" : "读取网站项目", () => controller.start(), !account.credentialConfigured), state.session ? (0, react.createElement)("div", null, (0, react.createElement)("p", { style: { overflowWrap: "anywhere" } }, `保存到：${state.session.workspacePath}`), state.session.link ? (0, react.createElement)("p", null, `当前关联：${state.session.link.folderName}；不会替换为其他项目。`) : null, (0, react.createElement)("div", { style: {
+				display: "grid",
+				gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
+				gap: 20
+			} }, (0, react.createElement)("section", { "aria-label": "网站项目" }, (0, react.createElement)("h3", null, "选择项目"), (0, react.createElement)("form", { onSubmit: (e) => {
+				e.preventDefault();
+				controller.browse({
+					page: 1,
+					keyword,
+					parentId: 0
+				});
+			} }, (0, react.createElement)("input", {
+				"aria-label": "搜索网站项目",
+				placeholder: "搜索项目名称",
+				maxLength: 200,
+				value: keyword,
+				disabled: state.busy,
+				onChange: (e) => setKeyword(e.target.value),
+				style: {
+					...button,
+					width: "70%"
+				}
+			}), (0, react.createElement)("button", {
+				type: "submit",
+				style: button,
+				disabled: state.busy
+			}, "搜索")), state.parentId !== 0 ? btn("返回顶层项目", () => controller.browse({
+				parentId: 0,
+				page: 1
+			})) : null, ...state.projects.map((p) => (0, react.createElement)("div", {
+				key: p.id,
+				style: {
+					display: "flex",
+					gap: 6,
+					marginTop: 8
+				}
+			}, btn(`${p.name}${state.project?.id === p.id ? " ✓" : ""}`, () => controller.selectProject(p), state.submitted), p.hasChildren ? btn("子项目", () => controller.browse({
+				parentId: p.id,
+				page: 1,
+				keyword: ""
+			}), state.submitted) : null)), !state.projects.length ? (0, react.createElement)("p", null, "此页没有项目") : null, (0, react.createElement)("p", null, `第 ${state.projectPage} 页 · ${state.totalProjects} 个项目`), btn("上一页", () => controller.browse({ page: state.projectPage - 1 }), state.projectPage <= 1), btn("下一页", () => controller.browse({ page: state.projectPage + 1 }), state.projectPage * 20 >= state.totalProjects)), (0, react.createElement)("section", { "aria-label": "项目内容" }, (0, react.createElement)("h3", null, state.project ? `选择内容 · ${state.project.name}` : "请先选择项目"), state.project ? (0, react.createElement)("div", null, btn("历史生成内容及附件", () => controller.items({ kind: "history" }), state.submitted), btn("项目文件", () => controller.items({ kind: "files" }), state.submitted), (0, react.createElement)("p", null, state.kind === "history" ? "网站历史正文和生成附件" : "网站项目文件"), ...state.items.map((row) => (0, react.createElement)("label", {
+				key: row.key,
+				style: {
+					display: "block",
+					padding: "8px 0",
+					overflowWrap: "anywhere"
+				}
+			}, (0, react.createElement)("input", {
+				type: "checkbox",
+				checked: state.selected.includes(row.key),
+				disabled: state.busy || state.submitted || !row.downloadable,
+				onChange: () => controller.toggle(row.key)
+			}), ` ${row.fileName} · ${row.size === null ? "大小待下载核实" : `${row.size} 字节`}`, row.reason ? (0, react.createElement)("small", null, ` — ${row.reason}`) : null)), !state.items.length ? (0, react.createElement)("p", null, "此页没有可列出的内容；子项目需单独选择。") : null, (0, react.createElement)("p", null, `第 ${state.itemPage} 页 · ${state.totalItems} 条源记录`), btn("上一页内容", () => controller.items({ page: state.itemPage - 1 }), state.itemPage <= 1 || state.submitted), btn("下一页内容", () => controller.items({ page: state.itemPage + 1 }), state.itemPage * 20 >= state.totalItems || state.submitted)) : null)), (0, react.createElement)("hr"), (0, react.createElement)("p", null, `已勾选 ${state.selected.length} 项。单文件最多 32 MiB，每次最多 100 项 / 100 MiB。`), (0, react.createElement)("p", null, "导入同时确认所选网站项目与当前本地项目的关联。历史正文以 _OIW.md 保存；附件保留文件名。同名不覆盖、同内容跳过，导入内容未在本地审核。"), btn("导入到当前项目", () => controller.commit(), !state.selected.length || state.submitted)) : null, state.busy ? (0, react.createElement)("p", { role: "status" }, state.submitted ? "正在逐项下载并保存，请勿关闭 Host…" : "正在读取…") : null, state.error ? (0, react.createElement)("p", { role: "alert" }, state.error) : null, state.result ? (0, react.createElement)("section", { "aria-label": "导入结果" }, (0, react.createElement)("h3", null, state.result.status === "completed" ? "导入完成" : "部分内容未完成"), ...state.result.items.map((row) => (0, react.createElement)("p", { key: row.key }, `${{
+				saved: "已保存",
+				skipped: "相同内容已跳过",
+				failed: "未完成"
+			}[row.status]}：${row.fileName}${row.code ? `（${row.code}）` : ""}`)), (0, react.createElement)("p", { style: { overflowWrap: "anywhere" } }, `导入清单：${state.result.manifest}`), btn("打开 DSH 文件管理", () => onOpenFiles(), !onOpenFiles)) : null);
+		}
+		//#endregion
 		//#region src/client/OasisWorkbenchSurface.js
 		const noConfiguration = Object.freeze({ canSubmit: true });
 		const getNoConfiguration = () => noConfiguration;
-		const noSubscribe$2 = () => () => {};
+		const noSubscribe = () => () => {};
 		const zero = () => 0;
 		const reducedMotionCss = `
   [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
@@ -8179,11 +8796,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}
 		function OasisWorkbenchSurface({ store, markdownRenderer, coordinator, focusTargets, layoutAdapter, workspaceId, workspaceItems, hostMode = "standalone", visible = true }) {
 			const [center, setCenter] = (0, react.useState)(false);
+			const [importWorkspace, setImportWorkspace] = (0, react.useState)(null);
 			const state = (0, react.useSyncExternalStore)(store.subscribe, () => store.peekWorkspaceState(workspaceId), () => store.peekWorkspaceState(workspaceId));
 			const panelRef = (0, react.useRef)(null);
-			(0, react.useSyncExternalStore)(store.conversationDrafts?.subscribe ?? noSubscribe$2, store.conversationDrafts?.getSnapshot ?? zero, store.conversationDrafts?.getSnapshot ?? zero);
+			(0, react.useSyncExternalStore)(store.conversationDrafts?.subscribe ?? noSubscribe, store.conversationDrafts?.getSnapshot ?? zero, store.conversationDrafts?.getSnapshot ?? zero);
 			const conversationUnavailableReason = store.conversationDrafts?.unavailableReason(workspaceId) ?? (store.conversationDrafts ? null : "当前对话输入接口不可用");
-			const configuration = (0, react.useSyncExternalStore)(store.connectionSettings?.subscribe ?? noSubscribe$2, store.connectionSettings?.getSnapshot ?? getNoConfiguration, store.connectionSettings?.getSnapshot ?? getNoConfiguration);
+			const configuration = (0, react.useSyncExternalStore)(store.connectionSettings?.subscribe ?? noSubscribe, store.connectionSettings?.getSnapshot ?? getNoConfiguration, store.connectionSettings?.getSnapshot ?? getNoConfiguration);
 			const titleRef = (0, react.useRef)(null);
 			const layout = (0, react.useSyncExternalStore)(layoutAdapter.subscribe, layoutAdapter.getSnapshot, layoutAdapter.getSnapshot);
 			(0, react.useEffect)(() => {
@@ -8255,7 +8873,17 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				"data-visible": visible ? "true" : "false",
 				"aria-label": "绿洲专业工作台",
 				style: sectionStyle(hostMode, layout, effectiveMode)
-			}, (0, react.createElement)("style", null, reducedMotionCss), (0, react.createElement)(PanelChrome, {
+			}, (0, react.createElement)("style", null, reducedMotionCss), importWorkspace === workspaceId && store.websiteImportRemote && store.connectionSettings ? (0, react.createElement)(WebsiteImportDialog, {
+				key: workspaceId,
+				workspaceId,
+				remote: store.websiteImportRemote,
+				accountController: store.connectionSettings,
+				onClose: () => setImportWorkspace(null),
+				onOpenFiles: coordinator?.nativeAvailability(workspaceId)?.editor ? () => {
+					setImportWorkspace(null);
+					coordinator.openNativeTool(workspaceId, "editor");
+				} : void 0
+			}) : null, (0, react.createElement)(PanelChrome, {
 				hostMode,
 				state: {
 					...state,
@@ -8283,6 +8911,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (hostMode === "standalone") store.setPanelMode(workspaceId, state.panelMode === "expanded" ? "normal" : "expanded");
 				}
 			}), (0, react.createElement)(PanelPages, {
+				onImport: store.websiteImportRemote && store.connectionSettings ? () => setImportWorkspace(workspaceId) : void 0,
 				markdownRenderer,
 				savedFileUnavailableReason: coordinator?.captureSavedFileTarget(workspaceId) ? null : "安全文件预览不可用",
 				onOpenSavedFile: (pageId, runId, writebackId) => store.openSavedFile(workspaceId, pageId, runId, writebackId),
@@ -9021,6 +9650,131 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}));
 		}
 		//#endregion
+		//#region src/website-import-contract.js
+		const IMPORT_LIMITS = Object.freeze({
+			fileBytes: 33554432,
+			totalBytes: 104857600,
+			items: 100,
+			ttlMs: 9e5
+		});
+		const id = number().int().positive().max(Number.MAX_SAFE_INTEGER);
+		const token = string().uuid();
+		const page = number().int().min(1).max(1e4);
+		const key = string().min(1).max(256);
+		const importCommands = {
+			open: object({
+				workspaceId: key,
+				confirmed: literal(true)
+			}).strict(),
+			projects: object({
+				token,
+				parentId: number().int().nonnegative().default(0),
+				page: page.default(1),
+				keyword: string().max(200).default("")
+			}).strict(),
+			items: object({
+				token,
+				folderId: id,
+				kind: _enum(["history", "files"]),
+				page: page.default(1)
+			}).strict(),
+			commit: object({
+				token,
+				folderId: id,
+				keys: array(key).min(1).max(IMPORT_LIMITS.items).refine((v) => new Set(v).size === v.length),
+				confirmed: literal(true)
+			}).strict()
+		};
+		const websiteProjectLinkSchema = object({
+			workspaceId: key,
+			workspacePath: string().min(1).max(4096),
+			apiBaseOrigin: string().url(),
+			accountId: id,
+			folderId: id,
+			folderName: string().min(1).max(200),
+			confirmedAt: string().datetime()
+		}).strict();
+		const project = object({
+			id,
+			name: string().max(200),
+			hasChildren: boolean()
+		}).strict();
+		const item = object({
+			key,
+			name: string().max(200),
+			fileName: string().max(255),
+			kind: _enum([
+				"text",
+				"file",
+				"resource"
+			]),
+			size: number().int().nonnegative().nullable(),
+			downloadable: boolean(),
+			reason: string().max(300).nullable()
+		}).strict();
+		const importResponses = {
+			open: object({
+				token,
+				workspaceId: key,
+				workspacePath: string(),
+				accountId: id,
+				accountRevision: key,
+				link: websiteProjectLinkSchema.nullable(),
+				expiresAt: number()
+			}).strict(),
+			projects: object({
+				total: number().int().nonnegative(),
+				items: array(project).max(20)
+			}).strict(),
+			items: object({
+				folderId: id,
+				total: number().int().nonnegative(),
+				items: array(item).max(40)
+			}).strict(),
+			commit: object({
+				workspaceId: key,
+				folderId: id,
+				status: _enum(["completed", "partial"]),
+				manifest: string().max(255),
+				items: array(object({
+					key,
+					fileName: string().max(255),
+					status: _enum([
+						"saved",
+						"skipped",
+						"failed"
+					]),
+					code: string().max(100).optional()
+				}).strict()).max(100)
+			}).strict()
+		};
+		//#endregion
+		//#region src/oasis-account-contract.js
+		const OASIS_PRODUCT_ORIGIN = `https://${OASIS_PRODUCTION_HOSTNAME}`;
+		const phone = string().regex(/^1[3-9]\d{9}$/);
+		object({}).strict(), object({
+			phone,
+			confirmed: literal(true)
+		}).strict(), discriminatedUnion("mode", [object({
+			mode: literal("sms"),
+			phone,
+			code: string().regex(/^\d{4,8}$/),
+			confirmed: literal(true)
+		}).strict(), object({
+			mode: literal("password"),
+			phone,
+			password: string().min(1).max(256),
+			confirmed: literal(true)
+		}).strict()]), object({ confirmed: literal(true) }).strict();
+		const accountStatusSchema = object({
+			authenticated: boolean(),
+			available: boolean(),
+			writable: boolean(),
+			accountId: number().int().positive().nullable(),
+			revision: string().max(100).nullable(),
+			retryAfterSeconds: number().int().nonnegative()
+		}).strict();
+		//#endregion
 		//#region src/client/workbench-remote.js
 		const CHANNEL = "/oasis-workbench";
 		var WorkbenchRemoteError = class extends Error {
@@ -9047,6 +9801,74 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return connection.rpc.call("/api", `oasis-workbench/${endpoint}`, payload, signal);
 			};
 			return Object.freeze({
+				async websiteImport(action, payload) {
+					if (!Object.hasOwn(importCommands, action)) throw new WorkbenchRemoteError("IMPORT_INVALID_INPUT", "导入动作无效");
+					const input = importCommands[action].parse(payload);
+					const result = unwrap(await call(CHANNEL, `import/${action}`, input), importResponses[action]);
+					if (action === "open" && result.workspaceId !== input.workspaceId || ["items", "commit"].includes(action) && result.folderId !== input.folderId) throw new WorkbenchRemoteError("INVALID_RESPONSE", "导入项目不一致");
+					return result;
+				},
+				async accountStatus() {
+					return unwrap(await call(CHANNEL, "account/status", {}), accountStatusSchema);
+				},
+				async accountSms(payload) {
+					return unwrap(await call(CHANNEL, "account/sms", payload), accountStatusSchema);
+				},
+				async accountLogin(payload) {
+					return unwrap(await call(CHANNEL, "account/login", payload), accountStatusSchema);
+				},
+				async accountLogout(payload) {
+					return unwrap(await call(CHANNEL, "account/logout", payload), accountStatusSchema);
+				},
+				async getWorkspaceBinding(payload, signal) {
+					const result = unwrap(await call(CHANNEL, "professional/binding/get", payload, signal), workspaceBindingReadSchema);
+					if (result.workspaceId !== payload.workspaceId) throw new WorkbenchRemoteError("INVALID_RESPONSE", "绑定项目不一致");
+					return result;
+				},
+				async getBindingOptions(payload, signal) {
+					const result = unwrap(await call(CHANNEL, "professional/binding/options", payload, signal), workspaceBindingOptionsSchema);
+					if (result.workspaceId !== payload.workspaceId) throw new WorkbenchRemoteError("INVALID_RESPONSE", "绑定项目不一致");
+					return result;
+				},
+				async confirmWorkspaceBinding(payload, signal) {
+					const result = unwrap(await call(CHANNEL, "professional/binding/confirm", payload, signal), workspaceBindingSavedSchema);
+					for (const key of [
+						"workspaceId",
+						"workspacePath",
+						"apiBaseOrigin",
+						"accountId",
+						"apiId",
+						"apiEndpoint",
+						"apiProcess",
+						"folderId",
+						"schemaHash"
+					]) if (result.binding[key] !== payload[key]) throw new WorkbenchRemoteError("INVALID_RESPONSE", "绑定范围不一致");
+					return result;
+				},
+				async prepareClaimsApi(payload, signal) {
+					const result = unwrap(await call(CHANNEL, "task/prepare-api", payload, signal), claimsApiPreparationSchema);
+					for (const key of [
+						"workspaceId",
+						"taskId",
+						"expectedRevision",
+						"expectedSettingsRevision"
+					]) if (result.snapshot[key] !== payload[key]) throw new WorkbenchRemoteError("INVALID_RESPONSE", "API 材料准备范围不一致");
+					return result;
+				},
+				async previewClaimsApi(payload, signal) {
+					const result = unwrap(await call(CHANNEL, "task/preview-api", payload, signal), claimsApiPreviewSchema);
+					for (const key of [
+						"workspaceId",
+						"taskId",
+						"expectedRevision",
+						"expectedSettingsRevision",
+						"preparationSha256"
+					]) if (result[key] !== payload[key]) throw new WorkbenchRemoteError("INVALID_RESPONSE", "API 确认范围不一致");
+					return result;
+				},
+				async startClaimsApi(payload, signal) {
+					return unwrap(await call(CHANNEL, "task/start-api", payload, signal), workbenchReplaceResponseSchema);
+				},
 				async get(workspaceId, signal) {
 					return unwrap(await call(CHANNEL, "state/get", { workspaceId }, signal), workbenchGetResponseSchema);
 				},
@@ -9325,7 +10147,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						formValues,
 						generation: workflow.executionMode === "unified-text" ? {
 							inputSchemaVersion: claimsInputVersion(workflow.workflowVersion),
-							source: generationSourceSchema.parse(action.defaultGenerationSource ?? "local-skill")
+							source: "local-skill"
 						} : null,
 						updatedAt: env.now(),
 						view: "workspace"
@@ -9569,6 +10391,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					catalogError: null,
 					workflows: workflowCatalog.workflows,
 					unifiedFixtureEnabled: workflowCatalog.unifiedFixtureEnabled === true,
+					apiExecutionAvailable: workflowCatalog.apiExecutionAvailable === true,
 					localGenerationEnabled: workflowCatalog.localGenerationEnabled === true,
 					localGenerationKind: workflowCatalog.localGenerationKind ?? null
 				});
@@ -9579,6 +10402,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					catalogError: current.catalogError,
 					workflows: current.workflows,
 					unifiedFixtureEnabled: current.unifiedFixtureEnabled === true,
+					apiExecutionAvailable: current.apiExecutionAvailable === true,
 					localGenerationEnabled: current.localGenerationEnabled === true,
 					localGenerationKind: current.localGenerationKind ?? null,
 					professionalStatus: current.professionalStatus,
@@ -9602,6 +10426,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					externalTransferConfirmed: false,
 					requestKey: null,
 					localModelPreview: null,
+					apiPreview: null,
 					writebackConfirmed: false,
 					writebackPlan: null,
 					error: null,
@@ -9648,7 +10473,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}
 			function operationErrorFeedback(error) {
 				const code = typeof error?.code === "string" ? error.code : null;
-				if (code === "WRITEBACK_COMMITTED_INDEX_FAILED") return "index-warning";
+				if (["WRITEBACK_COMMITTED_INDEX_FAILED", "WRITEBACK_PARTIAL_PUBLISH"].includes(code)) return "index-warning";
 				if (code === "MATERIAL_CHANGED") return "material-changed";
 				if (code?.includes("CONFLICT") || code === "revision-conflict") return "conflict";
 				return "operation-error";
@@ -9913,6 +10738,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return after.pages.find((page) => !before.pages.some((item) => item.pageId === page.pageId));
 			}
 			const store = {
+				websiteImportRemote: remote,
 				connectionSettings,
 				conversationDrafts,
 				async refreshProfessionalConfiguration(reload = false) {
@@ -9929,6 +10755,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							...operation,
 							professionalDetail: null,
 							localModelPreview: null,
+							apiPreview: null,
 							priceConfirmed: false,
 							externalTransferConfirmed: false,
 							runningWaterStatus: "idle",
@@ -9989,6 +10816,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								catalogError: null,
 								workflows,
 								unifiedFixtureEnabled: response.unifiedFixtureEnabled === true,
+								apiExecutionAvailable: response.apiExecutionAvailable === true,
 								localGenerationEnabled: response.localGenerationEnabled === true,
 								localGenerationKind: response.localGenerationKind ?? null
 							}));
@@ -9999,6 +10827,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								catalogError: errorMessage(error),
 								workflows: [],
 								unifiedFixtureEnabled: false,
+								apiExecutionAvailable: false,
 								localGenerationEnabled: false,
 								localGenerationKind: null
 							}));
@@ -10095,14 +10924,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (current.catalogStatus !== "ready") throw new Error("workflow catalog is not ready");
 					const workflow = current.workflows.find((item) => item.workflowId === workflowId);
 					if (!workflow) throw new Error(`workflow catalog does not contain ${workflowId}`);
-					const preference = connectionSettings?.getSnapshot?.();
 					dispatch(workspaceId, {
 						type: "select-workflow",
 						pageId,
 						workflow,
-						defaultGenerationSource: preference?.defaultGenerationSource ?? "local-skill"
+						defaultGenerationSource: "local-skill"
 					});
-					if (workflow.executionMode === "unified-text" && preference?.outputDirectoryPrefix) updatePageOperation(workspaceId, pageId, { writebackDirectory: `${preference.outputDirectoryPrefix}\\${pageId}` });
 					return getCurrent(workspaceId);
 				},
 				updateFormValue(workspaceId, pageId, fieldId, value) {
@@ -10392,6 +11219,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async createRun(workspaceId, pageId, confirmed = false) {
 					const page = pageFor(workspaceId, pageId);
 					if (page.generation) {
+						if (page.generation.source === "oasis-api" && !getCurrent(workspaceId).unifiedFixtureEnabled && getCurrent(workspaceId).apiExecutionAvailable) return store.createApiRun(workspaceId, pageId, confirmed);
 						const local = getCurrent(workspaceId).localGenerationEnabled && page.generation.source === "local-skill";
 						if (!local && !getCurrent(workspaceId).unifiedFixtureEnabled) throw new Error(generationUnavailableReason(page.generation.source));
 						assertInputEditable(workspaceId, pageId);
@@ -10482,6 +11310,102 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						feedback: "run-completed"
 					}));
 				},
+				async createApiRun(workspaceId, pageId, confirmed = false) {
+					assertOpen();
+					assertKnown(workspaceId);
+					assertInputEditable(workspaceId, pageId);
+					assertProfessionalConfiguration();
+					const page = pageFor(workspaceId, pageId);
+					if (!getCurrent(workspaceId).apiExecutionAvailable || page.workflowVersion !== "2" || page.generation?.source !== "oasis-api") throw new Error("当前任务不支持专业 API 执行");
+					const configurationGeneration = professionalConfigurationGeneration;
+					const sessionId = getGenerationSession?.(workspaceId);
+					if (!confirmed) {
+						updatePageOperation(workspaceId, pageId, {
+							activeOperation: "api-preview",
+							apiPreview: null,
+							error: null,
+							errorCode: null
+						});
+						try {
+							await flushWorkspace(workspaceId);
+							const current = getCurrent(workspaceId), generation = runtimeFor(workspaceId).editGeneration;
+							if (current.syncStatus !== "ready") throw new Error("请先保存材料再确认");
+							const binding = await remote.getWorkspaceBinding({ workspaceId }, controller.signal);
+							assertProfessionalConfiguration(configurationGeneration);
+							const payload = {
+								workspaceId,
+								taskId: pageId,
+								expectedRevision: current.revision,
+								expectedSettingsRevision: binding.settingsRevision
+							};
+							const prepared = await remote.prepareClaimsApi(payload, controller.signal);
+							const preview = await remote.previewClaimsApi({
+								...payload,
+								preparationSha256: prepared.preparationSha256,
+								remoteReadConfirmed: true
+							}, controller.signal);
+							if (closing || disposed) return;
+							assertProfessionalConfiguration(configurationGeneration);
+							if (runtimeFor(workspaceId).editGeneration !== generation || getCurrent(workspaceId).revision !== current.revision || getGenerationSession?.(workspaceId) !== sessionId) throw new Error("材料或当前项目已变更，请重新确认");
+							updatePageOperation(workspaceId, pageId, {
+								apiPreview: preview,
+								apiSessionId: sessionId
+							});
+							return getCurrent(workspaceId);
+						} catch (error) {
+							if (!closing && !disposed) updatePageOperation(workspaceId, pageId, {
+								error: errorMessage(error),
+								errorCode: error?.code ?? null,
+								apiPreview: null
+							});
+							throw error;
+						} finally {
+							if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { activeOperation: null });
+						}
+					}
+					const operation = operationFor(getCurrent(workspaceId), pageId), preview = operation.apiPreview;
+					if (!preview || preview.expectedRevision !== getCurrent(workspaceId).revision || Date.parse(preview.expiresAt) <= Date.now() || sessionId !== operation.apiSessionId) throw new Error("请重新核对 API 与材料，再明确确认");
+					const requestKey = createRequestKey();
+					let admitted = false;
+					try {
+						return await runPageOperation(workspaceId, pageId, "api-create", async (current) => {
+							assertProfessionalConfiguration(configurationGeneration);
+							if (current.revision !== preview.expectedRevision || getGenerationSession?.(workspaceId) !== sessionId) throw new Error("确认范围已改变");
+							admitted = true;
+							const started = await remote.startClaimsApi({
+								workspaceId,
+								taskId: pageId,
+								expectedRevision: current.revision,
+								expectedSettingsRevision: preview.expectedSettingsRevision,
+								confirmationToken: preview.confirmationToken,
+								requestKey,
+								priceConfirmed: true,
+								externalTransferConfirmed: true
+							}, controller.signal);
+							applyAuthoritativeReplacement(workspaceId, started);
+							if (!started.committed) return started;
+							const execution = Object.values(started.current.tasks[pageId].remoteExecutions).find((e) => e.requestKey === requestKey);
+							if (!execution) throw new Error("API 执行检查点未确认；请查看原运行");
+							assertProfessionalConfiguration(configurationGeneration);
+							return remote.continueProfessional({
+								workspaceId,
+								taskId: pageId,
+								executionId: execution.executionId
+							}, controller.signal);
+						}, () => ({
+							apiPreview: null,
+							requestKey: null,
+							generationUncertain: false,
+							feedback: "run-observed"
+						}));
+					} catch (error) {
+						if (!closing && !disposed) updatePageOperation(workspaceId, pageId, {
+							apiPreview: null,
+							generationUncertain: admitted
+						});
+						throw error;
+					}
+				},
 				setReviewNote(workspaceId, pageId, note) {
 					return updatePageOperation(workspaceId, pageId, {
 						reviewNote: String(note),
@@ -10493,6 +11417,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async observeUnifiedRun(workspaceId, pageId) {
 					return runPageOperation(workspaceId, pageId, "run-observe", async (current) => {
 						const page = pageFor(workspaceId, pageId);
+						const api = Object.values(page.remoteExecutions).find((e) => e.unifiedClaims && isOasisRemoteExecutionUnresolved(e));
+						if (api?.submittedAt === null && ["uploading", "auth-required"].includes(api.status)) return remote.continueProfessional({
+							workspaceId,
+							taskId: pageId,
+							executionId: api.executionId
+						}, controller.signal);
+						if (api?.submittedAt) {
+							assertProfessionalConfiguration();
+							return remote.continueProfessional({
+								workspaceId,
+								taskId: pageId,
+								executionId: api.executionId
+							}, controller.signal);
+						}
 						const pending = Object.values(page.runs).find((run) => run.mode === "dsh-local" && ["prepared", "unknown"].includes(run.status));
 						return pending ? remote.observeLocalRun({
 							workspaceId,
@@ -10510,6 +11448,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					}));
 				},
 				async stopUnifiedRun(workspaceId, pageId, runId) {
+					if (pageFor(workspaceId, pageId).remoteExecutions[runId]?.unifiedClaims) return runPageOperation(workspaceId, pageId, "api-stop", async () => {
+						await remote.stopProfessional({
+							workspaceId,
+							taskId: pageId,
+							executionId: runId
+						}, controller.signal);
+						return {
+							committed: true,
+							current: await remote.get(workspaceId, controller.signal)
+						};
+					}, () => ({
+						generationUncertain: false,
+						apiPreview: null
+					}));
 					return runPageOperation(workspaceId, pageId, "run-stop", (current) => remote.stopUnifiedRun({
 						workspaceId,
 						taskId: pageId,
@@ -10622,8 +11574,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (run.result.contentStatus === "blocked") throw new Error("Blocked results cannot be written back");
 					if (run.review.status !== "approved") throw new Error("An approved run is required before writeback");
 					const operation = operationFor(getCurrent(workspaceId), pageId);
-					const relativeDirectory = operation.writebackDirectory.trim();
-					if (relativeDirectory.length === 0) throw new Error("Writeback directory is required");
+					const relativeDirectory = ".";
 					if (operation.activeOperation !== null) throw new Error("another page operation is already in progress");
 					updatePageOperation(workspaceId, pageId, {
 						activeOperation: "writeback-prepare",
@@ -10739,265 +11690,172 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return Object.freeze(store);
 		}
 		//#endregion
-		//#region src/generation-preferences.js
-		function normalizeGenerationPreferences(value = {}) {
-			const defaultGenerationSource = generationSourceSchema.parse(value.defaultGenerationSource ?? "local-skill");
-			const raw = value.outputDirectoryPrefix ?? "";
-			if (typeof raw !== "string" || raw.length > 200) throw new TypeError("Invalid output directory prefix");
-			const outputDirectoryPrefix = raw.trim().replaceAll("/", "\\");
-			if (outputDirectoryPrefix) writebackRelativePathSchema.parse(outputDirectoryPrefix);
-			return Object.freeze({
-				defaultGenerationSource,
-				outputDirectoryPrefix
-			});
-		}
-		//#endregion
-		//#region src/client/oasis-connection-settings.js
-		const REFERENCE = "OASIS_USER_JWT";
+		//#region src/client/product-settings.js
 		const initial = () => ({
-			environmentKind: "non-production",
 			connected: false,
 			settingsStatus: "unavailable",
 			settingsWritable: false,
-			apiBaseUrl: "",
-			credentialOrigin: "",
-			downloadOrigins: Object.freeze([]),
-			...normalizeGenerationPreferences(),
-			localModelEnabled: false,
+			environmentKind: "production",
+			apiBaseUrl: OASIS_PRODUCT_ORIGIN,
+			credentialOrigin: OASIS_PRODUCT_ORIGIN,
+			downloadOrigins: [],
+			defaultGenerationSource: "local-skill",
+			outputDirectoryPrefix: "",
 			credentialStatus: "unavailable",
 			credentialStored: false,
 			credentialConfigured: false,
 			credentialWritable: false,
+			accountId: null,
+			accountRevision: null,
+			retryAfterSeconds: 0,
 			busy: false,
 			restartRequired: false,
-			notice: null,
+			canSubmit: false,
 			error: null,
-			canSubmit: false
+			notice: null
 		});
-		function createOasisConnectionSettings({ onInvalidated = () => {} } = {}) {
+		function createProductSettings({ remote, onInvalidated = () => {} }) {
 			let snapshot = Object.freeze(initial());
 			const listeners = /* @__PURE__ */ new Set();
-			let scope = null;
-			let connection = null;
-			let remote = null;
-			let generation = 0;
-			let credentialRead = 0;
-			let lastSettings = null;
-			let pendingWrite = false;
-			let disposed = false;
-			let detachCurrent = () => {};
+			let scope, generation = 0, readId = 0, disposed = false, pending = false;
+			let detach = () => {};
+			const invalidate = () => {
+				try {
+					Promise.resolve(onInvalidated({ reload: false })).catch(() => {});
+				} catch {}
+			};
 			function publish(patch) {
 				if (disposed) return;
 				const next = {
 					...snapshot,
 					...patch
 				};
-				next.credentialConfigured = next.credentialStatus === "ready" && next.credentialStored === true && next.apiBaseUrl !== "" && next.credentialOrigin === next.apiBaseUrl;
-				next.canSubmit = next.connected && next.settingsStatus === "ready" && next.apiBaseUrl !== "" && next.credentialStatus === "ready" && next.credentialConfigured && !next.busy && !next.restartRequired;
+				next.canSubmit = next.connected && next.settingsStatus === "ready" && next.credentialConfigured && !next.busy && !next.restartRequired;
 				snapshot = Object.freeze(next);
 				for (const listener of listeners) listener();
-			}
-			function invalidate(reload = false) {
-				try {
-					Promise.resolve(onInvalidated({ reload })).catch(() => {});
-				} catch {}
 			}
 			function readSettings() {
 				try {
 					const view = scope?.getSnapshot();
-					if (view?.status !== "ready" || view.mode !== "host") throw new Error("unavailable");
-					const value = view.value;
-					const rawCredentialOrigin = value?.credentialOrigin ?? "";
-					if (!["non-production", "production"].includes(value?.environmentKind) || value.credentialRef !== REFERENCE || typeof value.apiBaseUrl !== "string" || typeof rawCredentialOrigin !== "string" || !Array.isArray(value.downloadOrigins)) throw new Error("invalid");
-					const environmentKind = value.environmentKind;
-					const apiBaseUrl = value.apiBaseUrl === "" ? "" : normalizeOasisOrigin(value.apiBaseUrl, "API", environmentKind);
-					const credentialOrigin = rawCredentialOrigin === "" ? "" : normalizeOasisOrigin(rawCredentialOrigin, "credential", environmentKind);
-					const downloadOrigins = Object.freeze([...new Set(value.downloadOrigins.map((origin) => normalizeOasisDownloadOrigin(origin, "download", environmentKind)))]);
-					const preferences = normalizeGenerationPreferences(value);
-					const localModelEnabled = value.localModelEnabled ?? false;
-					if (typeof localModelEnabled !== "boolean") throw new Error("invalid");
-					const settings = JSON.stringify([
-						environmentKind,
-						apiBaseUrl,
-						credentialOrigin,
-						downloadOrigins,
-						localModelEnabled
-					]);
-					const restartRequired = snapshot.restartRequired || lastSettings !== null && settings !== lastSettings;
-					lastSettings = settings;
+					if (view?.status !== "ready" || view.mode !== "host") throw Error();
 					publish({
 						settingsStatus: "ready",
-						settingsWritable: snapshot.connected && view.writable === true,
-						environmentKind,
-						apiBaseUrl,
-						credentialOrigin,
-						downloadOrigins,
-						restartRequired,
-						localModelEnabled,
-						...preferences
+						settingsWritable: snapshot.connected && view.writable === true
 					});
 				} catch {
 					publish({
 						settingsStatus: "unavailable",
-						settingsWritable: false,
-						apiBaseUrl: "",
-						credentialOrigin: "",
-						downloadOrigins: Object.freeze([]),
-						localModelEnabled: false,
-						...normalizeGenerationPreferences()
+						settingsWritable: false
 					});
 				}
 			}
-			async function refreshCredential() {
-				const current = generation;
-				const read = ++credentialRead;
-				const api = remote?.credentials;
-				if (!snapshot.connected || typeof api?.describe !== "function") {
-					publish({
-						credentialStatus: "unavailable",
-						credentialStored: false,
-						credentialWritable: false
-					});
-					return false;
-				}
+			function receive(result) {
+				const value = accountStatusSchema.parse(result);
+				if (snapshot.accountRevision !== value.revision) invalidate();
 				publish({
-					credentialStatus: "loading",
-					credentialWritable: false
+					credentialStatus: "ready",
+					credentialConfigured: value.authenticated,
+					credentialStored: value.authenticated,
+					credentialWritable: value.available && value.writable,
+					accountId: value.accountId,
+					accountRevision: value.revision,
+					retryAfterSeconds: value.retryAfterSeconds
 				});
+			}
+			async function refresh() {
+				readSettings();
+				if (!snapshot.connected) return false;
+				const current = generation, id = ++readId;
 				try {
-					const response = await api.describe([REFERENCE]);
-					if (disposed || current !== generation || read !== credentialRead) return false;
-					const info = response?.ok === true ? response.value?.[REFERENCE] : null;
-					if (typeof info?.configured !== "boolean" || typeof info.writable !== "boolean") throw new Error("invalid");
-					publish({
-						credentialStatus: "ready",
-						credentialStored: info.configured,
-						credentialWritable: info.writable && typeof api.set === "function"
-					});
+					const value = await remote.accountStatus();
+					if (disposed || current !== generation || id !== readId) return false;
+					receive(value);
 					return true;
 				} catch {
-					if (!disposed && current === generation && read === credentialRead) publish({
+					if (!disposed && current === generation && id === readId) publish({
 						credentialStatus: "error",
-						credentialStored: false,
+						credentialConfigured: false,
 						credentialWritable: false
 					});
 					return false;
 				}
 			}
-			async function write(kind, action) {
-				if (disposed || pendingWrite || !snapshot.connected || snapshot.settingsStatus !== "ready" || !(kind === "credential" ? snapshot.credentialWritable : snapshot.settingsWritable)) return false;
+			async function action(method, payload) {
+				if (disposed || pending || !snapshot.connected || !snapshot.credentialWritable) return false;
 				const current = generation;
-				pendingWrite = true;
+				pending = true;
+				++readId;
 				publish({
 					busy: true,
 					error: null,
 					notice: null
 				});
-				if (kind !== "preference") invalidate();
+				if (method !== "accountSms") invalidate();
 				try {
-					await action();
-					if (disposed || generation !== current) return false;
-					if (kind === "credential") {
-						const described = await refreshCredential();
-						if (disposed || generation !== current) return false;
-						publish({ notice: described ? "凭据已更新；后续操作使用新凭据。" : "凭据已写入，但状态读取失败；请刷新状态后再使用。" });
-						invalidate(described);
-					} else if (kind === "preference") {
-						readSettings();
-						publish({ notice: "已保存，仅用于新任务。" });
-					} else {
-						readSettings();
-						publish({
-							restartRequired: true,
-							notice: "设置已保存。请手工重启隔离 Host 并刷新页面后再提交任务。"
-						});
-					}
+					const result = await remote[method](payload);
+					if (disposed || current !== generation) return false;
+					receive(result);
+					publish({ notice: method === "accountSms" ? "验证码已发送，请查看手机。" : method === "accountLogout" ? "已退出本插件账户；未退出网站。" : "登录成功。可在工作台“从网站导入”中选择项目和文件。" });
 					return true;
 				} catch (error) {
-					if (!disposed && generation === current) publish({
-						...error?.code === "CREDENTIAL_ORIGIN_BINDING_FAILED" ? { credentialStored: true } : {},
-						error: error?.code === "CREDENTIAL_ORIGIN_BINDING_FAILED" ? "凭据已写入，但未能绑定当前 API 地址；远程服务保持禁用，请刷新状态后重试。" : kind === "credential" ? "凭据更新失败；请检查可写状态后重试。" : "设置保存失败；请刷新后检查冲突或输入。",
-						notice: null
-					});
+					if (!disposed && current === generation) {
+						await refresh();
+						publish({ error: error?.code === "SMS_COOLDOWN" ? "请稍候再发送验证码。" : "账户操作未完成，请检查手机号、验证码或密码；不会自动重试。" });
+					}
 					return false;
 				} finally {
-					pendingWrite = false;
-					publish({
-						busy: false,
-						...kind === "settings" && current !== generation ? {
-							restartRequired: true,
-							notice: "连接已变更，设置保存结果待确认；请检查保存值、重启 Host 并刷新页面。"
-						} : {}
-					});
+					pending = false;
+					publish({ busy: false });
 				}
 			}
 			return Object.freeze({
 				getSnapshot: () => snapshot,
 				subscribe(listener) {
-					if (disposed) return () => {};
 					listeners.add(listener);
 					return () => listeners.delete(listener);
 				},
 				bind(services) {
-					if (disposed) return () => {};
-					detachCurrent();
+					detach();
 					const disposers = [];
 					let active = true;
-					const detach = () => {
+					detach = () => {
 						if (!active) return;
 						active = false;
-						generation += 1;
-						credentialRead += 1;
-						for (const dispose of disposers.splice(0)) try {
-							dispose();
-						} catch {}
+						generation++;
+						readId++;
+						for (const fn of disposers) fn();
 						scope = null;
-						connection = null;
-						remote = null;
 						publish({
 							...initial(),
-							busy: pendingWrite,
+							busy: pending,
 							restartRequired: snapshot.restartRequired
 						});
 						invalidate();
 					};
-					detachCurrent = detach;
 					try {
-						connection = services.connection;
-						remote = services.remote;
-						if (connection?.isLoopback !== true || remote?.$host?.isLoopback !== true || typeof connection.generation?.subscribe !== "function" || typeof connection.generation?.getSnapshot !== "function") throw new Error("unavailable");
+						const connection = services.connection;
+						if (!connection?.isLoopback || !services.remote?.$host?.isLoopback) throw Error();
 						scope = services.settingsScope.bind({ namespace: "oasis-professional-service" });
-						if (typeof scope?.set !== "function" || typeof scope?.subscribe !== "function") throw new Error("unavailable");
 						const onHost = () => {
-							if (!active) return;
-							generation += 1;
-							credentialRead += 1;
+							generation++;
+							readId++;
 							publish({
 								connected: connection.generation.getSnapshot() != null,
-								credentialStored: false,
-								credentialWritable: false,
-								error: null,
-								notice: null
+								credentialConfigured: false,
+								credentialWritable: false
 							});
-							readSettings();
 							invalidate();
-							refreshCredential().then((ok) => {
-								if (active && ok) invalidate(true);
-							});
+							refresh();
 						};
 						disposers.push(scope.subscribe(() => {
-							if (active) {
-								readSettings();
-								invalidate();
-							}
-						}));
-						disposers.push(connection.generation.subscribe(onHost));
-						if (typeof remote.$on === "function") disposers.push(remote.$on("credentials/reference-updated", (ref) => {
-							if (!active || ref !== REFERENCE) return;
+							readSettings();
 							invalidate();
-							refreshCredential().then((ok) => {
-								if (active && ok) invalidate(true);
-							});
+						}), connection.generation.subscribe(onHost));
+						if (services.remote.$on) disposers.push(services.remote.$on("credentials/record-updated", (key) => {
+							if (key === "oasis-professional-service/website-account") {
+								invalidate();
+								refresh();
+							}
 						}));
 						onHost();
 					} catch {
@@ -11005,325 +11863,24 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					}
 					return detach;
 				},
-				async refresh() {
-					readSettings();
-					const ok = await refreshCredential();
-					if (ok) invalidate(true);
-					return ok;
-				},
-				async saveEnvironmentKind(value) {
-					if (!["non-production", "production"].includes(value)) return false;
-					if (value === snapshot.environmentKind) return true;
-					const targetScope = scope;
-					const targetGeneration = generation;
-					return write("settings", async () => {
-						for (const [key, next] of [
-							["apiBaseUrl", ""],
-							["credentialOrigin", ""],
-							["downloadOrigins", []],
-							["environmentKind", value]
-						]) {
-							if (disposed || scope !== targetScope || generation !== targetGeneration) throw new Error("Host changed during environment switch");
-							await targetScope.set(key, next);
-						}
-					});
-				},
-				async saveApiBaseUrl(value) {
-					let origin;
-					try {
-						origin = value.trim() === "" ? "" : normalizeOasisOrigin(value.trim(), "API", snapshot.environmentKind);
-					} catch {
-						publish({
-							error: "API 地址必须符合所选环境，线上仅允许指定 HTTPS 地址，不含路径或凭据。",
-							notice: null
-						});
-						return false;
-					}
-					return write("settings", () => scope.set("apiBaseUrl", origin));
-				},
-				async saveLocalModelEnabled(value) {
-					if (typeof value !== "boolean") return false;
-					return write("settings", () => scope.set("localModelEnabled", value));
-				},
-				async savePreference(key, value) {
-					if (!["defaultGenerationSource", "outputDirectoryPrefix"].includes(key)) return false;
-					let normalized;
-					try {
-						normalized = normalizeGenerationPreferences({ [key]: value })[key];
-					} catch {
-						publish({
-							error: key === "outputDirectoryPrefix" ? "请填写安全的项目内相对目录，或留空。" : "请选择本地 Skills 或专业 API。",
-							notice: null
-						});
-						return false;
-					}
-					return write("preference", () => scope.set(key, normalized));
-				},
-				async saveDownloadOrigins(value) {
-					let origins;
-					try {
-						origins = [...new Set(value.split(/\r?\n/u).map((item) => item.trim()).filter(Boolean).map((item) => normalizeOasisDownloadOrigin(item, "download", snapshot.environmentKind)))];
-					} catch {
-						publish({
-							error: "下载来源须逐行填写安全 origin；线上环境只允许 HTTPS。",
-							notice: null
-						});
-						return false;
-					}
-					return write("settings", () => scope.set("downloadOrigins", origins));
-				},
-				async updateCredential(value) {
-					if (typeof value !== "string" || value.trim() === "") return false;
-					if (snapshot.apiBaseUrl === "" || !snapshot.settingsWritable) {
-						publish({
-							error: "请先在 DSH 设置 → 绿洲工作台保存当前 API 地址，再更新凭据。",
-							notice: null
-						});
-						value = "";
-						return false;
-					}
-					const targetOrigin = snapshot.apiBaseUrl;
-					return write("credential", async () => {
-						try {
-							if ((await remote.credentials.set(REFERENCE, value))?.ok !== true) throw new Error("failed");
-							if (snapshot.credentialOrigin !== targetOrigin) try {
-								await scope.set("credentialOrigin", targetOrigin);
-							} catch {
-								const error = /* @__PURE__ */ new Error("credential origin binding failed");
-								error.code = "CREDENTIAL_ORIGIN_BINDING_FAILED";
-								throw error;
-							}
-						} finally {
-							value = "";
-						}
-					});
-				},
+				refresh,
+				login: (payload) => action("accountLogin", payload),
+				sendSms: (payload) => action("accountSms", payload),
+				logout: () => action("accountLogout", { confirmed: true }),
 				dispose() {
-					if (disposed) return;
-					detachCurrent();
+					detach();
 					disposed = true;
 					listeners.clear();
 				}
 			});
 		}
 		//#endregion
-		//#region src/client/OasisConnectionSettings.js
-		const unavailable = Object.freeze({
-			connected: false,
-			settingsWritable: false,
-			credentialWritable: false,
-			apiBaseUrl: "",
-			downloadOrigins: []
-		});
-		const noSubscribe$1 = () => () => {};
-		const getUnavailable = () => unavailable;
-		const fieldStyle = {
-			display: "grid",
-			gap: 4,
-			fontSize: 12
-		};
-		const inputStyle = {
-			width: "100%",
-			boxSizing: "border-box",
-			font: "inherit",
-			padding: 6
-		};
-		function ConnectionSettingsForm({ snapshot, controller, apiDraft = "", downloadDraft = "", passwordRef, surface = "workbench", onApiDraft = () => {}, onDownloadDraft = () => {} }) {
-			const disabledSettings = !snapshot.settingsWritable || snapshot.busy;
-			const disabledCredential = !snapshot.credentialWritable || !snapshot.settingsWritable || snapshot.settingsStatus !== "ready" || snapshot.apiBaseUrl === "" || snapshot.busy;
-			const clearPassword = () => {
-				if (passwordRef.current) passwordRef.current.value = "";
-			};
-			return (0, react.createElement)("details", {
-				"data-testid": "oasis-connection-settings",
-				style: surface === "settings" ? {
-					width: "100%",
-					boxSizing: "border-box"
-				} : {
-					flexShrink: 0,
-					maxHeight: "50%",
-					overflowY: "auto",
-					padding: "10px 14px",
-					borderBottom: "1px solid #dedee1"
-				},
-				onToggle: (event) => {
-					if (!event.currentTarget.open) clearPassword();
-				}
-			}, (0, react.createElement)("summary", { style: {
-				cursor: "pointer",
-				fontSize: 13
-			} }, "专业服务连接配置"), (0, react.createElement)("div", { style: {
-				display: "grid",
-				gap: 8,
-				paddingTop: 10
-			} }, (0, react.createElement)("p", {
-				role: "status",
-				style: {
-					margin: 0,
-					fontSize: 12
-				}
-			}, !snapshot.connected ? "尚未连接可配置的本机 Host；本地工作流仍可使用。" : snapshot.settingsStatus !== "ready" ? "公共配置服务不可用或配置引用不匹配；本地工作流仍可使用。" : `环境：${snapshot.environmentKind === "production" ? "线上服务" : "非生产"}；普通设置和凭据分别保存。`), (0, react.createElement)("label", { style: fieldStyle }, "服务环境", (0, react.createElement)("select", {
-				"aria-label": "服务环境",
-				value: snapshot.environmentKind ?? "non-production",
-				disabled: disabledSettings,
-				onChange: (event) => {
-					clearPassword();
-					controller.saveEnvironmentKind(event.currentTarget.value);
-				}
-			}, (0, react.createElement)("option", { value: "non-production" }, "非生产"), (0, react.createElement)("option", { value: "production" }, "线上服务"))), (0, react.createElement)("small", null, "切换环境会清空地址和下载来源并解除凭据绑定；不会自动上传或生成。"), (0, react.createElement)("label", { style: fieldStyle }, "API origin", (0, react.createElement)("input", {
-				value: apiDraft,
-				disabled: disabledSettings,
-				style: inputStyle,
-				autoComplete: "off",
-				placeholder: snapshot.environmentKind === "production" ? "https://lzhxpy.oasisintwrite.com" : "https://非生产服务域名",
-				onChange: (event) => onApiDraft(event.currentTarget.value)
-			})), (0, react.createElement)("button", {
-				type: "button",
-				disabled: disabledSettings,
-				onClick: () => {
-					controller.saveApiBaseUrl(apiDraft);
-				}
-			}, "保存 API 地址"), (0, react.createElement)("label", { style: fieldStyle }, "允许的下载 origin（可空，每行一个）", (0, react.createElement)("textarea", {
-				value: downloadDraft,
-				rows: 2,
-				disabled: disabledSettings,
-				style: inputStyle,
-				onChange: (event) => onDownloadDraft(event.currentTarget.value)
-			})), (0, react.createElement)("button", {
-				type: "button",
-				disabled: disabledSettings,
-				onClick: () => {
-					controller.saveDownloadOrigins(downloadDraft);
-				}
-			}, "保存下载来源"), (0, react.createElement)("p", { style: {
-				margin: 0,
-				fontSize: 12
-			} }, "保存设置后需手工重启 Host 并刷新页面；空 API 地址表示禁用远程服务。"), (0, react.createElement)("label", { style: fieldStyle }, "JWT · OASIS_USER_JWT", (0, react.createElement)("input", {
-				ref: passwordRef,
-				type: "password",
-				disabled: disabledCredential,
-				style: inputStyle,
-				autoComplete: "new-password",
-				spellCheck: false,
-				placeholder: "留空不更改已有凭据"
-			})), (0, react.createElement)("div", {
-				role: "status",
-				style: { fontSize: 12 }
-			}, snapshot.credentialStatus !== "ready" ? "凭据状态尚未确认。" : snapshot.credentialConfigured ? "凭据已绑定当前 API 地址（不读取或显示原值）。" : snapshot.credentialStored ? "凭据已保存，但未绑定当前 API 地址；请重新输入凭据以激活。" : "尚未配置凭据。"), (0, react.createElement)("button", {
-				type: "button",
-				disabled: disabledCredential,
-				"data-testid": "oasis-credential-save",
-				onClick: () => {
-					const value = passwordRef.current?.value ?? "";
-					clearPassword();
-					controller.updateCredential(value);
-				}
-			}, "更新凭据"), (0, react.createElement)("button", {
-				type: "button",
-				disabled: !snapshot.connected || snapshot.busy,
-				onClick: () => {
-					controller.refresh();
-				}
-			}, "刷新配置与目录状态"), snapshot.restartRequired ? (0, react.createElement)("div", { role: "status" }, "设置尚待重启生效；已暂停新业务提交，请重启 Host 并刷新页面。") : null, snapshot.notice ? (0, react.createElement)("div", { role: "status" }, snapshot.notice) : null, snapshot.error ? (0, react.createElement)("div", { role: "alert" }, snapshot.error) : null));
-		}
-		function OasisConnectionSettings({ controller, visible = true, surface = "workbench" }) {
-			const snapshot = (0, react.useSyncExternalStore)(controller?.subscribe ?? noSubscribe$1, controller?.getSnapshot ?? getUnavailable, controller?.getSnapshot ?? getUnavailable);
-			const [apiDraft, setApiDraft] = (0, react.useState)(snapshot.apiBaseUrl);
-			const [downloadDraft, setDownloadDraft] = (0, react.useState)(snapshot.downloadOrigins.join("\n"));
-			const passwordRef = (0, react.useRef)(null);
-			(0, react.useEffect)(() => {
-				setApiDraft(snapshot.apiBaseUrl);
-			}, [snapshot.apiBaseUrl]);
-			const originsText = snapshot.downloadOrigins.join("\n");
-			(0, react.useEffect)(() => {
-				setDownloadDraft(originsText);
-			}, [originsText]);
-			(0, react.useEffect)(() => {
-				const input = passwordRef.current;
-				if (!visible || !snapshot.connected || !snapshot.credentialWritable) {
-					if (input) input.value = "";
-				}
-				return () => {
-					if (input) input.value = "";
-				};
-			}, [
-				visible,
-				snapshot.connected,
-				snapshot.credentialWritable,
-				controller
-			]);
-			if (!visible) return null;
-			return (0, react.createElement)(ConnectionSettingsForm, {
-				snapshot,
-				controller,
-				apiDraft,
-				downloadDraft,
-				passwordRef,
-				surface,
-				onApiDraft: setApiDraft,
-				onDownloadDraft: setDownloadDraft
-			});
-		}
-		//#endregion
 		//#region src/client/OasisSettingsSection.js
-		const empty = Object.freeze({
-			settingsWritable: false,
-			defaultGenerationSource: "local-skill",
-			outputDirectoryPrefix: ""
-		});
-		const noSubscribe = () => () => {};
-		const getEmpty = () => empty;
-		function NewTaskPreferences({ controller }) {
-			const snapshot = (0, react.useSyncExternalStore)(controller?.subscribe ?? noSubscribe, controller?.getSnapshot ?? getEmpty, controller?.getSnapshot ?? getEmpty);
-			const [prefix, setPrefix] = (0, react.useState)(snapshot.outputDirectoryPrefix ?? "");
-			(0, react.useEffect)(() => {
-				setPrefix(snapshot.outputDirectoryPrefix ?? "");
-			}, [snapshot.outputDirectoryPrefix]);
-			const disabled = !snapshot.settingsWritable || snapshot.busy;
+		function GenerationGuidance() {
 			return (0, react.createElement)("div", { style: {
 				display: "grid",
 				gap: 10
-			} }, (0, react.createElement)("label", null, "默认生成来源", (0, react.createElement)("select", {
-				"aria-label": "默认生成来源",
-				value: snapshot.defaultGenerationSource ?? "local-skill",
-				disabled,
-				onChange: (event) => {
-					controller.savePreference("defaultGenerationSource", event.currentTarget.value);
-				},
-				style: {
-					display: "block",
-					padding: 8,
-					marginTop: 5
-				}
-			}, (0, react.createElement)("option", { value: "local-skill" }, "本地 Skills"), (0, react.createElement)("option", { value: "oasis-api" }, "专业 API"))), (0, react.createElement)("label", null, "保存目录前缀", (0, react.createElement)("input", {
-				"aria-label": "保存目录前缀",
-				value: prefix,
-				disabled,
-				maxLength: 200,
-				placeholder: "项目内相对目录（可空）",
-				onChange: (event) => setPrefix(event.currentTarget.value),
-				style: {
-					display: "block",
-					boxSizing: "border-box",
-					width: "100%",
-					padding: 8,
-					marginTop: 5
-				}
-			})), (0, react.createElement)("button", {
-				type: "button",
-				disabled,
-				onClick: () => {
-					controller.savePreference("outputDirectoryPrefix", prefix);
-				}
-			}, "保存目录偏好"), (0, react.createElement)("small", null, "仅用于新任务；保存文件仍需逐次确认。"), (0, react.createElement)("label", null, (0, react.createElement)("input", {
-				type: "checkbox",
-				"aria-label": "启用本地 Skills 真实模型生成",
-				checked: snapshot.localModelEnabled === true,
-				disabled,
-				onChange: (event) => {
-					controller.saveLocalModelEnabled(event.currentTarget.checked);
-				}
-			}), "启用本地 Skills 真实模型生成"), (0, react.createElement)("small", null, "重启 Host 后生效；使用 DSH 当前会话模型。云端模型会接收材料和内置 Skill，可能产生费用，每次生成前确认。"), snapshot.error ? (0, react.createElement)("div", { role: "alert" }, snapshot.error) : null, snapshot.notice ? (0, react.createElement)("div", { role: "status" }, snapshot.notice) : null);
+			} }, (0, react.createElement)("small", null, "新任务默认使用本地 Skills，通过 DSH 当前会话所选模型生成；如需专业 API，可在任务中切换并登录绿洲账户。"), (0, react.createElement)("small", null, "两种方式的结果均保存到当前 DSH 项目目录，使用 DSH 文件管理查看和编辑。Skills 生成的文件名不加来源标记，专业 API 文件名在扩展名前添加 _OIW。"), (0, react.createElement)("small", null, "使用云端模型或专业 API 时，相关材料会发送至对应服务，可能产生费用；生成前会提示并由你确认。"));
 		}
 		function OasisSettingsSection({ controller }) {
 			return (0, react.createElement)("section", {
@@ -11337,11 +11894,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, (0, react.createElement)("h2", { style: {
 				margin: 0,
 				fontSize: 18
-			} }, "绿洲工作台"), (0, react.createElement)(NewTaskPreferences, { controller }), (0, react.createElement)(OasisConnectionSettings, {
-				controller,
-				surface: "settings",
-				visible: true
-			}));
+			} }, "绿洲工作台"), (0, react.createElement)(GenerationGuidance), controller ? (0, react.createElement)(OasisAccountSettings, { controller }) : null);
 		}
 		//#endregion
 		//#region src/client/conversation-draft-bridge.js
@@ -11427,13 +11980,17 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const slots = ctx.get?.("slots") ?? ctx.slots;
 			const connection = ctx.get?.("connection") ?? ctx.connection;
 			if (slots === void 0 || connection === void 0) return () => {};
-			const connectionSettings = createOasisConnectionSettings({ onInvalidated: ({ reload }) => store.refreshProfessionalConfiguration(reload) });
+			const remote = createWorkbenchRemote(connection);
+			const connectionSettings = createProductSettings({
+				remote,
+				onInvalidated: ({ reload }) => store.refreshProfessionalConfiguration(reload)
+			});
 			const focusTargets = /* @__PURE__ */ new Map();
 			const layoutAdapter = createLayoutAdapter();
 			const coordinator = createPanelHostCoordinator({ layoutAdapter });
 			const conversationDrafts = createConversationDraftBridge(() => coordinator.getSnapshot().workspaceContext);
 			const store = createWorkbenchStore({
-				remote: createWorkbenchRemote(connection),
+				remote,
 				connectionSettings,
 				conversationDrafts,
 				nativeFiles: coordinator,
@@ -11481,7 +12038,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				label: "绿洲工作台"
 			}, (props) => (0, react.createElement)(OasisSettingsSection, {
 				...props,
-				controller: connectionSettings
+				controller: connectionSettings,
+				remote,
+				coordinator
 			})));
 			let betterSidebarFiber = null;
 			let settingsFiber = null;

@@ -7,7 +7,7 @@ import { WorkbenchEntry } from './client/WorkbenchEntry.js'
 import { WorkspaceContextBridge } from './client/WorkspaceContextBridge.js'
 import { createWorkbenchRemote } from './client/workbench-remote.js'
 import { createWorkbenchStore } from './client/workbench-store.js'
-import { createOasisConnectionSettings } from './client/oasis-connection-settings.js'
+import { createProductSettings } from './client/product-settings.js'
 import { OasisSettingsSection } from './client/OasisSettingsSection.js'
 import { createConversationDraftBridge } from './client/conversation-draft-bridge.js'
 import { resolveWorkspaceId } from './client/project-resolution.js'
@@ -24,14 +24,16 @@ export function apply(ctx, { markdownRenderer } = {}) {
   const connection = ctx.get?.('connection') ?? ctx.connection
   if (slots === undefined || connection === undefined) return () => {}
 
-  const connectionSettings = createOasisConnectionSettings({
+  const remote = createWorkbenchRemote(connection)
+  const connectionSettings = createProductSettings({
+    remote,
     onInvalidated: ({ reload }) => store.refreshProfessionalConfiguration(reload),
   })
   const focusTargets = new Map()
   const layoutAdapter = createLayoutAdapter()
   const coordinator = createPanelHostCoordinator({ layoutAdapter })
   const conversationDrafts = createConversationDraftBridge(() => coordinator.getSnapshot().workspaceContext)
-  const store = createWorkbenchStore({ remote: createWorkbenchRemote(connection), connectionSettings, conversationDrafts, nativeFiles: coordinator,
+  const store = createWorkbenchStore({ remote, connectionSettings, conversationDrafts, nativeFiles: coordinator,
     getGenerationSession(workspaceId) {
       const context = coordinator.getSnapshot().workspaceContext
       if (context?.status !== 'ready' || resolveWorkspaceId(context.currentSessionId, context.workspaceItems) !== workspaceId) {
@@ -87,6 +89,7 @@ export function apply(ctx, { markdownRenderer } = {}) {
     (props) => createElement(OasisSettingsSection, {
       ...props,
       controller: connectionSettings,
+      remote, coordinator,
     }),
   ))
 

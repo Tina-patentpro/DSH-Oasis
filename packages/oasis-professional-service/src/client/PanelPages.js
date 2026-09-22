@@ -39,7 +39,7 @@ export function PanelPages({
   state,
   markdownRenderer,
   savedFileUnavailableReason = '安全文件预览不可用', onOpenSavedFile = () => {},
-  showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false,
+  showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, onImport,
   effectiveMode = 'normal',
   onSelectWorkflow,
   onRenamePage,
@@ -89,7 +89,8 @@ export function PanelPages({
   }
 
   const page = state.pages.find((item) => item.pageId === state.activePageId)
-  if (!page) return createElement('div', { style: { padding: 20, color: '#66706b' } }, '请新建任务页。')
+  if (!page) return createElement('div', { style: { padding: 20, color: '#66706b' } }, '请新建任务页。',
+    onImport ? createElement('button', { type: 'button', onClick: onImport }, '从网站导入') : null)
 
   const titleEditor = createElement('div', {
     style: { padding: '14px 20px', display: 'grid', gap: 5, borderBottom: '1px solid var(--dsw-alias-border-l2, #eceeec)' },
@@ -113,6 +114,7 @@ export function PanelPages({
   let content
   if (page.view === 'chooser' || showFunctionCenter) {
     content = createElement(FunctionCenter, {
+      onImport,
       state,
       nativeAvailability, onOpenNative,
       onSelect: (workflowId) => onSelectWorkflow(page.pageId, workflowId),
@@ -140,6 +142,8 @@ export function PanelPages({
             key: page.pageId, page, workflow, markdownRenderer, workspaceId: state.workspaceId, syncStatus: state.syncStatus, operation,
             onRenamePage, onUpdateForm, onSetGenerationSource, onSelectClaimsUpstream,
             fixtureEnabled: state.unifiedFixtureEnabled === true,
+            apiExecutionAvailable: state.apiExecutionAvailable === true,
+            apiConfigurationReady: state.professionalConfigurationBlocked !== true,
             localGenerationEnabled: state.localGenerationEnabled === true,
             localGenerationKind: state.localGenerationKind,
             conversationUnavailableReason: state.conversationUnavailableReason === undefined ? '当前对话输入接口不可用' : state.conversationUnavailableReason,

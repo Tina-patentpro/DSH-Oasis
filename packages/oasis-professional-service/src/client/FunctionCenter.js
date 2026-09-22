@@ -9,7 +9,7 @@ export const NATIVE_TOOLS = Object.freeze([
 const button = { border: '1px solid var(--dsw-alias-border-l2, #dce4df)', borderRadius: 10, padding: 12,
   background: 'var(--dsw-alias-bg-base, #fff)', color: 'inherit', cursor: 'pointer', font: 'inherit' }
 
-export function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = () => false, onSelect = () => {} }) {
+export function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = () => false, onSelect = () => {}, onImport }) {
   const [category, setCategory] = useState('patent')
   const [notice, setNotice] = useState(null)
   const ready = state.catalogStatus === 'ready'
@@ -20,6 +20,7 @@ export function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = 
     createElement('header', { style: { display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'center' } },
       createElement('h3', { style: { margin: 0, fontSize: 19 } }, '功能中心'),
       createElement('small', { style: { color: '#307560', fontSize: 10 } }, 'BETTER SIDEBAR × OASIS')),
+    onImport ? createElement('button', { type: 'button', onClick: onImport, style: button }, '从网站导入') : null,
     createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 8 } },
       ...NATIVE_TOOLS.map(tool => createElement('button', { key: tool.id, type: 'button', style: button,
         disabled: nativeAvailability[tool.id] !== true, title: nativeAvailability[tool.id] === true ? undefined : '原生功能不可用或已在侧边卡片设置中关闭',

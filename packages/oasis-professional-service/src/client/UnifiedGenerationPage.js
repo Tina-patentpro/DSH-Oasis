@@ -33,7 +33,7 @@ const css = `
 }
 `
 
-export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus, operation, fixtureEnabled = false, localGenerationEnabled = false, localGenerationKind = null, markdownRenderer,
+export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus, operation, fixtureEnabled = false, apiExecutionAvailable = false, apiConfigurationReady = true, localGenerationEnabled = false, localGenerationKind = null, markdownRenderer,
   onRenamePage = () => {}, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onGenerate = () => {},
   onSelectClaimsUpstream = () => {},
   onObserveUnified = () => {}, onStopUnified = () => {}, ...resultActions }) {
@@ -44,18 +44,23 @@ export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus,
   const source = page.generation.source
   const local = localGenerationEnabled && source === 'local-skill'
   const real = local && localGenerationKind === 'native-model'
-  const confirmation = operation.localModelPreview
+  const api = source === 'oasis-api' && apiExecutionAvailable && !fixtureEnabled
+  const confirmation = api ? operation.apiPreview : operation.localModelPreview
   const [confirmed, setConfirmed] = useState(false)
-  useEffect(() => { setConfirmed(false) }, [confirmation?.sha256])
+  useEffect(() => { setConfirmed(false) }, [confirmation?.sha256, confirmation?.confirmationToken, source])
   const locked = !['ready', 'saving'].includes(syncStatus) || operation.activeOperation !== null
     || operation.generationUncertain || hasPendingUnifiedRun(page)
     || page.remoteExecutionOrder.some(id => isOasisRemoteExecutionUnresolved(page.remoteExecutions[id]))
   const readOnlyDisabled = syncStatus !== 'ready' || operation.activeOperation !== null || operation.generationUncertain === true
   const validation = validateWorkflowFormValues(workflow, page.formValues)
-  const reason = real && page.workflowVersion !== '2' ? '请新建权利要求任务，历史任务仅供查看'
-    : !fixtureEnabled && !local ? generationUnavailableReason(source)
+  const pendingApi = Object.values(page.remoteExecutions).find(e => e.unifiedClaims && isOasisRemoteExecutionUnresolved(e))
+  const latestApi = [...page.remoteExecutionOrder].reverse().map(id => page.remoteExecutions[id]).find(e => e.unifiedClaims)
+  const reason = (real || api) && page.workflowVersion !== '2' ? '请新建权利要求任务，历史任务仅供查看'
+    : api && !apiConfigurationReady ? '请先在 DSH 设置 → 绿洲工作台登录账户'
+    : api && (page.generation.upstream || page.inputRefs.length) ? '当前 API 映射不支持上游/文件引用；请先取消选择，不会静默忽略材料'
+    : !fixtureEnabled && !local && !api ? generationUnavailableReason(source)
     : operation.generationUncertain ? '结果未确认，请查看原运行'
-      : hasPendingUnifiedRun(page) ? '原运行未决，请查看状态；不会自动重发' : !validation.valid ? '请填写必填材料' : null
+      : hasPendingUnifiedRun(page) || pendingApi ? '原运行未决，请查看状态；不会自动重发' : !validation.valid ? '请填写必填材料' : null
   const pending = Object.values(page.runs).find(run => hasPendingUnifiedRun({ runs: { run } }))
   useEffect(() => {
     if (pending?.mode !== 'dsh-local' || pending.status !== 'prepared' || operation.activeOperation !== null || operation.error || syncStatus !== 'ready') return
@@ -74,7 +79,7 @@ export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus,
           } }),
         createElement('div', { title: workspaceId, style: { fontSize: 11, overflowWrap: 'anywhere', color: 'var(--dsw-alias-text-secondary, #66706b)' } }, `项目：${workspaceId}`)),
       createElement(GenerationSourceSwitch, { value: source, disabled: locked, onChange: value => onSetGenerationSource(page.pageId, value) }),
-      createElement('div', { className: 'generation-notice', role: 'status' }, real ? '本地 Skills · 使用 DSH 模型' : local ? '原生离线验收 · 无真实调用' : fixtureEnabled ? '合成验收 · 无真实调用' : source === 'local-skill' ? '本地 Skills · 未启用' : '专业 API · 待绑定'),
+      createElement('div', { className: 'generation-notice', role: 'status' }, real ? '本地 Skills · 使用 DSH 模型' : local ? '原生离线验收 · 无真实调用' : fixtureEnabled ? '合成验收 · 无真实调用' : api ? '专业 API · 逐次确认上传与费用' : source === 'local-skill' ? '本地 Skills · 模型服务暂不可用' : '专业 API · 待绑定'),
       createElement('div', { className: 'generation-views', 'aria-label': '输入与结果视图' },
         ...[['input', '输入'], ['result', '结果']].map(([id, label]) => createElement('button', {
           key: id, type: 'button', 'aria-pressed': view === id, onClick: () => setView(id),
@@ -96,6 +101,14 @@ export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus,
           presentation: 'tabs', activeFieldId, onActivateField: setActiveFieldId, preview, markdownRenderer,
           onChange: (fieldId, value) => onUpdateForm(page.pageId, fieldId, value) }),
         createElement('div', { className: 'generation-submit' },
+          api && confirmation ? createElement('div', { role: 'group', 'aria-label': '本次 API 调用确认', style: { fontSize: 12, marginBottom: 8, overflowWrap: 'anywhere' } },
+            createElement('div', null, `目的地：${confirmation.apiBaseOrigin} · ${confirmation.environmentKind === 'production' ? '生产' : '非生产'}`),
+            createElement('div', null, `账户 ${confirmation.accountId} · 目录 ${confirmation.folderName} (${confirmation.folderId}) · 服务 ${confirmation.apiEndpoint}`),
+            createElement('div', null, `技术交底以 technical-disclosure.txt 上传（${confirmation.documentBytes} 字节）；四字段共 ${confirmation.characterCount} 字符，未填字段省略。参考费用 ${confirmation.price}，余额 ${confirmation.balance}。`),
+            createElement('label', null, createElement('input', { type: 'checkbox', checked: confirmed, disabled: locked,
+              onChange: event => setConfirmed(event.currentTarget.checked) }), '我确认将本次材料上传至上述服务并生成，可能产生费用；失败不自动切换或重发。'),
+            createElement('button', { type: 'button', disabled: locked || !confirmed || reason !== null,
+              onClick: () => { setConfirmed(false); onGenerate(page.pageId, true) } }, '确认上传并生成')) : null,
           real && confirmation ? createElement('div', { role: 'group', 'aria-label': '本次模型调用确认', style: { fontSize: 12, marginBottom: 8, overflowWrap: 'anywhere' } },
             createElement('div', null, `模型：${confirmation.route.provider} / ${confirmation.route.model}${confirmation.route.reasoningEffort ? ` / ${confirmation.route.reasoningEffort}` : ''}`),
             createElement('div', null, `发送四选项卡文本${confirmation.upstreamIncluded ? '及已选择的上游全文' : '（未选上游文稿）'}，共 ${confirmation.characterCount} 字符${confirmation.skill ? `，另含内置 Skill ${confirmation.skill.id}/${confirmation.skill.version}` : ''}。`),
@@ -104,10 +117,14 @@ export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus,
             createElement('button', { type: 'button', disabled: locked || !confirmed || reason !== null,
               onClick: () => { setConfirmed(false); onGenerate(page.pageId, true) } }, '确认并生成')) : null,
           createElement('button', { type: 'button', 'data-testid': 'oasis-unified-generate', disabled: locked || syncStatus !== 'ready' || reason !== null,
-            title: reason ?? undefined, onClick: () => onGenerate(page.pageId) }, operation.activeOperation === 'run-create' ? '生成中…' : real ? confirmation ? '重新核对模型与材料' : '核对模型与材料' : local ? '生成离线样本' : fixtureEnabled ? '生成合成样本' : '生成'),
+            title: reason ?? undefined, onClick: () => onGenerate(page.pageId) }, ['run-create', 'api-create'].includes(operation.activeOperation) ? '生成中…' : api ? '核对服务与材料（读取账户与目录）' : real ? confirmation ? '重新核对模型与材料' : '核对模型与材料' : local ? '生成离线样本' : fixtureEnabled ? '生成合成样本' : '生成'),
+          operation.error ? createElement('p', { role: 'alert' }, `操作未完成（${operation.errorCode ?? '确认或连接失效'}）。请核对原生设置中的项目绑定和当前材料；不会自动重试。`) : null,
+          latestApi ? createElement('p', { role: 'status', style: { fontSize: 12 } }, `API 原运行：${latestApi.status}${latestApi.safeError ? `（${latestApi.safeError.code}）` : ''}。停止等待不代表后端取消或退款。`) : null,
           reason ? createElement('p', { role: 'status', style: { margin: '8px 0 0', fontSize: 12 } }, reason) : null,
-          (pending || operation.generationUncertain) ? createElement('div', null,
+          (pending || pendingApi || operation.generationUncertain) ? createElement('div', null,
             createElement('button', { type: 'button', disabled: operation.activeOperation !== null, onClick: () => onObserveUnified(page.pageId) }, '查看原运行'),
+            pendingApi && (pendingApi.submittedAt !== null || ['prepared', 'ready-to-submit'].includes(pendingApi.status)) ? createElement('button', { type: 'button', disabled: operation.activeOperation !== null,
+              onClick: () => onStopUnified(page.pageId, pendingApi.executionId) }, pendingApi.submittedAt === null ? '放弃提交前准备（保留回执）' : '停止本地等待') : null,
             pending?.status === 'prepared' ? createElement('button', { type: 'button', disabled: operation.activeOperation !== null,
               onClick: () => onStopUnified(page.pageId, pending.runId) }, pending.mode === 'dsh-local' ? '停止等待' : '结束未完成合成') : null) : null)),
       createElement('section', { className: 'generation-pane generation-result', 'data-visible': view === 'result' },

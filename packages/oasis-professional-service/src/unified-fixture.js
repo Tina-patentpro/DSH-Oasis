@@ -4,6 +4,13 @@ import { claimsDraftValuesSchema, generationSourceSchema } from './generation-co
 import { assembleClaimsV2, publicClaimsV2Output } from './claims-v2-result.js'
 
 export function unifiedInputSha256(run) {
+  if (run.mode === 'oasis-api') return createHash('sha256').update(canonicalJson({
+    mode: run.mode, evidenceKind: run.evidenceKind, executionId: run.executionId, executionInputSha: run.executionInputSha,
+    providerSnapshot: run.providerSnapshot, workflowId: run.workflowId, workflowVersion: run.workflowVersion,
+    source: run.source, inputSchemaVersion: run.inputSchemaVersion,
+    formValues: run.inputSnapshot.formValues, inputRefs: run.inputSnapshot.inputRefs,
+    upstreamSnapshot: run.inputSnapshot.upstreamSnapshot,
+  }), 'utf8').digest('hex')
   if (run.mode === 'dsh-local') return createHash('sha256').update(canonicalJson({
     mode: run.mode, evidenceKind: run.evidenceKind, executionVersion: run.executionVersion,
     workflowId: run.workflowId, workflowVersion: run.workflowVersion,

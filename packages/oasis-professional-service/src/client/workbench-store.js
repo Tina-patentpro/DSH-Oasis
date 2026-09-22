@@ -151,6 +151,7 @@ export function createWorkbenchStore({
       catalogError: null,
       workflows: workflowCatalog.workflows,
       unifiedFixtureEnabled: workflowCatalog.unifiedFixtureEnabled === true,
+      apiExecutionAvailable: workflowCatalog.apiExecutionAvailable === true,
       localGenerationEnabled: workflowCatalog.localGenerationEnabled === true,
       localGenerationKind: workflowCatalog.localGenerationKind ?? null,
     })
@@ -162,6 +163,7 @@ export function createWorkbenchStore({
       catalogError: current.catalogError,
       workflows: current.workflows,
       unifiedFixtureEnabled: current.unifiedFixtureEnabled === true,
+      apiExecutionAvailable: current.apiExecutionAvailable === true,
       localGenerationEnabled: current.localGenerationEnabled === true,
       localGenerationKind: current.localGenerationKind ?? null,
       professionalStatus: current.professionalStatus,
@@ -189,7 +191,7 @@ export function createWorkbenchStore({
   function invalidateInputConfirmations(workspaceId, pageId) {
     updatePageOperation(workspaceId, pageId, {
       priceConfirmed: false, externalTransferConfirmed: false, requestKey: null,
-      localModelPreview: null,
+      localModelPreview: null, apiPreview: null,
       writebackConfirmed: false, writebackPlan: null, error: null, errorCode: null, feedback: null,
     })
   }
@@ -236,7 +238,7 @@ export function createWorkbenchStore({
 
   function operationErrorFeedback(error) {
     const code = typeof error?.code === 'string' ? error.code : null
-    if (code === 'WRITEBACK_COMMITTED_INDEX_FAILED') return 'index-warning'
+    if (['WRITEBACK_COMMITTED_INDEX_FAILED', 'WRITEBACK_PARTIAL_PUBLISH'].includes(code)) return 'index-warning'
     if (code === 'MATERIAL_CHANGED') return 'material-changed'
     if (code?.includes('CONFLICT') || code === 'revision-conflict') return 'conflict'
     return 'operation-error'
@@ -573,6 +575,7 @@ export function createWorkbenchStore({
   }
 
   const store = {
+    websiteImportRemote: remote,
     connectionSettings,
     conversationDrafts,
 
@@ -587,7 +590,7 @@ export function createWorkbenchStore({
         runtime.professionalPromise = null
         const current = getCurrent(workspaceId)
         const pageOperations = Object.fromEntries(Object.entries(current.pageOperations).map(([pageId, operation]) => [
-          pageId, Object.freeze({ ...operation, professionalDetail: null, localModelPreview: null,
+          pageId, Object.freeze({ ...operation, professionalDetail: null, localModelPreview: null, apiPreview: null,
             priceConfirmed: false, externalTransferConfirmed: false,
             runningWaterStatus: 'idle', runningWaterObservation: null }),
         ]))
@@ -655,6 +658,7 @@ export function createWorkbenchStore({
           setState(workspaceId, stateWith(getCurrent(workspaceId), {
             catalogStatus: 'ready', catalogError: null, workflows,
             unifiedFixtureEnabled: response.unifiedFixtureEnabled === true,
+            apiExecutionAvailable: response.apiExecutionAvailable === true,
             localGenerationEnabled: response.localGenerationEnabled === true,
             localGenerationKind: response.localGenerationKind ?? null,
           }))
@@ -664,6 +668,7 @@ export function createWorkbenchStore({
             setState(workspaceId, stateWith(getCurrent(workspaceId), {
             catalogStatus: 'error', catalogError: errorMessage(error), workflows: [],
             unifiedFixtureEnabled: false,
+            apiExecutionAvailable: false,
             localGenerationEnabled: false,
             localGenerationKind: null,
             }))
@@ -766,12 +771,7 @@ export function createWorkbenchStore({
       if (current.catalogStatus !== 'ready') throw new Error('workflow catalog is not ready')
       const workflow = current.workflows.find((item) => item.workflowId === workflowId)
       if (!workflow) throw new Error(`workflow catalog does not contain ${workflowId}`)
-      const preference = connectionSettings?.getSnapshot?.()
-      dispatch(workspaceId, { type: 'select-workflow', pageId, workflow,
-        defaultGenerationSource: preference?.defaultGenerationSource ?? 'local-skill' })
-      if (workflow.executionMode === 'unified-text' && preference?.outputDirectoryPrefix) {
-        updatePageOperation(workspaceId, pageId, { writebackDirectory: `${preference.outputDirectoryPrefix}\\${pageId}` })
-      }
+      dispatch(workspaceId, { type: 'select-workflow', pageId, workflow, defaultGenerationSource: 'local-skill' })
       return getCurrent(workspaceId)
     },
 
@@ -1042,6 +1042,8 @@ export function createWorkbenchStore({
     async createRun(workspaceId, pageId, confirmed = false) {
       const page = pageFor(workspaceId, pageId)
       if (page.generation) {
+        if (page.generation.source === 'oasis-api' && !getCurrent(workspaceId).unifiedFixtureEnabled
+          && getCurrent(workspaceId).apiExecutionAvailable) return store.createApiRun(workspaceId, pageId, confirmed)
         const local = getCurrent(workspaceId).localGenerationEnabled && page.generation.source === 'local-skill'
         if (!local && !getCurrent(workspaceId).unifiedFixtureEnabled) throw new Error(generationUnavailableReason(page.generation.source))
         assertInputEditable(workspaceId, pageId)
@@ -1106,6 +1108,60 @@ export function createWorkbenchStore({
       )
     },
 
+    async createApiRun(workspaceId, pageId, confirmed = false) {
+      assertOpen(); assertKnown(workspaceId); assertInputEditable(workspaceId, pageId); assertProfessionalConfiguration()
+      const page = pageFor(workspaceId, pageId)
+      if (!getCurrent(workspaceId).apiExecutionAvailable || page.workflowVersion !== '2' || page.generation?.source !== 'oasis-api') throw new Error('当前任务不支持专业 API 执行')
+      const configurationGeneration = professionalConfigurationGeneration
+      const sessionId = getGenerationSession?.(workspaceId)
+      if (!confirmed) {
+        updatePageOperation(workspaceId, pageId, { activeOperation: 'api-preview', apiPreview: null, error: null, errorCode: null })
+        try {
+          await flushWorkspace(workspaceId)
+          const current = getCurrent(workspaceId), generation = runtimeFor(workspaceId).editGeneration
+          if (current.syncStatus !== 'ready') throw new Error('请先保存材料再确认')
+          const binding = await remote.getWorkspaceBinding({ workspaceId }, controller.signal)
+          assertProfessionalConfiguration(configurationGeneration)
+          const payload = { workspaceId, taskId: pageId, expectedRevision: current.revision, expectedSettingsRevision: binding.settingsRevision }
+          const prepared = await remote.prepareClaimsApi(payload, controller.signal)
+          const preview = await remote.previewClaimsApi({ ...payload, preparationSha256: prepared.preparationSha256, remoteReadConfirmed: true }, controller.signal)
+          if (closing || disposed) return
+          assertProfessionalConfiguration(configurationGeneration)
+          if (runtimeFor(workspaceId).editGeneration !== generation || getCurrent(workspaceId).revision !== current.revision
+            || getGenerationSession?.(workspaceId) !== sessionId) throw new Error('材料或当前项目已变更，请重新确认')
+          updatePageOperation(workspaceId, pageId, { apiPreview: preview, apiSessionId: sessionId })
+          return getCurrent(workspaceId)
+        } catch (error) {
+          if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { error: errorMessage(error), errorCode: error?.code ?? null, apiPreview: null })
+          throw error
+        } finally { if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { activeOperation: null }) }
+      }
+      const operation = operationFor(getCurrent(workspaceId), pageId), preview = operation.apiPreview
+      if (!preview || preview.expectedRevision !== getCurrent(workspaceId).revision || Date.parse(preview.expiresAt) <= Date.now()
+        || sessionId !== operation.apiSessionId) throw new Error('请重新核对 API 与材料，再明确确认')
+      const requestKey = createRequestKey()
+      let admitted = false
+      try {
+        return await runPageOperation(workspaceId, pageId, 'api-create', async current => {
+          assertProfessionalConfiguration(configurationGeneration)
+          if (current.revision !== preview.expectedRevision || getGenerationSession?.(workspaceId) !== sessionId) throw new Error('确认范围已改变')
+          admitted = true
+          const started = await remote.startClaimsApi({ workspaceId, taskId: pageId, expectedRevision: current.revision,
+            expectedSettingsRevision: preview.expectedSettingsRevision, confirmationToken: preview.confirmationToken, requestKey,
+            priceConfirmed: true, externalTransferConfirmed: true }, controller.signal)
+          applyAuthoritativeReplacement(workspaceId, started)
+          if (!started.committed) return started
+          const execution = Object.values(started.current.tasks[pageId].remoteExecutions).find(e => e.requestKey === requestKey)
+          if (!execution) throw new Error('API 执行检查点未确认；请查看原运行')
+          assertProfessionalConfiguration(configurationGeneration)
+          return remote.continueProfessional({ workspaceId, taskId: pageId, executionId: execution.executionId }, controller.signal)
+        }, () => ({ apiPreview: null, requestKey: null, generationUncertain: false, feedback: 'run-observed' }))
+      } catch (error) {
+        if (!closing && !disposed) updatePageOperation(workspaceId, pageId, { apiPreview: null, generationUncertain: admitted })
+        throw error
+      }
+    },
+
     setReviewNote(workspaceId, pageId, note) {
       return updatePageOperation(workspaceId, pageId, {
         reviewNote: String(note), error: null, errorCode: null, feedback: null,
@@ -1115,12 +1171,27 @@ export function createWorkbenchStore({
     async observeUnifiedRun(workspaceId, pageId) {
       return runPageOperation(workspaceId, pageId, 'run-observe', async current => {
         const page = pageFor(workspaceId, pageId)
+        const api = Object.values(page.remoteExecutions).find(e => e.unifiedClaims && isOasisRemoteExecutionUnresolved(e))
+        if (api?.submittedAt === null && ['uploading', 'auth-required'].includes(api.status)) {
+          // The Host only closes an orphan upload intent here; it never reads credentials or dispatches an upload.
+          return remote.continueProfessional({ workspaceId, taskId: pageId, executionId: api.executionId }, controller.signal)
+        }
+        if (api?.submittedAt) {
+          assertProfessionalConfiguration()
+          return remote.continueProfessional({ workspaceId, taskId: pageId, executionId: api.executionId }, controller.signal)
+        }
         const pending = Object.values(page.runs).find(run => run.mode === 'dsh-local' && ['prepared', 'unknown'].includes(run.status))
         return pending ? remote.observeLocalRun({ workspaceId, taskId: pageId, runId: pending.runId, expectedRevision: current.revision }, controller.signal)
           : { committed: true, current: await remote.get(workspaceId, controller.signal) }
       }, () => ({ generationUncertain: false, requestKey: null, feedback: 'run-observed' }))
     },
     async stopUnifiedRun(workspaceId, pageId, runId) {
+      if (pageFor(workspaceId, pageId).remoteExecutions[runId]?.unifiedClaims) {
+        return runPageOperation(workspaceId, pageId, 'api-stop', async () => {
+          await remote.stopProfessional({ workspaceId, taskId: pageId, executionId: runId }, controller.signal)
+          return { committed: true, current: await remote.get(workspaceId, controller.signal) }
+        }, () => ({ generationUncertain: false, apiPreview: null }))
+      }
       return runPageOperation(workspaceId, pageId, 'run-stop', current => remote.stopUnifiedRun({
         workspaceId, taskId: pageId, runId, expectedRevision: current.revision,
       }, controller.signal), () => ({ generationUncertain: false, requestKey: null, feedback: 'run-stopped' }))
@@ -1222,8 +1293,7 @@ export function createWorkbenchStore({
       if (run.result.contentStatus === 'blocked') throw new Error('Blocked results cannot be written back')
       if (run.review.status !== 'approved') throw new Error('An approved run is required before writeback')
       const operation = operationFor(getCurrent(workspaceId), pageId)
-      const relativeDirectory = operation.writebackDirectory.trim()
-      if (relativeDirectory.length === 0) throw new Error('Writeback directory is required')
+      const relativeDirectory = '.'
       if (operation.activeOperation !== null) throw new Error('another page operation is already in progress')
       updatePageOperation(workspaceId, pageId, {
         activeOperation: 'writeback-prepare', error: null, errorCode: null, feedback: null,

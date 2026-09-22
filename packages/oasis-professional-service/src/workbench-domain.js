@@ -70,6 +70,7 @@ function assertRunIntegrity(record) {
         },
         formValues: execution.formValues,
         inputRefs: execution.materialSnapshots,
+        ...(execution.unifiedClaims ? { unifiedClaims: execution.unifiedClaims } : {}),
       })
       if (executionInputSha256 !== execution.inputSha) {
         throw new Error(`remote execution input integrity mismatch for task ${taskId} execution ${executionId}`)
@@ -116,6 +117,10 @@ function assertRunIntegrity(record) {
         if (canonicalJson(expectedResult) !== canonicalJson(run.result)) {
           throw new Error(`result integrity mismatch for task ${taskId} run ${runId}`)
         }
+      } else if (run.mode === 'oasis-api') {
+        if (computeOasisRemoteResponseSha256(run.remoteResponse) !== run.remoteResponse.responseSha) {
+          throw new Error(`response integrity mismatch for task ${taskId} run ${runId}`)
+        }
       } else if (run.mode === 'oasis-legacy') {
         const responseSha256 = computeOasisRemoteResponseSha256({
           answerText: run.result.answerText,
@@ -134,8 +139,9 @@ function canonicalSha256(value) {
   return createHash('sha256').update(canonicalJson(value), 'utf8').digest('hex')
 }
 
-export function computeOasisRemoteInputSha256({ providerSnapshot, formValues, inputRefs }) {
-  return canonicalSha256({ mode: 'oasis-legacy', providerSnapshot, formValues, inputRefs })
+export function computeOasisRemoteInputSha256({ providerSnapshot, formValues, inputRefs, unifiedClaims }) {
+  return canonicalSha256({ mode: unifiedClaims ? 'oasis-api-1' : 'oasis-legacy', providerSnapshot, formValues, inputRefs,
+    ...(unifiedClaims ? { unifiedClaims } : {}) })
 }
 
 export function computeOasisRemoteResponseSha256({ answerText, fileUrls }) {

@@ -21,14 +21,14 @@ function nodes(value, result = []) {
   return result
 }
 
-test('native settings include new-task preferences without exposing an executable Skill or alternate model form', () => {
+test('native settings use website login without address, token, environment or output preference controls', () => {
   const html = renderToStaticMarkup(createElement(settingsUi.OasisSettingsSection, { controller: {
     subscribe: () => () => {}, getSnapshot: () => ({ connected: true, settingsWritable: true,
       defaultGenerationSource: 'oasis-api', outputDirectoryPrefix: '产物', apiBaseUrl: '', downloadOrigins: [] }),
   } }))
-  assert.match(html, /默认生成来源/)
-  assert.match(html, /保存目录前缀/)
-  assert.doesNotMatch(html, /Skill 正文|模型密钥/)
+  assert.match(html, /手机验证码/)
+  assert.match(html, /手机号与密码/)
+  assert.doesNotMatch(html, /默认生成来源|保存目录前缀|API origin|JWT|非生产|Skill 正文|模型密钥/)
 })
 
 test('configuration form offers separate writes and clears password before sending and when collapsed', () => {

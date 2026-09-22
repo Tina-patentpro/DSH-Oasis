@@ -63,7 +63,7 @@ function validateSafeSegment(segment, code = 'INVALID_WRITEBACK_PATH') {
     || segment.length > 255
     || segment === '.'
     || segment === '..'
-    || /[\x00-\x1f<>:"|?*]/.test(segment)
+    || /[\x00-\x1f<>:"|?*\\/]/.test(segment)
     || /[ .]$/.test(segment)
     || RESERVED_WINDOWS_STEM.test(stem)
   ) {
@@ -233,8 +233,14 @@ function createMetadata(input, artifactSizeBytes) {
         contextSnapshot: structuredClone(info.contextSnapshot) },
     })
   }
-  if (input.mode === 'oasis-legacy') {
+  if (input.mode === 'oasis-legacy' || input.mode === 'oasis-api') {
     const remote = input.remote
+    if (input.mode === 'oasis-api' && (remote?.source !== 'oasis-api'
+      || remote.inputSchemaVersion !== 'claims-disclosure-2'
+      || remote.evidenceKind !== (remote.provider?.environmentKind === 'production' ? 'production-api' : 'non-production-api')
+      || !(remote.parentRunId === null || typeof remote.parentRunId === 'string'))) {
+      throw writebackError('WRITEBACK_SOURCE_INVALID', 'Unified API provenance is invalid')
+    }
     if (
       !remote
       || typeof remote.executionId !== 'string'
@@ -257,6 +263,8 @@ function createMetadata(input, artifactSizeBytes) {
         mode: input.mode,
         executionId: remote.executionId,
         requestKeySha256: remote.requestKeySha256,
+        ...(input.mode === 'oasis-api' ? { source: remote.source, evidenceKind: remote.evidenceKind,
+          inputSchemaVersion: remote.inputSchemaVersion, parentRunId: remote.parentRunId } : {}),
       },
       provider: {
         ...(remote.provider.environmentKind ? { environmentKind: remote.provider.environmentKind } : {}),
@@ -338,21 +346,26 @@ export function createWritebackManager({
       throw writebackError('WRITEBACK_REVIEW_REQUIRED', 'Writeback requires an approved run')
     }
     validateArtifact(input?.artifact)
-    const relativeDirectory = validateWritebackRelativeDirectory(input?.relativeDirectory)
+    const relativeDirectory = input?.relativeDirectory === '.' ? '.' : validateWritebackRelativeDirectory(input?.relativeDirectory)
     const workspaceRoot = await resolveWorkspaceRoot(workspaceRegistry, fileSystem, input.workspaceId)
-    const absoluteTarget = await resolveSafeNewTarget(fileSystem, workspaceRoot, relativeDirectory)
-    const mainFileName = input.artifact.suggestedFileName
+    const absoluteTarget = relativeDirectory === '.' ? workspaceRoot : await resolveSafeNewTarget(fileSystem, workspaceRoot, relativeDirectory)
+    const mainFileName = input.outputFileName ?? input.artifact.suggestedFileName
+    validateSafeSegment(mainFileName, 'WRITEBACK_ARTIFACT_INVALID')
+    if (!mainFileName.endsWith('.md')) throw writebackError('WRITEBACK_ARTIFACT_INVALID', 'Markdown filename required')
     const metadataFileName = `${mainFileName.slice(0, -3)}.oasis.json`
     validateSafeSegment(metadataFileName, 'WRITEBACK_ARTIFACT_INVALID')
     const absoluteMain = resolve(absoluteTarget, mainFileName)
     const absoluteMetadata = resolve(absoluteTarget, metadataFileName)
+    if (relativeDirectory === '.' && (await pathExists(absoluteMain) || await pathExists(absoluteMetadata))) {
+      throw writebackError('WRITEBACK_TARGET_EXISTS', 'Project output file already exists')
+    }
     if ([absoluteTarget, absoluteMain, absoluteMetadata].some((value) => value.length > SAFE_WINDOWS_PATH_LENGTH)) {
       throw writebackError('WRITEBACK_PATH_TOO_LONG', 'Writeback target exceeds the safe Windows path budget')
     }
 
     const artifactContent = input.artifact.body
     const artifactSizeBytes = Buffer.byteLength(artifactContent, 'utf8')
-    const metadata = createMetadata(input, artifactSizeBytes)
+    const metadata = createMetadata({ ...input, artifact: { ...input.artifact, suggestedFileName: mainFileName } }, artifactSizeBytes)
     const metadataContent = `${JSON.stringify(metadata, null, 2)}\n`
     const now = nowMilliseconds()
     cleanupExpired(now)
@@ -364,8 +377,8 @@ export function createWritebackManager({
       throw new Error('tokenFactory must return a unique non-empty string')
     }
     const expiresAtMs = now + tokenTtlMs
-    const relativeMain = `${relativeDirectory}\\${mainFileName}`
-    const relativeMetadata = `${relativeDirectory}\\${metadataFileName}`
+    const relativeMain = relativeDirectory === '.' ? mainFileName : `${relativeDirectory}\\${mainFileName}`
+    const relativeMetadata = relativeDirectory === '.' ? metadataFileName : `${relativeDirectory}\\${metadataFileName}`
     const files = [
       {
         relativePath: relativeMain,
@@ -500,7 +513,7 @@ export function createWritebackManager({
     if (pathKey(workspaceRoot) !== pathKey(plan.workspaceRoot)) {
       throw writebackError('WORKSPACE_ROOT_CHANGED', 'Workspace root changed after writeback preparation')
     }
-    const absoluteTarget = await resolveSafeNewTarget(fileSystem, workspaceRoot, plan.relativeDirectory)
+    const absoluteTarget = plan.relativeDirectory === '.' ? workspaceRoot : await resolveSafeNewTarget(fileSystem, workspaceRoot, plan.relativeDirectory)
     if (pathKey(absoluteTarget) !== pathKey(plan.absoluteTarget)) {
       throw writebackError('WRITEBACK_TARGET_CHANGED', 'Writeback target changed after preparation')
     }
@@ -518,6 +531,7 @@ export function createWritebackManager({
   }
 
   async function publishConsumedPlan(plan) {
+    if (plan.relativeDirectory === '.') return publishProjectFiles(plan)
     const target = await revalidatePlanTarget(plan)
     const parent = dirname(target)
     const stageName = `.${basename(target)}.oasis-staging-${stageIdFactory()}`
@@ -595,6 +609,38 @@ export function createWritebackManager({
           cleanupFailed,
         },
       )
+    }
+  }
+
+  async function publishProjectFiles(plan) {
+    await revalidatePlanTarget(plan)
+    for (const file of plan.files) {
+      if (await pathExists(file.absolutePath)) throw writebackError('WRITEBACK_TARGET_EXISTS', 'Project output already exists')
+    }
+    const createdFiles = []
+    try {
+      for (const [index, file] of plan.files.entries()) {
+        await revalidatePlanTarget(plan)
+        await writeAndVerify(file.absolutePath, index === 0 ? plan.artifactContent : plan.metadataContent,
+          file.sizeBytes, file.sha256, () => createdFiles.push(file.relativePath))
+      }
+      await revalidatePlanTarget(plan)
+      const committedAt = clock()
+      if (!Number.isFinite(Date.parse(committedAt))) throw new TypeError('Invalid clock')
+      return Object.freeze({ writebackId: plan.writebackId, artifactId: plan.artifactId, relativeDirectory: '.',
+        files: plan.files.map(({ relativePath, sha256, mediaType }) => ({ relativePath, sha256, mediaType })),
+        reviewStatus: 'approved', committedAt })
+    } catch (error) {
+      // A two-file root publication is not a directory transaction. Preserve any new file,
+      // report the exact attempted manifest, and never retry or delete a possibly edited file.
+      throw writebackError(createdFiles.length ? 'WRITEBACK_PARTIAL_PUBLISH' : 'WRITEBACK_PUBLISH_FAILED',
+        'Project files were not fully committed; inspect the manifest before another save', {
+          createdFiles,
+          manifest: { schemaVersion: 1, workspaceId: plan.workspaceId, taskId: plan.taskId, runId: plan.runId,
+            artifactId: plan.artifactId, relativeDirectory: '.',
+            files: plan.files.map(({ relativePath, sha256, mediaType }) => ({ relativePath, sha256, mediaType })) },
+          systemCode: typeof error?.code === 'string' ? error.code : 'UNKNOWN',
+        })
     }
   }
 

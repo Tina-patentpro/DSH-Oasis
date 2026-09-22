@@ -94,7 +94,7 @@ test('registers the current Host tool and owned Connection routes with cleanup',
   assert.equal(fixture.settingsRegistration?.ns, 'oasis-professional-service')
   assert.equal(fixture.settingsRegistration?.options.applies, 'restart')
   assert.equal(fixture.registered?.name, 'oasis_workbench_status')
-  assert.equal(fixture.routes.size, 29)
+  assert.equal(fixture.routes.size, 40)
 
   const stateResult = await fixture.dispatch('state/get', { workspaceId: 'workspace-a' })
   assert.equal(stateResult.ok, true)
@@ -103,7 +103,7 @@ test('registers the current Host tool and owned Connection routes with cleanup',
   assert.deepEqual(professional, {
     ok: true,
     value: {
-      environmentKind: 'non-production', remoteEnabled: false, credentialConfigured: false,
+      environmentKind: 'production', remoteEnabled: true, credentialConfigured: false,
       balance: null, services: [], folders: [],
     },
   })
@@ -119,8 +119,29 @@ test('registers the current Host tool and owned Connection routes with cleanup',
   assert.equal(value.externalSystems, 'not-invoked')
 
   await dispose()
-  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 29, toolDispose: 1, credentialResolve: 0 })
+  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 40, toolDispose: 1, credentialResolve: 0 })
   assert.equal(fixture.routes.size, 0)
+})
+
+test('formal Host with old disabled setting attaches native services without starting a model request', async () => {
+  const fixture = createHostFixture({ runtimeSettings: { localModelEnabled: false } })
+  let attached = 0, modelCalls = 0, released = 0
+  fixture.ctx.inject = (names, callback) => {
+    attached++
+    assert.deepEqual(names, ['llm', 'sessions', 'sessionProjections', 'agentDefaultModel'])
+    const detach = callback({ ...fixture.ctx, llm: { chat() { modelCalls++ } }, sessions: {}, sessionProjections: {}, agentDefaultModel: {} })
+    return { dispose() { released++; detach() } }
+  }
+  const dispose = await apply(fixture.ctx)
+  try {
+    const catalog = await fixture.dispatch('workflow/catalog', {})
+    assert.equal(attached, 1)
+    assert.equal(catalog.value.localGenerationEnabled, true)
+    assert.equal(catalog.value.localGenerationKind, 'native-model')
+    assert.equal(modelCalls, 0)
+    assert.equal(fixture.calls.credentialResolve, 0)
+  } finally { await dispose() }
+  assert.equal(released, 1)
 })
 
 test('unregisters the Host tool when RPC setup fails', async () => {
@@ -163,7 +184,7 @@ test('an origin-mismatched credential cannot be resolved or used by automatic bo
     assert.deepEqual(result, {
       ok: true,
       value: {
-        environmentKind: 'non-production', remoteEnabled: true, credentialConfigured: false,
+        environmentKind: 'production', remoteEnabled: true, credentialConfigured: false,
         balance: null, services: [], folders: [],
       },
     })
@@ -183,13 +204,47 @@ test('wires the Host workspace registry into the safe writeback boundary', async
   )
 })
 
+test('Host authentication routes never expose secrets or use legacy Profile destinations', async t => {
+  const fixture = createHostFixture({ runtimeSettings: { apiBaseUrl: 'https://legacy.invalid', downloadOrigins: ['https://files.invalid'] } })
+  let record, requests = []
+  Object.assign(fixture.ctx.credentials, {
+    readRecord: async () => record, describeRecord: async () => ({ configured: !!record, writable: true }),
+    modifyRecord: async (_, mutate) => { record = await mutate(record) }, deleteRecord: async () => { record = undefined },
+  })
+  t.mock.method(globalThis, 'fetch', async (url, options) => {
+    requests.push(url)
+    assert.equal(options.redirect, 'error')
+    return Response.json({ code: 200, data: { id: 101, token: 'host-only-secret' } })
+  })
+  const dispose = await apply(fixture.ctx)
+  try {
+    assert.equal((await fixture.dispatch('account/status', {})).value.authenticated, false)
+    assert.equal(requests.length, 0)
+    const invalid = await fixture.dispatch('account/login', { mode: 'password', phone: '13800000000', password: 'host-only-secret', confirmed: false })
+    assert.equal(invalid.ok, false); assert.equal(JSON.stringify(invalid).includes('host-only-secret'), false)
+    const logged = await fixture.dispatch('account/login', { mode: 'password', phone: '13800000000', password: 'host-only-secret', confirmed: true })
+    assert.equal(logged.value.authenticated, true)
+    assert.equal(JSON.stringify(logged).includes('host-only-secret'), false)
+    assert.equal(record.payload.origin, 'https://lzhxpy.oasisintwrite.com')
+    await fixture.dispatch('account/logout', { confirmed: true })
+    assert.deepEqual(requests, ['https://lzhxpy.oasisintwrite.com/api/auth/pwdlogin'])
+    assert.equal(record, undefined)
+    assert.equal(fixture.calls.credentialResolve, 0)
+  } finally { await dispose() }
+})
+
 test('S6 Host refuses a replacement credential during an existing bootstrap operation', async (t) => {
   const fixture = createHostFixture({ runtimeSettings: {
     environmentKind: 'non-production', apiBaseUrl: 'https://oasis-staging.example',
     credentialOrigin: 'https://oasis-staging.example', credentialRef: 'OASIS_USER_JWT', downloadOrigins: [],
   } })
   let reads = 0, requests = 0
-  fixture.ctx.credentials.resolve = async () => ({ value: ++reads === 1 ? 'synthetic-account-a' : 'synthetic-account-b' })
+  fixture.ctx.credentials.readRecord = async () => ({ kind: 'grant', payload: {
+    origin: 'https://lzhxpy.oasisintwrite.com', accountId: 1, token: 'synthetic-token', revision: ++reads === 1 ? 'a' : 'b',
+  } })
+  fixture.ctx.credentials.describeRecord = async () => ({ configured: true, writable: true })
+  fixture.ctx.credentials.modifyRecord = async () => { throw Error('no mutation') }
+  fixture.ctx.credentials.deleteRecord = async () => { throw Error('no mutation') }
   t.mock.method(globalThis, 'fetch', async () => {
     requests += 1
     throw new Error('Synthetic fetch must not be reached after account switch')
@@ -221,7 +276,7 @@ test('S6 actual Host binding read is scoped and confirm cannot bypass disabled r
       apiEndpoint: 'synthetic-claims', apiProcess: 'one', schemaHash: 'a'.repeat(64),
     })
     assert.equal(denied.ok, false)
-    assert.equal(denied.error.code, 'REMOTE_DISABLED')
+    assert.equal(denied.error.code, 'AUTH_REQUIRED')
     assert.equal(fixture.calls.credentialResolve, 0)
     const preparation = await fixture.dispatch('task/prepare-api', { workspaceId: 'workspace-a', taskId: 'task-a',
       expectedRevision: 0, expectedSettingsRevision: 0 })

@@ -8,6 +8,10 @@ import {
 } from './workbench-contract.js'
 import { WorkspaceMaterialError } from './workspace-materials.js'
 import { workspaceApiBindingCommandSchema } from './oasis-workspace-binding.js'
+import { accountCommandSchemas } from './oasis-account-contract.js'
+import { OasisAccountError } from './oasis-account.js'
+import { importCommands } from './website-import-contract.js'
+import { WebsiteImportError } from './website-import-client.js'
 
 export const OASIS_WORKBENCH_RPC_CHANNEL = '/oasis-workbench'
 
@@ -138,14 +142,22 @@ async function materialResult(operation) {
   }
 }
 
+async function apiResult(operation) {
+  try { return await materialResult(operation) } catch {
+    // Credential providers and remote adapters may throw arbitrary messages. Never echo them to the renderer.
+    return { ok: false, error: { code: 'API_OPERATION_UNCONFIRMED',
+      message: 'API operation could not be confirmed. Inspect the original execution; do not retry creation automatically.', details: {} } }
+  }
+}
+
 async function writebackResult(operation) {
   try {
     return { ok: true, value: await operation() }
   } catch (error) {
     if (!(error instanceof WorkspaceMaterialError)) throw error
     let details = error.details
-    if (error.code === 'WRITEBACK_COMMITTED_INDEX_FAILED') {
-      const parsed = z.object({ manifest: writebackRecoveryManifestSchema }).strict().safeParse(details)
+    if (['WRITEBACK_COMMITTED_INDEX_FAILED', 'WRITEBACK_PARTIAL_PUBLISH'].includes(error.code)) {
+      const parsed = z.object({ manifest: writebackRecoveryManifestSchema }).strict().safeParse({ manifest: details.manifest })
       if (!parsed.success) throw new Error('Unsafe writeback recovery manifest was rejected')
       details = parsed.data
     }
@@ -160,8 +172,34 @@ async function writebackResult(operation) {
   }
 }
 
-export function createWorkbenchRpcHandler(service, professionalService = null) {
+export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null) {
   return async function handleWorkbenchRpc(endpoint, payload) {
+    if (endpoint.startsWith('import/')) {
+      const action = endpoint.slice('import/'.length)
+      const schema = Object.hasOwn(importCommands, action) ? importCommands[action] : null
+      if (!schema?.safeParse(payload).success) return { ok: false, error: { code: 'IMPORT_INVALID_INPUT', message: '导入选择无效', details: {} } }
+      try {
+        if (!importService) throw new WebsiteImportError('IMPORT_UNAVAILABLE')
+        return { ok: true, value: await importService[action](payload) }
+      } catch (error) {
+        const code = error instanceof WebsiteImportError ? error.code : 'IMPORT_OPERATION_FAILED'
+        return { ok: false, error: { code, message: '导入未完成；已保存的文件不会删除，请查看导入清单。', details: {} } }
+      }
+    }
+    if (endpoint.startsWith('account/')) {
+      const action = endpoint.slice('account/'.length)
+      const schema = accountCommandSchemas[action]
+      // Never include validation issues or input values for authentication payloads.
+      if (!schema || !schema.safeParse(payload).success) return { ok: false, error: { code: 'ACCOUNT_INVALID_INPUT', message: '登录输入无效', details: {} } }
+      try {
+        const method = action === 'sms' ? 'sendSms' : action
+        if (!accountService) throw new OasisAccountError('ACCOUNT_UNAVAILABLE')
+        return { ok: true, value: await accountService[method](payload) }
+      } catch (error) {
+        const code = error instanceof OasisAccountError ? error.code : 'ACCOUNT_REQUEST_FAILED'
+        return { ok: false, error: { code, message: '账户操作未完成，请检查登录状态；不会自动重试。', details: {} } }
+      }
+    }
     if (endpoint === 'state/get') {
       const parsed = parsePayload(getPayloadSchema, payload)
       if (!parsed.success) return parsed
@@ -178,7 +216,8 @@ export function createWorkbenchRpcHandler(service, professionalService = null) {
     if (endpoint === 'workflow/catalog') {
       const parsed = parsePayload(workflowCatalogPayloadSchema, payload)
       if (!parsed.success) return parsed
-      return { ok: true, value: service.getWorkflowCatalog(parsed.data.workType) }
+      return { ok: true, value: { ...service.getWorkflowCatalog(parsed.data.workType),
+        ...(professionalService?.previewClaims ? { apiExecutionAvailable: true } : {}) } }
     }
 
     if (endpoint === 'professional/bootstrap') {
@@ -196,13 +235,19 @@ export function createWorkbenchRpcHandler(service, professionalService = null) {
     if (endpoint === 'professional/binding/confirm') {
       const parsed = parsePayload(workspaceApiBindingCommandSchema, payload)
       if (!parsed.success) return parsed
-      return materialResult(() => professionalService.bindWorkspace(parsed.data))
+      return apiResult(() => professionalService.bindWorkspace(parsed.data))
+    }
+
+    if (endpoint === 'professional/binding/options') {
+      const parsed = parsePayload(getPayloadSchema.extend({ remoteReadConfirmed: z.literal(true) }).strict(), payload)
+      if (!parsed.success) return parsed
+      return apiResult(() => professionalService.getBindingOptions(parsed.data))
     }
 
     if (endpoint === 'professional/detail') {
       const parsed = parsePayload(professionalDetailPayloadSchema, payload)
       if (!parsed.success) return parsed
-      return materialResult(() => professionalService.getServiceDetail(parsed.data.apiEndpoint))
+      return apiResult(() => professionalService.getServiceDetail(parsed.data.apiEndpoint))
     }
 
     if (endpoint === 'professional/start') {
@@ -214,7 +259,7 @@ export function createWorkbenchRpcHandler(service, professionalService = null) {
     if (endpoint === 'professional/continue') {
       const parsed = parsePayload(professionalExecutionPayloadSchema, payload)
       if (!parsed.success) return parsed
-      return materialResult(() => professionalService.continue(parsed.data))
+      return apiResult(() => professionalService.continue(parsed.data))
     }
 
     if (endpoint === 'professional/stop') {
@@ -289,6 +334,21 @@ export function createWorkbenchRpcHandler(service, professionalService = null) {
       }).strict(), payload)
       if (!parsed.success) return parsed
       return materialResult(() => service.createLocalRun(parsed.data))
+    }
+    if (endpoint === 'task/preview-api') {
+      const parsed = parsePayload(z.object({ ...materialCommandBase,
+        expectedSettingsRevision: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+        preparationSha256: z.string().regex(/^[a-f0-9]{64}$/), remoteReadConfirmed: z.literal(true),
+      }).strict(), payload)
+      if (!parsed.success) return parsed
+      return apiResult(() => professionalService.previewClaims(parsed.data))
+    }
+    if (endpoint === 'task/start-api') {
+      const parsed = parsePayload(professionalStartPayloadSchema.extend({ confirmationToken: z.string().uuid(),
+        expectedSettingsRevision: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+      }).strict(), payload)
+      if (!parsed.success) return parsed
+      return apiResult(() => professionalService.startClaims(parsed.data))
     }
     if (endpoint === 'task/observe-local') {
       const parsed = parsePayload(unifiedRunPayloadSchema, payload)

@@ -4,6 +4,7 @@ import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
 import { hasPendingUnifiedRun } from '../generation-contract.js'
 import { PanelChrome } from './PanelChrome.js'
 import { PanelPages } from './PanelPages.js'
+import { WebsiteImportDialog } from './WebsiteImportDialog.js'
 
 const noConfiguration = Object.freeze({ canSubmit: true })
 const getNoConfiguration = () => noConfiguration
@@ -140,6 +141,7 @@ export function OasisWorkbenchSurface({
   visible = true,
 }) {
   const [center, setCenter] = useState(false)
+  const [importWorkspace, setImportWorkspace] = useState(null)
   const state = useSyncExternalStore(
     store.subscribe,
     () => store.peekWorkspaceState(workspaceId),
@@ -225,6 +227,11 @@ export function OasisWorkbenchSurface({
     style: sectionStyle(hostMode, layout, effectiveMode),
   },
   createElement('style', null, reducedMotionCss),
+  importWorkspace === workspaceId && store.websiteImportRemote && store.connectionSettings ? createElement(WebsiteImportDialog, {
+    key: workspaceId, workspaceId, remote: store.websiteImportRemote, accountController: store.connectionSettings,
+    onClose: () => setImportWorkspace(null),
+    onOpenFiles: coordinator?.nativeAvailability(workspaceId)?.editor ? () => { setImportWorkspace(null); coordinator.openNativeTool(workspaceId, 'editor') } : undefined,
+  }) : null,
   createElement(PanelChrome, {
     hostMode,
     state: {
@@ -246,6 +253,7 @@ export function OasisWorkbenchSurface({
     },
   }),
   createElement(PanelPages, {
+    onImport: store.websiteImportRemote && store.connectionSettings ? () => setImportWorkspace(workspaceId) : undefined,
     markdownRenderer,
     savedFileUnavailableReason: coordinator?.captureSavedFileTarget(workspaceId) ? null : '安全文件预览不可用',
     onOpenSavedFile: (pageId, runId, writebackId) => store.openSavedFile(workspaceId, pageId, runId, writebackId),

@@ -139,6 +139,53 @@ test('prepare returns a two-file transient manifest without creating the target'
   assert.deepEqual(await readdir(join(workspaceRoot, 'outputs')), [])
 })
 
+test('project root publication preserves existing files, rejects collisions and reads saved Markdown', async t => {
+  const { manager, workspaceRoot } = await createHarness(t)
+  await writeFile(join(workspaceRoot, 'existing.txt'), 'preserve')
+  const prepared = await manager.prepare(prepareInput({ relativeDirectory: '.', outputFileName: '权利要求书_20260922-143000_v1_OIW.md' }))
+  assert.equal(prepared.manifest.absoluteTarget, workspaceRoot)
+  assert.equal(prepared.manifest.files[0].relativePath, '权利要求书_20260922-143000_v1_OIW.md')
+  const record = await manager.publish(manager.consume(prepared.confirmationToken))
+  assert.equal(record.relativeDirectory, '.')
+  assert.equal(await readFile(join(workspaceRoot, record.files[0].relativePath), 'utf8'), artifact().body)
+  assert.equal(await manager.resolveSavedFile('workspace-a', record.files[0].relativePath), join(workspaceRoot, record.files[0].relativePath))
+  await expectCode(manager.prepare(prepareInput({ relativeDirectory: '.', outputFileName: record.files[0].relativePath })), 'WRITEBACK_TARGET_EXISTS')
+  assert.equal(await readFile(join(workspaceRoot, 'existing.txt'), 'utf8'), 'preserve')
+})
+
+test('project root partial failure preserves evidence and consumes confirmation', async t => {
+  const { manager, workspaceRoot } = await createHarness(t, { fileSystem: nativeFileSystem({ open: async (path, flags) => {
+    if (path.endsWith('.oasis.json')) throw Object.assign(Error('disk failed'), { code: 'EIO' })
+    return open(path, flags)
+  } }) })
+  const prepared = await manager.prepare(prepareInput({ relativeDirectory: '.' }))
+  const plan = manager.consume(prepared.confirmationToken)
+  await assert.rejects(() => manager.publish(plan), error => error.code === 'WRITEBACK_PARTIAL_PUBLISH' && error.details.createdFiles.length === 1)
+  assert.equal(await readFile(join(workspaceRoot, artifact().suggestedFileName), 'utf8'), artifact().body)
+  await expectCode(manager.publish(plan), 'WRITEBACK_PLAN_USED')
+})
+
+test('root publication refuses late collisions and root changes without overwriting adjacent bytes', async t => {
+  const { manager, workspaceRoot, workspaceRegistry } = await createHarness(t)
+  const input = prepareInput({ relativeDirectory: '.' })
+  const first = await manager.prepare(input)
+  await writeFile(first.manifest.files[1].absolutePath, 'existing-metadata')
+  await expectCode(manager.publish(manager.consume(first.confirmationToken)), 'WRITEBACK_TARGET_EXISTS')
+  await assert.rejects(readFile(first.manifest.files[0].absolutePath), { code: 'ENOENT' })
+  assert.equal(await readFile(first.manifest.files[1].absolutePath, 'utf8'), 'existing-metadata')
+  const second = await manager.prepare({ ...input, outputFileName: 'other.md' })
+  workspaceRegistry.get = () => ({ path: join(workspaceRoot, 'outputs'), status: async () => 'ok' })
+  await expectCode(manager.publish(manager.consume(second.confirmationToken)), 'WORKSPACE_ROOT_CHANGED')
+  await assert.rejects(readFile(second.manifest.files[0].absolutePath), { code: 'ENOENT' })
+})
+
+test('output filename cannot escape project root or inject a subdirectory', async t => {
+  const { manager } = await createHarness(t)
+  for (const name of ['../outside.md', '..\\outside.md', 'nested/file.md', 'nested\\file.md']) {
+    await expectCode(manager.prepare(prepareInput({ relativeDirectory: '.', outputFileName: name })), 'WRITEBACK_ARTIFACT_INVALID')
+  }
+})
+
 test('prepare rejects unsafe, missing, redirecting, existing, and overlong targets before writing', async (t) => {
   const { manager, workspaceRoot, tempRoot } = await createHarness(t)
   const invalidPaths = [

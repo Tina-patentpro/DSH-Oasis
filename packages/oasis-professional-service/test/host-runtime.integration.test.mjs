@@ -145,7 +145,7 @@ test('real Cordis tools service lists and executes oasis_workbench_status', asyn
     assert.equal(value.capabilityLevel, 'local-professional-loop')
     assert.deepEqual(value.supportedWorkTypes, ['technical-rd', 'cn-invention-patent'])
 
-    assert.equal(connectionStub.routes.size, 29)
+    assert.equal(connectionStub.routes.size, 40)
     assert.equal(connectionStub.routes.has('/api/oasis-workbench/professional/binding/get'), true)
     assert.equal(connectionStub.routes.has('/api/oasis-workbench/professional/binding/confirm'), true)
     const state = await connectionStub.dispatch('state/get', { workspaceId: 'workspace-a' })
@@ -169,7 +169,7 @@ test('real Cordis tools service lists and executes oasis_workbench_status', asyn
     await rm(tempRoot, { recursive: true, force: true })
   }
 
-  assert.equal(connectionStub.disposed, 29)
+  assert.equal(connectionStub.disposed, 40)
   assert.equal(connectionStub.routes.size, 0)
   assert.equal(storageDomainStub.closed, 1)
 })

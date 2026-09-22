@@ -348,10 +348,13 @@ export function createWorkbenchService({
       const task = requireTask(current, taskId)
       const run = requireRun(task, runId)
       assertWritebackRun(run, artifactId)
-      const remote = run.mode === 'oasis-legacy'
+      const response = run.mode === 'oasis-api' ? run.remoteResponse : run.result
+      const remote = ['oasis-legacy', 'oasis-api'].includes(run.mode)
         ? {
             executionId: run.executionId,
-            requestKeySha256: createHash('sha256').update(run.requestKey).digest('hex'),
+            requestKeySha256: createHash('sha256').update(run.mode === 'oasis-api' ? task.remoteExecutions[run.executionId].requestKey : run.requestKey).digest('hex'),
+            ...(run.mode === 'oasis-api' ? { source: run.source, evidenceKind: run.evidenceKind,
+              inputSchemaVersion: run.inputSchemaVersion, parentRunId: run.parentRunId } : {}),
             provider: {
               ...(run.providerSnapshot.environmentKind ? { environmentKind: run.providerSnapshot.environmentKind } : {}),
               apiBaseOrigin: run.providerSnapshot.apiBaseOrigin,
@@ -361,8 +364,8 @@ export function createWorkbenchService({
               folderId: run.providerSnapshot.folderId,
             },
             files: {
-              status: run.result.fileStatus,
-              urls: [...run.result.fileUrls],
+              status: response.fileStatus,
+              urls: [...response.fileUrls],
             },
           }
         : undefined
@@ -381,7 +384,8 @@ export function createWorkbenchService({
           executionVersion: run.executionVersion, inputSchemaVersion: run.inputSchemaVersion, parentRunId: run.parentRunId,
           contextSnapshot: run.contextSnapshot } } : {}),
         inputSha256: run.inputSnapshot.sha256,
-        artifact: run.result.artifact,
+          artifact: run.result.artifact,
+          ...(relativeDirectory === '.' ? { outputFileName: projectOutputFileName(task, run) } : {}),
         reviewStatus: run.review.status,
         relativeDirectory,
         ...(remote ? { remote } : {}),
@@ -429,3 +433,4 @@ export function createWorkbenchService({
     },
   })
 }
+import { projectOutputFileName } from './project-output-name.js'

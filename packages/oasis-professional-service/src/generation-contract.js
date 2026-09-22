@@ -14,7 +14,7 @@ export function hasPendingUnifiedRun(task) {
   return Object.values(task?.runs ?? {}).some(run => isUnifiedRun(run)
     && (run.status === 'prepared' || run.mode === 'dsh-local' && run.status === 'unknown'))
 }
-export function isUnifiedRun(run) { return ['unified-fixture', 'dsh-local'].includes(run?.mode) }
+export function isUnifiedRun(run) { return ['unified-fixture', 'dsh-local', 'oasis-api'].includes(run?.mode) }
 export const generationDraftSchema = z.object({
   inputSchemaVersion: z.enum([CLAIMS_SCHEMA_VERSION, CLAIMS_V2_SCHEMA_VERSION]),
   source: generationSourceSchema,
@@ -58,6 +58,6 @@ export const claimsUpstreamSnapshotSchema = z.union([missingUpstreamSchema, z.ob
 export function generationUnavailableReason(source) {
   generationSourceSchema.parse(source)
   return source === 'local-skill'
-    ? '本地 Skills 未启用：请在 DSH 设置中启用并重启 Host；需可用的会话模型'
+    ? 'DSH 模型服务暂不可用：请检查当前项目会话及 DSH 模型设置'
     : '专业 API 未启用：服务绑定待核实'
 }

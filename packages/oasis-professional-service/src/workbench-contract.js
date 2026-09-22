@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { claimsApiSnapshotSchema } from './claims-api-execution-contract.js'
 import { localExecutionSummarySchema } from './local-run-summary.js'
 
 import { normalizeOasisOrigin, normalizeOasisFileUrl } from './oasis-origin-policy.js'
@@ -108,6 +109,7 @@ export const workflowCatalogResponseSchema = z.object({
   schemaVersion: z.literal(1),
   workflows: z.array(workflowDefinitionSchema).max(16),
   unifiedFixtureEnabled: z.boolean().optional(),
+  apiExecutionAvailable: z.boolean().optional(),
   localGenerationEnabled: z.boolean().optional(),
   localGenerationKind: z.enum(['native-offline', 'native-model']).nullable().optional(),
 }).strict()
@@ -195,7 +197,7 @@ export const writebackFileSchema = z.object({
 export const writebackRecordSchema = z.object({
   writebackId: identifierSchema,
   artifactId: identifierSchema,
-  relativeDirectory: writebackRelativePathSchema,
+  relativeDirectory: z.union([z.literal('.'), writebackRelativePathSchema]),
   files: z.array(writebackFileSchema).length(WORKBENCH_LIMITS.maxWritebackFiles),
   reviewStatus: z.literal('approved'),
   committedAt: timestampSchema,
@@ -205,7 +207,7 @@ export const writebackRecordSchema = z.object({
   const mediaTypes = new Set()
   for (const [index, file] of value.files.entries()) {
     const path = file.relativePath.toLocaleLowerCase('en-US')
-    if (!path.startsWith(prefix)) {
+    if (value.relativeDirectory === '.' ? path.includes('\\') : !path.startsWith(prefix)) {
       ctx.addIssue({ code: 'custom', path: ['files', index, 'relativePath'], message: 'writeback file must be inside its relative directory' })
     }
     if (paths.has(path)) {
@@ -235,7 +237,7 @@ export const writebackRecoveryManifestSchema = z.object({
   taskId: identifierSchema,
   runId: identifierSchema,
   artifactId: identifierSchema,
-  relativeDirectory: writebackRelativePathSchema,
+  relativeDirectory: z.union([z.literal('.'), writebackRelativePathSchema]),
   files: z.array(writebackFileSchema).length(WORKBENCH_LIMITS.maxWritebackFiles),
 }).strict()
 
@@ -402,6 +404,13 @@ export const oasisProfessionalBootstrapSchema = z.object({
   }).strict()).max(1000),
 }).strict()
 
+export const workspaceBindingOptionsSchema = oasisProfessionalBootstrapSchema.extend({
+  workspaceId: identifierSchema, workspacePath: z.string().min(1).max(4096),
+  settingsRevision: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  accountId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  apiBaseOrigin: httpUrlSchema,
+}).strict()
+
 export const oasisProfessionalDetailSchema = z.object({
   id: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
   name: identifierSchema,
@@ -469,6 +478,7 @@ const oasisProviderSnapshotSchema = z.object({
 }).strict().superRefine((value, ctx) => validateRemoteEnvironment(value, ctx))
 
 export const oasisRemoteExecutionSchema = z.object({
+  unifiedClaims: claimsApiSnapshotSchema.optional(),
   environmentKind: z.enum(['non-production', 'production']).optional(),
   accountId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
   executionId: identifierSchema,
@@ -511,6 +521,17 @@ export const oasisRemoteExecutionSchema = z.object({
   completedAt: timestampSchema.nullable(),
 }).strict().superRefine((value, ctx) => {
   validateRemoteEnvironment(value, ctx, value.uploadedFiles.map(file => file.url))
+  if (value.unifiedClaims) {
+    const s = value.unifiedClaims, b = s.binding
+    if (value.materialSnapshots.length || s.workspaceId !== b.workspaceId || s.workspacePath !== b.workspacePath
+      || value.accountId !== b.accountId || value.apiBaseOrigin !== b.apiBaseOrigin
+      || value.environmentKind !== b.environmentKind || value.folderSnapshot.folderId !== b.folderId
+      || value.serviceSnapshot.apiId !== b.apiId || value.serviceSnapshot.apiEndpoint !== b.apiEndpoint
+      || value.serviceSnapshot.apiProcess !== b.apiProcess || value.serviceSnapshot.schemaHash !== b.schemaHash
+      || JSON.stringify(value.formValues) !== JSON.stringify(s.mapping.textInputs)) {
+      ctx.addIssue({ code: 'custom', message: 'unified API execution snapshot mismatch' })
+    }
+  }
   if (value.recordIdSource === 'create' && !Number.isSafeInteger(value.recordId)) {
     ctx.addIssue({ code: 'custom', path: ['recordId'], message: 'create provenance requires a record id' })
   }
@@ -594,6 +615,23 @@ export const unifiedRunSnapshotSchema = z.object({
   }
   if ((run.status === 'prepared') !== (run.completedAt === null)) {
     ctx.addIssue({ code: 'custom', message: 'prepared and terminal completion time mismatch' })
+  }
+})
+
+export const oasisApiRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
+  mode: z.literal('oasis-api'), source: z.literal('oasis-api'), evidenceKind: z.enum(['non-production-api', 'production-api']),
+  fixtureVersion: z.never().optional(), workflowVersion: z.literal('2'), inputSchemaVersion: z.literal('claims-disclosure-2'),
+  compositionVersion: z.never().optional(), workflowRunUid: z.never().optional(), status: z.literal('completed'),
+  executionId: identifierSchema, executionInputSha: sha256Schema, providerSnapshot: oasisProviderSnapshotSchema,
+  remoteResponse: z.object({ answerText: z.string().min(1).max(100000).refine(value => value.trim().length > 0),
+    fileUrls: z.array(httpUrlSchema).max(WORKBENCH_LIMITS.maxResultItems), responseSha: sha256Schema,
+    fileStatus: z.literal('undownloaded-unverified'),
+  }).strict(),
+}).superRefine((run, ctx) => {
+  validateRemoteEnvironment(run.providerSnapshot, ctx, run.remoteResponse.fileUrls)
+  if (!run.result || run.evidenceKind !== (run.providerSnapshot.environmentKind === 'production' ? 'production-api' : 'non-production-api')
+    || (run.parentRunId === null && run.result.artifact.body !== run.remoteResponse.answerText)) {
+    ctx.addIssue({ code: 'custom', message: 'unified API result provenance mismatch' })
   }
 })
 
@@ -718,19 +756,30 @@ const workbenchTaskV3Schema = z.object({
     if (run.mode === 'local-mock' && (value.workflowId !== run.workflowId || value.workflowVersion !== run.workflowVersion)) {
       ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'workflowId'], message: 'run workflow must match task workflow' })
     }
-    if (run.mode === 'oasis-legacy') {
-      if (remoteRunExecutionIds.has(run.executionId)) {
+    if (run.mode === 'oasis-legacy' || run.mode === 'oasis-api') {
+      const original = run.mode === 'oasis-legacy' || run.parentRunId === null
+      if (original && remoteRunExecutionIds.has(run.executionId)) {
         ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'executionId'], message: 'remote execution can produce only one completed run' })
       }
-      remoteRunExecutionIds.add(run.executionId)
+      if (original) remoteRunExecutionIds.add(run.executionId)
       const execution = value.remoteExecutions[run.executionId]
       if (!execution || execution.status !== 'completed') {
         ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'executionId'], message: 'remote run requires a completed Host execution' })
       } else {
-        if (execution.requestKey !== run.requestKey || execution.inputSha !== run.inputSnapshot.sha256) {
+        if ((original && execution.requestKey !== run.requestKey)
+          || execution.inputSha !== (run.mode === 'oasis-api' ? run.executionInputSha : run.inputSnapshot.sha256)) {
           ctx.addIssue({ code: 'custom', path: ['runs', mapKey, 'executionId'], message: 'remote run must match its Host execution snapshot' })
         }
         const provider = run.providerSnapshot
+        if (run.mode === 'oasis-api') {
+          const parent = run.parentRunId === null ? null : value.runs[run.parentRunId]
+          if (!execution.unifiedClaims || execution.unifiedClaims.taskId !== value.taskId
+            || JSON.stringify(run.inputSnapshot.formValues) !== JSON.stringify(execution.unifiedClaims.values)
+            || (run.parentRunId !== null && (!parent || parent.mode !== 'oasis-api' || parent.executionId !== run.executionId
+              || JSON.stringify(parent.remoteResponse) !== JSON.stringify(run.remoteResponse)))) {
+            ctx.addIssue({ code: 'custom', message: 'unified API run must match original execution and parent' })
+          }
+        }
         if (
           execution.serviceSnapshot.apiId !== provider.apiId
           || execution.accountId !== provider.accountId
@@ -802,7 +851,10 @@ const workbenchTaskV3Schema = z.object({
       }
       uploadedFields.add(upload.fieldId)
       const reference = execution.materialSnapshots.find((item) => item.referenceId === upload.referenceId)
-      if (!reference || reference.sha256 !== upload.sha256) {
+      const derived = execution.unifiedClaims?.mapping.document
+      const validDerived = derived && upload.fieldId === derived.fieldId
+        && upload.referenceId === `derived-txt:${derived.sha256}` && upload.sha256 === derived.sha256
+      if (derived ? !validDerived : (!reference || reference.sha256 !== upload.sha256)) {
         ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey, 'uploadedFiles', index], message: 'uploaded file must match its confirmed material snapshot' })
       }
     }
@@ -858,7 +910,7 @@ export const workbenchEditableTaskSchema = workbenchEditableTaskV3Schema.extend(
 
 export const workbenchTaskSchema = workbenchTaskV3Schema.safeExtend({
   generation: generationDraftSchema.nullable(),
-  runs: z.record(identifierSchema, z.discriminatedUnion('mode', [localRunSnapshotSchema, oasisRemoteRunSnapshotSchema, unifiedRunSnapshotSchema, dshLocalRunSnapshotSchema])),
+  runs: z.record(identifierSchema, z.discriminatedUnion('mode', [localRunSnapshotSchema, oasisRemoteRunSnapshotSchema, unifiedRunSnapshotSchema, dshLocalRunSnapshotSchema, oasisApiRunSnapshotSchema])),
 }).superRefine(enforceGenerationDraft)
 
 const panelModeSchema = z.enum(['hidden', 'normal', 'expanded'])
@@ -882,6 +934,12 @@ function enforceWorkspaceInvariants(value, ctx) {
     }
   }
   for (const [mapKey, task] of Object.entries(value.tasks)) {
+    for (const execution of Object.values(task.remoteExecutions ?? {})) {
+      const scope = execution.unifiedClaims
+      if (scope && (scope.taskId !== mapKey || (value.workspaceId !== undefined && scope.workspaceId !== value.workspaceId))) {
+        ctx.addIssue({ code: 'custom', path: ['tasks', mapKey], message: 'API execution belongs to another Workspace or task' })
+      }
+    }
     if (!seen.has(mapKey)) {
       ctx.addIssue({ code: 'custom', path: ['tasks', mapKey], message: `orphan task record: ${mapKey}` })
     }

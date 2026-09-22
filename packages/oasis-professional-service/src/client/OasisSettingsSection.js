@@ -1,33 +1,11 @@
-import { createElement, useEffect, useState, useSyncExternalStore } from 'react'
+import { createElement } from 'react'
 
-import { OasisConnectionSettings } from './OasisConnectionSettings.js'
-
-const empty = Object.freeze({ settingsWritable: false, defaultGenerationSource: 'local-skill', outputDirectoryPrefix: '' })
-const noSubscribe = () => () => {}
-const getEmpty = () => empty
-
-function NewTaskPreferences({ controller }) {
-  const snapshot = useSyncExternalStore(controller?.subscribe ?? noSubscribe, controller?.getSnapshot ?? getEmpty, controller?.getSnapshot ?? getEmpty)
-  const [prefix, setPrefix] = useState(snapshot.outputDirectoryPrefix ?? '')
-  useEffect(() => { setPrefix(snapshot.outputDirectoryPrefix ?? '') }, [snapshot.outputDirectoryPrefix])
-  const disabled = !snapshot.settingsWritable || snapshot.busy
+import { OasisAccountSettings } from './OasisAccountSettings.js'
+function GenerationGuidance() {
   return createElement('div', { style: { display: 'grid', gap: 10 } },
-    createElement('label', null, '默认生成来源', createElement('select', { 'aria-label': '默认生成来源',
-      value: snapshot.defaultGenerationSource ?? 'local-skill', disabled,
-      onChange: event => { void controller.savePreference('defaultGenerationSource', event.currentTarget.value) },
-      style: { display: 'block', padding: 8, marginTop: 5 } },
-      createElement('option', { value: 'local-skill' }, '本地 Skills'), createElement('option', { value: 'oasis-api' }, '专业 API'))),
-    createElement('label', null, '保存目录前缀', createElement('input', { 'aria-label': '保存目录前缀', value: prefix, disabled, maxLength: 200,
-      placeholder: '项目内相对目录（可空）', onChange: event => setPrefix(event.currentTarget.value),
-      style: { display: 'block', boxSizing: 'border-box', width: '100%', padding: 8, marginTop: 5 } })),
-    createElement('button', { type: 'button', disabled, onClick: () => { void controller.savePreference('outputDirectoryPrefix', prefix) } }, '保存目录偏好'),
-    createElement('small', null, '仅用于新任务；保存文件仍需逐次确认。'),
-    createElement('label', null, createElement('input', { type: 'checkbox', 'aria-label': '启用本地 Skills 真实模型生成',
-      checked: snapshot.localModelEnabled === true, disabled,
-      onChange: event => { void controller.saveLocalModelEnabled(event.currentTarget.checked) } }), '启用本地 Skills 真实模型生成'),
-    createElement('small', null, '重启 Host 后生效；使用 DSH 当前会话模型。云端模型会接收材料和内置 Skill，可能产生费用，每次生成前确认。'),
-    snapshot.error ? createElement('div', { role: 'alert' }, snapshot.error) : null,
-    snapshot.notice ? createElement('div', { role: 'status' }, snapshot.notice) : null)
+    createElement('small', null, '新任务默认使用本地 Skills，通过 DSH 当前会话所选模型生成；如需专业 API，可在任务中切换并登录绿洲账户。'),
+    createElement('small', null, '两种方式的结果均保存到当前 DSH 项目目录，使用 DSH 文件管理查看和编辑。Skills 生成的文件名不加来源标记，专业 API 文件名在扩展名前添加 _OIW。'),
+    createElement('small', null, '使用云端模型或专业 API 时，相关材料会发送至对应服务，可能产生费用；生成前会提示并由你确认。'))
 }
 
 export function OasisSettingsSection({ controller }) {
@@ -37,10 +15,7 @@ export function OasisSettingsSection({ controller }) {
     style: { display: 'grid', gap: 12, minWidth: 0 },
   },
   createElement('h2', { style: { margin: 0, fontSize: 18 } }, '绿洲工作台'),
-  createElement(NewTaskPreferences, { controller }),
-  createElement(OasisConnectionSettings, {
-    controller,
-    surface: 'settings',
-    visible: true,
-  }))
+  createElement(GenerationGuidance),
+  controller ? createElement(OasisAccountSettings, { controller }) : null,
+  )
 }

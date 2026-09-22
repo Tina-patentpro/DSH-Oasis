@@ -36,7 +36,7 @@ export function ProfessionalServicePanel({
     const execution = latestExecution(page)
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
       createElement('strong', null, '专业服务'),
-      createElement('p', { role: 'status' }, '请前往 DSH 设置 → 绿洲工作台完成连接配置。设置保存后须重启 Host 并刷新页面；本地工作流仍可继续使用。'),
+      createElement('p', { role: 'status' }, '请前往 DSH 设置 → 绿洲工作台登录账户并确认项目绑定；本地工作流仍可继续使用。'),
       waiting && execution ? createElement('button', {
         type: 'button', onClick: () => onStop(execution.executionId), 'data-testid': 'oasis-professional-stop',
       }, '停止本地等待') : null)
@@ -60,7 +60,7 @@ export function ProfessionalServicePanel({
   if (!bootstrap.credentialConfigured) {
     return createElement('section', { style: boxStyle, 'data-testid': 'oasis-professional-service' },
       createElement('strong', null, '专业服务'),
-      createElement('p', { style: { margin: 0, color: '#8b2f24' } }, '请前往 DSH 设置 → 绿洲工作台重新输入 JWT 并绑定当前 API 地址；凭证不会进入工作台状态。'))
+      createElement('p', { style: { margin: 0, color: '#8b2f24' } }, '请前往 DSH 设置 → 绿洲工作台登录账户；登录信息不会进入工作台状态。'))
   }
 
   const draft = page.professionalDraft

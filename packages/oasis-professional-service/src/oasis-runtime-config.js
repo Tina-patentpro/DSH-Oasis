@@ -4,8 +4,18 @@ import z from '@deepseek-ai/schemastery'
 import { normalizeOasisOrigin, normalizeOasisDownloadOrigin } from './oasis-origin-policy.js'
 import { normalizeGenerationPreferences } from './generation-preferences.js'
 import { parseWorkspaceApiBindings } from './oasis-workspace-binding.js'
+import { OASIS_PRODUCT_ORIGIN } from './oasis-account-contract.js'
+import { parseWebsiteProjectLinks } from './website-import-contract.js'
 
 const DEFAULT_CREDENTIAL_REF = 'OASIS_USER_JWT'
+
+export function normalizeProductRuntimeConfig(input = {}) {
+  return normalizeOasisRuntimeConfig({
+    localModelEnabled: true, workspaceApiBindings: input.workspaceApiBindings, websiteProjectLinks: input.websiteProjectLinks,
+    environmentKind: 'production', apiBaseUrl: OASIS_PRODUCT_ORIGIN, credentialOrigin: OASIS_PRODUCT_ORIGIN,
+    downloadOrigins: [],
+  })
+}
 
 export const OASIS_SETTINGS_NAMESPACE = 'oasis-professional-service'
 export const OASIS_SETTINGS_SCHEMA = z.object({
@@ -17,6 +27,8 @@ export const OASIS_SETTINGS_SCHEMA = z.object({
   defaultGenerationSource: z.string().default('local-skill'),
   outputDirectoryPrefix: z.string().default(''),
   localModelEnabled: z.boolean().default(false),
+  websiteProjectLinks: z.array(z.object({ workspaceId: z.string(), workspacePath: z.string(), apiBaseOrigin: z.string(),
+    accountId: z.number(), folderId: z.number(), folderName: z.string(), confirmedAt: z.string() })).default([]),
   workspaceApiBindings: z.array(z.object({
     workspaceId: z.string(), workspacePath: z.string(),
     environmentKind: z.union([z.const('non-production'), z.const('production')]),
@@ -32,6 +44,7 @@ export function normalizeOasisRuntimeConfig(input = {}) {
   }
   normalizeGenerationPreferences(input)
   parseWorkspaceApiBindings(input.workspaceApiBindings)
+  parseWebsiteProjectLinks(input.websiteProjectLinks)
   const localModelEnabled = input.localModelEnabled ?? false
   if (typeof localModelEnabled !== 'boolean') throw new TypeError('localModelEnabled must be boolean')
   const environmentKind = input.environmentKind ?? 'non-production'
@@ -71,6 +84,7 @@ export function registerOasisSettings(ctx, base = {}) {
     outputDirectoryPrefix: '',
     localModelEnabled: false,
     workspaceApiBindings: [],
+    websiteProjectLinks: [],
     ...base,
   }
   normalizeOasisRuntimeConfig(entry)

@@ -42,7 +42,8 @@ function ResultVersion({ page, run, operation, disabled, readOnlyDisabled = disa
     try { await fn() } catch { setError('操作未完成，请检查当前任务状态。') }
   }
   return createElement('article', { style: { display: 'grid', gap: 12 } },
-    createElement('div', { style: { fontSize: 12 } }, `${run.source === 'local-skill' ? '本地 Skills' : '专业 API'} · ${run.evidenceKind === 'native-model' ? '原生模型生成' : run.mode === 'dsh-local' ? '原生离线验收' : '合成验收'} · ${run.review.status === 'approved' ? '已审核' : '待审核'}`),
+    createElement('div', { style: { fontSize: 12 } }, `${run.source === 'local-skill' ? '本地 Skills' : '专业 API'} · ${run.mode === 'oasis-api' ? run.evidenceKind === 'production-api' ? '生产 API 响应' : '非生产 API 响应' : run.evidenceKind === 'native-model' ? '原生模型生成' : run.mode === 'dsh-local' ? '原生离线验收' : '合成验收'} · ${run.review.status === 'approved' ? '已审核' : '待审核'}`),
+    run.mode === 'oasis-api' ? createElement('small', null, `服务 ${run.providerSnapshot.apiEndpoint}；远端文件 ${run.remoteResponse.fileUrls.length} 个，仅记录来源，未下载/未验证，不视为已交付。`) : null,
     editing ? createElement('textarea', { 'aria-label': '修订结果', value: body, maxLength: 100000, disabled,
       onChange: event => setBody(event.currentTarget.value), style: { width: '100%' } })
       : createElement(SafeMarkdownPreview, { markdownRenderer, text: run.result.artifact.body, style: { fontSize: 13, lineHeight: 1.65 } }),

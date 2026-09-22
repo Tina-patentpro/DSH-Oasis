@@ -66,7 +66,7 @@ test('material preview uses a capable native renderer with images disabled, othe
   assert.equal(calls[0].fileMentions, undefined)
 })
 
-test('native default source and output prefix only seed newly selected tasks', async () => {
+test('new tasks ignore old source/directory preferences and preserve explicitly selected task sources', async () => {
   let preferences = { defaultGenerationSource: 'oasis-api', outputDirectoryPrefix: '产物' }
   let sequence = 0
   const store = createWorkbenchStore({ workflowCatalog: getWorkflowCatalog(), createId: () => `task-${++sequence}`,
@@ -75,16 +75,17 @@ test('native default source and output prefix only seed newly selected tasks', a
     store.syncWorkspaces([{ workspaceId: 'a' }])
     store.createPage('a'); store.selectWorkflow('a', 'task-1', 'patent-claims')
     store.updateFormValue('a', 'task-1', 'disclosure_text', '保留原稿')
-    assert.equal(store.getWorkspaceState('a').pages[0].generation.source, 'oasis-api')
-    assert.equal(store.getWorkspaceState('a').pageOperations['task-1'].writebackDirectory, '产物\\task-1')
+    assert.equal(store.getWorkspaceState('a').pages[0].generation.source, 'local-skill')
+    assert.equal(store.getWorkspaceState('a').pageOperations['task-1']?.writebackDirectory ?? '', '')
+    store.setGenerationSource('a', 'task-1', 'oasis-api')
     preferences = { defaultGenerationSource: 'local-skill', outputDirectoryPrefix: '新产物' }
     store.createPage('a'); store.selectWorkflow('a', 'task-2', 'patent-claims')
     const state = store.getWorkspaceState('a')
     assert.equal(state.pages[0].generation.source, 'oasis-api')
     assert.equal(state.pages[0].formValues.disclosure_text, '保留原稿')
     assert.equal(state.pages[1].generation.source, 'local-skill')
-    assert.equal(state.pageOperations['task-1'].writebackDirectory, '产物\\task-1')
-    assert.equal(state.pageOperations['task-2'].writebackDirectory, '新产物\\task-2')
+    assert.equal(state.pageOperations['task-1']?.writebackDirectory ?? '', '')
+    assert.equal(state.pageOperations['task-2']?.writebackDirectory ?? '', '')
     assert.equal(state.pages.every(page => page.runOrder.length === 0), true)
   } finally { await store.dispose() }
 })
@@ -177,7 +178,7 @@ test('source switching preserves one persisted draft, clears confirmations, and 
     assert.deepEqual(state.pages[0].generation, { inputSchemaVersion: 'claims-disclosure-2', source: 'local-skill' })
     assert.equal(workspaceStateToDraft(state).schemaVersion, 4)
     assert.equal(calls.every(c => c === 'save'), true)
-    await assert.rejects(() => store.createRun('workspace-a', 'task-a'), /未启用|not enabled/i)
+    await assert.rejects(() => store.createRun('workspace-a', 'task-a'), /DSH 模型服务暂不可用|not enabled/i)
     assert.equal(calls.includes('generate'), false)
   } finally { await store.dispose() }
 })

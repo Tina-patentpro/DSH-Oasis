@@ -9,7 +9,7 @@ const buttonStyle = {
   padding: '7px 10px', background: 'var(--dsw-alias-bg-base, #fff)', color: 'inherit',
 }
 
-export function WritebackPanel({ run, operation, disabled, onDraft, onPrepare, onConfirm, onCommit }) {
+export function WritebackPanel({ run, operation, disabled, onPrepare, onConfirm, onCommit }) {
   if (!run || run.result.contentStatus === 'blocked' || run.review.status !== 'approved') return null
   const prepared = operation.writebackPlan
   const commitDisabled = disabled || !prepared || !operation.writebackConfirmed
@@ -19,15 +19,9 @@ export function WritebackPanel({ run, operation, disabled, onDraft, onPrepare, o
   },
   createElement('h4', { style: { margin: 0, fontSize: 15 } }, '项目回写'),
   createElement('p', { style: { margin: 0, fontSize: 12, color: 'var(--dsw-alias-text-secondary, #66706b)' } },
-    '仅可创建全新目录；不会覆盖既有路径。人工批准与回写均不构成专业或法律结论。'),
-  createElement('label', { htmlFor: 'oasis-writeback-directory', style: { fontSize: 13, fontWeight: 650 } }, 'Workspace 内新目录'),
-  createElement('input', {
-    id: 'oasis-writeback-directory', value: operation.writebackDirectory, disabled,
-    onChange: (event) => onDraft(event.currentTarget.value, false),
-    style: { width: '100%', boxSizing: 'border-box', border: '1px solid #d7d9d8', borderRadius: 8, padding: 9 },
-  }),
+    '保存到当前 DSH 项目目录，使用 DSH 文件管理查看与编辑。同名文件不会覆盖；专业 API 文件名以 _OIW 结尾。审核与保存不构成专业或法律结论。'),
   createElement('button', {
-    type: 'button', disabled: disabled || operation.writebackDirectory.trim().length === 0,
+    type: 'button', disabled,
     onClick: onPrepare, style: buttonStyle,
   }, operation.activeOperation === 'writeback-prepare' ? '正在准备…' : '准备回写清单'),
   prepared ? createElement('div', { style: { border: '1px solid #cbd7d0', borderRadius: 9, padding: 11, display: 'grid', gap: 7 } },
@@ -41,15 +35,15 @@ export function WritebackPanel({ run, operation, disabled, onDraft, onPrepare, o
         type: 'checkbox', checked: operation.writebackConfirmed, disabled,
         onChange: (event) => onConfirm(event.currentTarget.checked),
       }),
-      createElement('span', null, '我已复核绝对目标路径和两份文件哈希，同意创建该全新目录。')),
+      createElement('span', null, '我已复核项目路径和两份文件哈希，同意在当前项目中创建新文件。')),
     createElement('button', {
       type: 'button', 'data-testid': 'oasis-writeback-commit', disabled: commitDisabled,
       onClick: onCommit, style: { ...buttonStyle, background: '#245d47', color: '#fff', borderColor: '#245d47' },
-    }, operation.activeOperation === 'writeback-commit' ? '正在提交…' : '确认创建新目录')) : null,
+    }, operation.activeOperation === 'writeback-commit' ? '正在提交…' : '确认保存到项目')) : null,
   createElement('div', { role: operation.feedback === 'index-warning' ? 'alert' : 'status', 'aria-live': 'polite', style: { fontSize: 12 } },
-    operation.feedback === 'writeback-success' ? '回写成功：新目录和索引均已提交。' : '',
+    operation.feedback === 'writeback-success' ? '保存成功：项目文件和索引均已提交。' : '',
     operation.feedback === 'conflict' ? '版本或目标路径冲突：未执行覆盖，请重新准备。' : '',
-    operation.feedback === 'index-warning' ? '文件已创建，但任务索引更新失败；请按恢复清单人工核对。' : ''),
+    operation.feedback === 'index-warning' ? '文件或索引未完整提交；已创建文件予以保留，请按恢复清单人工核对，不要自动重试。' : ''),
   operation.indexWarningManifest ? createElement('div', { style: { border: '1px solid #d7a69d', borderRadius: 8, padding: 9, fontSize: 12 } },
     createElement('strong', null, '恢复清单'),
     createElement('div', null, operation.indexWarningManifest.relativeDirectory),

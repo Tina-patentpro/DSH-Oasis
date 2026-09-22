@@ -22,7 +22,7 @@ export function createNativeModelRuntime(ctx, { BlockAssembler, createUserMessag
 // Keep the workbench available when optional generation services are absent.
 export function bindNativeModelRuntime(ctx, native, enabled = false) {
   let current = null
-  const fiber = enabled === true ? ctx.inject(['llm', 'sessions', 'sessionProjections', 'agentDefaultModel'], child => {
+  const fiber = enabled === true && typeof ctx?.inject === 'function' ? ctx.inject(['llm', 'sessions', 'sessionProjections', 'agentDefaultModel'], child => {
     const candidate = createNativeModelRuntime(child, native, true)
     current = candidate
     return () => { if (current === candidate) current = null; candidate?.dispose() }

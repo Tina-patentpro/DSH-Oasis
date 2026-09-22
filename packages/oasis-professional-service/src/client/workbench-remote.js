@@ -1,3 +1,4 @@
+import { importCommands, importResponses } from '../website-import-contract.js'
 import {
   savedFileResponseSchema,
   localGenerationPreviewSchema,
@@ -11,7 +12,10 @@ import {
   writebackCommitResponseSchema,
   writebackPrepareResponseSchema,
   workflowCatalogResponseSchema,
+  workspaceBindingOptionsSchema,
 } from '../workbench-contract.js'
+import { claimsApiPreparationSchema, claimsApiPreviewSchema, workspaceBindingReadSchema, workspaceBindingSavedSchema } from '../claims-api-execution-contract.js'
+import { accountStatusSchema } from '../oasis-account-contract.js'
 
 const CHANNEL = '/oasis-workbench'
 
@@ -56,6 +60,53 @@ export function createWorkbenchRemote(connection) {
   }
 
   return Object.freeze({
+    async websiteImport(action, payload) {
+      if (!Object.hasOwn(importCommands, action)) throw new WorkbenchRemoteError('IMPORT_INVALID_INPUT', '导入动作无效')
+      const input = importCommands[action].parse(payload)
+      const result = unwrap(await call(CHANNEL, `import/${action}`, input), importResponses[action])
+      if (action === 'open' && result.workspaceId !== input.workspaceId || ['items', 'commit'].includes(action) && result.folderId !== input.folderId) {
+        throw new WorkbenchRemoteError('INVALID_RESPONSE', '导入项目不一致')
+      }
+      return result
+    },
+    async accountStatus() { return unwrap(await call(CHANNEL, 'account/status', {}), accountStatusSchema) },
+    async accountSms(payload) { return unwrap(await call(CHANNEL, 'account/sms', payload), accountStatusSchema) },
+    async accountLogin(payload) { return unwrap(await call(CHANNEL, 'account/login', payload), accountStatusSchema) },
+    async accountLogout(payload) { return unwrap(await call(CHANNEL, 'account/logout', payload), accountStatusSchema) },
+    async getWorkspaceBinding(payload, signal) {
+      const result = unwrap(await call(CHANNEL, 'professional/binding/get', payload, signal), workspaceBindingReadSchema)
+      if (result.workspaceId !== payload.workspaceId) throw new WorkbenchRemoteError('INVALID_RESPONSE', '绑定项目不一致')
+      return result
+    },
+    async getBindingOptions(payload, signal) {
+      const result = unwrap(await call(CHANNEL, 'professional/binding/options', payload, signal), workspaceBindingOptionsSchema)
+      if (result.workspaceId !== payload.workspaceId) throw new WorkbenchRemoteError('INVALID_RESPONSE', '绑定项目不一致')
+      return result
+    },
+    async confirmWorkspaceBinding(payload, signal) {
+      const result = unwrap(await call(CHANNEL, 'professional/binding/confirm', payload, signal), workspaceBindingSavedSchema)
+      for (const key of ['workspaceId', 'workspacePath', 'apiBaseOrigin', 'accountId', 'apiId', 'apiEndpoint', 'apiProcess', 'folderId', 'schemaHash']) {
+        if (result.binding[key] !== payload[key]) throw new WorkbenchRemoteError('INVALID_RESPONSE', '绑定范围不一致')
+      }
+      return result
+    },
+    async prepareClaimsApi(payload, signal) {
+      const result = unwrap(await call(CHANNEL, 'task/prepare-api', payload, signal), claimsApiPreparationSchema)
+      for (const key of ['workspaceId', 'taskId', 'expectedRevision', 'expectedSettingsRevision']) {
+        if (result.snapshot[key] !== payload[key]) throw new WorkbenchRemoteError('INVALID_RESPONSE', 'API 材料准备范围不一致')
+      }
+      return result
+    },
+    async previewClaimsApi(payload, signal) {
+      const result = unwrap(await call(CHANNEL, 'task/preview-api', payload, signal), claimsApiPreviewSchema)
+      for (const key of ['workspaceId', 'taskId', 'expectedRevision', 'expectedSettingsRevision', 'preparationSha256']) {
+        if (result[key] !== payload[key]) throw new WorkbenchRemoteError('INVALID_RESPONSE', 'API 确认范围不一致')
+      }
+      return result
+    },
+    async startClaimsApi(payload, signal) {
+      return unwrap(await call(CHANNEL, 'task/start-api', payload, signal), workbenchReplaceResponseSchema)
+    },
     async get(workspaceId, signal) {
       return unwrap(await call(
         CHANNEL,
