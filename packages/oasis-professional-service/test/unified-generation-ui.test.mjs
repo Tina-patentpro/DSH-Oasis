@@ -17,6 +17,27 @@ function nodes(root) {
   return [root, ...nodes(root?.props?.children)]
 }
 
+test('generation errors point to available recovery actions without obsolete binding settings', () => {
+  const workflow = getWorkflowDefinition('patent-claims', '1')
+  const page = { pageId: 'p', title: 'Claims', generation: { source: 'local-skill' }, formValues: { claims: 'test' },
+    remoteExecutionOrder: [], remoteExecutions: {}, runs: {}, runOrder: [], activeRunId: null }
+  for (const [code, message] of [
+    ['AUTH_REQUIRED', /登录/], ['WORKSPACE_BINDING_REQUIRED', /从网站导入/],
+    ['API_SERVICE_MAPPING_REQUIRED', /本模板.*映射/], ['WEBSITE_PROJECT_LINK_CONFLICT', /解除/],
+    ['UNRESOLVED_RESPONSE', /查看原运行/], ['private-token', /不会自动重试/],
+    ['WORKSPACE_OPERATION_BUSY', /不会自动重试/],
+    ['REMOTE_ACCOUNT_UNVERIFIED', /账户身份.*未能核实/],
+    ['REMOTE_ACCOUNT_MISMATCH', /账户.*不一致/],
+    ['REMOTE_RUNTIME_CHANGED', /登录状态.*变化/],
+    ['REMOTE_SERVICE_MISMATCH', /服务目录.*不匹配/],
+  ]) {
+    const html = renderToStaticMarkup(createElement(UnifiedGenerationPage, { page, workflow, workspaceId: 'a', syncStatus: 'ready',
+      operation: { activeOperation: null, error: 'secret', errorCode: code } }))
+    assert.match(html, message)
+    assert.doesNotMatch(html, /原生设置中的项目绑定|private-token|secret/)
+  }
+})
+
 test('an unknown local run locks mutations but not approved historical result access', () => {
   const workflow = getWorkflowDefinition('patent-claims', '1')
   const completed = { runId: 'done', mode: 'dsh-local', status: 'completed', source: 'local-skill',

@@ -5,6 +5,23 @@ import { GenerationSourceSwitch } from './GenerationSourceSwitch.js'
 import { WorkflowForm, validateWorkflowFormValues } from './WorkflowForm.js'
 import { UnifiedResultPanel } from './UnifiedResultPanel.js'
 
+function generationErrorMessage(code) {
+  const messages = {
+    WORKSPACE_OPERATION_BUSY: '当前项目正在导入、解除关联或准备生成，请等待原操作结束后重新确认；不会自动重试。',
+    AUTH_REQUIRED: '请在 DSH 设置 → 绿洲工作台登录账户；如已提交生成，请先查看原运行，不要重复提交。',
+    REMOTE_ACCOUNT_UNVERIFIED: '账户身份未能核实，已阻止提交；请检查登录状态并提供此错误码，不要清空任务或重复生成。',
+    REMOTE_ACCOUNT_MISMATCH: '当前账户与项目关联或服务返回的账户不一致，已阻止提交；请核对原登录账户，不要重复生成。',
+    REMOTE_RUNTIME_CHANGED: '登录状态已变化或暂不可用，本次确认已失效；请检查当前账户后重新核对，已有运行请先查看，不会自动重试。',
+    REMOTE_SERVICE_MISMATCH: '服务目录或服务详情与本次确认不匹配，已阻止提交；请重新核对服务与材料，已有运行请先查看，不会自动重试。',
+    WORKSPACE_BINDING_REQUIRED: '请在功能中心打开“从网站导入”，选择网站项目并关联；可以不勾选文件。',
+    API_SERVICE_MAPPING_REQUIRED: '网站项目已关联，但当前版本尚未确认本模板的专业 API 服务映射；请使用本地 Skills 或等待映射更新，无需填写 JWT 或绑定表单。',
+    REMOTE_MAPPING_UNSUPPORTED: '本模板的专业 API 服务映射不兼容，已阻止提交；请使用本地 Skills 或等待映射更新。',
+    WEBSITE_PROJECT_LINK_CONFLICT: '网站项目与原服务绑定冲突；请在“从网站导入”窗口明确解除关联，再重新选择项目。本地文件保留。',
+    UNRESOLVED_RESPONSE: '尚未取得可用结果，请查看原运行；不会自动重发。停止等待不表示后端取消或退款。',
+  }
+  return messages[code] ?? '请检查连接和当前材料；如已有未决任务，请先查看原运行。不会自动重试。'
+}
+
 const css = `
 .oasis-unified { container: oasis-generation / inline-size; min-width: 0; color: var(--dsw-alias-text-primary, #24352f); }
 .oasis-unified * { box-sizing: border-box; }
@@ -118,7 +135,7 @@ export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus,
               onClick: () => { setConfirmed(false); onGenerate(page.pageId, true) } }, '确认并生成')) : null,
           createElement('button', { type: 'button', 'data-testid': 'oasis-unified-generate', disabled: locked || syncStatus !== 'ready' || reason !== null,
             title: reason ?? undefined, onClick: () => onGenerate(page.pageId) }, ['run-create', 'api-create'].includes(operation.activeOperation) ? '生成中…' : api ? '核对服务与材料（读取账户与目录）' : real ? confirmation ? '重新核对模型与材料' : '核对模型与材料' : local ? '生成离线样本' : fixtureEnabled ? '生成合成样本' : '生成'),
-          operation.error ? createElement('p', { role: 'alert' }, `操作未完成（${operation.errorCode ?? '确认或连接失效'}）。请核对原生设置中的项目绑定和当前材料；不会自动重试。`) : null,
+          operation.error ? createElement('p', { role: 'alert' }, `操作未完成。${generationErrorMessage(operation.errorCode)}`) : null,
           latestApi ? createElement('p', { role: 'status', style: { fontSize: 12 } }, `API 原运行：${latestApi.status}${latestApi.safeError ? `（${latestApi.safeError.code}）` : ''}。停止等待不代表后端取消或退款。`) : null,
           reason ? createElement('p', { role: 'status', style: { margin: '8px 0 0', fontSize: 12 } }, reason) : null,
           (pending || pendingApi || operation.generationUncertain) ? createElement('div', null,

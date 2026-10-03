@@ -31,7 +31,8 @@ export async function executionHarness(t, serviceOptions = {}) {
   }
   const active = { enabled: true, credentialConfigured: true, environmentKind: 'non-production', apiBaseOrigin: binding.apiBaseOrigin,
     client, assertCurrent: async () => { if (runtimeChanged) throw Object.assign(new Error('changed'), { code: 'REMOTE_RUNTIME_CHANGED' }) } }
-  const options = { repository: h.repository, settings: { describe: () => [{ ns: 'oasis-professional-service', revision, value }] },
+  const options = { repository: h.repository, workspaceOperations: serviceOptions.workspaceOperations,
+    settings: { describe: () => [{ ns: 'oasis-professional-service', revision, value }] },
     workspaceRegistry: { get: id => id === 'workspace-a' ? workspace : undefined }, getRuntime: async () => active,
     materialManager: { recheckAll: () => assert.fail('derived TXT must not read project materials'), readForUpload: () => assert.fail('not a project file') },
     executionIdFactory: () => `api-${++seq}`, runIdFactory: () => `api-run-${++seq}`, pollLimit: 1, pollIntervalMs: 0 }

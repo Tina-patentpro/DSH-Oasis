@@ -1123,7 +1123,7 @@ export function createWorkbenchStore({
           const binding = await remote.getWorkspaceBinding({ workspaceId }, controller.signal)
           assertProfessionalConfiguration(configurationGeneration)
           const payload = { workspaceId, taskId: pageId, expectedRevision: current.revision, expectedSettingsRevision: binding.settingsRevision }
-          const prepared = await remote.prepareClaimsApi(payload, controller.signal)
+          const prepared = await remote.prepareClaimsApi({ ...payload, remoteReadConfirmed: true }, controller.signal)
           const preview = await remote.previewClaimsApi({ ...payload, preparationSha256: prepared.preparationSha256, remoteReadConfirmed: true }, controller.signal)
           if (closing || disposed) return
           assertProfessionalConfiguration(configurationGeneration)

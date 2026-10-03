@@ -4945,6 +4945,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			accountId: id$2,
 			folderId: id$2,
 			apiId: id$2,
+			catalogEntryId: id$2.optional(),
 			apiEndpoint: label,
 			apiProcess: string().max(4e3),
 			schemaHash: string().regex(/^[a-f0-9]{64}$/)
@@ -5511,6 +5512,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			accountId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
 			apiBaseOrigin: httpUrlSchema,
 			apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			catalogEntryId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
 			apiEndpoint: identifierSchema,
 			apiProcess: string().max(4e3),
 			folderId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
@@ -5530,6 +5532,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			apiBaseOrigin: httpUrlSchema,
 			serviceSnapshot: object({
 				apiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+				catalogEntryId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
 				apiEndpoint: identifierSchema,
 				apiProcess: string().max(4e3),
 				schemaHash: sha256Schema
@@ -5562,7 +5565,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			validateRemoteEnvironment(value, ctx, value.uploadedFiles.map((file) => file.url));
 			if (value.unifiedClaims) {
 				const s = value.unifiedClaims, b = s.binding;
-				if (value.materialSnapshots.length || s.workspaceId !== b.workspaceId || s.workspacePath !== b.workspacePath || value.accountId !== b.accountId || value.apiBaseOrigin !== b.apiBaseOrigin || value.environmentKind !== b.environmentKind || value.folderSnapshot.folderId !== b.folderId || value.serviceSnapshot.apiId !== b.apiId || value.serviceSnapshot.apiEndpoint !== b.apiEndpoint || value.serviceSnapshot.apiProcess !== b.apiProcess || value.serviceSnapshot.schemaHash !== b.schemaHash || JSON.stringify(value.formValues) !== JSON.stringify(s.mapping.textInputs)) ctx.addIssue({
+				if (value.materialSnapshots.length || s.workspaceId !== b.workspaceId || s.workspacePath !== b.workspacePath || value.accountId !== b.accountId || value.apiBaseOrigin !== b.apiBaseOrigin || value.environmentKind !== b.environmentKind || value.folderSnapshot.folderId !== b.folderId || value.serviceSnapshot.apiId !== b.apiId || value.serviceSnapshot.apiEndpoint !== b.apiEndpoint || value.serviceSnapshot.catalogEntryId !== b.catalogEntryId || value.serviceSnapshot.apiProcess !== b.apiProcess || value.serviceSnapshot.schemaHash !== b.schemaHash || JSON.stringify(value.formValues) !== JSON.stringify(s.mapping.textInputs)) ctx.addIssue({
 					code: "custom",
 					message: "unified API execution snapshot mismatch"
 				});
@@ -5950,7 +5953,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								message: "unified API run must match original execution and parent"
 							});
 						}
-						if (execution.serviceSnapshot.apiId !== provider.apiId || execution.accountId !== provider.accountId || (execution.environmentKind ?? "non-production") !== (provider.environmentKind ?? "non-production") || execution.apiBaseOrigin !== provider.apiBaseOrigin || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint || execution.serviceSnapshot.apiProcess !== provider.apiProcess || execution.folderSnapshot.folderId !== provider.folderId || execution.priceSnapshot.price !== provider.price) ctx.addIssue({
+						if (execution.serviceSnapshot.apiId !== provider.apiId || execution.serviceSnapshot.catalogEntryId !== provider.catalogEntryId || execution.accountId !== provider.accountId || (execution.environmentKind ?? "non-production") !== (provider.environmentKind ?? "non-production") || execution.apiBaseOrigin !== provider.apiBaseOrigin || execution.serviceSnapshot.apiEndpoint !== provider.apiEndpoint || execution.serviceSnapshot.apiProcess !== provider.apiProcess || execution.folderSnapshot.folderId !== provider.folderId || execution.priceSnapshot.price !== provider.price) ctx.addIssue({
 							code: "custom",
 							path: [
 								"runs",
@@ -7655,6 +7658,21 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}
 		//#endregion
 		//#region src/client/UnifiedGenerationPage.js
+		function generationErrorMessage(code) {
+			return {
+				WORKSPACE_OPERATION_BUSY: "当前项目正在导入、解除关联或准备生成，请等待原操作结束后重新确认；不会自动重试。",
+				AUTH_REQUIRED: "请在 DSH 设置 → 绿洲工作台登录账户；如已提交生成，请先查看原运行，不要重复提交。",
+				REMOTE_ACCOUNT_UNVERIFIED: "账户身份未能核实，已阻止提交；请检查登录状态并提供此错误码，不要清空任务或重复生成。",
+				REMOTE_ACCOUNT_MISMATCH: "当前账户与项目关联或服务返回的账户不一致，已阻止提交；请核对原登录账户，不要重复生成。",
+				REMOTE_RUNTIME_CHANGED: "登录状态已变化或暂不可用，本次确认已失效；请检查当前账户后重新核对，已有运行请先查看，不会自动重试。",
+				REMOTE_SERVICE_MISMATCH: "服务目录或服务详情与本次确认不匹配，已阻止提交；请重新核对服务与材料，已有运行请先查看，不会自动重试。",
+				WORKSPACE_BINDING_REQUIRED: "请在功能中心打开“从网站导入”，选择网站项目并关联；可以不勾选文件。",
+				API_SERVICE_MAPPING_REQUIRED: "网站项目已关联，但当前版本尚未确认本模板的专业 API 服务映射；请使用本地 Skills 或等待映射更新，无需填写 JWT 或绑定表单。",
+				REMOTE_MAPPING_UNSUPPORTED: "本模板的专业 API 服务映射不兼容，已阻止提交；请使用本地 Skills 或等待映射更新。",
+				WEBSITE_PROJECT_LINK_CONFLICT: "网站项目与原服务绑定冲突；请在“从网站导入”窗口明确解除关联，再重新选择项目。本地文件保留。",
+				UNRESOLVED_RESPONSE: "尚未取得可用结果，请查看原运行；不会自动重发。停止等待不表示后端取消或退款。"
+			}[code] ?? "请检查连接和当前材料；如已有未决任务，请先查看原运行。不会自动重试。";
+		}
 		const css = `
 .oasis-unified { container: oasis-generation / inline-size; min-width: 0; color: var(--dsw-alias-text-primary, #24352f); }
 .oasis-unified * { box-sizing: border-box; }
@@ -7847,7 +7865,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				disabled: locked || syncStatus !== "ready" || reason !== null,
 				title: reason ?? void 0,
 				onClick: () => onGenerate(page.pageId)
-			}, ["run-create", "api-create"].includes(operation.activeOperation) ? "生成中…" : api ? "核对服务与材料（读取账户与目录）" : real ? confirmation ? "重新核对模型与材料" : "核对模型与材料" : local ? "生成离线样本" : fixtureEnabled ? "生成合成样本" : "生成"), operation.error ? (0, react.createElement)("p", { role: "alert" }, `操作未完成（${operation.errorCode ?? "确认或连接失效"}）。请核对原生设置中的项目绑定和当前材料；不会自动重试。`) : null, latestApi ? (0, react.createElement)("p", {
+			}, ["run-create", "api-create"].includes(operation.activeOperation) ? "生成中…" : api ? "核对服务与材料（读取账户与目录）" : real ? confirmation ? "重新核对模型与材料" : "核对模型与材料" : local ? "生成离线样本" : fixtureEnabled ? "生成合成样本" : "生成"), operation.error ? (0, react.createElement)("p", { role: "alert" }, `操作未完成。${generationErrorMessage(operation.errorCode)}`) : null, latestApi ? (0, react.createElement)("p", {
 				role: "status",
 				style: { fontSize: 12 }
 			}, `API 原运行：${latestApi.status}${latestApi.safeError ? `（${latestApi.safeError.code}）` : ""}。停止等待不代表后端取消或退款。`) : null, reason ? (0, react.createElement)("p", {
@@ -8387,13 +8405,17 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			selected: [],
 			result: null,
 			error: null,
+			notice: null,
 			submitted: false
 		});
 		const explanations = {
+			WORKSPACE_OPERATION_BUSY: "当前项目正在导入、解除关联或准备生成，请等待原操作结束后重新确认；不会自动重试。",
 			IMPORT_WORKSPACE_BUSY: "当前项目有未结束的生成，请先处理原任务，再导入。",
 			AUTH_REQUIRED: "请先在此窗口登录绿洲账户。",
 			IMPORT_ACCOUNT_CHANGED: "账户已变化，请重新读取项目。",
-			IMPORT_LINK_CONFLICT: "当前本地项目已关联其他网站项目或账户；不会替换原关联，请使用对应本地项目。",
+			IMPORT_LINK_CONFLICT: "当前本地项目已关联其他网站项目或账户；请在本窗口明确解除原关联后，重新选择项目。已有本地文件不变。",
+			IMPORT_SETTINGS_CHANGED: "设置已变化，请重新读取项目，再确认解除关联；不会覆盖其他修改。",
+			IMPORT_BUSY: "当前项目正在导入或解除关联，请等待原操作结束。",
 			IMPORT_OWNERSHIP: "网站返回的项目或文件归属无法验证，已阻止导入。",
 			IMPORT_REQUEST_FAILED: "网站接口读取失败或暂不支持；没有把失败当作空列表。请稍后明确重试。",
 			IMPORT_UNSAFE_PATH: "目录或文件名不安全，已阻止写入。",
@@ -8500,12 +8522,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async start() {
 					if (snapshot.busy) return false;
 					clear();
+					const g = generation;
 					return operation(async () => {
 						const session = await remote.websiteImport("open", {
 							workspaceId: getWorkspaceId(),
 							confirmed: true
 						});
-						if (!current(session)) throw Error("scope");
+						if (!current(session) || g !== generation) throw Error("scope");
+						publish({ session });
 						const result = await remote.websiteImport("projects", {
 							token: session.token,
 							parentId: 0,
@@ -8538,7 +8562,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						clear();
 						return false;
 					}
-					if (!snapshot.project || !snapshot.selected.length || snapshot.submitted || snapshot.busy) return false;
+					if (!snapshot.project || snapshot.submitted || snapshot.busy) return false;
 					const { session, project, selected } = snapshot;
 					return operation(async () => {
 						publish({ submitted: true });
@@ -8551,6 +8575,24 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						if (result.workspaceId !== session.workspaceId || result.folderId !== project.id) throw Error("scope");
 						return { result };
 					});
+				},
+				async unlink({ confirmed = false } = {}) {
+					if (!confirmed || !current(snapshot.session) || !snapshot.session.link || snapshot.busy) return false;
+					const { session } = snapshot;
+					const done = await operation(async () => {
+						const result = await remote.websiteImport("unlink", {
+							token: session.token,
+							expectedSettingsRevision: session.settingsRevision,
+							confirmed: true
+						});
+						if (result.workspaceId !== session.workspaceId || result.status !== "unlinked") throw Error("scope");
+						return {};
+					});
+					if (done) {
+						clear();
+						publish({ notice: "关联已解除，本地文件和历史记录保持不变。请重新读取网站项目并选择关联。" });
+					}
+					return done;
 				},
 				dispose() {
 					disposed = true;
@@ -8589,6 +8631,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const dialog = (0, react.useRef)(null), busy = (0, react.useRef)(false);
 			busy.current = state.busy;
 			const [keyword, setKeyword] = (0, react.useState)("");
+			const [unlinkConfirm, setUnlinkConfirm] = (0, react.useState)(false);
+			(0, react.useEffect)(() => {
+				setUnlinkConfirm(false);
+			}, [
+				workspaceId,
+				account.accountRevision,
+				state.session?.token
+			]);
 			(0, react.useEffect)(() => {
 				controller.invalidate();
 			}, [
@@ -8631,7 +8681,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				display: "flex",
 				justifyContent: "space-between",
 				alignItems: "center"
-			} }, (0, react.createElement)("h2", { id: "oasis-import-title" }, "从网站导入到当前项目"), btn("关闭", onClose)), (0, react.createElement)("p", null, "在此选择网站项目及文件，无需打开网站。只下载勾选内容，不上传本地材料、不生成、不自动同步。"), !account.credentialConfigured ? (0, react.createElement)(OasisAccountSettings, { controller: accountController }) : (0, react.createElement)("p", null, `已登录绿洲账户 ${account.accountId}`), btn(state.session ? "重新读取项目" : "读取网站项目", () => controller.start(), !account.credentialConfigured), state.session ? (0, react.createElement)("div", null, (0, react.createElement)("p", { style: { overflowWrap: "anywhere" } }, `保存到：${state.session.workspacePath}`), state.session.link ? (0, react.createElement)("p", null, `当前关联：${state.session.link.folderName}；不会替换为其他项目。`) : null, (0, react.createElement)("div", { style: {
+			} }, (0, react.createElement)("h2", { id: "oasis-import-title" }, "从网站导入到当前项目"), btn("关闭", onClose)), (0, react.createElement)("p", null, "在此选择网站项目及文件，无需打开网站。只下载勾选内容，不上传本地材料、不生成、不自动同步。"), !account.credentialConfigured ? (0, react.createElement)(OasisAccountSettings, { controller: accountController }) : (0, react.createElement)("p", null, `已登录绿洲账户 ${account.accountId}`), btn(state.session ? "重新读取项目" : "读取网站项目", () => controller.start(), !account.credentialConfigured), state.session ? (0, react.createElement)("div", null, (0, react.createElement)("p", { style: { overflowWrap: "anywhere" } }, `保存到：${state.session.workspacePath}`), state.session.link ? (0, react.createElement)("div", null, (0, react.createElement)("p", null, `当前关联：${state.session.link.folderName}（账户 ${state.session.link.accountId}）；不会自动替换。`), unlinkConfirm ? (0, react.createElement)("div", {
+				role: "group",
+				"aria-label": "确认解除网站项目关联"
+			}, (0, react.createElement)("p", null, "解除当前项目的网站关联及专业 API 服务绑定；已有文件、生成结果和审核记录保留。未结束的生成或导入会阻止解除。"), btn("确认解除关联", () => controller.unlink({ confirmed: true })), btn("取消解除", () => setUnlinkConfirm(false))) : btn("解除关联", () => setUnlinkConfirm(true))) : null, (0, react.createElement)("div", { style: {
 				display: "grid",
 				gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
 				gap: 20
@@ -8683,7 +8736,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				checked: state.selected.includes(row.key),
 				disabled: state.busy || state.submitted || !row.downloadable,
 				onChange: () => controller.toggle(row.key)
-			}), ` ${row.fileName} · ${row.size === null ? "大小待下载核实" : `${row.size} 字节`}`, row.reason ? (0, react.createElement)("small", null, ` — ${row.reason}`) : null)), !state.items.length ? (0, react.createElement)("p", null, "此页没有可列出的内容；子项目需单独选择。") : null, (0, react.createElement)("p", null, `第 ${state.itemPage} 页 · ${state.totalItems} 条源记录`), btn("上一页内容", () => controller.items({ page: state.itemPage - 1 }), state.itemPage <= 1 || state.submitted), btn("下一页内容", () => controller.items({ page: state.itemPage + 1 }), state.itemPage * 20 >= state.totalItems || state.submitted)) : null)), (0, react.createElement)("hr"), (0, react.createElement)("p", null, `已勾选 ${state.selected.length} 项。单文件最多 32 MiB，每次最多 100 项 / 100 MiB。`), (0, react.createElement)("p", null, "导入同时确认所选网站项目与当前本地项目的关联。历史正文以 _OIW.md 保存；附件保留文件名。同名不覆盖、同内容跳过，导入内容未在本地审核。"), btn("导入到当前项目", () => controller.commit(), !state.selected.length || state.submitted)) : null, state.busy ? (0, react.createElement)("p", { role: "status" }, state.submitted ? "正在逐项下载并保存，请勿关闭 Host…" : "正在读取…") : null, state.error ? (0, react.createElement)("p", { role: "alert" }, state.error) : null, state.result ? (0, react.createElement)("section", { "aria-label": "导入结果" }, (0, react.createElement)("h3", null, state.result.status === "completed" ? "导入完成" : "部分内容未完成"), ...state.result.items.map((row) => (0, react.createElement)("p", { key: row.key }, `${{
+			}), ` ${row.fileName} · ${row.size === null ? "大小待下载核实" : `${row.size} 字节`}`, row.reason ? (0, react.createElement)("small", null, ` — ${row.reason}`) : null)), !state.items.length ? (0, react.createElement)("p", null, "此页没有可列出的内容；子项目需单独选择。") : null, (0, react.createElement)("p", null, `第 ${state.itemPage} 页 · ${state.totalItems} 条源记录`), btn("上一页内容", () => controller.items({ page: state.itemPage - 1 }), state.itemPage <= 1 || state.submitted), btn("下一页内容", () => controller.items({ page: state.itemPage + 1 }), state.itemPage * 20 >= state.totalItems || state.submitted)) : null)), (0, react.createElement)("hr"), (0, react.createElement)("p", null, `已勾选 ${state.selected.length} 项。单文件最多 32 MiB，每次最多 100 项 / 100 MiB。`), (0, react.createElement)("p", null, "不勾选文件也可仅关联项目。勾选时，历史正文以 _OIW.md 保存；附件保留文件名。同名不覆盖、同内容跳过，导入内容未在本地审核。"), btn(state.selected.length ? "关联并导入选中文件" : "关联到当前项目", () => controller.commit(), !state.project || state.submitted || unlinkConfirm)) : null, state.busy ? (0, react.createElement)("p", { role: "status" }, state.submitted ? "正在逐项下载并保存，请勿关闭 Host…" : "正在读取…") : null, state.error ? (0, react.createElement)("p", { role: "alert" }, state.error) : null, state.notice ? (0, react.createElement)("p", { role: "status" }, state.notice) : null, state.result ? (0, react.createElement)("section", { "aria-label": "导入结果" }, (0, react.createElement)("h3", null, state.result.status === "completed" ? state.result.items.length ? "关联及导入完成" : "关联成功" : "部分内容未完成"), (0, react.createElement)("p", null, "需要解除或更换关联时，请先点击“重新读取项目”。"), ...state.result.items.map((row) => (0, react.createElement)("p", { key: row.key }, `${{
 				saved: "已保存",
 				skipped: "相同内容已跳过",
 				failed: "未完成"
@@ -9655,6 +9708,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			fileBytes: 33554432,
 			totalBytes: 104857600,
 			items: 100,
+			listItems: 2e3,
 			ttlMs: 9e5
 		});
 		const id = number().int().positive().max(Number.MAX_SAFE_INTEGER);
@@ -9681,7 +9735,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			commit: object({
 				token,
 				folderId: id,
-				keys: array(key).min(1).max(IMPORT_LIMITS.items).refine((v) => new Set(v).size === v.length),
+				keys: array(key).max(IMPORT_LIMITS.items).refine((v) => new Set(v).size === v.length),
+				confirmed: literal(true)
+			}).strict(),
+			unlink: object({
+				token,
+				expectedSettingsRevision: number().int().nonnegative(),
 				confirmed: literal(true)
 			}).strict()
 		};
@@ -9720,7 +9779,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				accountId: id,
 				accountRevision: key,
 				link: websiteProjectLinkSchema.nullable(),
+				settingsRevision: number().int().nonnegative(),
 				expiresAt: number()
+			}).strict(),
+			unlink: object({
+				workspaceId: key,
+				status: literal("unlinked")
 			}).strict(),
 			projects: object({
 				total: number().int().nonnegative(),
@@ -9729,7 +9793,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			items: object({
 				folderId: id,
 				total: number().int().nonnegative(),
-				items: array(item).max(40)
+				items: array(item).max(IMPORT_LIMITS.listItems)
 			}).strict(),
 			commit: object({
 				workspaceId: key,
@@ -11338,7 +11402,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								expectedRevision: current.revision,
 								expectedSettingsRevision: binding.settingsRevision
 							};
-							const prepared = await remote.prepareClaimsApi(payload, controller.signal);
+							const prepared = await remote.prepareClaimsApi({
+								...payload,
+								remoteReadConfirmed: true
+							}, controller.signal);
 							const preview = await remote.previewClaimsApi({
 								...payload,
 								preparationSha256: prepared.preparationSha256,

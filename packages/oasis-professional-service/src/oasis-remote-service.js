@@ -1,7 +1,10 @@
 import { createHash, randomUUID } from 'node:crypto'
+import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 import { OASIS_SETTINGS_NAMESPACE, normalizeOasisRuntimeConfig } from './oasis-runtime-config.js'
 import { parseWorkspaceApiBindings, workspaceApiBindingCommandSchema, workspaceApiBindingSchema } from './oasis-workspace-binding.js'
 import { parseWebsiteProjectLinks } from './website-import-contract.js'
+import { OASIS_PRODUCT_ORIGIN } from './oasis-account-contract.js'
+import { FAST_SERVICE, matchesReleasedFastContract } from './oasis-fast-contract.js'
 import { CLAIMS_TEMPLATE_ID, CLAIMS_V2_SCHEMA_VERSION, hasPendingUnifiedRun } from './generation-contract.js'
 import { prepareClaimsApiMapping, prepareClaimsApiDocument, buildClaimsApiDocumentInputs } from './claims-api-document.js'
 import { claimsApiSnapshotSchema, claimsApiPreviewSchema } from './claims-api-execution-contract.js'
@@ -40,10 +43,28 @@ function assertExecutionEnvironment(active, execution, run) {
   }
 }
 
-function accountIdFromUser(user) {
-  if (!Number.isSafeInteger(user?.id) || user.id < 0) {
+async function accountIdFromUser(user, active) {
+  const identity = active?.accountIdentity
+  if (identity !== undefined) {
+    if (active.environmentKind !== 'production' || active.apiBaseOrigin !== OASIS_PRODUCT_ORIGIN
+      || identity?.origin !== active.apiBaseOrigin || !Number.isSafeInteger(identity?.accountId) || identity.accountId <= 0
+      || typeof identity.revision !== 'string' || !identity.revision.length || identity.revision.length > 100
+      || typeof active.assertCurrent !== 'function') {
+      throw remoteError('REMOTE_ACCOUNT_UNVERIFIED', 'Captured login identity is unavailable')
+    }
+    // The detail request must still belong to the grant that supplied this identity.
+    try { await active.assertCurrent() } catch {
+      throw remoteError('REMOTE_RUNTIME_CHANGED', 'Captured login is no longer current; confirm again')
+    }
+  }
+  if (!user || typeof user !== 'object' || Array.isArray(user)) {
     throw remoteError('REMOTE_ACCOUNT_UNVERIFIED', 'Oasis authenticated account identity is unavailable')
   }
+  if (!Object.hasOwn(user, 'id') && identity) return identity.accountId
+  if (!Object.hasOwn(user, 'id') || !Number.isSafeInteger(user.id) || user.id < 0) {
+    throw remoteError('REMOTE_ACCOUNT_UNVERIFIED', 'Oasis authenticated account identity is unavailable')
+  }
+  if (identity && user.id !== identity.accountId) throw remoteError('REMOTE_ACCOUNT_MISMATCH', 'Detail identity conflicts with the captured login')
   return user.id
 }
 
@@ -51,7 +72,7 @@ async function assertExecutionAccount(active, execution) {
   if (!Number.isSafeInteger(execution.accountId)) {
     throw remoteError('REMOTE_ACCOUNT_UNVERIFIED', 'Historical execution has no verified account identity; it will not be reassigned')
   }
-  if (accountIdFromUser(await active.client.getUserDetail()) !== execution.accountId) {
+  if (await accountIdFromUser(await active.client.getUserDetail(), active) !== execution.accountId) {
     throw remoteError('REMOTE_ACCOUNT_MISMATCH', 'The active Oasis account does not match this execution')
   }
 }
@@ -71,7 +92,7 @@ function resultIdentityError(execution, result) {
   return null
 }
 
-function safeFolder(value, expectedId) {
+function safeFolder(value, expectedId, expectedOwner) {
   if (value === null || typeof value !== 'object' || Array.isArray(value)) {
     throw remoteError('INVALID_REMOTE_FOLDER', 'Oasis folder response is invalid')
   }
@@ -84,6 +105,9 @@ function safeFolder(value, expectedId) {
   }
   if (expectedId !== undefined && id !== expectedId) {
     throw remoteError('REMOTE_FOLDER_MISMATCH', 'Oasis folder detail does not match the selected folder')
+  }
+  if (expectedOwner !== undefined && value.owner_id !== expectedOwner) {
+    throw remoteError('REMOTE_FOLDER_MISMATCH', 'Oasis folder ownership does not match the authenticated account')
   }
   return { id, name }
 }
@@ -110,6 +134,13 @@ function detailWithoutRaw(detail) {
     ...safe,
     schemaHash: createHash('sha256').update(canonicalJson(safe), 'utf8').digest('hex'),
   }
+}
+
+function claimsDetail(detail, environmentKind) {
+  if (environmentKind === 'production' && !matchesReleasedFastContract(detail)) {
+    throw remoteError('REMOTE_SCHEMA_CHANGED', 'Fast service contract changed; a reviewed release mapping is required')
+  }
+  return detailWithoutRaw(detail)
 }
 
 function workflowPolicy(task) {
@@ -151,6 +182,7 @@ export function createOasisRemoteService({
   getRuntime,
   settings,
   workspaceRegistry,
+  workspaceOperations = createWorkspaceOperationGuard(),
   clock = () => new Date().toISOString(),
   executionIdFactory,
   runIdFactory,
@@ -181,10 +213,39 @@ export function createOasisRemoteService({
   const waitControllers = new Map()
   const claimsConfirmations = new Map()
   const claimsAdmissions = new Map()
+  const linkedClaimsBindings = new Map()
+
+  function linkedScope(workspaceId, state) {
+    const link = parseWebsiteProjectLinks(state.value.websiteProjectLinks).find(item => item.workspaceId === workspaceId)
+    if (!link) throw remoteError('WORKSPACE_BINDING_REQUIRED', '请先在功能中心使用“从网站导入”关联网站项目；本地 Skills 不受影响。')
+    if (link.apiBaseOrigin !== OASIS_PRODUCT_ORIGIN || resolveConfig(state.value).apiBaseUrl !== OASIS_PRODUCT_ORIGIN) {
+      throw remoteError('REMOTE_ENVIRONMENT_MISMATCH', 'The linked website origin changed')
+    }
+    return { link, key: canonicalJson({ revision: state.revision, link }) }
+  }
+
+  function claimsBinding(workspaceId, state) {
+    if (resolveConfig(state.value).environmentKind !== 'production') return state.bindings.find(item => item.workspaceId === workspaceId)
+    const scope = linkedScope(workspaceId, state), cached = linkedClaimsBindings.get(workspaceId)
+    if (!cached || cached.key !== scope.key) throw remoteError('API_SERVICE_MAPPING_REQUIRED', '请点击“核对服务与材料”读取并核验 Fast 服务；无需填写项目绑定表单。')
+    return cached.binding
+  }
 
   function pruneConfirmations() {
     for (const [token, entry] of claimsConfirmations) if (entry.expires <= Date.now()) claimsConfirmations.delete(token)
     if (claimsConfirmations.size >= 256) throw remoteError('API_CONFIRMATION_LIMIT', 'Too many pending confirmations; wait and prepare again')
+  }
+
+  function assertCatalogIdentity(services, snapshot, environmentKind) {
+    const catalogEntryId = snapshot.catalogEntryId
+    if (environmentKind === 'production' && !Number.isSafeInteger(catalogEntryId)) {
+      throw remoteError('REMOTE_SERVICE_MISMATCH', 'Fresh catalog identity is required before transfer')
+    }
+    const matches = services.filter(item => item.apiEndpoint === snapshot.apiEndpoint)
+    if (matches.length !== 1 || matches[0].apiId !== (catalogEntryId ?? snapshot.apiId)
+      || matches[0].apiProcess !== snapshot.apiProcess) {
+      throw remoteError('REMOTE_SERVICE_MISMATCH', 'The confirmed catalog identity or process changed')
+    }
   }
 
   function assertClaimsDetail(detail) {
@@ -201,12 +262,15 @@ export function createOasisRemoteService({
   }
 
   async function assertClaimsAdmission(workspaceId, taskId, execution, admission) {
+    if (execution.environmentKind === 'production' && !Number.isSafeInteger(execution.serviceSnapshot.catalogEntryId)) {
+      throw remoteError('REMOTE_SERVICE_MISMATCH', 'Historical preparation requires fresh catalog verification')
+    }
     if (!admission || admission.expires <= Date.now()) throw remoteError('API_CONFIRMATION_REQUIRED', 'Pre-submit consent expired or Host restarted; do not resume automatically')
     await admission.active.assertCurrent()
     const snapshot = execution.unifiedClaims
     await bindingWorkspace(workspaceId, snapshot.workspacePath)
     const currentSettings = bindingSettings(snapshot.expectedSettingsRevision)
-    const binding = currentSettings.bindings.find(item => item.workspaceId === workspaceId)
+    const binding = claimsBinding(workspaceId, currentSettings)
     const task = requireTask(repository.get(workspaceId), taskId)
     if (snapshot.workspaceId !== workspaceId || snapshot.taskId !== taskId
       || canonicalJson(binding ?? null) !== canonicalJson(snapshot.binding)
@@ -218,15 +282,15 @@ export function createOasisRemoteService({
 
   async function recheckClaimsDestination(execution, active) {
     const user = await active.client.getUserDetail()
-    if (accountIdFromUser(user) !== execution.accountId) throw remoteError('REMOTE_ACCOUNT_MISMATCH', 'Account changed before create')
+    if (await accountIdFromUser(user, active) !== execution.accountId) throw remoteError('REMOTE_ACCOUNT_MISMATCH', 'Account changed before create')
     const services = await active.client.getCategoryCatalog()
     const s = execution.serviceSnapshot
-    if (!services.some(item => item.apiId === s.apiId && item.apiEndpoint === s.apiEndpoint && item.apiProcess === s.apiProcess)) {
-      throw remoteError('REMOTE_SERVICE_MISMATCH', 'Service changed before create')
-    }
-    const detail = detailWithoutRaw(await active.client.getApiDetail(s.apiEndpoint))
+    assertCatalogIdentity(services, s, execution.environmentKind)
+    const detail = claimsDetail(await active.client.getApiDetail(s.apiEndpoint), execution.environmentKind)
+    if (detail.id !== s.apiId || detail.name !== s.apiEndpoint) throw remoteError('REMOTE_SERVICE_MISMATCH', 'Service detail identity changed before create')
     if (detail.schemaHash !== s.schemaHash || detail.price !== execution.priceSnapshot.price) throw remoteError('REMOTE_SCHEMA_CHANGED', 'Schema or reference price changed before create')
-    safeFolder(await active.client.getFolderDetail(execution.folderSnapshot.folderId), execution.folderSnapshot.folderId)
+    safeFolder(await active.client.getFolderDetail(execution.folderSnapshot.folderId), execution.folderSnapshot.folderId,
+      execution.environmentKind === 'production' ? execution.accountId : undefined)
     if (safeBalance(user.balance) < detail.price) throw remoteError('INSUFFICIENT_BALANCE', 'Balance is below the confirmed reference price')
   }
 
@@ -385,6 +449,7 @@ export function createOasisRemoteService({
         ...(currentExecution.accountId !== undefined ? { accountId: currentExecution.accountId } : {}),
         apiBaseOrigin: currentExecution.apiBaseOrigin,
         apiId: currentExecution.serviceSnapshot.apiId,
+        ...(currentExecution.serviceSnapshot.catalogEntryId !== undefined ? { catalogEntryId: currentExecution.serviceSnapshot.catalogEntryId } : {}),
         apiEndpoint: currentExecution.serviceSnapshot.apiEndpoint,
         apiProcess: currentExecution.serviceSnapshot.apiProcess,
         folderId: currentExecution.folderSnapshot.folderId,
@@ -491,8 +556,9 @@ export function createOasisRemoteService({
   async function prepareClaimsMapping({ workspaceId, taskId, expectedRevision, expectedSettingsRevision }) {
       // Local preparation only: do not obtain a runtime (which resolves credentials).
       const workspacePath = await bindingWorkspace(workspaceId)
-      const { revision, bindings, value } = bindingSettings(expectedSettingsRevision)
-      const binding = bindings.find(item => item.workspaceId === workspaceId)
+      const state = bindingSettings(expectedSettingsRevision)
+      const { revision, value } = state
+      const binding = claimsBinding(workspaceId, state)
       const websiteLink = parseWebsiteProjectLinks(value.websiteProjectLinks).find(item => item.workspaceId === workspaceId)
       if (!binding) throw websiteLink
         ? remoteError('API_SERVICE_MAPPING_REQUIRED', '网站项目已关联；当前版本尚未确认本模板的专业 API 服务映射，暂不能生成。无需填写 JWT 或项目绑定表单。')
@@ -536,13 +602,57 @@ export function createOasisRemoteService({
   return Object.freeze({
     prepareClaimsMapping,
 
+    async prepareLinkedClaimsMapping(input) {
+      if (input.remoteReadConfirmed !== true) throw remoteError('REMOTE_READ_CONFIRMATION_REQUIRED', 'Confirm metadata access first')
+      return workspaceOperations.run(input.workspaceId, async () => {
+        const state = bindingSettings(input.expectedSettingsRevision)
+        if (resolveConfig(state.value).environmentKind !== 'production') return prepareClaimsMapping(input)
+        const scope = linkedScope(input.workspaceId, state)
+        await bindingWorkspace(input.workspaceId, scope.link.workspacePath)
+        const record = repository.get(input.workspaceId), task = requireTask(record, input.taskId)
+        if (record.revision !== input.expectedRevision) throw remoteError('REVISION_CONFLICT', 'Task changed before metadata read')
+        if (task.workflowId !== CLAIMS_TEMPLATE_ID || task.workflowVersion !== '2' || task.generation?.source !== 'oasis-api') {
+          throw remoteError('WORKFLOW_MISMATCH', 'A unified claims v2 API draft is required')
+        }
+        if (task.generation.upstream || task.inputRefs.length) throw remoteError('UNSUPPORTED_MATERIAL', 'Cannot omit upstream or file materials')
+        if (Object.values(record.tasks).some(item => hasPendingUnifiedRun(item) || Object.values(item.remoteExecutions).some(isOasisRemoteExecutionUnresolved))) {
+          throw remoteError('WORKSPACE_GENERATION_ACTIVE', 'Workspace has an unresolved generation')
+        }
+        prepareClaimsApiMapping({ inputSchemaVersion: task.generation.inputSchemaVersion, values: task.formValues })
+        const active = await runtime()
+        if (active.environmentKind !== 'production' || active.apiBaseOrigin !== scope.link.apiBaseOrigin) throw remoteError('REMOTE_ENVIRONMENT_MISMATCH', 'Linked runtime changed')
+        const user = await active.client.getUserDetail()
+        if (await accountIdFromUser(user, active) !== scope.link.accountId) throw remoteError('REMOTE_ACCOUNT_MISMATCH', 'Linked account changed')
+        const services = await active.client.getCategoryCatalog()
+        const matches = services.filter(item => item.apiEndpoint === FAST_SERVICE.name)
+        if (matches.length !== 1 || !Number.isSafeInteger(matches[0].apiId) || matches[0].apiId < 0) {
+          throw remoteError('REMOTE_SERVICE_MISMATCH', 'Released Fast service is not uniquely available')
+        }
+        const observed = await active.client.getApiDetail(FAST_SERVICE.name)
+        if (observed.id !== FAST_SERVICE.id || observed.name !== FAST_SERVICE.name) throw remoteError('REMOTE_SERVICE_MISMATCH', 'Fast service identity changed')
+        const detail = claimsDetail(observed, 'production')
+        safeFolder(await active.client.getFolderDetail(scope.link.folderId), scope.link.folderId, scope.link.accountId)
+        const binding = workspaceApiBindingSchema.parse({ ...scope.link, environmentKind: 'production',
+          apiId: detail.id, catalogEntryId: matches[0].apiId, apiEndpoint: detail.name, apiProcess: matches[0].apiProcess, schemaHash: detail.schemaHash })
+        await active.assertCurrent()
+        await bindingWorkspace(input.workspaceId, scope.link.workspacePath)
+        const current = bindingSettings(input.expectedSettingsRevision)
+        if (linkedScope(input.workspaceId, current).key !== scope.key || repository.get(input.workspaceId).revision !== input.expectedRevision) {
+          throw remoteError('API_PREPARATION_CHANGED', 'Project or draft changed during metadata read')
+        }
+        if (!linkedClaimsBindings.has(input.workspaceId) && linkedClaimsBindings.size >= 256) throw remoteError('API_CONFIRMATION_LIMIT', 'Too many cached Workspace mappings')
+        linkedClaimsBindings.set(input.workspaceId, { key: scope.key, binding })
+        return prepareClaimsMapping(input)
+      })
+    },
+
     async previewClaims(input) {
       pruneConfirmations()
       const observed = await this.checkClaimsMapping(input)
       const prepared = await prepareClaimsMapping(input)
       const snapshot = claimsApiSnapshotSchema.parse(prepared.snapshot)
       const active = await runtime()
-      const detail = detailWithoutRaw(await active.client.getApiDetail(snapshot.binding.apiEndpoint))
+      const detail = claimsDetail(await active.client.getApiDetail(snapshot.binding.apiEndpoint), snapshot.binding.environmentKind)
       assertClaimsDetail(detail)
       if (detail.schemaHash !== snapshot.binding.schemaHash) throw remoteError('REMOTE_SCHEMA_CHANGED', 'Service changed before confirmation')
       await active.assertCurrent()
@@ -559,6 +669,7 @@ export function createOasisRemoteService({
     },
 
     async startClaims(input) {
+      return workspaceOperations.run(input.workspaceId, async () => {
       if (input.priceConfirmed !== true || input.externalTransferConfirmed !== true) throw remoteError('API_CONFIRMATION_REQUIRED', 'Confirm this transfer and reference price')
       const admission = claimsConfirmations.get(input.confirmationToken)
       claimsConfirmations.delete(input.confirmationToken)
@@ -574,15 +685,20 @@ export function createOasisRemoteService({
       await admission.active.assertCurrent()
       const now = clock(), executionId = executionIdFactory(), b = snapshot.binding
       const providerSnapshot = { environmentKind: b.environmentKind, accountId: b.accountId, apiBaseOrigin: b.apiBaseOrigin,
+        ...(b.catalogEntryId !== undefined ? { catalogEntryId: b.catalogEntryId } : {}),
         apiId: b.apiId, apiEndpoint: b.apiEndpoint, apiProcess: b.apiProcess, folderId: b.folderId, price: checked.observed.price }
       const execution = { environmentKind: b.environmentKind, accountId: b.accountId, unifiedClaims: snapshot,
         executionId, recordId: null, recordIdSource: null, requestKey: input.requestKey, status: 'prepared',
         inputSha: computeOasisRemoteInputSha256({ providerSnapshot, formValues: snapshot.mapping.textInputs, inputRefs: [], unifiedClaims: snapshot }),
         formValues: structuredClone(snapshot.mapping.textInputs), apiBaseOrigin: b.apiBaseOrigin,
-        serviceSnapshot: { apiId: b.apiId, apiEndpoint: b.apiEndpoint, apiProcess: b.apiProcess, schemaHash: b.schemaHash },
+        serviceSnapshot: { apiId: b.apiId, ...(b.catalogEntryId !== undefined ? { catalogEntryId: b.catalogEntryId } : {}),
+          apiEndpoint: b.apiEndpoint, apiProcess: b.apiProcess, schemaHash: b.schemaHash },
         folderSnapshot: { folderId: b.folderId, folderName: b.folderName }, priceSnapshot: { price: checked.observed.price, balance: checked.observed.balance },
         materialSnapshots: [], uploadedFiles: [], safeError: null, createdAt: now, updatedAt: now, submittedAt: null, completedAt: null }
-      const result = await repository.mutate(input.workspaceId, input.expectedRevision, current => {
+      const result = await repository.mutate(input.workspaceId, input.expectedRevision, async current => {
+        await admission.active.assertCurrent()
+        await bindingWorkspace(input.workspaceId, snapshot.workspacePath)
+        bindingSettings(snapshot.expectedSettingsRevision)
         const task = requireTask(current, input.taskId)
         if (Object.values(current.tasks).some(t => hasPendingUnifiedRun(t) || Object.values(t.remoteExecutions).some(isOasisRemoteExecutionUnresolved))) {
           throw remoteError('WORKSPACE_GENERATION_ACTIVE', 'Workspace has an unresolved generation')
@@ -597,6 +713,7 @@ export function createOasisRemoteService({
       })
       if (result.committed) claimsAdmissions.set(executionKey(input.workspaceId, input.taskId, executionId), admission)
       return result
+      })
     },
 
     async checkClaimsMapping(input) {
@@ -614,11 +731,11 @@ export function createOasisRemoteService({
         }
         if (typeof active.assertCurrent !== 'function') throw remoteError('REMOTE_DISABLED', 'Frozen runtime check is unavailable')
         user = await active.client.getUserDetail()
-        if (accountIdFromUser(user) !== binding.accountId) {
+        if (await accountIdFromUser(user, active) !== binding.accountId) {
           throw remoteError('REMOTE_ACCOUNT_MISMATCH', 'The prepared Oasis account changed')
         }
         services = await active.client.getCategoryCatalog()
-        detail = detailWithoutRaw(await active.client.getApiDetail(binding.apiEndpoint))
+        detail = claimsDetail(await active.client.getApiDetail(binding.apiEndpoint), binding.environmentKind)
         folderValue = await active.client.getFolderDetail(binding.folderId)
         await active.assertCurrent()
       } catch (error) {
@@ -627,12 +744,12 @@ export function createOasisRemoteService({
         const safe = safeApiError(error, 'REMOTE_PREFLIGHT_FAILED', 'API metadata could not be verified; no upload or generation was requested')
         throw remoteError(safe.code, safe.message)
       }
-      if (!services.some(item => item.apiId === binding.apiId && item.apiEndpoint === binding.apiEndpoint
-        && item.apiProcess === binding.apiProcess) || detail.id !== binding.apiId || detail.name !== binding.apiEndpoint) {
+      assertCatalogIdentity(services, binding, binding.environmentKind)
+      if (detail.id !== binding.apiId || detail.name !== binding.apiEndpoint) {
         throw remoteError('REMOTE_SERVICE_MISMATCH', 'The prepared Oasis service changed')
       }
       if (detail.schemaHash !== binding.schemaHash) throw remoteError('REMOTE_SCHEMA_CHANGED', 'Service schema or price changed; confirm the binding again')
-      const folder = safeFolder(folderValue, binding.folderId)
+      const folder = safeFolder(folderValue, binding.folderId, binding.environmentKind === 'production' ? binding.accountId : undefined)
       const balance = safeBalance(user.balance)
       if (balance < detail.price) throw remoteError('INSUFFICIENT_BALANCE', 'Oasis balance is below the reference price')
       const current = await prepareClaimsMapping(input)
@@ -667,7 +784,7 @@ export function createOasisRemoteService({
         await active.assertCurrent()
         await bindingWorkspace(workspaceId, workspacePath)
         bindingSettings(revision)
-        return { workspaceId, workspacePath, settingsRevision: revision, accountId: accountIdFromUser(user),
+        return { workspaceId, workspacePath, settingsRevision: revision, accountId: await accountIdFromUser(user, active),
           apiBaseOrigin: active.apiBaseOrigin, environmentKind: active.environmentKind, remoteEnabled: true, credentialConfigured: true,
           balance: safeBalance(user.balance), services: structuredClone(services), folders: folders.items.map(item => safeFolder(item)) }
       } catch (error) {
@@ -681,6 +798,7 @@ export function createOasisRemoteService({
       const parsed = workspaceApiBindingCommandSchema.safeParse(input)
       if (!parsed.success) throw remoteError('INVALID_WORKSPACE_BINDING', 'An explicit bounded Workspace binding is required')
       const { expectedSettingsRevision, confirmed: _confirmed, ...selection } = parsed.data
+      return workspaceOperations.run(selection.workspaceId, async () => {
       await bindingWorkspace(selection.workspaceId, selection.workspacePath)
       const { bindings } = bindingSettings(expectedSettingsRevision)
       if (settings.writable !== true || typeof settings.update !== 'function') {
@@ -691,7 +809,7 @@ export function createOasisRemoteService({
         throw remoteError('REMOTE_ENVIRONMENT_MISMATCH', 'The displayed API environment changed')
       }
       if (typeof active.assertCurrent !== 'function') throw remoteError('REMOTE_DISABLED', 'Frozen runtime check is unavailable')
-      const accountId = accountIdFromUser(await active.client.getUserDetail())
+      const accountId = await accountIdFromUser(await active.client.getUserDetail(), active)
       if (accountId !== selection.accountId) throw remoteError('REMOTE_ACCOUNT_MISMATCH', 'The displayed Oasis account changed')
       const [services, detail, folderValue] = await Promise.all([
         active.client.getCategoryCatalog(),
@@ -716,6 +834,7 @@ export function createOasisRemoteService({
       }
       // This is not TXT/mapping acceptance or permission to generate.
       return { binding, status: 'unverified' }
+      })
     },
 
     async getBootstrap() {
@@ -757,6 +876,7 @@ export function createOasisRemoteService({
       priceConfirmed,
       externalTransferConfirmed,
     }) {
+      return workspaceOperations.run(workspaceId, async () => {
       if (priceConfirmed !== true) throw remoteError('PRICE_CONFIRMATION_REQUIRED', 'Explicit price confirmation is required')
       if (externalTransferConfirmed !== true) {
         throw remoteError('EXTERNAL_TRANSFER_CONFIRMATION_REQUIRED', 'Explicit material transfer confirmation is required')
@@ -788,7 +908,7 @@ export function createOasisRemoteService({
         throw remoteError('REMOTE_SCHEMA_CHANGED', 'Oasis service schema changed and requires reconfirmation')
       }
       const folder = safeFolder(folderValue, draft.folderId)
-      const accountId = accountIdFromUser(user)
+      const accountId = await accountIdFromUser(user, active)
       const balance = safeBalance(user.balance)
       if (balance < detail.price) throw remoteError('INSUFFICIENT_BALANCE', 'Oasis balance is below the reference price')
       const selectedReferences = selectedMaterialSnapshots(task, detail, draft.formValues)
@@ -858,6 +978,7 @@ export function createOasisRemoteService({
         next.tasks[taskId].updatedAt = now
         return next
       })
+      })
     },
 
     continue({ workspaceId, taskId, executionId }) {
@@ -881,7 +1002,7 @@ export function createOasisRemoteService({
         const active = execution.unifiedClaims && execution.submittedAt === null ? admission.active : await runtime()
         assertExecutionEnvironment(active, execution)
         await assertExecutionAccount(active, execution)
-        const detail = detailWithoutRaw(await active.client.getApiDetail(execution.serviceSnapshot.apiEndpoint))
+        const detail = claimsDetail(await active.client.getApiDetail(execution.serviceSnapshot.apiEndpoint), execution.unifiedClaims ? execution.environmentKind : undefined)
         if (detail.schemaHash !== execution.serviceSnapshot.schemaHash || detail.id !== execution.serviceSnapshot.apiId) {
           return setExecution(workspaceId, taskId, executionId, {
             status: 'failed',
@@ -891,6 +1012,10 @@ export function createOasisRemoteService({
 
         if (execution.submittedAt === null && !['submission-unknown', 'waiting-result', 'wait-stopped'].includes(execution.status)) {
           if (execution.unifiedClaims) assertClaimsDetail(detail)
+          if (execution.unifiedClaims && execution.environmentKind === 'production') {
+            await recheckClaimsDestination(execution, active)
+            await assertClaimsAdmission(workspaceId, taskId, execution, admission)
+          }
           if (!receiptsMatchInputs(execution, detail)) {
             return setExecution(workspaceId, taskId, executionId, {
               status: 'failed', safeError: { code: 'REMOTE_UPLOAD_RECEIPT_INVALID',

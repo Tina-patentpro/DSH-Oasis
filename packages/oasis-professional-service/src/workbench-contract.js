@@ -471,6 +471,7 @@ const oasisProviderSnapshotSchema = z.object({
   accountId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
   apiBaseOrigin: httpUrlSchema,
   apiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+  catalogEntryId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
   apiEndpoint: identifierSchema,
   apiProcess: z.string().max(4000),
   folderId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
@@ -491,6 +492,7 @@ export const oasisRemoteExecutionSchema = z.object({
   apiBaseOrigin: httpUrlSchema,
   serviceSnapshot: z.object({
     apiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+    catalogEntryId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
     apiEndpoint: identifierSchema,
     apiProcess: z.string().max(4000),
     schemaHash: sha256Schema,
@@ -527,6 +529,7 @@ export const oasisRemoteExecutionSchema = z.object({
       || value.accountId !== b.accountId || value.apiBaseOrigin !== b.apiBaseOrigin
       || value.environmentKind !== b.environmentKind || value.folderSnapshot.folderId !== b.folderId
       || value.serviceSnapshot.apiId !== b.apiId || value.serviceSnapshot.apiEndpoint !== b.apiEndpoint
+      || value.serviceSnapshot.catalogEntryId !== b.catalogEntryId
       || value.serviceSnapshot.apiProcess !== b.apiProcess || value.serviceSnapshot.schemaHash !== b.schemaHash
       || JSON.stringify(value.formValues) !== JSON.stringify(s.mapping.textInputs)) {
       ctx.addIssue({ code: 'custom', message: 'unified API execution snapshot mismatch' })
@@ -782,6 +785,7 @@ const workbenchTaskV3Schema = z.object({
         }
         if (
           execution.serviceSnapshot.apiId !== provider.apiId
+          || execution.serviceSnapshot.catalogEntryId !== provider.catalogEntryId
           || execution.accountId !== provider.accountId
           || (execution.environmentKind ?? 'non-production') !== (provider.environmentKind ?? 'non-production')
           || execution.apiBaseOrigin !== provider.apiBaseOrigin

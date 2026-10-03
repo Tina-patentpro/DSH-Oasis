@@ -69,6 +69,110 @@ test('legacy file attachments never receive a Bearer token; redirect and malform
   h.responses.set('/api/files?projectId=2&page=1&pageSize=20', json({ items: [], pagination: {} }))
   await assert.rejects(c.listItems({ folderId: 2, kind: 'files', page: 1 }), { code: 'IMPORT_INVALID_RESPONSE' })
 })
+test('legacy attachments compare canonical URLs for Unicode and spaces without sending credentials', async () => {
+  const raw = origin + '/files/权利要求书生成报告 1.docx'
+  const encoded = new URL(raw).href
+  for (const [listed, detail] of [[raw, raw], [raw, encoded], [encoded, raw], [encoded, encoded]]) {
+    const h = network(), c = h.client()
+    h.responses.set('/api/user/user/projectlist?folder_id=2&page=1&limit=20', json([{ id: 9, folder_id: 2, name: 'fixture', file_url: listed }]))
+    h.responses.set('/api/user/user/projectdetail/9', json({ id: 9, folder_id: 2, file_url: detail }))
+    h.responses.set(new URL(encoded).pathname, new Response('synthetic attachment'))
+    const page = await c.listItems({ folderId: 2, kind: 'history', page: 1 })
+    assert.equal(page.items[0].fileName, '权利要求书生成报告 1.docx')
+    assert.equal((await c.download(page.items[0], 2)).toString(), 'synthetic attachment')
+    assert.equal(h.calls.at(-1).url, encoded)
+    assert.deepEqual(h.calls.at(-1).headers, {})
+    assert.equal(h.calls.at(-1).redirect, 'error')
+  }
+})
+test('legacy attachment canonical comparison still rejects changed or untrusted URLs before download', async () => {
+  const raw = origin + '/files/报告.docx?version=1'
+  for (const detail of [origin + '/files/其他.docx?version=1', origin + '/files/报告.docx?version=2',
+    'https://evil.example/files/报告.docx?version=1', origin + '/api/user/detail', raw + '#fragment', null]) {
+    const h = network(), c = h.client()
+    h.responses.set('/api/user/user/projectlist?folder_id=2&page=1&limit=20', json([{ id: 9, folder_id: 2, file_url: raw }]))
+    h.responses.set('/api/user/user/projectdetail/9', json({ id: 9, folder_id: 2, file_url: detail }))
+    const page = await c.listItems({ folderId: 2, kind: 'history', page: 1 })
+    await assert.rejects(c.download(page.items[0], 2), { code: 'IMPORT_ITEM_CHANGED' })
+    assert.equal(h.calls.length, 4)
+    assert.ok(h.calls.every(call => new URL(call.url).pathname.startsWith('/api/')))
+  }
+})
+
+test('a legacy history with comma-separated attachments lists and downloads each file independently', async () => {
+  const h = network(), c = h.client()
+  const first = origin + '/files/权利要求书.docx', second = origin + '/files/生成报告.docx'
+  h.responses.set('/api/user/user/projectlist?folder_id=2&page=1&limit=20', json([{ id: 9, folder_id: 2, file_url: `${first}, ${second}` }]))
+  h.responses.set('/api/user/user/projectdetail/9', json({ id: 9, folder_id: 2, file_url: `${first}, ${second}` }))
+  h.responses.set(new URL(first).pathname, new Response('claims fixture'))
+  h.responses.set(new URL(second).pathname, new Response('report fixture'))
+  const page = await c.listItems({ folderId: 2, kind: 'history', page: 1 })
+  assert.deepEqual(page.items.map(row => row.fileName), ['权利要求书.docx', '生成报告.docx'])
+  assert.notEqual(page.items[0].key, page.items[1].key)
+  for (const [row, expected] of [[page.items[0], 'claims fixture'], [page.items[1], 'report fixture']]) {
+    assert.equal((await c.download(row, 2)).toString(), expected)
+    assert.deepEqual(h.calls.at(-1).headers, {})
+    assert.equal(h.calls.at(-1).redirect, 'error')
+  }
+  assert.deepEqual(h.calls.filter(call => new URL(call.url).pathname.startsWith('/files/')).map(call => call.url), [new URL(first).href, new URL(second).href])
+})
+
+test('attachment identity survives array/string, order and encoding changes and deduplicates canonical URLs', async () => {
+  const h = network(), c = h.client(), first = origin + '/files/报告 1.docx', second = origin + '/files/claims.docx'
+  const setList = value => h.responses.set('/api/user/user/projectlist?folder_id=2&page=1&limit=20', json([{ id: 9, folder_id: 2, file_url: value }]))
+  setList(`${first}, ${second}`)
+  const selected = await c.listItems({ folderId: 2, kind: 'history', page: 1 })
+  setList(['', second, `${new URL(first).href}, ${first}`, '  '])
+  const reordered = await c.listItems({ folderId: 2, kind: 'history', page: 1 })
+  assert.deepEqual(reordered.items.map(row => row.fileName), ['claims.docx', '报告 1.docx'])
+  assert.equal(reordered.items[0].key, selected.items[1].key)
+  assert.equal(reordered.items[1].key, selected.items[0].key)
+  h.responses.set('/api/user/user/projectdetail/9', json({ id: 9, folder_id: 2, file_url: [second, new URL(first).href] }))
+  h.responses.set(new URL(first).pathname, new Response('selected report'))
+  assert.equal((await c.download(selected.items[0], 2)).toString(), 'selected report')
+  assert.equal(h.calls.at(-1).url, new URL(first).href)
+})
+
+test('ordinary URL commas remain intact and untrusted siblings cannot become downloadable', async () => {
+  const h = network(), c = h.client(), trusted = origin + '/files/part,one.docx?parts=1,2'
+  const values = [trusted, 'https://evil.example/files/a.docx', origin + '/api/user/detail',
+    '/files/relative.docx', trusted + '#fragment', 'https://user:pass@lzhxpy.oasisintwrite.com/files/a.docx']
+  h.responses.set('/api/user/user/projectlist?folder_id=2&page=1&limit=20', json([{ id: 9, folder_id: 2, file_url: values.join(', ') }]))
+  const page = await c.listItems({ folderId: 2, kind: 'history', page: 1 })
+  assert.equal(page.items.length, 6)
+  assert.equal(page.items[0].fileName, 'part,one.docx')
+  assert.deepEqual(page.items.map(row => row.downloadable), [true, false, false, false, false, false])
+  for (const row of page.items.slice(1)) await assert.rejects(c.download(row, 2), { code: 'IMPORT_UNSUPPORTED_FILE' })
+  h.responses.set('/api/user/user/projectdetail/9', json({ id: 9, folder_id: 2, file_url: trusted }))
+  h.responses.set('/files/part,one.docx?parts=1,2', new Response('comma file'))
+  assert.equal((await c.download(page.items[0], 2)).toString(), 'comma file')
+  assert.equal(h.calls.at(-1).url, trusted)
+})
+
+test('a removed or replaced selected attachment is rejected without requesting its remaining sibling', async () => {
+  const selected = origin + '/files/selected.docx', sibling = origin + '/files/sibling.docx'
+  for (const detail of [[sibling], `${sibling}, ${selected}?changed=1`, null]) {
+    const h = network(), c = h.client()
+    h.responses.set('/api/user/user/projectlist?folder_id=2&page=1&limit=20', json([{ id: 9, folder_id: 2, file_url: `${selected}, ${sibling}` }]))
+    const page = await c.listItems({ folderId: 2, kind: 'history', page: 1 })
+    assert.equal(page.items[0].fileName, 'selected.docx')
+    h.responses.set('/api/user/user/projectdetail/9', json({ id: 9, folder_id: 2, file_url: detail }))
+    await assert.rejects(c.download(page.items[0], 2), { code: 'IMPORT_ITEM_CHANGED' })
+    assert.ok(h.calls.every(call => new URL(call.url).pathname.startsWith('/api/')))
+  }
+})
+
+test('malformed or over-capacity attachment lists fail instead of silently omitting files', async () => {
+  const h = network(), c = h.client()
+  for (const [value, code] of [
+    [[origin + '/files/a.docx', { url: origin + '/files/b.docx' }], 'IMPORT_INVALID_RESPONSE'],
+    [Array.from({ length: 2001 }, (_, i) => origin + `/files/${i}.docx`), 'IMPORT_TOO_MANY_ITEMS'],
+  ]) {
+    h.responses.set('/api/user/user/projectlist?folder_id=2&page=1&limit=20', json([{ id: 9, folder_id: 2, file_url: value }]))
+    await assert.rejects(c.listItems({ folderId: 2, kind: 'history', page: 1 }), { code })
+  }
+})
+
 async function fixture(t) {
   assert.equal(typeof serviceModule.createWebsiteImportService, 'function')
   const root = await mkdtemp(join(tmpdir(), 'oasis-import-'))
@@ -88,9 +192,116 @@ async function fixture(t) {
   const open = () => service.open({ workspaceId: 'a', confirmed: true })
   async function select() { const s = await open(); await service.items({ token: s.token, folderId: 2, kind: 'history', page: 1 }); return s }
   return { service, root, open, select, row, client, downloads: () => downloads, settings: () => value,
+    changeSettings: patch => { value = { ...value, ...patch }; settingsRevision++ },
     expire: () => { clock += 16 * 60 * 1000 }, busy: () => { active = true },
     accountChange: () => { revision = 'r2' }, body: text => { body = text }, move: path => { workspace.path = path } }
 }
+
+test('expanded history pages cross 40 rows without leaking URLs and save only the selected attachment', async t => {
+  const h = await fixture(t), n = network(), c = n.client()
+  n.responses.set('/api/user/user/projectlist?folder_id=2&page=1&limit=20', json({ total: 21, items: Array.from({ length: 20 }, (_, i) => ({
+    id: i + 9, folder_id: 2, name: `record-${i}`, answer_text: '# fixture',
+    file_url: `${origin}/files/first-${i}.docx, ${origin}/files/second-${i}.docx`,
+  })) }))
+  h.client.listItems = c.listItems; h.client.download = c.download
+  const s = await h.open(), page = await h.service.items({ token: s.token, folderId: 2, kind: 'history', page: 1 })
+  assert.equal(page.total, 21)
+  assert.equal(page.items.length, 60)
+  assert.equal(new Set(page.items.map(row => row.key)).size, 60)
+  assert.ok(!JSON.stringify(page).includes(origin))
+  assert.ok(!JSON.stringify(page).includes('test-secret'))
+  const selected = page.items.find(row => row.fileName === 'second-0.docx')
+  assert.ok(selected)
+  n.responses.set('/api/user/user/projectdetail/9', json({ id: 9, folder_id: 2, file_url: [origin + '/files/second-0.docx', origin + '/files/first-0.docx'] }))
+  n.responses.set('/files/second-0.docx', new Response('selected bytes'))
+  const result = await h.service.commit({ token: s.token, folderId: 2, keys: [selected.key], confirmed: true })
+  assert.deepEqual(result.items, [{ key: selected.key, fileName: 'second-0.docx', status: 'saved' }])
+  assert.deepEqual((await readdir(h.root)).sort(), [result.manifest, 'second-0.docx'].sort())
+  assert.equal(await readFile(join(h.root, 'second-0.docx'), 'utf8'), 'selected bytes')
+  assert.deepEqual(n.calls.filter(call => new URL(call.url).pathname.startsWith('/files/')).map(call => call.url), [origin + '/files/second-0.docx'])
+  const manifest = await readFile(join(h.root, result.manifest), 'utf8')
+  assert.ok(!manifest.includes(origin + '/files/'))
+  assert.ok(!manifest.includes('test-secret'))
+})
+
+test('zero-file association validates project and records intent without downloading', async t => {
+  const h = await fixture(t), s = await h.open()
+  let checked = 0; h.client.project = async id => { checked++; return { id, name: 'empty' } }
+  const result = await h.service.commit({ token: s.token, folderId: 2, keys: [], confirmed: true })
+  assert.equal(checked, 1); assert.equal(h.downloads(), 0); assert.deepEqual(result.items, [])
+  assert.equal(h.settings().websiteProjectLinks[0].folderId, 2)
+  assert.deepEqual(await readdir(h.root), [result.manifest])
+})
+
+test('unlink is explicit, revision-bound, preserves files and invalidates all old tickets', async t => {
+  const h = await fixture(t), s = await h.select()
+  const r = await h.service.commit({ token: s.token, folderId: 2, keys: [h.row.key], confirmed: true })
+  h.changeSettings({ workspaceApiBindings: [{ ...h.settings().websiteProjectLinks[0], serviceId: 4 }, { workspaceId: 'b' }] })
+  const current = await h.open(), other = await h.open()
+  const before = await readFile(join(h.root, r.manifest), 'utf8')
+  await assert.rejects(h.service.unlink({ token: current.token, expectedSettingsRevision: current.settingsRevision, confirmed: false }), { code: 'IMPORT_INVALID_INPUT' })
+  await assert.rejects(h.service.unlink({ token: current.token, expectedSettingsRevision: current.settingsRevision - 1, confirmed: true }), { code: 'IMPORT_SETTINGS_CHANGED' })
+  await h.service.unlink({ token: current.token, expectedSettingsRevision: current.settingsRevision, confirmed: true })
+  assert.deepEqual(h.settings().websiteProjectLinks, [])
+  assert.deepEqual(h.settings().workspaceApiBindings, [{ workspaceId: 'b' }])
+  assert.equal(await readFile(join(h.root, r.manifest), 'utf8'), before)
+  assert.equal(await readFile(join(h.root, r.items[0].fileName), 'utf8'), '# text')
+  await assert.rejects(h.service.projects({ token: other.token }), { code: 'IMPORT_EXPIRED' })
+  const fresh = await h.open()
+  await h.service.commit({ token: fresh.token, folderId: 3, keys: [], confirmed: true })
+  assert.equal(h.settings().websiteProjectLinks[0].folderId, 3)
+})
+
+test('unlink refuses changed settings, account and unresolved generation', async t => {
+  for (const [change, code] of [
+    [h => h.changeSettings({ unrelated: true }), 'IMPORT_SETTINGS_CHANGED'],
+    [h => h.accountChange(), 'IMPORT_ACCOUNT_CHANGED'],
+    [h => h.busy(), 'IMPORT_WORKSPACE_BUSY'],
+  ]) {
+    const h = await fixture(t), s = await h.open()
+    await h.service.commit({ token: s.token, folderId: 2, keys: [], confirmed: true })
+    const current = await h.open(); change(h)
+    await assert.rejects(h.service.unlink({ token: current.token, expectedSettingsRevision: current.settingsRevision, confirmed: true }), { code })
+    assert.equal(h.settings().websiteProjectLinks.length, 1)
+  }
+})
+
+test('legacy service-only association can be explicitly unlinked without reading website lists', async t => {
+  const h = await fixture(t)
+  h.changeSettings({ workspaceApiBindings: [{ workspaceId: 'a', workspacePath: h.root, apiBaseOrigin: origin,
+    accountId: 7, folderId: 2, folderName: 'legacy', confirmedAt: new Date().toISOString(), apiId: 3 }] })
+  const s = await h.open()
+  assert.equal(s.link.folderName, 'legacy')
+  await h.service.unlink({ token: s.token, expectedSettingsRevision: s.settingsRevision, confirmed: true })
+  assert.deepEqual(h.settings().workspaceApiBindings, [])
+})
+
+test('zero-file association still rejects unverifiable ownership before any writes', async t => {
+  const h = await fixture(t), s = await h.open()
+  h.client.project = async () => { throw new clientModule.WebsiteImportError('IMPORT_OWNERSHIP') }
+  await assert.rejects(h.service.commit({ token: s.token, folderId: 2, keys: [], confirmed: true }), { code: 'IMPORT_OWNERSHIP' })
+  assert.deepEqual(h.settings().websiteProjectLinks, []); assert.deepEqual(await readdir(h.root), [])
+})
+
+test('unlink refuses a running import and invalidates a late item read', async t => {
+  const h = await fixture(t), s = await h.select(), second = await h.open()
+  let finish, entered
+  const started = new Promise(resolve => { entered = resolve })
+  h.client.download = () => { entered(); return new Promise(resolve => { finish = resolve }) }
+  const pending = h.service.commit({ token: s.token, folderId: 2, keys: [h.row.key], confirmed: true })
+  await started
+  await assert.rejects(h.service.unlink({ token: second.token, expectedSettingsRevision: second.settingsRevision, confirmed: true }), { code: 'WORKSPACE_OPERATION_BUSY' })
+  finish(Buffer.from('# text')); await pending
+  const current = await h.open()
+  let finishRead, enteredRead
+  const reading = new Promise(resolve => { enteredRead = resolve })
+  h.client.listItems = () => { enteredRead(); return new Promise(resolve => { finishRead = resolve }) }
+  const late = h.service.items({ token: current.token, folderId: 2, kind: 'files' })
+  await reading
+  await h.service.unlink({ token: current.token, expectedSettingsRevision: current.settingsRevision, confirmed: true })
+  finishRead({ total: 1, items: [h.row] })
+  await assert.rejects(late, { code: 'IMPORT_EXPIRED' })
+})
 test('import writes current project root, associates project, preserves collision and deduplicates', async t => {
   const h = await fixture(t)
   await writeFile(join(h.root, 'claims_OIW.md'), 'old')

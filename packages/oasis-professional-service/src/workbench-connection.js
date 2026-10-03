@@ -1,7 +1,7 @@
 import { clientRequestSchema } from '@deepseek-ai/dsh-client-connection'
 
 const endpoints = Object.freeze([
-  'import/open','import/projects','import/items','import/commit',
+  'import/open','import/projects','import/items','import/commit','import/unlink',
   'account/status','account/sms','account/login','account/logout',
   'state/get','state/replace','workflow/catalog',
   'professional/bootstrap','professional/detail','professional/start','professional/continue','professional/stop','professional/running-water',

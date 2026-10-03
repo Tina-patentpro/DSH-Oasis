@@ -13,6 +13,8 @@ export function WebsiteImportDialog({ workspaceId, remote, accountController, on
   const dialog = useRef(null), busy = useRef(false)
   busy.current = state.busy
   const [keyword, setKeyword] = useState('')
+  const [unlinkConfirm, setUnlinkConfirm] = useState(false)
+  useEffect(() => { setUnlinkConfirm(false) }, [workspaceId, account.accountRevision, state.session?.token])
   useEffect(() => { controller.invalidate() }, [controller, workspaceId, account.accountRevision])
   useEffect(() => () => controller.dispose(), [controller])
   useEffect(() => {
@@ -32,7 +34,12 @@ export function WebsiteImportDialog({ workspaceId, remote, accountController, on
     btn(state.session ? '重新读取项目' : '读取网站项目', () => controller.start(), !account.credentialConfigured),
     state.session ? h('div', null,
       h('p', { style: { overflowWrap: 'anywhere' } }, `保存到：${state.session.workspacePath}`),
-      state.session.link ? h('p', null, `当前关联：${state.session.link.folderName}；不会替换为其他项目。`) : null,
+      state.session.link ? h('div', null,
+        h('p', null, `当前关联：${state.session.link.folderName}（账户 ${state.session.link.accountId}）；不会自动替换。`),
+        unlinkConfirm ? h('div', { role: 'group', 'aria-label': '确认解除网站项目关联' },
+          h('p', null, '解除当前项目的网站关联及专业 API 服务绑定；已有文件、生成结果和审核记录保留。未结束的生成或导入会阻止解除。'),
+          btn('确认解除关联', () => controller.unlink({ confirmed: true })),
+          btn('取消解除', () => setUnlinkConfirm(false))) : btn('解除关联', () => setUnlinkConfirm(true))) : null,
       h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 20 } },
         h('section', { 'aria-label': '网站项目' }, h('h3', null, '选择项目'),
           h('form', { onSubmit: e => { e.preventDefault(); void controller.browse({ page: 1, keyword, parentId: 0 }) } },
@@ -61,11 +68,13 @@ export function WebsiteImportDialog({ workspaceId, remote, accountController, on
             btn('上一页内容', () => controller.items({ page: state.itemPage - 1 }), state.itemPage <= 1 || state.submitted),
             btn('下一页内容', () => controller.items({ page: state.itemPage + 1 }), state.itemPage * 20 >= state.totalItems || state.submitted)) : null)),
       h('hr'), h('p', null, `已勾选 ${state.selected.length} 项。单文件最多 32 MiB，每次最多 100 项 / 100 MiB。`),
-      h('p', null, '导入同时确认所选网站项目与当前本地项目的关联。历史正文以 _OIW.md 保存；附件保留文件名。同名不覆盖、同内容跳过，导入内容未在本地审核。'),
-      btn('导入到当前项目', () => controller.commit(), !state.selected.length || state.submitted)) : null,
+      h('p', null, '不勾选文件也可仅关联项目。勾选时，历史正文以 _OIW.md 保存；附件保留文件名。同名不覆盖、同内容跳过，导入内容未在本地审核。'),
+      btn(state.selected.length ? '关联并导入选中文件' : '关联到当前项目', () => controller.commit(), !state.project || state.submitted || unlinkConfirm)) : null,
     state.busy ? h('p', { role: 'status' }, state.submitted ? '正在逐项下载并保存，请勿关闭 Host…' : '正在读取…') : null,
     state.error ? h('p', { role: 'alert' }, state.error) : null,
-    state.result ? h('section', { 'aria-label': '导入结果' }, h('h3', null, state.result.status === 'completed' ? '导入完成' : '部分内容未完成'),
+    state.notice ? h('p', { role: 'status' }, state.notice) : null,
+    state.result ? h('section', { 'aria-label': '导入结果' }, h('h3', null, state.result.status === 'completed' ? state.result.items.length ? '关联及导入完成' : '关联成功' : '部分内容未完成'),
+      h('p', null, '需要解除或更换关联时，请先点击“重新读取项目”。'),
       ...state.result.items.map(row => h('p', { key: row.key }, `${{ saved: '已保存', skipped: '相同内容已跳过', failed: '未完成' }[row.status]}：${row.fileName}${row.code ? `（${row.code}）` : ''}`)),
       h('p', { style: { overflowWrap: 'anywhere' } }, `导入清单：${state.result.manifest}`),
       btn('打开 DSH 文件管理', () => onOpenFiles(), !onOpenFiles)) : null)

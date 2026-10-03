@@ -63,6 +63,7 @@ function assertRunIntegrity(record) {
           ...(execution.accountId !== undefined ? { accountId: execution.accountId } : {}),
           apiBaseOrigin: execution.apiBaseOrigin,
           apiId: execution.serviceSnapshot.apiId,
+          ...(execution.serviceSnapshot.catalogEntryId !== undefined ? { catalogEntryId: execution.serviceSnapshot.catalogEntryId } : {}),
           apiEndpoint: execution.serviceSnapshot.apiEndpoint,
           apiProcess: execution.serviceSnapshot.apiProcess,
           folderId: execution.folderSnapshot.folderId,

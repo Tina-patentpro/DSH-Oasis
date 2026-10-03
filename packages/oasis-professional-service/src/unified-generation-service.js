@@ -5,6 +5,7 @@ import { WorkspaceMaterialError } from './workspace-materials.js'
 import { createUnifiedResult, runUnifiedFixture, unifiedInputSha256 } from './unified-fixture.js'
 import { missingUpstream } from './claims-v2-result.js'
 import { randomUUID } from 'node:crypto'
+import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 
 function fail(code, message) { throw new WorkspaceMaterialError(code, message) }
 function taskFor(record, taskId) {
@@ -14,7 +15,7 @@ function taskFor(record, taskId) {
   return task
 }
 
-export function createUnifiedGenerationService({ repository, enabled, clock, runIdFactory, runner = runUnifiedFixture, upstream }) {
+export function createUnifiedGenerationService({ repository, enabled, clock, runIdFactory, runner = runUnifiedFixture, upstream, workspaceOperations = createWorkspaceOperationGuard() }) {
   function requireEnabled() {
     if (enabled !== true) fail('GENERATION_NOT_ENABLED', '合成验收未启用；真实 Skills/API 不会作为替代')
   }
@@ -39,7 +40,7 @@ export function createUnifiedGenerationService({ repository, enabled, clock, run
     async createUnifiedRun({ workspaceId, taskId, expectedRevision, requestKey }) {
       requireEnabled()
       let admitted = null
-      const prepared = await repository.mutate(workspaceId, expectedRevision, async current => {
+      const prepared = await workspaceOperations.run(workspaceId, () => repository.mutate(workspaceId, expectedRevision, async current => {
         const task = taskFor(current, taskId)
         const formValues = validateWorkflowForm(task.workflowId, task.workflowVersion, task.formValues)
         const now = clock()
@@ -65,7 +66,7 @@ export function createUnifiedGenerationService({ repository, enabled, clock, run
           result: null, review: { status: 'not-reviewed', note: '', updatedAt: now }, writebacks: [], createdAt: now, completedAt: null }
         admitted = run
         return addRun(current, taskId, run)
-      })
+      }))
       if (!prepared.committed || admitted === null) return prepared
       // No model/network/file runner: only the local synthetic function, outside the repository queue.
       let result = null

@@ -22,7 +22,7 @@ function request(endpoint,patch={}) {
 }
 test('owned routes preserve RPC correlation and handler validation boundary without intercepting other services',async()=>{
   const f=fixture(),dispose=registerWorkbenchRoutes(f.connection,f.handler)
-  assert.equal(f.routes.size,40)
+  assert.equal(f.routes.size,41)
   for(const route of f.routes.values()) {
     assert.deepEqual(route.methods,['POST'])
     assert.equal(route.requestBody,'buffered')

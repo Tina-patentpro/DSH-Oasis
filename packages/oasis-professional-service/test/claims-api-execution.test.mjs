@@ -10,6 +10,8 @@ import { createWorkbenchRpcHandler } from '../src/workbench-rpc.js'
 import { createWorkbenchRemote } from '../src/client/workbench-remote.js'
 import { createConnectionFixture } from './connection-fixture.mjs'
 import { normalizeProductRuntimeConfig } from '../src/oasis-runtime-config.js'
+import { normalizeApiDetail } from '../src/oasis-api-contract.js'
+import { fastDetail } from './fast-service-fixture.mjs'
 
 test('typed Connection API preview and start preserve scope and require both confirmations', async t => {
   const h = await executionHarness(t), handler = createWorkbenchRpcHandler(h.service, h.professional)
@@ -73,8 +75,14 @@ test('API root saves keep terminal OIW on original and edited versions without m
 test('product preparation uses release destination even with old Profile settings', async t => {
   const h = await executionHarness(t)
   Object.assign(h.binding, { environmentKind: 'production', apiBaseOrigin: 'https://lzhxpy.oasisintwrite.com' })
+  Object.assign(h.active, { environmentKind: 'production', apiBaseOrigin: h.binding.apiBaseOrigin })
+  h.value.websiteProjectLinks = [{ workspaceId: 'workspace-a', workspacePath: h.workspace.path,
+    apiBaseOrigin: h.binding.apiBaseOrigin, accountId: 101, folderId: 8, folderName: 'test', confirmedAt: new Date().toISOString() }]
+  h.client.getApiDetail = async () => normalizeApiDetail(structuredClone(fastDetail))
+  h.client.getCategoryCatalog = async () => [{ apiId: 39, apiEndpoint: fastDetail.name, apiProcess: 'synthetic-process' }]
+  h.client.getFolderDetail = async () => ({ id: 8, name: 'test', owner_id: 101 })
   const professional = createOasisRemoteService({ ...h.options, resolveConfig: normalizeProductRuntimeConfig })
-  const prepared = await professional.prepareClaimsMapping(h.base())
+  const prepared = await professional.prepareLinkedClaimsMapping({ ...h.base(), remoteReadConfirmed: true })
   assert.deepEqual(prepared.snapshot.allowedUploadOrigins, ['https://lzhxpy.oasisintwrite.com'])
   assert.equal(h.calls.length, 0)
 })

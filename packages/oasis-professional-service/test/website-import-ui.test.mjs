@@ -8,10 +8,10 @@ import { createWorkbenchRemote } from '../src/client/workbench-remote.js'
 import { FunctionCenter } from '../src/client/FunctionCenter.js'
 const mod = await import('../src/client/website-import-controller.js').catch(() => ({}))
 const ui = await import('../src/client/WebsiteImportDialog.js').catch(() => ({}))
-test('import owns four exact routes, validates commands and sanitizes failures', async () => {
+test('import owns five exact routes, validates commands and sanitizes failures', async () => {
   const routes = []
   const dispose = registerWorkbenchRoutes({ fetch: { register: r => { routes.push(r.path); return () => {} } } }, () => {})
-  for (const action of ['open', 'projects', 'items', 'commit']) assert.ok(routes.includes('/api/oasis-workbench/import/' + action))
+  for (const action of ['open', 'projects', 'items', 'commit', 'unlink']) assert.ok(routes.includes('/api/oasis-workbench/import/' + action))
   const handler = createWorkbenchRpcHandler({}, null, null, { open: async () => { throw Error('private-token') } })
   const bad = await handler('import/commit', { token: 'x', url: 'http://evil' })
   assert.equal(bad.ok, false)
@@ -30,7 +30,8 @@ function harness() {
   const calls = [], rows = [{ key: 'history:9:text', fileName: 'claims_OIW.md', downloadable: true }]
   const remote = { websiteImport: async (action, payload) => {
     calls.push({ action, payload })
-    if (action === 'open') return { token: 'ticket', workspaceId, accountRevision, workspacePath: 'D:\\a' }
+    if (action === 'open') return { token: 'ticket', workspaceId, accountRevision, workspacePath: 'D:\\a', settingsRevision: 3, link: { folderId: 2, folderName: 'x' } }
+    if (action === 'unlink') return { workspaceId, status: 'unlinked' }
     if (action === 'projects') return { items: [{ id: 2, name: 'x' }], total: 1 }
     if (action === 'items') return { items: rows, folderId: payload.folderId, total: 1 }
     return { workspaceId, folderId: 2, status: 'completed', items: [{ key: rows[0].key, fileName: rows[0].fileName, status: 'saved' }] }
@@ -38,6 +39,48 @@ function harness() {
   const controller = mod.createWebsiteImportController({ remote, getWorkspaceId: () => workspaceId, getAccountRevision: () => accountRevision })
   return { controller, remote, calls, change: () => { workspaceId = 'b' } }
 }
+
+test('zero selections can associate even when optional item listing fails', async () => {
+  const h = harness(); await h.controller.start()
+  const base = h.remote.websiteImport
+  h.remote.websiteImport = async (action, payload) => { if (action === 'items') throw { code: 'IMPORT_REQUEST_FAILED' }; return base(action, payload) }
+  await h.controller.selectProject({ id: 2, name: 'x' })
+  assert.ok(h.controller.getSnapshot().error)
+  assert.equal(await h.controller.commit(), true)
+  assert.deepEqual(h.calls.at(-1).payload.keys, [])
+})
+
+test('unlink needs explicit confirmation, sends settings revision and clears stale selection', async () => {
+  const h = harness(); await h.controller.start(); await h.controller.selectProject({ id: 2, name: 'x' })
+  h.controller.toggle('history:9:text')
+  assert.equal(await h.controller.unlink(), false)
+  assert.equal(h.calls.some(x => x.action === 'unlink'), false)
+  assert.equal(await h.controller.unlink({ confirmed: true }), true)
+  assert.deepEqual(h.calls.at(-1).payload, { token: 'ticket', expectedSettingsRevision: 3, confirmed: true })
+  assert.equal(h.controller.getSnapshot().session, null)
+  assert.deepEqual(h.controller.getSnapshot().selected, [])
+  assert.match(h.controller.getSnapshot().notice, /解除/)
+})
+
+test('project listing failure retains association so explicit unlink is still available', async () => {
+  const h = harness(), base = h.remote.websiteImport
+  h.remote.websiteImport = async (action, payload) => { if (action === 'projects') throw { code: 'IMPORT_REQUEST_FAILED' }; return base(action, payload) }
+  assert.equal(await h.controller.start(), false)
+  assert.equal(h.controller.getSnapshot().session.link.folderId, 2)
+  assert.equal(await h.controller.unlink({ confirmed: true }), true)
+})
+
+test('shared workspace busy error keeps association and never retries unlink automatically', async () => {
+  const h = harness(); await h.controller.start()
+  let calls = 0
+  h.remote.websiteImport = async () => { calls++; throw { code: 'WORKSPACE_OPERATION_BUSY' } }
+  assert.equal(await h.controller.unlink({ confirmed: true }), false)
+  assert.equal(h.controller.getSnapshot().session.link.folderId, 2)
+  assert.match(h.controller.getSnapshot().error, /不会自动重试/)
+  assert.equal(h.controller.getSnapshot().notice, null)
+  await new Promise(resolve => setImmediate(resolve))
+  assert.equal(calls, 1)
+})
 test('no mount reads; explicit project selection and checked items drive import to frozen workspace', async () => {
   const h = harness(); assert.deepEqual(h.calls, [])
   await h.controller.start(); await h.controller.selectProject({ id: 2, name: 'x' })

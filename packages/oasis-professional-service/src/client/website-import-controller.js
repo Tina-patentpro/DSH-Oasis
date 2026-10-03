@@ -1,9 +1,12 @@
 const empty = () => ({ busy: false, session: null, projects: [], totalProjects: 0, projectPage: 1, parentId: 0, keyword: '',
-  project: null, kind: 'history', itemPage: 1, totalItems: 0, items: [], selected: [], result: null, error: null, submitted: false })
+  project: null, kind: 'history', itemPage: 1, totalItems: 0, items: [], selected: [], result: null, error: null, notice: null, submitted: false })
 const explanations = {
+  WORKSPACE_OPERATION_BUSY: '当前项目正在导入、解除关联或准备生成，请等待原操作结束后重新确认；不会自动重试。',
   IMPORT_WORKSPACE_BUSY: '当前项目有未结束的生成，请先处理原任务，再导入。',
   AUTH_REQUIRED: '请先在此窗口登录绿洲账户。', IMPORT_ACCOUNT_CHANGED: '账户已变化，请重新读取项目。',
-  IMPORT_LINK_CONFLICT: '当前本地项目已关联其他网站项目或账户；不会替换原关联，请使用对应本地项目。',
+  IMPORT_LINK_CONFLICT: '当前本地项目已关联其他网站项目或账户；请在本窗口明确解除原关联后，重新选择项目。已有本地文件不变。',
+  IMPORT_SETTINGS_CHANGED: '设置已变化，请重新读取项目，再确认解除关联；不会覆盖其他修改。',
+  IMPORT_BUSY: '当前项目正在导入或解除关联，请等待原操作结束。',
   IMPORT_OWNERSHIP: '网站返回的项目或文件归属无法验证，已阻止导入。',
   IMPORT_REQUEST_FAILED: '网站接口读取失败或暂不支持；没有把失败当作空列表。请稍后明确重试。',
   IMPORT_UNSAFE_PATH: '目录或文件名不安全，已阻止写入。', IMPORT_TOO_LARGE: '所选文件超过本次大小限制。',
@@ -54,9 +57,11 @@ export function createWebsiteImportController({ remote, getWorkspaceId, getAccou
     async start() {
       if (snapshot.busy) return false
       clear()
+      const g = generation
       return operation(async () => {
         const session = await remote.websiteImport('open', { workspaceId: getWorkspaceId(), confirmed: true })
-        if (!current(session)) throw Error('scope')
+        if (!current(session) || g !== generation) throw Error('scope')
+        publish({ session })
         const result = await remote.websiteImport('projects', { token: session.token, parentId: 0, page: 1, keyword: '' })
         return { session, projects: result.items, totalProjects: result.total }
       })
@@ -70,7 +75,7 @@ export function createWebsiteImportController({ remote, getWorkspaceId, getAccou
     },
     async commit() {
       if (!current(snapshot.session)) { clear(); return false }
-      if (!snapshot.project || !snapshot.selected.length || snapshot.submitted || snapshot.busy) return false
+      if (!snapshot.project || snapshot.submitted || snapshot.busy) return false
       const { session, project, selected } = snapshot
       return operation(async () => {
         publish({ submitted: true })
@@ -78,6 +83,17 @@ export function createWebsiteImportController({ remote, getWorkspaceId, getAccou
         if (result.workspaceId !== session.workspaceId || result.folderId !== project.id) throw Error('scope')
         return { result }
       })
+    },
+    async unlink({ confirmed = false } = {}) {
+      if (!confirmed || !current(snapshot.session) || !snapshot.session.link || snapshot.busy) return false
+      const { session } = snapshot
+      const done = await operation(async () => {
+        const result = await remote.websiteImport('unlink', { token: session.token, expectedSettingsRevision: session.settingsRevision, confirmed: true })
+        if (result.workspaceId !== session.workspaceId || result.status !== 'unlinked') throw Error('scope')
+        return {}
+      })
+      if (done) { clear(); publish({ notice: '关联已解除，本地文件和历史记录保持不变。请重新读取网站项目并选择关联。' }) }
+      return done
     },
     dispose() { disposed = true; generation++; listeners.clear() },
   })

@@ -11,6 +11,7 @@ export const workspaceApiBindingFields = {
   accountId: id,
   folderId: id,
   apiId: id,
+  catalogEntryId: id.optional(),
   apiEndpoint: label,
   apiProcess: z.string().max(4000),
   schemaHash: z.string().regex(/^[a-f0-9]{64}$/),

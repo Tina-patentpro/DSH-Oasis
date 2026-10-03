@@ -316,9 +316,11 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
     if (endpoint === 'task/prepare-api') {
       const parsed = parsePayload(z.object({ ...materialCommandBase,
         expectedSettingsRevision: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+        remoteReadConfirmed: z.literal(true).optional(),
       }).strict(), payload)
       if (!parsed.success) return parsed
-      return materialResult(() => professionalService.prepareClaimsMapping(parsed.data))
+      return apiResult(() => parsed.data.remoteReadConfirmed === true
+        ? professionalService.prepareLinkedClaimsMapping(parsed.data) : professionalService.prepareClaimsMapping(parsed.data))
     }
     if (endpoint === 'task/check-api') {
       const parsed = parsePayload(z.object({ ...materialCommandBase,

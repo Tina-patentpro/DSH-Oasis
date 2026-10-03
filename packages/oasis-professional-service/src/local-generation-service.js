@@ -6,12 +6,13 @@ import { createUnifiedResult, unifiedInputSha256 } from './unified-fixture.js'
 import { WorkspaceMaterialError } from './workspace-materials.js'
 import { missingUpstream } from './claims-v2-result.js'
 import { normalizeLocalExecutionSummary } from './local-run-summary.js'
+import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 
 const fail = (code, message) => { throw new WorkspaceMaterialError(code, message) }
 const safeCodes = new Set(['GENERATION_FAILED', 'ABORTED', 'TIMED_OUT', 'INVALID_OUTPUT', 'INVALID_INPUT', 'MODEL_UNAVAILABLE', 'MODEL_LIMITED'])
 
 // Owns only this Host's admitted calls; the repository remains the durable state owner.
-export function createLocalGenerationService({ repository, runtime, clock, runIdFactory, upstream }) {
+export function createLocalGenerationService({ repository, runtime, clock, runIdFactory, upstream, workspaceOperations = createWorkspaceOperationGuard() }) {
   const active = new Map()
   const keyFor = (workspaceId, runId) => JSON.stringify([workspaceId, runId])
   const enabled = () => runtime?.enabled === true && ['native-offline', 'native-model'].includes(runtime.evidenceKind)
@@ -84,7 +85,7 @@ export function createLocalGenerationService({ repository, runtime, clock, runId
       if (runtime.evidenceKind === 'native-model' && confirmation?.confirmed !== true) fail('GENERATION_CONFIRMATION_REQUIRED', '请确认本次模型、材料外传和可能的费用。')
       let instruction, context
       let admitted
-      const result = await repository.mutate(workspaceId, expectedRevision, async record => {
+      const result = await workspaceOperations.run(workspaceId, () => repository.mutate(workspaceId, expectedRevision, async record => {
         const task = taskFor(record, taskId)
         if (task.generation.source !== 'local-skill') fail('GENERATION_NOT_ENABLED', '此入口只接受本地来源；不会切换来源。')
         const now = clock()
@@ -112,7 +113,7 @@ export function createLocalGenerationService({ repository, runtime, clock, runId
         next.tasks[taskId].runs[runId] = admitted
         next.tasks[taskId].runOrder.push(runId); next.tasks[taskId].activeRunId = runId; next.tasks[taskId].updatedAt = now
         return next
-      })
+      }))
       if (!result.committed || !admitted) return result
       const controller = new AbortController()
       const key = keyFor(workspaceId, admitted.runId)

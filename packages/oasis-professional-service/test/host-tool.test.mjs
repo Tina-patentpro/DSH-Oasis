@@ -1,8 +1,12 @@
 import assert from 'node:assert/strict'
-import { readFile } from 'node:fs/promises'
+import { readFile, mkdtemp } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import test from 'node:test'
 
 import { apply, inject, name } from '../src/index.js'
+import { fixtureHarness } from './unified-generation-harness.mjs'
+import { fastDetail, fastCatalog } from './fast-service-fixture.mjs'
 
 function createHostFixture(options = {}) {
   let registered
@@ -85,6 +89,48 @@ function createHostFixture(options = {}) {
   }
 }
 
+test('actual Host obtains the missing detail ID from its captured login grant before Fast preview', async t => {
+  const h = await fixtureHarness({ claimsV2: true }); t.after(() => h.repository.close())
+  const origin = 'https://lzhxpy.oasisintwrite.com', workspace = { path: 'D:\\synthetic\\account', status: async () => 'ok' }
+  const value = { websiteProjectLinks: [{ workspaceId: 'workspace-a', workspacePath: workspace.path,
+    apiBaseOrigin: origin, accountId: 101, folderId: 8, folderName: 'test', confirmedAt: '2026-09-27T00:00:00.000Z' }], workspaceApiBindings: [] }
+  const fixture = createHostFixture({ runtimeSettings: value }), requests = []
+  fixture.ctx.workspaceRegistry.get = id => id === 'workspace-a' ? workspace : undefined
+  fixture.ctx.settings.describe = () => [{ ns: 'oasis-professional-service', value, revision: 0 }]
+  Object.assign(fixture.ctx.credentials, {
+    readRecord: async () => ({ kind: 'grant', payload: { origin, accountId: 101, revision: 'same-login', token: 'host-identity-secret' } }),
+    describeRecord: async () => ({ writable: true }),
+    modifyRecord: () => assert.fail('no credential mutation'), deleteRecord: () => assert.fail('no logout'),
+  })
+  t.mock.method(globalThis, 'fetch', async (url, options) => {
+    const pathname = new URL(url).pathname; requests.push(pathname)
+    assert.equal(options.headers.authorization, 'Bearer host-identity-secret')
+    let data
+    if (pathname === '/api/user/detail') data = { username: 'test', balance: 20 }
+    else if (pathname === '/api/apicategories/detail') data = structuredClone(fastCatalog)
+    else if (pathname === '/api/apicategories/apidetail') data = structuredClone(fastDetail)
+    else if (pathname === '/api/user/user/folderdetail/8') data = { id: 8, name: 'test', owner_id: 101 }
+    else assert.fail('no upload/create or other network action: ' + pathname)
+    return Response.json({ code: 200, data })
+  })
+  const dispose = await apply(fixture.ctx)
+  try {
+    const draft = h.draft(); draft.tasks['task-a'].generation.source = 'oasis-api'
+    const saved = await fixture.dispatch('state/replace', { workspaceId: 'workspace-a', expectedRevision: 0, state: draft })
+    assert.equal(saved.ok, true)
+    const payload = { workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: saved.value.current.revision, expectedSettingsRevision: 0, remoteReadConfirmed: true }
+    const prepared = await fixture.dispatch('task/prepare-api', payload)
+    assert.equal(prepared.ok, true, JSON.stringify(prepared))
+    assert.equal(prepared.value.snapshot.binding.accountId, 101)
+    const preview = await fixture.dispatch('task/preview-api', { ...payload, preparationSha256: prepared.value.preparationSha256 })
+    assert.equal(preview.ok, true, JSON.stringify(preview))
+    assert.equal(preview.value.accountId, 101); assert.equal(preview.value.balance, 20)
+    assert.ok(requests.includes('/api/user/detail'))
+    assert.equal(JSON.stringify([prepared, preview]).includes('host-identity-secret'), false)
+    assert.deepEqual((await fixture.dispatch('state/get', { workspaceId: 'workspace-a' })).value.tasks['task-a'].remoteExecutions, {})
+  } finally { await dispose() }
+})
+
 test('registers the current Host tool and owned Connection routes with cleanup', async () => {
   const fixture = createHostFixture()
   const dispose = await apply(fixture.ctx)
@@ -94,7 +140,7 @@ test('registers the current Host tool and owned Connection routes with cleanup',
   assert.equal(fixture.settingsRegistration?.ns, 'oasis-professional-service')
   assert.equal(fixture.settingsRegistration?.options.applies, 'restart')
   assert.equal(fixture.registered?.name, 'oasis_workbench_status')
-  assert.equal(fixture.routes.size, 40)
+  assert.equal(fixture.routes.size, 41)
 
   const stateResult = await fixture.dispatch('state/get', { workspaceId: 'workspace-a' })
   assert.equal(stateResult.ok, true)
@@ -119,7 +165,7 @@ test('registers the current Host tool and owned Connection routes with cleanup',
   assert.equal(value.externalSystems, 'not-invoked')
 
   await dispose()
-  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 40, toolDispose: 1, credentialResolve: 0 })
+  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 41, toolDispose: 1, credentialResolve: 0 })
   assert.equal(fixture.routes.size, 0)
 })
 
@@ -200,8 +246,54 @@ test('wires the Host workspace registry into the safe writeback boundary', async
   const source = await readFile(new URL('../src/index.js', import.meta.url), 'utf8')
   assert.match(
     source,
-    /createWorkbenchService\(\{\s*repository,\s*materialManager,\s*workspaceRegistry:\s*ctx\.workspaceRegistry,/,
+    /createWorkbenchService\(\{\s*repository,\s*workspaceOperations,\s*materialManager,\s*workspaceRegistry:\s*ctx\.workspaceRegistry,/,
   )
+})
+
+test('R1 Host shares import and generation admission guard and preserves safe RPC busy errors', async t => {
+  const root = await mkdtemp(join(tmpdir(), 'oasis-r1-host-'))
+  let value = { websiteProjectLinks: [{ workspaceId: 'workspace-a', workspacePath: root,
+    apiBaseOrigin: 'https://lzhxpy.oasisintwrite.com', accountId: 7, folderId: 2,
+    folderName: 'synthetic', confirmedAt: new Date().toISOString() }], workspaceApiBindings: [] }
+  let revision = 0, entered, release
+  const waiting = new Promise(resolve => { entered = resolve })
+  const gate = new Promise(resolve => { release = resolve })
+  const fixture = createHostFixture({ runtimeSettings: value })
+  fixture.ctx.workspaceRegistry.get = () => ({ path: root, status: async () => 'ok' })
+  Object.assign(fixture.ctx.settings, {
+    writable: true, describe: () => [{ ns: 'oasis-professional-service', value, revision }],
+    update: async (_ns, patch, expected) => {
+      assert.equal(expected, revision); entered(); await gate
+      value = { ...value, ...patch }; revision++
+    },
+  })
+  Object.assign(fixture.ctx.credentials, {
+    readRecord: async () => ({ kind: 'grant', payload: { origin: 'https://lzhxpy.oasisintwrite.com',
+      accountId: 7, token: 'synthetic-token', revision: 'r1' } }),
+    describeRecord: async () => ({ writable: true }),
+    modifyRecord: () => assert.fail('no credential write'), deleteRecord: () => assert.fail('no logout'),
+  })
+  t.mock.method(globalThis, 'fetch', () => assert.fail('no network'))
+  const dispose = await apply(fixture.ctx)
+  let pending
+  try {
+    const opened = await fixture.dispatch('import/open', { workspaceId: 'workspace-a', confirmed: true })
+    assert.equal(opened.ok, true)
+    const unlink = { token: opened.value.token, expectedSettingsRevision: 0, confirmed: true }
+    pending = fixture.dispatch('import/unlink', unlink); await waiting
+    const create = { workspaceId: 'workspace-a', taskId: 'task-a', expectedRevision: 0, requestKey: 'r1' }
+    for (const [endpoint, payload] of [
+      ['task/create', create],
+      ['professional/start', { ...create, priceConfirmed: true, externalTransferConfirmed: true }],
+      ['import/unlink', unlink],
+    ]) {
+      const result = await fixture.dispatch(endpoint, payload)
+      assert.equal(result.ok, false, endpoint)
+      assert.equal(result.error.code, 'WORKSPACE_OPERATION_BUSY', endpoint)
+      assert.ok(!JSON.stringify(result).includes('synthetic-token'))
+    }
+  } finally { release(); if (pending) assert.equal((await pending).ok, true); await dispose() }
+  assert.deepEqual(value.websiteProjectLinks, [])
 })
 
 test('Host authentication routes never expose secrets or use legacy Profile destinations', async t => {

@@ -12,6 +12,49 @@ function harness(fetchImpl) {
   }
   return { service: createOasisAccountService({ credentials, fetchImpl }), credentials, record: () => record }
 }
+
+test('captured session binds identity and token in one immutable Host-only snapshot', async () => {
+  const h = harness(() => assert.fail('capture must not request a login'))
+  await h.credentials.modifyRecord('', () => ({ kind: 'grant', payload: {
+    origin: OASIS_PRODUCT_ORIGIN, accountId: 17, revision: 'first', token: 'session-secret',
+  } }))
+  let reads = 0
+  const read = h.credentials.readRecord
+  h.credentials.readRecord = async key => { reads++; return read(key) }
+  const session = await h.service.captureSession()
+  assert.equal(reads, 1, 'identity and token must not come from separate credential reads')
+  assert.deepEqual(session.identity, { accountId: 17, origin: OASIS_PRODUCT_ORIGIN, revision: 'first' })
+  assert.ok(Object.isFrozen(session.identity)); assert.ok(Object.isFrozen(session))
+  assert.equal(JSON.stringify(session).includes('session-secret'), false)
+  assert.equal(await session.resolveToken(), 'session-secret')
+})
+
+for (const [key, value] of [['accountId', 18], ['revision', 'next'], ['token', 'replacement'], ['origin', 'https://other.invalid']]) {
+  test(`captured identity rejects in-place ${key} changes without following the new grant`, async () => {
+    const h = harness(() => assert.fail('no fetch'))
+    await h.credentials.modifyRecord('', () => ({ kind: 'grant', payload: {
+      origin: OASIS_PRODUCT_ORIGIN, accountId: 17, revision: 'first', token: 'session-secret',
+    } }))
+    const session = await h.service.captureSession()
+    const before = h.record().payload[key]
+    h.record().payload[key] = value
+    await assert.rejects(session.resolveToken, { code: 'REMOTE_RUNTIME_CHANGED' })
+    h.record().payload[key] = before
+    await assert.rejects(session.resolveToken, { code: 'REMOTE_RUNTIME_CHANGED' })
+    assert.equal(session.identity.accountId, 17)
+  })
+}
+
+test('session capture cannot invent a missing identity and logout invalidates an existing snapshot', async () => {
+  const h = harness(() => assert.fail('no fetch'))
+  await assert.rejects(() => h.service.captureSession(), { code: 'AUTH_REQUIRED' })
+  await h.credentials.modifyRecord('', () => ({ kind: 'grant', payload: {
+    origin: OASIS_PRODUCT_ORIGIN, accountId: 17, revision: 'first', token: 'session-secret',
+  } }))
+  const session = await h.service.captureSession()
+  await h.service.logout({ confirmed: true })
+  await assert.rejects(session.resolveToken, { code: 'REMOTE_RUNTIME_CHANGED' })
+})
 test('login uses fixed website routes and stores secrets only in Host credentials', async () => {
   const calls = []
   const h = harness(async (url, options) => {

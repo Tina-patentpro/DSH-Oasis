@@ -4,7 +4,8 @@ import { resolve, parse, join, sep } from 'node:path'
 import { OASIS_PRODUCT_ORIGIN } from './oasis-account-contract.js'
 import { importCommands, importResponses, IMPORT_LIMITS, parseWebsiteProjectLinks } from './website-import-contract.js'
 import { createWebsiteImportClient, WebsiteImportError, importFail } from './website-import-client.js'
-import { validateWorkspaceRelativePath } from './workspace-materials.js'
+import { validateWorkspaceRelativePath, WorkspaceMaterialError } from './workspace-materials.js'
+import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 
 const NS = 'oasis-professional-service'
 const hash = bytes => createHash('sha256').update(bytes).digest('hex')
@@ -49,8 +50,8 @@ async function sameFile(path, bytes) {
   } catch (error) { if (error.code === 'ENOENT') return false; throw error }
   finally { await handle?.close() }
 }
-export function createWebsiteImportService({ workspaceRegistry, accountService, settings, createClient = createWebsiteImportClient, now = Date.now, isWorkspaceBusy = () => false }) {
-  const tickets = new Map(), busy = new Set()
+export function createWebsiteImportService({ workspaceRegistry, accountService, settings, createClient = createWebsiteImportClient, now = Date.now, isWorkspaceBusy = () => false, workspaceOperations = createWorkspaceOperationGuard() }) {
+  const tickets = new Map()
   let disposed = false
   function descriptor() {
     const d = settings?.describe({ redactSecrets: true }).find(x => x.ns === NS)
@@ -58,7 +59,7 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
     return { ...d, links: parseWebsiteProjectLinks(d.value.websiteProjectLinks) }
   }
   async function check(t) {
-    if (disposed || !t || now() >= t.expiresAt) importFail('IMPORT_EXPIRED')
+    if (disposed || !t || t.invalidated || now() >= t.expiresAt) importFail('IMPORT_EXPIRED')
     const status = await accountService.status()
     if (!status.authenticated || status.accountId !== t.accountId || status.revision !== t.accountRevision) importFail('IMPORT_ACCOUNT_CHANGED')
     await t.resolveToken()
@@ -66,6 +67,7 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
     if (!w || w.path !== t.workspacePath || await w.status() !== 'ok') importFail('IMPORT_WORKSPACE_CHANGED')
     const root = await secureRoot(w.path)
     if (root.identity !== t.rootIdentity) importFail('IMPORT_WORKSPACE_CHANGED')
+    if (disposed || t.invalidated || now() >= t.expiresAt) importFail('IMPORT_EXPIRED')
   }
   function linkCheck(t, folderId) {
     const d = descriptor(), link = d.links.find(x => x.workspaceId === t.workspaceId)
@@ -81,9 +83,11 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
     return [parsed.data, tickets.get(parsed.data.token)]
   }
   async function locked(t, operation) {
-    if (busy.has(t.workspaceId)) importFail('IMPORT_BUSY')
-    busy.add(t.workspaceId)
-    try { return await operation() } finally { busy.delete(t.workspaceId) }
+    try { return await workspaceOperations.run(t.workspaceId, operation) }
+    catch (error) {
+      if (error instanceof WorkspaceMaterialError && error.code === 'WORKSPACE_OPERATION_BUSY') importFail(error.code)
+      throw error
+    }
   }
   return Object.freeze({
     async open(input) {
@@ -91,7 +95,7 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
       if (!parsed.success) importFail('IMPORT_INVALID_INPUT')
       const { workspaceId } = parsed.data
       if (disposed) importFail('IMPORT_EXPIRED')
-      for (const [key, value] of tickets) if (now() >= value.expiresAt && !busy.has(value.workspaceId)) tickets.delete(key)
+      for (const [key, value] of tickets) if (now() >= value.expiresAt && !workspaceOperations.isBusy(value.workspaceId)) tickets.delete(key)
       if (tickets.size >= 32) importFail('IMPORT_BUSY')
       const status = await accountService.status()
       if (!status.authenticated) importFail('AUTH_REQUIRED')
@@ -104,8 +108,13 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
       await check(t)
       t.client = createClient({ resolveToken, accountId: t.accountId })
       tickets.set(token, t)
+      const d = descriptor()
+      t.settingsRevision = d.revision
+      const existing = d.links.find(x => x.workspaceId === workspaceId) ?? d.value.workspaceApiBindings?.find(x => x.workspaceId === workspaceId)
+      const link = existing ? Object.fromEntries(['workspaceId', 'workspacePath', 'apiBaseOrigin', 'accountId', 'folderId', 'folderName', 'confirmedAt'].map(key => [key, existing[key]])) : null
       return importResponses.open.parse({ token, workspaceId, workspacePath: t.workspacePath, accountId: t.accountId,
-        accountRevision: t.accountRevision, expiresAt: t.expiresAt, link: descriptor().links.find(x => x.workspaceId === workspaceId) ?? null })
+        accountRevision: t.accountRevision, expiresAt: t.expiresAt, settingsRevision: d.revision,
+        link })
     },
     async projects(input) {
       const [args, t] = ticket(input, 'projects'); await check(t)
@@ -116,7 +125,7 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
       const [args, t] = ticket(input, 'items'); await check(t); linkCheck(t, args.folderId)
       if (t.consumed) importFail('IMPORT_EXPIRED')
       const result = await t.client.listItems(args); await check(t); linkCheck(t, args.folderId)
-      if (t.seen.size + result.items.length > 2000) importFail('IMPORT_TOO_MANY_ITEMS')
+      if (t.seen.size + result.items.length > IMPORT_LIMITS.listItems) importFail('IMPORT_TOO_MANY_ITEMS')
       for (const row of result.items) t.seen.set(`${args.folderId}:${row.key}`, structuredClone(row))
       return importResponses.items.parse({ folderId: args.folderId, total: result.total,
         items: result.items.map(({ key, name, fileName, kind, size, downloadable, reason }) => ({ key, name, fileName, kind, size, downloadable, reason })) })
@@ -191,6 +200,23 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
           return structuredClone(t.result)
         } catch { importFail('IMPORT_INCOMPLETE_CHECK_MANIFEST') }
         finally { await journal?.close() }
+      })
+    },
+    async unlink(input) {
+      const [args, t] = ticket(input, 'unlink'); await check(t)
+      return locked(t, async () => {
+        await check(t)
+        if (isWorkspaceBusy(t.workspaceId)) importFail('IMPORT_WORKSPACE_BUSY')
+        const d = descriptor()
+        if (args.expectedSettingsRevision !== t.settingsRevision || d.revision !== t.settingsRevision) importFail('IMPORT_SETTINGS_CHANGED')
+        if (!settings.writable || typeof settings.update !== 'function') importFail('IMPORT_SETTINGS_UNAVAILABLE')
+        // One native settings CAS clears only this Workspace's association and service binding.
+        await settings.update(NS, {
+          websiteProjectLinks: d.links.filter(v => v.workspaceId !== t.workspaceId),
+          workspaceApiBindings: (d.value.workspaceApiBindings ?? []).filter(v => v.workspaceId !== t.workspaceId),
+        }, d.revision)
+        for (const [key, value] of tickets) if (value.workspaceId === t.workspaceId) { value.invalidated = true; tickets.delete(key) }
+        return importResponses.unlink.parse({ workspaceId: t.workspaceId, status: 'unlinked' })
       })
     },
     dispose() { disposed = true; tickets.clear() },

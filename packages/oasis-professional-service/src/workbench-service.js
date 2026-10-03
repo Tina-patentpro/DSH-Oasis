@@ -19,6 +19,7 @@ import { createWritebackManager } from './writeback-service.js'
 import { createUnifiedGenerationService } from './unified-generation-service.js'
 import { createLocalGenerationService } from './local-generation-service.js'
 import { createClaimsUpstreamService } from './claims-upstream.js'
+import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 
 function serviceError(code, message, details = {}) {
   return new WorkspaceMaterialError(code, message, details)
@@ -88,6 +89,7 @@ export function createWorkbenchService({
   unifiedFixtureEnabled = false,
   unifiedFixtureRunner,
   localGeneration,
+  workspaceOperations = createWorkspaceOperationGuard(),
 } = {}) {
   if (!repository || typeof repository.get !== 'function') {
     throw new TypeError('repository.get is required')
@@ -161,8 +163,8 @@ export function createWorkbenchService({
   }
 
   const upstream = createClaimsUpstreamService({ repository, workspaceRegistry, clock })
-  const unified = createUnifiedGenerationService({ repository, enabled: unifiedFixtureEnabled, clock, runIdFactory, runner: unifiedFixtureRunner, upstream })
-  const local = createLocalGenerationService({ repository, runtime: localGeneration, clock, runIdFactory, upstream })
+  const unified = createUnifiedGenerationService({ repository, enabled: unifiedFixtureEnabled, clock, runIdFactory, runner: unifiedFixtureRunner, upstream, workspaceOperations })
+  const local = createLocalGenerationService({ repository, runtime: localGeneration, clock, runIdFactory, upstream, workspaceOperations })
   return Object.freeze({
     ...unified, ...local,
     get localGenerationEnabled() { return local.localGenerationEnabled },
@@ -241,7 +243,7 @@ export function createWorkbenchService({
       return materials.recheckAll(workspaceId, task.inputRefs, materialPolicyForTask(task))
     },
     createRun({ workspaceId, taskId, expectedRevision, requestKey }) {
-      return repository.mutate(workspaceId, expectedRevision, async (current) => {
+      return workspaceOperations.run(workspaceId, () => repository.mutate(workspaceId, expectedRevision, async (current) => {
         const task = requireTask(current, taskId)
         const workflow = workflowForTask(task)
         if (workflow.executionMode !== 'local-mock') {
@@ -303,7 +305,7 @@ export function createWorkbenchService({
         next.tasks[taskId].activeRunId = runId
         next.tasks[taskId].updatedAt = now
         return next
-      })
+      }))
     },
     reviewRun({ workspaceId, taskId, runId, expectedRevision, status, note }) {
       if (!['changes-requested', 'approved'].includes(status)) {

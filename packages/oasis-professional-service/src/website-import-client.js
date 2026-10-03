@@ -28,6 +28,23 @@ function legacyUrl(value) {
     return url.href
   } catch { return null }
 }
+function legacyAttachments(value) {
+  if (value == null) return []
+  const values = typeof value === 'string' ? [value] : value
+  if (!Array.isArray(values) || values.some(v => typeof v !== 'string')) importFail('IMPORT_INVALID_RESPONSE')
+  const attachments = new Map()
+  for (const entry of values) {
+    // The website's legacy file_url can join several URLs; commas inside a URL remain data.
+    for (const part of entry.split(/,(?=\s*(?:https?:\/\/|\/))/g)) {
+      const raw = part.trim()
+      if (!raw) continue
+      const url = legacyUrl(raw), fingerprint = digest(url ?? raw)
+      attachments.set(fingerprint, { url, fingerprint })
+      if (attachments.size > IMPORT_LIMITS.listItems) importFail('IMPORT_TOO_MANY_ITEMS')
+    }
+  }
+  return [...attachments.values()]
+}
 function unwrap(value) {
   if (!value || typeof value !== 'object' || ('code' in value && ![0, 200].includes(value.code))) importFail('IMPORT_INVALID_RESPONSE')
   return Object.hasOwn(value, 'data') ? value.data : value
@@ -104,14 +121,14 @@ export function createWebsiteImportClient({ resolveToken, accountId, fetchImpl =
           id(v.id)
           if (typeof v.answer_text === 'string' && v.answer_text.trim()) items.push({ key: `history:${v.id}:text`, sourceId: v.id, name: title(v.name),
             fileName: generatedName(v.name), kind: 'text', size: Buffer.byteLength(v.answer_text), sha256: digest(v.answer_text), downloadable: true, reason: null })
-          if (typeof v.file_url === 'string' && v.file_url) {
-            const url = legacyUrl(v.file_url)
+          for (const { url, fingerprint } of legacyAttachments(v.file_url)) {
             let fileName = null
             try { fileName = url ? safeName(decodeURIComponent(new URL(url).pathname.split('/').at(-1))) : null } catch {}
-            items.push({ key: `history:${v.id}:file`, sourceId: v.id, name: title(v.name), fileName: fileName ?? '历史附件', kind: 'file', size: null,
+            items.push({ key: `history:${v.id}:file:${fingerprint}`, sourceId: v.id, name: title(v.name), fileName: fileName ?? '历史附件', kind: 'file', size: null,
               downloadable: !!url && !!fileName, reason: url && fileName ? null : '附件地址未获信任或文件名不安全', url })
           }
         }
+        if (items.length > IMPORT_LIMITS.listItems) importFail('IMPORT_TOO_MANY_ITEMS')
       }
       return { total: result.total, items }
     },
@@ -131,7 +148,7 @@ export function createWebsiteImportClient({ resolveToken, accountId, fetchImpl =
         if (typeof data.answer_text !== 'string' || !data.answer_text.trim() || digest(data.answer_text) !== row.sha256) importFail('IMPORT_ITEM_CHANGED')
         return Buffer.from(data.answer_text, 'utf8')
       }
-      if (!legacyUrl(data.file_url) || data.file_url !== row.url) importFail('IMPORT_ITEM_CHANGED')
+      if (!legacyAttachments(data.file_url).some(({ url }) => url && url === row.url)) importFail('IMPORT_ITEM_CHANGED')
       return request(row.url, true, false)
     },
   })

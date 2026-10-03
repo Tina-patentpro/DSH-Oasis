@@ -21,6 +21,7 @@ import { createWorkspaceMaterialManager } from './workspace-materials.js'
 import { createWebsiteImportService } from './website-import-service.js'
 import { hasPendingUnifiedRun } from './generation-contract.js'
 import { isOasisRemoteExecutionUnresolved } from './workbench-contract.js'
+import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 
 export const name = 'oasis-professional-service'
 export const inject = ['tools', 'storageDomain', 'connection', 'workspaceRegistry', 'settings', 'credentials',
@@ -68,7 +69,8 @@ export async function apply(ctx) {
   const nativeOffline = isNativeOfflineEnvironment()
   const fixtureEnabled = isUnifiedFixtureEnvironment() && !nativeOffline
   const accountService = createOasisAccountService({ credentials: ctx.credentials, enabled: !fixtureEnabled && !nativeOffline })
-  const importService = createWebsiteImportService({ workspaceRegistry: ctx.workspaceRegistry, accountService, settings: ctx.settings,
+  const workspaceOperations = createWorkspaceOperationGuard()
+  const importService = createWebsiteImportService({ workspaceRegistry: ctx.workspaceRegistry, accountService, settings: ctx.settings, workspaceOperations,
     isWorkspaceBusy: workspaceId => Object.values(repository.get(workspaceId).tasks).some(task => hasPendingUnifiedRun(task)
       || Object.values(task.remoteExecutions).some(isOasisRemoteExecutionUnresolved)),
   })
@@ -83,6 +85,7 @@ export async function apply(ctx) {
   }
   const service = createWorkbenchService({
     repository,
+    workspaceOperations,
     materialManager,
     workspaceRegistry: ctx.workspaceRegistry,
     unifiedFixtureEnabled: fixtureEnabled,
@@ -91,6 +94,7 @@ export async function apply(ctx) {
   const professionalService = createOasisRemoteService({
     resolveConfig: normalizeProductRuntimeConfig,
     repository,
+    workspaceOperations,
     materialManager,
     settings: ctx.settings,
     workspaceRegistry: ctx.workspaceRegistry,
@@ -99,9 +103,11 @@ export async function apply(ctx) {
     async getRuntime() {
       if (fixtureEnabled || nativeOffline) return { enabled: false, environmentKind: 'non-production', apiBaseOrigin: null, credentialConfigured: false, client: null }
       let credentialConfigured = true
-      let resolveToken
+      let resolveToken, accountIdentity
       try {
-        resolveToken = await accountService.captureToken()
+        const session = await accountService.captureSession()
+        resolveToken = session.resolveToken
+        accountIdentity = session.identity
       } catch (error) {
         if (error?.code !== 'AUTH_REQUIRED') throw error
         credentialConfigured = false
@@ -111,6 +117,7 @@ export async function apply(ctx) {
         environmentKind: 'production',
         apiBaseOrigin: OASIS_PRODUCT_ORIGIN,
         credentialConfigured,
+        accountIdentity,
         assertCurrent: credentialConfigured ? async () => { await resolveToken() } : null,
         client: credentialConfigured
           ? createOasisApiClient({

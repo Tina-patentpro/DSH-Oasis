@@ -71,6 +71,25 @@ export function createOasisAccountService({ credentials, fetchImpl = globalThis.
     catch (error) { if (error instanceof OasisAccountError) throw error; fail('ACCOUNT_REQUEST_FAILED') }
     finally { busy = false }
   }
+  async function captureSession() {
+    if (!available || disposed) fail('AUTH_REQUIRED')
+    const value = grant(await credentials.readRecord(KEY))
+    if (!value) fail('AUTH_REQUIRED')
+    // Copy primitives: providers may retain and mutate their record object.
+    const captured = { ...value }
+    const identity = Object.freeze({ accountId: captured.accountId, origin: captured.origin, revision: captured.revision })
+    let invalidated = false
+    const resolveToken = async () => {
+      const current = grant(await credentials.readRecord(KEY))
+      if (invalidated || disposed || !current || current.revision !== captured.revision
+        || current.origin !== captured.origin || current.token !== captured.token || current.accountId !== captured.accountId) {
+        invalidated = true
+        fail('REMOTE_RUNTIME_CHANGED')
+      }
+      return current.token
+    }
+    return Object.freeze({ identity, resolveToken })
+  }
   return Object.freeze({
     status,
     sendSms: input => command('sms', input, async ({ phone }) => {
@@ -93,20 +112,8 @@ export function createOasisAccountService({ credentials, fetchImpl = globalThis.
       return status()
     }),
     logout: input => command('logout', input, async () => { await credentials.deleteRecord(KEY); return status() }),
-    async captureToken() {
-      if (!available || disposed) fail('AUTH_REQUIRED')
-      const captured = grant(await credentials.readRecord(KEY))
-      if (!captured) fail('AUTH_REQUIRED')
-      let invalidated = false
-      return async () => {
-        const current = grant(await credentials.readRecord(KEY))
-        if (invalidated || disposed || !current || current.revision !== captured.revision || current.token !== captured.token || current.accountId !== captured.accountId) {
-          invalidated = true
-          fail('REMOTE_RUNTIME_CHANGED')
-        }
-        return current.token
-      }
-    },
+    captureSession,
+    async captureToken() { return (await captureSession()).resolveToken },
     dispose() { disposed = true; for (const controller of controllers) controller.abort() },
   })
 }
