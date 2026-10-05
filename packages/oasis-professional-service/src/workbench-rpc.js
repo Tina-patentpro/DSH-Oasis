@@ -10,7 +10,7 @@ import { WorkspaceMaterialError } from './workspace-materials.js'
 import { workspaceApiBindingCommandSchema } from './oasis-workspace-binding.js'
 import { accountCommandSchemas } from './oasis-account-contract.js'
 import { OasisAccountError } from './oasis-account.js'
-import { importCommands } from './website-import-contract.js'
+import { importCommands, sanitizeImportDiagnostics } from './website-import-contract.js'
 import { WebsiteImportError } from './website-import-client.js'
 
 export const OASIS_WORKBENCH_RPC_CHANNEL = '/oasis-workbench'
@@ -183,7 +183,7 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
         return { ok: true, value: await importService[action](payload) }
       } catch (error) {
         const code = error instanceof WebsiteImportError ? error.code : 'IMPORT_OPERATION_FAILED'
-        return { ok: false, error: { code, message: '导入未完成；已保存的文件不会删除，请查看导入清单。', details: {} } }
+        return { ok: false, error: { code, message: '导入未完成；已保存的文件不会删除，请查看导入清单。', details: error instanceof WebsiteImportError ? sanitizeImportDiagnostics(error.details) : {} } }
       }
     }
     if (endpoint.startsWith('account/')) {

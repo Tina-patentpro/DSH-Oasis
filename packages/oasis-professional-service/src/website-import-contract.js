@@ -1,6 +1,15 @@
 import { z } from 'zod'
 
 export const IMPORT_LIMITS = Object.freeze({ fileBytes: 32 * 1024 * 1024, totalBytes: 100 * 1024 * 1024, items: 100, listItems: 2000, ttlMs: 15 * 60 * 1000 })
+export function sanitizeImportDiagnostics(value) {
+  const result = {}
+  if (!value || typeof value !== 'object') return result
+  if (['project-list', 'project-detail', 'history-list', 'history-detail', 'file-list', 'file-metadata', 'file-download', 'history-attachment'].includes(value.endpoint)) result.endpoint = value.endpoint
+  if (['authentication', 'request', 'response', 'body', 'json', 'validation'].includes(value.stage)) result.stage = value.stage
+  if (['http', 'network', 'timeout', 'json', 'contract', 'ownership', 'operation'].includes(value.kind)) result.kind = value.kind
+  if (Number.isInteger(value.httpStatus) && value.httpStatus >= 100 && value.httpStatus <= 599) result.httpStatus = value.httpStatus
+  return result
+}
 const id = z.number().int().positive().max(Number.MAX_SAFE_INTEGER)
 const token = z.string().uuid()
 const page = z.number().int().min(1).max(10000)

@@ -8388,6 +8388,149 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, "刷新登录状态"), snapshot.error ? (0, react.createElement)("div", { role: "alert" }, snapshot.error) : null, snapshot.notice ? (0, react.createElement)("div", { role: "status" }, snapshot.notice) : null);
 		}
 		//#endregion
+		//#region src/website-import-contract.js
+		const IMPORT_LIMITS = Object.freeze({
+			fileBytes: 33554432,
+			totalBytes: 104857600,
+			items: 100,
+			listItems: 2e3,
+			ttlMs: 9e5
+		});
+		function sanitizeImportDiagnostics(value) {
+			const result = {};
+			if (!value || typeof value !== "object") return result;
+			if ([
+				"project-list",
+				"project-detail",
+				"history-list",
+				"history-detail",
+				"file-list",
+				"file-metadata",
+				"file-download",
+				"history-attachment"
+			].includes(value.endpoint)) result.endpoint = value.endpoint;
+			if ([
+				"authentication",
+				"request",
+				"response",
+				"body",
+				"json",
+				"validation"
+			].includes(value.stage)) result.stage = value.stage;
+			if ([
+				"http",
+				"network",
+				"timeout",
+				"json",
+				"contract",
+				"ownership",
+				"operation"
+			].includes(value.kind)) result.kind = value.kind;
+			if (Number.isInteger(value.httpStatus) && value.httpStatus >= 100 && value.httpStatus <= 599) result.httpStatus = value.httpStatus;
+			return result;
+		}
+		const id = number().int().positive().max(Number.MAX_SAFE_INTEGER);
+		const token = string().uuid();
+		const page = number().int().min(1).max(1e4);
+		const key = string().min(1).max(256);
+		const importCommands = {
+			open: object({
+				workspaceId: key,
+				confirmed: literal(true)
+			}).strict(),
+			projects: object({
+				token,
+				parentId: number().int().nonnegative().default(0),
+				page: page.default(1),
+				keyword: string().max(200).default("")
+			}).strict(),
+			items: object({
+				token,
+				folderId: id,
+				kind: _enum(["history", "files"]),
+				page: page.default(1)
+			}).strict(),
+			commit: object({
+				token,
+				folderId: id,
+				keys: array(key).max(IMPORT_LIMITS.items).refine((v) => new Set(v).size === v.length),
+				confirmed: literal(true)
+			}).strict(),
+			unlink: object({
+				token,
+				expectedSettingsRevision: number().int().nonnegative(),
+				confirmed: literal(true)
+			}).strict()
+		};
+		const websiteProjectLinkSchema = object({
+			workspaceId: key,
+			workspacePath: string().min(1).max(4096),
+			apiBaseOrigin: string().url(),
+			accountId: id,
+			folderId: id,
+			folderName: string().min(1).max(200),
+			confirmedAt: string().datetime()
+		}).strict();
+		const project = object({
+			id,
+			name: string().max(200),
+			hasChildren: boolean()
+		}).strict();
+		const item = object({
+			key,
+			name: string().max(200),
+			fileName: string().max(255),
+			kind: _enum([
+				"text",
+				"file",
+				"resource"
+			]),
+			size: number().int().nonnegative().nullable(),
+			downloadable: boolean(),
+			reason: string().max(300).nullable()
+		}).strict();
+		const importResponses = {
+			open: object({
+				token,
+				workspaceId: key,
+				workspacePath: string(),
+				accountId: id,
+				accountRevision: key,
+				link: websiteProjectLinkSchema.nullable(),
+				settingsRevision: number().int().nonnegative(),
+				expiresAt: number()
+			}).strict(),
+			unlink: object({
+				workspaceId: key,
+				status: literal("unlinked")
+			}).strict(),
+			projects: object({
+				total: number().int().nonnegative(),
+				items: array(project).max(20)
+			}).strict(),
+			items: object({
+				folderId: id,
+				total: number().int().nonnegative(),
+				items: array(item).max(IMPORT_LIMITS.listItems)
+			}).strict(),
+			commit: object({
+				workspaceId: key,
+				folderId: id,
+				status: _enum(["completed", "partial"]),
+				manifest: string().max(255),
+				items: array(object({
+					key,
+					fileName: string().max(255),
+					status: _enum([
+						"saved",
+						"skipped",
+						"failed"
+					]),
+					code: string().max(100).optional()
+				}).strict()).max(100)
+			}).strict()
+		};
+		//#endregion
 		//#region src/client/website-import-controller.js
 		const empty = () => ({
 			busy: false,
@@ -8424,6 +8567,39 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			IMPORT_EXPIRED: "选择已过期，请重新读取。",
 			IMPORT_INCOMPLETE_CHECK_MANIFEST: "导入中断。请在当前项目中查看 .oasis-import- 开头的清单，核对已保存和未完成文件。"
 		};
+		function explain(error) {
+			const base = Object.hasOwn(explanations, error?.code) ? explanations[error.code] : "操作未完成；请检查连接和导入清单，不会自动重试。";
+			const d = sanitizeImportDiagnostics(error?.details);
+			const endpoint = {
+				"project-list": "网站项目列表",
+				"project-detail": "项目归属核对",
+				"history-list": "历史内容列表",
+				"history-detail": "历史内容详情",
+				"file-list": "项目文件列表",
+				"file-metadata": "项目文件元数据",
+				"file-download": "项目文件下载",
+				"history-attachment": "历史附件下载"
+			};
+			const kind = {
+				http: "接口响应失败",
+				network: "网络或响应传输失败",
+				timeout: "请求超时",
+				json: "返回内容不是有效 JSON",
+				contract: "返回内容不符合接口合同",
+				ownership: "项目或文件归属不符",
+				operation: "请求操作未完成"
+			};
+			const stage = {
+				authentication: "登录状态检查",
+				request: "发送请求",
+				response: "响应状态",
+				body: "读取响应",
+				json: "解析响应",
+				validation: "校验响应"
+			};
+			if (!d.endpoint || !d.kind) return base;
+			return `${base} ${endpoint[d.endpoint]}：${kind[d.kind]}${d.stage ? `（${stage[d.stage]}）` : ""}${d.httpStatus ? `，HTTP ${d.httpStatus}` : ""}。不会自动重试。`;
+		}
 		function createWebsiteImportController({ remote, getWorkspaceId, getAccountRevision }) {
 			let snapshot = Object.freeze(empty()), generation = 0, disposed = false;
 			const listeners = /* @__PURE__ */ new Set();
@@ -8459,7 +8635,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					publish(patch);
 					return true;
 				} catch (error) {
-					if (!disposed && g === generation) publish({ error: explanations[error?.code] ?? "操作未完成；请检查连接和导入清单，不会自动重试。" });
+					if (!disposed && g === generation) publish({ error: explain(error) });
 					return false;
 				} finally {
 					if (g === generation) publish({ busy: false });
@@ -9702,116 +9878,6 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				inputActions
 			}));
 		}
-		//#endregion
-		//#region src/website-import-contract.js
-		const IMPORT_LIMITS = Object.freeze({
-			fileBytes: 33554432,
-			totalBytes: 104857600,
-			items: 100,
-			listItems: 2e3,
-			ttlMs: 9e5
-		});
-		const id = number().int().positive().max(Number.MAX_SAFE_INTEGER);
-		const token = string().uuid();
-		const page = number().int().min(1).max(1e4);
-		const key = string().min(1).max(256);
-		const importCommands = {
-			open: object({
-				workspaceId: key,
-				confirmed: literal(true)
-			}).strict(),
-			projects: object({
-				token,
-				parentId: number().int().nonnegative().default(0),
-				page: page.default(1),
-				keyword: string().max(200).default("")
-			}).strict(),
-			items: object({
-				token,
-				folderId: id,
-				kind: _enum(["history", "files"]),
-				page: page.default(1)
-			}).strict(),
-			commit: object({
-				token,
-				folderId: id,
-				keys: array(key).max(IMPORT_LIMITS.items).refine((v) => new Set(v).size === v.length),
-				confirmed: literal(true)
-			}).strict(),
-			unlink: object({
-				token,
-				expectedSettingsRevision: number().int().nonnegative(),
-				confirmed: literal(true)
-			}).strict()
-		};
-		const websiteProjectLinkSchema = object({
-			workspaceId: key,
-			workspacePath: string().min(1).max(4096),
-			apiBaseOrigin: string().url(),
-			accountId: id,
-			folderId: id,
-			folderName: string().min(1).max(200),
-			confirmedAt: string().datetime()
-		}).strict();
-		const project = object({
-			id,
-			name: string().max(200),
-			hasChildren: boolean()
-		}).strict();
-		const item = object({
-			key,
-			name: string().max(200),
-			fileName: string().max(255),
-			kind: _enum([
-				"text",
-				"file",
-				"resource"
-			]),
-			size: number().int().nonnegative().nullable(),
-			downloadable: boolean(),
-			reason: string().max(300).nullable()
-		}).strict();
-		const importResponses = {
-			open: object({
-				token,
-				workspaceId: key,
-				workspacePath: string(),
-				accountId: id,
-				accountRevision: key,
-				link: websiteProjectLinkSchema.nullable(),
-				settingsRevision: number().int().nonnegative(),
-				expiresAt: number()
-			}).strict(),
-			unlink: object({
-				workspaceId: key,
-				status: literal("unlinked")
-			}).strict(),
-			projects: object({
-				total: number().int().nonnegative(),
-				items: array(project).max(20)
-			}).strict(),
-			items: object({
-				folderId: id,
-				total: number().int().nonnegative(),
-				items: array(item).max(IMPORT_LIMITS.listItems)
-			}).strict(),
-			commit: object({
-				workspaceId: key,
-				folderId: id,
-				status: _enum(["completed", "partial"]),
-				manifest: string().max(255),
-				items: array(object({
-					key,
-					fileName: string().max(255),
-					status: _enum([
-						"saved",
-						"skipped",
-						"failed"
-					]),
-					code: string().max(100).optional()
-				}).strict()).max(100)
-			}).strict()
-		};
 		//#endregion
 		//#region src/oasis-account-contract.js
 		const OASIS_PRODUCT_ORIGIN = `https://${OASIS_PRODUCTION_HOSTNAME}`;

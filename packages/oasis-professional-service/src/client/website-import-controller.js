@@ -1,3 +1,5 @@
+import { sanitizeImportDiagnostics } from '../website-import-contract.js'
+
 const empty = () => ({ busy: false, session: null, projects: [], totalProjects: 0, projectPage: 1, parentId: 0, keyword: '',
   project: null, kind: 'history', itemPage: 1, totalItems: 0, items: [], selected: [], result: null, error: null, notice: null, submitted: false })
 const explanations = {
@@ -12,6 +14,17 @@ const explanations = {
   IMPORT_UNSAFE_PATH: '目录或文件名不安全，已阻止写入。', IMPORT_TOO_LARGE: '所选文件超过本次大小限制。',
   IMPORT_WORKSPACE_CHANGED: '本地项目已变化，请重新打开导入。', IMPORT_EXPIRED: '选择已过期，请重新读取。',
   IMPORT_INCOMPLETE_CHECK_MANIFEST: '导入中断。请在当前项目中查看 .oasis-import- 开头的清单，核对已保存和未完成文件。',
+}
+function explain(error) {
+  const base = Object.hasOwn(explanations, error?.code) ? explanations[error.code] : '操作未完成；请检查连接和导入清单，不会自动重试。'
+  const d = sanitizeImportDiagnostics(error?.details)
+  const endpoint = { 'project-list': '网站项目列表', 'project-detail': '项目归属核对', 'history-list': '历史内容列表',
+    'history-detail': '历史内容详情', 'file-list': '项目文件列表', 'file-metadata': '项目文件元数据', 'file-download': '项目文件下载', 'history-attachment': '历史附件下载' }
+  const kind = { http: '接口响应失败', network: '网络或响应传输失败', timeout: '请求超时', json: '返回内容不是有效 JSON',
+    contract: '返回内容不符合接口合同', ownership: '项目或文件归属不符', operation: '请求操作未完成' }
+  const stage = { authentication: '登录状态检查', request: '发送请求', response: '响应状态', body: '读取响应', json: '解析响应', validation: '校验响应' }
+  if (!d.endpoint || !d.kind) return base
+  return `${base} ${endpoint[d.endpoint]}：${kind[d.kind]}${d.stage ? `（${stage[d.stage]}）` : ''}${d.httpStatus ? `，HTTP ${d.httpStatus}` : ''}。不会自动重试。`
 }
 export function createWebsiteImportController({ remote, getWorkspaceId, getAccountRevision }) {
   let snapshot = Object.freeze(empty()), generation = 0, disposed = false
@@ -29,7 +42,7 @@ export function createWebsiteImportController({ remote, getWorkspaceId, getAccou
       if (!current(patch?.session ?? snapshot.session)) { clear(); return false }
       publish(patch); return true
     } catch (error) {
-      if (!disposed && g === generation) publish({ error: explanations[error?.code] ?? '操作未完成；请检查连接和导入清单，不会自动重试。' })
+      if (!disposed && g === generation) publish({ error: explain(error) })
       return false
     } finally { if (g === generation) publish({ busy: false }) }
   }

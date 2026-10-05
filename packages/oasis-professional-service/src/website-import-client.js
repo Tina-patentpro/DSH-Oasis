@@ -1,12 +1,12 @@
 import { OASIS_PRODUCT_ORIGIN } from './oasis-account-contract.js'
-import { IMPORT_LIMITS } from './website-import-contract.js'
+import { IMPORT_LIMITS, sanitizeImportDiagnostics } from './website-import-contract.js'
 import { validateWorkspaceRelativePath } from './workspace-materials.js'
 import { createHash } from 'node:crypto'
 
 export class WebsiteImportError extends Error {
-  constructor(code) { super(code); this.code = code }
+  constructor(code, details) { super(code); this.code = code; this.details = sanitizeImportDiagnostics(details) }
 }
-export const importFail = code => { throw new WebsiteImportError(code) }
+export const importFail = (code, details) => { throw new WebsiteImportError(code, details) }
 const id = value => Number.isSafeInteger(value) && value > 0 ? value : importFail('IMPORT_INVALID_RESPONSE')
 const title = value => typeof value === 'string' && value.trim() ? value.slice(0, 200) : '未命名'
 const digest = value => createHash('sha256').update(value).digest('hex')
@@ -46,7 +46,8 @@ function legacyAttachments(value) {
   return [...attachments.values()]
 }
 function unwrap(value) {
-  if (!value || typeof value !== 'object' || ('code' in value && ![0, 200].includes(value.code))) importFail('IMPORT_INVALID_RESPONSE')
+  if (!value || typeof value !== 'object' || ('code' in value && ![0, 200].includes(value.code))
+    || ('success' in value && value.success !== true)) importFail('IMPORT_INVALID_RESPONSE')
   return Object.hasOwn(value, 'data') ? value.data : value
 }
 function list(value, resource = false, page = 1) {
@@ -57,16 +58,27 @@ function list(value, resource = false, page = 1) {
   return { total, items: data.items }
 }
 export function createWebsiteImportClient({ resolveToken, accountId, fetchImpl = globalThis.fetch }) {
-  async function request(path, binary = false, authenticated = true) {
+  async function validated(endpoint, operation) {
+    try { return await operation() }
+    catch (error) {
+      if (error instanceof WebsiteImportError && error.details.endpoint) throw error
+      const code = error instanceof WebsiteImportError ? error.code : 'IMPORT_INVALID_RESPONSE'
+      importFail(code, { endpoint, stage: 'validation', kind: code === 'IMPORT_OWNERSHIP' ? 'ownership' : 'contract', httpStatus: 200 })
+    }
+  }
+  async function request(path, endpoint, binary = false, authenticated = true) {
     const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 30000)
-    let reader
+    let reader, httpStatus, stage = 'authentication'
     try {
       const auth = authenticated ? { authorization: `Bearer ${await resolveToken()}` } : {}
+      stage = 'request'
       const response = await fetchImpl(path.startsWith('https:') ? path : OASIS_PRODUCT_ORIGIN + path, {
         method: 'GET', headers: auth, redirect: 'error', credentials: 'omit', cache: 'no-store', signal: controller.signal,
       })
-      if (response.status === 401 || response.status === 403) importFail('AUTH_REQUIRED')
-      if (response.status !== 200) importFail('IMPORT_REQUEST_FAILED')
+      stage = 'response'; httpStatus = response.status
+      if (response.status === 401 || response.status === 403) importFail('AUTH_REQUIRED', { endpoint, stage, kind: 'http', httpStatus })
+      if (response.status !== 200) importFail('IMPORT_REQUEST_FAILED', { endpoint, stage, kind: 'http', httpStatus })
+      stage = 'body'
       const max = binary ? IMPORT_LIMITS.fileBytes : 2 * 1024 * 1024
       if (Number(response.headers.get('content-length')) > max) importFail('IMPORT_TOO_LARGE')
       reader = response.body?.getReader()
@@ -79,35 +91,50 @@ export function createWebsiteImportClient({ resolveToken, accountId, fetchImpl =
         if (size > max) importFail('IMPORT_TOO_LARGE')
         chunks.push(value)
       }
+      stage = 'authentication'
       await resolveToken()
       const bytes = Buffer.concat(chunks)
+      stage = 'json'
       return binary ? bytes : JSON.parse(bytes.toString('utf8'))
     } catch (error) {
-      if (error instanceof WebsiteImportError) throw error
-      importFail('IMPORT_REQUEST_FAILED')
+      if (error instanceof WebsiteImportError) {
+        if (error.details.endpoint) throw error
+        importFail(error.code, { endpoint, stage, kind: 'contract', httpStatus })
+      }
+      const kind = controller.signal.aborted || error?.name === 'AbortError' ? 'timeout'
+        : stage === 'json' ? 'json' : stage === 'request' || stage === 'body' ? 'network' : 'operation'
+      importFail('IMPORT_REQUEST_FAILED', { endpoint, stage, kind, httpStatus })
     } finally { clearTimeout(timer); controller.abort(); await reader?.cancel().catch(() => {}); reader?.releaseLock() }
   }
   async function project(folderId) {
-    const data = unwrap(await request(`/api/user/user/folderdetail/${id(folderId)}`))
+    return validated('project-detail', async () => {
+    const data = unwrap(await request(`/api/user/user/folderdetail/${id(folderId)}`, 'project-detail'))
     if (data.id !== folderId || data.owner_id !== accountId) importFail('IMPORT_OWNERSHIP')
     return { id: folderId, name: title(data.name), hasChildren: data.has_children === true }
+    })
   }
   async function history(sourceId, folderId) {
-    const data = unwrap(await request(`/api/user/user/projectdetail/${id(sourceId)}`))
+    return validated('history-detail', async () => {
+    const data = unwrap(await request(`/api/user/user/projectdetail/${id(sourceId)}`, 'history-detail'))
     if (data.id !== sourceId || data.folder_id !== folderId) importFail('IMPORT_OWNERSHIP')
     return data
+    })
   }
   return Object.freeze({
     project,
     async listProjects({ parentId = 0, page = 1, keyword = '' }) {
-      const result = list(await request('/api/user/user/folderlist?' + new URLSearchParams({ parent_id: parentId, page, limit: 20, keyword })), false, page)
+      return validated('project-list', async () => {
+      const result = list(await request('/api/user/user/folderlist?' + new URLSearchParams({ parent_id: parentId, page, limit: 20, keyword }), 'project-list'), false, page)
       return { total: result.total, items: result.items.map(v => ({ id: id(v.id), name: title(v.name), hasChildren: v.has_children === true })) }
+      })
     },
     async listItems({ folderId, kind, page }) {
       await project(folderId)
       const resource = kind === 'files'
+      const endpoint = resource ? 'file-list' : 'history-list'
+      return validated(endpoint, async () => {
       const result = list(await request(resource ? '/api/files?' + new URLSearchParams({ projectId: folderId, page, pageSize: 20 })
-        : '/api/user/user/projectlist?' + new URLSearchParams({ folder_id: folderId, page, limit: 20 })), resource, page)
+        : '/api/user/user/projectlist?' + new URLSearchParams({ folder_id: folderId, page, limit: 20 }), endpoint), resource, page)
       const items = []
       for (const v of result.items) {
         if (resource) {
@@ -131,17 +158,22 @@ export function createWebsiteImportClient({ resolveToken, accountId, fetchImpl =
         if (items.length > IMPORT_LIMITS.listItems) importFail('IMPORT_TOO_MANY_ITEMS')
       }
       return { total: result.total, items }
+      })
     },
     async download(row, folderId) {
       if (!row.downloadable) importFail('IMPORT_UNSUPPORTED_FILE')
       await project(folderId)
       if (row.kind === 'resource') {
-        const data = unwrap(await request(`/api/files/${encodeURIComponent(row.sourceId)}/metadata`))
+        await validated('file-metadata', async () => {
+        const data = unwrap(await request(`/api/files/${encodeURIComponent(row.sourceId)}/metadata`, 'file-metadata'))
         if (data.id !== row.sourceId || data.projectId !== String(folderId)) importFail('IMPORT_OWNERSHIP')
         if (data.filename !== row.fileName || data.size !== row.size) importFail('IMPORT_ITEM_CHANGED')
-        const bytes = await request(`/api/files/${encodeURIComponent(row.sourceId)}`, true)
+        })
+        return validated('file-download', async () => {
+        const bytes = await request(`/api/files/${encodeURIComponent(row.sourceId)}`, 'file-download', true)
         if (bytes.length !== row.size) importFail('IMPORT_ITEM_CHANGED')
         return bytes
+        })
       }
       const data = await history(row.sourceId, folderId)
       if (row.kind === 'text') {
@@ -149,7 +181,7 @@ export function createWebsiteImportClient({ resolveToken, accountId, fetchImpl =
         return Buffer.from(data.answer_text, 'utf8')
       }
       if (!legacyAttachments(data.file_url).some(({ url }) => url && url === row.url)) importFail('IMPORT_ITEM_CHANGED')
-      return request(row.url, true, false)
+      return request(row.url, 'history-attachment', true, false)
     },
   })
 }
