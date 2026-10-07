@@ -4974,11 +4974,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		//#region src/claims-api-execution-contract.js
 		const sha = string().regex(/^[a-f0-9]{64}$/);
 		const id$1 = string().min(1).max(256);
-		const revision = number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
+		const revision$1 = number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
 		const workspaceBindingReadSchema = object({
 			workspaceId: id$1,
 			workspacePath: string().min(1).max(4096),
-			settingsRevision: revision,
+			settingsRevision: revision$1,
 			binding: workspaceApiBindingSchema.nullable(),
 			status: _enum(["unbound", "unverified"])
 		}).strict();
@@ -4990,8 +4990,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			workspaceId: id$1,
 			workspacePath: string().min(1).max(4096),
 			taskId: id$1,
-			expectedRevision: revision,
-			expectedSettingsRevision: revision,
+			expectedRevision: revision$1,
+			expectedSettingsRevision: revision$1,
 			workflowId: literal("patent-claims"),
 			workflowVersion: literal("2"),
 			source: literal("oasis-api"),
@@ -5024,15 +5024,15 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		const claimsApiPreviewSchema = object({
 			workspaceId: id$1,
 			taskId: id$1,
-			expectedRevision: revision,
-			expectedSettingsRevision: revision,
+			expectedRevision: revision$1,
+			expectedSettingsRevision: revision$1,
 			confirmationToken: string().uuid(),
 			expiresAt: string().datetime(),
 			preparationSha256: sha,
 			apiBaseOrigin: string().min(1).max(2048),
 			environmentKind: _enum(["non-production", "production"]),
-			accountId: revision,
-			folderId: revision,
+			accountId: revision$1,
+			folderId: revision$1,
 			folderName: string().min(1).max(200),
 			apiEndpoint: id$1,
 			price: number().nonnegative().finite(),
@@ -8433,6 +8433,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		const token = string().uuid();
 		const page = number().int().min(1).max(1e4);
 		const key = string().min(1).max(256);
+		const revision = string().regex(/^[a-f0-9]{64}$/);
 		const importCommands = {
 			open: object({
 				workspaceId: key,
@@ -8447,15 +8448,16 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			items: object({
 				token,
 				folderId: id,
-				kind: _enum(["history", "files"]),
+				kind: literal("records"),
 				page: page.default(1)
 			}).strict(),
 			commit: object({
 				token,
 				folderId: id,
 				keys: array(key).max(IMPORT_LIMITS.items).refine((v) => new Set(v).size === v.length),
+				versions: record(key, revision),
 				confirmed: literal(true)
-			}).strict(),
+			}).strict().refine((v) => Object.keys(v.versions).length === v.keys.length && v.keys.every((k) => Object.hasOwn(v.versions, k))),
 			unlink: object({
 				token,
 				expectedSettingsRevision: number().int().nonnegative(),
@@ -8478,19 +8480,54 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}).strict();
 		const item = object({
 			key,
+			revision,
+			recordId: id,
+			role: _enum([
+				"text",
+				"input",
+				"output"
+			]),
+			inputField: string().max(2e3).nullable(),
 			name: string().max(200),
 			fileName: string().max(255),
-			kind: _enum([
-				"text",
-				"file",
-				"resource"
-			]),
+			kind: _enum(["text", "file"]),
 			size: number().int().nonnegative().nullable(),
 			downloadable: boolean(),
 			reason: string().max(300).nullable()
 		}).strict();
+		const diagnostics = object({
+			endpoint: _enum([
+				"project-list",
+				"project-detail",
+				"history-list",
+				"history-detail",
+				"file-list",
+				"file-metadata",
+				"file-download",
+				"history-attachment"
+			]).optional(),
+			stage: _enum([
+				"authentication",
+				"request",
+				"response",
+				"body",
+				"json",
+				"validation"
+			]).optional(),
+			kind: _enum([
+				"http",
+				"network",
+				"timeout",
+				"json",
+				"contract",
+				"ownership",
+				"operation"
+			]).optional(),
+			httpStatus: number().int().min(100).max(599).optional()
+		}).strict();
 		const importResponses = {
 			open: object({
+				protocolVersion: literal(2),
 				token,
 				workspaceId: key,
 				workspacePath: string(),
@@ -8511,11 +8548,19 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			items: object({
 				folderId: id,
 				total: number().int().nonnegative(),
+				pageState: _enum(["complete", "partial"]),
+				recordIds: array(id).max(20).refine((v) => new Set(v).size === v.length),
+				issues: array(object({
+					recordId: id,
+					code: string().max(100),
+					details: diagnostics
+				}).strict()).max(20),
 				items: array(item).max(IMPORT_LIMITS.listItems)
-			}).strict(),
+			}).strict().refine((v) => v.items.every((row) => v.recordIds.includes(row.recordId)) && v.issues.every((issue) => v.recordIds.includes(issue.recordId))),
 			commit: object({
 				workspaceId: key,
 				folderId: id,
+				associationStatus: literal("saved"),
 				status: _enum(["completed", "partial"]),
 				manifest: string().max(255),
 				items: array(object({
@@ -8541,11 +8586,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			parentId: 0,
 			keyword: "",
 			project: null,
-			kind: "history",
+			role: "text",
 			itemPage: 1,
 			totalItems: 0,
 			items: [],
+			pageState: null,
+			issues: [],
 			selected: [],
+			selectedRows: [],
 			result: null,
 			error: null,
 			notice: null,
@@ -8560,6 +8608,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			IMPORT_SETTINGS_CHANGED: "设置已变化，请重新读取项目，再确认解除关联；不会覆盖其他修改。",
 			IMPORT_BUSY: "当前项目正在导入或解除关联，请等待原操作结束。",
 			IMPORT_OWNERSHIP: "网站返回的项目或文件归属无法验证，已阻止导入。",
+			IMPORT_PROTOCOL_MISMATCH: "导入协议不匹配，请使用配套的 Host 和客户端；导入已禁用。",
+			IMPORT_ITEM_CHANGED: "所选材料已变化，请重新读取并重新选择；不会自动改用新内容。",
 			IMPORT_REQUEST_FAILED: "网站接口读取失败或暂不支持；没有把失败当作空列表。请稍后明确重试。",
 			IMPORT_UNSAFE_PATH: "目录或文件名不安全，已阻止写入。",
 			IMPORT_TOO_LARGE: "所选文件超过本次大小限制。",
@@ -8635,7 +8685,15 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					publish(patch);
 					return true;
 				} catch (error) {
-					if (!disposed && g === generation) publish({ error: explain(error) });
+					if (!disposed && g === generation) {
+						if ([
+							"AUTH_REQUIRED",
+							"IMPORT_OWNERSHIP",
+							"IMPORT_ACCOUNT_CHANGED",
+							"IMPORT_WORKSPACE_CHANGED"
+						].includes(error.code)) publish(empty());
+						publish({ error: explain(error) });
+					}
 					return false;
 				} finally {
 					if (g === generation) publish({ busy: false });
@@ -8662,29 +8720,46 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					};
 				});
 			}
-			async function items({ project = snapshot.project, kind = snapshot.kind, page = 1 } = {}) {
-				if (!current(snapshot.session) || !project || snapshot.submitted) return false;
-				if (project.id !== snapshot.project?.id) publish({
+			async function items({ project = snapshot.project, page = snapshot.itemPage } = {}) {
+				if (snapshot.busy || disposed || !current(snapshot.session) || !project || snapshot.submitted) return false;
+				const changed = project.id !== snapshot.project?.id;
+				if (changed) publish({
 					selected: [],
+					selectedRows: [],
 					items: [],
 					totalItems: 0,
 					project,
-					result: null
+					itemPage: page,
+					result: null,
+					role: "text",
+					pageState: null,
+					issues: [],
+					error: null,
+					notice: null
 				});
 				return operation(async () => {
+					const oldPageKeys = new Set(!changed && page === snapshot.itemPage ? snapshot.items.map((v) => v.key) : []);
 					const result = await remote.websiteImport("items", {
 						token: snapshot.session.token,
 						folderId: project.id,
-						kind,
+						kind: "records",
 						page
 					});
 					if (result.folderId !== project.id) throw Error("scope");
+					const incoming = new Map(result.items.map((row) => [row.key, row]));
+					const failedRecords = new Set(result.issues.map((issue) => issue.recordId));
+					const selectedRows = snapshot.selectedRows.filter((row) => !failedRecords.has(row.recordId) && (incoming.has(row.key) ? incoming.get(row.key).revision === row.revision && incoming.get(row.key).downloadable : !oldPageKeys.has(row.key) && !result.recordIds.includes(row.recordId)));
+					const removed = selectedRows.length !== snapshot.selectedRows.length;
 					return {
 						project,
-						kind,
 						itemPage: page,
 						items: result.items,
-						totalItems: result.total
+						totalItems: result.total,
+						pageState: result.pageState,
+						issues: result.issues,
+						selectedRows,
+						selected: selectedRows.map((v) => v.key),
+						...removed ? { notice: "部分已选材料发生变化或无法读取，已取消勾选。请核对后重新选择。" } : {}
 					};
 				});
 			}
@@ -8704,6 +8779,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							workspaceId: getWorkspaceId(),
 							confirmed: true
 						});
+						if (session.protocolVersion !== 2) throw { code: "IMPORT_PROTOCOL_MISMATCH" };
 						if (!current(session) || g !== generation) throw Error("scope");
 						publish({ session });
 						const result = await remote.websiteImport("projects", {
@@ -8723,15 +8799,27 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				items,
 				selectProject: (project) => items({
 					project,
-					kind: "history",
 					page: 1
 				}),
+				filter(role) {
+					if (snapshot.busy || snapshot.submitted || !current(snapshot.session) || ![
+						"text",
+						"input",
+						"output"
+					].includes(role)) return false;
+					publish({ role });
+					return true;
+				},
 				toggle(key) {
-					if (snapshot.busy || snapshot.submitted || !current(snapshot.session) || !snapshot.items.some((v) => v.key === key && v.downloadable)) return;
-					const selected = new Set(snapshot.selected);
-					if (selected.has(key)) selected.delete(key);
-					else if (selected.size < 100) selected.add(key);
-					publish({ selected: [...selected] });
+					if (snapshot.busy || snapshot.submitted || !current(snapshot.session) || !snapshot.selected.includes(key) && !snapshot.items.some((v) => v.key === key && v.downloadable)) return;
+					const selectedRows = [...snapshot.selectedRows];
+					const index = selectedRows.findIndex((row) => row.key === key);
+					if (index >= 0) selectedRows.splice(index, 1);
+					else if (selectedRows.length < 100) selectedRows.push(structuredClone(snapshot.items.find((row) => row.key === key)));
+					publish({
+						selected: selectedRows.map((v) => v.key),
+						selectedRows
+					});
 				},
 				async commit() {
 					if (!current(snapshot.session)) {
@@ -8739,13 +8827,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						return false;
 					}
 					if (!snapshot.project || snapshot.submitted || snapshot.busy) return false;
-					const { session, project, selected } = snapshot;
+					const { session, project, selected, selectedRows } = snapshot;
 					return operation(async () => {
 						publish({ submitted: true });
 						const result = await remote.websiteImport("commit", {
 							token: session.token,
 							folderId: project.id,
 							keys: selected,
+							versions: Object.fromEntries(selectedRows.map((row) => [row.key, row.revision])),
 							confirmed: true
 						});
 						if (result.workspaceId !== session.workspaceId || result.folderId !== project.id) throw Error("scope");
@@ -8788,6 +8877,34 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			font: "inherit",
 			cursor: "pointer"
 		};
+		const roles = {
+			text: "历史正文",
+			input: "输入材料",
+			output: "输出附件"
+		};
+		function WebsiteRecordItems({ state, onToggle }) {
+			const visible = state.items.filter((row) => row.role === state.role);
+			return (0, react.createElement)("div", null, state.pageState === "partial" ? (0, react.createElement)("p", { role: "status" }, "部分记录或材料无法读取；已验证项仍可选择，不能据此认定项目材料完整。") : null, ...state.issues.map((issue) => (0, react.createElement)("p", {
+				key: issue.recordId,
+				role: "status"
+			}, `记录 ${issue.recordId} 未读取：${issue.code}${issue.details.httpStatus ? `，HTTP ${issue.details.httpStatus}` : ""}`)), ...visible.map((row) => (0, react.createElement)("label", {
+				key: row.key,
+				style: {
+					display: "block",
+					padding: "8px 0",
+					overflowWrap: "anywhere"
+				}
+			}, (0, react.createElement)("input", {
+				type: "checkbox",
+				checked: state.selected.includes(row.key),
+				disabled: state.busy || state.submitted || !row.downloadable,
+				onChange: () => onToggle(row.key)
+			}), ` ${row.fileName} · ${roles[row.role]} · 记录 ${row.recordId}（${row.name}）${row.inputField ? ` · 字段 ${row.inputField}` : ""} · ${row.size === null ? "大小待下载核实" : `${row.size} 字节`}`, row.reason ? (0, react.createElement)("small", null, ` — ${row.reason}`) : null)), !visible.length ? (0, react.createElement)("p", null, state.pageState === "partial" ? "当前筛选暂无可列项，不能判断是否没有材料。" : state.pageState === "complete" ? state.items.length ? "当前筛选没有可识别材料。" : "本页没有可识别材料；不代表项目全部页都无材料。" : "材料尚未成功读取；可明确重试或仅关联项目。") : null, state.selectedRows.length ? (0, react.createElement)("section", { "aria-label": "已选清单" }, (0, react.createElement)("h4", null, "已选清单（含其他页和筛选）"), ...state.selectedRows.map((row) => (0, react.createElement)("div", { key: row.key }, `${row.fileName} · ${roles[row.role]} · 记录 ${row.recordId} `, (0, react.createElement)("button", {
+				type: "button",
+				disabled: state.busy || state.submitted,
+				onClick: () => onToggle(row.key)
+			}, "取消选择")))) : null);
+		}
 		function WebsiteImportDialog({ workspaceId, remote, accountController, onClose, onOpenFiles }) {
 			const account = (0, react.useSyncExternalStore)(accountController.subscribe, accountController.getSnapshot, accountController.getSnapshot);
 			const scope = (0, react.useRef)({
@@ -8900,19 +9017,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				parentId: p.id,
 				page: 1,
 				keyword: ""
-			}), state.submitted) : null)), !state.projects.length ? (0, react.createElement)("p", null, "此页没有项目") : null, (0, react.createElement)("p", null, `第 ${state.projectPage} 页 · ${state.totalProjects} 个项目`), btn("上一页", () => controller.browse({ page: state.projectPage - 1 }), state.projectPage <= 1), btn("下一页", () => controller.browse({ page: state.projectPage + 1 }), state.projectPage * 20 >= state.totalProjects)), (0, react.createElement)("section", { "aria-label": "项目内容" }, (0, react.createElement)("h3", null, state.project ? `选择内容 · ${state.project.name}` : "请先选择项目"), state.project ? (0, react.createElement)("div", null, btn("历史生成内容及附件", () => controller.items({ kind: "history" }), state.submitted), btn("项目文件", () => controller.items({ kind: "files" }), state.submitted), (0, react.createElement)("p", null, state.kind === "history" ? "网站历史正文和生成附件" : "网站项目文件"), ...state.items.map((row) => (0, react.createElement)("label", {
-				key: row.key,
-				style: {
-					display: "block",
-					padding: "8px 0",
-					overflowWrap: "anywhere"
-				}
-			}, (0, react.createElement)("input", {
-				type: "checkbox",
-				checked: state.selected.includes(row.key),
-				disabled: state.busy || state.submitted || !row.downloadable,
-				onChange: () => controller.toggle(row.key)
-			}), ` ${row.fileName} · ${row.size === null ? "大小待下载核实" : `${row.size} 字节`}`, row.reason ? (0, react.createElement)("small", null, ` — ${row.reason}`) : null)), !state.items.length ? (0, react.createElement)("p", null, "此页没有可列出的内容；子项目需单独选择。") : null, (0, react.createElement)("p", null, `第 ${state.itemPage} 页 · ${state.totalItems} 条源记录`), btn("上一页内容", () => controller.items({ page: state.itemPage - 1 }), state.itemPage <= 1 || state.submitted), btn("下一页内容", () => controller.items({ page: state.itemPage + 1 }), state.itemPage * 20 >= state.totalItems || state.submitted)) : null)), (0, react.createElement)("hr"), (0, react.createElement)("p", null, `已勾选 ${state.selected.length} 项。单文件最多 32 MiB，每次最多 100 项 / 100 MiB。`), (0, react.createElement)("p", null, "不勾选文件也可仅关联项目。勾选时，历史正文以 _OIW.md 保存；附件保留文件名。同名不覆盖、同内容跳过，导入内容未在本地审核。"), btn(state.selected.length ? "关联并导入选中文件" : "关联到当前项目", () => controller.commit(), !state.project || state.submitted || unlinkConfirm)) : null, state.busy ? (0, react.createElement)("p", { role: "status" }, state.submitted ? "正在逐项下载并保存，请勿关闭 Host…" : "正在读取…") : null, state.error ? (0, react.createElement)("p", { role: "alert" }, state.error) : null, state.notice ? (0, react.createElement)("p", { role: "status" }, state.notice) : null, state.result ? (0, react.createElement)("section", { "aria-label": "导入结果" }, (0, react.createElement)("h3", null, state.result.status === "completed" ? state.result.items.length ? "关联及导入完成" : "关联成功" : "部分内容未完成"), (0, react.createElement)("p", null, "需要解除或更换关联时，请先点击“重新读取项目”。"), ...state.result.items.map((row) => (0, react.createElement)("p", { key: row.key }, `${{
+			}), state.submitted) : null)), !state.projects.length ? (0, react.createElement)("p", null, "此页没有项目") : null, (0, react.createElement)("p", null, `第 ${state.projectPage} 页 · ${state.totalProjects} 个项目`), btn("上一页", () => controller.browse({ page: state.projectPage - 1 }), state.projectPage <= 1), btn("下一页", () => controller.browse({ page: state.projectPage + 1 }), state.projectPage * 20 >= state.totalProjects)), (0, react.createElement)("section", { "aria-label": "项目内容" }, (0, react.createElement)("h3", null, state.project ? `选择内容 · ${state.project.name}` : "请先选择项目"), state.project ? (0, react.createElement)("div", null, ...Object.entries(roles).map(([role, label]) => btn(`${label}${state.role === role ? " ✓" : ""}`, () => controller.filter(role), state.submitted)), (0, react.createElement)("p", null, "来自所选项目的业务记录；筛选不发请求，不读取独立文件库。"), btn("重新读取本页记录", () => controller.items(), state.submitted), (0, react.createElement)(WebsiteRecordItems, {
+				state,
+				onToggle: (key) => controller.toggle(key)
+			}), (0, react.createElement)("p", null, `第 ${state.itemPage} 页 · ${state.totalItems} 条源记录`), btn("上一页内容", () => controller.items({ page: state.itemPage - 1 }), state.itemPage <= 1 || state.submitted), btn("下一页内容", () => controller.items({ page: state.itemPage + 1 }), state.itemPage * 20 >= state.totalItems || state.submitted)) : null)), (0, react.createElement)("hr"), (0, react.createElement)("p", null, `已勾选 ${state.selected.length} 项。单文件最多 32 MiB，每次最多 100 项 / 100 MiB。`), (0, react.createElement)("p", null, "不勾选文件也可仅关联项目。勾选时，历史正文以 _OIW.md 保存；附件保留文件名。同名不覆盖、同内容跳过，导入内容未在本地审核。"), btn(state.selected.length ? "关联并导入选中文件" : "关联到当前项目", () => controller.commit(), !state.project || state.submitted || unlinkConfirm)) : null, state.busy ? (0, react.createElement)("p", { role: "status" }, state.submitted ? "正在逐项下载并保存，请勿关闭 Host…" : "正在读取…") : null, state.error ? (0, react.createElement)("p", { role: "alert" }, state.error) : null, state.notice ? (0, react.createElement)("p", { role: "status" }, state.notice) : null, state.result ? (0, react.createElement)("section", { "aria-label": "导入结果" }, (0, react.createElement)("h3", null, "项目关联已保存"), (0, react.createElement)("p", null, `文件：${state.result.items.filter((v) => v.status === "saved").length} 项保存，${state.result.items.filter((v) => v.status === "skipped").length} 项同内容跳过，${state.result.items.filter((v) => v.status === "failed").length} 项失败。`), (0, react.createElement)("p", null, "需要解除或更换关联时，请先点击“重新读取项目”。"), ...state.result.items.map((row) => (0, react.createElement)("p", { key: row.key }, `${{
 				saved: "已保存",
 				skipped: "相同内容已跳过",
 				failed: "未完成"
@@ -9934,7 +10042,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async websiteImport(action, payload) {
 					if (!Object.hasOwn(importCommands, action)) throw new WorkbenchRemoteError("IMPORT_INVALID_INPUT", "导入动作无效");
 					const input = importCommands[action].parse(payload);
-					const result = unwrap(await call(CHANNEL, `import/${action}`, input), importResponses[action]);
+					const response = await call(CHANNEL, `import/${action}`, input);
+					if (action === "open" && response?.ok === true && response.value?.protocolVersion !== 2) throw new WorkbenchRemoteError("IMPORT_PROTOCOL_MISMATCH", "导入协议不匹配");
+					const result = unwrap(response, importResponses[action]);
 					if (action === "open" && result.workspaceId !== input.workspaceId || ["items", "commit"].includes(action) && result.folderId !== input.folderId) throw new WorkbenchRemoteError("INVALID_RESPONSE", "导入项目不一致");
 					return result;
 				},

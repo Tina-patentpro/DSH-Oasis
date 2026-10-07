@@ -2,7 +2,7 @@ import { randomUUID, createHash } from 'node:crypto'
 import { lstat, realpath, open as openFile } from 'node:fs/promises'
 import { resolve, parse, join, sep } from 'node:path'
 import { OASIS_PRODUCT_ORIGIN } from './oasis-account-contract.js'
-import { importCommands, importResponses, IMPORT_LIMITS, parseWebsiteProjectLinks } from './website-import-contract.js'
+import { importCommands, importResponses, IMPORT_LIMITS, IMPORT_PROTOCOL_VERSION, parseWebsiteProjectLinks, sanitizeImportDiagnostics } from './website-import-contract.js'
 import { createWebsiteImportClient, WebsiteImportError, importFail } from './website-import-client.js'
 import { validateWorkspaceRelativePath, WorkspaceMaterialError } from './workspace-materials.js'
 import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
@@ -83,7 +83,10 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
     return [parsed.data, tickets.get(parsed.data.token)]
   }
   async function locked(t, operation) {
-    try { return await workspaceOperations.run(t.workspaceId, operation) }
+    try { return await workspaceOperations.run(t.workspaceId, async () => {
+      t.mutating = true
+      try { return await operation() } finally { t.mutating = false }
+    }) }
     catch (error) {
       if (error instanceof WorkspaceMaterialError && error.code === 'WORKSPACE_OPERATION_BUSY') importFail(error.code)
       throw error
@@ -112,7 +115,7 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
       t.settingsRevision = d.revision
       const existing = d.links.find(x => x.workspaceId === workspaceId) ?? d.value.workspaceApiBindings?.find(x => x.workspaceId === workspaceId)
       const link = existing ? Object.fromEntries(['workspaceId', 'workspacePath', 'apiBaseOrigin', 'accountId', 'folderId', 'folderName', 'confirmedAt'].map(key => [key, existing[key]])) : null
-      return importResponses.open.parse({ token, workspaceId, workspacePath: t.workspacePath, accountId: t.accountId,
+      return importResponses.open.parse({ protocolVersion: IMPORT_PROTOCOL_VERSION, token, workspaceId, workspacePath: t.workspacePath, accountId: t.accountId,
         accountRevision: t.accountRevision, expiresAt: t.expiresAt, settingsRevision: d.revision,
         link })
     },
@@ -124,22 +127,39 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
     async items(input) {
       const [args, t] = ticket(input, 'items'); await check(t); linkCheck(t, args.folderId)
       if (t.consumed) importFail('IMPORT_EXPIRED')
+      if (t.reading || t.mutating) importFail('IMPORT_BUSY')
+      t.reading = true
+      try {
       const result = await t.client.listItems(args); await check(t); linkCheck(t, args.folderId)
-      if (t.seen.size + result.items.length > IMPORT_LIMITS.listItems) importFail('IMPORT_TOO_MANY_ITEMS')
-      for (const row of result.items) t.seen.set(`${args.folderId}:${row.key}`, structuredClone(row))
-      return importResponses.items.parse({ folderId: args.folderId, total: result.total,
-        items: result.items.map(({ key, name, fileName, kind, size, downloadable, reason }) => ({ key, name, fileName, kind, size, downloadable, reason })) })
+      if (t.consumed) importFail('IMPORT_EXPIRED')
+      const response = importResponses.items.parse({ folderId: args.folderId, total: result.total, pageState: result.pageState, recordIds: result.recordIds,
+        issues: result.issues.map(issue => ({ ...issue, details: sanitizeImportDiagnostics(issue.details) })),
+        items: result.items.map(({ key, revision, sourceId, role, inputField, name, fileName, kind, size, downloadable, reason }) =>
+          ({ key, revision, recordId: sourceId, role, inputField, name, fileName, kind, size, downloadable, reason })) })
+      const nextSeen = new Map(t.seen)
+      for (const [key, row] of nextSeen) if (key.startsWith(`${args.folderId}:`) && result.recordIds.includes(row.sourceId)) nextSeen.delete(key)
+      for (const row of result.items) nextSeen.set(`${args.folderId}:${row.key}`, structuredClone(row))
+      if (nextSeen.size > IMPORT_LIMITS.listItems) importFail('IMPORT_TOO_MANY_ITEMS')
+      t.seen = nextSeen
+      return response
+      } catch (error) {
+        if (['AUTH_REQUIRED', 'IMPORT_OWNERSHIP'].includes(error.code)) { t.invalidated = true; t.seen.clear() }
+        throw error
+      } finally { t.reading = false }
     },
     async commit(input) {
       const [args, t] = ticket(input, 'commit'); await check(t)
-      const selection = JSON.stringify({ folderId: args.folderId, keys: [...args.keys].sort() })
+      if (t.reading) importFail('IMPORT_BUSY')
+      const selection = JSON.stringify({ folderId: args.folderId, selected: [...args.keys].sort().map(key => [key, args.versions[key]]) })
       if (t.result && selection === t.selection) return structuredClone(t.result)
       if (t.consumed) importFail('IMPORT_ALREADY_SUBMITTED')
       const rows = args.keys.map(key => t.seen.get(`${args.folderId}:${key}`))
       if (rows.some(v => !v?.downloadable)) importFail('IMPORT_INVALID_SELECTION')
+      if (rows.some(row => row.revision !== args.versions[row.key])) importFail('IMPORT_ITEM_CHANGED')
       for (const row of rows) fileName(row.fileName, 1)
       if (rows.reduce((sum, row) => sum + (row.size ?? 0), 0) > IMPORT_LIMITS.totalBytes) importFail('IMPORT_TOO_LARGE')
       return locked(t, async () => {
+        if (t.reading) importFail('IMPORT_BUSY')
         await check(t)
         if (isWorkspaceBusy(t.workspaceId)) importFail('IMPORT_WORKSPACE_BUSY')
         const d = linkCheck(t, args.folderId), folder = await t.client.project(args.folderId)
@@ -150,34 +170,40 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
           accountId: t.accountId, folderId: args.folderId, folderName: folder.name, confirmedAt: new Date(now()).toISOString() }
         const links = parseWebsiteProjectLinks([...d.links.filter(v => v.workspaceId !== t.workspaceId), link])
         if (isWorkspaceBusy(t.workspaceId)) importFail('IMPORT_WORKSPACE_BUSY')
+        // Freeze before the first potentially persisted mutation: unknown settings outcome is not retryable.
+        t.consumed = true; t.selection = selection
         await settings.update(NS, { websiteProjectLinks: links }, d.revision)
         await check(t); linkCheck(t, args.folderId)
-        t.consumed = true; t.selection = selection
         const manifest = `.oasis-import-${randomUUID()}.jsonl`, items = []
-        let journal, total = 0, fatal = false
+        let journal, fatal = false
+        const budget = { remaining: IMPORT_LIMITS.totalBytes }
+        const provenance = row => ({ recordId: row.sourceId, role: row.role, inputField: row.inputField, selectionRevision: row.revision })
         const record = async data => { await journal.writeFile(JSON.stringify(data) + '\n'); await journal.sync() }
         try {
           journal = await openFile(join(t.workspacePath, manifest), 'wx')
-          await record({ kind: 'import', version: 1, ...link, selected: rows.map(v => ({ key: v.key, fileName: v.fileName })), warning: 'Imported website history; not locally reviewed. Intent without saved record requires inspection.' })
+          await record({ kind: 'import', version: 2, ...link, selected: rows.map(v => ({ key: v.key, fileName: v.fileName, ...provenance(v) })),
+            warning: 'Current website record references; downloaded hashes do not authenticate historical originals. Not locally reviewed. Intent without saved record requires inspection.' })
           for (const row of rows) {
             let chosen = row.fileName, handle
             try {
               if (fatal) importFail('IMPORT_STOPPED')
               await check(t); linkCheck(t, args.folderId)
-              const bytes = await t.client.download(row, args.folderId)
-              total += bytes.length
-              if (bytes.length > IMPORT_LIMITS.fileBytes || total > IMPORT_LIMITS.totalBytes) { fatal = true; importFail('IMPORT_TOO_LARGE') }
+              if (budget.remaining <= 0) { fatal = true; importFail('IMPORT_TOO_LARGE') }
+              const before = budget.remaining
+              const bytes = await t.client.download(row, args.folderId, { budget })
+              if (bytes.length > IMPORT_LIMITS.fileBytes || bytes.length > before || budget.remaining > before - bytes.length) { fatal = true; importFail('IMPORT_TOO_LARGE') }
               await check(t); linkCheck(t, args.folderId)
               let saved = false
               for (let number = 1; number <= 1000; number++) {
                 chosen = fileName(row.fileName, number)
                 const path = join(t.workspacePath, chosen)
                 if (await sameFile(path, bytes)) {
+                  await record({ kind: 'verified-existing', key: row.key, fileName: chosen, ...provenance(row), size: bytes.length, sha256: hash(bytes) })
                   items.push({ key: row.key, fileName: chosen, status: 'skipped' }); saved = true; break
                 }
                 await check(t)
                 // Durable intent precedes exclusive creation. Partial bytes remain explicitly incomplete after a crash.
-                await record({ kind: 'intent', key: row.key, fileName: chosen, size: bytes.length, sha256: hash(bytes) })
+                await record({ kind: 'intent', key: row.key, fileName: chosen, ...provenance(row), size: bytes.length, sha256: hash(bytes) })
                 try { handle = await openFile(path, 'wx') } catch (error) { if (error.code === 'EEXIST') continue; throw error }
                 await handle.writeFile(bytes); await handle.sync(); await handle.close(); handle = null
                 await check(t)
@@ -188,12 +214,12 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
             } catch (error) {
               await handle?.close().catch(() => {})
               const code = error instanceof WebsiteImportError ? error.code : 'IMPORT_IO_OR_REQUEST_FAILED'
-              if (['IMPORT_ACCOUNT_CHANGED', 'IMPORT_WORKSPACE_CHANGED', 'IMPORT_LINK_CONFLICT', 'IMPORT_EXPIRED', 'AUTH_REQUIRED'].includes(code)) fatal = true
+              if (['IMPORT_ACCOUNT_CHANGED', 'IMPORT_WORKSPACE_CHANGED', 'IMPORT_LINK_CONFLICT', 'IMPORT_EXPIRED', 'AUTH_REQUIRED', 'IMPORT_OWNERSHIP'].includes(code) || budget.remaining <= 0) fatal = true
               items.push({ key: row.key, fileName: chosen, status: 'failed', code })
             }
             await record({ kind: 'result', ...items.at(-1) })
           }
-          const result = importResponses.commit.parse({ workspaceId: t.workspaceId, folderId: args.folderId, manifest, items,
+          const result = importResponses.commit.parse({ workspaceId: t.workspaceId, folderId: args.folderId, associationStatus: 'saved', manifest, items,
             status: items.some(v => v.status === 'failed') ? 'partial' : 'completed' })
           await record({ kind: 'finished', status: result.status })
           t.result = result

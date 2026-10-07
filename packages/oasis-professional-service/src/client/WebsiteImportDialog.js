@@ -3,6 +3,23 @@ import { OasisAccountSettings } from './OasisAccountSettings.js'
 import { createWebsiteImportController } from './website-import-controller.js'
 
 const button = { padding: '8px 12px', border: '1px solid #cfd8d3', borderRadius: 8, background: 'var(--dsw-alias-bg-base, white)', color: 'inherit', font: 'inherit', cursor: 'pointer' }
+const roles = { text: '历史正文', input: '输入材料', output: '输出附件' }
+export function WebsiteRecordItems({ state, onToggle }) {
+  const visible = state.items.filter(row => row.role === state.role)
+  return h('div', null,
+    state.pageState === 'partial' ? h('p', { role: 'status' }, '部分记录或材料无法读取；已验证项仍可选择，不能据此认定项目材料完整。') : null,
+    ...state.issues.map(issue => h('p', { key: issue.recordId, role: 'status' }, `记录 ${issue.recordId} 未读取：${issue.code}${issue.details.httpStatus ? `，HTTP ${issue.details.httpStatus}` : ''}`)),
+    ...visible.map(row => h('label', { key: row.key, style: { display: 'block', padding: '8px 0', overflowWrap: 'anywhere' } },
+      h('input', { type: 'checkbox', checked: state.selected.includes(row.key), disabled: state.busy || state.submitted || !row.downloadable,
+        onChange: () => onToggle(row.key) }), ` ${row.fileName} · ${roles[row.role]} · 记录 ${row.recordId}（${row.name}）${row.inputField ? ` · 字段 ${row.inputField}` : ''} · ${row.size === null ? '大小待下载核实' : `${row.size} 字节`}`,
+      row.reason ? h('small', null, ` — ${row.reason}`) : null)),
+    !visible.length ? h('p', null, state.pageState === 'partial' ? '当前筛选暂无可列项，不能判断是否没有材料。'
+      : state.pageState === 'complete' ? state.items.length ? '当前筛选没有可识别材料。' : '本页没有可识别材料；不代表项目全部页都无材料。'
+        : '材料尚未成功读取；可明确重试或仅关联项目。') : null,
+    state.selectedRows.length ? h('section', { 'aria-label': '已选清单' }, h('h4', null, '已选清单（含其他页和筛选）'),
+      ...state.selectedRows.map(row => h('div', { key: row.key }, `${row.fileName} · ${roles[row.role]} · 记录 ${row.recordId} `,
+        h('button', { type: 'button', disabled: state.busy || state.submitted, onClick: () => onToggle(row.key) }, '取消选择')))) : null)
+}
 export function WebsiteImportDialog({ workspaceId, remote, accountController, onClose, onOpenFiles }) {
   const account = useSyncExternalStore(accountController.subscribe, accountController.getSnapshot, accountController.getSnapshot)
   const scope = useRef({ workspaceId, accountRevision: account.accountRevision })
@@ -56,14 +73,10 @@ export function WebsiteImportDialog({ workspaceId, remote, accountController, on
           btn('下一页', () => controller.browse({ page: state.projectPage + 1 }), state.projectPage * 20 >= state.totalProjects)),
         h('section', { 'aria-label': '项目内容' }, h('h3', null, state.project ? `选择内容 · ${state.project.name}` : '请先选择项目'),
           state.project ? h('div', null,
-            btn('历史生成内容及附件', () => controller.items({ kind: 'history' }), state.submitted),
-            btn('项目文件', () => controller.items({ kind: 'files' }), state.submitted),
-            h('p', null, state.kind === 'history' ? '网站历史正文和生成附件' : '网站项目文件'),
-            ...state.items.map(row => h('label', { key: row.key, style: { display: 'block', padding: '8px 0', overflowWrap: 'anywhere' } },
-              h('input', { type: 'checkbox', checked: state.selected.includes(row.key), disabled: state.busy || state.submitted || !row.downloadable,
-                onChange: () => controller.toggle(row.key) }), ` ${row.fileName} · ${row.size === null ? '大小待下载核实' : `${row.size} 字节`}`,
-              row.reason ? h('small', null, ` — ${row.reason}`) : null)),
-            !state.items.length ? h('p', null, '此页没有可列出的内容；子项目需单独选择。') : null,
+            ...Object.entries(roles).map(([role, label]) => btn(`${label}${state.role === role ? ' ✓' : ''}`, () => controller.filter(role), state.submitted)),
+            h('p', null, '来自所选项目的业务记录；筛选不发请求，不读取独立文件库。'),
+            btn('重新读取本页记录', () => controller.items(), state.submitted),
+            h(WebsiteRecordItems, { state, onToggle: key => controller.toggle(key) }),
             h('p', null, `第 ${state.itemPage} 页 · ${state.totalItems} 条源记录`),
             btn('上一页内容', () => controller.items({ page: state.itemPage - 1 }), state.itemPage <= 1 || state.submitted),
             btn('下一页内容', () => controller.items({ page: state.itemPage + 1 }), state.itemPage * 20 >= state.totalItems || state.submitted)) : null)),
@@ -73,7 +86,8 @@ export function WebsiteImportDialog({ workspaceId, remote, accountController, on
     state.busy ? h('p', { role: 'status' }, state.submitted ? '正在逐项下载并保存，请勿关闭 Host…' : '正在读取…') : null,
     state.error ? h('p', { role: 'alert' }, state.error) : null,
     state.notice ? h('p', { role: 'status' }, state.notice) : null,
-    state.result ? h('section', { 'aria-label': '导入结果' }, h('h3', null, state.result.status === 'completed' ? state.result.items.length ? '关联及导入完成' : '关联成功' : '部分内容未完成'),
+    state.result ? h('section', { 'aria-label': '导入结果' }, h('h3', null, '项目关联已保存'),
+      h('p', null, `文件：${state.result.items.filter(v => v.status === 'saved').length} 项保存，${state.result.items.filter(v => v.status === 'skipped').length} 项同内容跳过，${state.result.items.filter(v => v.status === 'failed').length} 项失败。`),
       h('p', null, '需要解除或更换关联时，请先点击“重新读取项目”。'),
       ...state.result.items.map(row => h('p', { key: row.key }, `${{ saved: '已保存', skipped: '相同内容已跳过', failed: '未完成' }[row.status]}：${row.fileName}${row.code ? `（${row.code}）` : ''}`)),
       h('p', { style: { overflowWrap: 'anywhere' } }, `导入清单：${state.result.manifest}`),

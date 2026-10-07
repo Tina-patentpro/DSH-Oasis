@@ -1,7 +1,7 @@
-import { sanitizeImportDiagnostics } from '../website-import-contract.js'
+import { sanitizeImportDiagnostics, IMPORT_PROTOCOL_VERSION } from '../website-import-contract.js'
 
 const empty = () => ({ busy: false, session: null, projects: [], totalProjects: 0, projectPage: 1, parentId: 0, keyword: '',
-  project: null, kind: 'history', itemPage: 1, totalItems: 0, items: [], selected: [], result: null, error: null, notice: null, submitted: false })
+  project: null, role: 'text', itemPage: 1, totalItems: 0, items: [], pageState: null, issues: [], selected: [], selectedRows: [], result: null, error: null, notice: null, submitted: false })
 const explanations = {
   WORKSPACE_OPERATION_BUSY: '当前项目正在导入、解除关联或准备生成，请等待原操作结束后重新确认；不会自动重试。',
   IMPORT_WORKSPACE_BUSY: '当前项目有未结束的生成，请先处理原任务，再导入。',
@@ -10,6 +10,8 @@ const explanations = {
   IMPORT_SETTINGS_CHANGED: '设置已变化，请重新读取项目，再确认解除关联；不会覆盖其他修改。',
   IMPORT_BUSY: '当前项目正在导入或解除关联，请等待原操作结束。',
   IMPORT_OWNERSHIP: '网站返回的项目或文件归属无法验证，已阻止导入。',
+  IMPORT_PROTOCOL_MISMATCH: '导入协议不匹配，请使用配套的 Host 和客户端；导入已禁用。',
+  IMPORT_ITEM_CHANGED: '所选材料已变化，请重新读取并重新选择；不会自动改用新内容。',
   IMPORT_REQUEST_FAILED: '网站接口读取失败或暂不支持；没有把失败当作空列表。请稍后明确重试。',
   IMPORT_UNSAFE_PATH: '目录或文件名不安全，已阻止写入。', IMPORT_TOO_LARGE: '所选文件超过本次大小限制。',
   IMPORT_WORKSPACE_CHANGED: '本地项目已变化，请重新打开导入。', IMPORT_EXPIRED: '选择已过期，请重新读取。',
@@ -42,7 +44,10 @@ export function createWebsiteImportController({ remote, getWorkspaceId, getAccou
       if (!current(patch?.session ?? snapshot.session)) { clear(); return false }
       publish(patch); return true
     } catch (error) {
-      if (!disposed && g === generation) publish({ error: explain(error) })
+      if (!disposed && g === generation) {
+        if (['AUTH_REQUIRED', 'IMPORT_OWNERSHIP', 'IMPORT_ACCOUNT_CHANGED', 'IMPORT_WORKSPACE_CHANGED'].includes(error.code)) publish(empty())
+        publish({ error: explain(error) })
+      }
       return false
     } finally { if (g === generation) publish({ busy: false }) }
   }
@@ -53,15 +58,24 @@ export function createWebsiteImportController({ remote, getWorkspaceId, getAccou
       return { projects: result.items, totalProjects: result.total, projectPage: page, parentId, keyword }
     })
   }
-  async function items({ project = snapshot.project, kind = snapshot.kind, page = 1 } = {}) {
-    if (!current(snapshot.session) || !project || snapshot.submitted) return false
+  async function items({ project = snapshot.project, page = snapshot.itemPage } = {}) {
+    if (snapshot.busy || disposed || !current(snapshot.session) || !project || snapshot.submitted) return false
     const changed = project.id !== snapshot.project?.id
     // Selection survives pagination in the same project; never across projects.
-    if (changed) publish({ selected: [], items: [], totalItems: 0, project, result: null })
+    if (changed) publish({ selected: [], selectedRows: [], items: [], totalItems: 0, project, itemPage: page,
+      result: null, role: 'text', pageState: null, issues: [], error: null, notice: null })
     return operation(async () => {
-      const result = await remote.websiteImport('items', { token: snapshot.session.token, folderId: project.id, kind, page })
+      const oldPageKeys = new Set(!changed && page === snapshot.itemPage ? snapshot.items.map(v => v.key) : [])
+      const result = await remote.websiteImport('items', { token: snapshot.session.token, folderId: project.id, kind: 'records', page })
       if (result.folderId !== project.id) throw Error('scope')
-      return { project, kind, itemPage: page, items: result.items, totalItems: result.total }
+      const incoming = new Map(result.items.map(row => [row.key, row]))
+      const failedRecords = new Set(result.issues.map(issue => issue.recordId))
+      const selectedRows = snapshot.selectedRows.filter(row => !failedRecords.has(row.recordId)
+        && (incoming.has(row.key) ? incoming.get(row.key).revision === row.revision && incoming.get(row.key).downloadable
+          : !oldPageKeys.has(row.key) && !result.recordIds.includes(row.recordId)))
+      const removed = selectedRows.length !== snapshot.selectedRows.length
+      return { project, itemPage: page, items: result.items, totalItems: result.total, pageState: result.pageState, issues: result.issues,
+        selectedRows, selected: selectedRows.map(v => v.key), ...(removed ? { notice: '部分已选材料发生变化或无法读取，已取消勾选。请核对后重新选择。' } : {}) }
     })
   }
   return Object.freeze({
@@ -73,26 +87,35 @@ export function createWebsiteImportController({ remote, getWorkspaceId, getAccou
       const g = generation
       return operation(async () => {
         const session = await remote.websiteImport('open', { workspaceId: getWorkspaceId(), confirmed: true })
+        if (session.protocolVersion !== IMPORT_PROTOCOL_VERSION) throw { code: 'IMPORT_PROTOCOL_MISMATCH' }
         if (!current(session) || g !== generation) throw Error('scope')
         publish({ session })
         const result = await remote.websiteImport('projects', { token: session.token, parentId: 0, page: 1, keyword: '' })
         return { session, projects: result.items, totalProjects: result.total }
       })
     },
-    browse, items, selectProject: project => items({ project, kind: 'history', page: 1 }),
+    browse, items, selectProject: project => items({ project, page: 1 }),
+    filter(role) {
+      if (snapshot.busy || snapshot.submitted || !current(snapshot.session) || !['text', 'input', 'output'].includes(role)) return false
+      publish({ role }); return true
+    },
     toggle(key) {
-      if (snapshot.busy || snapshot.submitted || !current(snapshot.session) || !snapshot.items.some(v => v.key === key && v.downloadable)) return
-      const selected = new Set(snapshot.selected)
-      if (selected.has(key)) selected.delete(key); else if (selected.size < 100) selected.add(key)
-      publish({ selected: [...selected] })
+      if (snapshot.busy || snapshot.submitted || !current(snapshot.session)
+        || (!snapshot.selected.includes(key) && !snapshot.items.some(v => v.key === key && v.downloadable))) return
+      const selectedRows = [...snapshot.selectedRows]
+      const index = selectedRows.findIndex(row => row.key === key)
+      if (index >= 0) selectedRows.splice(index, 1)
+      else if (selectedRows.length < 100) selectedRows.push(structuredClone(snapshot.items.find(row => row.key === key)))
+      publish({ selected: selectedRows.map(v => v.key), selectedRows })
     },
     async commit() {
       if (!current(snapshot.session)) { clear(); return false }
       if (!snapshot.project || snapshot.submitted || snapshot.busy) return false
-      const { session, project, selected } = snapshot
+      const { session, project, selected, selectedRows } = snapshot
       return operation(async () => {
         publish({ submitted: true })
-        const result = await remote.websiteImport('commit', { token: session.token, folderId: project.id, keys: selected, confirmed: true })
+        const result = await remote.websiteImport('commit', { token: session.token, folderId: project.id, keys: selected,
+          versions: Object.fromEntries(selectedRows.map(row => [row.key, row.revision])), confirmed: true })
         if (result.workspaceId !== session.workspaceId || result.folderId !== project.id) throw Error('scope')
         return { result }
       })

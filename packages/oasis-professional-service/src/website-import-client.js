@@ -1,6 +1,6 @@
 import { OASIS_PRODUCT_ORIGIN } from './oasis-account-contract.js'
 import { IMPORT_LIMITS, sanitizeImportDiagnostics } from './website-import-contract.js'
-import { validateWorkspaceRelativePath } from './workspace-materials.js'
+import { extractWebsiteRecordFiles, safeImportName } from './website-record-files.js'
 import { createHash } from 'node:crypto'
 
 export class WebsiteImportError extends Error {
@@ -10,91 +10,68 @@ export const importFail = (code, details) => { throw new WebsiteImportError(code
 const id = value => Number.isSafeInteger(value) && value > 0 ? value : importFail('IMPORT_INVALID_RESPONSE')
 const title = value => typeof value === 'string' && value.trim() ? value.slice(0, 200) : '未命名'
 const digest = value => createHash('sha256').update(value).digest('hex')
-function safeName(value) {
-  try { if (/[\\/]/.test(value)) throw Error(); validateWorkspaceRelativePath(value); return value } catch { return null }
-}
+const fingerprint = value => digest(JSON.stringify(value))
 function generatedName(value) {
   let stem = title(value).normalize('NFC').replace(/[\x00-\x1f<>:"/\\|?*]/g, '_').replace(/[ .]+$/g, '').slice(0, 170)
-  if (!safeName(stem)) stem = `历史_${stem}`
+  if (!safeImportName(stem)) stem = `历史_${stem}`
   return `${stem}_OIW.md`
-}
-function legacyUrl(value) {
-  try {
-    if (typeof value !== 'string' || value.length > 4096) return null
-    const url = new URL(value)
-    if (url.origin !== OASIS_PRODUCT_ORIGIN || url.username || url.password || url.hash) return null
-    // Never follow arbitrary authenticated API GETs found inside imported content.
-    if (!/^\/(?:uploads|storage|files)\//.test(url.pathname)) return null
-    return url.href
-  } catch { return null }
-}
-function legacyAttachments(value) {
-  if (value == null) return []
-  const values = typeof value === 'string' ? [value] : value
-  if (!Array.isArray(values) || values.some(v => typeof v !== 'string')) importFail('IMPORT_INVALID_RESPONSE')
-  const attachments = new Map()
-  for (const entry of values) {
-    // The website's legacy file_url can join several URLs; commas inside a URL remain data.
-    for (const part of entry.split(/,(?=\s*(?:https?:\/\/|\/))/g)) {
-      const raw = part.trim()
-      if (!raw) continue
-      const url = legacyUrl(raw), fingerprint = digest(url ?? raw)
-      attachments.set(fingerprint, { url, fingerprint })
-      if (attachments.size > IMPORT_LIMITS.listItems) importFail('IMPORT_TOO_MANY_ITEMS')
-    }
-  }
-  return [...attachments.values()]
 }
 function unwrap(value) {
   if (!value || typeof value !== 'object' || ('code' in value && ![0, 200].includes(value.code))
     || ('success' in value && value.success !== true)) importFail('IMPORT_INVALID_RESPONSE')
   return Object.hasOwn(value, 'data') ? value.data : value
 }
-function list(value, resource = false, page = 1) {
+function list(value, page = 1) {
   const data = unwrap(value)
-  if (!resource && Array.isArray(data)) return { total: data.length, items: data.slice((page - 1) * 20, page * 20) }
-  const total = resource ? data?.pagination?.total : data?.total
-  if (!Number.isSafeInteger(total) || total < 0 || !Array.isArray(data?.items) || data.items.length > 20 || total < data.items.length) importFail('IMPORT_INVALID_RESPONSE')
-  return { total, items: data.items }
+  if (Array.isArray(data)) return { total: data.length, items: data.slice((page - 1) * 20, page * 20) }
+  const total = data?.total, items = Object.hasOwn(data ?? {}, 'items') ? data.items : data?.item
+  if (!Number.isSafeInteger(total) || total < 0 || !Array.isArray(items) || items.length > 20 || total < items.length) importFail('IMPORT_INVALID_RESPONSE')
+  return { total, items }
 }
 export function createWebsiteImportClient({ resolveToken, accountId, fetchImpl = globalThis.fetch }) {
   async function validated(endpoint, operation) {
     try { return await operation() }
     catch (error) {
       if (error instanceof WebsiteImportError && error.details.endpoint) throw error
-      const code = error instanceof WebsiteImportError ? error.code : 'IMPORT_INVALID_RESPONSE'
+      const code = error instanceof WebsiteImportError ? error.code : error?.code === 'IMPORT_TOO_MANY_ITEMS' ? error.code : 'IMPORT_INVALID_RESPONSE'
       importFail(code, { endpoint, stage: 'validation', kind: code === 'IMPORT_OWNERSHIP' ? 'ownership' : 'contract', httpStatus: 200 })
     }
   }
-  async function request(path, endpoint, binary = false, authenticated = true) {
+  async function request(path, endpoint, { binary = false, authenticated = true, signal, budget } = {}) {
     const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 30000)
+    const abort = () => controller.abort()
+    signal?.addEventListener('abort', abort, { once: true })
+    if (signal?.aborted) controller.abort()
     let reader, httpStatus, stage = 'authentication'
     try {
-      const auth = authenticated ? { authorization: `Bearer ${await resolveToken()}` } : {}
-      stage = 'request'
+      controller.signal.throwIfAborted()
+      const auth = authenticated ? { authorization: 'Bearer ' + await resolveToken() } : {}
+      controller.signal.throwIfAborted(); stage = 'request'
       const response = await fetchImpl(path.startsWith('https:') ? path : OASIS_PRODUCT_ORIGIN + path, {
         method: 'GET', headers: auth, redirect: 'error', credentials: 'omit', cache: 'no-store', signal: controller.signal,
       })
-      stage = 'response'; httpStatus = response.status
+      controller.signal.throwIfAborted(); stage = 'response'; httpStatus = response.status
       if (response.status === 401 || response.status === 403) importFail('AUTH_REQUIRED', { endpoint, stage, kind: 'http', httpStatus })
       if (response.status !== 200) importFail('IMPORT_REQUEST_FAILED', { endpoint, stage, kind: 'http', httpStatus })
       stage = 'body'
-      const max = binary ? IMPORT_LIMITS.fileBytes : 2 * 1024 * 1024
+      const max = binary ? Math.min(IMPORT_LIMITS.fileBytes, budget?.remaining ?? IMPORT_LIMITS.fileBytes) : 2 * 1024 * 1024
       if (Number(response.headers.get('content-length')) > max) importFail('IMPORT_TOO_LARGE')
+      const contentType = (response.headers.get('content-type') ?? '').split(';')[0].trim().toLowerCase()
+      if (binary && /^(?:text\/html|application\/(?:json|problem\+json|xhtml\+xml))$/.test(contentType)) importFail('IMPORT_UNSUPPORTED_FILE')
       reader = response.body?.getReader()
       if (!reader) importFail('IMPORT_INVALID_RESPONSE')
       const chunks = []; let size = 0
       while (true) {
         const { done, value } = await reader.read()
+        controller.signal.throwIfAborted()
         if (done) break
         size += value.byteLength
+        if (binary && budget) budget.remaining = Math.max(0, budget.remaining - value.byteLength)
         if (size > max) importFail('IMPORT_TOO_LARGE')
         chunks.push(value)
       }
-      stage = 'authentication'
-      await resolveToken()
-      const bytes = Buffer.concat(chunks)
-      stage = 'json'
+      stage = 'authentication'; await resolveToken(); controller.signal.throwIfAborted()
+      const bytes = Buffer.concat(chunks); stage = 'json'
       return binary ? bytes : JSON.parse(bytes.toString('utf8'))
     } catch (error) {
       if (error instanceof WebsiteImportError) {
@@ -104,84 +81,110 @@ export function createWebsiteImportClient({ resolveToken, accountId, fetchImpl =
       const kind = controller.signal.aborted || error?.name === 'AbortError' ? 'timeout'
         : stage === 'json' ? 'json' : stage === 'request' || stage === 'body' ? 'network' : 'operation'
       importFail('IMPORT_REQUEST_FAILED', { endpoint, stage, kind, httpStatus })
-    } finally { clearTimeout(timer); controller.abort(); await reader?.cancel().catch(() => {}); reader?.releaseLock() }
+    } finally {
+      clearTimeout(timer); signal?.removeEventListener('abort', abort); controller.abort()
+      await reader?.cancel().catch(() => {}); reader?.releaseLock()
+    }
   }
-  async function project(folderId) {
+  async function project(folderId, options) {
     return validated('project-detail', async () => {
-    const data = unwrap(await request(`/api/user/user/folderdetail/${id(folderId)}`, 'project-detail'))
-    if (data.id !== folderId || data.owner_id !== accountId) importFail('IMPORT_OWNERSHIP')
-    return { id: folderId, name: title(data.name), hasChildren: data.has_children === true }
+      const data = unwrap(await request('/api/user/user/folderdetail/' + id(folderId), 'project-detail', options))
+      if (data?.id !== folderId || data.owner_id !== accountId) importFail('IMPORT_OWNERSHIP')
+      return { id: folderId, name: title(data.name), hasChildren: data.has_children === true }
     })
   }
-  async function history(sourceId, folderId) {
+  async function history(sourceId, folderId, options) {
     return validated('history-detail', async () => {
-    const data = unwrap(await request(`/api/user/user/projectdetail/${id(sourceId)}`, 'history-detail'))
-    if (data.id !== sourceId || data.folder_id !== folderId) importFail('IMPORT_OWNERSHIP')
-    return data
+      const data = unwrap(await request('/api/user/user/projectdetail/' + id(sourceId), 'history-detail', options))
+      if (data?.id !== sourceId || data.folder_id !== folderId || (Object.hasOwn(data, 'user_id') && data.user_id !== accountId)) importFail('IMPORT_OWNERSHIP')
+      return data
     })
+  }
+  function recordRows(data, folderId) {
+    const rows = [], base = [accountId, folderId, data.id]
+    if (typeof data.answer_text === 'string' && data.answer_text.trim()) {
+      const fileName = generatedName(data.name), size = Buffer.byteLength(data.answer_text), sha256 = digest(data.answer_text)
+      rows.push({ key: 'record:' + data.id + ':text:' + fingerprint(base), sourceId: data.id, role: 'text', inputField: null, mimeType: 'text/markdown',
+        revision: fingerprint([fileName, size, sha256]), name: title(data.name), fileName, kind: 'text', size, sha256,
+        downloadable: size <= IMPORT_LIMITS.fileBytes, reason: size <= IMPORT_LIMITS.fileBytes ? null : '正文超过32 MiB' })
+    }
+    const { files, unsupported } = extractWebsiteRecordFiles(data)
+    for (const file of files) {
+      const key = 'record:' + data.id + ':file:' + fingerprint([...base, file.role, file.inputField, file.url])
+      rows.push({ ...file, key, sourceId: data.id, name: title(data.name), kind: 'file',
+        revision: fingerprint([file.url, file.fileName, file.mimeType, file.size]), downloadable: true, reason: null })
+    }
+    unsupported.forEach((file, index) => rows.push({ ...file, key: 'record:' + data.id + ':unsupported:' + fingerprint([...base, index, file]),
+      revision: fingerprint(file), sourceId: data.id, name: title(data.name), fileName: '不支持的材料', kind: 'file', size: null,
+      mimeType: null, downloadable: false }))
+    if (rows.length > IMPORT_LIMITS.listItems) importFail('IMPORT_TOO_MANY_ITEMS')
+    return rows
   }
   return Object.freeze({
     project,
     async listProjects({ parentId = 0, page = 1, keyword = '' }) {
       return validated('project-list', async () => {
-      const result = list(await request('/api/user/user/folderlist?' + new URLSearchParams({ parent_id: parentId, page, limit: 20, keyword }), 'project-list'), false, page)
-      return { total: result.total, items: result.items.map(v => ({ id: id(v.id), name: title(v.name), hasChildren: v.has_children === true })) }
+        const result = list(await request('/api/user/user/folderlist?' + new URLSearchParams({ parent_id: parentId, page, limit: 20, keyword }), 'project-list'), page)
+        return { total: result.total, items: result.items.map(v => ({ id: id(v.id), name: title(v.name), hasChildren: v.has_children === true })) }
       })
     },
-    async listItems({ folderId, kind, page }) {
-      await project(folderId)
-      const resource = kind === 'files'
-      const endpoint = resource ? 'file-list' : 'history-list'
-      return validated(endpoint, async () => {
-      const result = list(await request(resource ? '/api/files?' + new URLSearchParams({ projectId: folderId, page, pageSize: 20 })
-        : '/api/user/user/projectlist?' + new URLSearchParams({ folder_id: folderId, page, limit: 20 }), endpoint), resource, page)
-      const items = []
-      for (const v of result.items) {
-        if (resource) {
-          if (v.projectId !== String(folderId)) importFail('IMPORT_OWNERSHIP')
-          if (typeof v.id !== 'string' || !/^[a-zA-Z0-9_-]{1,180}$/.test(v.id) || !Number.isSafeInteger(v.size) || v.size < 0) importFail('IMPORT_INVALID_RESPONSE')
-          const fileName = safeName(v.filename), downloadable = !!fileName && v.size <= IMPORT_LIMITS.fileBytes
-          items.push({ key: `resource:${v.id}`, sourceId: v.id, name: title(v.filename), fileName: fileName ?? '不可导入文件', kind: 'resource',
-            size: v.size, downloadable, reason: downloadable ? null : '文件名不安全或超过 32 MiB' })
-        } else {
-          if (v.folder_id !== folderId) importFail('IMPORT_OWNERSHIP')
-          id(v.id)
-          if (typeof v.answer_text === 'string' && v.answer_text.trim()) items.push({ key: `history:${v.id}:text`, sourceId: v.id, name: title(v.name),
-            fileName: generatedName(v.name), kind: 'text', size: Buffer.byteLength(v.answer_text), sha256: digest(v.answer_text), downloadable: true, reason: null })
-          for (const { url, fingerprint } of legacyAttachments(v.file_url)) {
-            let fileName = null
-            try { fileName = url ? safeName(decodeURIComponent(new URL(url).pathname.split('/').at(-1))) : null } catch {}
-            items.push({ key: `history:${v.id}:file:${fingerprint}`, sourceId: v.id, name: title(v.name), fileName: fileName ?? '历史附件', kind: 'file', size: null,
-              downloadable: !!url && !!fileName, reason: url && fileName ? null : '附件地址未获信任或文件名不安全', url })
+    async listItems({ folderId, kind, page = 1 }) {
+      if (kind !== 'records') importFail('IMPORT_INVALID_INPUT')
+      const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 60000)
+      const options = { signal: controller.signal }
+      try {
+        await project(folderId, options)
+        return await validated('history-list', async () => {
+          const result = list(await request('/api/user/user/projectlist?' + new URLSearchParams({ folder_id: folderId, page, limit: 20 }), 'history-list', options), page)
+          const ids = new Set()
+          for (const v of result.items) {
+            id(v.id)
+            if (v.folder_id !== folderId || (Object.hasOwn(v, 'user_id') && v.user_id !== accountId)) importFail('IMPORT_OWNERSHIP')
+            if (ids.has(v.id)) importFail('IMPORT_INVALID_RESPONSE')
+            ids.add(v.id)
           }
-        }
-        if (items.length > IMPORT_LIMITS.listItems) importFail('IMPORT_TOO_MANY_ITEMS')
-      }
-      return { total: result.total, items }
-      })
+          const batches = [], issues = []; let next = 0, fatal
+          async function worker() {
+            while (!fatal && next < result.items.length) {
+              const index = next++, sourceId = result.items[index].id
+              try { batches[index] = recordRows(await history(sourceId, folderId, options), folderId) }
+              catch (error) {
+                if (['AUTH_REQUIRED', 'IMPORT_OWNERSHIP', 'IMPORT_TOO_MANY_ITEMS'].includes(error.code)) {
+                  if (!fatal) fatal = error
+                  controller.abort(); return
+                }
+                issues.push({ recordId: sourceId, code: error instanceof WebsiteImportError ? error.code : 'IMPORT_INVALID_RESPONSE', details: sanitizeImportDiagnostics(error.details) })
+              }
+            }
+          }
+          await Promise.all([worker(), worker()])
+          if (fatal) throw fatal
+          const items = batches.flat().filter(Boolean)
+          if (items.length > IMPORT_LIMITS.listItems) importFail('IMPORT_TOO_MANY_ITEMS')
+          return { total: result.total, recordIds: [...ids], items, issues: issues.sort((a, b) => a.recordId - b.recordId),
+            pageState: issues.length || items.some(v => !v.downloadable) ? 'partial' : 'complete' }
+        })
+      } finally { clearTimeout(timer); controller.abort() }
     },
-    async download(row, folderId) {
+    async download(row, folderId, { budget = { remaining: IMPORT_LIMITS.totalBytes } } = {}) {
       if (!row.downloadable) importFail('IMPORT_UNSUPPORTED_FILE')
       await project(folderId)
-      if (row.kind === 'resource') {
-        await validated('file-metadata', async () => {
-        const data = unwrap(await request(`/api/files/${encodeURIComponent(row.sourceId)}/metadata`, 'file-metadata'))
-        if (data.id !== row.sourceId || data.projectId !== String(folderId)) importFail('IMPORT_OWNERSHIP')
-        if (data.filename !== row.fileName || data.size !== row.size) importFail('IMPORT_ITEM_CHANGED')
-        })
-        return validated('file-download', async () => {
-        const bytes = await request(`/api/files/${encodeURIComponent(row.sourceId)}`, 'file-download', true)
-        if (bytes.length !== row.size) importFail('IMPORT_ITEM_CHANGED')
-        return bytes
-        })
+      async function revalidate() {
+        const rows = await validated('history-detail', async () => recordRows(await history(row.sourceId, folderId), folderId))
+        if (!rows.some(v => v.key === row.key && v.revision === row.revision && v.downloadable)) importFail('IMPORT_ITEM_CHANGED')
       }
-      const data = await history(row.sourceId, folderId)
+      await revalidate()
+      let bytes
       if (row.kind === 'text') {
-        if (typeof data.answer_text !== 'string' || !data.answer_text.trim() || digest(data.answer_text) !== row.sha256) importFail('IMPORT_ITEM_CHANGED')
-        return Buffer.from(data.answer_text, 'utf8')
-      }
-      if (!legacyAttachments(data.file_url).some(({ url }) => url && url === row.url)) importFail('IMPORT_ITEM_CHANGED')
-      return request(row.url, 'history-attachment', true, false)
+        const data = await history(row.sourceId, folderId)
+        bytes = Buffer.from(data.answer_text, 'utf8')
+        if (bytes.length > Math.min(IMPORT_LIMITS.fileBytes, budget.remaining)) importFail('IMPORT_TOO_LARGE')
+        budget.remaining -= bytes.length
+        if (digest(bytes) !== row.sha256) importFail('IMPORT_ITEM_CHANGED')
+      } else bytes = await request(row.url, 'history-attachment', { binary: true, authenticated: false, budget })
+      if (row.size != null && bytes.length !== row.size) importFail('IMPORT_ITEM_CHANGED')
+      await revalidate(); await project(folderId)
+      return bytes
     },
   })
 }

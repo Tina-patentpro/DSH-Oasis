@@ -1,4 +1,4 @@
-import { importCommands, importResponses } from '../website-import-contract.js'
+import { importCommands, importResponses, IMPORT_PROTOCOL_VERSION } from '../website-import-contract.js'
 import {
   savedFileResponseSchema,
   localGenerationPreviewSchema,
@@ -63,7 +63,11 @@ export function createWorkbenchRemote(connection) {
     async websiteImport(action, payload) {
       if (!Object.hasOwn(importCommands, action)) throw new WorkbenchRemoteError('IMPORT_INVALID_INPUT', '导入动作无效')
       const input = importCommands[action].parse(payload)
-      const result = unwrap(await call(CHANNEL, `import/${action}`, input), importResponses[action])
+      const response = await call(CHANNEL, `import/${action}`, input)
+      if (action === 'open' && response?.ok === true && response.value?.protocolVersion !== IMPORT_PROTOCOL_VERSION) {
+        throw new WorkbenchRemoteError('IMPORT_PROTOCOL_MISMATCH', '导入协议不匹配')
+      }
+      const result = unwrap(response, importResponses[action])
       if (action === 'open' && result.workspaceId !== input.workspaceId || ['items', 'commit'].includes(action) && result.folderId !== input.folderId) {
         throw new WorkbenchRemoteError('INVALID_RESPONSE', '导入项目不一致')
       }

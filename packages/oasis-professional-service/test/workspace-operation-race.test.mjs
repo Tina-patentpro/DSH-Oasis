@@ -34,8 +34,8 @@ async function fixture(t) {
       if (fail) throw Error('synthetic persistence failure')
       value = { ...value, ...patch }; revision++; writes++
     } }
-  const row = { key: 'history:9:text', kind: 'text', sourceId: 9, fileName: 'claims_OIW.md', name: 'claims', size: 6, downloadable: true, reason: null }
-  const client = { project: async id => ({ id, name: 'synthetic' }), listItems: async () => ({ total: 1, items: [row] }), download: async () => Buffer.from('# text') }
+  const row = { key: 'history:9:text', revision: 'a'.repeat(64), role: 'text', inputField: null, kind: 'text', sourceId: 9, fileName: 'claims_OIW.md', name: 'claims', size: 6, downloadable: true, reason: null }
+  const client = { project: async id => ({ id, name: 'synthetic' }), listItems: async () => ({ total: 1, pageState: 'complete', recordIds: [9], issues: [], items: [row] }), download: async (row, folder, { budget }) => { budget.remaining -= 6; return Buffer.from('# text') } }
   const importer = createWebsiteImportService({ workspaceOperations: guard, settings, createClient: () => client,
     workspaceRegistry: { get: () => ({ path: root, status: async () => 'ok' }) },
     accountService: { status: async () => ({ authenticated: true, accountId: 7, revision: 'r1' }), captureToken: async () => async () => 'synthetic-token' },
@@ -76,9 +76,9 @@ test('R1 local admission excludes unlink before prepared exists; unresolved stat
 
 test('R1 import lock lasts through downloads and blocks synthetic and compatibility admission', async t => {
   const h = await fixture(t), s = await h.open(), entered = deferred(), release = deferred()
-  await h.importer.items({ token: s.token, folderId: 2, kind: 'history' })
-  h.client.download = async () => { entered.resolve(); await release.promise; return Buffer.from('# text') }
-  const pending = h.importer.commit({ token: s.token, folderId: 2, keys: [h.row.key], confirmed: true }); await entered.promise
+  await h.importer.items({ token: s.token, folderId: 2, kind: 'records' })
+  h.client.download = async (row, folder, { budget }) => { entered.resolve(); await release.promise; budget.remaining -= 6; return Buffer.from('# text') }
+  const pending = h.importer.commit({ token: s.token, folderId: 2, keys: [h.row.key], versions: { [h.row.key]: h.row.revision }, confirmed: true }); await entered.promise
   try {
     await assert.rejects(h.service.createUnifiedRun(h.command()), busy)
     await assert.rejects(Promise.resolve().then(() => h.service.createRun(h.command())), busy)

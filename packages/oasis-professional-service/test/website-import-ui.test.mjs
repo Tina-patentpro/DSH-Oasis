@@ -27,13 +27,13 @@ test('remote import validates result schema and command scope', async () => {
 function harness() {
   assert.equal(typeof mod.createWebsiteImportController, 'function')
   let workspaceId = 'a', accountRevision = 'r1'
-  const calls = [], rows = [{ key: 'history:9:text', fileName: 'claims_OIW.md', downloadable: true }]
+  const calls = [], rows = [{ key: 'history:9:text', fileName: 'claims_OIW.md', downloadable: true, role: 'text', recordId: 9, revision: 'a'.repeat(64) }]
   const remote = { websiteImport: async (action, payload) => {
     calls.push({ action, payload })
-    if (action === 'open') return { token: 'ticket', workspaceId, accountRevision, workspacePath: 'D:\\a', settingsRevision: 3, link: { folderId: 2, folderName: 'x' } }
+    if (action === 'open') return { protocolVersion: 2, token: 'ticket', workspaceId, accountRevision, workspacePath: 'D:\\a', settingsRevision: 3, link: { folderId: 2, folderName: 'x' } }
     if (action === 'unlink') return { workspaceId, status: 'unlinked' }
     if (action === 'projects') return { items: [{ id: 2, name: 'x' }], total: 1 }
-    if (action === 'items') return { items: rows, folderId: payload.folderId, total: 1 }
+    if (action === 'items') return { items: structuredClone(rows), folderId: payload.folderId, total: 1, recordIds: [9], pageState: 'complete', issues: [] }
     return { workspaceId, folderId: 2, status: 'completed', items: [{ key: rows[0].key, fileName: rows[0].fileName, status: 'saved' }] }
   } }
   const controller = mod.createWebsiteImportController({ remote, getWorkspaceId: () => workspaceId, getAccountRevision: () => accountRevision })
@@ -47,7 +47,7 @@ test('zero selections can associate even when optional item listing fails', asyn
   await h.controller.selectProject({ id: 2, name: 'x' })
   assert.ok(h.controller.getSnapshot().error)
   assert.equal(await h.controller.commit(), true)
-  assert.deepEqual(h.calls.at(-1).payload.keys, [])
+  assert.deepEqual(h.calls.at(-1).payload.keys, []); assert.deepEqual(h.calls.at(-1).payload.versions, {})
 })
 
 test('unlink needs explicit confirmation, sends settings revision and clears stale selection', async () => {
@@ -87,7 +87,7 @@ test('no mount reads; explicit project selection and checked items drive import 
   assert.equal(h.controller.getSnapshot().selected.length, 0)
   h.controller.toggle('history:9:text')
   await h.controller.commit()
-  assert.deepEqual(h.calls.at(-1).payload, { token: 'ticket', folderId: 2, keys: ['history:9:text'], confirmed: true })
+  assert.deepEqual(h.calls.at(-1).payload, { token: 'ticket', folderId: 2, keys: ['history:9:text'], versions: { 'history:9:text': 'a'.repeat(64) }, confirmed: true })
   assert.equal(h.controller.getSnapshot().result.status, 'completed')
 })
 test('late response after Workspace changes cannot import into new project', async () => {
@@ -95,7 +95,7 @@ test('late response after Workspace changes cannot import into new project', asy
   let finish
   h.remote.websiteImport = () => new Promise(resolve => { finish = resolve })
   const pending = h.controller.selectProject({ id: 2, name: 'x' })
-  h.change(); finish({ items: [], total: 0, folderId: 2 }); await pending
+  h.change(); finish({ items: [], total: 0, folderId: 2, recordIds: [], pageState: 'complete', issues: [] }); await pending
   assert.equal(h.controller.getSnapshot().session, null)
   assert.equal(await h.controller.commit(), false)
 })
