@@ -4,6 +4,58 @@ const mod = await import('../src/website-record-files.js').catch(() => ({}))
 const extract = record => { assert.equal(typeof mod.extractWebsiteRecordFiles, 'function'); return mod.extractWebsiteRecordFiles(record) }
 const origin = 'https://lzhxpy.oasisintwrite.com'
 
+const signedToolUrl = '/files/tools/claims.docx?timestamp=1&nonce=synthetic&sign=fixture'
+const signedToolFile = { type: 'document', transfer_method: 'tool_file', filename: 'claims.docx', size: 4, url: signedToolUrl }
+
+test('website copies remain separate from signed historical tool metadata', () => {
+  const result = extract({ file_url: '/uploads/workflow/claims.docx, /uploads/workflow/report.docx',
+    response: JSON.stringify({ data: { outputs: { claims_docx: [signedToolFile],
+      report_docx: [{ ...signedToolFile, filename: 'report.docx', url: signedToolUrl.replace('claims.docx', 'report.docx') }] } } }) })
+  assert.deepEqual(result.files.map(f => [f.fileName, f.size, f.mimeType, f.url]), [
+    ['claims.docx', null, null, origin + '/uploads/workflow/claims.docx'],
+    ['report.docx', null, null, origin + '/uploads/workflow/report.docx'],
+  ])
+  assert.equal(result.unsupported.length, 2)
+  assert.ok(result.unsupported.every(f => f.role === 'output' && /工具资源地址/.test(f.reason)))
+  assert.doesNotMatch(JSON.stringify(result.unsupported), /timestamp|nonce|sign|synthetic|fixture|https:/)
+})
+
+test('signed tool-only history is explicit unsupported rather than a downloadable or empty result', () => {
+  const result = extract({ outputs: { claims_docx: signedToolFile } })
+  assert.deepEqual(result.files, [])
+  assert.equal(result.unsupported.length, 1)
+  assert.match(result.unsupported[0].reason, /网站.*附件/)
+})
+
+test('output rejection applies to positional URLs and encoded tool path and parameter names', () => {
+  for (const url of [signedToolUrl, signedToolUrl.replace('/tools/', '/%74ools/').replace('sign=', '%73ign=')]) {
+    const result = extract({ file_url: url, file_output: [{ filename: 'claims.docx', size: 4 }] })
+    assert.equal(result.files.length, 0)
+    assert.equal(result.unsupported.length, 1)
+  }
+})
+
+for (const field of ['download_url', 'downloadUrl']) test(`${field} qualifies the selected website address, not its signed tool fallback`, () => {
+  const result = extract({ outputs: { claims_docx: { ...signedToolFile, [field]: '/uploads/workflow/original.docx' } } })
+  assert.deepEqual(result.files.map(f => f.url), [origin + '/uploads/workflow/original.docx'])
+  assert.deepEqual(result.unsupported, [])
+})
+
+test('signature qualification does not disable unsigned tools, partial signatures or other website paths', () => {
+  for (const url of ['/files/tools/claims.docx', '/files/tools/claims.docx?timestamp=1&nonce=synthetic',
+    '/files/tools/claims.docx?nonce=synthetic&sign=fixture', '/files/tools/claims.docx?timestamp=1&sign=fixture',
+    '/uploads/workflow/claims.docx?timestamp=1&nonce=synthetic&sign=fixture']) {
+    const result = extract({ outputs: { claims_docx: { ...signedToolFile, url } } })
+    assert.equal(result.files.length, 1); assert.deepEqual(result.unsupported, [])
+  }
+})
+
+test('signed tool URL qualification leaves the existing remote_url input contract unchanged', () => {
+  const result = extract({ inputs: { material: { ...signedToolFile, transfer_method: 'remote_url' } } })
+  assert.deepEqual(result.files.map(f => [f.role, f.inputField, f.url]), [['input', 'material', origin + signedToolUrl]])
+  assert.deepEqual(result.unsupported, [])
+})
+
 test('input objects and JSON arrays preserve field provenance without scanning ordinary text', () => {
   const result = extract({ inputs: JSON.stringify({ disclosure: { type: 'document', transfer_method: 'remote_url', url: '/uploads/a.txt' },
     images: [{ type: 'image', transfer_method: 'remote_url', url: origin + '/files/b.png' }], prose: origin + '/files/not-a-file.txt' }) })

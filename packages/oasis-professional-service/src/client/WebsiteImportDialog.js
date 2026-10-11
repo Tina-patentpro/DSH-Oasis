@@ -1,6 +1,6 @@
 import { createElement as h, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import { OasisAccountSettings } from './OasisAccountSettings.js'
-import { createWebsiteImportController } from './website-import-controller.js'
+import { createWebsiteImportController, explain } from './website-import-controller.js'
 
 const button = { padding: '8px 12px', border: '1px solid #cfd8d3', borderRadius: 8, background: 'var(--dsw-alias-bg-base, white)', color: 'inherit', font: 'inherit', cursor: 'pointer' }
 const roles = { text: '历史正文', input: '输入材料', output: '输出附件' }
@@ -19,6 +19,10 @@ export function WebsiteRecordItems({ state, onToggle }) {
     state.selectedRows.length ? h('section', { 'aria-label': '已选清单' }, h('h4', null, '已选清单（含其他页和筛选）'),
       ...state.selectedRows.map(row => h('div', { key: row.key }, `${row.fileName} · ${roles[row.role]} · 记录 ${row.recordId} `,
         h('button', { type: 'button', disabled: state.busy || state.submitted, onClick: () => onToggle(row.key) }, '取消选择')))) : null)
+}
+export function WebsiteImportResultItem({ row }) {
+  return h('p', null, `${{ saved: '已保存', skipped: '相同内容已跳过', failed: '未完成' }[row.status]}：${row.fileName}${row.code ? `（${row.code}）` : ''}`,
+    row.status === 'failed' && row.details ? ` ${explain(row)}` : null)
 }
 export function WebsiteImportDialog({ workspaceId, remote, accountController, onClose, onOpenFiles }) {
   const account = useSyncExternalStore(accountController.subscribe, accountController.getSnapshot, accountController.getSnapshot)
@@ -89,7 +93,7 @@ export function WebsiteImportDialog({ workspaceId, remote, accountController, on
     state.result ? h('section', { 'aria-label': '导入结果' }, h('h3', null, '项目关联已保存'),
       h('p', null, `文件：${state.result.items.filter(v => v.status === 'saved').length} 项保存，${state.result.items.filter(v => v.status === 'skipped').length} 项同内容跳过，${state.result.items.filter(v => v.status === 'failed').length} 项失败。`),
       h('p', null, '需要解除或更换关联时，请先点击“重新读取项目”。'),
-      ...state.result.items.map(row => h('p', { key: row.key }, `${{ saved: '已保存', skipped: '相同内容已跳过', failed: '未完成' }[row.status]}：${row.fileName}${row.code ? `（${row.code}）` : ''}`)),
+      ...state.result.items.map(row => h(WebsiteImportResultItem, { key: row.key, row })),
       h('p', { style: { overflowWrap: 'anywhere' } }, `导入清单：${state.result.manifest}`),
       btn('打开 DSH 文件管理', () => onOpenFiles(), !onOpenFiles)) : null)
 }

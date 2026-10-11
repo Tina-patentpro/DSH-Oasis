@@ -8571,7 +8571,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						"skipped",
 						"failed"
 					]),
-					code: string().max(100).optional()
+					code: string().max(100).optional(),
+					details: diagnostics.optional()
 				}).strict()).max(100)
 			}).strict()
 		};
@@ -8905,6 +8906,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				onClick: () => onToggle(row.key)
 			}, "取消选择")))) : null);
 		}
+		function WebsiteImportResultItem({ row }) {
+			return (0, react.createElement)("p", null, `${{
+				saved: "已保存",
+				skipped: "相同内容已跳过",
+				failed: "未完成"
+			}[row.status]}：${row.fileName}${row.code ? `（${row.code}）` : ""}`, row.status === "failed" && row.details ? ` ${explain(row)}` : null);
+		}
 		function WebsiteImportDialog({ workspaceId, remote, accountController, onClose, onOpenFiles }) {
 			const account = (0, react.useSyncExternalStore)(accountController.subscribe, accountController.getSnapshot, accountController.getSnapshot);
 			const scope = (0, react.useRef)({
@@ -9020,11 +9028,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}), state.submitted) : null)), !state.projects.length ? (0, react.createElement)("p", null, "此页没有项目") : null, (0, react.createElement)("p", null, `第 ${state.projectPage} 页 · ${state.totalProjects} 个项目`), btn("上一页", () => controller.browse({ page: state.projectPage - 1 }), state.projectPage <= 1), btn("下一页", () => controller.browse({ page: state.projectPage + 1 }), state.projectPage * 20 >= state.totalProjects)), (0, react.createElement)("section", { "aria-label": "项目内容" }, (0, react.createElement)("h3", null, state.project ? `选择内容 · ${state.project.name}` : "请先选择项目"), state.project ? (0, react.createElement)("div", null, ...Object.entries(roles).map(([role, label]) => btn(`${label}${state.role === role ? " ✓" : ""}`, () => controller.filter(role), state.submitted)), (0, react.createElement)("p", null, "来自所选项目的业务记录；筛选不发请求，不读取独立文件库。"), btn("重新读取本页记录", () => controller.items(), state.submitted), (0, react.createElement)(WebsiteRecordItems, {
 				state,
 				onToggle: (key) => controller.toggle(key)
-			}), (0, react.createElement)("p", null, `第 ${state.itemPage} 页 · ${state.totalItems} 条源记录`), btn("上一页内容", () => controller.items({ page: state.itemPage - 1 }), state.itemPage <= 1 || state.submitted), btn("下一页内容", () => controller.items({ page: state.itemPage + 1 }), state.itemPage * 20 >= state.totalItems || state.submitted)) : null)), (0, react.createElement)("hr"), (0, react.createElement)("p", null, `已勾选 ${state.selected.length} 项。单文件最多 32 MiB，每次最多 100 项 / 100 MiB。`), (0, react.createElement)("p", null, "不勾选文件也可仅关联项目。勾选时，历史正文以 _OIW.md 保存；附件保留文件名。同名不覆盖、同内容跳过，导入内容未在本地审核。"), btn(state.selected.length ? "关联并导入选中文件" : "关联到当前项目", () => controller.commit(), !state.project || state.submitted || unlinkConfirm)) : null, state.busy ? (0, react.createElement)("p", { role: "status" }, state.submitted ? "正在逐项下载并保存，请勿关闭 Host…" : "正在读取…") : null, state.error ? (0, react.createElement)("p", { role: "alert" }, state.error) : null, state.notice ? (0, react.createElement)("p", { role: "status" }, state.notice) : null, state.result ? (0, react.createElement)("section", { "aria-label": "导入结果" }, (0, react.createElement)("h3", null, "项目关联已保存"), (0, react.createElement)("p", null, `文件：${state.result.items.filter((v) => v.status === "saved").length} 项保存，${state.result.items.filter((v) => v.status === "skipped").length} 项同内容跳过，${state.result.items.filter((v) => v.status === "failed").length} 项失败。`), (0, react.createElement)("p", null, "需要解除或更换关联时，请先点击“重新读取项目”。"), ...state.result.items.map((row) => (0, react.createElement)("p", { key: row.key }, `${{
-				saved: "已保存",
-				skipped: "相同内容已跳过",
-				failed: "未完成"
-			}[row.status]}：${row.fileName}${row.code ? `（${row.code}）` : ""}`)), (0, react.createElement)("p", { style: { overflowWrap: "anywhere" } }, `导入清单：${state.result.manifest}`), btn("打开 DSH 文件管理", () => onOpenFiles(), !onOpenFiles)) : null);
+			}), (0, react.createElement)("p", null, `第 ${state.itemPage} 页 · ${state.totalItems} 条源记录`), btn("上一页内容", () => controller.items({ page: state.itemPage - 1 }), state.itemPage <= 1 || state.submitted), btn("下一页内容", () => controller.items({ page: state.itemPage + 1 }), state.itemPage * 20 >= state.totalItems || state.submitted)) : null)), (0, react.createElement)("hr"), (0, react.createElement)("p", null, `已勾选 ${state.selected.length} 项。单文件最多 32 MiB，每次最多 100 项 / 100 MiB。`), (0, react.createElement)("p", null, "不勾选文件也可仅关联项目。勾选时，历史正文以 _OIW.md 保存；附件保留文件名。同名不覆盖、同内容跳过，导入内容未在本地审核。"), btn(state.selected.length ? "关联并导入选中文件" : "关联到当前项目", () => controller.commit(), !state.project || state.submitted || unlinkConfirm)) : null, state.busy ? (0, react.createElement)("p", { role: "status" }, state.submitted ? "正在逐项下载并保存，请勿关闭 Host…" : "正在读取…") : null, state.error ? (0, react.createElement)("p", { role: "alert" }, state.error) : null, state.notice ? (0, react.createElement)("p", { role: "status" }, state.notice) : null, state.result ? (0, react.createElement)("section", { "aria-label": "导入结果" }, (0, react.createElement)("h3", null, "项目关联已保存"), (0, react.createElement)("p", null, `文件：${state.result.items.filter((v) => v.status === "saved").length} 项保存，${state.result.items.filter((v) => v.status === "skipped").length} 项同内容跳过，${state.result.items.filter((v) => v.status === "failed").length} 项失败。`), (0, react.createElement)("p", null, "需要解除或更换关联时，请先点击“重新读取项目”。"), ...state.result.items.map((row) => (0, react.createElement)(WebsiteImportResultItem, {
+				key: row.key,
+				row
+			})), (0, react.createElement)("p", { style: { overflowWrap: "anywhere" } }, `导入清单：${state.result.manifest}`), btn("打开 DSH 文件管理", () => onOpenFiles(), !onOpenFiles)) : null);
 		}
 		//#endregion
 		//#region src/client/OasisWorkbenchSurface.js
@@ -9679,6 +9686,21 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				workspaceItems: Object.freeze([])
 			});
 		}
+		function resolveMainViewSessionId(snapshot) {
+			const byId = snapshot?.byId;
+			if (byId === null || typeof byId !== "object" || Array.isArray(byId)) return void 0;
+			let currentSessionId = null;
+			for (const [id, row] of Object.entries(byId)) {
+				if (id.length === 0 || row?.id !== id) return void 0;
+				const retainedBy = row.retainedBy;
+				if (retainedBy === null || typeof retainedBy !== "object" || Array.isArray(retainedBy)) return void 0;
+				if (Object.values(retainedBy).some((count) => !Number.isSafeInteger(count) || count < 0)) return void 0;
+				if ((retainedBy.mainView ?? 0) === 0) continue;
+				if (currentSessionId !== null) return void 0;
+				currentSessionId = id;
+			}
+			return currentSessionId;
+		}
 		function createWorkspaceContextSnapshot({ currentSessionId, workspaceItems, generation }) {
 			if (!Number.isSafeInteger(generation) || generation < 0) return blockedWorkspaceContext(0);
 			if (currentSessionId !== null && (typeof currentSessionId !== "string" || currentSessionId.length === 0)) return blockedWorkspaceContext(generation);
@@ -9751,14 +9773,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}
 		function WorkspaceContextBridge(props) {
 			const { coordinator, useSessions, useWorkspaces } = props;
-			const currentSessionId = useSessions((snapshot) => snapshot.current);
+			const currentSessionId = useSessions(resolveMainViewSessionId);
 			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
 			const generationRef = (0, react.useRef)(0);
 			const hostSnapshot = (0, react.useSyncExternalStore)(coordinator.subscribe, coordinator.getSnapshot, coordinator.getSnapshot);
 			(0, react.useLayoutEffect)(() => {
 				generationRef.current += 1;
 				coordinator.updateWorkspaceContext(createWorkspaceContextSnapshot({
-					currentSessionId: currentSessionId ?? null,
+					currentSessionId,
 					workspaceItems,
 					generation: generationRef.current
 				}));
@@ -12078,7 +12100,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					try {
 						const connection = services.connection;
 						if (!connection?.isLoopback || !services.remote?.$host?.isLoopback) throw Error();
-						scope = services.settingsScope.bind({ namespace: "oasis-professional-service" });
+						scope = typeof services.configForms?.get === "function" ? services.configForms.get("oasis-professional-service") : services.settingsScope.bind({ namespace: "oasis-professional-service" });
 						const onHost = () => {
 							generation++;
 							readId++;
@@ -12289,8 +12311,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			let settingsFiber = null;
 			if (typeof ctx.inject === "function") {
 				try {
-					settingsFiber = ctx.inject(["settingsScope", "remote.credentials"], (injectedCtx) => connectionSettings.bind({
-						settingsScope: injectedCtx.get?.("settingsScope") ?? injectedCtx.settingsScope,
+					settingsFiber = ctx.inject(["configForms", "remote.credentials"], (injectedCtx) => connectionSettings.bind({
+						configForms: injectedCtx.get?.("configForms") ?? injectedCtx.configForms,
 						remote: injectedCtx.get?.("remote") ?? injectedCtx.remote,
 						connection
 					}));

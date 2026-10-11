@@ -73,6 +73,14 @@ export function normalizeOasisRuntimeConfig(input = {}) {
 }
 
 export function registerOasisSettings(ctx, base = {}) {
+  if (typeof ctx?.settings?.configure === 'function') {
+    if (typeof base?.get !== 'function' || typeof ctx.effect !== 'function') {
+      throw new TypeError('Native Oasis Config and effect ownership are required')
+    }
+    normalizeOasisRuntimeConfig(base.get())
+    ctx.effect(() => ctx.settings.configure({ auto: false }, ctx.fiber))
+    return Object.freeze({ get: () => base.get() })
+  }
   if (typeof ctx?.settings?.register !== 'function') throw new TypeError('ctx.settings.register is required')
   const entry = {
     environmentKind: 'non-production',

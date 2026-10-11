@@ -5,7 +5,28 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createWebsiteImportService } from '../src/website-import-service.js'
 import { IMPORT_LIMITS } from '../src/website-import-contract.js'
-import { WebsiteImportError } from '../src/website-import-client.js'
+import { WebsiteImportError, createWebsiteImportClient } from '../src/website-import-client.js'
+
+test('service issues no signed-tool download ticket and leaks no URL or signature in disabled metadata', async t => {
+  const h = await fixture(t), attachmentCalls = []
+  const realClient = createWebsiteImportClient({ accountId: 7, resolveToken: async () => 'synthetic-token', fetchImpl: async url => {
+    const path = new URL(url).pathname
+    if (path === '/api/user/user/folderdetail/2') return Response.json({ data: { id: 2, owner_id: 7, name: 'project' } })
+    if (path === '/api/user/user/projectlist') return Response.json({ data: { total: 1, item: [{ id: 9, folder_id: 2 }] } })
+    if (path === '/api/user/user/projectdetail/9') return Response.json({ data: { id: 9, folder_id: 2, user_id: 7,
+      file_url: '/uploads/workflow/claims.docx', outputs: { claims_docx: [{ type: 'document', transfer_method: 'tool_file',
+        url: '/files/tools/claims.docx?timestamp=1&nonce=synthetic&sign=fixture', filename: 'claims.docx', size: 4 }] } } })
+    attachmentCalls.push(path); throw new Error('Unexpected attachment GET')
+  } })
+  Object.assign(h.client, realClient)
+  const page = await h.list(), disabled = page.items.find(v => !v.downloadable)
+  assert.ok(disabled)
+  assert.doesNotMatch(JSON.stringify(page), /https:|timestamp|nonce|sign|synthetic|fixture/)
+  await assert.rejects(h.service.commit({ token: h.session.token, folderId: 2, confirmed: true,
+    keys: [disabled.key], versions: { [disabled.key]: disabled.revision } }), { code: 'IMPORT_INVALID_SELECTION' })
+  assert.deepEqual(attachmentCalls, [])
+  assert.deepEqual(await readdir(h.root), []); assert.deepEqual(h.settings().websiteProjectLinks, [])
+})
 
 async function fixture(t) {
   const root = await mkdtemp(join(tmpdir(), 'oasis-records-')); t.after(() => rm(root, { recursive: true, force: true }))

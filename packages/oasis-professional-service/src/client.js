@@ -97,8 +97,8 @@ export function apply(ctx, { markdownRenderer } = {}) {
   let settingsFiber = null
   if (typeof ctx.inject === 'function') {
     try {
-      settingsFiber = ctx.inject(['settingsScope', 'remote.credentials'], (injectedCtx) => connectionSettings.bind({
-        settingsScope: injectedCtx.get?.('settingsScope') ?? injectedCtx.settingsScope,
+      settingsFiber = ctx.inject(['configForms', 'remote.credentials'], (injectedCtx) => connectionSettings.bind({
+        configForms: injectedCtx.get?.('configForms') ?? injectedCtx.configForms,
         remote: injectedCtx.get?.('remote') ?? injectedCtx.remote,
         connection,
       }))

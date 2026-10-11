@@ -9,6 +9,69 @@ const createWorkspaceContextSnapshot = implementation.createWorkspaceContextSnap
   ?? (() => Object.freeze({ status: 'missing', generation: -1 }))
 const resolveWorkspaceBinding = implementation.resolveWorkspaceBinding
   ?? (() => Object.freeze({ status: 'missing', workspaceId: null }))
+const resolveMainViewSessionId = implementation.resolveMainViewSessionId ?? (() => undefined)
+
+function sessionCatalog(byId, phase = 'ready') {
+  return { ids: Object.keys(byId), byId, phase, projectionsBySession: {} }
+}
+
+test('resolves only the unique public main-view Session, not a retained Sidebar Session', () => {
+  const catalog = sessionCatalog({
+    'session-a': { id: 'session-a', retainedBy: { mainView: 1 } },
+    'session-b': { id: 'session-b', retainedBy: { betterSidebar: 2 } },
+  })
+  assert.equal(resolveMainViewSessionId(catalog), 'session-a')
+  assert.equal(resolveWorkspaceBinding({
+    context: createWorkspaceContextSnapshot({
+      currentSessionId: resolveMainViewSessionId(catalog),
+      workspaceItems: [{ workspaceId: 'workspace-a', sessionIds: ['session-a'] }],
+      generation: 1,
+    }), sessionId: 'session-a', visible: true,
+  }).status, 'ready')
+})
+
+test('follows native main-view retention changes without using legacy current', () => {
+  const catalog = sessionCatalog({
+    'session-a': { id: 'session-a', retainedBy: { betterSidebar: 1 } },
+    'session-b': { id: 'session-b', retainedBy: { mainView: 1 } },
+  })
+  catalog.current = 'session-a'
+  assert.equal(resolveMainViewSessionId(catalog), 'session-b')
+})
+
+test('an absent main view never binds to a Sidebar-only or legacy selection', () => {
+  const catalog = sessionCatalog({
+    'session-a': { id: 'session-a', retainedBy: { betterSidebar: 1 } },
+  })
+  catalog.current = 'session-a'
+  assert.equal(resolveMainViewSessionId(catalog), null)
+  assert.equal(resolveMainViewSessionId(sessionCatalog({}, 'pending')), null)
+})
+
+test('ambiguous main-view retention blocks instead of choosing the first Session', () => {
+  const currentSessionId = resolveMainViewSessionId(sessionCatalog({
+    'session-a': { id: 'session-a', retainedBy: { mainView: 1 } },
+    'session-b': { id: 'session-b', retainedBy: { mainView: 1 } },
+  }))
+  assert.equal(currentSessionId, undefined)
+  assert.equal(createWorkspaceContextSnapshot({ currentSessionId,
+    workspaceItems: [{ workspaceId: 'workspace-a', sessionIds: ['session-a', 'session-b'] }],
+    generation: 1,
+  }).status, 'blocked')
+})
+
+test('malformed public retention or row identity blocks the workspace context', () => {
+  for (const catalog of [
+    {},
+    sessionCatalog({ 'session-a': { id: 'session-other', retainedBy: { mainView: 1 } } }),
+    sessionCatalog({ 'session-a': { id: 'session-a', retainedBy: { mainView: -1 } } }),
+    sessionCatalog({ 'session-a': { id: 'session-a', retainedBy: { mainView: '1' } } }),
+  ]) {
+    assert.equal(createWorkspaceContextSnapshot({
+      currentSessionId: resolveMainViewSessionId(catalog), workspaceItems: [], generation: 1,
+    }).status, 'blocked')
+  }
+})
 
 test('projects one detached frozen workspace generation without paths or stale mutable input', () => {
   const source = [{

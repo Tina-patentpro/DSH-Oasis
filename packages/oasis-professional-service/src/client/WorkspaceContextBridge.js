@@ -20,6 +20,24 @@ function blockedWorkspaceContext(generation) {
   })
 }
 
+// DSH 0.2 publishes main-view ownership in the public Session catalog,
+// not the former list.current field. Ambiguity is not a selection rule.
+export function resolveMainViewSessionId(snapshot) {
+  const byId = snapshot?.byId
+  if (byId === null || typeof byId !== 'object' || Array.isArray(byId)) return undefined
+  let currentSessionId = null
+  for (const [id, row] of Object.entries(byId)) {
+    if (id.length === 0 || row?.id !== id) return undefined
+    const retainedBy = row.retainedBy
+    if (retainedBy === null || typeof retainedBy !== 'object' || Array.isArray(retainedBy)) return undefined
+    if (Object.values(retainedBy).some((count) => !Number.isSafeInteger(count) || count < 0)) return undefined
+    if ((retainedBy.mainView ?? 0) === 0) continue
+    if (currentSessionId !== null) return undefined
+    currentSessionId = id
+  }
+  return currentSessionId
+}
+
 export function createWorkspaceContextSnapshot({
   currentSessionId,
   workspaceItems,
@@ -119,7 +137,7 @@ export function WorkspaceContextBridge(props) {
     useSessions,
     useWorkspaces,
   } = props
-  const currentSessionId = useSessions((snapshot) => snapshot.current)
+  const currentSessionId = useSessions(resolveMainViewSessionId)
   const workspaceItems = useWorkspaces((snapshot) => snapshot.items)
   const generationRef = useRef(0)
   const hostSnapshot = useSyncExternalStore(
@@ -131,7 +149,7 @@ export function WorkspaceContextBridge(props) {
   useLayoutEffect(() => {
     generationRef.current += 1
     coordinator.updateWorkspaceContext(createWorkspaceContextSnapshot({
-      currentSessionId: currentSessionId ?? null,
+      currentSessionId,
       workspaceItems,
       generation: generationRef.current,
     }))

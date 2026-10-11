@@ -1,7 +1,33 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { createHash } from 'node:crypto'
 import { createWebsiteImportClient } from '../src/website-import-client.js'
 const origin = 'https://lzhxpy.oasisintwrite.com'
+
+test('signed historical outputs are partial disabled rows alongside distinct website copies', async () => {
+  const h = fixture([{ ...record, file_output: undefined, file_url: '/uploads/workflow/claims.docx',
+    response: { data: { outputs: { claims_docx: [{ type: 'document', transfer_method: 'tool_file', filename: 'claims.docx', size: 4,
+      url: '/files/tools/claims.docx?timestamp=1&nonce=synthetic&sign=fixture' }] } } } }])
+  const page = await h.list(), output = page.items.filter(v => v.role === 'output')
+  assert.equal(page.pageState, 'partial')
+  assert.equal(output.filter(v => v.downloadable).length, 1)
+  assert.equal(output.find(v => v.downloadable).size, null)
+  assert.match(output.find(v => !v.downloadable).reason, /工具资源地址/)
+  assert.ok(!h.calls.some(c => /^\/(?:uploads|files)\//.test(new URL(c.url).pathname)))
+})
+
+test('a pre-correction signed tool selection cannot download or silently substitute a website copy', async () => {
+  const url = origin + '/files/tools/claims.docx?timestamp=1&nonce=synthetic&sign=fixture'
+  const fingerprint = value => createHash('sha256').update(JSON.stringify(value)).digest('hex')
+  const old = { key: 'record:9:file:' + fingerprint([7, 2, 9, 'output', null, url]),
+    revision: fingerprint([url, 'claims.docx', null, 4]), sourceId: 9, role: 'output', inputField: null,
+    fileName: 'claims.docx', mimeType: null, size: 4, url, kind: 'file', downloadable: true }
+  const h = fixture([{ ...record, file_output: undefined, file_url: '/uploads/workflow/claims.docx',
+    response: { data: { outputs: { claims_docx: [{ type: 'document', transfer_method: 'tool_file', filename: 'claims.docx', size: 4, url }] } } } }])
+  h.responses.set('/files/tools/claims.docx', () => new Response('docx'))
+  await assert.rejects(h.client.download(old, 2), { code: 'IMPORT_ITEM_CHANGED' })
+  assert.ok(!h.calls.some(c => /^\/(?:uploads|files)\//.test(new URL(c.url).pathname)))
+})
 const json = value => Response.json({ code: 200, data: value })
 const record = { id: 9, folder_id: 2, user_id: 7, name: 'claims', answer_text: '# text',
   inputs: { material: { type: 'document', transfer_method: 'remote_url', url: '/uploads/input.txt' } }, file_output: [{ url: '/files/output.docx' }] }

@@ -50,5 +50,5 @@ export const importResponses = {
     items: z.array(item).max(IMPORT_LIMITS.listItems) }).strict()
     .refine(v => v.items.every(row => v.recordIds.includes(row.recordId)) && v.issues.every(issue => v.recordIds.includes(issue.recordId))),
   commit: z.object({ workspaceId: key, folderId: id, associationStatus: z.literal('saved'), status: z.enum(['completed', 'partial']), manifest: z.string().max(255),
-    items: z.array(z.object({ key, fileName: z.string().max(255), status: z.enum(['saved', 'skipped', 'failed']), code: z.string().max(100).optional() }).strict()).max(100) }).strict(),
+    items: z.array(z.object({ key, fileName: z.string().max(255), status: z.enum(['saved', 'skipped', 'failed']), code: z.string().max(100).optional(), details: diagnostics.optional() }).strict()).max(100) }).strict(),
 }

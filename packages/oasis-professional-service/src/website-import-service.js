@@ -214,8 +214,9 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
             } catch (error) {
               await handle?.close().catch(() => {})
               const code = error instanceof WebsiteImportError ? error.code : 'IMPORT_IO_OR_REQUEST_FAILED'
+              const details = sanitizeImportDiagnostics(error instanceof WebsiteImportError ? error.details : undefined)
               if (['IMPORT_ACCOUNT_CHANGED', 'IMPORT_WORKSPACE_CHANGED', 'IMPORT_LINK_CONFLICT', 'IMPORT_EXPIRED', 'AUTH_REQUIRED', 'IMPORT_OWNERSHIP'].includes(code) || budget.remaining <= 0) fatal = true
-              items.push({ key: row.key, fileName: chosen, status: 'failed', code })
+              items.push({ key: row.key, fileName: chosen, status: 'failed', code, ...(Object.keys(details).length ? { details } : {}) })
             }
             await record({ kind: 'result', ...items.at(-1) })
           }

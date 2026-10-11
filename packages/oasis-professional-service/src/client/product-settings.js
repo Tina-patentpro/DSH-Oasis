@@ -86,7 +86,9 @@ export function createProductSettings({ remote, onInvalidated = () => {} }) {
       try {
         const connection = services.connection
         if (!connection?.isLoopback || !services.remote?.$host?.isLoopback) throw Error()
-        scope = services.settingsScope.bind({ namespace: 'oasis-professional-service' })
+        scope = typeof services.configForms?.get === 'function'
+          ? services.configForms.get('oasis-professional-service')
+          : services.settingsScope.bind({ namespace: 'oasis-professional-service' })
         const onHost = () => {
           generation++; readId++
           publish({ connected: connection.generation.getSnapshot() != null, credentialConfigured: false, credentialWritable: false })

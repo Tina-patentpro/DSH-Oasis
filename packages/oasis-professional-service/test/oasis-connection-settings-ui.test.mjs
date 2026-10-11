@@ -75,14 +75,14 @@ test('client binds one configuration owner into the native DSH settings section 
     slots: { inject(_name, fn) { return fn() }, register(options, component) { slots.push({ options, component }); return () => {} } },
     inject(names) { optional.push(names); return { dispose: () => disposed.push(names) } },
   })
-  assert.ok(optional.some((names) => names.includes('settingsScope')))
+  assert.ok(optional.some((names) => names.includes('configForms')))
   assert.deepEqual(slots.map(({ options }) => options.name).sort(), ['conversation.input.right', 'settings.section', 'shell.overlay'])
   const nativeSettings = slots.find(({ options }) => options.name === 'settings.section')
   assert.equal(nativeSettings.options.id, 'oasis-professional-settings')
   assert.equal(typeof settingsUi.OasisSettingsSection, 'function')
   assert.equal(nativeSettings.component({ close() {} }).type, settingsUi.OasisSettingsSection)
   await dispose()
-  assert.ok(disposed.some((names) => names.includes('settingsScope')))
+  assert.ok(disposed.some((names) => names.includes('configForms')))
   const source = await readFile(new URL('../src/client/OasisWorkbenchSurface.js', import.meta.url), 'utf8')
   assert.doesNotMatch(source, /createElement\(OasisConnectionSettings/)
 })

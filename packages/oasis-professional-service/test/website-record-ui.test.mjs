@@ -5,6 +5,31 @@ import { createWorkbenchRemote } from '../src/client/workbench-remote.js'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import * as view from '../src/client/WebsiteImportDialog.js'
+import { createWebsiteImportClient } from '../src/website-import-client.js'
+
+test('real record eligibility renders signed tools disabled and controller cannot select them', async () => {
+  const h = fixture()
+  const client = createWebsiteImportClient({ accountId: 7, resolveToken: async () => 'synthetic-token', fetchImpl: async url => {
+    const path = new URL(url).pathname
+    if (path === '/api/user/user/folderdetail/2') return Response.json({ data: { id: 2, owner_id: 7, name: 'project' } })
+    if (path === '/api/user/user/projectlist') return Response.json({ data: { total: 1, item: [{ id: 9, folder_id: 2 }] } })
+    assert.equal(path, '/api/user/user/projectdetail/9')
+    return Response.json({ data: { id: 9, folder_id: 2, user_id: 7, file_url: '/uploads/workflow/claims.docx',
+      outputs: { claims_docx: [{ type: 'document', transfer_method: 'tool_file', filename: 'claims.docx', size: 4,
+        url: '/files/tools/claims.docx?timestamp=1&nonce=synthetic&sign=fixture' }] } } })
+  } })
+  const page = await client.listItems({ folderId: 2, kind: 'records' })
+  h.rows.splice(0, h.rows.length, ...page.items.map(({ url, sourceId, ...row }) => ({ ...row, recordId: sourceId })))
+  await h.controller.start(); await h.controller.selectProject({ id: 2, name: 'project' }); h.controller.filter('output')
+  const state = h.controller.getSnapshot(), disabled = state.items.find(v => !v.downloadable)
+  assert.ok(disabled)
+  h.controller.toggle(disabled.key)
+  assert.deepEqual(h.controller.getSnapshot().selected, [])
+  const html = renderToStaticMarkup(createElement(view.WebsiteRecordItems, { state, onToggle: () => {} }))
+  assert.match(html, /disabled=""/); assert.match(html, /工具资源地址/)
+  assert.match(html, /大小待下载核实/)
+  assert.doesNotMatch(html, /timestamp|nonce|sign|synthetic|fixture/)
+})
 function fixture(version = 2) {
   const calls = [], rows = ['text', 'input', 'output'].map((role, i) => ({ key: `${role}:9`, role, recordId: 9, revision: 'a'.repeat(64), fileName: `${role}.txt`, downloadable: true }))
   const remote = { websiteImport: async (action, payload) => {

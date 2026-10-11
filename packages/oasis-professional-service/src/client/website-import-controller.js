@@ -17,7 +17,7 @@ const explanations = {
   IMPORT_WORKSPACE_CHANGED: '本地项目已变化，请重新打开导入。', IMPORT_EXPIRED: '选择已过期，请重新读取。',
   IMPORT_INCOMPLETE_CHECK_MANIFEST: '导入中断。请在当前项目中查看 .oasis-import- 开头的清单，核对已保存和未完成文件。',
 }
-function explain(error) {
+export function explain(error) {
   const base = Object.hasOwn(explanations, error?.code) ? explanations[error.code] : '操作未完成；请检查连接和导入清单，不会自动重试。'
   const d = sanitizeImportDiagnostics(error?.details)
   const endpoint = { 'project-list': '网站项目列表', 'project-detail': '项目归属核对', 'history-list': '历史内容列表',

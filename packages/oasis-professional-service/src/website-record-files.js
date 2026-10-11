@@ -38,6 +38,13 @@ export function extractWebsiteRecordFiles(record) {
   function add(value, role, inputField, rawUrl) {
     count()
     const url = canonicalWebsiteFileUrl(rawUrl)
+    if (url && role === 'output') {
+      const target = new URL(url)
+      if (decodeURIComponent(target.pathname).startsWith('/files/tools/')
+        && ['timestamp', 'nonce', 'sign'].every(name => target.searchParams.has(name))) {
+        unsupported.push({ role, inputField, reason: '历史工具资源地址未获网站附件下载确认，请选择网站保存的附件' }); return
+      }
+    }
     let basename
     try { basename = url && decodeURIComponent(new URL(url).pathname.split('/').at(-1)) } catch {}
     const explicitName = field(value, 'filename', 'file_name', 'fileName', 'name')

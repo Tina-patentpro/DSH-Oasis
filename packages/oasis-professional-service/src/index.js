@@ -11,6 +11,7 @@ import { createOasisRemoteService } from './oasis-remote-service.js'
 import { createPluginStatus } from './status.js'
 import {
   normalizeProductRuntimeConfig,
+  OASIS_SETTINGS_SCHEMA,
   registerOasisSettings,
 } from './oasis-runtime-config.js'
 import { openOasisWorkbenchRepository } from './workbench-repository.js'
@@ -24,6 +25,7 @@ import { isOasisRemoteExecutionUnresolved } from './workbench-contract.js'
 import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 
 export const name = 'oasis-professional-service'
+export const Config = OASIS_SETTINGS_SCHEMA.volatile()
 export const inject = ['tools', 'storageDomain', 'connection', 'workspaceRegistry', 'settings', 'credentials',
   ...(isNativeOfflineEnvironment() ? ['llm', 'sessions', 'sessionProjections', 'agentDefaultModel'] : []),
 ]
@@ -62,8 +64,8 @@ function registerStatusTool(ctx) {
   }))
 }
 
-export async function apply(ctx) {
-  const settingsScope = registerOasisSettings(ctx)
+export async function apply(ctx, config) {
+  const settingsScope = registerOasisSettings(ctx, config)
   const repository = await openOasisWorkbenchRepository(ctx.storageDomain)
   const materialManager = createWorkspaceMaterialManager({ workspaceRegistry: ctx.workspaceRegistry })
   const nativeOffline = isNativeOfflineEnvironment()
