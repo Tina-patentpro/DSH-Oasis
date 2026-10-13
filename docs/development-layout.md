@@ -48,3 +48,7 @@ Git检查会刷新index的文件系统stat缓存；当前及快照的对象ID、
 构建/测试日志、失败证据、密封包、Windows恢复树、回退文件、旧Mac源码、下载原件、现有docs/output都保留。不会因目录大小或文件名含temp就整目录清扫。
 
 实际回收项目及最终验证见 [阶段0证据](evidence/2026-10-13-stage0-root-relocation.md)。
+
+## 隔离 Desktop 地址与原生草稿恢复
+
+阶段2实际重启验证后，开发专用Profile的 `desktop-shell.config.port` 固定57517、`networkExposure` 保持loopback。原生DSH会话草稿/Sidebar视图由浏览器localStorage持久化；原port=0每次分配不同origin，业务存储恢复但原生草稿不可见。运行同一隔离userData时须保持地址，端口冲突应显式失败，不能静默回退随机端口。此设置仅位于忽略的 `.dsh-test/mac-dev/home/profiles/desktop/cordis.patch.yml`；已审准入指纹随本地配置更新，不修改签名应用或日常Profile。复现与两次连续重启证据见 [阶段2验收](evidence/2026-10-14-stage2-desktop-closeout.md)。

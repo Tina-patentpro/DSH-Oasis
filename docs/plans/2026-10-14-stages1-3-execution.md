@@ -22,22 +22,22 @@
 
 - [x] 核对最新工作树与阶段1证据，复跑受影响流及Mac入口合同，退出0。
 - [x] 对全部待提交路径审计秘密/二进制/运行数据；保留所有已批准Mac适配变更。
-- [ ] 提交全部可版本控制内容，记录commit、验证和有限关注。旧真实提供方超时根因仍未知，不妨碍本阶段无模型范围完成。
+- [x] 提交全部可版本控制内容，阶段1为 `81da8b8`，48项定向测试通过；记录commit、验证和有限关注。旧真实提供方超时根因仍未知，不妨碍本阶段无模型范围完成。
 
 ## 阶段2：当前根目录实际Desktop/Host验收
 
 文件范围：现有 `scripts/macos-development-launch.mjs` / `tests/macos-development-launch.test.mjs`，受影响的业务Host/Client边界与对应test（仅发现具体缺陷时），新增本阶段evidence与当前状态。隔离Profile准入和运行账本留 `.dsh-test/mac-dev` / `.local`。
 
-- [ ] 核对当前进程/监听与隔离输入；备份非秘密Profile配置及已有业务/草稿，确认无另一个Host写同一存储。
-- [ ] `--check`成功后按官方入口启动当前隔离Desktop；官方本地认证初始化按正常流程执行。取得当前窗口和实际Host/绿洲/Sidebar证据。
-- [ ] 在A/B隔离Workspace实际操作：共用输入、来源切换不派发、输入草稿、合成生成/未审、编辑新版本/再审、固定版本无覆盖Markdown保存、原生打开和固定版本对话草稿准备。
-- [ ] 对草稿逐字/哈希、A/B归属、保存内容及运行记录进行独立本地核对；正常退出、重启，核对草稿/输入/运行/版本/审核/保存恢复。
-- [ ] 如有缺陷：针对真实问题写失败测试、最小修复、定向回归和当前GUI再验；不扩大诊断平台。
-- [ ] 写需求逐项验收表及保留限制，确认阶段2满足后提交全部本阶段工作。
+- [x] 核对当前进程/监听与隔离输入；备份非秘密Profile配置及已有业务/草稿，确认无另一个Host写同一存储。
+- [x] `--check`成功后按官方入口启动当前隔离Desktop；官方本地认证初始化按正常流程执行。取得当前窗口和实际Host/绿洲/Sidebar证据。
+- [x] 在A/B隔离Workspace实际操作：共用输入、来源切换不派发、输入草稿、合成生成/未审、编辑新版本/再审、固定版本无覆盖Markdown保存、原生打开和固定版本对话草稿准备。
+- [x] 对业务草稿逐字/哈希、原生单行草稿逐字、A/B归属、保存内容及运行记录进行独立本地核对；正常退出、重启，核对草稿/输入/运行/版本/审核/保存恢复。
+- [x] 如有缺陷：针对真实问题写失败测试、最小修复、定向回归和当前GUI再验；不扩大诊断平台。
+- [x] 写需求逐项验收表及保留限制，阶段2实际闭环与固定地址连续恢复通过；42/42及API130/130定向测试通过。提交全部本阶段工作，commit随后按Git记录核对。
 
 ## 阶段3：首模板真实双来源程序闭环
 
-文件范围：现有启动器/正式模式边界、`native-model-runtime`/`dsh-generation-context`、`oasis-account`/`claims-api-execution`/`claims-api-transport`/共同输入与结果边界的必要最小变更和对应test；新增阶段3evidence与当前状态。秘密只在原生credentials；真实运行证据保留本地并在Git中写脱敏摘要。
+文件范围：现有启动器/正式模式边界、`native-model-runtime`/`dsh-generation-context`、`oasis-account`/`oasis-remote-service`/`claims-api-execution-contract`/`claims-api-document`/`oasis-api-contract`/共同输入与结果边界的必要最小变更和对应test；新增阶段3evidence与当前状态。秘密只在原生credentials；真实运行证据保留本地并在Git中写脱敏摘要。
 
 - [ ] 审计正式运行模式与合成门禁，先核对固定原生模型目录/推理/输出预算/目的地/凭据可用性，再启用必要提供方网络；不改日常配置、不猜模型。
 - [ ] 核对专业API固定origin、登录、账户/Workspace项目显式绑定和实际服务schema/共同字段→API inputs无损映射；有缺项先定位，不编造folder_id/默认值。

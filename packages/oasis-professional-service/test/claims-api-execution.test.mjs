@@ -3,7 +3,7 @@ import test from 'node:test'
 import { executionHarness } from './claims-api-execution-harness.mjs'
 import { createOasisRemoteService } from '../src/oasis-remote-service.js'
 import { parseStoredWorkbenchRecord } from '../src/workbench-domain.js'
-import { mkdtemp, readFile, rm } from 'node:fs/promises'
+import { mkdtemp, readFile, realpath, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createWorkbenchRpcHandler } from '../src/workbench-rpc.js'
@@ -30,7 +30,7 @@ test('typed Connection API preview and start preserve scope and require both con
 })
 
 test('API reviewed original and edited child save through the common no-overwrite path', async t => {
-  const root = await mkdtemp(join(tmpdir(), 'oasis-api-writeback-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-api-writeback-')))
   t.after(() => rm(root, { recursive: true }))
   const h = await executionHarness(t, { workspaceRegistry: { get: () => ({ path: root, status: async () => 'ok' }) } })
   const task = await h.execute(), original = task.runs[task.activeRunId]
@@ -52,7 +52,7 @@ test('API reviewed original and edited child save through the common no-overwrit
 })
 
 test('API root saves keep terminal OIW on original and edited versions without mutating original artifact names', async t => {
-  const root = await mkdtemp(join(tmpdir(), 'oasis-api-root-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-api-root-')))
   t.after(() => rm(root, { recursive: true }))
   const h = await executionHarness(t, { workspaceRegistry: { get: () => ({ path: root, status: async () => 'ok' }) } })
   await h.execute()
