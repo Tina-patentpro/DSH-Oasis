@@ -8,7 +8,7 @@ import { parseStoredWorkbenchRecord } from '../src/workbench-domain.js'
 import { createWorkbenchRpcHandler } from '../src/workbench-rpc.js'
 import { createWorkbenchRemote } from '../src/client/workbench-remote.js'
 import { createWorkbenchStore } from '../src/client/workbench-store.js'
-import { mkdtemp, readFile } from 'node:fs/promises'
+import { mkdtemp, readFile, realpath, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
@@ -96,7 +96,7 @@ test('local capability rejects real-model evidence and missing native context be
 })
 
 test('same Store RPC page uses local admission, observation, review and no-overwrite save', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'oasis-4c-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-4c-')))
   const h = await fixtureHarness({ localGeneration: runtime(async () => ({ status: 'completed', body: '离线保存正文', model: context().route })),
     workspaceRegistry: { get: () => ({ path: root, async status() { return 'ok' } }) } })
   const handler = createWorkbenchRpcHandler(h.service)
@@ -124,5 +124,5 @@ test('same Store RPC page uses local admission, observation, review and no-overw
     assert.equal(metadata.execution.mode, 'dsh-local')
     assert.equal(metadata.execution.evidenceKind, 'native-offline')
     assert.ok(!JSON.stringify(metadata).includes(instruction.body))
-  } finally { await store.dispose(); await h.repository.close() }
+  } finally { await store.dispose(); await h.repository.close(); await rm(root, { recursive: true }) }
 })

@@ -8,7 +8,7 @@ import * as module from '../src/native-offline-runtime.js'
 
 test('offline composition requires exact isolated Home and explicit flag', () => {
   assert.equal(isNativeOfflineEnvironment({}), false)
-  assert.equal(isNativeOfflineEnvironment({ OASIS_NATIVE_OFFLINE: '1', DSH_HOME: resolve(process.env.USERPROFILE, '.dsh') }), false)
+  assert.equal(isNativeOfflineEnvironment({ OASIS_NATIVE_OFFLINE: '1', DSH_HOME: resolve(process.env.USERPROFILE ?? process.env.HOME, '.dsh') }), false)
 })
 test('approved isolated Home admits only the explicit native offline flag', { skip: !existsSync(new URL('../../../.dsh-test/stage2-desktop', import.meta.url)) }, () => {
   const DSH_HOME = fileURLToPath(new URL('../../../.dsh-test/stage2-desktop', import.meta.url))

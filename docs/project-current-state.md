@@ -1,8 +1,36 @@
+## 当前Mac阶段1状态 — 2026-10-14
+
+用户批准执行阶段1并在中断后要求继续。无模型流诊断已完成，结论PASS_WITH_CONCERNS（仅阶段1范围）：首包停滞、持续推理、部分正文后停滞、原生超时、停止/重复停止及迟到响应有定向证据；原生DSH0.2.0-rc.2 TIMEOUT错误此前被映射为普通失败，现仅补1行映射为TIMED_OUT并保持unknown/未决锁。正式120000ms总期限、模型/参数/来源、schema及UI不变；旧10月11日真实超时根因及提供方结果/费用仍未知，不修改旧运行、不重发。
+
+定向32/32通过，固定构建与--check退出0，client.js/map字节保持；序列化文件重开后同输入哈希/摘要/未知锁保持，仅测试Domain/owner替身，非实际Desktop恢复证明。另修Mac临时目录测试夹具realpath，生产安全规则未改。现有变更/归档保全，HEAD及原refs/index/暂存保持，Codex续接新增自身turn-diffs捕获引用另记；没有启动DSH/Desktop、读取/迁移认证、模型/API、依赖安装、提交推送。证据见 [阶段1无模型诊断](evidence/2026-10-14-stage1-stream-timeout.md)。下一步为阶段2无模型Desktop/Host验收，运行范围独立取得；首模板真实双来源仍未收口。
+
+## 当前Mac根目录状态 — 2026-10-13
+
+用户批准的阶段0已完成本地目录/构建收口，状态PASS_WITH_CONCERNS。源码与.git现位于 `/Users/tinadong7036/Documents/开发项目/dsh-lab`；mac/continuity-v2及73b826f HEAD、refs、Git索引和既有未提交内容保全。原候选完整快照、全refs bundle及二进制patch在 `.archive/pre-root-20261013`；Windows恢复/旧Mac/密封交接/回退材料在 `.archive/migration-20261012`。
+
+当前主包同锁依赖不再链接旧source；Profile四项link由固定pnpm离线真实物化。客户端构建退出0；Mac/启动器16通过、编译安全17通过/4既有跳过、fixture gate1通过，清理后--check退出0，明确Desktop-not-run。构建差异仅依赖路径注释与source map路径。10项确认无用对象约1.34GB移入独立废纸篓，未清空；原件/失败证据保留。
+
+保留关注：主包新路径的pnpm供应链政策验证在--offline下仍查询registry，被阻断代理拒绝，未完成；未关闭校验/升级/下载，依赖正文哈希逐项匹配原库存，本轮不宣称完整离线重装成功。工作区CRLF尾随空白诊断与保全前一致。没有启动DSH、读取/迁移认证、真实模型/API、提交推送。详见 [阶段0证据](evidence/2026-10-13-stage0-root-relocation.md)、[目录映射](development-layout.md) 和 [开发路线](plans/2026-10-13-oasis-development-roadmap.md)。下一步仍为明确范围的无模型流诊断；原TIMED_OUT记录及许可消费保持。
+
+---
+
 # 当前项目状态 — 2026-09-12
 
 这是维护前 AGENTS 记录的定向索引，不是本轮运行验证，也不新增或续期授权。开始后续阶段前核对当前 Git、相关构建/配置及原始证据；与其他任务新证据冲突时停止覆盖并报告。
 
 ## 当前阶段
+
+- 2026-10-11 用户明确批准材料外传/可能费用/网络准备与单次本地Skills计划，最终完整退出实测开发进程0、43120无监听；本轮执行目标FAIL，不是内容质量结论。隔离入口增加显式--local-model-check（须--s6-ui-check），Host追加api.deepseek.com:443后缀旁路及固定公开DEEPSEEK_BASE_URL；默认/Electron/日常不变，只有入口及其准入SHA修改，无依赖/业务源码/版本变化。RED为缺失能力4失败/1通过，GREEN与既有网站入口共10/10退出0；完整原入口check/start均0，新主49520/开发窗口6360318。Computer Use核对A现有任务、1312字符无上游、正式flow-2-6/0.2.2、deepseek-official/deepseek-flash后仅确认一次；run-0e8c8593-8ac3-4e03-b822-346f3e299ebb于06:57:33.406Z创建、06:59:33.464Z结束等待，120058ms后unknown/TIMED_OUT，executionSummary.failureStage=stream，result=null/未审核/无回写。实际v4结果页及调用记录显示状态未确认、流处理、结束原因/用量未记录；保留本地来源，不重试/切API/清未决状态。许可已消费，不能据此声称提供方收到/完成/取消或零费用；超时根因待只读追溯，不盲目增大超时/改模型。949字符未发送草稿逐字/SHA790d628f...保持；786有限保护仅入口、准入、业务JSON三项预期差异，旧运行/输入/审核/API执行/B与29旧Workspace文件保持、新Workspace文件0；业务仅新增唯一运行/激活指针/来源、revision42→45及时间戳。无消息发送、专业API生成、自动审核保存引用、提交推送或基线晋升。真实本地派发已有流阶段证据，成功响应/产物及当前完整双来源仍未收口。证据D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\.dsh-test\program-local-generation-20261011-01\result.json；范围记录openspec/changes/upgrade-dsh-test-20261007/local-model-test.md。
+
+- 2026-10-11 模型显示差异只读核对已收口，窄目标PASS，覆盖下条“别名与推理选择待核对”的当前性，不新增生成许可。固定0.2.0-rc.2原生DeepSeek目录明确deepseek-flash→DeepSeek-V41-Flash；选择器以显式reasoningEffort或模型能力defaultEffort显示等级，默认DeepSeek能力为high/High，LlmRuntime.prepareCall按同一能力补默认，业务适配器使用prepared.config。因此上次原始ID/未显式等级与原生显示名/High可由同一合同解释，不是已证实选错模型，无需代码修复。只读核对9原生输入匹配pin、5装配文件模型白名单字段/哈希保持、786保护项无新增差异；当次只读UI仍为原API/v2、防覆盖和949字符原草稿，未点击模型/改设置/发送。当前仅补同三文档及新摘要，不重复预览、全套测试或合成派发；不冒充新鲜模型能力RPC/凭据或真实提供方/API执行，也不保证未来默认不会变化。证据D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\.dsh-test\program-model-mapping-20261011-01\result.json。下一门禁仅当前完整双来源真实派发与对应整体验收；旧真实调用许可已消费，不自动续期。隔离入口当前仅网站443有显式Host代理旁路，不能以泛称继续自行开放模型网络/安装重启或调用。
+
+- 2026-10-11 用户明确允许有限API→Skills→本地生成前预览→还原API，已由Computer Use完成，窄目标PASS_WITH_CONCERNS，覆盖下条待此许可的当前性。现有开发窗口395664、A原任务，仅点击一次“核对模型与材料”，取得实际Host预览：deepseek-official/deepseek-flash、1312字符、无上游文稿、flow-2-6/0.2.2；费用/外传框未勾选、确认生成禁用，未创建运行/发送/真实模型或专业API调用。已还原API及原v2结果视图，949字符未发送草稿逐字/SHA790d628f...保持。786有限保护项复核退出0，只有业务JSON变化，逐叶哈希证明最终仅A revision40→42及任务/Workspace时间戳改变，输入/旧运行/审核/产物/回写等保持；12个实际app原生入口/manifest匹配pin。预览证明当前可选服务绑定及正式上下文/本地Skill预检路径可用，不认证完整生成、提供方就绪或整个Profile/userdata。原生选择器仍显示DeepSeek-V41-Flash/High，预览只显示上述原始ID且未显示推理等级；别名与推理选择一致性待核对，不凭名称差异断言产品缺陷，也不宣称模型选择一致。会话持久化投影pending/lastUsed均null只是缓存证据，不冒充实时owner返回。下一步只读核对显示名/模型ID/推理选择权威接点，再决定是否需最小修正；不得调用模型、改选择/设置或重做本次预览。只追加原3文档/新证据，无源码安装重启配置、提交推送或晋升；整个双来源运行仍STATIC_ONLY。证据D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\.dsh-test\program-host-preview-20261011-01\ui-result.json、before.json、skills.json、restored.json。
+
+- 2026-10-11 用户批准核对真实宿主接线，明确保留草稿、禁止发送/真实模型/API；本轮接线目标BLOCKED_WAITING_FOR_USER，不是产品FAIL。原开发主35996/监听52300/127.0.0.1:43120仍在，Computer Use精确窗口395664由最小化恢复后显示原A/API/v2已审核/草稿防覆盖及DeepSeek-V41-Flash/High。草稿前后949规范化字符逐字一致、SHA790d628f...保持；无来源切换、发送、运行创建或生成。13个实际app内原生入口/manifest及私有Node匹配pin，公开Session/modelSelection/default-owner合同与当前解析器对应；这些是静态核对，不冒充已取得实际服务返回。外部无浏览器认证的workflow/catalog一次请求403，停止、不取令牌；现有Desktop DevTools正常浏览器路径的只读表达式被粘贴安全提示拦截，未执行，不输入allow-pasting或绕过。恢复原Network页签/过滤、未清日志，关闭本轮DevTools；旧Console连接与bootstrap400日志不判为本轮新产品缺陷。最终786有限保护项/业务JSON均保持，验证退出0。本轮仅新建证据并追加原3文档，不修源码、安装/重启、改认证安全/Profile配置、提交推送或晋升基线。已询问是否允许有限API→Skills→生成前确认预览→还原API（会更新业务revision，不确认、不发送、不调用）；未批准前不执行。证据D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\.dsh-test\program-host-wiring-20261011-01\verification.json。
+
+- 2026-10-11 用户同意下一步，限定补当前原生服务/上下文/派发的无网络证据。本轮离线原生互操作目标PASS：实际已装Cordis4.0.4、LlmRuntime/LlmAdapter/消息/组装器0.2.0-rc.2，主源与已验证副本哈希对应；四场景退出0，服务缺失/恢复、内存项目会话归属与模型选择、预览不派发/确认后单次完成/重复请求不派发、提供方退出及服务退出禁用均满足。成功运行内存提供方prepare1/stream1、网络尝试0，前后786有限保护项无差异；6个原生包入口/manifest匹配pin。Workspace/session/projection/default-model owner和业务存储仍为明确内存替身，不认证当前原生真实owner或Desktop/提供方/API。原先测试夹具遗漏外层workspaceRegistry依赖声明、清理/注册句柄及上游字段传参错误已按实际公开合同纠正，失败保留且不算产品修复；源码未变。整个当前双来源运行仍STATIC_ONLY，后续只保留真实owner接线/提供方与API派发必要证据，不扩展离线工具、不重跑已有UI/全套测试。仅追加本状态、现有收口证据及tasks，未操作开发窗口/草稿、安装/升级、真实调用/上传下载费用、提交推送或晋升整体验收基线。原始结果：D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\.dsh-test\program-native-runtime-20261011-01\result.json。
+
+- 2026-10-11 用户明确不评价生成内容质量，并批准精简程序收口计划。本轮先只读核对 main/73b826f，开始工作区干净；201仓库输入（含94个test路径）/494安装成员/4入口/46有限保护/12日常/29Workspace共786项与10月11日标签重开后基线一致，退出0。复用同输入build/test/pack0、856通过/2既有跳过，不重跑、不重建、不重装。只补旧适配器测试使用TestAssembler造成的当前原生helper缺证：实际DSH0.2.0-rc.2 BlockAssembler/createUserMessage + 内存llm，文本/推理隔离及max-tokens拒绝两场景退出0，fetch0；不是原生LlmRuntime或新真实模型/API证据。当前安装同页/A-B恢复、V2指定输入输出/无覆盖及安全预览样例、10月11日固定v2单次插入/三版本往返/标签重开按既有证据收口，不重复测试。当前整个首模板双来源运行仍STATIC_ONLY：旧组合真实生成不自动认证新SDK/设置owner/会话接点下的完整原生服务/派发链路；取消内容质量门禁不补齐运行证据。未发现本轮需要修改源码的具体缺陷；旧signed-tool404/同一composer重定向/合成补丁测试可复现性保留为限定关注，不恢复旧/api/files、全格式安全或已排除的额外跨版本Desktop演练。本轮仅最小文档/纯合成新证据，无UI、真实调用上传下载费用、安装Profile/日常、提交推送发布或AGENTS/Skill整体验收晋升。证据：D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\docs\evidence\2026-10-11-program-functional-closeout.md。
 
 - 2026-10-09 用户批准当前安装同页来源/已有版本/草稿防覆盖及A/B恢复，窄目标PASS_WITH_CONCERNS，不是整批或新真实生成收口。原入口check/start退出0，run cf34664a-6fe6-4fe2-8115-cd7e8ca1c384健康、主78116/子监听65652/43121；Computer Use5310456同页API→Skills→API输入不变，v1合成/v2历史生产API/v3历史编辑与审核、v2保存入口及草稿禁用说明可见，最终原API/v2/输入。A→B→A业务恢复正确，B无生成内容；原生Workspace下拉保留并重定向同一composer草稿，不称独立会话草稿隔离通过。949字符UIA草稿SHA790d628f...逐字保持、未发送。后验退出0：包110/Sidebar384/两源/4入口/日常12匹配，29旧Workspace文件不变、新文件/会话/缓存0；46保护中43保持，另3项仅业务A revision32→37/时间戳、B旧会话end-seed与投影seq/seeded，旧事件前缀及全部产物/审核/回写保持，不称全Profile/userdata不变。Oct8旧run49720非正常退出提示保留，当前健康不代替旧退出证明。证据docs/evidence/2026-10-09-current-ui-recovery.md及.dsh-test/dsh-upgrade-20261007/batch2-ui-recovery-20261009。无新模型/API/上传下载费用/审核编辑保存/安装配置/提交推送/晋升，单代理非独立审查，真实双来源及整批门禁仍开放。
 

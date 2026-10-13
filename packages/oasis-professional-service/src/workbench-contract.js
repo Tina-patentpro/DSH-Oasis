@@ -222,8 +222,13 @@ export const writebackRecordSchema = z.object({
 })
 
 const writebackAbsolutePathSchema = z.string().min(1).max(32 * 1024).refine(
-  (value) => /^(?:[a-z]:\\|\\\\[^\\]+\\[^\\]+\\)/i.test(value),
-  'must be an absolute Windows path',
+  (value) => {
+    if (value.includes('\0')) return false
+    if (/^(?:[a-z]:\\|\\\\[^\\]+\\[^\\]+\\)/i.test(value)) return true
+    if (!value.startsWith('/') || value.startsWith('//') || value.includes('\\')) return false
+    return value === '/' || value.slice(1).split('/').every(part => part && part !== '.' && part !== '..')
+  },
+  'must be a normalized absolute Windows or POSIX path',
 )
 
 const transientWritebackFileSchema = writebackFileSchema.extend({
@@ -246,9 +251,11 @@ const writebackTransientManifestSchema = writebackRecoveryManifestSchema.extend(
   files: z.array(transientWritebackFileSchema).length(WORKBENCH_LIMITS.maxWritebackFiles),
   expiresAt: timestampSchema,
 }).strict().superRefine((value, ctx) => {
-  const prefix = `${value.absoluteTarget.toLocaleLowerCase('en-US')}\\`
+  const posix = value.absoluteTarget.startsWith('/')
+  const key = path => posix ? path : path.toLocaleLowerCase('en-US')
+  const prefix = posix ? (value.absoluteTarget === '/' ? '/' : value.absoluteTarget + '/') : `${key(value.absoluteTarget)}\\`
   for (const [index, file] of value.files.entries()) {
-    if (!file.absolutePath.toLocaleLowerCase('en-US').startsWith(prefix)) {
+    if (!key(file.absolutePath).startsWith(prefix)) {
       ctx.addIssue({ code: 'custom', path: ['files', index, 'absolutePath'], message: 'manifest file must be inside its absolute target' })
     }
   }

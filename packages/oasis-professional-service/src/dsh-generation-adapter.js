@@ -26,6 +26,7 @@ function providerCode(error) {
     if (['NO_ADAPTER', 'MISSING_CREDENTIAL', 'INVALID_CREDENTIAL', 'AUTH'].includes(code)) return 'MODEL_UNAVAILABLE'
     if (['RATE_LIMIT', 'QUOTA_EXCEEDED', 'CONTEXT_WINDOW_EXCEEDED'].includes(code)) return 'MODEL_LIMITED'
     if (code === 'ABORTED') return 'ABORTED'
+    if (code === 'TIMEOUT') return 'TIMED_OUT'
   } catch { /* Never expose an untrusted error getter. */ }
   return 'GENERATION_FAILED'
 }

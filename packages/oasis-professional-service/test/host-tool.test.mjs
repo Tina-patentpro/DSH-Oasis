@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import assert from 'node:assert/strict'
 import { readFile, mkdtemp } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
@@ -380,7 +381,7 @@ test('S6 actual Host binding read is scoped and confirm cannot bypass disabled r
 
 test('isolated synthetic Host disables legacy bootstrap before resolving any credential or API request', async () => {
   const oldHome = process.env.DSH_HOME; const oldFixture = process.env.OASIS_UNIFIED_FIXTURE
-  process.env.DSH_HOME = String.raw`D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\.dsh-test\isolated-dev-20260913\home`; process.env.OASIS_UNIFIED_FIXTURE = '1'
+  process.env.DSH_HOME = (process.platform === 'win32' ? String.raw`D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\.dsh-test\isolated-dev-20260913\home` : fileURLToPath(new URL('../../../.dsh-test/mac-dev/home', import.meta.url))); process.env.OASIS_UNIFIED_FIXTURE = '1'
   const fixture = createHostFixture({ runtimeSettings: {
     environmentKind: 'non-production', apiBaseUrl: 'http://127.0.0.1:6326', credentialOrigin: 'http://127.0.0.1:6326',
     credentialRef: 'OASIS_USER_JWT', downloadOrigins: [],
