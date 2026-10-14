@@ -1,4 +1,4 @@
-/** Mac-only, no-account/no-model development launcher. Windows entries are preserved. */
+/** Mac-only isolated launcher; default is no-model, real acceptance is explicit. */
 import {createHash,randomUUID} from 'node:crypto';
 import {openSync,closeSync,writeFileSync,readFileSync,unlinkSync,lstatSync,realpathSync,existsSync} from 'node:fs';
 import {spawn,execFileSync} from 'node:child_process';
@@ -18,7 +18,7 @@ export function assertConfined(root,path) {
  if(realpathSync(target)!==target) throw Error('Noncanonical confined path');
  return target;
 }
-export function makeLaunchSpec({root,app,node,acceptance=false}) {
+export function makeLaunchSpec({root,app,node,acceptance=false,realAcceptance=false}) {
  root=canonicalRoot(root);app=canonicalRoot(app);node=realpathSync(node);
  for(const name of ['user','home','userdata','cache','temp','evidence','workspace-a','workspace-b']) assertConfined(root,join(root,name));
  const env={PATH:[dirname(node),'/usr/bin','/bin','/usr/sbin','/sbin'].join(delimiter),
@@ -28,6 +28,13 @@ export function makeLaunchSpec({root,app,node,acceptance=false}) {
   npm_config_store_dir:join(root,'cache/pnpm'),SHELL:'/bin/zsh',LANG:'en_US.UTF-8',LC_ALL:'en_US.UTF-8',
   DSH_TELEMETRY_DISABLED:'1',OASIS_UNIFIED_FIXTURE:'1',HTTP_PROXY:'http://127.0.0.1:9',HTTPS_PROXY:'http://127.0.0.1:9',
   ALL_PROXY:'http://127.0.0.1:9',NO_PROXY:'127.0.0.1,localhost,::1',CI:'true'};
+ if(realAcceptance===true) {
+  delete env.OASIS_UNIFIED_FIXTURE;
+  env.DEEPSEEK_BASE_URL='https://api.deepseek.com/anthropic';
+  // Host proxy routing, not an OS firewall: NO_PROXY also matches subdomains.
+  // Renderer traffic and all other Host destinations keep the blocking proxy.
+  env.NO_PROXY+=',api.deepseek.com:443,lzhxpy.oasisintwrite.com:443';
+ }
  return {exe:join(app,'Contents/MacOS/DSH Desktop'),args:[
   '--user-data-dir='+join(root,'userdata'),'--proxy-server=http://127.0.0.1:9',
   '--proxy-bypass-list=localhost;127.0.0.1;[::1]','--disable-background-networking',
@@ -86,6 +93,12 @@ export function verifyPins(pin) {
   if(!/^[a-f0-9]{64}$/.test(hash) || fileHash(path)!==hash) throw Error('Pinned file drift: '+path);
  }
 }
+export function assertRealAcceptanceAdmission(pin) {
+ const review=pin.real_acceptance;
+ if(review?.reviewed!==true || review.provider!=='deepseek-official'
+  || review.modelOrigin!=='https://api.deepseek.com/anthropic'
+  || review.apiOrigin!=='https://lzhxpy.oasisintwrite.com') throw Error('Missing or mismatched reviewed real acceptance admission');
+}
 export function startOwnedChild(spec,{stdio,spawnProcess=spawn}={}) {
  // User-approved: remove only this project's outer sandbox-exec wrapper.
  // Keep signed Electron's native sandbox, clean environment and isolated paths.
@@ -94,7 +107,9 @@ export function startOwnedChild(spec,{stdio,spawnProcess=spawn}={}) {
 async function main() {
  if(process.platform!=='darwin')throw Error('Mac launcher requires darwin');
  const args=process.argv.slice(2);
- if(!['--check','--start','--stop'].includes(args[0]) || args.length>2 || (args.length===2 && (args[0]!=='--start' || args[1]!=='--acceptance')))throw Error('Use --check, --start [--acceptance], or --stop');
+ if(!['--check','--start','--stop'].includes(args[0]) || args.length>2
+  || (args.length===2 && !((args[0]==='--start' && args[1]==='--acceptance')
+    || (['--check','--start'].includes(args[0]) && args[1]==='--real-acceptance'))))throw Error('Use --check [--real-acceptance], --start [--acceptance|--real-acceptance], or --stop');
  const source=canonicalRoot(join(dirname(fileURLToPath(import.meta.url)),'..'));
  const root=canonicalRoot(join(source,'.dsh-test/mac-dev'));
  if(args[0]==='--stop'){console.log(JSON.stringify(stopLaunch(root)));return;}
@@ -102,9 +117,11 @@ async function main() {
  const pin=JSON.parse(readFileSync(pinPath,'utf8'));
  if(pin.root!==root || pin.policy!=='no-model-private-profile-v2')throw Error('Invalid Mac admission');
  verifyPins(pin);
+ const realAcceptance=args.includes('--real-acceptance');
+ if(realAcceptance)assertRealAcceptanceAdmission(pin);
  if(realpathSync(process.execPath)!==realpathSync(pin.node))throw Error('Use pinned private Node');
- const spec=makeLaunchSpec({root,app:pin.app,node:pin.node,acceptance:args.includes('--acceptance')});
- if(args[0]==='--check') {console.log(JSON.stringify({status:'preflight-only',runtimeAcceptance:pin.runtime_acceptance?.status ?? 'unverified',root,exe:spec.exe,home:spec.env.HOME,dshHome:spec.env.DSH_HOME,userData:join(root,'userdata'),network:'Profile loopback; no outer kernel network/file guard',launch:'direct signed Electron; native sandbox unchanged'}));return;}
+ const spec=makeLaunchSpec({root,app:pin.app,node:pin.node,acceptance:args.includes('--acceptance') || realAcceptance,realAcceptance});
+ if(args[0]==='--check') {console.log(JSON.stringify({status:'preflight-only',mode:realAcceptance?'real-acceptance':'no-model',runtimeAcceptance:pin.runtime_acceptance?.status ?? 'unverified',root,exe:spec.exe,home:spec.env.HOME,dshHome:spec.env.DSH_HOME,userData:join(root,'userdata'),network:realAcceptance?'Host fixed model/API HTTPS proxy bypass; renderer loopback; no outer kernel guard':'Profile loopback; no outer kernel network/file guard',launch:'direct signed Electron; native sandbox unchanged'}));return;}
  const release=acquireLaunchLock(root);
  const runId=Date.now(),base=join(root,'evidence','launch-'+runId);
  const out=openSync(base+'.stdout.log','wx',0o600),err=openSync(base+'.stderr.log','wx',0o600);
@@ -114,7 +131,7 @@ async function main() {
  try {
   child=startOwnedChild(spec,{stdio:['ignore',out,err]});
   await new Promise((ok,fail)=>{child.once('spawn',ok);child.once('error',fail);});
-  const record={runId,pid:child.pid,launcherPid:process.pid,exe:spec.exe,root,home:spec.env.HOME,dshHome:spec.env.DSH_HOME,userData:join(root,'userdata'),acceptance:args.includes('--acceptance'),status:'spawned; acceptance pending'};
+  const record={runId,pid:child.pid,launcherPid:process.pid,exe:spec.exe,root,home:spec.env.HOME,dshHome:spec.env.DSH_HOME,userData:join(root,'userdata'),acceptance:args.includes('--acceptance') || realAcceptance,mode:realAcceptance?'real-acceptance':'no-model',status:'spawned; acceptance pending'};
   writeFileSync(base+'.json',JSON.stringify(record,null,2),{flag:'wx',mode:0o600});
   console.log(JSON.stringify(record));
   const result=await new Promise(ok=>child.once('close',(code,signal)=>ok({code,signal})));

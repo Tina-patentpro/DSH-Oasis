@@ -52,3 +52,7 @@ Git检查会刷新index的文件系统stat缓存；当前及快照的对象ID、
 ## 隔离 Desktop 地址与原生草稿恢复
 
 阶段2实际重启验证后，开发专用Profile的 `desktop-shell.config.port` 固定57517、`networkExposure` 保持loopback。原生DSH会话草稿/Sidebar视图由浏览器localStorage持久化；原port=0每次分配不同origin，业务存储恢复但原生草稿不可见。运行同一隔离userData时须保持地址，端口冲突应显式失败，不能静默回退随机端口。此设置仅位于忽略的 `.dsh-test/mac-dev/home/profiles/desktop/cordis.patch.yml`；已审准入指纹随本地配置更新，不修改签名应用或日常Profile。复现与两次连续重启证据见 [阶段2验收](evidence/2026-10-14-stage2-desktop-closeout.md)。
+
+必要真实验收使用显式 `tools/bin/node scripts/macos-development-launch.mjs --check --real-acceptance`，通过已审本地准入后才用 `--start --real-acceptance`。默认启动仍是合成模式。正式入口只对固定模型/网站Host提供HTTPS代理旁路，renderer继续阻断外网；原生密钥和网站登录在设置中由用户完成，不复制日常credentials。详见 [阶段3准备](evidence/2026-10-14-stage3-real-acceptance-preparation.md)，准备不等于实际双来源验收通过。
+
+阶段3当前固定Mac组合的真实双来源程序验收及正常重启已收口，见 `docs/evidence/2026-10-14-stage3-independent-acceptance.md`。仅隔离Profile原生UI确认的项目关联发生写回并经单项pin复核；未改变日常配置、固定组合或默认合成入口。独立调用预算各一次已消费，不因正式入口仍存在而授权自动新增调用；旧未知记录继续保全。真实验收产物与运行数据留 `.dsh-test/mac-dev` / `.local`，不入Git或发布包。

@@ -9,7 +9,7 @@ import { createHash } from 'node:crypto'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { UnifiedGenerationPage } from '../src/client/UnifiedGenerationPage.js'
-import { mkdtemp, readFile } from 'node:fs/promises'
+import { mkdtemp, readFile, realpath } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
@@ -108,7 +108,7 @@ test('local contract2 loads only pinned public resources and sanitizes invalid J
 
 test('contract2 native and API synthetic artifacts save without overwrite with versioned provenance', async () => {
   for (const mode of ['native', 'synthetic']) {
-    const root = await mkdtemp(join(tmpdir(), 'oasis-claims-v2-'))
+    const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-claims-v2-')))
     const localGeneration = { enabled: true, evidenceKind: 'native-offline', loadClaimsV2Skill: loadPublicClaimsV2Skill,
       resolveContext: () => ({ sessionId: 's', route: { provider: 'offline', model: 'text' } }),
       adapter: { async generate(input) { return { status: 'completed', body: JSON.stringify(publicClaimsV2Output(input.formValues)) } } } }

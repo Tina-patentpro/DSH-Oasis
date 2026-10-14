@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url'
 import assert from 'node:assert/strict'
-import { readFile, mkdtemp } from 'node:fs/promises'
+import { readFile, mkdtemp, realpath } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import test from 'node:test'
@@ -252,7 +252,7 @@ test('wires the Host workspace registry into the safe writeback boundary', async
 })
 
 test('R1 Host shares import and generation admission guard and preserves safe RPC busy errors', async t => {
-  const root = await mkdtemp(join(tmpdir(), 'oasis-r1-host-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-r1-host-')))
   let value = { websiteProjectLinks: [{ workspaceId: 'workspace-a', workspacePath: root,
     apiBaseOrigin: 'https://lzhxpy.oasisintwrite.com', accountId: 7, folderId: 2,
     folderName: 'synthetic', confirmedAt: new Date().toISOString() }], workspaceApiBindings: [] }

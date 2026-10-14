@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { mkdtemp, readFile, writeFile, readdir, rm } from 'node:fs/promises'
+import { mkdtemp, readFile, writeFile, readdir, rm, realpath } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createElement } from 'react'
@@ -18,7 +18,7 @@ const origin = 'https://lzhxpy.oasisintwrite.com'
 const safe = { endpoint: 'history-attachment', stage: 'response', kind: 'http', httpStatus: 404 }
 const oldRow = { key: 'fixture', fileName: 'claims.docx', status: 'failed', code: 'IMPORT_REQUEST_FAILED' }
 async function fixture(t, response) {
-  const root = await mkdtemp(join(tmpdir(), 'oasis-download-diagnostics-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-download-diagnostics-')))
   t.after(() => rm(root, { recursive: true, force: true }))
   await writeFile(join(root, 'claims.docx'), 'protected old bytes')
   let revision = 0, value = { websiteProjectLinks: [], workspaceApiBindings: [] }

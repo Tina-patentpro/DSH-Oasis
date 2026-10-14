@@ -1,7 +1,7 @@
 import { createConnectionFixture } from './connection-fixture.mjs'
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises'
+import { mkdtemp, mkdir, writeFile, rm, realpath } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createWorkbenchService } from '../src/workbench-service.js'
@@ -25,7 +25,7 @@ test('saved versions expose current-file opening with a capability gate, distinc
 })
 
 test('saved-file open resolves only an owned persisted Markdown record, without changing or reapproving current files', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'oasis-saved-open-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-saved-open-')))
   try {
     await mkdir(join(root, 'output'))
     await writeFile(join(root, 'output', 'claims.md'), 'changed current file', 'utf8')

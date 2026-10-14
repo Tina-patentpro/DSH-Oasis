@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { mkdtemp, readFile, readdir, rm } from 'node:fs/promises'
+import { mkdtemp, readFile, readdir, rm, realpath } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createWebsiteImportService } from '../src/website-import-service.js'
@@ -29,7 +29,7 @@ test('service issues no signed-tool download ticket and leaks no URL or signatur
 })
 
 async function fixture(t) {
-  const root = await mkdtemp(join(tmpdir(), 'oasis-records-')); t.after(() => rm(root, { recursive: true, force: true }))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-records-'))); t.after(() => rm(root, { recursive: true, force: true }))
   let settingsValue = { websiteProjectLinks: [] }, revision = 0, calls = 0
   const row = { key: 'record:9:file:opaque', revision: 'a'.repeat(64), name: 'record', sourceId: 9, role: 'input', inputField: 'material',
     mimeType: 'text/plain', fileName: 'input.txt', kind: 'file', size: null, downloadable: true, reason: null, url: 'https://lzhxpy.oasisintwrite.com/uploads/input.txt' }

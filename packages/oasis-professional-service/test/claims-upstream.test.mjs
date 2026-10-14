@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { mkdtemp, writeFile } from 'node:fs/promises'
+import { mkdtemp, writeFile, realpath } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { createHash } from 'node:crypto'
@@ -16,7 +16,7 @@ const upstream = `# 技术交底\n\n## 文档信息\n\n- node_id: Flow-1-5\n- wo
 const fields = { disclosure_text: '补充：日志采用分段存储。', drawings_text: '', claim_requirements_text: '', user_input: '' }
 
 test('explicit Workspace file is confirmed, frozen into either source, and changes require reconfirmation', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'claims-upstream-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'claims-upstream-')))
   await writeFile(join(root, fileName), upstream)
   const h = await fixtureHarness({ claimsV2: true, unifiedFixtureEnabled: true,
     workspaceRegistry: { get: id => id === 'workspace-a' ? { path: root, async status() { return 'ok' } } : undefined } })
@@ -62,7 +62,7 @@ test('actual offline provider accepts a frozen upstream without using any extern
 })
 
 test('bounded upstream rejects overflow and foreign projects; RPC cannot inject body; valid model echo remains a G-SKILL counterexample', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'claims-upstream-guards-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'claims-upstream-guards-')))
   await writeFile(join(root, 'large.md'), 'a'.repeat(65537))
   const localGeneration = { enabled: true, evidenceKind: 'native-offline', loadClaimsV2Skill: loadPublicClaimsV2Skill,
     resolveContext: () => ({ sessionId: 's', route: { provider: 'offline', model: 'text' } }),

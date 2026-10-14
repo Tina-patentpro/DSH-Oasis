@@ -1,4 +1,4 @@
-import { mkdtemp, mkdir, writeFile, readFile } from 'node:fs/promises'
+import { mkdtemp, mkdir, writeFile, readFile, realpath } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join, dirname } from 'node:path'
 import { createHash } from 'node:crypto'
@@ -9,7 +9,7 @@ export const contracts = Object.freeze({ inputSchemaVersion: '1', outputSchemaVe
 
 // Independent public fixture, never read authoring resources or user attachments.
 export async function publicSkillFixture() {
-  const root = await mkdtemp(join(tmpdir(), 'oasis-builtin-public-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-builtin-public-')))
   const content = [
     ['SKILL.md', 'instruction', '---\nname: oasis-patent-claims\ndescription: "Public offline resource-loading test only."\n---\nPUBLIC_4E_MAIN\nUse the supplied public text only. Do not read other files.'],
     ['references/drafting-rules.md', 'reference', 'PUBLIC_4E_RULES\nPublic rule: return the fixed test result.'],

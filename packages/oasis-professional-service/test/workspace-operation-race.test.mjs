@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { mkdtemp, writeFile, readFile } from 'node:fs/promises'
+import { mkdtemp, writeFile, readFile, realpath } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fixtureHarness } from './unified-generation-harness.mjs'
@@ -22,7 +22,7 @@ async function fixture(t) {
       instruction: { version: 'public-1', body: 'Synthetic review only' },
       adapter: { generate: () => { dispatched.resolve(); return generation.promise } } } })
   t.after(async () => { generation.resolve({ status: 'failed', code: 'ABORTED' }); await h.service.closeLocalGeneration(); await h.repository.close() })
-  const root = await mkdtemp(join(tmpdir(), 'oasis-r1-')), entered = deferred(), release = deferred()
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-r1-'))), entered = deferred(), release = deferred()
   const link = { workspaceId: 'workspace-a', workspacePath: root, apiBaseOrigin: 'https://lzhxpy.oasisintwrite.com',
     accountId: 7, folderId: 2, folderName: 'synthetic', confirmedAt: new Date().toISOString() }
   let revision = 0, pause = false, fail = false, writes = 0
@@ -122,7 +122,7 @@ test('R1 API final admission rechecks settings after repository queue delay, wit
 
 async function apiFixture(t) {
   const h = await executionHarness(t, { workspaceOperations: operations() })
-  const root = await mkdtemp(join(tmpdir(), 'oasis-r1-api-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-r1-api-')))
   h.workspace.path = root; h.binding.workspacePath = root
   h.binding.apiBaseOrigin = h.active.apiBaseOrigin = h.value.apiBaseUrl = h.value.credentialOrigin = 'https://lzhxpy.oasisintwrite.com'
   h.binding.environmentKind = h.active.environmentKind = h.value.environmentKind = 'production'

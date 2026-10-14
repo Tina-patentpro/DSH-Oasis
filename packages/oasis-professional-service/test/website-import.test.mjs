@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { mkdtemp, readFile, writeFile, readdir, rm, symlink } from 'node:fs/promises'
+import { mkdtemp, readFile, writeFile, readdir, rm, symlink, realpath } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 const clientModule = await import('../src/website-import-client.js').catch(() => ({}))
@@ -120,7 +120,7 @@ test('malformed attachments are explicitly unsupported and oversized expansion i
 
 async function fixture(t) {
   assert.equal(typeof serviceModule.createWebsiteImportService, 'function')
-  const root = await mkdtemp(join(tmpdir(), 'oasis-import-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-import-')))
   t.after(() => rm(root, { recursive: true, force: true }))
   const workspace = { path: root, status: async () => 'ok' }
   let revision = 'r1', settingsRevision = 0, clock = Date.now(), active = false

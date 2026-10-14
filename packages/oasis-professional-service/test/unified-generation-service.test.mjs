@@ -1,7 +1,7 @@
 import { createConnectionFixture } from './connection-fixture.mjs'
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { mkdtemp, readFile, rm } from 'node:fs/promises'
+import { mkdtemp, readFile, rm, realpath } from 'node:fs/promises'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { parseStoredWorkbenchRecord } from '../src/workbench-domain.js'
@@ -160,7 +160,7 @@ test('prepared run is durable and locks input, stops without rerunning and ignor
 })
 
 test('both sources use existing no-overwrite Markdown publication with synthetic provenance', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'oasis-unified-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-unified-')))
   const h = await fixtureHarness({ unifiedFixtureEnabled: true,
     workspaceRegistry: { get: id => id === 'workspace-a' ? { path: root, async status() { return 'ok' } } : null },
   })
@@ -186,7 +186,7 @@ test('both sources use existing no-overwrite Markdown publication with synthetic
 })
 
 test('store to RPC to Host closes the two-source synthetic loop and prepares native input without sending', async () => {
-  const root = await mkdtemp(join(tmpdir(), 'oasis-unified-open-'))
+  const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-unified-open-')))
   const h = await fixtureHarness({ unifiedFixtureEnabled: true,
     workspaceRegistry: { get: id => id === 'workspace-a' ? { path: root, async status() { return 'ok' } } : null },
   })

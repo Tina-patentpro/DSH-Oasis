@@ -96,3 +96,26 @@ test('approved launch starts the signed app directly without an added sandbox or
  assert.equal(calls[0][2].shell,false);assert.deepEqual(calls[0][2].stdio,['ignore',10,11]);
  assert.equal(calls[0][1].includes('--no-sandbox'),false);
 });
+
+test('real acceptance is explicit, uses fixed Host destinations and keeps the renderer proxy',t=>{
+ const f=fixture(t),normal=api.makeLaunchSpec(f),real=api.makeLaunchSpec({...f,realAcceptance:true});
+ assert.equal(normal.env.OASIS_UNIFIED_FIXTURE,'1');
+ assert.equal(real.env.OASIS_UNIFIED_FIXTURE,undefined);
+ assert.equal(real.env.DEEPSEEK_BASE_URL,'https://api.deepseek.com/anthropic');
+ assert.equal(real.env.NO_PROXY,'127.0.0.1,localhost,::1,api.deepseek.com:443,lzhxpy.oasisintwrite.com:443');
+ assert.equal(real.env.HTTPS_PROXY,'http://127.0.0.1:9');
+ assert.ok(real.args.includes('--proxy-server=http://127.0.0.1:9'));
+ assert.ok(real.args.includes('--proxy-bypass-list=localhost;127.0.0.1;[::1]'));
+ assert.equal(real.env.DEEPSEEK_API_KEY,undefined);
+ assert.equal(real.env.OPENAI_API_KEY,undefined);
+});
+
+test('real acceptance rejects absent or mismatched reviewed admission',()=>{
+ assert.equal(typeof api.assertRealAcceptanceAdmission,'function');
+ assert.throws(()=>api.assertRealAcceptanceAdmission({}),/reviewed/i);
+ const reviewed={real_acceptance:{reviewed:true,provider:'deepseek-official',modelOrigin:'https://api.deepseek.com/anthropic',apiOrigin:'https://lzhxpy.oasisintwrite.com'}};
+ assert.doesNotThrow(()=>api.assertRealAcceptanceAdmission(reviewed));
+ for(const key of ['provider','modelOrigin','apiOrigin']) {
+  assert.throws(()=>api.assertRealAcceptanceAdmission({real_acceptance:{...reviewed.real_acceptance,[key]:'unexpected'}}),/reviewed/i);
+ }
+});
