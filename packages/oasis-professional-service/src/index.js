@@ -161,6 +161,7 @@ export async function apply(ctx, config) {
         try {
           disposeTool()
         } finally {
+          await service.closeV340Runtime()
           await service.closeLocalGeneration()
           await localGeneration?.dispose()
           await repository.close()

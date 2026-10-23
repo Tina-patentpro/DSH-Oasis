@@ -9,7 +9,7 @@ export const NATIVE_TOOLS = Object.freeze([
 const button = { border: '1px solid var(--dsw-alias-border-l2, #dce4df)', borderRadius: 10, padding: 12,
   background: 'var(--dsw-alias-bg-base, #fff)', color: 'inherit', cursor: 'pointer', font: 'inherit' }
 
-export function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = () => false, onSelect = () => {}, onImport }) {
+export function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = () => false, onSelect = () => {}, onSelectV340, onResumeV340, onRetryV340Catalog, onImport }) {
   const [category, setCategory] = useState('patent')
   const [notice, setNotice] = useState(null)
   const ready = state.catalogStatus === 'ready'
@@ -38,6 +38,15 @@ export function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = 
         onClick: () => onSelect(task.id), style: { ...button, display: 'flex', justifyContent: 'space-between', textAlign: 'left', opacity: supported ? 1 : .55 } },
         task.title, createElement('small', null, supported ? '打开 →' : '待接入'))
     })),
+    onSelectV340&&state.v340Catalog?createElement('section',{'aria-label':'专利工作流',style:{display:'grid',gap:8}},
+      ...state.v340Catalog.nodes.filter(node=>category==='rd'?node.nodeId.startsWith('Flow-1-'):category==='patent'?!node.nodeId.startsWith('Flow-1-'):false)
+        .map(node=>createElement('button',{key:node.nodeId,type:'button',disabled:state.v340Creating===true,style:{...button,textAlign:'left'},
+          onClick:()=>onSelectV340(node.nodeId)},node.title,createElement('small',{style:{display:'block',marginTop:4}},'输入与结果 · 生成待接入')))):null,
+    state.v340CreateError?createElement('p',{role:'alert'},state.v340CreateError):null,
+    state.v340CatalogStatus==='error'?createElement('section',{role:'alert'},createElement('p',null,state.v340CatalogError),
+      createElement('button',{type:'button',style:button,disabled:!onRetryV340Catalog,onClick:()=>{void onRetryV340Catalog?.().catch(()=>{})}},'重试新版目录')):null,
+    onResumeV340&&state.closedV340Tabs?.length?createElement('section',{'aria-label':'已保留任务'},createElement('small',null,'已关闭的任务页，记录仍保留'),
+      ...state.pages.filter(p=>state.closedV340Tabs.includes(p.pageId)).map(p=>createElement('button',{key:p.pageId,type:'button',style:button,onClick:()=>onResumeV340(p.pageId)},`重新打开 ${p.title}`))):null,
     !ready ? createElement('div', { role: state.catalogStatus === 'error' ? 'alert' : 'status' },
       state.catalogStatus === 'error' ? '工作流目录读取失败' : '正在读取工作流目录…') : null,
     tasks.length === 0 ? createElement('small', null, '暂无已接入任务') : null,

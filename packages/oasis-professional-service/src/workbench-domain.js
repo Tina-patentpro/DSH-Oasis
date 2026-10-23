@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto'
 import { unifiedInputSha256 } from './unified-fixture.js'
 import { isUnifiedRun } from './generation-contract.js'
+import { assertV340Integrity } from './v340-runtime-integrity.js'
 
 import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain'
 
@@ -172,6 +173,7 @@ export function parseWorkbenchRecord(workspaceId, input) {
   const record = structuredClone(workbenchRecordSchema.parse(input))
   assertWorkspaceIdentity(workspaceId, record)
   assertRunIntegrity(record)
+  assertV340Integrity(record)
   return deepFreeze(record)
 }
 

@@ -1,4 +1,4 @@
-import { createElement, useState } from 'react'
+import { createElement, useEffect, useRef, useState } from 'react'
 import { WritebackPanel } from './WritebackPanel.js'
 import { SafeMarkdownPreview } from './SafeMarkdownPreview.js'
 
@@ -30,13 +30,45 @@ function localFailureText(run) {
 }
 
 function ResultVersion({ page, run, operation, disabled, readOnlyDisabled = disabled, markdownRenderer, onReview = () => {}, onEditResult = () => {},
+  workspaceId, workspaceRevision,
+  onUpdateResultEditDraft, onDiscardResultEditDraft,
   conversationUnavailableReason = null,
   savedFileUnavailableReason = '安全文件预览不可用', onOpenSavedFile = () => {},
   onUseInConversation = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {},
   onWritebackConfirm = () => {}, onCommitWriteback = () => {} }) {
-  const [editing, setEditing] = useState(false)
-  const [body, setBody] = useState(run.result.artifact.body)
+  const draft = operation.resultEditDrafts?.[run.runId]
+  const editing = draft !== undefined
+  const body = draft?.body ?? run.result.artifact.body
+  const staleDraft = editing && draft.baseArtifactId !== run.result.artifact.artifactId
   const [error, setError] = useState(null)
+  const [reviewConfirmation, setReviewConfirmation] = useState(null)
+  const reviewEntry = useRef(null)
+  const reviewTarget = useRef(null)
+  const reviewPending = useRef(false)
+  const live = useRef(true)
+  const reviewIdentity = JSON.stringify([workspaceId, workspaceRevision, page.pageId, run.runId, run.result.artifact.artifactId])
+  const currentIdentity = useRef(null)
+  currentIdentity.current = disabled || editing || run.review.status === 'approved' ? null : reviewIdentity
+  useEffect(() => { live.current = true; return () => { live.current = false } }, [])
+  useEffect(() => { reviewTarget.current = null; setReviewConfirmation(null) }, [reviewIdentity, disabled, editing, run.review.status])
+  function cancelReview() {
+    reviewTarget.current = null; setReviewConfirmation(null)
+    reviewEntry.current?.focus()
+  }
+  function openReview() {
+    if (currentIdentity.current === null || reviewPending.current) return
+    const target = { workspaceId, revision: workspaceRevision, artifactId: run.result.artifact.artifactId, identity: reviewIdentity }
+    reviewTarget.current = target; setReviewConfirmation(target)
+  }
+  async function confirmReview() {
+    const target = reviewConfirmation
+    if (!live.current || !target || reviewTarget.current !== target || reviewPending.current || currentIdentity.current !== target.identity) return
+    reviewPending.current = true
+    reviewTarget.current = null; setReviewConfirmation(null)
+    try { await action(() => onReview(page.pageId, run.runId, 'approved', '',
+      { workspaceId: target.workspaceId, revision: target.revision, artifactId: target.artifactId })) }
+    finally { reviewPending.current = false }
+  }
   async function action(fn) {
     setError(null)
     try { await fn() } catch { setError('操作未完成，请检查当前任务状态。') }
@@ -45,18 +77,29 @@ function ResultVersion({ page, run, operation, disabled, readOnlyDisabled = disa
     createElement('div', { style: { fontSize: 12 } }, `${run.source === 'local-skill' ? '本地 Skills' : '专业 API'} · ${run.mode === 'oasis-api' ? run.evidenceKind === 'production-api' ? '生产 API 响应' : '非生产 API 响应' : run.evidenceKind === 'native-model' ? '原生模型生成' : run.mode === 'dsh-local' ? '原生离线验收' : '合成验收'} · ${run.review.status === 'approved' ? '已审核' : '待审核'}`),
     run.mode === 'oasis-api' ? createElement('small', null, `服务 ${run.providerSnapshot.apiEndpoint}；远端文件 ${run.remoteResponse.fileUrls.length} 个，仅记录来源，未下载/未验证，不视为已交付。`) : null,
     editing ? createElement('textarea', { 'aria-label': '修订结果', value: body, maxLength: 100000, disabled,
-      onChange: event => setBody(event.currentTarget.value), style: { width: '100%' } })
+      onChange: event => action(() => onUpdateResultEditDraft(page.pageId, run.runId, event.currentTarget.value)), style: { width: '100%' } })
       : createElement(SafeMarkdownPreview, { markdownRenderer, text: run.result.artifact.body, style: { fontSize: 13, lineHeight: 1.65 } }),
     createElement('div', { style: { fontSize: 12, color: 'var(--dsw-alias-text-secondary, #66706b)' } }, '风险未评估 · 待确认问题未评估'),
+    editing ? createElement('p', { role: 'status' }, staleDraft ? '编辑基准已变化，原草稿保留；请复制保全或明确放弃后重新编辑。'
+      : draft.dirty ? '有未保存的结果编辑；切换版本会保留本次编辑，请保存为新版本或明确放弃。' : '结果编辑中；原版本保持不变。') : null,
     createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 6 } },
-      createElement('button', { type: 'button', style: button, disabled, onClick: () => setEditing(!editing) }, editing ? '放弃编辑' : '编辑结果'),
-      editing ? createElement('button', { type: 'button', style: button, disabled: disabled || !body.trim() || body === run.result.artifact.body,
+      createElement('button', { type: 'button', style: button, disabled: disabled || !onUpdateResultEditDraft || !onDiscardResultEditDraft,
+        onClick: () => action(() => editing ? onDiscardResultEditDraft(page.pageId, run.runId)
+          : onUpdateResultEditDraft(page.pageId, run.runId, run.result.artifact.body)) }, editing ? '放弃编辑' : '编辑结果'),
+      editing ? createElement('button', { type: 'button', style: button, disabled: disabled || staleDraft || !body.trim() || body === run.result.artifact.body,
         onClick: () => action(() => onEditResult(page.pageId, run.runId, body)) }, '保存为新版本') : null,
-      createElement('button', { type: 'button', style: button, disabled: disabled || editing || run.review.status === 'approved',
-        onClick: () => action(() => onReview(page.pageId, run.runId, 'approved', '')) }, '审核此版本'),
+      createElement('button', { ref: reviewEntry, type: 'button', style: button, disabled: disabled || editing || run.review.status === 'approved',
+        onClick: openReview }, '审核此版本'),
       createElement('button', { type: 'button', style: button, title: conversationUnavailableReason ?? undefined,
         disabled: readOnlyDisabled || editing || run.review.status !== 'approved' || conversationUnavailableReason !== null,
         onClick: () => action(() => onUseInConversation(page.pageId, run.runId)) }, '在对话中使用')),
+    reviewConfirmation ? createElement('section', { role: 'group', 'aria-label': '审核确认',
+      onKeyDown: event => { if (event.key === 'Escape') { event.preventDefault(); cancelReview() } } },
+      createElement('p', null, `当前固定版本${page.runOrder.indexOf(run.runId) + 1} · ${run.source === 'local-skill' ? '本地 Skills' : '专业 API'} · 哈希 ${(run.result.artifact.sha256 ?? run.result.artifact.artifactId ?? '未记录').replace('sha256:', '').slice(0, 12)}`),
+      createElement('p', null, '风险未评估 · 待确认问题未评估。确认仅登记此固定版本的人工审核结论。'),
+      createElement('button', { type: 'button', style: button, disabled: disabled || editing,
+        onClick: confirmReview }, `确认审核版本${page.runOrder.indexOf(run.runId) + 1}`),
+      createElement('button', { type: 'button', style: button, onClick: cancelReview }, '取消审核')) : null,
     error || operation.error ? createElement('div', { role: 'alert' }, error ?? `操作未完成（${operation.errorCode ?? '连接失败'}）`) : null,
     operation.feedback === 'conversation-draft-ready' ? createElement('div', { role: 'status' }, '已放入对话草稿，尚未发送。') : null,
     run.writebacks.length ? createElement('section', { 'aria-label': '已保存文件', style: { display: 'grid', gap: 6 } },

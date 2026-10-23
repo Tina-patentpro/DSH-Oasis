@@ -236,6 +236,7 @@ export function OasisWorkbenchSurface({
     hostMode,
     state: {
       ...state,
+      pages:state.pages.filter(page=>!state.closedV340Tabs?.includes(page.pageId)),
       effectiveMode,
       layoutStatus: hostMode === 'embedded' ? 'better-sidebar-owned' : layout.status,
     },
@@ -253,6 +254,24 @@ export function OasisWorkbenchSurface({
     },
   }),
   createElement(PanelPages, {
+    v340Actions:{
+      retryCatalog:()=>store.loadV340Catalog(workspaceId),
+      create:nodeId=>{void store.createV340Task(workspaceId,nodeId).then(()=>setCenter(false)).catch(()=>{})},
+      resume:pageId=>{store.activatePage(workspaceId,pageId);setCenter(false)},
+      discardLocal:(pageId,expected)=>store.discardV340LocalDrafts(workspaceId,pageId,expected),
+      saveDraft:(pageId,draft)=>store.saveV340Draft(workspaceId,pageId,draft),
+      saveEditDraft:(pageId,target,body)=>store.saveV340ResultDraft(workspaceId,pageId,target,body),
+      edit:(pageId,target)=>store.editV340Result(workspaceId,pageId,target),
+      review:(pageId,target,confirmation)=>store.reviewV340Result(workspaceId,pageId,target,confirmation),
+      selectVersion:(pageId,runId,versionId)=>store.selectV340Version(workspaceId,pageId,runId,versionId),
+      prepareSave:(pageId,target)=>store.prepareV340Save(workspaceId,pageId,target),
+      confirmSave:(pageId,value)=>store.setV340SaveConfirmation(workspaceId,pageId,value),
+      commitSave:pageId=>store.commitV340Save(workspaceId,pageId),
+      useReference:(pageId,target)=>store.useV340InConversation(workspaceId,pageId,target),
+      openSaved:(pageId,target,writebackId)=>store.openV340SavedFile(workspaceId,pageId,target,writebackId),
+      observe:(pageId,runId)=>store.v340Action(workspaceId,pageId,'run/observe',{runId}),
+      stop:(pageId,runId)=>store.v340Action(workspaceId,pageId,'run/stop',{runId}),
+    },
     onImport: store.websiteImportRemote && store.connectionSettings ? () => setImportWorkspace(workspaceId) : undefined,
     markdownRenderer,
     savedFileUnavailableReason: coordinator?.captureSavedFileTarget(workspaceId) ? null : '安全文件预览不可用',
@@ -263,7 +282,7 @@ export function OasisWorkbenchSurface({
     state: { ...state, professionalConfigurationBlocked: !configuration.canSubmit, conversationUnavailableReason },
     effectiveMode,
     onSelectWorkflow: (pageId, workflowId) => {
-      if (store.getWorkspaceState(workspaceId).pages.find(page => page.pageId === pageId)?.workflowId) {
+      if (!pageId||store.getWorkspaceState(workspaceId).pages.find(page => page.pageId === pageId)?.workflowId) {
         store.createPage(workspaceId)
         pageId = store.getWorkspaceState(workspaceId).activePageId
       }
@@ -278,6 +297,8 @@ export function OasisWorkbenchSurface({
     onObserveUnified: pageId => { void store.observeUnifiedRun(workspaceId, pageId).catch(() => {}) },
     onStopUnified: (pageId, runId) => { void store.stopUnifiedRun(workspaceId, pageId, runId).catch(() => {}) },
     onEditResult: (pageId, runId, body) => store.editUnifiedResult(workspaceId, pageId, runId, body),
+    onUpdateResultEditDraft: (pageId, runId, body) => store.updateResultEditDraft(workspaceId, pageId, runId, body),
+    onDiscardResultEditDraft: (pageId, runId, expectedDraft) => store.discardResultEditDraft(workspaceId, pageId, runId, expectedDraft),
     onUseInConversation: (pageId, runId) => store.useInConversation(workspaceId, pageId, runId),
     onMaterialDraft: (pageId, path, confirmed) => store.setMaterialDraft(workspaceId, pageId, path, confirmed),
     onAddMaterial: (pageId) => { void store.addMaterial(workspaceId, pageId).catch(() => {}) },
@@ -290,8 +311,10 @@ export function OasisWorkbenchSurface({
     onGenerate: (pageId, confirmed = false) => { void store.createRun(workspaceId, pageId, confirmed).catch(() => {}) },
     onActivateRun: (pageId, runId) => store.activateRun(workspaceId, pageId, runId),
     onReviewNote: (pageId, note) => store.setReviewNote(workspaceId, pageId, note),
-    onReview: (pageId, runId, status, note) => {
-      void store.reviewRun(workspaceId, pageId, runId, status, note).catch(() => {})
+    onReview: (pageId, runId, status, note, confirmation) => {
+      const pending = store.reviewRun(workspaceId, pageId, runId, status, note, confirmation)
+      if (confirmation) return pending
+      void pending.catch(() => {})
     },
     onWritebackDraft: (pageId, directory, confirmed) => {
       store.setWritebackDraft(workspaceId, pageId, directory, confirmed)

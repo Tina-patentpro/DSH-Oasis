@@ -1026,7 +1026,7 @@ window.__ModuleLoader__.load({
 			const hhmm = `(?:[01]\\d|2[0-3]):[0-5]\\d`;
 			return typeof args.precision === "number" ? args.precision === -1 ? `${hhmm}` : args.precision === 0 ? `${hhmm}:[0-5]\\d` : `${hhmm}:[0-5]\\d\\.\\d{${args.precision}}` : `${hhmm}(?::[0-5]\\d(?:\\.\\d+)?)?`;
 		}
-		function time$1(args) {
+		function time$2(args) {
 			return new RegExp(`^${timeSource(args)}$`);
 		}
 		function datetime$1(args) {
@@ -1683,7 +1683,7 @@ window.__ModuleLoader__.load({
 			$ZodStringFormat.init(inst, def);
 		});
 		const $ZodISOTime = /*@__PURE__*/ $constructor("$ZodISOTime", (inst, def) => {
-			def.pattern ?? (def.pattern = time$1(def));
+			def.pattern ?? (def.pattern = time$2(def));
 			$ZodStringFormat.init(inst, def);
 		});
 		const $ZodISODuration = /*@__PURE__*/ $constructor("$ZodISODuration", (inst, def) => {
@@ -3895,7 +3895,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			$ZodISOTime.init(inst, def);
 			ZodStringFormat.init(inst, def);
 		});
-		function time(params) {
+		function time$1(params) {
 			return /* @__PURE__ */ _isoTime(ZodISOTime, params);
 		}
 		const ZodISODuration = /*@__PURE__*/ $constructor("ZodISODuration", (inst, def) => {
@@ -4189,7 +4189,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			inst.e164 = (params) => inst.check(/* @__PURE__ */ _e164(ZodE164, params));
 			inst.datetime = (params) => inst.check(datetime(params));
 			inst.date = (params) => inst.check(date(params));
-			inst.time = (params) => inst.check(time(params));
+			inst.time = (params) => inst.check(time$1(params));
 			inst.duration = (params) => inst.check(duration(params));
 		});
 		function string(params) {
@@ -4757,6 +4757,198 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return /* @__PURE__ */ _superRefine(fn, params);
 		}
 		//#endregion
+		//#region src/v340-runtime-contract.js
+		const V340_NODE_IDS = [
+			"Flow-1-1",
+			"Flow-1-2",
+			"Flow-1-3",
+			"Flow-1-4",
+			"Flow-1-5",
+			"Flow-2-6",
+			"Flow-2-7",
+			"Flow-3-8",
+			"Flow-3-9",
+			"Flow-3-10",
+			"Flow-4-11",
+			"Flow-4-12",
+			"Flow-5-13",
+			"Flow-6-14"
+		];
+		const V340_LIMITS = Object.freeze({
+			documentBytes: 1048576,
+			snapshotBytes: 2097152,
+			recordBytes: 8388608
+		});
+		const v340Id = string().min(1).max(256).refine((v) => v.trim() === v && ![
+			"__proto__",
+			"constructor",
+			"prototype"
+		].includes(v));
+		const sha$1 = string().regex(/^[a-f0-9]{64}$/);
+		const time = string().refine((v) => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(v) && Number.isFinite(Date.parse(v)) && new Date(v).toISOString() === v);
+		const bytes = (value) => new TextEncoder().encode(JSON.stringify(value)).length;
+		const v340DocumentBodySchema = string().min(1).max(V340_LIMITS.documentBytes).refine((body) => new TextEncoder().encode(body).length <= V340_LIMITS.documentBytes, "V340 document exceeds UTF-8 byte limit");
+		const boundedJson = unknown().superRefine((value, ctx) => {
+			const queue = [[value, 0]], seen = /* @__PURE__ */ new Set();
+			let invalid = false;
+			while (queue.length && !invalid) {
+				const [v, d] = queue.pop();
+				if (v === null || typeof v === "boolean" || typeof v === "string" || typeof v === "number" && Number.isFinite(v)) continue;
+				if (typeof v !== "object" || d > 32 || seen.has(v)) {
+					invalid = true;
+					break;
+				}
+				seen.add(v);
+				const items = Array.isArray(v) ? v : Object.getPrototypeOf(v) === Object.prototype || Object.getPrototypeOf(v) === null ? Object.values(v) : null;
+				if (!items || items.length > 1024) {
+					invalid = true;
+					break;
+				}
+				for (const child of items) queue.push([child, d + 1]);
+			}
+			if (invalid || bytes(value) > V340_LIMITS.snapshotBytes) ctx.addIssue({
+				code: "custom",
+				message: "V340 bounded JSON required"
+			});
+		});
+		const entries = (schema) => record(string().max(128), schema).refine((v) => Object.keys(v).length <= 32);
+		const v340DraftSchema = object({
+			source: _enum(["local-skill", "oasis-api"]),
+			textInputs: entries(string().max(3e5)),
+			filePaths: entries(string().min(1).max(1024)),
+			configuration: entries(boundedJson)
+		}).strict().refine((v) => bytes(v) <= V340_LIMITS.snapshotBytes, "V340 draft exceeds byte limit");
+		const resultSchema = object({
+			body: v340DocumentBodySchema,
+			fileName: string().min(1).max(255),
+			sha256: sha$1,
+			snapshot: boundedJson
+		}).strict();
+		const inputSchema = object({
+			workspaceId: v340Id,
+			taskId: v340Id,
+			runId: v340Id,
+			workflowRunUid: string().uuid(),
+			requestKey: v340Id,
+			capturedAt: time,
+			nodeId: _enum(V340_NODE_IDS),
+			source: _enum(["local-skill", "oasis-api"]),
+			resourceSHA256: sha$1,
+			draft: v340DraftSchema,
+			prepared: boundedJson
+		}).strict().refine((v) => bytes(v) <= V340_LIMITS.snapshotBytes, "V340 snapshot exceeds byte limit");
+		const v340RunSchema = object({
+			schemaVersion: literal(1),
+			runId: v340Id,
+			workflowRunUid: string().uuid(),
+			requestKey: v340Id,
+			workspaceId: v340Id,
+			taskId: v340Id,
+			nodeId: _enum(V340_NODE_IDS),
+			source: _enum(["local-skill", "oasis-api"]),
+			evidenceKind: literal("synthetic"),
+			inputSchemaVersion: literal("v340-1"),
+			inputSnapshot: inputSchema,
+			inputSha256: sha$1,
+			status: _enum([
+				"prepared",
+				"completed",
+				"failed",
+				"unknown"
+			]),
+			failureCode: _enum([
+				"INTERRUPTED",
+				"ABORTED",
+				"EXECUTION_UNCONFIRMED",
+				"INVALID_OUTPUT",
+				"EXECUTION_FAILED"
+			]).nullable(),
+			result: resultSchema.nullable(),
+			resultDraft: object({
+				baseSha256: sha$1,
+				body: v340DocumentBodySchema,
+				updatedAt: time
+			}).strict().nullable(),
+			reviewStatus: literal("not-reviewed"),
+			createdAt: time,
+			completedAt: time.nullable()
+		}).strict().superRefine((run, ctx) => {
+			if (run.status === "completed" ? !run.result || !run.completedAt || run.failureCode !== null : run.result !== null || run.resultDraft !== null) ctx.addIssue({
+				code: "custom",
+				message: "V340 result/status mismatch"
+			});
+			if (run.status === "prepared" ? run.completedAt !== null || run.failureCode !== null : !run.completedAt) ctx.addIssue({
+				code: "custom",
+				message: "V340 terminal timestamp mismatch"
+			});
+			if (["failed", "unknown"].includes(run.status) && run.failureCode === null) ctx.addIssue({
+				code: "custom",
+				message: "V340 failure code required"
+			});
+			if (run.resultDraft && run.resultDraft.baseSha256 !== run.result?.sha256) ctx.addIssue({
+				code: "custom",
+				message: "V340 edited draft base mismatch"
+			});
+		});
+		const v340TaskStateSchema = object({
+			schemaVersion: literal(1),
+			businessVersion: literal("V3.4.0"),
+			nodeId: _enum(V340_NODE_IDS),
+			draft: v340DraftSchema,
+			activeRunId: v340Id.nullable(),
+			runOrder: array(v340Id).max(8),
+			runs: record(v340Id, v340RunSchema)
+		}).strict().superRefine((state, ctx) => {
+			const ids = new Set(state.runOrder), keys = /* @__PURE__ */ new Set();
+			if (ids.size !== state.runOrder.length || Object.keys(state.runs).length !== ids.size || state.activeRunId !== null && !ids.has(state.activeRunId)) ctx.addIssue({
+				code: "custom",
+				message: "V340 run order mismatch"
+			});
+			for (const [id, run] of Object.entries(state.runs)) {
+				if (!ids.has(id) || run.runId !== id || run.nodeId !== state.nodeId || keys.has(run.requestKey)) ctx.addIssue({
+					code: "custom",
+					message: "V340 run identity mismatch"
+				});
+				keys.add(run.requestKey);
+			}
+		});
+		const hasPendingV340Run = (task) => Object.values(task?.v340?.runs ?? {}).some((run) => ["prepared", "unknown"].includes(run.status));
+		const command = {
+			workspaceId: v340Id,
+			taskId: v340Id,
+			expectedRevision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER)
+		};
+		Object.freeze({
+			"task/create": object({
+				...command,
+				nodeId: _enum(V340_NODE_IDS),
+				title: string().trim().min(1).max(200)
+			}).strict(),
+			"task/draft": object({
+				...command,
+				draft: v340DraftSchema
+			}).strict(),
+			"run/observe": object({
+				workspaceId: v340Id,
+				taskId: v340Id,
+				runId: v340Id
+			}).strict(),
+			"run/stop": object({
+				...command,
+				runId: v340Id
+			}).strict(),
+			"result/draft": object({
+				...command,
+				runId: v340Id,
+				baseSha256: sha$1,
+				body: v340DocumentBodySchema.nullable()
+			}).strict(),
+			"run/create": object({
+				...command,
+				requestKey: v340Id
+			}).strict()
+		});
+		//#endregion
 		//#region src/generation-contract.js
 		const CLAIMS_TEMPLATE_ID = "patent-claims";
 		const CLAIMS_V2_SCHEMA_VERSION = "claims-disclosure-2";
@@ -4771,7 +4963,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			sha256: string().regex(/^[a-f0-9]{64}$/)
 		}).strict();
 		function hasPendingUnifiedRun(task) {
-			return Object.values(task?.runs ?? {}).some((run) => isUnifiedRun(run) && (run.status === "prepared" || run.mode === "dsh-local" && run.status === "unknown"));
+			return hasPendingV340Run(task) || Object.values(task?.runs ?? {}).some((run) => isUnifiedRun(run) && (run.status === "prepared" || run.mode === "dsh-local" && run.status === "unknown"));
 		}
 		function isUnifiedRun(run) {
 			return [
@@ -6134,6 +6326,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}
 		const workbenchEditableTaskSchema = workbenchEditableTaskV3Schema.extend({ generation: generationDraftSchema.nullable() }).superRefine(enforceGenerationDraft);
 		const workbenchTaskSchema = workbenchTaskV3Schema.safeExtend({
+			v340: v340TaskStateSchema.optional(),
 			generation: generationDraftSchema.nullable(),
 			runs: record(identifierSchema, discriminatedUnion("mode", [
 				localRunSnapshotSchema,
@@ -6142,15 +6335,29 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				dshLocalRunSnapshotSchema,
 				oasisApiRunSnapshotSchema
 			]))
-		}).superRefine(enforceGenerationDraft);
+		}).superRefine(enforceGenerationDraft).superRefine((task, ctx) => {
+			if (task.v340 ? task.workflowId !== task.v340.nodeId || task.workflowVersion !== "V3.4.0" || task.workType !== "cn-invention-patent" || task.generation !== null || task.professionalDraft !== null || task.activeRunId !== null || task.runOrder.length || task.inputRefs.length || task.remoteExecutionOrder.length || Object.keys(task.formValues).length : V340_NODE_IDS.includes(task.workflowId) && task.workflowVersion === "V3.4.0") ctx.addIssue({
+				code: "custom",
+				message: "V340 task identity/evidence mismatch"
+			});
+		});
 		const panelModeSchema = _enum([
 			"hidden",
 			"normal",
 			"expanded"
 		]);
 		function enforceWorkspaceInvariants(value, ctx) {
+			const v340RunIds = /* @__PURE__ */ new Set(), v340RequestKeys = /* @__PURE__ */ new Set();
+			for (const task of Object.values(value.tasks)) for (const run of Object.values(task.v340?.runs ?? {})) {
+				if (v340RunIds.has(run.runId) || v340RequestKeys.has(run.requestKey)) ctx.addIssue({
+					code: "custom",
+					message: "V340 Workspace run/request identity collision"
+				});
+				v340RunIds.add(run.runId);
+				v340RequestKeys.add(run.requestKey);
+			}
 			const activeTasks = Object.values(value.tasks).filter((task) => hasPendingUnifiedRun(task) || Object.values(task.remoteExecutions ?? {}).some(isOasisRemoteExecutionUnresolved));
-			const pendingUnified = Object.values(value.tasks).flatMap((task) => Object.values(task.runs ?? {})).filter((run) => hasPendingUnifiedRun({ runs: { run } })).length;
+			const pendingUnified = Object.values(value.tasks).reduce((count, task) => count + Object.values(task.runs ?? {}).filter((run) => hasPendingUnifiedRun({ runs: { run } })).length + Object.values(task.v340?.runs ?? {}).filter((run) => ["prepared", "unknown"].includes(run.status)).length, 0);
 			if (pendingUnified > 1 || pendingUnified && activeTasks.length > 1) ctx.addIssue({
 				code: "custom",
 				path: ["tasks"],
@@ -6204,7 +6411,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				path: ["tasks"],
 				message: `workspace tasks must not exceed ${WORKBENCH_LIMITS.maxTasksPerWorkspace}`
 			});
-			if (utf8Bytes(JSON.stringify(value)) > WORKBENCH_LIMITS.maxDraftBytes) ctx.addIssue({
+			const legacyValue = {
+				...value,
+				tasks: Object.fromEntries(Object.entries(value.tasks).map(([id, task]) => {
+					const { v340, ...legacy } = task;
+					return [id, legacy];
+				}))
+			};
+			if (utf8Bytes(JSON.stringify(legacyValue)) > WORKBENCH_LIMITS.maxDraftBytes || utf8Bytes(JSON.stringify(value)) > V340_LIMITS.recordBytes) ctx.addIssue({
 				code: "custom",
 				message: `workspace data must not exceed ${WORKBENCH_LIMITS.maxDraftBytes} UTF-8 bytes`
 			});
@@ -7546,10 +7760,73 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			if (run.failureCode === "INVALID_OUTPUT" && run.executionSummary?.failureStage === "stream") return "模型输出流未通过校验，未保存产物；不会自动重试。";
 			return `未取得有效正文（${run.failureCode}），不会自动重试。`;
 		}
-		function ResultVersion({ page, run, operation, disabled, readOnlyDisabled = disabled, markdownRenderer, onReview = () => {}, onEditResult = () => {}, conversationUnavailableReason = null, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, onUseInConversation = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {} }) {
-			const [editing, setEditing] = (0, react.useState)(false);
-			const [body, setBody] = (0, react.useState)(run.result.artifact.body);
+		function ResultVersion({ page, run, operation, disabled, readOnlyDisabled = disabled, markdownRenderer, onReview = () => {}, onEditResult = () => {}, workspaceId, workspaceRevision, onUpdateResultEditDraft, onDiscardResultEditDraft, conversationUnavailableReason = null, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, onUseInConversation = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {} }) {
+			const draft = operation.resultEditDrafts?.[run.runId];
+			const editing = draft !== void 0;
+			const body = draft?.body ?? run.result.artifact.body;
+			const staleDraft = editing && draft.baseArtifactId !== run.result.artifact.artifactId;
 			const [error, setError] = (0, react.useState)(null);
+			const [reviewConfirmation, setReviewConfirmation] = (0, react.useState)(null);
+			const reviewEntry = (0, react.useRef)(null);
+			const reviewTarget = (0, react.useRef)(null);
+			const reviewPending = (0, react.useRef)(false);
+			const live = (0, react.useRef)(true);
+			const reviewIdentity = JSON.stringify([
+				workspaceId,
+				workspaceRevision,
+				page.pageId,
+				run.runId,
+				run.result.artifact.artifactId
+			]);
+			const currentIdentity = (0, react.useRef)(null);
+			currentIdentity.current = disabled || editing || run.review.status === "approved" ? null : reviewIdentity;
+			(0, react.useEffect)(() => {
+				live.current = true;
+				return () => {
+					live.current = false;
+				};
+			}, []);
+			(0, react.useEffect)(() => {
+				reviewTarget.current = null;
+				setReviewConfirmation(null);
+			}, [
+				reviewIdentity,
+				disabled,
+				editing,
+				run.review.status
+			]);
+			function cancelReview() {
+				reviewTarget.current = null;
+				setReviewConfirmation(null);
+				reviewEntry.current?.focus();
+			}
+			function openReview() {
+				if (currentIdentity.current === null || reviewPending.current) return;
+				const target = {
+					workspaceId,
+					revision: workspaceRevision,
+					artifactId: run.result.artifact.artifactId,
+					identity: reviewIdentity
+				};
+				reviewTarget.current = target;
+				setReviewConfirmation(target);
+			}
+			async function confirmReview() {
+				const target = reviewConfirmation;
+				if (!live.current || !target || reviewTarget.current !== target || reviewPending.current || currentIdentity.current !== target.identity) return;
+				reviewPending.current = true;
+				reviewTarget.current = null;
+				setReviewConfirmation(null);
+				try {
+					await action(() => onReview(page.pageId, run.runId, "approved", "", {
+						workspaceId: target.workspaceId,
+						revision: target.revision,
+						artifactId: target.artifactId
+					}));
+				} finally {
+					reviewPending.current = false;
+				}
+			}
 			async function action(fn) {
 				setError(null);
 				try {
@@ -7566,7 +7843,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				value: body,
 				maxLength: 1e5,
 				disabled,
-				onChange: (event) => setBody(event.currentTarget.value),
+				onChange: (event) => action(() => onUpdateResultEditDraft(page.pageId, run.runId, event.currentTarget.value)),
 				style: { width: "100%" }
 			}) : (0, react.createElement)(SafeMarkdownPreview, {
 				markdownRenderer,
@@ -7578,32 +7855,51 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}), (0, react.createElement)("div", { style: {
 				fontSize: 12,
 				color: "var(--dsw-alias-text-secondary, #66706b)"
-			} }, "风险未评估 · 待确认问题未评估"), (0, react.createElement)("div", { style: {
+			} }, "风险未评估 · 待确认问题未评估"), editing ? (0, react.createElement)("p", { role: "status" }, staleDraft ? "编辑基准已变化，原草稿保留；请复制保全或明确放弃后重新编辑。" : draft.dirty ? "有未保存的结果编辑；切换版本会保留本次编辑，请保存为新版本或明确放弃。" : "结果编辑中；原版本保持不变。") : null, (0, react.createElement)("div", { style: {
 				display: "flex",
 				flexWrap: "wrap",
 				gap: 6
 			} }, (0, react.createElement)("button", {
 				type: "button",
 				style: button$2,
-				disabled,
-				onClick: () => setEditing(!editing)
+				disabled: disabled || !onUpdateResultEditDraft || !onDiscardResultEditDraft,
+				onClick: () => action(() => editing ? onDiscardResultEditDraft(page.pageId, run.runId) : onUpdateResultEditDraft(page.pageId, run.runId, run.result.artifact.body))
 			}, editing ? "放弃编辑" : "编辑结果"), editing ? (0, react.createElement)("button", {
 				type: "button",
 				style: button$2,
-				disabled: disabled || !body.trim() || body === run.result.artifact.body,
+				disabled: disabled || staleDraft || !body.trim() || body === run.result.artifact.body,
 				onClick: () => action(() => onEditResult(page.pageId, run.runId, body))
 			}, "保存为新版本") : null, (0, react.createElement)("button", {
+				ref: reviewEntry,
 				type: "button",
 				style: button$2,
 				disabled: disabled || editing || run.review.status === "approved",
-				onClick: () => action(() => onReview(page.pageId, run.runId, "approved", ""))
+				onClick: openReview
 			}, "审核此版本"), (0, react.createElement)("button", {
 				type: "button",
 				style: button$2,
 				title: conversationUnavailableReason ?? void 0,
 				disabled: readOnlyDisabled || editing || run.review.status !== "approved" || conversationUnavailableReason !== null,
 				onClick: () => action(() => onUseInConversation(page.pageId, run.runId))
-			}, "在对话中使用")), error || operation.error ? (0, react.createElement)("div", { role: "alert" }, error ?? `操作未完成（${operation.errorCode ?? "连接失败"}）`) : null, operation.feedback === "conversation-draft-ready" ? (0, react.createElement)("div", { role: "status" }, "已放入对话草稿，尚未发送。") : null, run.writebacks.length ? (0, react.createElement)("section", {
+			}, "在对话中使用")), reviewConfirmation ? (0, react.createElement)("section", {
+				role: "group",
+				"aria-label": "审核确认",
+				onKeyDown: (event) => {
+					if (event.key === "Escape") {
+						event.preventDefault();
+						cancelReview();
+					}
+				}
+			}, (0, react.createElement)("p", null, `当前固定版本${page.runOrder.indexOf(run.runId) + 1} · ${run.source === "local-skill" ? "本地 Skills" : "专业 API"} · 哈希 ${(run.result.artifact.sha256 ?? run.result.artifact.artifactId ?? "未记录").replace("sha256:", "").slice(0, 12)}`), (0, react.createElement)("p", null, "风险未评估 · 待确认问题未评估。确认仅登记此固定版本的人工审核结论。"), (0, react.createElement)("button", {
+				type: "button",
+				style: button$2,
+				disabled: disabled || editing,
+				onClick: confirmReview
+			}, `确认审核版本${page.runOrder.indexOf(run.runId) + 1}`), (0, react.createElement)("button", {
+				type: "button",
+				style: button$2,
+				onClick: cancelReview
+			}, "取消审核")) : null, error || operation.error ? (0, react.createElement)("div", { role: "alert" }, error ?? `操作未完成（${operation.errorCode ?? "连接失败"}）`) : null, operation.feedback === "conversation-draft-ready" ? (0, react.createElement)("div", { role: "status" }, "已放入对话草稿，尚未发送。") : null, run.writebacks.length ? (0, react.createElement)("section", {
 				"aria-label": "已保存文件",
 				style: {
 					display: "grid",
@@ -7900,6 +8196,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				page,
 				operation,
 				markdownRenderer,
+				workspaceId,
 				disabled: locked || syncStatus !== "ready",
 				readOnlyDisabled,
 				...resultActions
@@ -8062,10 +8359,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			color: "var(--dsw-alias-text-primary, #1f2623)",
 			background: "var(--dsw-alias-bg-base, #fff)"
 		};
-		function reloadButton(onReload, label) {
+		function reloadButton(onReload, label, disabled = false) {
 			return (0, react.createElement)("button", {
 				type: "button",
 				onClick: onReload,
+				disabled,
 				style: {
 					marginTop: 12,
 					border: "1px solid #d7d9d8",
@@ -8076,34 +8374,68 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				}
 			}, label);
 		}
+		function SyncRecoveryNotice({ state, onReload, onDiscardResultEditDraft }) {
+			const [error, setError] = (0, react.useState)(null);
+			const drafts = state.pages.flatMap((page) => Object.entries(state.pageOperations?.[page.pageId]?.resultEditDrafts ?? {}).filter(([, draft]) => draft.dirty).map(([runId, draft]) => ({
+				page,
+				runId,
+				draft
+			})));
+			const conflict = state.syncStatus === "conflict";
+			async function action(fn) {
+				setError(null);
+				try {
+					await fn();
+				} catch {
+					setError("处理未完成，草稿仍保留；请核对当前状态后重试。");
+				}
+			}
+			return (0, react.createElement)("div", {
+				role: "alert",
+				tabIndex: -1,
+				style: syncNoticeStyle
+			}, (0, react.createElement)("strong", null, conflict ? "检测到版本冲突" : "保存或读取失败"), (0, react.createElement)("div", { style: {
+				marginTop: 6,
+				fontSize: 13
+			} }, conflict ? `服务端当前为 revision ${state.conflictCurrent?.revision ?? "未知"}。本地草稿仍保留，系统不会自动覆盖。` : "本地草稿仍保留。请检查 DSH Host 后，再明确重新载入服务端版本。"), drafts.length ? (0, react.createElement)("section", { "aria-label": "未保存结果编辑恢复" }, (0, react.createElement)("p", null, "请先选中并复制需要保留的正文，再逐项明确放弃结果编辑。放弃不会修改本地输入；全部处理后才能重新载入。"), drafts.map(({ page, runId, draft }) => (0, react.createElement)("section", {
+				key: JSON.stringify([page.pageId, runId]),
+				style: { marginTop: 12 }
+			}, (0, react.createElement)("div", { style: {
+				fontSize: 12,
+				overflowWrap: "anywhere"
+			} }, `${page.title} · 任务 ${page.pageId} · 版本 ${page.runOrder.indexOf(runId) + 1} · 基准 ${draft.baseArtifactId}`), (0, react.createElement)("textarea", {
+				"aria-label": `未保存结果草稿：${page.title} / ${runId}`,
+				value: draft.body,
+				readOnly: true,
+				rows: 6,
+				style: {
+					width: "100%",
+					boxSizing: "border-box"
+				}
+			}), (0, react.createElement)("button", {
+				type: "button",
+				disabled: !onDiscardResultEditDraft || (state.pageOperations[page.pageId]?.activeOperation ?? null) !== null,
+				onClick: () => {
+					action(() => onDiscardResultEditDraft(page.pageId, runId, draft));
+				}
+			}, "放弃此结果编辑")))) : null, error ? (0, react.createElement)("p", { role: "status" }, error) : null, reloadButton(() => {
+				action(onReload);
+			}, "重新载入服务端版本（舍弃本地输入草稿）", drafts.length > 0 || !onReload));
+		}
 		function activeRun(page) {
 			return page.activeRunId === null ? null : page.runs[page.activeRunId];
 		}
-		function PanelPages({ state, markdownRenderer, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, onImport, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {}, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {}, onObserveRunningWater = () => {} }) {
+		function PanelPages({ state, markdownRenderer, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, onImport, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {}, onUpdateResultEditDraft, onDiscardResultEditDraft, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {}, onObserveRunningWater = () => {} }) {
 			if (state.syncStatus === "idle" || state.syncStatus === "loading") return (0, react.createElement)("div", {
 				role: "status",
 				"aria-live": "polite",
 				style: syncNoticeStyle
 			}, "正在读取当前项目的绿洲任务页…");
-			if (state.syncStatus === "conflict") {
-				const currentRevision = state.conflictCurrent?.revision ?? "未知";
-				return (0, react.createElement)("div", {
-					role: "alert",
-					tabIndex: -1,
-					style: syncNoticeStyle
-				}, (0, react.createElement)("strong", null, "检测到版本冲突"), (0, react.createElement)("div", { style: {
-					marginTop: 6,
-					fontSize: 13
-				} }, `服务端当前为 revision ${currentRevision}。本地草稿仍保留，系统不会自动覆盖。`), reloadButton(onReload, "重新载入服务端版本（舍弃本地草稿）"));
-			}
-			if (state.syncStatus === "error") return (0, react.createElement)("div", {
-				role: "alert",
-				tabIndex: -1,
-				style: syncNoticeStyle
-			}, (0, react.createElement)("strong", null, "保存或读取失败"), (0, react.createElement)("div", { style: {
-				marginTop: 6,
-				fontSize: 13
-			} }, "本地草稿仍保留。请检查 DSH Host 后，再明确重新载入服务端版本。"), reloadButton(onReload, "重新载入服务端版本"));
+			if (state.syncStatus === "conflict" || state.syncStatus === "error") return (0, react.createElement)(SyncRecoveryNotice, {
+				state,
+				onReload,
+				onDiscardResultEditDraft
+			});
 			const page = state.pages.find((item) => item.pageId === state.activePageId);
 			if (!page) return (0, react.createElement)("div", { style: {
 				padding: 20,
@@ -8192,6 +8524,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						workflow,
 						markdownRenderer,
 						workspaceId: state.workspaceId,
+						workspaceRevision: state.revision,
 						syncStatus: state.syncStatus,
 						operation,
 						onRenamePage,
@@ -8209,6 +8542,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						onStopUnified,
 						onEditResult,
 						onUseInConversation,
+						onUpdateResultEditDraft,
+						onDiscardResultEditDraft,
 						savedFileUnavailableReason,
 						onOpenSavedFile,
 						onActivateRun,
@@ -9295,6 +9630,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					store.stopUnifiedRun(workspaceId, pageId, runId).catch(() => {});
 				},
 				onEditResult: (pageId, runId, body) => store.editUnifiedResult(workspaceId, pageId, runId, body),
+				onUpdateResultEditDraft: (pageId, runId, body) => store.updateResultEditDraft(workspaceId, pageId, runId, body),
+				onDiscardResultEditDraft: (pageId, runId, expectedDraft) => store.discardResultEditDraft(workspaceId, pageId, runId, expectedDraft),
 				onUseInConversation: (pageId, runId) => store.useInConversation(workspaceId, pageId, runId),
 				onMaterialDraft: (pageId, path, confirmed) => store.setMaterialDraft(workspaceId, pageId, path, confirmed),
 				onAddMaterial: (pageId) => {
@@ -9311,8 +9648,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				},
 				onActivateRun: (pageId, runId) => store.activateRun(workspaceId, pageId, runId),
 				onReviewNote: (pageId, note) => store.setReviewNote(workspaceId, pageId, note),
-				onReview: (pageId, runId, status, note) => {
-					store.reviewRun(workspaceId, pageId, runId, status, note).catch(() => {});
+				onReview: (pageId, runId, status, note, confirmation) => {
+					const pending = store.reviewRun(workspaceId, pageId, runId, status, note, confirmation);
+					if (confirmation) return pending;
+					pending.catch(() => {});
 				},
 				onWritebackDraft: (pageId, directory, confirmed) => {
 					store.setWritebackDraft(workspaceId, pageId, directory, confirmed);
@@ -10558,6 +10897,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			materialPath: "",
 			materialConfirmed: false,
 			reviewNote: "",
+			resultEditDrafts: Object.freeze({}),
 			writebackDirectory: "",
 			writebackConfirmed: false,
 			writebackPlan: null,
@@ -10705,6 +11045,19 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}
 			function operationFor(state, pageId) {
 				return state.pageOperations[pageId] ?? EMPTY_PAGE_OPERATION;
+			}
+			function resultDraft(workspaceId, pageId, runId) {
+				const drafts = operationFor(getCurrent(workspaceId), pageId).resultEditDrafts;
+				return drafts && Object.hasOwn(drafts, runId) ? drafts[runId] : void 0;
+			}
+			function assertNoDirtyResult(workspaceId, pageId, runId) {
+				const drafts = operationFor(getCurrent(workspaceId), pageId).resultEditDrafts ?? {};
+				if (runId === void 0 ? Object.values(drafts).some((draft) => draft.dirty) : resultDraft(workspaceId, pageId, runId)?.dirty) throw new Error("存在未保存的结果编辑，请先保存为新版本或明确放弃编辑。");
+			}
+			function removeResultDraft(workspaceId, pageId, runId) {
+				const drafts = { ...operationFor(getCurrent(workspaceId), pageId).resultEditDrafts };
+				delete drafts[runId];
+				updatePageOperation(workspaceId, pageId, { resultEditDrafts: Object.freeze(drafts) });
 			}
 			function updatePageOperation(workspaceId, pageId, changes) {
 				assertOpen();
@@ -11151,6 +11504,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				async reloadWorkspace(workspaceId) {
 					assertOpen();
 					assertKnown(workspaceId);
+					for (const page of getCurrent(workspaceId).pages) assertNoDirtyResult(workspaceId, page.pageId);
 					const runtime = runtimeFor(workspaceId);
 					runtime.pendingActions.length = 0;
 					runtime.pendingDraft = null;
@@ -11745,10 +12099,47 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						feedback: "run-stopped"
 					}));
 				},
+				updateResultEditDraft(workspaceId, pageId, runId, body) {
+					assertOpen();
+					assertKnown(workspaceId);
+					const current = getCurrent(workspaceId);
+					const page = pageFor(workspaceId, pageId);
+					const operation = operationFor(current, pageId);
+					const run = page.runs[runId];
+					if (!["ready", "saving"].includes(current.syncStatus) || operation.generationUncertain || operation.activeOperation !== null && operation.activeOperation !== "result-edit" || hasPendingUnifiedRun(page) || page.remoteExecutionOrder.some((id) => isOasisRemoteExecutionUnresolved(page.remoteExecutions[id]))) throw new Error("任务处理中或结果未确认，不能编辑结果。");
+					if (!run?.result || run.status !== "completed" || typeof body !== "string" || body.length > 1e5) throw new Error("结果编辑不可用");
+					const previous = resultDraft(workspaceId, pageId, runId);
+					if (previous && previous.baseArtifactId !== run.result.artifact.artifactId) throw new Error("编辑基准已变化；原草稿保留，请明确处理。");
+					const draft = Object.freeze({
+						baseArtifactId: run.result.artifact.artifactId,
+						body,
+						revision: (previous?.revision ?? 0) + 1,
+						dirty: body !== run.result.artifact.body
+					});
+					updatePageOperation(workspaceId, pageId, {
+						resultEditDrafts: Object.freeze({
+							...operation.resultEditDrafts,
+							[runId]: draft
+						}),
+						writebackPlan: null,
+						writebackConfirmed: false
+					});
+					return draft;
+				},
+				discardResultEditDraft(workspaceId, pageId, runId, expectedDraft) {
+					assertOpen();
+					assertKnown(workspaceId);
+					pageFor(workspaceId, pageId);
+					if (operationFor(getCurrent(workspaceId), pageId).activeOperation !== null) throw new Error("请等待当前操作完成后再放弃编辑。");
+					if (expectedDraft !== void 0 && resultDraft(workspaceId, pageId, runId) !== expectedDraft) throw new Error("草稿已变化，请重新核对后再放弃。");
+					removeResultDraft(workspaceId, pageId, runId);
+				},
 				async editUnifiedResult(workspaceId, pageId, runId, body) {
 					assertInputEditable(workspaceId, pageId);
 					const run = pageFor(workspaceId, pageId).runs[runId];
 					if (!run || run.status !== "completed") throw new Error("请选择已完成版本");
+					const submitted = resultDraft(workspaceId, pageId, runId);
+					if (submitted && (submitted.baseArtifactId !== run.result.artifact.artifactId || submitted.body !== body)) throw new Error("编辑基准或草稿已变化，原草稿保留。");
 					const requestKey = createRequestKey();
 					return runPageOperation(workspaceId, pageId, "result-edit", (current) => remote.editUnifiedResult({
 						workspaceId,
@@ -11758,14 +12149,18 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						expectedRevision: current.revision,
 						requestKey,
 						body
-					}, controller.signal), () => ({
-						feedback: "result-edited",
-						writebackPlan: null,
-						writebackConfirmed: false,
-						reviewNote: ""
-					}));
+					}, controller.signal), () => {
+						if (submitted && resultDraft(workspaceId, pageId, runId) === submitted) removeResultDraft(workspaceId, pageId, runId);
+						return {
+							feedback: "result-edited",
+							writebackPlan: null,
+							writebackConfirmed: false,
+							reviewNote: ""
+						};
+					});
 				},
 				async useInConversation(workspaceId, pageId, runId) {
+					assertNoDirtyResult(workspaceId, pageId, runId);
 					if (!conversationDrafts) throw new Error("当前对话输入接口不可用");
 					const target = conversationDrafts.capture(workspaceId);
 					const run = pageFor(workspaceId, pageId).runs[runId];
@@ -11783,6 +12178,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					const latest = getCurrent(workspaceId);
 					const page = latest.pages.find((item) => item.pageId === pageId);
 					if (latest.syncStatus !== "ready" || latest.revision !== current.revision || latest.activePageId !== pageId || page?.activeRunId !== runId || page.runs[runId]?.review.status !== "approved") throw new Error("当前任务或审核版本已变化，请重新准备对话资料");
+					assertNoDirtyResult(workspaceId, pageId, runId);
 					conversationDrafts.insert(target, result);
 					updatePageOperation(workspaceId, pageId, { feedback: "conversation-draft-ready" });
 					return true;
@@ -11808,20 +12204,32 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (latest.revision !== current.revision || latest.activePageId !== pageId || page?.activeRunId !== runId || !nativeFiles.openSavedFile(target, result)) throw new Error("当前任务或项目已变化，请重新打开文件");
 					return true;
 				},
-				async reviewRun(workspaceId, pageId, runId, status, note) {
+				async reviewRun(workspaceId, pageId, runId, status, note, confirmation) {
+					assertNoDirtyResult(workspaceId, pageId, runId);
 					const run = pageFor(workspaceId, pageId).runs[runId];
 					if (!run) throw new Error("unknown run");
+					const checkConfirmation = () => {
+						if (!confirmation) return;
+						const current = getCurrent(workspaceId);
+						const selected = pageFor(workspaceId, pageId);
+						if (confirmation.workspaceId !== workspaceId || confirmation.revision !== current.revision || current.activePageId !== pageId || selected.activeRunId !== runId || confirmation.artifactId !== selected.runs[runId]?.result?.artifact.artifactId || hasPendingUnifiedRun(selected) || selected.remoteExecutionOrder.some((id) => isOasisRemoteExecutionUnresolved(selected.remoteExecutions[id]))) throw new Error("审核确认已失效，请重新核对当前固定版本。");
+						assertNoDirtyResult(workspaceId, pageId, runId);
+					};
+					checkConfirmation();
 					const reviewNote = String(note);
 					if (status === "approved" && run.result.contentStatus === "blocked") throw new Error("Blocked results cannot be approved");
 					if (status === "changes-requested" && reviewNote.trim().length === 0) throw new Error("Changes-requested review requires a note");
-					return runPageOperation(workspaceId, pageId, "run-review", (current) => remote.reviewRun({
-						workspaceId,
-						taskId: pageId,
-						runId,
-						expectedRevision: current.revision,
-						status,
-						note: reviewNote
-					}, controller.signal), () => ({ feedback: status === "approved" ? "review-approved" : "review-changes-requested" }));
+					return runPageOperation(workspaceId, pageId, "run-review", (current) => {
+						checkConfirmation();
+						return remote.reviewRun({
+							workspaceId,
+							taskId: pageId,
+							runId,
+							expectedRevision: current.revision,
+							status,
+							note: reviewNote
+						}, controller.signal);
+					}, () => ({ feedback: status === "approved" ? "review-approved" : "review-changes-requested" }));
 				},
 				setWritebackDraft(workspaceId, pageId, relativeDirectory, confirmed) {
 					return updatePageOperation(workspaceId, pageId, {
@@ -11841,6 +12249,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					});
 				},
 				async prepareWriteback(workspaceId, pageId, runId) {
+					assertNoDirtyResult(workspaceId, pageId, runId);
 					const run = pageFor(workspaceId, pageId).runs[runId];
 					if (!run) throw new Error("unknown run");
 					if (run.result.contentStatus === "blocked") throw new Error("Blocked results cannot be written back");
@@ -11918,6 +12327,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					});
 				},
 				closePage(workspaceId, pageId) {
+					assertNoDirtyResult(workspaceId, pageId);
 					if (pageFor(workspaceId, pageId).generation) assertInputEditable(workspaceId, pageId);
 					return dispatch(workspaceId, {
 						type: "close-page",

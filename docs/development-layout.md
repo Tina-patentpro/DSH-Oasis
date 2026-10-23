@@ -55,4 +55,18 @@ Git检查会刷新index的文件系统stat缓存；当前及快照的对象ID、
 
 必要真实验收使用显式 `tools/bin/node scripts/macos-development-launch.mjs --check --real-acceptance`，通过已审本地准入后才用 `--start --real-acceptance`。默认启动仍是合成模式。正式入口只对固定模型/网站Host提供HTTPS代理旁路，renderer继续阻断外网；原生密钥和网站登录在设置中由用户完成，不复制日常credentials。详见 [阶段3准备](evidence/2026-10-14-stage3-real-acceptance-preparation.md)，准备不等于实际双来源验收通过。
 
+## Mac组件安全测试与独立依赖夹具（2026-10-21）
+
+根目录执行：
+
+```zsh
+tools/bin/node --test tests/native-markdown-policy.test.mjs tests/sidebar-safe-file.test.mjs tests/web-markdown-policy.test.mjs tests/macos-safe-preview.test.mjs
+```
+
+测试先按 `.dsh-test/mac-dev/evidence/admission.json` 核对指定UI/Web/Sidebar的版本和文件hash，不检查通过或更改整套Desktop准入。原生Markdown完整渲染所需依赖另在 `.local/test-runtimes/dsh-0.2.0-rc.2-639ed015/deepseek-harness-639ed015397290b3745d163aafe02ffee4aa3f84`，禁止从已升级的签名应用node_modules补缺。不存在/漂移时明确失败，不自动联网、安装或跳过。
+
+该测试树来自官方tag dsh-v0.2.0-rc.2的固定提交639ed015397290b3745d163aafe02ffee4aa3f84；原锁hash80fe05eae33582ae26839afd05f1965f9b0e4be11034ddf9797af6085d5ba9b1。恢复顺序为：核验固定提交归档→固定pnpm过滤ui-primitives依赖且冻结锁/忽略脚本与pnpmfile/禁止包管理器自动下载→测试副本清空年龄排除并取得严格校验完成回执→固定tsdown仅构建client/store、util/code-language、util/workspace-path支持库。输入助手另校验三个支持库输出hash，CSS只在测试加载器中忽略；不替换真实Markdown渲染逻辑。
+
+当前完整重放命令和环境保留于 `.local/supply-mac-20261021/native-runtime-install.py`、`native-runtime-strict.py`、`native-runtime-build.config.mjs`，原source-identity/归档与上游原workspace配置也保存该处。依赖、缓存、上游源码和测试构建均忽略，不进入Git、产品包或Profile。主包的干净恢复另在 `.local/supply-mac-20261021/clean`，仍是offline/frozen/ignore-scripts，包体下载0；不能与独立测试夹具允许的固定包体下载混写。详见[供应链及Mac测试收口](evidence/2026-10-21-supply-chain-mac-tests-closeout.md)。
+
 阶段3当前固定Mac组合的真实双来源程序验收及正常重启已收口，见 `docs/evidence/2026-10-14-stage3-independent-acceptance.md`。仅隔离Profile原生UI确认的项目关联发生写回并经单项pin复核；未改变日常配置、固定组合或默认合成入口。独立调用预算各一次已消费，不因正式入口仍存在而授权自动新增调用；旧未知记录继续保全。真实验收产物与运行数据留 `.dsh-test/mac-dev` / `.local`，不入Git或发布包。

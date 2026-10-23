@@ -194,11 +194,16 @@ export function createWorkspaceMaterialManager({
     if (typeof fileSystem?.[method] !== 'function') throw new TypeError(`fileSystem.${method} is required`)
   }
 
-  async function inspect(workspaceId, inputPath, policy) {
+  async function inspect(workspaceId, inputPath, policy, expectedAbsolutePath) {
     const acceptedExtensions = validatePolicy(policy)
     const normalizedPath = validateWorkspaceRelativePath(inputPath)
     const root = await resolveWorkspaceRoot(workspaceRegistry, fileSystem, workspaceId)
     const absolutePath = await resolveMaterialFile(fileSystem, root, normalizedPath)
+    // Saved-file callers must hash the same canonical file they located, even if a root binding moves back.
+    // Keep the three-argument material API and its persisted evidence shape unchanged.
+    if (expectedAbsolutePath !== undefined && absolutePath !== expectedAbsolutePath) {
+      throw materialError('WORKSPACE_ROOT_CHANGED', 'Workspace root changed during saved file inspection')
+    }
     const extension = extname(normalizedPath).toLowerCase()
     if (!acceptedExtensions.has(extension) || !(extension in MEDIA_TYPES)) {
       throw materialError('UNSUPPORTED_MATERIAL_TYPE', 'Material file type is not supported')

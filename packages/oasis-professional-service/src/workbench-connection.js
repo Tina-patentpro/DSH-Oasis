@@ -1,9 +1,12 @@
 import { clientRequestSchema } from '@deepseek-ai/dsh-client-connection'
 
 const endpoints = Object.freeze([
+  'workflow/v340/result/edit','workflow/v340/result/review','workflow/v340/result/prepare-save','workflow/v340/result/commit-save',
+  'workflow/v340/result/conversation-draft','workflow/v340/result/saved-file',
   'import/open','import/projects','import/items','import/commit','import/unlink',
   'account/status','account/sms','account/login','account/logout',
-  'state/get','state/replace','workflow/catalog',
+  'state/get','state/replace','workflow/catalog','workflow/v340/catalog','workflow/v340/prepare',
+  'workflow/v340/task/create','workflow/v340/task/draft','workflow/v340/run/observe','workflow/v340/run/stop','workflow/v340/result/draft',
   'professional/bootstrap','professional/detail','professional/start','professional/continue','professional/stop','professional/running-water',
   'professional/binding/get','professional/binding/confirm',
   'professional/binding/options','task/preview-api','task/start-api',

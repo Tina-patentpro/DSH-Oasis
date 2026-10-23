@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-21",
+  "tool": "built-in imagegen",
+  "scope": "C1/C2 Oasis-specific terminology only",
+  "rule": "绿洲慧写使用“对话完善”，DSH原生功能保留“侧边对话”。",
+  "requests": [
+    {
+      "key": "12-sidechat",
+      "target": "/Users/tinadong7036/Documents/开发项目/dsh-lab/output/ui-concepts/stage4-20261015-ui4.3/12-sidechat-revision-3.png",
+      "prompt": "Use case: text-localization. Asset type: an existing high-fidelity Chinese desktop UI mockup, terminology correction only, not a redesign. Target dimensions 1487 x 1058, same aspect ratio and framing as edit target. Date anchor today 2026-10-21 Asia/Shanghai; preserve the reference's historical dates and times unchanged. Change only the exact text specified below, using the same typography, weight, size, baseline, dark navy/emerald colors, placement and spacing. Preserve every other pixel-level visual element, all body copy, tabs, icons, selected states, buttons, document text, layout, borders and background. DSH native '侧边对话' is a separate native function; this screenshot's Oasis-specific dialogue card must be named '对话完善'. Do not add any features, labels, notes or watermarks.\nImage 1 is the edit target C1. In the active top card/tab label currently '侧边对话', replace it verbatim with '对话完善'. This is the only edit. Keep green active underline, chat bubble icon and surrounding top tabs exactly as in the reference. Keep heading '权利要求初稿 · 智能完善版', save/return controls, conversation and dates unchanged."
+    },
+    {
+      "key": "13-saved-return",
+      "target": "/Users/tinadong7036/Documents/开发项目/dsh-lab/output/ui-concepts/stage4-20261015-ui4.3/13-saved-return-revision-3.png",
+      "prompt": "Use case: text-localization. Asset type: an existing high-fidelity Chinese desktop UI mockup, terminology correction only, not a redesign. Target dimensions 1487 x 1058, same aspect ratio and framing as edit target. Date anchor today 2026-10-21 Asia/Shanghai; preserve the reference's historical dates and times unchanged. Change only the exact text specified below, using the same typography, weight, size, baseline, dark navy/emerald colors, placement and spacing. Preserve every other pixel-level visual element, all body copy, tabs, icons, selected states, buttons, document text, layout, borders and background. DSH native '侧边对话' is a separate native function; this screenshot's Oasis-specific dialogue card must be named '对话完善'. Do not add any features, labels, notes or watermarks.\nImage 1 is the edit target C2. Make exactly two text replacements: (1) the top fourth card/tab label '侧边对话' becomes verbatim '对话完善'; (2) the pale green status badge above the result currently '来自侧边对话 · 已保存' becomes verbatim '来自对话完善 · 已保存'. Keep tab widths, close icons, inactive styling, result version '对话修改版', bottom button '对话完善', all other copy and controls unchanged.\nPay extreme attention to exact Chinese lettering: 对 话 完 善. The second character is 话 (言字旁讠+舌), never 边. All four characters must be correct."
+    }
+  ],
+  "corrections": [
+    {
+      "result": "rejected: wrong second character in first C1 output",
+      "output": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-26038357-d9a5-4997-979c-d612c107cfe2.png",
+      "promptReference": "requests[0]"
+    },
+    {
+      "prompt": "Use case: text-localization. This is a precise one-label correction to an existing Chinese desktop UI mockup, not a redesign. Target image 1 C1 is 1485 x 1059; preserve exact size, aspect ratio, composition and all other content. Today 2026-10-21; preserve all existing historical dates unchanged. Image 1 is the EDIT TARGET. Image 2 is SUPPORTING REFERENCE ONLY: it contains a correctly written top-tab label 对话完善; use only that wording and lettering as a reference, do not use image 2's layout. In Image 1, the active top fourth tab has an incorrect label 对边完善. Change that label to EXACTLY 对话完善. The four exact characters, with NO spaces: 对(U+5BF9), 话(U+8BDD, 言字旁讠 plus 舌), 完(U+5B8C), 善(U+5584). The second character is 话, never 边. Match original dark navy font, size, boldness, center positioning, and the chat-bubble icon to its left. Keep green active underline unchanged. Do not alter any body/document/chat text, other tabs, spacing, heading, dates, buttons, controls, or anything outside this one tab label. No additional text or watermark.",
+      "result": "rejected: wrong second character",
+      "output": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-16cb74b4-907e-4fc3-8f23-29d4078e7678.png"
+    },
+    {
+      "prompt": "Precise screenshot text edit. Output exactly one full desktop screenshot matching IMAGE 1 at 1487x1058. IMAGE 1 is the ORIGINAL C1 edit target; IMAGE 2 is only a reference for the correct four-character Chinese wording in its fourth top tab. Copy the exact label '对话完善' from IMAGE 2's fourth top tab into IMAGE 1's fourth top tab, replacing IMAGE 1's old label '侧边对话'. Correct text is 对话完善. 话 uses the 讠 radical, not 辶; do not write 对边完善. Change ONLY that top tab text in IMAGE 1. Keep its chat icon, active green underline, card layout, document heading, conversation, Chinese patent text, save button, typography, historical dates, spacing, and all other content from IMAGE 1 unchanged. Date anchor is 2026-10-21, but do not update historical dates from IMAGE 1. Use the same clear Chinese UI font as the source and ensure the second character is the same 话 character already correctly written in IMAGE 2's tab label. This is only a label substitution, not a new design.",
+      "result": "selected",
+      "output": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-ad930241-3c03-48a8-9ba6-41dd7280f96f.png"
+    }
+  ],
+  "selected": [
+    {
+      "key": "12-sidechat",
+      "source": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-ad930241-3c03-48a8-9ba6-41dd7280f96f.png",
+      "file": "12-sidechat-revision-4.png",
+      "title": "对话完善",
+      "note": "绿洲专用对话完善卡片，与DSH原生侧边对话区分。",
+      "sha256": "25eaa2fa4c03785b5394913609178bd3453f7959e32d6213ec6bc86d63fd0388",
+      "dimensions": [
+        1487,
+        1058
+      ]
+    },
+    {
+      "key": "13-saved-return",
+      "source": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-76a84703-7dac-4c1f-9008-2910980d2c26.png",
+      "file": "13-saved-return-revision-4.png",
+      "title": "对话完善保存返回",
+      "note": "从绿洲对话完善保存并返回工作台；来源提示与卡片名称统一。",
+      "sha256": "591dfbce9f5d98d81b47e0847d187a37ec5e5ab74d059904c82e649039499b55",
+      "dimensions": [
+        1484,
+        1060
+      ]
+    }
+  ]
+}

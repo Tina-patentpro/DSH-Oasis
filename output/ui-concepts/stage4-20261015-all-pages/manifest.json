@@ -1,0 +1,388 @@
+{
+  "title": "绿洲 UI-4.2 全页面样品",
+  "date": "2026-10-15",
+  "scope": "当前已实现绿洲页面及主要交互状态；原生功能沿用宿主，只展示入口与衔接。未接入模板不视为已实现。",
+  "stylePrompt": "Create a high-fidelity static Chinese desktop UI EXAMPLE in the attached chosen Green Oasis UI-4.2 style. Current date 2026-10-15 Asia/Shanghai. The reference is the current chosen visual TARGET, not source code. Match restrained green #196e55, white/light gray surfaces, system Chinese typography, thin dividers, minimal border radius, comfortable readable 14–16px body type, purposeful spacing. This is inside an existing DSH professional plugin; preserve existing host ownership. NO unrelated dashboard, metrics, decorative illustrations, gradients, nested cards or giant app heading. One focused screen per image, no montage, no option numbers.\nGLOBAL USER REQUIREMENTS: the native file tab is the ONLY place for the name 绿洲专业工作台; NEVER repeat it as a page heading. Under native tabs use ONE compact working toolbar containing minimal 功能中心 navigation, current task 权利要求书生成 with small close/+ affordances when relevant, next-generation source 本地 Skills / 专业 API. No extra subtitle, project id, date, readiness/status banner. Absolutely NO settings button, settings gear, settings menu, settings link, account controls or configuration status strip in the business workspace. Settings are ONLY inside DSH's existing native settings region; a page explicitly designated NATIVE SETTINGS below may show the actual account form there. No duplication of credentials/model/layout configuration elsewhere.\nShared material fields are EXACTLY 技术交底 / 附图说明 / 撰写要求 / 用户指令, in that order. Input is one shared form for BOTH sources, never two API/local panels. In narrow layout 输入 / 结果 are distinct OUTER view tabs, not a fifth material field. Current result version selector always independently states its original source; source switch controls only next generation. Independent bounded scroll regions, fixed reachable bottom operations. Known outcomes must stay precise: unknown is not failure, stopping wait is not backend cancellation/refund, no automatic retry or source switch; prepared conversation data is NOT sent. Review applies only to fixed version; edit makes a new unreviewed version; no-overwrite save manifest/confirmation is retained.\nAll content/statuses/file names below are SYNTHETIC DESIGN EXAMPLES, NOT live acceptance or actual costs. Use the public synthetic disclosure: controller writes a new log data segment, checks checksum, updates one of two alternating index slots, writes index contents before commit marker, startup uses valid newer index and falls back to old slot if interrupted. Do NOT invent unsupported numerical parameters or claim legal/patent success. Do NOT display credentials, JWT, API origin inputs, independent save directories, local-real-model enable checkbox, project API binding form, provider marketplace, billing/accounting, extra templates as available, automatic send/refund/cancel.\nPrefer concise relevant text at point of action, not a global explanatory header. Labels must be legible Chinese, exact sensible semantics. No view-level app title added. A modal may have one concise functional heading for accessibility. No numbered concepts or commentary labels in the image.",
+  "baselineGenerated": [
+    "exec-9b98d699-522b-4574-b99e-98c15195d334.png",
+    "exec-5f607617-71bf-4d0d-bfe7-0588cc4c7c46.png",
+    "exec-bc7be12d-b378-4747-8653-a71d383c5d40.png",
+    "exec-96969a8c-c85b-48e6-96e2-0469777d6091.png",
+    "exec-43097f56-80ae-4387-b6dc-8d9f756fd1e3.png",
+    "exec-2b686dd1-26e5-4083-99d8-d7d2a5fcdeb6.png",
+    "exec-64e8b1be-7efc-47bf-9051-70e48baf9f45.png",
+    "exec-e2af4e74-69a3-4311-8067-9e444a9cfb59.png",
+    "exec-334be0a3-3efc-448a-93f6-04aee90db3a6.png",
+    "exec-db18988a-942b-4b1d-998a-b3c478e394eb.png",
+    "exec-2d6e971b-a434-47c6-96db-1565c80df704.png",
+    "exec-bba1df4b-0c2c-4ba8-b5d6-61eb765e7a88.png",
+    "exec-a15e1de5-8cca-4319-a1ce-db54d383b2db.png",
+    "exec-0a32042a-0866-4c76-b9a6-c9413bb47be1.png",
+    "exec-cc4b5983-e8d6-4b66-ac95-62bec0682f37.png",
+    "exec-975e1f2c-f667-41fe-9fe7-8e5a9c4af36e.png",
+    "exec-479d062a-884b-4f9d-bd8d-19e6d3d158c3.png",
+    "exec-0dc8fd80-56c5-4530-8a0b-3fd19dfe3747.png",
+    "exec-67c344ae-7208-4c68-bbbd-f91e5b8045f7.png",
+    "exec-1ffde530-367d-41a1-ad48-f62c8dee1767.png",
+    "exec-5e6c95e8-3b88-404f-8481-92a601e26d0f.png",
+    "exec-f9a05f11-d125-41a5-8167-952db15965cf.png",
+    "exec-8e5a04f4-7736-4ddb-ab77-f67b119a5492.png",
+    "exec-e49e7f0b-a171-4ef4-a3fd-c4b3303fb35f.png",
+    "exec-94f20d3b-e200-4270-8e7f-0cf0bab6a662.png",
+    "exec-5a17954f-dd79-43ed-a8cb-f34fd9f165ec.png",
+    "exec-e9710a81-1226-4a68-ba80-fd4d1a86500c.png",
+    "exec-1eb39318-b705-470e-8b5f-d38c45a12ead.png",
+    "exec-5223f2f3-c434-4dd6-b654-f12bafd09529.png",
+    "exec-a537f866-c836-4882-b0f1-efcb50ec0236.png",
+    "exec-26f53500-906f-43ab-96a4-192f5463ac13.png",
+    "exec-b32636dc-b110-4c4e-bbdf-23b69f048957.png",
+    "exec-56e2931e-3dbf-4d99-b92e-f9c43be72d9e.png"
+  ],
+  "pages": {
+    "01-function-center": {
+      "title": "功能中心",
+      "group": "导航与输入",
+      "ref": "wide",
+      "brief": "Target1152x896, side workspace detail frame. Native file tab is the only app name. Compact second row shows only 功能中心 selected and a new-task plus, no generation source controls because no task has opened. Directly below, four modest native-tool shortcut entries in one horizontal row labeled 文件, 任务管理, 侧边对话, 浏览器, using familiar restrained outline icons. A small 从网站导入 action sits on the right in this functional row. Below a compact category tab strip 技术研发 / 专利撰写 / 辅助工具 with 专利撰写 selected. A clean flat task list: 权利要求书生成 active/openable with 打开→; 说明书生成 disabled 待接入; 申请文件检查 disabled 待接入. Only the first template is supported. Plenty of quiet white space, no decorative branded header, statistics, provider dashboard or extra website landing page. Keep headings minimal; no second 功能中心 title repeating its tab.",
+      "status": "ready",
+      "file": "01-function-center.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-334be0a3-3efc-448a-93f6-04aee90db3a6.png",
+      "sha256": "1e697565c47d09ce96e72ae92b93e87e82025c747479f9c8045ce2e79afac724",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "note": "原生功能入口、网站导入与已接入模板；其余模板保持待接入。"
+    },
+    "02-input-narrow": {
+      "title": "材料输入·窄栏",
+      "group": "导航与输入",
+      "ref": "narrow",
+      "brief": "Target640x1024 narrow workspace. One compact task/source toolbar, 本地 Skills selected. Separate outer tabs 输入 / 结果, 输入 selected. Below four exact material tabs 技术交底 / 附图说明 / 撰写要求 / 用户指令, with 技术交底 active and small filled indicators. One compact optional upstream row 上游累计文稿 · 未选择 with 选择文件; this is current-project Markdown only, not an upload. Tiny editor mode controls 编辑 Markdown / 文本预览 aligned right, not a large header. Big textarea with synthetic log disclosure, independent scrollbar, max20000 if a counter is shown. Other tabs hold data but are not separate forms. Fixed bottom single action 核对模型与材料. No confirmation yet, no run created. No save directory or settings controls.",
+      "status": "ready",
+      "file": "02-input-narrow-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-b32636dc-b110-4c4e-bbdf-23b69f048957.png",
+      "sha256": "63fd803b05c0f15e49c44867926bcf8bdcdda3c42d0b8b26b23786c734b8b97f",
+      "dimensions": [
+        992,
+        1586
+      ],
+      "history": [
+        {
+          "file": "02-input-narrow.png",
+          "sha256": "4cf6627c3837cddb58fe922d63c3fd79fb4c00659ec5e522c60da48efed8bd76",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-db18988a-942b-4b1d-998a-b3c478e394eb.png"
+        }
+      ],
+      "note": "同一四字段表单；结果版本选择不进入输入页。"
+    },
+    "03-local-confirm": {
+      "title": "本地生成确认",
+      "group": "生成与状态",
+      "ref": "narrow",
+      "brief": "Target640x1024 narrow INPUT view, 本地 Skills selected, same4field tabs and disclosure editor. A compact bottom inline confirmation panel appears after 核对模型与材料. Show model DeepSeek Flash · High, data scope 四项材料及内置 Skill, 未选择上游文稿, purpose 本次生成. Concise text 材料将发送至所选模型服务，可能产生费用. Unchecked checkbox 我确认发送本次材料和 Skill. Primary 确认并生成 visibly disabled until checked; secondary 重新核对. Confirmation belongs here at point of action, never global header. Leave plenty of editor above. No implication local is offline or free. No model key/configuration fields, no real submitted run.",
+      "status": "ready",
+      "file": "03-local-confirm-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-975e1f2c-f667-41fe-9fe7-8e5a9c4af36e.png",
+      "sha256": "2f1fcd5d5a5e7b91865f4d26cec0f69b378a95baf7e18401dbdde0136cb5ea04",
+      "dimensions": [
+        992,
+        1586
+      ],
+      "history": [
+        {
+          "file": "03-local-confirm.png",
+          "sha256": "e4dc686ff5d3f3ea5c4ce46151b798f949f76419e1bd192b3aa4e06846272d9d",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-2d6e971b-a434-47c6-96db-1565c80df704.png"
+        }
+      ],
+      "note": "发送材料及 Skill 前确认模型与费用；采用普通文本编辑器。"
+    },
+    "04-api-confirm": {
+      "title": "专业API上传与费用确认",
+      "group": "生成与状态",
+      "ref": "wide",
+      "brief": "Target1152x896 wide shared input and empty-result columns. 专业 API selected on the only source switch, four shared material tabs unchanged. Left editor holds same public disclosure. At bottom left clear inline 本次上传与费用确认: destination lzhxpy.oasisintwrite.com read-only text; project 公开合成测试项目, service 权利要求书生成-Fast, file technical-disclosure.txt. Mock price shown clearly 参考费用：3（示例，非实扣） and balance 余额：示例值; no invented actual payment claim. Unchecked checkbox 我确认上传本次材料并生成，可能产生费用. Primary 确认上传并生成 disabled. Right region quiet empty state 确认后开始生成, no fake output. No alternative second API-specific form, project binding inputs, credentials or origin editable field. Purposeful narrow confirmation prose.",
+      "status": "ready",
+      "file": "04-api-confirm-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-26f53500-906f-43ab-96a4-192f5463ac13.png",
+      "sha256": "9fe15349ef09b5367af84f4bb31fff28f605532fb73c8ffc34289df81cda6700",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "history": [
+        {
+          "file": "04-api-confirm.png",
+          "sha256": "643087e83bdd5ac3029a70efd7de3163fd03c1de7736082f8469431645f1ea2b",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-bba1df4b-0c2c-4ba8-b5d6-61eb765e7a88.png"
+        }
+      ],
+      "note": "同表单映射专业 API；明确目的地、文件、参考费用与本次授权。"
+    },
+    "05-generating": {
+      "title": "生成中",
+      "group": "生成与状态",
+      "ref": "wide",
+      "brief": "Target1152x896 wide task layout, local source selected but source toggle and input fields clearly disabled while current run is active. Left retains the public input. Right compact current run row 本地 Skills · 生成中 with small spinner, text 正在等待模型返回. No fake percent complete, no linear progress claiming100%, no invented tokens or reasoning text. One small call record line 请求标识 example-run-01 · 已保存输入快照. Primary observational action 查看原运行 and secondary 停止等待; clarify small text 仅停止本地等待，不代表服务端取消或退款. Review/save/conversation controls unavailable because no valid result yet. Header remains one row with no status banner added. Bounded reading region empty until actual valid response.",
+      "status": "ready",
+      "file": "05-generating.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-a15e1de5-8cca-4319-a1ce-db54d383b2db.png",
+      "sha256": "0a80f9893fd22a891934a5eca7acfaf9b1a8a388107df19934d6275b96f857c5",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "note": "锁定本次输入和来源；停止本地等待不代表后端取消。"
+    },
+    "06-unknown": {
+      "title": "超时后状态未确认",
+      "group": "生成与状态",
+      "ref": "wide",
+      "brief": "Target1152x896 wide, source and input frozen/disabled, selected record v5 · 本地 Skills · 状态未确认. Right primary small amber notice 状态未确认, concise line 本地等待已超时，尚未取得有效正文. Smaller text 原请求结果未知；不自动重发或切换来源. Folded 调用记录 details, code TIMED_OUT in secondary typography, never a giant diagnostic wall. Only 查看原运行 action. NO retry/regenerate/recover-response buttons, no provider cancellation/refund or charge conclusion. Historical version selector can still indicate older approved versions without mutating unknown run. Pending run does not become failure or success. Calm context-specific warning, minimal top chrome.",
+      "status": "ready",
+      "file": "06-unknown-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-cc4b5983-e8d6-4b66-ac95-62bec0682f37.png",
+      "sha256": "eba3cf3b416b53e7d379c18ccf8186e414b7881d26a8fd793c6247b7c835efa2",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "history": [
+        {
+          "file": "06-unknown.png",
+          "sha256": "2169bba61d1ac35c119f95d7d26129f0cc7703c83c251da04ede11c3bf37a094",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-0a32042a-0866-4c76-b9a6-c9413bb47be1.png"
+        }
+      ],
+      "note": "保留未知，不重发、不切源；没有正文时不提供审核或保存。"
+    },
+    "07-result-wide": {
+      "title": "结果审阅·双栏",
+      "group": "审阅与保存",
+      "reuse": "/Users/tinadong7036/Documents/开发项目/dsh-lab/output/ui-concepts/stage4-20261015-ui4.2/wide-no-workspace-settings.png",
+      "status": "ready",
+      "file": "07-result-wide.png",
+      "sha256": "5a9e071979b8a2613a1fb583a2335de6cb0cc65eb5d7dab6a3f678f2fda6c9fe",
+      "note": "双栏对照审阅；来自用户选中方向的现有修订稿。",
+      "dimensions": [
+        1422,
+        1106
+      ]
+    },
+    "08-result-narrow": {
+      "title": "结果审阅·窄栏",
+      "group": "审阅与保存",
+      "reuse": "/Users/tinadong7036/Documents/开发项目/dsh-lab/output/ui-concepts/stage4-20261015-ui4.2/narrow-no-workspace-settings.png",
+      "status": "ready",
+      "file": "08-result-narrow.png",
+      "sha256": "b46759934318c9e847330ad7c3309d8fa73ca08b2d577abd9a8f01114cd4a61e",
+      "note": "窄栏只显示当前视图；来自用户选中方向的现有修订稿。",
+      "dimensions": [
+        992,
+        1586
+      ]
+    },
+    "09-edit-result": {
+      "title": "编辑为新版本",
+      "group": "审阅与保存",
+      "ref": "wide",
+      "brief": "Target1152x896 wide, same source/input side on left. Right result selector v4 · 本地 Skills · 已审核, with editing state 正在修订 below only as small contextual text. Large textarea labeled 修订结果 with public claim text and one short edit line. Fixed editor actions primary 保存为新版本 and secondary 放弃编辑. On-review/save/conversation actions disabled or replaced until editing finished. Short helper 保存后形成新版本，并重新审核. Version switching visibly locked while a dirty edit exists, so work is not silently discarded. Do not overwrite the existing audited version or falsely retain its approval on changes. No rich editor toolbar or new general document app.",
+      "status": "ready",
+      "file": "09-edit-result.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-479d062a-884b-4f9d-bd8d-19e6d3d158c3.png",
+      "sha256": "8f21358823bb76ac8560bf40379c50e24d35d1ac14a71c57b96d1a5ceeb1208c",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "note": "保存形成新版本并重新审核；有改动时保护版本切换。"
+    },
+    "10-review-confirm": {
+      "title": "固定版本审核确认",
+      "group": "审阅与保存",
+      "ref": "narrow",
+      "brief": "Target640x1024 narrow RESULT view, same minimal toolbar. Current v5 · 本地 Skills · 修订版 · 待审核. Long safe-text result preview occupies upper majority with own scrollbar. Bottom inline confirmation group 确认审核此版本, exact short metadata 版本 v5 · 内容哈希 11a8332c…, warning 风险与待确认问题未评估, unchecked checkbox 我已审阅该版本全文. Primary 确认审核 v5 disabled until checked, secondary 取消. No modal covering the full frame and no huge extra global header. Confirm applies only to this fixed version, not all future versions, risks are not marked resolved or patent/legal approved. Save/draft remain disabled.",
+      "status": "ready",
+      "file": "10-review-confirm.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-0dc8fd80-56c5-4530-8a0b-3fd19dfe3747.png",
+      "sha256": "d135ee0492d08257e34483ddc6dec1fa1e76420b419852bda062af5699cc9968",
+      "dimensions": [
+        992,
+        1586
+      ],
+      "note": "确认具体版本与内容哈希；风险未评估状态继续保留。"
+    },
+    "11-save-confirm": {
+      "title": "保存Markdown确认",
+      "group": "审阅与保存",
+      "ref": "wide",
+      "brief": "Target1152x896 wide. Right active v2 · 专业 API · 人工修订 · 已审核, left shared material pane still same common form. Right contextual save manifest area 保存到当前项目, not an independent save-directory setting. Show read-only root /项目/workspace-b/ (synthetic path), two new files 权利要求书_20261015_v2_OIW.md and 权利要求书_20261015_v2_OIW.oasis.json. Each has a short illustrative SHA-256 prefix clearly readable. Small helper 同名不覆盖；审核仅针对选定版本. Unchecked 我已复核目标路径和两份文件哈希，同意创建新文件. Primary 确认保存到项目 disabled; secondary 返回审阅. Existing result excerpt above remains visible. No directory picker or replace-existing button. API source suffix_OIW before extension correct.",
+      "status": "ready",
+      "file": "11-save-confirm.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-67c344ae-7208-4c68-bbbd-f91e5b8045f7.png",
+      "sha256": "ab8d509ac9178d65556822599509c0bfa5262bcd03d344cf895a6427ce2b66e7",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "note": "只写当前项目新文件；API 文件名带 _OIW，保留 .oasis.json。"
+    },
+    "12-saved-file": {
+      "title": "已保存与原生文件查看",
+      "group": "审阅与保存",
+      "ref": "wide",
+      "brief": "Target1152x896 side workspace. Show native file tabs with 绿洲专业工作台 and active 权利要求书_20261015_v4.md. Active content is the EXISTING DSH/Sidebar safe native text file viewer, not a new plugin editor. Compact file path bar workspace-b / 权利要求书_20261015_v4.md, no extra repeated giant filename heading. Body is the saved Markdown plain text, not executable HTML. One small contextual completion line 已保存 · 固定审核版本 v4, and reminder 当前文件可编辑，修改后不沿用审核结论. No duplicated business toolbar when viewing the native file tab, no invented full IDE, no new save folder. The style of host chrome stays consistent; only manuscript content is mocked. No final-content legal acceptance statement.",
+      "status": "ready",
+      "file": "12-saved-file.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-1ffde530-367d-41a1-ad48-f62c8dee1767.png",
+      "sha256": "21b1c93ec596d999947f7f08bfc1595f7bd404a0b280b966c6fc8973ed5d04c7",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "note": "仅示意与现有原生文件页的衔接；不建设新文件编辑器。"
+    },
+    "13-conversation-draft": {
+      "title": "固定版本准备到原生对话草稿",
+      "group": "审阅与保存",
+      "ref": "wide",
+      "brief": "Target1440x1024 FULL EXISTING DSH shell unlike the detail-frame samples, native workspace navigation on left, native main conversation in middle, professional plugin on right. Use same restrained style and reference host structure. Middle native composer contains an UNSENT document/reference draft with title 资料：权利要求书 · v4 and short hash11a8332c…, some representative public claim lines and an expandable-looking content region indicating 完整正文已附入草稿, not a fake downloadable URL. Include preexisting user draft line 请根据这份材料整理术语 as preserved draft text. Native Send control remains untouched; small status 草稿尚未发送. Right reviewed result and inline confirmation 已放入对话草稿，尚未发送, no automatic call or sent bubble. Fixed-version source and hash readable. Absolutely no workspace settings button or duplicate app title in content. Native composer, not a new second plugin chat.",
+      "status": "ready",
+      "file": "13-conversation-draft-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-5223f2f3-c434-4dd6-b654-f12bafd09529.png",
+      "sha256": "055e62a75d0d21fa2e28f0da90d6447d21b9911fa48d6f19cf674dfcc6c8f15d",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "13-conversation-draft.png",
+          "sha256": "19db4442946bc53d5dca61fd5d96afdd8578b383a0e3a6e736262001ed9d53d0",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-5e6c95e8-3b88-404f-8481-92a601e26d0f.png"
+        }
+      ],
+      "note": "原生输入框内的未发送资料草稿；不新增资料面板或自动发送。"
+    },
+    "14-import-select": {
+      "title": "网站项目与材料选择",
+      "group": "网站导入",
+      "ref": "wide",
+      "brief": "Target1152x896, a SINGLE modal 从网站导入 over softly dimmed compact FunctionCenter backdrop. Functional modal heading appears once with Close. Under a concise note 仅下载勾选内容，不上传、不生成. Two flat columns: left searchable website project list with selected 公开合成测试项目, two other clearly synthetic names and pagination; right exact role filters 历史正文 / 输入材料 / 输出附件, three checkbox rows like 技术交底.txt / 历史权利要求_OIW.md / 附图说明.txt, one unchecked item unavailable with 待核实 reason. Two checked items. A small inline partial notice 部分记录未读取，不能据此认定材料完整. Destination read-only 当前项目 workspace-b. Footer 已选2项 and primary 关联并导入选中文件; text 不选文件也可仅关联项目. No secret fields or login form; no settings link/button, no file upload promise or two business source panels. Modal supports selection only, not generated output.",
+      "status": "ready",
+      "file": "14-import-select-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-56e2931e-3dbf-4d99-b92e-f9c43be72d9e.png",
+      "sha256": "794d273f1441b537343369226b5da1a533c85cdd8faaaabb206176634b0c8ed5",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "history": [
+        {
+          "file": "14-import-select.png",
+          "sha256": "24b371fb4c6bd7f85472f4f23b07618336bc0d68b4385f4a44f6ac1a2b85fc68",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-f9a05f11-d125-41a5-8167-952db15965cf.png"
+        }
+      ],
+      "note": "按角色筛选，跨筛选已选项单列；只下载所选内容。"
+    },
+    "15-import-result": {
+      "title": "导入结果与未完成项",
+      "group": "网站导入",
+      "ref": "wide",
+      "brief": "Target1152x896, same 从网站导入 modal with completed synthetic result, no new page header. Show 项目关联已保存 as modest status. Flat result rows: 技术交底.txt 已保存; 历史权利要求_OIW.md 相同内容已跳过; 附图说明.txt 未完成（网络读取失败）. Summary1项保存 ·1项跳过 ·1项未完成. Show read-only manifest path workspace-b/.oasis-import/示例清单.json. Important context 导入内容尚未本地审核. Primary 打开 DSH 文件管理, secondary 关闭, optional 重新读取项目 visible as explicit operation. No 自动重试/自动同步 or all-success checkmark, no upload/generation/charge claim. Do not delete successful partial files or infer all project contents complete.",
+      "status": "ready",
+      "file": "15-import-result.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-8e5a04f4-7736-4ddb-ab77-f67b119a5492.png",
+      "sha256": "eb39fe706ce864b7c319552c3a2147bd8a77327c29d985f6ec31042ab74605a2",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "note": "区分保存、跳过与未完成，不用整体成功掩盖部分失败。"
+    },
+    "16-unlink-confirm": {
+      "title": "解除网站项目关联确认",
+      "group": "网站导入",
+      "ref": "wide",
+      "brief": "Target1152x896, same import modal focused on inline destructive-but-recoverable relationship confirmation, not deletion. Small current association 公开合成测试项目 → workspace-b and functional heading 解除网站项目关联. Concise consequences 解除网站关联及专业API服务绑定；已有文件、生成结果、审核记录保留. Note 正在进行的生成或导入会阻止解除. Two actions secondary 取消 and restrained outlined red 确认解除关联, not a giant alarm. Project/file list faintly retained below context, not another stacked modal. No delete files, no website logout, no credential display, no automated rebind. This is an existing native import flow state, not settings navigation.",
+      "status": "ready",
+      "file": "16-unlink-confirm.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-e49e7f0b-a171-4ef4-a3fd-c4b3303fb35f.png",
+      "sha256": "2e208a4aafffbf433317b4b909f74ec6718b6d1a3b1b4eef0e8722a130b5d27f",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "note": "只解除关联；本地文件、生成与审核记录保留。"
+    },
+    "17-settings-login": {
+      "title": "DSH原生设置·绿洲账户未登录",
+      "group": "原生设置",
+      "ref": "wide",
+      "brief": "Target1152x896, THIS FRAME IS THE EXISTING DSH NATIVE SETTINGS AREA, NOT the business workbench. Show native settings shell with left navigation only a concise 设置 header and selected section 绿洲工作台; don't invent a full settings inventory. NO professional task/source toolbar, no native workspace settings shortcut, no duplicate 绿洲工作台 page title in content. Right content directly starts 使用说明 with three short flat lines: 新任务默认本地Skills; 文件保存到当前项目，API文件名加_OIW; 云模型或API可能外传并计费，逐次确认. Thin divider, 绿洲账户 section. Native login method dropdown 手机验证码 (alternative 密码登录 indicated as another option, not a second form). Empty labeled 手机号 and 验证码 inputs, 发送验证码 button, primary 登录, secondary 刷新登录状态. No actual phone/code/password or credentials. Concise 本地Skills无需绿洲账户登录. No origin/JWT/enable-model switches, independent save directory or project API binding fields. Typography and controls same chosen minimal style; compact native settings content, not a giant app hero.",
+      "status": "ready",
+      "file": "17-settings-login.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-94f20d3b-e200-4270-8e7f-0cf0bab6a662.png",
+      "sha256": "d68b59b69a3fa8734c239f7ff5ffeb5d979f4276df57a37d7cefeac98f6269bc",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "note": "仅位于 DSH 原生设置区；展示既有验证码/密码登录方式。"
+    },
+    "18-settings-logged-in": {
+      "title": "DSH原生设置·绿洲账户已登录",
+      "group": "原生设置",
+      "ref": "wide",
+      "brief": "Target1152x896, SAME DSH NATIVE SETTINGS shell as previous. Left navigation 设置 with 绿洲工作台 selected, no business workspace task/source chrome and no repeated page app title. Right content: same concise 使用说明3lines, divider, 绿洲账户. Show small status 已登录 · 示例账户 (no actual identifier); two actions 刷新登录状态 and 退出本插件账户. Short helper 退出仅影响本插件，不退出网站. No login form while logged in, no new account management or billing features. Show one inline subtle notice 登录状态已更新 as a synthetic example. White/gray surfaces, restrained green status text only here, no configuration banner. Do not duplicate model/credentials/layout settings or add separate plugin storage.",
+      "status": "ready",
+      "file": "18-settings-logged-in.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-5a17954f-dd79-43ed-a8cb-f34fd9f165ec.png",
+      "sha256": "280cb2eeae140ece8832823bb986afd631debce8ba3c8d02c46ce28e1c1f750c",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "note": "沿用既有原生账户状态、刷新与退出；不复制模型配置。"
+    },
+    "19-sync-conflict": {
+      "title": "草稿版本冲突保全",
+      "group": "异常与恢复",
+      "ref": "wide",
+      "brief": "Target1152x896 minimal workbench shell with native tab and one compact task toolbar; task and source editing disabled. Main content a calm small amber context warning 检测到版本冲突. Explain 本地草稿仍保留，系统不会自动覆盖. Native server revision36 vs local35 displayed in small contextual text, not diagnostics wall. Show a short read-only local draft excerpt beneath so it feels retained. One explicit outlined action 重新载入服务端版本（舍弃本地草稿） with a nearby consequence statement, not an auto-refresh. No automatic merge, no new merge platform or artificial comparison editor. No generate/save/force-overwrite buttons while conflicting; no settings entry. Error content uses whitespace, not giant status illustrations or duplicated headings.",
+      "status": "ready",
+      "file": "19-sync-conflict-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-a537f866-c836-4882-b0f1-efcb50ec0236.png",
+      "sha256": "30d39b484c9dd43870196792cfa2053bfb75752033dd14bba5f0ba0f83a4b22c",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "history": [
+        {
+          "file": "19-sync-conflict.png",
+          "sha256": "07616de6f13151e9762f86c3ca80d32a3f0e5f4d49a6191a5047ec4bb4eec79e",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-e9710a81-1226-4a68-ba80-fd4d1a86500c.png"
+        }
+      ],
+      "note": "操作前保留本地草稿；明确重新载入会舍弃本地草稿。"
+    },
+    "20-connection-error": {
+      "title": "项目读取或保存失败",
+      "group": "异常与恢复",
+      "ref": "wide",
+      "brief": "Target1152x896 same minimal shell. Compact task controls disabled while data unavailable, no extra title. Main area one clear contextual message 保存或读取失败 and short text 本地草稿仍保留，请检查DSH Host后再明确重新载入. A concise read-only draft excerpt remains visible. Single action 重新载入服务端版本; no automatic retry, no paid generation or unknown-run resend. Optional small expandable 技术详情 currently collapsed, no giant stack trace. No source switch enabled, no active save button, no forced discard without warning. No settings button/link. Gray and restrained amber with calm typography, no error-themed decorative illustration.",
+      "status": "ready",
+      "file": "20-connection-error.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-1eb39318-b705-470e-8b5f-d38c45a12ead.png",
+      "sha256": "cea2ce7f8b54f7492f51a3390927c15b041da97f96ed80561ca00f2b276ad287",
+      "dimensions": [
+        1422,
+        1106
+      ],
+      "note": "草稿保留，明确重新载入；不自动重试生成请求。"
+    }
+  }
+}

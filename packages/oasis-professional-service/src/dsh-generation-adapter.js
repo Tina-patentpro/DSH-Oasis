@@ -13,13 +13,13 @@ const MESSAGES = Object.freeze({
   ABORTED: '已停止本地等待，不代表提供方已取消或退款。',
   TIMED_OUT: '本地等待超时，提供方状态未确认；不会自动重试。',
 })
-function failure(code, started = false) {
-  return { status: started && ['ABORTED', 'TIMED_OUT'].includes(code) ? 'unknown' : 'failed', code, message: MESSAGES[code] }
+function failure(code, started = false, uncertain = false) {
+  return { status: uncertain || started && ['ABORTED', 'TIMED_OUT'].includes(code) ? 'unknown' : 'failed', code, message: MESSAGES[code] }
 }
 class AdapterFailure extends Error {
-  constructor(code) { super(code); this.code = code }
+  constructor(code, uncertain = false) { super(code); this.code = code; this.uncertain = uncertain }
 }
-function invalid(code) { throw new AdapterFailure(code) }
+function invalid(code, uncertain = false) { throw new AdapterFailure(code, uncertain) }
 function providerCode(error) {
   try {
     const code = error?.code
@@ -74,12 +74,15 @@ function textConsumer(BlockAssembler, summary) {
   const blocks = new Map()
   let size = 0
   let finished = false
+  let terminal = false
   return {
+    hasTerminal() { return terminal },
     push(chunk) {
       if (finished || !chunk || typeof chunk !== 'object') invalid('INVALID_OUTPUT')
       if (chunk.type === 'finish') {
         finished = true
         const kind = chunk.reason?.kind
+        terminal = ['stop', 'max-tokens', 'tool-calls'].includes(kind)
         Object.assign(summary, normalizeLocalExecutionSummary({ finishKind: kind }))
         if (kind === 'error') invalid(providerCode(chunk.reason.failure))
         if (kind === 'aborted') invalid('ABORTED')
@@ -121,7 +124,7 @@ function textConsumer(BlockAssembler, summary) {
       assembler.push(type === 'block-end' ? { type, index, block: { type: 'text', text } } : { type, index, text })
     },
     result() {
-      if (!finished) invalid('INVALID_OUTPUT')
+      if (!finished) invalid('INVALID_OUTPUT', true)
       const output = assembler.blocks()
       if (output.some(b => b.type !== 'text' || typeof b.text !== 'string')) invalid('INVALID_OUTPUT')
       const body = output.map(b => b.text).join('')
@@ -141,12 +144,14 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
     } catch { return failure('INVALID_INPUT') }
     if (request.signal.aborted) return failure('ABORTED')
     let started = false
+    let dispatched = false
     let iterator
     let exhausted = false
     let stopped
     let rejectStop
     const summary = {}
     let failureStage = 'preparation'
+    let consumer
     const controller = new AbortController()
     const stopPromise = new Promise((_, reject) => { rejectStop = reject })
     stopPromise.catch(() => {})
@@ -167,7 +172,7 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
     }
     const wait = action => Promise.race([stopPromise, Promise.resolve().then(() => { check(); return action() })])
     try {
-      const consumer = textConsumer(BlockAssembler, summary)
+      consumer = textConsumer(BlockAssembler, summary)
       const message = freezeTree(createUserMessage({ content: [{ type: 'text', text: request.text }] }))
       const prepared = await wait(() => {
         started = true
@@ -178,8 +183,9 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
       if (config.provider !== request.route.provider || config.model !== request.route.model) invalid('GENERATION_FAILED')
       const options = Object.freeze({ ...config, system: request.system, sessionId: request.sessionId,
         messages: Object.freeze([message]), signal: controller.signal })
-      iterator = prepared.stream(options)[Symbol.asyncIterator]()
       failureStage = 'stream'
+      dispatched = true
+      iterator = prepared.stream(options)[Symbol.asyncIterator]()
       while (true) {
         const item = await wait(() => iterator.next())
         check()
@@ -193,10 +199,18 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
         executionSummary: normalizeLocalExecutionSummary(summary) }
     } catch (error) {
       let code = stopped ?? 'GENERATION_FAILED'
+      let truncated = false
       try {
-        code = stopped ?? (error instanceof AdapterFailure ? error.code : providerCode(error))
+        const internal = error instanceof AdapterFailure
+        code = stopped ?? (internal ? error.code : providerCode(error))
+        truncated = internal && error.uncertain === true
       } catch { /* Error prototype access must not escape the safe result boundary either. */ }
-      return { ...failure(code, started), executionSummary: normalizeLocalExecutionSummary({ ...summary, failureStage }) }
+      // A native finish.error may wrap a broken transport; it is not proof of provider cancellation.
+      // Local rejection before a valid terminal cannot prove the provider has stopped either.
+      // Explicit rejection/terminal format failures keep their known-failure classification.
+      const uncertain = dispatched && (code === 'GENERATION_FAILED' || truncated
+        || code === 'INVALID_OUTPUT' && !consumer.hasTerminal())
+      return { ...failure(code, started, uncertain), executionSummary: normalizeLocalExecutionSummary({ ...summary, failureStage }) }
     } finally {
       clearTimeout(timer)
       request.signal.removeEventListener('abort', onAbort)

@@ -20,6 +20,9 @@ import { createUnifiedGenerationService } from './unified-generation-service.js'
 import { createLocalGenerationService } from './local-generation-service.js'
 import { createClaimsUpstreamService } from './claims-upstream.js'
 import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
+import { createV340PreparationService } from './v340-preparation.js'
+import { createV340RuntimeService } from './v340-runtime-service.js'
+import {createV340ResultService} from './v340-result-service.js'
 
 function serviceError(code, message, details = {}) {
   return new WorkspaceMaterialError(code, message, details)
@@ -89,6 +92,7 @@ export function createWorkbenchService({
   unifiedFixtureEnabled = false,
   unifiedFixtureRunner,
   localGeneration,
+  v340Executor,
   workspaceOperations = createWorkspaceOperationGuard(),
 } = {}) {
   if (!repository || typeof repository.get !== 'function') {
@@ -105,6 +109,8 @@ export function createWorkbenchService({
   if (typeof runIdFactory !== 'function') throw new TypeError('runIdFactory is required')
   if (typeof localMockRunner !== 'function') throw new TypeError('localMockRunner is required')
   const materials = materialManager ?? createWorkspaceMaterialManager({ workspaceRegistry, clock })
+  const v340 = createV340PreparationService({ materialManager: materials })
+  const v340Runtime=createV340RuntimeService({repository,preparation:v340,executor:v340Executor,clock,workspaceOperations})
   for (const method of ['confirm', 'recheckAll', 'refresh']) {
     if (typeof materials?.[method] !== 'function') throw new TypeError(`materialManager.${method} is required`)
   }
@@ -166,7 +172,7 @@ export function createWorkbenchService({
   const unified = createUnifiedGenerationService({ repository, enabled: unifiedFixtureEnabled, clock, runIdFactory, runner: unifiedFixtureRunner, upstream, workspaceOperations })
   const local = createLocalGenerationService({ repository, runtime: localGeneration, clock, runIdFactory, upstream, workspaceOperations })
   return Object.freeze({
-    ...unified, ...local,
+    ...unified, ...local, ...v340Runtime, ...createV340ResultService({repository,writebackManager:writebacks,materialManager:materials,clock}),
     get localGenerationEnabled() { return local.localGenerationEnabled },
     get localGenerationKind() { return local.localGenerationKind },
     selectClaimsUpstream: upstream.selectClaimsUpstream,
@@ -184,6 +190,8 @@ export function createWorkbenchService({
       return { ...getWorkflowCatalog(workType), unifiedFixtureEnabled: unifiedFixtureEnabled === true,
         localGenerationEnabled: local.localGenerationEnabled, localGenerationKind: local.localGenerationKind }
     },
+    getV340Catalog: v340.getV340Catalog,
+    prepareV340: v340.prepareV340,
     addMaterial({ workspaceId, taskId, expectedRevision, relativePath, confirmed }) {
       if (confirmed !== true) {
         throw serviceError('MATERIAL_CONFIRMATION_REQUIRED', 'Explicit material confirmation is required')

@@ -3,12 +3,9 @@ import test from 'node:test'
 import { createRequire } from 'node:module'
 import { readFileSync } from 'node:fs'
 import { runInNewContext } from 'node:vm'
-const patchedMode = false
-const { patchMarkdownResources, patchMarkdownWebBundle } = patchedMode
-  ? await import('../../../patches/dsh-0.2.0-rc.2/markdown-resources.mjs')
-  : { patchMarkdownResources: value => value, patchMarkdownWebBundle: value => value }
-const upstream = readFileSync(new URL(process.env.OASIS_MAC_UNPATCHED === '1' ? 'file:///Users/tinadong7036/Applications/DSH%20Desktop.app/Contents/Resources/app/node_modules/@deepseek-ai/dsh-client-ui-primitives/lib/index.js' : '../.dsh-test/mac-dev/packages/dsh-client-ui-primitives/lib/index.js', import.meta.url), 'utf8')
-const source = patchMarkdownResources(upstream)
+const { patchMarkdownResources } = await import('../patches/dsh-0.2.0-rc.2/markdown-resources.mjs')
+const { readMacComponentInput } = await import('./helpers/mac-component-inputs.mjs')
+const { source } = readMacComponentInput('native')
 const section = (start, end) => {
   const a = source.indexOf(start), b = source.indexOf(end, a)
   assert.ok(a >= 0 && b > a, 'Pinned function boundary missing')
@@ -73,7 +70,9 @@ test('actual component drops streaming cache in safe mode and exposes the capabi
   assert.match(source, /pathImages,\s*allowRemoteImages\s*\]/)
 })
 
-test('patch rejects unknown or already-patched upstream bytes', { skip: !patchedMode }, () => {
+test('fixed patch replays exact upstream bytes and rejects unknown or already-patched input', () => {
+  const upstream = readFileSync(new URL('../packages/oasis-professional-service/node_modules/@deepseek-ai/dsh-client-ui-primitives/lib/index.js', import.meta.url), 'utf8')
+  assert.equal(patchMarkdownResources(upstream), source, 'Patch replay must reproduce the admitted Mac component byte for byte')
   assert.throws(() => patchMarkdownResources('unknown upstream'), /mismatch/)
-  assert.throws(() => patchMarkdownResources(patchMarkdownResources(upstream)), /mismatch/)
+  assert.throws(() => patchMarkdownResources(source), /mismatch/)
 })

@@ -1,13 +1,12 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { readFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
-import { resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { readMacComponentInput } from './helpers/mac-component-inputs.mjs'
 import vm from 'node:vm'
 
-const require = createRequire(resolve('packages/oasis-professional-service/package.json'))
-const file = '.dsh-test/stage3-desktop-app/resources/app.asar.unpacked/node_modules/dsh-better-sidebar/lib/client.js'
-const source = await readFile(file, 'utf8')
+const require = createRequire(fileURLToPath(new URL('../packages/oasis-professional-service/package.json', import.meta.url)))
+const { source } = readMacComponentInput('sidebar')
 // Only expose native internals inside this test VM; no production private API use.
 const code = source.replace('exports.apply = apply;', 'exports.service = createBetterSidebarService; exports.store = createSidebarStore; exports.tabs = builtinTabs; exports.leaves = allLeaves; exports.apply = apply;')
 let native
@@ -24,16 +23,16 @@ test('safe native file opens cannot dedupe onto an ordinary preview and retain s
   store.setSession('session-a')
   const service = native.service(store)
   service.registerTab(native.tabs({})[0])
-  service.openFile({ sessionId: 'session-a' }, 'C:/workspace/result.md')
-  service.openFile({ sessionId: 'session-a' }, 'C:/workspace/result.md', 'Result', { safePreview: true })
-  const tabs = () => native.leaves(store.getSnapshot().state.splits).flatMap(leaf => leaf.tabs).filter(tab => tab.type === 'editor' && tab.path)
+  service.openFile({ sessionId: 'session-a' }, '/workspace/result.md')
+  service.openFile({ sessionId: 'session-a' }, '/workspace/result.md', 'Result', { safePreview: true })
+  const tabs = () => native.leaves(store.getSnapshot().state.bottomSplits).flatMap(leaf => leaf.tabs).filter(tab => tab.type === 'editor' && tab.path)
   assert.equal(tabs().length, 2, 'unsafe existing preview must not receive the safe open')
   assert.equal(tabs().filter(tab => tab.meta?.safePreview === true).length, 1)
-  service.openFile({ sessionId: 'session-a' }, 'C:/workspace/result.md', 'Result', { safePreview: true })
+  service.openFile({ sessionId: 'session-a' }, '/workspace/result.md', 'Result', { safePreview: true })
   assert.equal(tabs().length, 2, 'repeated safe open focuses the existing safe tab')
   const roundtrip = JSON.parse(JSON.stringify(store.getSnapshot().state))
-  assert.equal(native.leaves(roundtrip.splits).flatMap(leaf => leaf.tabs).some(tab => tab.meta?.safePreview === true), true)
-  service.openFile({ sessionId: 'session-b' }, 'C:/other/result.md', 'Other', { safePreview: true })
-  assert.equal(tabs().some(tab => tab.path === 'C:/other/result.md'), false)
+  assert.equal(native.leaves(roundtrip.bottomSplits).flatMap(leaf => leaf.tabs).some(tab => tab.meta?.safePreview === true), true)
+  service.openFile({ sessionId: 'session-b' }, '/other/result.md', 'Other', { safePreview: true })
+  assert.equal(tabs().some(tab => tab.path === '/other/result.md'), false)
   assert.ok(service.features.includes('safeFilePreview'))
 })

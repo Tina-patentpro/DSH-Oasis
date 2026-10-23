@@ -141,7 +141,13 @@ test('registers the current Host tool and owned Connection routes with cleanup',
   assert.equal(fixture.settingsRegistration?.ns, 'oasis-professional-service')
   assert.equal(fixture.settingsRegistration?.options.applies, 'restart')
   assert.equal(fixture.registered?.name, 'oasis_workbench_status')
-  assert.equal(fixture.routes.size, 41)
+  assert.equal(fixture.routes.size, 54)
+  const v340Catalog = await fixture.dispatch('workflow/v340/catalog', {})
+  assert.equal(v340Catalog.value.nodes.length, 14)
+  assert.equal(v340Catalog.value.capability, 'runtime-persistence-only')
+  const prepared = await fixture.dispatch('workflow/v340/prepare', { workspaceId: 'workspace-a', nodeId: 'Flow-1-1', confirmed: true, textInputs: {}, filePaths: {}, configuration: {} })
+  assert.equal(prepared.ok, true)
+  assert.equal(prepared.value.dispatchEnabled, false)
 
   const stateResult = await fixture.dispatch('state/get', { workspaceId: 'workspace-a' })
   assert.equal(stateResult.ok, true)
@@ -166,7 +172,7 @@ test('registers the current Host tool and owned Connection routes with cleanup',
   assert.equal(value.externalSystems, 'not-invoked')
 
   await dispose()
-  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 41, toolDispose: 1, credentialResolve: 0 })
+  assert.deepEqual(fixture.calls, { domainClose: 1, rpcDispose: 54, toolDispose: 1, credentialResolve: 0 })
   assert.equal(fixture.routes.size, 0)
 })
 
@@ -399,4 +405,23 @@ test('isolated synthetic Host disables legacy bootstrap before resolving any cre
     if (oldHome === undefined) delete process.env.DSH_HOME; else process.env.DSH_HOME = oldHome
     if (oldFixture === undefined) delete process.env.OASIS_UNIFIED_FIXTURE; else process.env.OASIS_UNIFIED_FIXTURE = oldFixture
   }
+})
+
+
+test('real Host routes persist versioned draft across Host recreation without credentials or dispatch', async () => {
+  const fixture = createHostFixture()
+  let dispose = await apply(fixture.ctx)
+  try {
+    const created = await fixture.dispatch('workflow/v340/task/create', { workspaceId:'new-workspace',taskId:'new',expectedRevision:0,nodeId:'Flow-1-1',title:'新版任务' })
+    assert.equal(created.ok,true)
+    const saved = await fixture.dispatch('workflow/v340/task/draft', { workspaceId:'new-workspace',taskId:'new',expectedRevision:created.value.current.revision,
+      draft:{source:'oasis-api',textInputs:{research_request_text:'公开合成输入'},filePaths:{},configuration:{}} })
+    assert.equal(saved.ok,true)
+    assert.equal(fixture.routes.has('/api/oasis-workbench/workflow/v340/run/create'),false)
+    await dispose()
+    dispose = await apply(fixture.ctx)
+    const reopened = await fixture.dispatch('state/get',{workspaceId:'new-workspace'})
+    assert.deepEqual(reopened.value,saved.value.current)
+    assert.equal(fixture.calls.credentialResolve,0)
+  } finally { await dispose() }
 })

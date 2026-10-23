@@ -1,4 +1,4 @@
-import { createElement } from 'react'
+import { createElement, useState } from 'react'
 
 import { MaterialReferences } from './MaterialReferences.js'
 import { ProfessionalServicePanel } from './ProfessionalServicePanel.js'
@@ -7,6 +7,7 @@ import { WorkflowForm, validateWorkflowFormValues } from './WorkflowForm.js'
 import { WritebackPanel } from './WritebackPanel.js'
 import { UnifiedGenerationPage } from './UnifiedGenerationPage.js'
 import { FunctionCenter } from './FunctionCenter.js'
+import {V340GenerationPage} from './V340GenerationPage.js'
 
 const surfaceStyle = {
   border: '1px solid var(--dsw-alias-border-l2, #dfe2e0)',
@@ -24,11 +25,45 @@ const syncNoticeStyle = {
   background: 'var(--dsw-alias-bg-base, #fff)',
 }
 
-function reloadButton(onReload, label) {
+function reloadButton(onReload, label, disabled = false) {
   return createElement('button', {
-    type: 'button', onClick: onReload,
+    type: 'button', onClick: onReload, disabled,
     style: { marginTop: 12, border: '1px solid #d7d9d8', borderRadius: 8, padding: '7px 10px', background: '#fff', color: 'inherit' },
   }, label)
+}
+
+function SyncRecoveryNotice({ state, onReload, onDiscardResultEditDraft, onDiscardV340Drafts }) {
+  const [error, setError] = useState(null)
+  const drafts = state.pages.flatMap(page => Object.entries(state.pageOperations?.[page.pageId]?.resultEditDrafts ?? {})
+    .filter(([, draft]) => draft.dirty)
+    .map(([runId, draft]) => ({ page, runId, draft })))
+  const conflict = state.syncStatus === 'conflict'
+  const v340Drafts=state.pages.map(page=>({page,op:state.pageOperations?.[page.pageId]??{}})).filter(({op})=>op.v340InputDraft||Object.keys(op.v340Edits??{}).length)
+  async function action(fn) {
+    setError(null)
+    try { await fn() } catch { setError('处理未完成，草稿仍保留；请核对当前状态后重试。') }
+  }
+  return createElement('div', { role: 'alert', tabIndex: -1, style: syncNoticeStyle },
+    createElement('strong', null, conflict ? '检测到版本冲突' : '保存或读取失败'),
+    createElement('div', { style: { marginTop: 6, fontSize: 13 } }, conflict
+      ? `服务端当前为 revision ${state.conflictCurrent?.revision ?? '未知'}。本地草稿仍保留，系统不会自动覆盖。`
+      : '本地草稿仍保留。请检查 DSH Host 后，再明确重新载入服务端版本。'),
+    drafts.length ? createElement('section', { 'aria-label': '未保存结果编辑恢复' },
+      createElement('p', null, '请先选中并复制需要保留的正文，再逐项明确放弃结果编辑。放弃不会修改本地输入；全部处理后才能重新载入。'),
+      drafts.map(({ page, runId, draft }) => createElement('section', { key: JSON.stringify([page.pageId, runId]), style: { marginTop: 12 } },
+        createElement('div', { style: { fontSize: 12, overflowWrap: 'anywhere' } },
+          `${page.title} · 任务 ${page.pageId} · 版本 ${page.runOrder.indexOf(runId) + 1} · 基准 ${draft.baseArtifactId}`),
+        createElement('textarea', { 'aria-label': `未保存结果草稿：${page.title} / ${runId}`,
+          value: draft.body, readOnly: true, rows: 6, style: { width: '100%', boxSizing: 'border-box' } }),
+        createElement('button', { type: 'button',
+          disabled: !onDiscardResultEditDraft || (state.pageOperations[page.pageId]?.activeOperation ?? null) !== null,
+          onClick: () => { void action(() => onDiscardResultEditDraft(page.pageId, runId, draft)) } }, '放弃此结果编辑')))) : null,
+    ...v340Drafts.map(({page,op})=>createElement('section',{key:page.pageId,'aria-label':'新版未保存草稿'},
+      createElement('p',null,`${page.title}：请先复制保留草稿，再明确放弃本地未保存部分；Host已保存的记录不会被删除。`),
+      createElement('textarea',{readOnly:true,rows:8,'aria-label':`新版未保存草稿：${page.title}`,value:JSON.stringify({input:op.v340InputDraft,edits:op.v340Edits},null,2),style:{width:'100%'}}),
+      createElement('button',{type:'button',disabled:!onDiscardV340Drafts||op.activeOperation!=null,onClick:()=>action(()=>onDiscardV340Drafts(page.pageId,{input:op.v340InputDraft,edits:op.v340Edits}))},'放弃此新版本地草稿'))),
+    error ? createElement('p', { role: 'status' }, error) : null,
+    reloadButton(() => { void action(onReload) }, '重新载入服务端版本（舍弃本地输入草稿）', drafts.length > 0 || v340Drafts.length>0 || !onReload))
 }
 
 function activeRun(page) {
@@ -41,6 +76,7 @@ export function PanelPages({
   savedFileUnavailableReason = '安全文件预览不可用', onOpenSavedFile = () => {},
   showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, onImport,
   effectiveMode = 'normal',
+  v340Actions={},
   onSelectWorkflow,
   onRenamePage,
   onReload,
@@ -48,6 +84,7 @@ export function PanelPages({
   onSetGenerationSource = () => {},
   onSelectClaimsUpstream = () => {},
   onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {},
+  onUpdateResultEditDraft, onDiscardResultEditDraft,
   onMaterialDraft = () => {},
   onAddMaterial = () => {},
   onRefreshMaterial = () => {},
@@ -72,23 +109,12 @@ export function PanelPages({
   if (state.syncStatus === 'idle' || state.syncStatus === 'loading') {
     return createElement('div', { role: 'status', 'aria-live': 'polite', style: syncNoticeStyle }, '正在读取当前项目的绿洲任务页…')
   }
-  if (state.syncStatus === 'conflict') {
-    const currentRevision = state.conflictCurrent?.revision ?? '未知'
-    return createElement('div', { role: 'alert', tabIndex: -1, style: syncNoticeStyle },
-      createElement('strong', null, '检测到版本冲突'),
-      createElement('div', { style: { marginTop: 6, fontSize: 13 } },
-        `服务端当前为 revision ${currentRevision}。本地草稿仍保留，系统不会自动覆盖。`),
-      reloadButton(onReload, '重新载入服务端版本（舍弃本地草稿）'))
-  }
-  if (state.syncStatus === 'error') {
-    return createElement('div', { role: 'alert', tabIndex: -1, style: syncNoticeStyle },
-      createElement('strong', null, '保存或读取失败'),
-      createElement('div', { style: { marginTop: 6, fontSize: 13 } },
-        '本地草稿仍保留。请检查 DSH Host 后，再明确重新载入服务端版本。'),
-      reloadButton(onReload, '重新载入服务端版本'))
+  if (state.syncStatus === 'conflict' || state.syncStatus === 'error') {
+    return createElement(SyncRecoveryNotice, { state, onReload, onDiscardResultEditDraft, onDiscardV340Drafts:v340Actions.discardLocal })
   }
 
   const page = state.pages.find((item) => item.pageId === state.activePageId)
+  if (!page&&showFunctionCenter)return createElement(FunctionCenter,{state,onSelectV340:v340Actions.create,onResumeV340:v340Actions.resume,onRetryV340Catalog:v340Actions.retryCatalog,onSelect:id=>onSelectWorkflow(null,id),nativeAvailability,onOpenNative,onImport})
   if (!page) return createElement('div', { style: { padding: 20, color: '#66706b' } }, '请新建任务页。',
     onImport ? createElement('button', { type: 'button', onClick: onImport }, '从网站导入') : null)
 
@@ -118,7 +144,13 @@ export function PanelPages({
       state,
       nativeAvailability, onOpenNative,
       onSelect: (workflowId) => onSelectWorkflow(page.pageId, workflowId),
+      onSelectV340:nodeId=>v340Actions.create?.(nodeId),
+      onResumeV340:v340Actions.resume,
+      onRetryV340Catalog:v340Actions.retryCatalog,
     })
+  } else if(page.v340){
+    content=createElement(V340GenerationPage,{key:`${state.workspaceId}/${page.pageId}`,page,state,
+      node:state.v340Catalog?.nodes.find(n=>n.nodeId===page.v340.nodeId),operation:state.pageOperations[page.pageId]??{},actions:v340Actions,markdownRenderer,savedFileUnavailableReason})
   } else {
     const workflow = state.workflows.find((item) => (
       item.workflowId === page.workflowId && item.workflowVersion === page.workflowVersion
@@ -139,7 +171,7 @@ export function PanelPages({
       const run = activeRun(page)
       content = workflow.executionMode === 'unified-text' && page.generation
         ? createElement(UnifiedGenerationPage, {
-            key: page.pageId, page, workflow, markdownRenderer, workspaceId: state.workspaceId, syncStatus: state.syncStatus, operation,
+            key: page.pageId, page, workflow, markdownRenderer, workspaceId: state.workspaceId, workspaceRevision: state.revision, syncStatus: state.syncStatus, operation,
             onRenamePage, onUpdateForm, onSetGenerationSource, onSelectClaimsUpstream,
             fixtureEnabled: state.unifiedFixtureEnabled === true,
             apiExecutionAvailable: state.apiExecutionAvailable === true,
@@ -148,6 +180,7 @@ export function PanelPages({
             localGenerationKind: state.localGenerationKind,
             conversationUnavailableReason: state.conversationUnavailableReason === undefined ? '当前对话输入接口不可用' : state.conversationUnavailableReason,
             onGenerate, onObserveUnified, onStopUnified, onEditResult, onUseInConversation,
+            onUpdateResultEditDraft, onDiscardResultEditDraft,
             savedFileUnavailableReason, onOpenSavedFile,
             onActivateRun, onReview, onWritebackDraft, onPrepareWriteback, onWritebackConfirm, onCommitWriteback,
           })
@@ -217,5 +250,5 @@ export function PanelPages({
     role: 'tabpanel',
     'aria-labelledby': `oasis-tab-${page.pageId}`,
     style: { flex: 1, minHeight: 0, overflow: 'auto', background: 'var(--dsw-alias-bg-subtle, #f5f7f5)' },
-  }, page.generation || page.view === 'chooser' || showFunctionCenter ? null : titleEditor, content)
+  }, page.generation || page.v340 || page.view === 'chooser' || showFunctionCenter ? null : titleEditor, content)
 }

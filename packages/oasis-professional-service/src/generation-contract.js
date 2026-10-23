@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { hasPendingV340Run } from './v340-runtime-contract.js'
 
 export const CLAIMS_TEMPLATE_ID = 'patent-claims'
 export const CLAIMS_SCHEMA_VERSION = '1'
@@ -11,7 +12,7 @@ export const claimsUpstreamReferenceSchema = z.object({
 }).strict()
 
 export function hasPendingUnifiedRun(task) {
-  return Object.values(task?.runs ?? {}).some(run => isUnifiedRun(run)
+  return hasPendingV340Run(task) || Object.values(task?.runs ?? {}).some(run => isUnifiedRun(run)
     && (run.status === 'prepared' || run.mode === 'dsh-local' && run.status === 'unknown'))
 }
 export function isUnifiedRun(run) { return ['unified-fixture', 'dsh-local', 'oasis-api'].includes(run?.mode) }

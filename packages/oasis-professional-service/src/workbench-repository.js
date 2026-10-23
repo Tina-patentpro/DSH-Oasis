@@ -54,6 +54,7 @@ function assertUnresolvedRemoteExecutionsPreserved(current, draft) {
   const retainedTaskIds = new Set(draft.taskOrder)
   for (const taskId of current.taskOrder) {
     const task = current.tasks[taskId]
+    if(task.v340&&!retainedTaskIds.has(taskId))throw new Error('V340 tasks cannot be removed by an older draft; unresolved evidence is preserved')
     const unresolved = hasPendingUnifiedRun(task) || task.remoteExecutionOrder.some((executionId) => (
       isOasisRemoteExecutionUnresolved(task.remoteExecutions[executionId])
     ))
@@ -95,6 +96,7 @@ function mergeEditableDraft(current, draft) {
 
     tasks[taskId] = {
       ...editable,
+      ...(previous.v340 ? {v340:previous.v340} : {}),
       generation: editable.generation ?? null,
       inputRefs: previous.inputRefs,
       runOrder: previous.runOrder,

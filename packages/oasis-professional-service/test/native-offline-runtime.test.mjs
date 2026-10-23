@@ -1,17 +1,22 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { resolve } from 'node:path'
-import { existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { isNativeOfflineEnvironment } from '../src/unified-fixture-environment.js'
 import * as module from '../src/native-offline-runtime.js'
+
+// Only the approved directory identity is required; no Desktop or Profile is loaded.
+// Prepare an empty isolated Home in a clean test tree; missing input must fail, not skip.
+const isolatedHome = process.platform === 'win32'
+  ? String.raw`D:\OneDrive\4、董娣相关\9、绿洲慧写4.0预研\.dsh-test\isolated-dev-20260913\home`
+  : fileURLToPath(new URL('../../../.dsh-test/mac-dev/home', import.meta.url))
 
 test('offline composition requires exact isolated Home and explicit flag', () => {
   assert.equal(isNativeOfflineEnvironment({}), false)
   assert.equal(isNativeOfflineEnvironment({ OASIS_NATIVE_OFFLINE: '1', DSH_HOME: resolve(process.env.USERPROFILE ?? process.env.HOME, '.dsh') }), false)
 })
-test('approved isolated Home admits only the explicit native offline flag', { skip: !existsSync(new URL('../../../.dsh-test/stage2-desktop', import.meta.url)) }, () => {
-  const DSH_HOME = fileURLToPath(new URL('../../../.dsh-test/stage2-desktop', import.meta.url))
+test('approved isolated Home admits only the explicit native offline flag', () => {
+  const DSH_HOME = isolatedHome
   assert.equal(isNativeOfflineEnvironment({ DSH_HOME, OASIS_NATIVE_OFFLINE: '1' }), true)
   assert.equal(isNativeOfflineEnvironment({ DSH_HOME, OASIS_UNIFIED_FIXTURE: '1' }), false)
   assert.equal(isNativeOfflineEnvironment({ DSH_HOME, OASIS_NATIVE_OFFLINE: 'true' }), false)
@@ -20,10 +25,10 @@ test('absent native services do not advertise an enabled local runtime', () => {
   assert.equal(typeof module.createNativeOfflineRuntime, 'function')
   assert.equal(module.createNativeOfflineRuntime({}, {}), null)
 })
-test('isolated Host declares native services before accessing Cordis context', { skip: !existsSync(new URL('../../../.dsh-test/stage2-desktop', import.meta.url)) }, async () => {
+test('isolated Host declares native services before accessing Cordis context', async () => {
   const before = { DSH_HOME: process.env.DSH_HOME, OASIS_NATIVE_OFFLINE: process.env.OASIS_NATIVE_OFFLINE }
   try {
-    process.env.DSH_HOME = fileURLToPath(new URL('../../../.dsh-test/stage2-desktop', import.meta.url))
+    process.env.DSH_HOME = isolatedHome
     process.env.OASIS_NATIVE_OFFLINE = '1'
     const host = await import('../src/index.js?stage4c-native-inject')
     for (const service of ['llm', 'sessions', 'sessionProjections', 'agentDefaultModel']) assert.ok(host.inject.includes(service), service)

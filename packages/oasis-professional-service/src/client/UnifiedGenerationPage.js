@@ -146,5 +146,5 @@ export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus,
               onClick: () => onStopUnified(page.pageId, pending.runId) }, pending.mode === 'dsh-local' ? '停止等待' : '结束未完成合成') : null) : null)),
       createElement('section', { className: 'generation-pane generation-result', 'data-visible': view === 'result' },
         createElement('h3', null, '生成结果'),
-        createElement(UnifiedResultPanel, { page, operation, markdownRenderer, disabled: locked || syncStatus !== 'ready', readOnlyDisabled, ...resultActions }))))
+        createElement(UnifiedResultPanel, { page, operation, markdownRenderer, workspaceId, disabled: locked || syncStatus !== 'ready', readOnlyDisabled, ...resultActions }))))
 }

@@ -1,0 +1,2930 @@
+{
+  "schemaVersion": 1,
+  "businessVersion": "V3.4.0",
+  "sourceSHA256": "a0de1ecd22a74b72c236bc9dc73b71f0e48b2c88fdda0eef35b3b231bd6d10d6",
+  "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+  "checkedAt": "2026-10-23",
+  "dispatchEnabled": false,
+  "realCallVerified": false,
+  "evidence": [
+    {
+      "id": "business",
+      "path": "docs/business-baseline/14节点清单V3.4.0.md",
+      "sha256": "a0de1ecd22a74b72c236bc9dc73b71f0e48b2c88fdda0eef35b3b231bd6d10d6",
+      "checkedAt": "2026-10-23",
+      "evidenceKind": "static-original",
+      "scope": "V3.4.0-business-original"
+    },
+    {
+      "id": "pack",
+      "path": "packages/oasis-professional-service/src/v340-contracts.json",
+      "sha256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+      "checkedAt": "2026-10-23",
+      "evidenceKind": "static-resource",
+      "scope": "V3.4.0-fixed-host-pack"
+    },
+    {
+      "id": "catalog",
+      "path": "packages/oasis-professional-service/src/v340-catalog.js",
+      "sha256": "e8d45a8984b1909b303fce0ef9c2bb879744dd2de56710c8f46cb708435217cb",
+      "checkedAt": "2026-10-23",
+      "evidenceKind": "static-code",
+      "scope": "assembly-order-and-disabled-sources"
+    },
+    {
+      "id": "legacy-manifest",
+      "path": "packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.2/manifest.json",
+      "sha256": "f81d427db60ab671dcd552a24794f68c1a323d2dd1b440510bb26f9bfe23d706",
+      "checkedAt": "2026-10-23",
+      "evidenceKind": "historical-resource",
+      "scope": "legacy-only-not-V3.4.0"
+    },
+    {
+      "id": "legacy-loader",
+      "path": "packages/oasis-professional-service/src/builtin-skill-loader.js",
+      "sha256": "f60f09dc80c54b52f1178ffa117e9493dd20c1414acbbac5b530bb248aa9e94e",
+      "checkedAt": "2026-10-23",
+      "evidenceKind": "static-code",
+      "scope": "legacy-loader-only"
+    },
+    {
+      "id": "api-baseline",
+      "path": "packages/oasis-professional-service/docs/api/oasis-professional-service-baseline.json",
+      "sha256": "01051469cfb66bf829e4fb18ac71a80f7401444ec89b5fbfe1c92b366fa0b6a8",
+      "checkedAt": "2026-10-23",
+      "evidenceKind": "historical-contract",
+      "scope": "legacy-endpoints-only-no-node-binding"
+    },
+    {
+      "id": "api-contract",
+      "path": "packages/oasis-professional-service/src/oasis-api-contract.js",
+      "sha256": "8b56d9374c508304bef84d6f2bf5b7257b633230af5a118532e8e031653f785f",
+      "checkedAt": "2026-10-23",
+      "evidenceKind": "static-code",
+      "scope": "legacy-normalization-not-deployment"
+    },
+    {
+      "id": "workspace-binding",
+      "path": "packages/oasis-professional-service/src/oasis-workspace-binding.js",
+      "sha256": "1c848580a357c6e705fb5746d7898c85459cbba4fc97e9077c1709957ae506bf",
+      "checkedAt": "2026-10-23",
+      "evidenceKind": "static-code",
+      "scope": "binding-requirements-not-actual-account"
+    }
+  ],
+  "legacyReference": {
+    "skillId": "flow-2-6",
+    "skillVersion": "0.2.2",
+    "inputSchemaVersion": "claims-disclosure-2",
+    "outputSchemaVersion": "claims-cumulative-2",
+    "executionContractVersion": "single-call-cumulative-1",
+    "appliesToV340": false,
+    "manifestEvidenceId": "legacy-manifest",
+    "resources": [
+      {
+        "path": "packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.2/SKILL.md",
+        "role": "instruction",
+        "sha256": "f9f26a3d473418e40e7461047877cdcf0f7e7be0f20cf9dd15739930fd1af830"
+      },
+      {
+        "path": "packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.2/references/drafting-rules.md",
+        "role": "reference",
+        "sha256": "cf95acbe249a2419e230348c09ef7a3e2be56c87680ab6adb87816e29048052a"
+      },
+      {
+        "path": "packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.2/references/special-domain-boundary.md",
+        "role": "reference",
+        "sha256": "ee2cccad227a1e2be2694633517f340b63b3fefe88102995f78b53ba06b046b6"
+      },
+      {
+        "path": "packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.2/assets/claims-output-template.md",
+        "role": "output-template",
+        "sha256": "2bb1d0df7a5a6210e3979b69e6c198a88126b9bd8a2d6d93e4e333f0ac55c1de"
+      }
+    ]
+  },
+  "gaps": [
+    "NON_TEXT_EXTRACTION_UNVERIFIED",
+    "CURRENT_DESKTOP_UNVERIFIED"
+  ],
+  "nodes": [
+    {
+      "nodeId": "Flow-1-1",
+      "title": "技术背景研究",
+      "upstreamNodeId": null,
+      "filenamePrefix": "tech_landscape",
+      "inputs": [
+        {
+          "id": "research_request_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "一个研究请求或技术背景文件",
+          "handling": "提取技术对象、场景、目标、现有方式和限制；记录文件名、哈希及可定位来源"
+        },
+        {
+          "id": "research_request_text",
+          "channel": "用户文本",
+          "importance": "expected",
+          "boundary": "一段研究请求或技术背景文本",
+          "handling": "作为独立技术内容验收；与文件并存时用于补充、纠正或缩小范围"
+        },
+        {
+          "id": "research_scope_config",
+          "channel": "配置",
+          "importance": "optional",
+          "boundary": "一个检索地域、语言、时间或深度配置对象",
+          "handling": "缺失时使用项目默认范围并写入文档信息"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-1-1.instruction",
+            "sha256": "ac28bcdc4001225d0ecd418c42d8544f802d1a045eb1e259f4e416d84b5f21c6"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "5f244adea7faa822f1e9f58376ffe5789f80d0f27c0a06ee15949dd757ec2759",
+        "inputSchemaSHA256": "14bd2c44e988b0e11898ccd3f5fa3e626667b8919bb65f31201ac4b9d88a4343",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "research_request_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "research_request_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "research_scope_config",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-1-2",
+      "title": "TRIZ问题分析",
+      "upstreamNodeId": "Flow-1-1",
+      "filenamePrefix": "triz_analysis_report",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-1-1生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "technical_analysis_material_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个补充技术分析、实验或设计文件",
+          "handling": "用于修正问题、根因、约束或候选方向；保留来源定位"
+        },
+        {
+          "id": "technical_analysis_material_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段补充技术分析、实验或设计文本",
+          "handling": "与文件并存时作为补充或纠正，不无提示覆盖上游事实"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-1-2.instruction",
+            "sha256": "1044a87cc711894f1e13e4d2f106ebffe24f80f292a084a48b40b64da15c9db6"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "bca14ed2c6be09cdb03a479dbbdab8040a3d55d1787c498bbdfc8f4901af34f8",
+        "inputSchemaSHA256": "f1edd14cdee9d4f932e56a26f048367ac73d58a9943da92abfc438099a1b5e0b",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "technical_analysis_material_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "technical_analysis_material_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-1-3",
+      "title": "概要专利检索",
+      "upstreamNodeId": "Flow-1-2",
+      "filenamePrefix": "prior_art_set_basic",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-1-2生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "search_target_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个补充检索目标、术语或已知文献文件",
+          "handling": "用于扩展或限定检索；单独记录用户提供文献和工作流检得文献"
+        },
+        {
+          "id": "search_target_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段补充检索目标、术语、排除项或已知文献文本",
+          "handling": "与文件并存时补充或纠正，不覆盖未明确替换的上游候选"
+        },
+        {
+          "id": "max_fetch",
+          "channel": "配置",
+          "importance": "optional",
+          "boundary": "一个正整数候选数量上限",
+          "handling": "缺失时使用项目默认值并记录"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-1-3.instruction",
+            "sha256": "a4bd5bfc9addd89319adbc774715037b9521939ae54bf40eae8f9f1f9711557c"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "0a7b1d2ee98e8632547a7aed845df2fa2a2f4ae40ead009e6cd7906b7e33282d",
+        "inputSchemaSHA256": "7f4916b17ad69c13a94fbdeca17c76ce86b8b5f6297a68838ea796c213dadf80",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "search_target_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "search_target_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "max_fetch",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-1-4",
+      "title": "技术方案筛选",
+      "upstreamNodeId": "Flow-1-3",
+      "filenamePrefix": "list_patent",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-1-3生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "solution_selection_basis_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个选型依据、研发约束或验证结果文件",
+          "handling": "用于调整方案优先级、可实施性和证据状态"
+        },
+        {
+          "id": "solution_selection_basis_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段选型依据、研发约束或验证结果文本",
+          "handling": "作为文件补充或独立修正意见"
+        },
+        {
+          "id": "application_type",
+          "channel": "配置",
+          "importance": "expected",
+          "boundary": "一个值：`invention`、`utility_model`或`undetermined`",
+          "handling": "写入累计快照并下游继承；实用新型仅保留适于产品形状、构造或其结合的技术方案"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-1-4.instruction",
+            "sha256": "2e2027252d1cd5625c2fe47aadb7dd5f4a92669d8ce582445da8144fd4dd0f34"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "0127b92ea445f29232fa0faf4fd172217db8f1aa32b80265f8f6e79926a53c2c",
+        "inputSchemaSHA256": "c4c298cd1e3c16cc4afce95885b1740c35af4e43a19cb72f2318c630c2dd5e6d",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "solution_selection_basis_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "solution_selection_basis_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "application_type",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-1-5",
+      "title": "技术交底书与要素建模",
+      "upstreamNodeId": "Flow-1-4",
+      "filenamePrefix": "disclosure",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-1-4生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "technical_disclosure_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个技术交底或研发说明文件",
+          "handling": "作为用户技术事实来源；逐段定位并与上游方案合并"
+        },
+        {
+          "id": "technical_disclosure_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段技术交底或研发说明文本",
+          "handling": "与文件并存时作为补充、纠正或明确替换内容"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个附图文件或包含一组附图的单一文档",
+          "handling": "提取图号、标记、结构和关系；不从不可辨识图形臆造技术特征"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图说明、图中关系或操作过程文本",
+          "handling": "用于解释附图，不替代实际不存在的技术结构证据"
+        },
+        {
+          "id": "supplemental_data_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个实验、仿真、计算或参数数据文件",
+          "handling": "记录条件、单位、方法和数据范围"
+        },
+        {
+          "id": "supplemental_data_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段补充数据、条件或结果文本",
+          "handling": "与数据文件并存时作为解释或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-1-5.instruction",
+            "sha256": "6e8d7bf3731231dc34c8e8b15fc23e0ec6c88184ea2fdc5cadc310fef09eaa18"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "f1eeca4f538bd9b639b8353c81df141c10bb4166b16667291f42be756ee5faaf",
+        "inputSchemaSHA256": "815b9d207b3eb049d8aab94fa4cb3f22d2e6e9f59d048dbece28ea3a5e8ec53d",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "technical_disclosure_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "technical_disclosure_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "supplemental_data_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "supplemental_data_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-2-6",
+      "title": "权利要求初稿",
+      "upstreamNodeId": "Flow-1-5",
+      "filenamePrefix": "claims",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-1-5生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "disclosure_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个用户修订或替换的技术交底文件",
+          "handling": "按明确指令更新累计交底；无替换指令时作为补充并保留差异"
+        },
+        {
+          "id": "disclosure_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段用户修订或补充的技术交底文本",
+          "handling": "与文件并存时用于补充或纠正"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个用户修订附图文件或单一附图文档",
+          "handling": "用于核对结构、关系、标记和支持"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图关系或修改说明文本",
+          "handling": "用于解释图示和更正图文关系"
+        },
+        {
+          "id": "claim_requirements_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个权利要求范围、层级或表达要求文件",
+          "handling": "不得覆盖技术来源和申请类型限制"
+        },
+        {
+          "id": "claim_requirements_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段权利要求范围、层级或表达要求文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-2-6.instruction",
+            "sha256": "c1a8885cc90f4953a1fa80264cf29675f92b3a93c00b798e547cabf874087954"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "72205d5a7cfb7b1aff85cfdeef75ed82888d38567e9d7e3d3024c47aa1ec9325",
+        "inputSchemaSHA256": "be1572d08ad974f76a3b33859df9c8d2a910b4f0e028c0934d34b7aebcd5d61f",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "disclosure_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "disclosure_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claim_requirements_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claim_requirements_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-2-7",
+      "title": "说明书初稿",
+      "upstreamNodeId": "Flow-2-6",
+      "filenamePrefix": "specification",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-2-6生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个用户修订权利要求书文件",
+          "handling": "作为权利要求内容主体；无明确替换指令时与累计权项保留差异"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段用户修订权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "disclosure_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个技术交底书文件",
+          "handling": "作为交底内容主体并逐项定位来源"
+        },
+        {
+          "id": "disclosure_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段技术交底文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个附图文件或单一附图文档",
+          "handling": "用于附图说明、标记和图文一致性"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图说明或图中技术关系文本",
+          "handling": "用于解释或纠正附图内容"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-2-7.instruction",
+            "sha256": "057c6d4c3e763d1f99dee8cc41c14b330472edfd7e79b02725280d4e503cdfa2"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "bd905588523f59cf844e12aeabaa7779550048bbf64afa06dfaa77dee8cca6fb",
+        "inputSchemaSHA256": "a0dd30f98cb8fcdbda667dd501df41d53188e32aaccbc4807542037f958cfa49",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "disclosure_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "disclosure_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-3-8",
+      "title": "全文深度复检",
+      "upstreamNodeId": "Flow-2-7",
+      "filenamePrefix": "prior_art_set",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-2-7生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前权利要求书文件",
+          "handling": "用于修正累计权项并保留版本差异"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "specification_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前说明书文件",
+          "handling": "用于修正累计说明书并保留来源"
+        },
+        {
+          "id": "specification_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前说明书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "search_material_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个检索报告、文献清单或检索说明文件",
+          "handling": "补充检索策略和候选范围"
+        },
+        {
+          "id": "search_material_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段检索报告、文献清单或检索说明文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_1_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第1份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_1_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第1份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_1_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_2_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第2份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_2_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第2份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_2_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_3_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第3份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_3_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第3份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_3_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_4_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第4份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_4_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第4份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_4_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_5_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第5份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_5_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第5份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_5_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-3-8.instruction",
+            "sha256": "395daf74baad03eb136842e61b3d917d73f244c5b4e070838341192e54ba02ee"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "6aab017dca665e664299094675b645ced37947256df1f8cfdf928c4db3ed4f96",
+        "inputSchemaSHA256": "b6d9fb1ddecbf616811e6ba644b527599df495f2c6ef3c86e5e3a3ebd3f9479a",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "specification_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "specification_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "search_material_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "search_material_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_1_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_1_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_2_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_2_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_3_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_3_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_4_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_4_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_5_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_5_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-3-9",
+      "title": "专利撰写计划",
+      "upstreamNodeId": "Flow-3-8",
+      "filenamePrefix": "patent_plan",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-3-8生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前权利要求书文件",
+          "handling": "用于计划基线更新并记录差异"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "specification_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前说明书文件",
+          "handling": "用于支持性和实施方式计划"
+        },
+        {
+          "id": "specification_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前说明书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_1_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第1份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_1_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第1份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_1_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_2_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第2份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_2_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第2份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_2_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_3_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第3份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_3_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第3份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_3_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_4_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第4份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_4_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第4份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_4_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_5_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第5份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_5_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第5份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_5_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "strategy_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个保护范围、研发重点或论证策略文件",
+          "handling": "作为人工策略输入，不改变技术事实来源"
+        },
+        {
+          "id": "strategy_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段保护范围、研发重点或论证策略文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-3-9.instruction",
+            "sha256": "987d8147fe881b7210c7ed84de06062f178ba87b9a9210b4928bb13964dc423f"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "86356d423bbf2af4e4dbfc4b8cb2a4ac776c4441999300e1444f3225c5151203",
+        "inputSchemaSHA256": "d100ee387c3358b87c104ecbe9b039a2350b61dfdc7b70fc5d669e90de2c4b02",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "specification_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "specification_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_1_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_1_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_2_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_2_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_3_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_3_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_4_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_4_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_5_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_5_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "strategy_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "strategy_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-3-10",
+      "title": "技术内容沟通确认",
+      "upstreamNodeId": "Flow-3-9",
+      "filenamePrefix": "decision_notes",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-3-9生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "technical_feedback_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "一个技术反馈或确认文件",
+          "handling": "逐项映射问题、特征、关系、机理、效果和范围；未覆盖项保持待确认"
+        },
+        {
+          "id": "technical_feedback_text",
+          "channel": "用户文本",
+          "importance": "expected",
+          "boundary": "一段技术反馈或确认文本",
+          "handling": "与文件并存时作为补充、纠正或明确确认"
+        },
+        {
+          "id": "supplemental_data_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个实验、仿真、计算或参数补充文件",
+          "handling": "记录条件、方法、单位和与技术效果的对应"
+        },
+        {
+          "id": "supplemental_data_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段补充数据、条件或结果文本",
+          "handling": "与文件并存时作为解释或纠正"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个补充或修订附图文件",
+          "handling": "用于确认结构、关系、标记和实施方式"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图说明或图中关系确认文本",
+          "handling": "用于解释或纠正附图"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-3-10.instruction",
+            "sha256": "42e8ea440f4e1bb1cad32643ec2eead47ec3938c8ffd286cd09c4f3671f46184"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "75b735e15f22ce0a64b669f5c96e805eed0d3654498439bf8ae08d04807e2eb4",
+        "inputSchemaSHA256": "9c28261ce156c87845de913ab6dfafdf3b3e56232b77d5b408b9de1dc257c6c2",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "technical_feedback_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "technical_feedback_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "supplemental_data_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "supplemental_data_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-4-11",
+      "title": "权利要求正式稿",
+      "upstreamNodeId": "Flow-3-10",
+      "filenamePrefix": "claims_final",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-3-10生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个用户修订权利要求书文件",
+          "handling": "作为当前权项内容补充或明确替换版本"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段用户修订权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "specification_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前说明书文件",
+          "handling": "用于支持性和术语核对"
+        },
+        {
+          "id": "specification_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前说明书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "confirmation_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个技术确认或范围确认文件",
+          "handling": "更新确认矩阵并保留来源"
+        },
+        {
+          "id": "confirmation_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段技术确认或范围确认文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-4-11.instruction",
+            "sha256": "11289f13235fca61e65674dc73b32307e5dd27dbee7b5b862b7c8278ab46504b"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "6e55f23fcdd91ed9e1e6be7a6986568507a349e230df63b0d40babb004f6d224",
+        "inputSchemaSHA256": "b407ca92b8df30bbbee8127a02609f2dc1b1e5d2926a71d60f80afd43785517e",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "specification_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "specification_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "confirmation_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "confirmation_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-4-12",
+      "title": "说明书正式稿",
+      "upstreamNodeId": "Flow-4-11",
+      "filenamePrefix": "spec_final",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-4-11生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前正式权利要求书文件",
+          "handling": "用于更新累计权项并核对支持"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前正式权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "specification_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个用户修订说明书文件",
+          "handling": "作为说明书内容主体补充或明确替换版本"
+        },
+        {
+          "id": "specification_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段用户修订说明书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "disclosure_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个技术交底书文件",
+          "handling": "用于事实、实施方式和来源核对"
+        },
+        {
+          "id": "disclosure_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段技术交底文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个附图文件或单一附图文档",
+          "handling": "用于图号、标记、附图说明和支持"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图说明或图中关系文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "supplemental_data_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个实验、仿真、计算或参数数据文件",
+          "handling": "用于效果、条件和实施证据"
+        },
+        {
+          "id": "supplemental_data_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段补充数据、条件或结果文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-4-12.instruction",
+            "sha256": "3eba586f79581ca8e673b2180f6f83c0f8fccaa10afa74bd1588c6d5d409aec4"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "82bc2778221b04f25b75e35d323903c5019cb5e5619984ccd6de1a1498c68efe",
+        "inputSchemaSHA256": "29a136e8e4f6dbb897ec0f239d99176728e7724c6bda7909532564b4beb67cc5",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "specification_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "specification_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "disclosure_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "disclosure_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "supplemental_data_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "supplemental_data_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-5-13",
+      "title": "申请文件终检",
+      "upstreamNodeId": "Flow-4-12",
+      "filenamePrefix": "patent_report",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-4-12生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个待终检权利要求书文件",
+          "handling": "作为当前权项版本补充或明确替换内容"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段待终检权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "specification_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个待终检说明书和摘要文件",
+          "handling": "作为当前说明书版本补充或明确替换内容"
+        },
+        {
+          "id": "specification_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段待终检说明书或摘要文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个待终检附图文件或单一附图文档",
+          "handling": "用于图文一致性和实施支持检查"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图说明或图中关系文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "check_requirements_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个终检重点、风险偏好或专业检查要求文件",
+          "handling": "不缩减默认完整实体检查范围，除非`user_input`明确限定"
+        },
+        {
+          "id": "check_requirements_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段终检重点、风险偏好或专业检查要求文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-5-13.instruction",
+            "sha256": "d58267366d0fd923d8bb0e57b4da94ec9545be53eccee19749d5f44b858584f5"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "eca18b55058474e04eae1b4cd7cc40a21002c1cd8fe39deb1b776fe53f9849b9",
+        "inputSchemaSHA256": "a092668bfe9938b48fff6fd8cb77b5da4aad07fc0d135e3a46e7294efbbeaafd",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "claims_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "specification_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "specification_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "drawings_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "check_requirements_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "check_requirements_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    },
+    {
+      "nodeId": "Flow-6-14",
+      "title": "审查意见答复",
+      "upstreamNodeId": "Flow-5-13",
+      "filenamePrefix": "response_draft",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-5-13生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "oa_notice_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "一个审查意见通知书及其合并附件文件",
+          "handling": "拆分审查理由、涉及权项和引用文献；记录版本与页码"
+        },
+        {
+          "id": "oa_notice_text",
+          "channel": "用户文本",
+          "importance": "expected",
+          "boundary": "一段审查意见通知书技术内容文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "original_application_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "一个包含原始权利要求书、说明书、摘要和附图的单一申请文件包",
+          "handling": "作为修改依据和原始公开范围的最高优先级来源"
+        },
+        {
+          "id": "original_application_text",
+          "channel": "用户文本",
+          "importance": "expected",
+          "boundary": "一段原始申请文件技术内容文本",
+          "handling": "与文件并存时作为补充；不能证明的原始依据保持待核验"
+        },
+        {
+          "id": "current_application_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "一个包含当前有效权利要求书和说明书的单一文件包",
+          "handling": "与原始提交版本明确区分，用于确定当前答复对象"
+        },
+        {
+          "id": "current_application_text",
+          "channel": "用户文本",
+          "importance": "expected",
+          "boundary": "一段当前有效申请文件技术内容文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_1_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "第1份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_1_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第1份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_1_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_2_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "第2份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_2_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第2份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_2_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_3_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "第3份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_3_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第3份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_3_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_4_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "第4份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_4_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第4份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_4_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_5_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "第5份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_5_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第5份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_5_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "response_requirements_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个答复技术重点、范围底线或方案偏好文件",
+          "handling": "作为策略输入，不改变原申请依据边界"
+        },
+        {
+          "id": "response_requirements_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段答复技术重点、范围底线或方案偏好文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "local": {
+        "sourceId": "local-skill",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "STATIC_ONLY",
+        "resources": [
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "common",
+            "sha256": "b3482ac8d8a37683e84d0fd349cd34c9ac9f7b38cd83fad7409ec60aff8b2846"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "nodes.Flow-6-14.instruction",
+            "sha256": "7819f8bd2036e8c66dc67a209fd12b127beae1f3321993321f50f8f4255627b7"
+          },
+          {
+            "path": "packages/oasis-professional-service/src/v340-contracts.json",
+            "selector": "tables",
+            "sha256": "d494b2bd61e799ffcac7972edda7373088da6552362726479ecc3b3c671a328d"
+          }
+        ],
+        "assembledSHA256": "3b842056e2b9afa06c497f77bd60d3fb39867e174f383de994895a5a11322a98",
+        "inputSchemaSHA256": "983e011543f5814a7ded229fcac0fb7c6ca77c95ba3f03d76d5b4f723475c311",
+        "resultContract": "host-cumulative-markdown-T1-T6-provenance",
+        "evidenceIds": [
+          "business",
+          "pack",
+          "catalog"
+        ],
+        "gaps": [
+          "LOCAL_ADAPTER_UNWIRED",
+          "LOCAL_REAL_CALL_UNVERIFIED"
+        ]
+      },
+      "api": {
+        "sourceId": "oasis-api",
+        "enabled": false,
+        "realCallVerified": false,
+        "status": "BLOCKED",
+        "serviceId": null,
+        "method": null,
+        "path": null,
+        "inputMapping": [
+          {
+            "inputId": "upstream_md_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "oa_notice_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "oa_notice_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "original_application_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "original_application_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "current_application_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "current_application_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_1_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_1_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_2_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_2_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_3_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_3_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_4_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_4_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_5_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "comparison_doc_5_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "response_requirements_file",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "response_requirements_text",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          },
+          {
+            "inputId": "user_input",
+            "apiField": null,
+            "required": null,
+            "transform": null
+          }
+        ],
+        "resultMapping": {
+          "resultType": null,
+          "bodyField": null,
+          "urlField": null,
+          "bodyDelivered": false
+        },
+        "schemaSHA256": null,
+        "projectAccountEvidence": null,
+        "evidenceIds": [
+          "api-baseline",
+          "api-contract",
+          "workspace-binding"
+        ],
+        "gaps": [
+          "API_SERVICE_COORDINATES_MISSING",
+          "API_SCHEMA_MISSING",
+          "API_INPUT_MAPPING_UNVERIFIED",
+          "API_RESULT_BODY_UNVERIFIED",
+          "API_PROJECT_ACCOUNT_BINDING_MISSING",
+          "API_REAL_CALL_UNVERIFIED"
+        ]
+      }
+    }
+  ]
+}

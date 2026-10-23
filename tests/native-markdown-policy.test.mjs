@@ -2,18 +2,32 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { registerHooks, createRequire } from 'node:module'
-import { resolve } from 'node:path'
-import { pathToFileURL } from 'node:url'
+import { pathToFileURL, fileURLToPath } from 'node:url'
+import { realpathSync } from 'node:fs'
+import { sep } from 'node:path'
+import { readMacComponentInput, nativeMarkdownTestPackage } from './helpers/mac-component-inputs.mjs'
 
-const app = resolve('.dsh-test/stage3-desktop-app/resources/app.asar.unpacked')
-const require = createRequire(pathToFileURL(`${app}/package.json`))
-registerHooks({ load(url, context, nextLoad) {
+const component = readMacComponentInput('native')
+const runtime = nativeMarkdownTestPackage()
+const require = createRequire(runtime.packageFile)
+const componentPrefix = pathToFileURL(component.packageRoot + sep).href
+registerHooks({ resolve(specifier, context, nextResolve) {
+  if (context.parentURL?.startsWith(componentPrefix) && !specifier.startsWith('.') && !specifier.startsWith('node:')) {
+    const resolved = nextResolve(specifier, { ...context, parentURL: pathToFileURL(runtime.packageFile).href })
+    const file = realpathSync(fileURLToPath(resolved.url))
+    assert.ok(file.startsWith(runtime.source + sep), 'Native test dependency escaped its frozen fixture')
+    return resolved
+  }
+  return nextResolve(specifier, context)
+}, load(url, context, nextLoad) {
   if (url.endsWith('.css')) return { format: 'module', source: 'export default {}', shortCircuit: true }
   return nextLoad(url, context)
 } })
 const { createElement } = await import(pathToFileURL(require.resolve('react')))
 const { renderToStaticMarkup } = await import(pathToFileURL(require.resolve('react-dom/server')))
-const { MarkdownText } = await import(pathToFileURL(require.resolve('@deepseek-ai/dsh-client-ui-primitives')))
+assert.equal(require('react/package.json').version, '18.3.1')
+assert.equal(require('react-dom/package.json').version, '18.3.1')
+const { MarkdownText } = await import(pathToFileURL(component.file))
 const labels = { code: { copyLabel: 'Copy', copiedLabel: 'Copied' }, footnotes: 'Notes' }
 const render = (text, props = {}) => renderToStaticMarkup(createElement(MarkdownText, { text, labels, ...props }))
 

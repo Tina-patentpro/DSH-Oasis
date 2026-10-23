@@ -1,6 +1,7 @@
 import { importCommands, importResponses, IMPORT_PROTOCOL_VERSION } from '../website-import-contract.js'
 import {
   savedFileResponseSchema,
+  v340ConversationDraftResponseSchema,v340SavedFileResponseSchema,
   localGenerationPreviewSchema,
   conversationDraftResponseSchema,
   oasisProfessionalBootstrapSchema,
@@ -16,6 +17,7 @@ import {
 } from '../workbench-contract.js'
 import { claimsApiPreparationSchema, claimsApiPreviewSchema, workspaceBindingReadSchema, workspaceBindingSavedSchema } from '../claims-api-execution-contract.js'
 import { accountStatusSchema } from '../oasis-account-contract.js'
+import {v340Commands,v340CatalogResponseSchema} from '../v340-runtime-contract.js'
 
 const CHANNEL = '/oasis-workbench'
 
@@ -60,6 +62,20 @@ export function createWorkbenchRemote(connection) {
   }
 
   return Object.freeze({
+    async getV340Catalog(signal){return unwrap(await call(CHANNEL,'workflow/v340/catalog',{},signal),v340CatalogResponseSchema)},
+    async v340(action,payload,signal,expectedWorkspaceId){
+      if(!Object.hasOwn(v340Commands,action)||action==='run/create')throw new WorkbenchRemoteError('V340_OPERATION_DISABLED','新版操作不可用')
+      const input=v340Commands[action].parse(payload)
+      const workspaceId=input.workspaceId??expectedWorkspaceId
+      if(!workspaceId)throw new WorkbenchRemoteError('V340_INVALID_INPUT','缺少当前项目身份')
+      const readSchema=action==='result/conversation-draft'?v340ConversationDraftResponseSchema:action==='result/saved-file'?v340SavedFileResponseSchema:null
+      const schema=readSchema??(action==='result/prepare-save'?writebackPrepareResponseSchema:workbenchReplaceResponseSchema)
+      const result=unwrap(await call(CHANNEL,`workflow/v340/${action}`,input,signal),schema)
+      if(result.current&&result.current.workspaceId!==workspaceId||result.manifest&&result.manifest.workspaceId!==workspaceId)throw new WorkbenchRemoteError('malformed-response','新版项目身份不一致',{})
+      if(readSchema&&(['workspaceId','taskId','runId','versionId','resultSha256','expectedRevision',...(action==='result/saved-file'?['writebackId']:[])].some(k=>result[k]!==input[k])
+        ||result.artifactId!==`sha256:${input.resultSha256}`))throw new WorkbenchRemoteError('malformed-response','新版固定版本身份不一致',{})
+      return result
+    },
     async websiteImport(action, payload) {
       if (!Object.hasOwn(importCommands, action)) throw new WorkbenchRemoteError('IMPORT_INVALID_INPUT', '导入动作无效')
       const input = importCommands[action].parse(payload)

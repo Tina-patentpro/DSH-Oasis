@@ -110,6 +110,27 @@ test('malformed, excessive and non-success streams do not publish partial text',
   }
 })
 
+test('local validation before a valid terminal retains uncertainty, while terminal format failures are known', async () => {
+  const cases = [
+    { chunks: [text('x'.repeat(100001)), finish()], status: 'unknown' },
+    { chunks: [{ type: 'tool-call-delta', index: 0 }, finish()], status: 'unknown' },
+    { chunks: [{ ...text('partial'), index: -1 }, finish()], status: 'unknown' },
+    { chunks: [...Array.from({ length: 1025 }, (_, index) => ({ type: 'reasoning-delta', index, text: 'r' })), finish()], status: 'unknown' },
+    { chunks: [text('partial'), finish('invented')], status: 'unknown' },
+    { chunks: [text(' '), finish()], status: 'failed' },
+    { chunks: [text('partial'), finish('max-tokens')], status: 'failed' },
+    { chunks: [text('partial'), finish('tool-calls')], status: 'failed' },
+    { chunks: [text('partial'), finish(), text('late')], status: 'failed' },
+  ]
+  for (const { chunks, status } of cases) {
+    const { adapter } = harness({ chunks })
+    const result = await adapter.generate(input())
+    assert.equal(result.status, status)
+    assert.equal(result.code, 'INVALID_OUTPUT')
+    assert.equal(result.body, undefined)
+  }
+})
+
 test('reasoning and replay metadata never enter the assembler or returned object', async () => {
   class TextOnlyAssembler extends TestAssembler {
     push(chunk) {
@@ -171,6 +192,19 @@ test('error codes are allowlisted for throws and finish chunks, including hostil
       assert.equal(seen.prepares.length, 1)
     }
   }
+})
+
+test('a provider error that changes prototype inspection cannot escape the safe result boundary', async () => {
+  let probes = 0
+  const hostile = new Proxy({ code: 'AUTH' }, { getPrototypeOf() {
+    if (++probes > 1) throw Error(CANARY)
+    return Object.prototype
+  } })
+  const { adapter } = harness({ stream: () => ({ [Symbol.asyncIterator]() { return this }, next() { throw hostile } }) })
+  const result = await adapter.generate(input())
+  assert.equal(result.status, 'failed')
+  assert.equal(result.code, 'MODEL_UNAVAILABLE')
+  assert.doesNotMatch(JSON.stringify(result), /PUBLIC_TEST_INSTRUCTION/)
 })
 
 test('pre-cancel starts nothing; cancel during stalled prepare returns unknown and cleans listeners', async () => {

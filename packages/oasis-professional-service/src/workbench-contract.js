@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { claimsApiSnapshotSchema } from './claims-api-execution-contract.js'
 import { localExecutionSummarySchema } from './local-run-summary.js'
+import { v340TaskStateSchema, V340_LIMITS, V340_NODE_IDS } from './v340-runtime-contract.js'
 
 import { normalizeOasisOrigin, normalizeOasisFileUrl } from './oasis-origin-policy.js'
 import { CLAIMS_TEMPLATE_ID, claimsDraftValuesSchema, claimsV2DraftValuesSchema, claimsInputVersion, claimsUpstreamSnapshotSchema, generationDraftSchema, generationSourceSchema, hasPendingUnifiedRun, isUnifiedRun } from './generation-contract.js'
@@ -697,6 +698,11 @@ export const savedFileResponseSchema = z.object({
   absolutePath: writebackAbsolutePathSchema, kind: z.literal('current-file'),
 }).strict()
 
+const v340SelectionResponse={versionId:identifierSchema,resultSha256:sha256Schema,expectedRevision:z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER)}
+export const v340ConversationDraftResponseSchema=conversationDraftResponseSchema.extend(v340SelectionResponse).strict()
+export const v340SavedFileResponseSchema=savedFileResponseSchema.extend({...v340SelectionResponse,matchesReviewed:z.boolean(),currentSha256:sha256Schema}).strict()
+  .refine(v=>v.matchesReviewed===(v.currentSha256===v.resultSha256),'Current file review status mismatch')
+
 export const professionalDraftSchema = z.object({
   selectedApiEndpoint: identifierSchema,
   selectedApiId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
@@ -920,17 +926,28 @@ export const workbenchEditableTaskSchema = workbenchEditableTaskV3Schema.extend(
 }).superRefine(enforceGenerationDraft)
 
 export const workbenchTaskSchema = workbenchTaskV3Schema.safeExtend({
+  v340: v340TaskStateSchema.optional(),
   generation: generationDraftSchema.nullable(),
   runs: z.record(identifierSchema, z.discriminatedUnion('mode', [localRunSnapshotSchema, oasisRemoteRunSnapshotSchema, unifiedRunSnapshotSchema, dshLocalRunSnapshotSchema, oasisApiRunSnapshotSchema])),
-}).superRefine(enforceGenerationDraft)
+}).superRefine(enforceGenerationDraft).superRefine((task,ctx)=>{
+  if(task.v340 ? task.workflowId!==task.v340.nodeId||task.workflowVersion!=='V3.4.0'||task.workType!=='cn-invention-patent'
+    ||task.generation!==null||task.professionalDraft!==null||task.activeRunId!==null||task.runOrder.length||task.inputRefs.length
+    ||task.remoteExecutionOrder.length||Object.keys(task.formValues).length : V340_NODE_IDS.includes(task.workflowId)&&task.workflowVersion==='V3.4.0')ctx.addIssue({code:'custom',message:'V340 task identity/evidence mismatch'})
+})
 
 const panelModeSchema = z.enum(['hidden', 'normal', 'expanded'])
 
 function enforceWorkspaceInvariants(value, ctx) {
+  const v340RunIds=new Set(),v340RequestKeys=new Set()
+  for(const task of Object.values(value.tasks))for(const run of Object.values(task.v340?.runs??{})){
+    if(v340RunIds.has(run.runId)||v340RequestKeys.has(run.requestKey))ctx.addIssue({code:'custom',message:'V340 Workspace run/request identity collision'})
+    v340RunIds.add(run.runId);v340RequestKeys.add(run.requestKey)
+  }
   const activeTasks = Object.values(value.tasks).filter(task => hasPendingUnifiedRun(task)
     || Object.values(task.remoteExecutions ?? {}).some(isOasisRemoteExecutionUnresolved))
-  const pendingUnified = Object.values(value.tasks).flatMap(task => Object.values(task.runs ?? {}))
-    .filter(run => hasPendingUnifiedRun({ runs: { run } })).length
+  const pendingUnified = Object.values(value.tasks).reduce((count,task)=>count+
+    Object.values(task.runs??{}).filter(run=>hasPendingUnifiedRun({runs:{run}})).length+
+    Object.values(task.v340?.runs??{}).filter(run=>['prepared','unknown'].includes(run.status)).length,0)
   if (pendingUnified > 1 || (pendingUnified && activeTasks.length > 1)) {
     ctx.addIssue({ code: 'custom', path: ['tasks'], message: 'Workspace already has an active generation' })
   }
@@ -964,7 +981,11 @@ function enforceWorkspaceInvariants(value, ctx) {
   if (Object.keys(value.tasks).length > WORKBENCH_LIMITS.maxTasksPerWorkspace) {
     ctx.addIssue({ code: 'custom', path: ['tasks'], message: `workspace tasks must not exceed ${WORKBENCH_LIMITS.maxTasksPerWorkspace}` })
   }
-  if (utf8Bytes(JSON.stringify(value)) > WORKBENCH_LIMITS.maxDraftBytes) {
+  const legacyValue={...value,tasks:Object.fromEntries(Object.entries(value.tasks).map(([id,task])=>{
+    const {v340,...legacy}=task;return [id,legacy]
+  }))}
+  if (utf8Bytes(JSON.stringify(legacyValue)) > WORKBENCH_LIMITS.maxDraftBytes
+    ||utf8Bytes(JSON.stringify(value)) > V340_LIMITS.recordBytes) {
     ctx.addIssue({ code: 'custom', message: `workspace data must not exceed ${WORKBENCH_LIMITS.maxDraftBytes} UTF-8 bytes` })
   }
 }

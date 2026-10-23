@@ -71,6 +71,56 @@ async function settled(h) {
   return run
 }
 
+for (const mode of ['before-first-packet', 'after-partial-text', 'truncated-without-finish', 'local-text-limit']) {
+  test(`native ${mode} transport uncertainty keeps the durable lock after reopen`, async t => {
+    const native = await nativeHarness(t, { stream: async function* () {
+      if (mode === 'local-text-limit') {
+        yield text('x'.repeat(100001))
+        assert.fail('Local rejection must not consume a later provider terminal')
+      }
+      if (mode !== 'before-first-packet') yield text('DISCONNECT_PARTIAL_CANARY')
+      if (mode !== 'truncated-without-finish') throw Object.assign(new Error('PUBLIC_CONNECTION_DETAIL'), { code: 'ECONNRESET' })
+    } })
+    const h = await serviceHarness(t, native)
+    const admitted = await h.admit()
+    const run = await settled(h)
+    assert.equal(run.status, 'unknown')
+    assert.equal(run.result, null)
+    if (mode === 'local-text-limit') {
+      assert.equal(run.failureCode, 'INVALID_OUTPUT')
+      assert.equal(run.executionSummary.finishKind, undefined)
+    }
+    assert.doesNotMatch(JSON.stringify(run), /DISCONNECT_PARTIAL_CANARY|PUBLIC_CONNECTION_DETAIL/)
+    const stored = JSON.parse(JSON.stringify(h.state()))
+    const repository = await openOasisWorkbenchRepository({ async open() { return {
+      table: () => ({ get: id => id === 'workspace-a' ? stored : undefined,
+        put: () => assert.fail('No mutation after reopened uncertainty') }), close: async () => {},
+    } } })
+    t.after(() => repository.close())
+    const restarted = createLocalGenerationService({ repository, runtime: h.runtime,
+      clock: () => new Date().toISOString(), runIdFactory: () => assert.fail('No second run') })
+    t.after(() => restarted.closeLocalGeneration())
+    await restarted.observeLocalRun({ workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-1' })
+    await restarted.createLocalRun({ ...admitted, expectedRevision: stored.revision })
+    const preview = await restarted.prepareLocalRun({ ...admitted, expectedRevision: stored.revision })
+    await assert.rejects(restarted.createLocalRun({ ...admitted, expectedRevision: stored.revision,
+      requestKey: 'second-after-disconnect', confirmation: { confirmed: true, sha256: preview.sha256 } }),
+    { code: 'WORKSPACE_GENERATION_ACTIVE' })
+    assert.deepEqual(native.calls, { prepare: 1, stream: 1 })
+    assert.deepEqual(repository.get('workspace-a'), stored)
+  })
+}
+
+for (const code of ['AUTH', 'QUOTA_EXCEEDED']) {
+  test(`native explicit ${code} rejection stays a known failure`, async t => {
+    const native = await nativeHarness(t, { stream: async function* () { throw new LlmError('PUBLIC_REJECTION', code) } })
+    const result = await native.adapter.generate(request())
+    assert.equal(result.status, 'failed')
+    assert.equal(result.code, code === 'AUTH' ? 'MODEL_UNAVAILABLE' : 'MODEL_LIMITED')
+    assert.equal(result.body, undefined)
+  })
+}
+
 // These catch the ordinary-failure mapping that would incorrectly unlock an unresolved native call.
 for (const stage of ['preparation', 'stream']) {
   test(`native TIMEOUT during ${stage} remains unknown with no partial body or replay`, async t => {

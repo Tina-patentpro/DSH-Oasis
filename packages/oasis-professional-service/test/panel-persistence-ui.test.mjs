@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
+import { createElement } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 
 import { PanelChrome } from '../src/client/PanelChrome.js'
 import { PanelPages } from '../src/client/PanelPages.js'
@@ -45,25 +47,25 @@ function baseState(overrides = {}) {
 }
 
 test('renders loading, conflict, and transport failure as distinct accessible states', () => {
-  const loading = PanelPages({ state: baseState({ syncStatus: 'loading' }) })
-  assert.match(textOf(loading), /正在读取当前项目/)
-  assert.equal(loading.props.role, 'status')
+  const loading = renderToStaticMarkup(createElement(PanelPages, { state: baseState({ syncStatus: 'loading' }) }))
+  assert.match(loading, /正在读取当前项目/)
+  assert.match(loading, /role="status"/)
 
-  const conflict = PanelPages({
+  const conflict = renderToStaticMarkup(createElement(PanelPages, {
     state: baseState({ syncStatus: 'conflict', conflictCurrent: { revision: 4 } }),
     onReload: () => {},
-  })
-  assert.match(textOf(conflict), /版本冲突/)
-  assert.match(textOf(conflict), /revision 4/)
-  assert.equal(conflict.props.role, 'alert')
+  }))
+  assert.match(conflict, /版本冲突/)
+  assert.match(conflict, /revision 4/)
+  assert.match(conflict, /role="alert"/)
 
-  const failed = PanelPages({
+  const failed = renderToStaticMarkup(createElement(PanelPages, {
     state: baseState({ syncStatus: 'error', syncError: 'connection lost' }),
     onReload: () => {},
-  })
-  assert.match(textOf(failed), /保存或读取失败/)
-  assert.doesNotMatch(textOf(failed), /connection lost/)
-  assert.equal(failed.props.role, 'alert')
+  }))
+  assert.match(failed, /保存或读取失败/)
+  assert.doesNotMatch(failed, /connection lost/)
+  assert.match(failed, /role="alert"/)
 })
 
 test('exposes task rename and explicit close controls while preserving saving feedback', () => {

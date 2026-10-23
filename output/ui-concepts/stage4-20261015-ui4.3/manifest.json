@@ -1,0 +1,1034 @@
+{
+  "version": "UI-4.3",
+  "date": "2026-10-15",
+  "kind": "static-design-only",
+  "multiEndRequirement": "pending-user-clarification",
+  "masterBrief": "Create a realistic production-quality Chinese desktop product UI sample. This is one screen in a coherent Oasis / DSH UI-4.3 design, NOT multiple design variants, NOT a feature inventory. Match the provided images for restrained light white surfaces, forest green #13745e accent, charcoal Chinese PingFang typography, fine neutral separators, modest 6px radius, readable 14–16px text at natural UI scale, no gratuitous shadows/cards. Date anchor 2026-10-15. All text/data synthetic. Prefer spacing and dividers.\nCRITICAL NEW USER REQUIREMENTS override anything in reference images: Native top card-tab strip must read left to right 功能中心, 绿洲专业工作台, and any open 文档管理/浏览器/侧边对话. 功能中心 is permanently leftmost and default open, a peer independent native card, not a workspace dropdown. Product name appears ONCE only inside its top native tab. No duplicated product header, logo, date, project status header, settings button, settings cog, or old function-center toolbar.\nInside workbench a single compact row: 权利要求书生成 at left, 本地 / 专业 segmented source, 输入 / 结果 segmented views on narrow screens. Second compact row: 编辑 Markdown / 文本预览 segmented control, DeepSeek Flash model dropdown, green 生成 button all on ONE line. Use short source labels 本地 / 专业. Materials tabs 技术交底, 附图说明, 撰写要求, 用户指令, and optional compact 上游历史文稿 row (never 上游累计文稿). No 核对模型与材料 panel or button; no 本次上传与费用确认 panel; no review status/badge/button or confirmation; no 准备对话草稿 or 对话草稿 controls. No 查看原运行 banner. No full width bottom placeholder navigation. Floating circular up and down arrow icons overlay the lower right of the scrollable text.\nResults: direct editable output with caret and quiet autosave state 已保存; no 编辑 button. Bottom concise actions 保存, 对话, 修订, 去 AI 味. Versions as distinct small tab-cards (e.g. 初始版本, 修订版, 去 AI 味版, 对话修改版) with timestamp, same-level alternatives, no dropdown-only history, no overwrite. Conversation uses DSH native sidechat peer card with Save then return. All inputs/outputs/chat persist continuously, no standalone draft step. No fabricated remote sync or device syncing claims. Do not include any unwanted controls inherited from references.\nRender screen edge-to-edge as actual desktop app content, no device bezel, no surrounding webpage, no poster labels/annotations. One focused scene. High fidelity, readable Chinese, purposeful spacing, nothing clipped. Icon-only affordances use conventional minimal line icons.\n2026-10-16 scoped override: FunctionCenter has separate left DSH native menu and right Oasis menu, with full-height vertical divider; supersedes the mixed utility grid. See scopedRevisions.\n2026-10-17 source-based override: shared search and mutually exclusive 独立会话历史 / 项目管理 tabs in right Oasis column. Standalone has no project association. Project view supports active/archived filter and project card containing sessions and child-project summary, not unproven recursive navigation. 01/21 supersede older history structures.\n2026-10-17 latest new-session override: clicking New Session immediately opens a new workbench card. All four category menus, workflow selection and project assignment live in that workbench, never in Function Center. 确认 enters selected work in the SAME card; it does not generate. Categories: 技术研发 F-1-1..F-1-5, 专利撰写 F-2-6..F-4-12, 附图生成 three new drawing functions without fabricated F IDs, 辅助功能 F-5-13/F-6-14. This supersedes older new-session location and category examples.\nLatest label override 2026-10-17: replace UI source label 本地 with lowercase skill. While skill selected display DSH native model selector in editor/model/generate row. Model names/options/current choice/availability follow DSH, no independent Oasis model list. 25-confirmed-work-revision-2.png is the latest formal-page sample; other old images retain historical wording.\nLatest annotation override 2026-10-17: formal wide workbench has ONE toolbar with function/node, skill/professional, DSH model selector, project, Generate. Remove edit-Markdown/text-preview and input/result segmented switches entirely; remove second row and shift two-column content up. Latest 25-confirmed-work-revision-3.png supersedes previous toolbar descriptions.\nLatest narrow override 2026-10-17: same controls as latest wide, wrapped into two compact rows (function/source/generate, model/project). Input and result vertically stacked and simultaneously visible, no Markdown-preview or input-result switches. Result retains version cards/direct edit/floating arrows/anchored actions. Current03/05 replace obsolete narrow layouts.\nLatest naming override2026-10-17: result action 修订 is now 智能完善; its version label 修订版 is 智能完善版. Meaning remains reflecting on and improving selected output as a parallel new version. Current05 narrow sample updated; older images retain historical wording.\nLatest professional-running override2026-10-17: use service/type in professional mode, source skill/专业 locked with专业selected. Wide one toolbar/two columns; narrow two header rows/vertical panels. Sync compact indeterminate activity and elapsed wait for complete response, no unproven streamed body or percentage. Async submitted/processing/get-result steps, task ID and elapsed wait, return later. Separate selected生成中version and retained priorversions; disable actions on incomplete version. 智能完善 replaces修订. Async remains design-only, not connected.\nLatest user annotation2026-10-18: remove entire model/service dropdown from workbench for BOTH skill and professional, wide and narrow. Do not replace or relocate it. Preserve source toggle, project, Generate and distinct sync/async run-state presentation. This supersedes prior embedded model and service picker requirements.\nFINAL USER CORRECTION2026-10-18: skill MUST retain DSH model picker without label prefix; professional has NO model or service picker. BOTH exclude non-model picker such as Fast sync. This corrects and supersedes prior assistant interpretation removing both model pickers.",
+  "baselineGenerated": [
+    "exec-bba1df4b-0c2c-4ba8-b5d6-61eb765e7a88.png",
+    "exec-9b98d699-522b-4574-b99e-98c15195d334.png",
+    "exec-e49e7f0b-a171-4ef4-a3fd-c4b3303fb35f.png",
+    "exec-975e1f2c-f667-41fe-9fe7-8e5a9c4af36e.png",
+    "exec-db18988a-942b-4b1d-998a-b3c478e394eb.png",
+    "exec-0a32042a-0866-4c76-b9a6-c9413bb47be1.png",
+    "exec-b32636dc-b110-4c4e-bbdf-23b69f048957.png",
+    "exec-94f20d3b-e200-4270-8e7f-0cf0bab6a662.png",
+    "exec-5e6c95e8-3b88-404f-8481-92a601e26d0f.png",
+    "exec-0dc8fd80-56c5-4530-8a0b-3fd19dfe3747.png",
+    "exec-479d062a-884b-4f9d-bd8d-19e6d3d158c3.png",
+    "exec-26f53500-906f-43ab-96a4-192f5463ac13.png",
+    "exec-5f607617-71bf-4d0d-bfe7-0588cc4c7c46.png",
+    "exec-1ffde530-367d-41a1-ad48-f62c8dee1767.png",
+    "exec-2d6e971b-a434-47c6-96db-1565c80df704.png",
+    "exec-5223f2f3-c434-4dd6-b654-f12bafd09529.png",
+    "exec-e9710a81-1226-4a68-ba80-fd4d1a86500c.png",
+    "exec-1eb39318-b705-470e-8b5f-d38c45a12ead.png",
+    "exec-bc7be12d-b378-4747-8653-a71d383c5d40.png",
+    "exec-56e2931e-3dbf-4d99-b92e-f9c43be72d9e.png",
+    "exec-96969a8c-c85b-48e6-96e2-0469777d6091.png",
+    "exec-f9a05f11-d125-41a5-8167-952db15965cf.png",
+    "exec-43097f56-80ae-4387-b6dc-8d9f756fd1e3.png",
+    "exec-a15e1de5-8cca-4319-a1ce-db54d383b2db.png",
+    "exec-a537f866-c836-4882-b0f1-efcb50ec0236.png",
+    "exec-334be0a3-3efc-448a-93f6-04aee90db3a6.png",
+    "exec-cc4b5983-e8d6-4b66-ac95-62bec0682f37.png",
+    "exec-2b686dd1-26e5-4083-99d8-d7d2a5fcdeb6.png",
+    "exec-67c344ae-7208-4c68-bbbd-f91e5b8045f7.png",
+    "exec-5a17954f-dd79-43ed-a8cb-f34fd9f165ec.png",
+    "exec-64e8b1be-7efc-47bf-9051-70e48baf9f45.png",
+    "exec-e2af4e74-69a3-4311-8067-9e444a9cfb59.png",
+    "exec-8e5a04f4-7736-4ddb-ab77-f67b119a5492.png",
+    "exec-8c9f9db7-b439-4f5d-a5ee-6076f08ae7b2.png",
+    "exec-d78a2e02-5aed-4a9f-be44-8b0d58b08b4c.png",
+    "exec-94167fff-9f87-4dba-8919-61e31c2c7153.png",
+    "exec-e494a5dc-3c4b-4d88-897a-35c5b6153c8f.png",
+    "exec-09e6ffba-95d8-4d04-afd9-81060f78f988.png",
+    "exec-9571358b-268e-4a5d-a50b-2485d18172f9.png",
+    "exec-11c1a816-93db-486c-acdc-0922d33bc027.png",
+    "exec-6c77451f-6d0b-410c-bdf8-65332adec5ee.png",
+    "exec-59f7bf60-499d-44a9-8d6e-1867dfb4fd1c.png",
+    "exec-62fc6525-a758-43ef-bcce-2125710bc45b.png",
+    "exec-6b25ef98-21ff-43ff-8dde-0a2b6108d12e.png",
+    "exec-49e13c2d-1a6e-4529-ad35-5024ed2814d6.png",
+    "exec-88edc7e2-d2bb-433b-bc4f-91f2285182da.png",
+    "exec-0385bd4e-6ea5-43b4-bc7d-90b4ed5f2b1f.png",
+    "exec-082f6cdf-bc88-4c67-9f1e-852f16628b24.png",
+    "exec-3edc9f2f-62f4-43ef-a6c5-15da46def30a.png",
+    "exec-f02d6132-c291-4672-b90c-61252bf98cc3.png",
+    "exec-9c1b37ed-848c-46cc-950b-e39cf65d6f48.png",
+    "exec-ac463f6a-0504-4498-a714-8552da301f4e.png",
+    "exec-50589bd4-2377-4743-af11-8b1b616041cb.png",
+    "exec-6ae4e184-98c9-41e3-8120-616e5b9b9bec.png",
+    "exec-8d131753-1939-4221-a282-b77709abac21.png",
+    "exec-9fd21949-e562-4f33-961b-4fe8c9e0aa5f.png",
+    "exec-6f07e9ba-89cd-49f1-8c57-c75bacd00ce7.png",
+    "exec-5545095b-426d-4db9-9f6c-5aafd5795f9f.png",
+    "exec-c5844772-fc55-4cf3-af82-d8fd9e43bca4.png",
+    "exec-50c4ab56-2bd7-4e27-9249-42f03d5b6919.png",
+    "exec-7ed65ae5-cd83-4702-95ea-8a8087561528.png",
+    "exec-05c0dc6f-f8b6-4552-b836-08ea25b9563a.png",
+    "exec-9c240f90-00c4-4356-8bb8-07535e21f816.png",
+    "exec-15624a0c-a144-434c-a521-635192b14cfb.png",
+    "exec-69a3c226-f547-4952-b67c-45fdb0a85063.png",
+    "exec-b2226bd2-693f-49a7-a4ea-06230bdd8a20.png",
+    "exec-598739a1-48b6-498d-a990-924bc6fe9a7e.png",
+    "exec-dbbbf73a-efcd-4797-a416-1add8be962a7.png",
+    "exec-207cfcaa-d72f-4da6-a0ed-3ee5c8986896.png",
+    "exec-0d69b004-1631-4875-8c66-2f11e3a1089c.png",
+    "exec-43f44ae1-e6d4-41e6-ad87-e5464179a81b.png",
+    "exec-58c955cd-f564-4609-9c79-7e2a4a227847.png",
+    "exec-1238c7b1-cb55-41c8-8514-d148de5a80ca.png",
+    "exec-7937c694-bb3a-4c6e-9a49-2df998950d08.png",
+    "exec-56d5b851-d6ec-4d86-a998-d827a31281b8.png",
+    "exec-74ed24c7-33e0-4a0f-983a-2a38ef3825b0.png",
+    "exec-df58fb5b-f700-4d12-80dc-713a27dcefbb.png",
+    "exec-ce9fb22d-3106-4264-8d74-2277409e090e.png",
+    "exec-0f49cab9-1168-4fef-a4ba-36110f89a19f.png",
+    "exec-fec45534-fccf-4abd-b3b1-2cb86a132a41.png",
+    "exec-f94c0a2f-e35c-4906-ade2-e6a61eee8c1d.png",
+    "exec-2f7f90b6-9f25-45f6-a09c-0833ba6d2e2c.png",
+    "exec-efc4335e-3fbc-4608-ab31-748258e9b675.png",
+    "exec-9c89f5b3-ffb0-4fc2-bf77-dd7047217413.png",
+    "exec-70798306-4e55-4cdc-9479-b698a80e251c.png",
+    "exec-6c47ea5f-9d29-44ce-af09-455252960914.png",
+    "exec-a8b0e9fb-5cfb-4994-9ec1-528734c1756b.png",
+    "exec-69833c83-58cf-4ca6-9572-8ae3b6edaeb9.png",
+    "exec-2aca3a01-c53b-40f6-86c0-0db9212d9fc4.png",
+    "exec-97db9f3a-5ee0-45e5-bc19-3ed52ee89809.png",
+    "exec-e6dfd629-db12-4be6-b558-bb2452aadd17.png",
+    "exec-37ac2af1-f537-4c05-a4af-3531f254eb6a.png",
+    "exec-60b94d41-1598-4085-bd2e-37987f5806c4.png",
+    "exec-961beab7-2382-442c-b5a9-badfee4d2912.png",
+    "exec-15ab9b90-1a22-45e3-b95c-6134661fb3a4.png",
+    "exec-1f25f7a1-525d-47e3-ae26-160667cef166.png",
+    "exec-573a54e5-5ac1-4635-809a-7a72aaf4a4ea.png",
+    "exec-afab7937-19a9-4fd3-a056-cc43f2af1749.png",
+    "exec-92eb4f36-2179-4fdc-9123-3b61720c1aaa.png",
+    "exec-6c7ff656-efa6-4285-9ef7-9293805f488b.png",
+    "exec-3c93988a-bccc-4b94-99db-9bc113fb7322.png",
+    "exec-eab48467-d07c-4747-aae7-fc9621d406c1.png",
+    "exec-1684ce97-0c12-4c44-af7a-e5fdabbc9e2b.png",
+    "exec-48efed52-679c-4fa2-a4ab-13c7b2bff047.png",
+    "exec-fb1b56be-2965-4c21-a4a9-6680af0bb541.png",
+    "exec-798c45d8-6afd-48a7-b500-08003c3382f0.png",
+    "exec-37117e1d-2a33-4c90-8a85-02787852ea59.png",
+    "exec-62167c34-ac9d-4cb2-90b0-69af0d163b8d.png"
+  ],
+  "pages": {
+    "01-center": {
+      "title": "功能中心 · 独立会话历史",
+      "group": "导航与会话",
+      "note": "左DSH、右Oasis；独立会话历史/项目管理分开切换，本页显示10条未关联项目的合成会话。 点击新会话直接打开工作台选择页。",
+      "status": "ready",
+      "file": "01-center-revision-5.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-15624a0c-a144-434c-a521-635192b14cfb.png",
+      "sha256": "b8c390f0597488a154ae9ab21f001371ed69e8fb35a410be81725dbddd657e62",
+      "dimensions": [
+        1490,
+        1055
+      ],
+      "history": [
+        {
+          "file": "01-center.png",
+          "sha256": "9d4c4b53549a48e64c9f2567bd747ef462fc726314ad095fc77ee6980145ff12",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-8c9f9db7-b439-4f5d-a5ee-6076f08ae7b2.png"
+        },
+        {
+          "file": "01-center-revision-2.png",
+          "sha256": "eeeedab21521ec8073a2b2ef7b7f49132040f7ec2905a62114cd0aeaaba0bbc8",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-6ae4e184-98c9-41e3-8120-616e5b9b9bec.png"
+        },
+        {
+          "file": "01-center-revision-3.png",
+          "sha256": "2a0f44ef9c1197c125fdfdd922746c2d56db1948b9c5cc50e2551ad5374a00e6",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-7ed65ae5-cd83-4702-95ea-8a8087561528.png"
+        },
+        {
+          "file": "01-center-revision-4.png",
+          "sha256": "b78cafba306ec30f07268235225320375cce0af2b51aa324d31243e25f0ef16a",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-9c240f90-00c4-4356-8bb8-07535e21f816.png"
+        }
+      ]
+    },
+    "21-projects": {
+      "title": "功能中心 · 项目管理",
+      "group": "导航与会话",
+      "note": "项目页独立状态：进行中/已归档筛选，展开项目内会话与子项目摘要；点击具体会话打开工作台。",
+      "status": "ready",
+      "file": "21-projects.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-69a3c226-f547-4952-b67c-45fdb0a85063.png",
+      "sha256": "09581ef2c1f20b5eb0bc3b30c7adfdfb3e5325f8a86d8cecc578585473ec30c1",
+      "dimensions": [
+        1490,
+        1056
+      ]
+    },
+    "22-new-research": {
+      "title": "工作台新会话 · 技术研发",
+      "note": "F-1-1至F-1-5五项工作流；选定功能与项目后确认。",
+      "group": "新会话与工作流",
+      "status": "ready",
+      "file": "22-new-research.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-598739a1-48b6-498d-a990-924bc6fe9a7e.png",
+      "sha256": "96af1c207c4c304c314258d3c74dd1d4b2d1e3b1537a7d04f9d07e3b36ce5c7a",
+      "dimensions": [
+        1487,
+        1058
+      ]
+    },
+    "02-new-session": {
+      "title": "工作台新会话 · 专利撰写",
+      "group": "新会话与工作流",
+      "note": "点击新会话已进入工作台；选择F-2-6至F-4-12的7项功能及所属项目，确认后在同一卡片进入正式工作。",
+      "status": "ready",
+      "file": "02-new-session-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-b2226bd2-693f-49a7-a4ea-06230bdd8a20.png",
+      "sha256": "613ed029a92356326a09fc00d3421bd45ec8fe9bc28d8a18021d4caec25b4962",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "02-new-session.png",
+          "sha256": "2d62fafce70d25437f18ee66d77b84926b432540b096ce0b38b6c9887f24c7f5",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-d78a2e02-5aed-4a9f-be44-8b0d58b08b4c.png"
+        }
+      ]
+    },
+    "23-new-drawings": {
+      "title": "工作台新会话 · 附图生成",
+      "note": "新增三项：专利附图主图、专利细节图、专利6视图；不臆造F节点号。",
+      "group": "新会话与工作流",
+      "status": "ready",
+      "file": "23-new-drawings.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-dbbbf73a-efcd-4797-a416-1add8be962a7.png",
+      "sha256": "e14f0799578c4cb748bf0796470a54e2df8c5a210639308f7d792eaac75f6d05",
+      "dimensions": [
+        1487,
+        1058
+      ]
+    },
+    "24-new-utilities": {
+      "title": "工作台新会话 · 辅助功能",
+      "note": "F-5-13申请文件终检、F-6-14审查意见答复；示例展开所属项目选择。",
+      "group": "新会话与工作流",
+      "status": "ready",
+      "file": "24-new-utilities.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-207cfcaa-d72f-4da6-a0ed-3ee5c8986896.png",
+      "sha256": "2630234555420fa5d97bfed7f5199663b1990fb2ef1cd8d50cf88e67bf4112da",
+      "dimensions": [
+        1487,
+        1058
+      ]
+    },
+    "25-confirmed-work": {
+      "title": "确认后 · 同一工作台正式工作",
+      "note": "按标注精简为单行：功能、skill/专业、DSH模型、所属项目、生成；移除两组切换，双栏正文上移。",
+      "group": "新会话与工作流",
+      "status": "ready",
+      "file": "25-confirmed-work-revision-3.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-58c955cd-f564-4609-9c79-7e2a4a227847.png",
+      "sha256": "8022119409761a35e1845dbaffcd0a67d35077e94bac59491abd749b7e468967",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "25-confirmed-work.png",
+          "sha256": "f17a2b7f67827afe8e41c7e9c68fbfda781145937aeafb69127785193939606e",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-0d69b004-1631-4875-8c66-2f11e3a1089c.png"
+        },
+        {
+          "file": "25-confirmed-work-revision-2.png",
+          "sha256": "dfde32996eeec73291b2d761de3a3cb5dee317beff304b696ede0fd8c18571e6",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-43f44ae1-e6d4-41e6-ad87-e5464179a81b.png"
+        }
+      ]
+    },
+    "03-input-narrow": {
+      "title": "窄页 · 输入与空结果",
+      "group": "窄页布局",
+      "note": "沿用最新宽页：顶部控件紧凑两行，输入/结果上下排列；不恢复已删除的两组切换。",
+      "status": "ready",
+      "file": "03-input-narrow-revision-3.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-1238c7b1-cb55-41c8-8514-d148de5a80ca.png",
+      "sha256": "6c1c17433e193885769fded32921316cb5f7e110bdcd9962d10e6283258c49db",
+      "dimensions": [
+        1066,
+        1475
+      ],
+      "history": [
+        {
+          "file": "03-input-narrow.png",
+          "sha256": "c95392965a3685371051e5744c316cc2fb77673162a74a5c03a418867848f28f",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-94167fff-9f87-4dba-8919-61e31c2c7153.png"
+        },
+        {
+          "file": "03-input-narrow-revision-2.png",
+          "sha256": "b71e4331435627c79d6047fef722f5ab74e3bfcbfa33846c614cefb3ebe8f66a",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-8d131753-1939-4221-a282-b77709abac21.png"
+        }
+      ]
+    },
+    "04-result-wide": {
+      "title": "宽页已有结果",
+      "group": "A 工作与版本",
+      "note": "最新单行头部，直接编辑、版本卡片与四项结果操作。",
+      "status": "ready",
+      "file": "04-result-wide-revision-3.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-15ab9b90-1a22-45e3-b95c-6134661fb3a4.png",
+      "sha256": "c5c4a367a18b6945c63d97341c7cd448c652b3b3000da213c042cd7c7d5b0e50",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "04-result-wide.png",
+          "sha256": "dea3a729eea9af1fa78bc3d92b23a9befdebdab96772879b1da4232193377d68",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-e494a5dc-3c4b-4d88-897a-35c5b6153c8f.png"
+        },
+        {
+          "file": "04-result-wide-revision-2.png",
+          "sha256": "366eaac599469d00241e7f71a428dbe3a4d5236fc2c7b850a20319fe3b8afbd6",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-fec45534-fccf-4abd-b3b1-2cb86a132a41.png"
+        }
+      ],
+      "reuseOf": "28-version-tabs-wide.png"
+    },
+    "05-result-narrow": {
+      "title": "窄页 · 输入与结果版本",
+      "group": "窄页布局",
+      "note": "上方输入、下方可编辑结果；按钮改为智能完善，对应版本为智能完善版；其余窄页布局保持。",
+      "status": "ready",
+      "file": "05-result-narrow-revision-3.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-56d5b851-d6ec-4d86-a998-d827a31281b8.png",
+      "sha256": "4134d0d32b5d34155e963f20ab8af0b7c19e51df18e41f365b4e1eb103da7d8d",
+      "dimensions": [
+        1066,
+        1476
+      ],
+      "history": [
+        {
+          "file": "05-result-narrow.png",
+          "sha256": "f143c01478c1686c5c3b07c84eba256988c1a8a76506f1267c8e7e212791ae1a",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-09e6ffba-95d8-4d04-afd9-81060f78f988.png"
+        },
+        {
+          "file": "05-result-narrow-revision-2.png",
+          "sha256": "fa340b454276355e138405e455175e4fa318ea50fe96ecb459dc3cb222e439d8",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-7937c694-bb3a-4c6e-9a49-2df998950d08.png"
+        }
+      ]
+    },
+    "06-local-running": {
+      "title": "skill生成中",
+      "group": "A 工作与版本",
+      "note": "DSH模型、紧凑活动条，运行中锁定输入与来源。",
+      "status": "ready",
+      "file": "06-local-running-revision-4.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-3c93988a-bccc-4b94-99db-9bc113fb7322.png",
+      "sha256": "193b3cc825df545ca03518f6c98d1b64019ea87089da7d22f8893e1bfffdd8d5",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "06-local-running.png",
+          "sha256": "136fd591db7353788923f8a8029cd628f24a9667253bdb6e1f1e1606c80890b9",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-9571358b-268e-4a5d-a50b-2485d18172f9.png"
+        },
+        {
+          "file": "06-local-running-revision-2.png",
+          "sha256": "6519a4220254542895892c7d28e997d677b1ff8791b837c97c59690bdc7ba7a3",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-9fd21949-e562-4f33-961b-4fe8c9e0aa5f.png"
+        },
+        {
+          "file": "06-local-running-revision-3.png",
+          "sha256": "dfebcbbfbcb7d3c656efeef61c7f56fa199a8e2e4d968d8e9b814b6207563d3b",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-f94c0a2f-e35c-4906-ade2-e6a61eee8c1d.png"
+        }
+      ]
+    },
+    "07-api-sync": {
+      "title": "专业生成中 · 同步宽页",
+      "group": "专业生成中",
+      "note": "Fast同步：新版单行头部、紧凑活动条与等待完整结果；未伪造流式正文或百分比。",
+      "status": "ready",
+      "file": "07-api-sync-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-74ed24c7-33e0-4a0f-983a-2a38ef3825b0.png",
+      "sha256": "9bebe62a8ada7afac45ffd6c0653f7cd2002d837640579d5ca0c5035da17e35b",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "07-api-sync.png",
+          "sha256": "306c600a86b1a3c1902ad6d1ba4ae9ec8f09bfdba2ce3b2df239caa0ec276bb9",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-11c1a816-93db-486c-acdc-0922d33bc027.png"
+        }
+      ]
+    },
+    "08-api-async": {
+      "title": "专业生成中 · 异步宽页",
+      "group": "专业生成中",
+      "note": "Basic异步：步骤、任务号、等待时间，可稍后查看；新版单行头部，异步仅设计未接入。",
+      "status": "ready",
+      "file": "08-api-async-revision-3.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-df58fb5b-f700-4d12-80dc-713a27dcefbb.png",
+      "sha256": "ce5f852d8646b6acdce7f85bcfe168f8737c15dbfc54d71825b9cc491ecacf38",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "08-api-async.png",
+          "sha256": "2461ee72c57a8601d07dd593f9693ffc4edfbe86f81fd224fc5fc295a9ac8ba3",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-6c77451f-6d0b-410c-bdf8-65332adec5ee.png"
+        },
+        {
+          "file": "08-api-async-revision-2.png",
+          "sha256": "da878f25ae51d18585cfdbb2828ed1b5af3c8b7668a0f428746f17f8ca6a31f1",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-6f07e9ba-89cd-49f1-8c57-c75bacd00ce7.png"
+        }
+      ]
+    },
+    "26-api-sync-narrow": {
+      "title": "专业生成中 · 同步窄页",
+      "group": "专业生成中",
+      "note": "Fast同步：窄页上下布局，紧凑活动条和等待完整结果；未显示流式正文。",
+      "status": "ready",
+      "file": "26-api-sync-narrow.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-ce9fb22d-3106-4264-8d74-2277409e090e.png",
+      "sha256": "328cc51aaf35fc198f69c00656d14fce9f7cafe969158831be8db8d7c0b8c0dc",
+      "dimensions": [
+        1065,
+        1476
+      ]
+    },
+    "27-api-async-narrow": {
+      "title": "专业生成中 · 异步窄页",
+      "group": "专业生成中",
+      "note": "Basic异步：窄页步骤、任务号、等待时间与稍后查看；仅设计示例，异步未接入。",
+      "status": "ready",
+      "file": "27-api-async-narrow.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-0f49cab9-1168-4fef-a4ba-36110f89a19f.png",
+      "sha256": "f2067adbf6da59a0101f3c8246d9af333a77968b94d287751f5d8559816150d4",
+      "dimensions": [
+        1065,
+        1476
+      ]
+    },
+    "09-failure": {
+      "title": "明确失败",
+      "group": "B 异常与恢复",
+      "note": "确定未派发时可重新生成，保留材料及旧版本。",
+      "status": "ready",
+      "file": "09-failure-revision-4.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-1684ce97-0c12-4c44-af7a-e5fdabbc9e2b.png",
+      "sha256": "4909ae51687cc9497982f9ee1d683a7f828ba2346ba8dde6c3489a201118037b",
+      "dimensions": [
+        1482,
+        1061
+      ],
+      "history": [
+        {
+          "file": "09-failure.png",
+          "sha256": "4943616a2720a93530a775db32933debda4928e1ba71d86d79d79eee85c177ac",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-59f7bf60-499d-44a9-8d6e-1867dfb4fd1c.png"
+        },
+        {
+          "file": "09-failure-revision-2.png",
+          "sha256": "64aae940392afe00fea5bbfd581cd6a10b69f3c5c5dd1d82f9b730ca157be213",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-5545095b-426d-4db9-9f6c-5aafd5795f9f.png"
+        },
+        {
+          "file": "09-failure-revision-3.png",
+          "sha256": "de8dc850440e4e49936ac4e36365739698724c04e4c8dc8b0fab206f5667264b",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-efc4335e-3fbc-4608-ab31-748258e9b675.png"
+        }
+      ]
+    },
+    "10-unknown": {
+      "title": "结果未知",
+      "group": "B 异常与恢复",
+      "note": "保留已有请求，不自动重发、换来源或推定取消。",
+      "status": "ready",
+      "file": "10-unknown-revision-5.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-fb1b56be-2965-4c21-a4a9-6680af0bb541.png",
+      "sha256": "f15dc89d6e5d3ed6e60b59edea93eaf83f504144f4a4fae4d72b84c8e7714a4b",
+      "dimensions": [
+        1482,
+        1061
+      ],
+      "history": [
+        {
+          "file": "10-unknown.png",
+          "sha256": "2419fa323a247702025ff4f7e2a1387c85b6f9a4ade0de1a4debcaf2f179ccd2",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-62fc6525-a758-43ef-bcce-2125710bc45b.png"
+        },
+        {
+          "file": "10-unknown-revision-2.png",
+          "sha256": "a14947ffa4e6715c7b763d93ee72264c39753206a479edf6c425b5c5c2a6f1ac",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-c5844772-fc55-4cf3-af82-d8fd9e43bca4.png"
+        },
+        {
+          "file": "10-unknown-revision-3.png",
+          "sha256": "5ace8305868c22583069588866801266c21d47cd8e0984fbfa1a265ca6b363fb",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-9c89f5b3-ffb0-4fc2-bf77-dd7047217413.png"
+        },
+        {
+          "file": "10-unknown-revision-4.png",
+          "sha256": "5b1e991ad1719a5b0d5f2d8ac55a732aa580a2a902b4b7ec6d5a599389f59759",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-48efed52-679c-4fa2-a4ab-13c7b2bff047.png"
+        }
+      ]
+    },
+    "11-refine": {
+      "title": "智能完善与去AI味",
+      "group": "A 工作与版本",
+      "note": "完整独立新版本，保留父版本与完善来源。",
+      "status": "ready",
+      "file": "11-refine-revision-3.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-eab48467-d07c-4747-aae7-fc9621d406c1.png",
+      "sha256": "f04cba7fd87d4ffd14eff262bcee614fb1e20e3d2ffd011ef736aec49caae714",
+      "dimensions": [
+        1486,
+        1059
+      ],
+      "history": [
+        {
+          "file": "11-refine.png",
+          "sha256": "538cfdd99fdcb139affa84b1b59c7aa1e3c059f43135773d354fb0b70aeee657",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-6b25ef98-21ff-43ff-8dde-0a2b6108d12e.png"
+        },
+        {
+          "file": "11-refine-revision-2.png",
+          "sha256": "1f32b79370331b6c0384b34b68e0524b15a48c9d58a7c7885037c80657a7175e",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-2f7f90b6-9f25-45f6-a09c-0833ba6d2e2c.png"
+        }
+      ]
+    },
+    "12-sidechat": {
+      "title": "对话完善",
+      "group": "C 对话往返",
+      "note": "绿洲专用对话完善卡片，与DSH原生侧边对话区分。",
+      "status": "ready",
+      "file": "12-sidechat-revision-4.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-ad930241-3c03-48a8-9ba6-41dd7280f96f.png",
+      "sha256": "25eaa2fa4c03785b5394913609178bd3453f7959e32d6213ec6bc86d63fd0388",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "12-sidechat.png",
+          "sha256": "b07208bac918dc9d7ed784e6bfb42f360e4bf839c1194ef21404ece59953dd21",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-49e13c2d-1a6e-4529-ad35-5024ed2814d6.png"
+        },
+        {
+          "file": "12-sidechat-revision-2.png",
+          "sha256": "e6bce293ea96ae7913be60b8f260b74e0a0f75d574f2a1d18b8ef52760fbf21d",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-50c4ab56-2bd7-4e27-9249-42f03d5b6919.png"
+        },
+        {
+          "file": "12-sidechat-revision-3.png",
+          "sha256": "da5f535a8a71ae442b276a936a11615cd674ebc5850cb2ccd9ef780b12d1b6a1",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-a8b0e9fb-5cfb-4994-9ec1-528734c1756b.png"
+        }
+      ]
+    },
+    "13-saved-return": {
+      "title": "对话完善保存返回",
+      "group": "C 对话往返",
+      "note": "从绿洲对话完善保存并返回工作台；来源提示与卡片名称统一。",
+      "status": "ready",
+      "file": "13-saved-return-revision-4.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-76a84703-7dac-4c1f-9008-2910980d2c26.png",
+      "sha256": "591dfbce9f5d98d81b47e0847d187a37ec5e5ab74d059904c82e649039499b55",
+      "dimensions": [
+        1484,
+        1060
+      ],
+      "history": [
+        {
+          "file": "13-saved-return.png",
+          "sha256": "da97fe1cb844a039cf8c279ea2bf8aeb71734c0d360cb02e12dabe3438aae87e",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-88edc7e2-d2bb-433b-bc4f-91f2285182da.png"
+        },
+        {
+          "file": "13-saved-return-revision-2.png",
+          "sha256": "6c44a95a629cfa1d38f35cb2b803da23134196b0b5733920e05c7b89842bb8c3",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-69833c83-58cf-4ca6-9572-8ae3b6edaeb9.png"
+        },
+        {
+          "file": "13-saved-return-revision-3.png",
+          "sha256": "2537c5d4473f13eef8256d8553ddb07ad7de165e4e317f86400470b71957a478",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-62167c34-ac9d-4cb2-90b0-69af0d163b8d.png"
+        }
+      ]
+    },
+    "14-restore": {
+      "title": "重开恢复",
+      "group": "B 异常与恢复",
+      "note": "最新功能中心结构中继续上次会话。",
+      "status": "ready",
+      "file": "14-restore-revision-3.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-6c47ea5f-9d29-44ce-af09-455252960914.png",
+      "sha256": "b2a2f0cdba9cda8d327c2786752aef19f55c8b14e63fc5a5a34220262f616482",
+      "dimensions": [
+        1486,
+        1058
+      ],
+      "history": [
+        {
+          "file": "14-restore.png",
+          "sha256": "190dd19b6110f228b4fd5bf44631012ec0ce5ac214cbc29a775fe3094cf1ff16",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-0385bd4e-6ea5-43b4-bc7d-90b4ed5f2b1f.png"
+        },
+        {
+          "file": "14-restore-revision-2.png",
+          "sha256": "f538eefe7e811ab1d779be048ef752b9e6fc4602b305606dc121a711453b8aa0",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-05c0dc6f-f8b6-4552-b836-08ea25b9563a.png"
+        }
+      ]
+    },
+    "15-native-files": {
+      "title": "文档管理",
+      "group": "D 原生工具与设置",
+      "note": "DSH原生独立卡片，沿用原生文件功能。",
+      "status": "ready",
+      "file": "15-native-files-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-2aca3a01-c53b-40f6-86c0-0db9212d9fc4.png",
+      "sha256": "cce8c703136107615c7db66426ee847353954afa2b90d58e2c3906b4686fe16a",
+      "dimensions": [
+        1486,
+        1058
+      ],
+      "history": [
+        {
+          "file": "15-native-files.png",
+          "sha256": "d2b8b1c5d63f9302fd7d7d92d960092b6351d71cb9792a679b5b1a60ab71f51d",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-082f6cdf-bc88-4c67-9f1e-852f16628b24.png"
+        }
+      ]
+    },
+    "16-native-browser": {
+      "title": "浏览器",
+      "group": "D 原生工具与设置",
+      "note": "DSH原生浏览器同级卡片。",
+      "status": "ready",
+      "file": "16-native-browser-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-97db9f3a-5ee0-45e5-bc19-3ed52ee89809.png",
+      "sha256": "520540c85c6e7a7d7c67e9f7f7edaa3d0a0a525212c6ebba31710c4106051e5f",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "16-native-browser.png",
+          "sha256": "44909e41a85bec50776e4ae7a25952141f31080f9cf52135022b5ff42325bccb",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-3edc9f2f-62f4-43ef-a6c5-15da46def30a.png"
+        }
+      ]
+    },
+    "17-import": {
+      "title": "选择网站材料",
+      "group": "E 网站导入",
+      "note": "从功能中心进入已有账户项目材料选择。",
+      "status": "ready",
+      "file": "17-import-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-60b94d41-1598-4085-bd2e-37987f5806c4.png",
+      "sha256": "f393928d027bdd76cdb901c9a23978ce2b1c16be0ba025be80a3fdd5a1e75069",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "17-import.png",
+          "sha256": "b05b6da579ab1ffe017cec67b42b18682ec02d78b818c2485b0d40924902e4fb",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-f02d6132-c291-4672-b90c-61252bf98cc3.png"
+        }
+      ]
+    },
+    "18-import-result": {
+      "title": "导入完成清单",
+      "group": "E 网站导入",
+      "note": "成功/跳过/失败状态与文档管理入口。",
+      "status": "ready",
+      "file": "18-import-result-revision-2.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-961beab7-2382-442c-b5a9-badfee4d2912.png",
+      "sha256": "ba49c672f03c3856abd3d1f9404b461d12b4335ecb0eaee356ad96754dfb0fb5",
+      "dimensions": [
+        1488,
+        1057
+      ],
+      "history": [
+        {
+          "file": "18-import-result.png",
+          "sha256": "fe6a59f79bce6c469162d93dda2a6db36774697bd0b8fd9fffd72ae79e0d267f",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-9c1b37ed-848c-46cc-950b-e39cf65d6f48.png"
+        }
+      ]
+    },
+    "19-native-settings": {
+      "title": "DSH原生设置",
+      "group": "D 原生工具与设置",
+      "note": "绿洲使用说明、账户；模型与布局归宿主原有设置。",
+      "status": "ready",
+      "file": "19-native-settings-revision-4.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-afab7937-19a9-4fd3-a056-cc43f2af1749.png",
+      "sha256": "99116d8f11e846db76f987fde6531b7ec5ed9b3f9a258c7c717677ad30b26761",
+      "dimensions": [
+        1486,
+        1058
+      ],
+      "history": [
+        {
+          "file": "19-native-settings.png",
+          "sha256": "f2dd20e232f29c1d98df9f639c4374b35f2861a7f7d48602fd67db51752859e3",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-ac463f6a-0504-4498-a714-8552da301f4e.png"
+        },
+        {
+          "file": "19-native-settings-revision-2.png",
+          "sha256": "76e5f3067b0aa4284ba19f938008b1f477bf61d0baff14729eb2fa5ed4f6822f",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-e6dfd629-db12-4be6-b558-bb2452aadd17.png"
+        },
+        {
+          "file": "19-native-settings-revision-3.png",
+          "sha256": "f252e56056b942bc401c56d1331bd7c53c0368c5b146834942ed3c18dfd7a3a0",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-37ac2af1-f537-4c05-a4af-3531f254eb6a.png"
+        }
+      ],
+      "reuseOf": "30-settings-upgrade.png"
+    },
+    "20-autosave-error": {
+      "title": "自动保存失败",
+      "group": "B 异常与恢复",
+      "note": "内容保留、尚未保存与重试提示。",
+      "status": "ready",
+      "file": "20-autosave-error-revision-4.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-37117e1d-2a33-4c90-8a85-02787852ea59.png",
+      "sha256": "8bfdb0d52faaa8485f15a8c55b4e059b5cd9127319c6b17bd903984cf162921f",
+      "dimensions": [
+        1068,
+        1472
+      ],
+      "history": [
+        {
+          "file": "20-autosave-error.png",
+          "sha256": "6c49d37588d45bb92eb1b78be9cf86d3e0a0bcfab0394e7f5f78a51a60ccc7ff",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-50589bd4-2377-4743-af11-8b1b616041cb.png"
+        },
+        {
+          "file": "20-autosave-error-revision-2.png",
+          "sha256": "b5e5741aadca132d4c1b0009c6a2be2eff22b3db88fffb97e63448beedef2513",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-70798306-4e55-4cdc-9479-b698a80e251c.png"
+        },
+        {
+          "file": "20-autosave-error-revision-3.png",
+          "sha256": "adbe32e8772297a0cde963d55373b5f18c9bff955a0c4741cef3afcb4baa8e60",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-798c45d8-6afd-48a7-b500-08003c3382f0.png"
+        }
+      ]
+    },
+    "28-version-tabs-wide": {
+      "title": "宽页：版本改名与删除",
+      "note": "skill保留DSH模型框；专业无模型/服务框。两者都没有Fast同步等非模型选框。",
+      "group": "10月18日 · 五点修订",
+      "status": "ready",
+      "file": "28-version-tabs-wide.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-15ab9b90-1a22-45e3-b95c-6134661fb3a4.png",
+      "sha256": "c5c4a367a18b6945c63d97341c7cd448c652b3b3000da213c042cd7c7d5b0e50",
+      "dimensions": [
+        1487,
+        1058
+      ],
+      "history": [
+        {
+          "file": "28-version-tabs-wide.png",
+          "sha256": "c5c4a367a18b6945c63d97341c7cd448c652b3b3000da213c042cd7c7d5b0e50",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-15ab9b90-1a22-45e3-b95c-6134661fb3a4.png"
+        },
+        {
+          "file": "28-version-tabs-wide-revision-2.png",
+          "sha256": "a6ed6522d47f2ddb57a79e9c9d5eeef80fa0115054c31d7d1c55a920c54db7d6",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-92eb4f36-2179-4fdc-9123-3b61720c1aaa.png"
+        }
+      ]
+    },
+    "29-version-tabs-narrow": {
+      "title": "窄页：实时保存与完善入口",
+      "note": "专业无模型/服务选框；skill应保留DSH模型框。两者都无非模型选框。",
+      "group": "10月18日 · 五点修订",
+      "status": "ready",
+      "file": "29-version-tabs-narrow-revision-3.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-6c7ff656-efa6-4285-9ef7-9293805f488b.png",
+      "sha256": "609dd7b95867e50e02855d131a8d29299e8a2c0d30701a24d5c8bf1291c02539",
+      "dimensions": [
+        1065,
+        1476
+      ],
+      "history": [
+        {
+          "file": "29-version-tabs-narrow.png",
+          "sha256": "106ae47680284004373d745a99291acdbb7da150901aff0f3e28a4c347cc6f10",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-1f25f7a1-525d-47e3-ae26-160667cef166.png"
+        },
+        {
+          "file": "29-version-tabs-narrow-revision-2.png",
+          "sha256": "9c82196d859e45fd7d8b7aafa3566601341afb4ba0d7e49d641c832b74cc297c",
+          "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-573a54e5-5ac1-4635-809a-7a72aaf4a4ea.png"
+        }
+      ]
+    },
+    "30-settings-upgrade": {
+      "title": "原生设置：软件与skills升级",
+      "note": "DSH设置内的绿洲工作台增加升级按钮，不在工作台复制设置入口。",
+      "group": "10月18日 · 五点修订",
+      "status": "ready",
+      "file": "30-settings-upgrade.png",
+      "generatedSource": "/Users/tinadong7036/.codex/generated_images/01a13caf-72a4-7020-9d0c-61a16e3bac05/exec-afab7937-19a9-4fd3-a056-cc43f2af1749.png",
+      "sha256": "99116d8f11e846db76f987fde6531b7ec5ed9b3f9a258c7c717677ad30b26761",
+      "dimensions": [
+        1486,
+        1058
+      ]
+    }
+  },
+  "scopedRevisions": [
+    {
+      "date": "2026-10-16",
+      "kind": "scoped-design-revision",
+      "prompt": "Use case: ui-mockup. Revise the selected Oasis/DSH function center design to the user's precise request, using both attached references directly. One frame only, production-quality Chinese desktop UI, target1440x1024; date anchor2026-10-16. Reference showing six vertically stacked native DSH menu buttons is authoritative for LEFT menu content/order/appearance; the other function-center reference supplies the native peer tabstrip and restrained green/white typography. This is NOT a new style or a choice of alternatives.\nKeep native card tabs at very top, left to right 功能中心 (selected green underline, default), 绿洲专业工作台 (inactive), 文档管理 (inactive), plus minimal +. Product name only within native tab, no repeated page hero or subtitle, NO settings buttons/cog.\nMain FUNCTION CENTER must have EXACTLY TWO vertical MENU COLUMNS with CLEAR SEPARATION, not a mixed two-column utility tile grid. Small equal-weight column headings DSH at left and Oasis at right, aligned top. A continuous clearly visible thin neutral VERTICAL DIVIDER at center, extending well below the menus, with32px whitespace on each side. Both columns have equal width, similar aligned menu/button sizes; no enclosing card around entire column.\nLEFT DSH column must reproduce ALL SIX native menu entries in the screenshot, original order and wording, original white lightly bordered rounded horizontal buttons, original small colored line icons: 文件, 文件变动, 新建终端 (native dropdown chevron), 任务管理, 浏览器, 侧边对话(beta). Preserve native menu affordances; no duplicating DSH tools in right column; no removing 文件变动 or 新建终端. Native keyboard hints may remain only if exact source, otherwise omit rather than invent.\nRIGHT Oasis column ONLY professional service actions: 新会话 (one restrained green emphasis), 从网站导入; below a lightweight separator label 历史会话 and two normal rows 日志存储方法 / 权利要求书生成 and 控制器技术方案 / 技术研发, each row with small trailing arrow to open workbench. New-session business category selection remains inside its next view; don't put four business category controls on this main menu. No extra DSH files/browser/chat/taskmanagement actions on Oasis side. No metrics/statuscards/login/pricing/approvals/drafts/review/settings. Import means existing Oasis WEBSITE project material, not URL scraping.\nTypography readable PingFang Chinese 14–16px body at natural UI scale, headings small and light, charcoal text, white base, forest-green #13745e for Oasis emphasis, neutral thin borders. Native DSH buttons keep source's softly rounded outlined shape and small colored icons. Prefer matched top alignment, purposeful whitespace, clear center divider. No outerdevicebezel, no decorativebranding, no massiveheading, no marketingcopy, no dates/projectIDs in the header. Deliver the single corrected function center screen edge-to-edge.",
+      "restorePrompt": "Edit attached exact function-center menu design to show its 'reopened software, work restored' state. Keep 1491x1055 dimensions, exact split LEFT DSH native6menuorder 文件/文件变动/新建终端/任务管理/浏览器/侧边对话(beta), RIGHT Oasis 新会话/从网站导入/historylist, fullheightcenterdivider, allfonts/spacing/nativecardtabstrip. Onlyadd under right 历史会话 heading a small quiet gray text '已恢复上次工作' and on first 日志存储方法 historyrow small green trailingtext '继续工作' instead of plain arrow. Keep allrightmenusunder Oasis, no sidebarDSHtoolsduplicate. Dateanchor2026-10-16 butno needvisibledate. No newheading/settings/modal/duplicatebranding/marketing. Clearlyboundedstatevariationofthesameapprovedstyletarget.",
+      "references": "Primary generation received num_last_images_to_include=2: the user's DSH native-menu screenshot and the inspected previous function-center sample. Restore variation received the new local function-center PNG."
+    },
+    {
+      "date": "2026-10-16",
+      "kind": "history-density-preview",
+      "historyCount": 10,
+      "prompt": "Edit the attached exact function-center design. One revised sample only, same1491x1055 pixel desktop viewport and same style. Dateanchor2026-10-16.\nPRIMARY CHANGE: increase right Oasis 历史会话 list from2 to EXACTLY10 individual sessions, all TEN visible and readable in this single viewport. This is a density preview. Keep entire native peer tabstrip, LEFT DSH six menu buttons, native icons/order and positions, DSH/Oasis column labels, center full-height divider and whitespace unchanged. Keep right 新会话 and 从网站导入 buttons at top, not adding features/settings/repeatedtitle.\nTo fit10, change ONLY historical session area from two oversized cards into a compact grouped list with subtle horizontal row separators. Its area begins just below existing 历史会话 heading aroundy500 and endsaroundy1000. Exactly TEN rows about45–48px each, one16px semibold title and optional12px secondary function name on next line. Small14px documenticon left and trailingarrow right. Do not shrink labels under12px, do not stretchcanvas, no clipped rows, no multiple-columns within history, no pagination/search/additional controls. Count next to heading: 历史会话 10.\nExact ten rows, top to bottom, do not omit/combine/duplicate:\n1 日志存储方法 — 权利要求书生成\n2 控制器技术方案 — 技术研发\n3 温度控制系统 — 说明书初稿\n4 机械连接结构 — 权利要求书生成\n5 传感器校准方法 — 技术研发\n6 电池管理系统 — 申请文件检查\n7 工艺流程示意图 — 附图生成\n8 术语一致性检查 — 辅助工具\n9 图像处理方法 — 权利要求书生成\n10 信号采集装置 — 说明书初稿\nDo not print numeric prefixes; numbersabovejustinstructexactcount. These are synthetic design examples. Whitebase,charcoalChinesePingFang,forestgreen#13745eOasisprimary. No new badges, avatars, statuses, giant headings or decorative boxes. Clearly readable ten-row session list on RIGHT, all LEFT DSH nativebuttons remain original."
+    },
+    {
+      "date": "2026-10-17",
+      "kind": "source-based-history-organization",
+      "repository": "Tina-patentpro/oasis-frontend",
+      "commit": "9c287d212cc6edf22ed2a1684d09cdb17574d025",
+      "sourceEvidence": "docs/design/2026-10-17-oasis-frontend-history-reference.md",
+      "pages": [
+        "01-center",
+        "21-projects"
+      ],
+      "standaloneCount": 10,
+      "sourceReadMethod": "existing authenticated Chrome; rendered GitHub source read-only",
+      "note": "No product implementation. Separate independent and project views; project child rows are summaries."
+    },
+    {
+      "date": "2026-10-17",
+      "kind": "workbench-owned-new-session",
+      "pages": [
+        "02-new-session",
+        "22-new-research",
+        "23-new-drawings",
+        "24-new-utilities",
+        "25-confirmed-work"
+      ],
+      "userDecision": "新会话即打开工作台，选择功能/项目后确认，在同一工作台进入正式工作",
+      "flowNamesSource": "docs/business-baseline/14节点清单V3.4.0.md section 2.1",
+      "categories": {
+        "技术研发": [
+          "F-1-1 技术背景研究",
+          "F-1-2 TRIZ问题分析",
+          "F-1-3 概要专利检索",
+          "F-1-4 技术方案筛选",
+          "F-1-5 技术交底书"
+        ],
+        "专利撰写": [
+          "F-2-6 权利要求初稿",
+          "F-2-7 说明书初稿",
+          "F-3-8 全文深度复检",
+          "F-3-9 专利撰写计划",
+          "F-3-10 发明人沟通确认",
+          "F-4-11 权利要求正式稿",
+          "F-4-12 说明书正式稿"
+        ],
+        "附图生成": [
+          "专利附图主图",
+          "专利细节图",
+          "专利6视图"
+        ],
+        "辅助功能": [
+          "F-5-13 申请文件终检",
+          "F-6-14 审查意见答复"
+        ]
+      },
+      "projectAssignment": "choose existing project or unassociated independent session; no backend folder_id inferred",
+      "confirmation": "same card; no model/API/upload dispatch",
+      "generationMode": "built-in image_gen",
+      "prompts": {
+        "02-new-session": "Use case: ui-mockup. Edit target: attached selected desktop new-session sample. Create one revised screen at1487x1058, matching its white/forest-green #13745e, PingFang Chinese typography, restrained thin gray borders and same native tabstrip. Critical navigation correction: 功能中心 tab MUST be INACTIVE, 绿洲专业工作台 tab MUST be ACTIVE with green underline. New session selection already lives INSIDE this workbench native card. 文档管理 remains inactive. No duplicate product heading in page body, no settingsbutton, no other nativecard opened. Body has a small 新会话 heading (not huge) and short instruction 选择功能与所属项目. No backarrow suggesting an in-center subpage. Four equally weighted category tabs EXACTLY 技术研发 / 专利撰写 / 附图生成 / 辅助功能 with minimal icons; only the specified category active. Under tabs show only that category's concrete workflows in a compact TWO-column card grid, modest border and6pxradius, no nestedcards. Every workflow has an exact functional name and node ID in smaller muted text. No 待接入 pills or disabled grayout; this is a proposed full design, not a claim of implemented capability. One chosen workflow palegreen border/checkmark, otherswhite. Clicking a workflow only selects it, no navigation arrows on workflowcards. Footer anchored belowgrid above bottomedge: a wide project dropdown labeled 所属项目 with selected 智能温控系统 and downchevron; to right one green button EXACTLY 确认 (never 打开工作台). Small quiet helper belowprojectfield 可选择项目，或不关联项目. No request/cost/model/approval/confirmationpanel. The 确认 button transitions this SAME native workbenchcard from function selection to the selected functional work, no additional tab/card. Do not show explanatory developer annotations about this transition insideproduct. All dates anchor2026-10-17 but visible dates notneeded. Synthetic data only. Edge-to-edge actualappscreen, no devicebezel/poster/collage. Preserve readable natural Chinese and purposeful whitespace, all cards/footer visible. Category state: 专利撰写 ACTIVE. Show EXACTLY SEVEN workflowcards in reading order: 权利要求初稿 (F-2-6); 说明书初稿 (F-2-7); 全文深度复检 (F-3-8); 专利撰写计划 (F-3-9); 发明人沟通确认 (F-3-10); 权利要求正式稿 (F-4-11); 说明书正式稿 (F-4-12). First 权利要求初稿 selected. Use four rows of compact cards, lastrowonlyleftcard. These seven MUST allfit. Do not include 申请文件终检 or 审查意见答复 in patentcategory; those belong to辅助功能. Do not inventmissingworkflows. No secondary descriptions needed besides nodeIDs to avoid crowding. Match source stylewhile fixingtabownership.",
+        "22-new-research": "Use case: ui-mockup. Edit target: attached selected desktop new-session sample. Create one revised screen at1487x1058, matching its white/forest-green #13745e, PingFang Chinese typography, restrained thin gray borders and same native tabstrip. Critical navigation correction: 功能中心 tab MUST be INACTIVE, 绿洲专业工作台 tab MUST be ACTIVE with green underline. New session selection already lives INSIDE this workbench native card. 文档管理 remains inactive. No duplicate product heading in page body, no settingsbutton, no other nativecard opened. Body has a small 新会话 heading (not huge) and short instruction 选择功能与所属项目. No backarrow suggesting an in-center subpage. Four equally weighted category tabs EXACTLY 技术研发 / 专利撰写 / 附图生成 / 辅助功能 with minimal icons; only the specified category active. Under tabs show only that category's concrete workflows in a compact TWO-column card grid, modest border and6pxradius, no nestedcards. Every workflow has an exact functional name and node ID in smaller muted text. No 待接入 pills or disabled grayout; this is a proposed full design, not a claim of implemented capability. One chosen workflow palegreen border/checkmark, otherswhite. Clicking a workflow only selects it, no navigation arrows on workflowcards. Footer anchored belowgrid above bottomedge: a wide project dropdown labeled 所属项目 with selected 智能温控系统 and downchevron; to right one green button EXACTLY 确认 (never 打开工作台). Small quiet helper belowprojectfield 可选择项目，或不关联项目. No request/cost/model/approval/confirmationpanel. The 确认 button transitions this SAME native workbenchcard from function selection to the selected functional work, no additional tab/card. Do not show explanatory developer annotations about this transition insideproduct. All dates anchor2026-10-17 but visible dates notneeded. Synthetic data only. Edge-to-edge actualappscreen, no devicebezel/poster/collage. Preserve readable natural Chinese and purposeful whitespace, all cards/footer visible. Category state: 技术研发 ACTIVE, otherthreeinactive. EXACTLY FIVE workflowcards in reading order 技术背景研究 (F-1-1); TRIZ问题分析 (F-1-2); 概要专利检索 (F-1-3); 技术方案筛选 (F-1-4); 技术交底书 (F-1-5). Select 技术背景研究 firstcard withgreencheck. Keep SAME gridcard sizes/positions as attached patentstate, three rows, lastrowleftonly, calm whitespacebelowgrid. Footer remains sameposition. No inventedworkflows. Do not change nativeworkbenchtabactive state, projectfield or 确认 button.",
+        "23-new-drawings": "Use case: ui-mockup. Edit target: attached selected desktop new-session sample. Create one revised screen at1487x1058, matching its white/forest-green #13745e, PingFang Chinese typography, restrained thin gray borders and same native tabstrip. Critical navigation correction: 功能中心 tab MUST be INACTIVE, 绿洲专业工作台 tab MUST be ACTIVE with green underline. New session selection already lives INSIDE this workbench native card. 文档管理 remains inactive. No duplicate product heading in page body, no settingsbutton, no other nativecard opened. Body has a small 新会话 heading (not huge) and short instruction 选择功能与所属项目. No backarrow suggesting an in-center subpage. Four equally weighted category tabs EXACTLY 技术研发 / 专利撰写 / 附图生成 / 辅助功能 with minimal icons; only the specified category active. Under tabs show only that category's concrete workflows in a compact TWO-column card grid, modest border and6pxradius, no nestedcards. Every workflow has an exact functional name and node ID in smaller muted text. No 待接入 pills or disabled grayout; this is a proposed full design, not a claim of implemented capability. One chosen workflow palegreen border/checkmark, otherswhite. Clicking a workflow only selects it, no navigation arrows on workflowcards. Footer anchored belowgrid above bottomedge: a wide project dropdown labeled 所属项目 with selected 智能温控系统 and downchevron; to right one green button EXACTLY 确认 (never 打开工作台). Small quiet helper belowprojectfield 可选择项目，或不关联项目. No request/cost/model/approval/confirmationpanel. The 确认 button transitions this SAME native workbenchcard from function selection to the selected functional work, no additional tab/card. Do not show explanatory developer annotations about this transition insideproduct. All dates anchor2026-10-17 but visible dates notneeded. Synthetic data only. Edge-to-edge actualappscreen, no devicebezel/poster/collage. Preserve readable natural Chinese and purposeful whitespace, all cards/footer visible. Category state: 附图生成 ACTIVE, otherthreeinactive. EXACTLY THREE workflowcards in reading order 专利附图主图; 专利细节图; 专利6视图. Selected 专利附图主图 firstcard withgreencheck. These are NEWfunction names, DO NOT show F/Flow numbers or any invented node/service IDs. Small secondary plain descriptions respectively 整体结构与主要部件 / 局部结构与连接细节 / 六个方向的正投影视图. Use minimal line image/cubeicons not decorative generated patentdrawings. Keep SAME compact gridcard dimensions as patentreference, two rows, lastrowleftonly, calm whitespace below. Keep SAMEactiveworkbenchtab, sameprojectdropdownandfooter 确认. No billing/upload/materials controls at selectionstep.",
+        "24-new-utilities": "Use case: ui-mockup. Edit target: attached selected desktop new-session sample. Create one revised screen at1487x1058, matching its white/forest-green #13745e, PingFang Chinese typography, restrained thin gray borders and same native tabstrip. Critical navigation correction: 功能中心 tab MUST be INACTIVE, 绿洲专业工作台 tab MUST be ACTIVE with green underline. New session selection already lives INSIDE this workbench native card. 文档管理 remains inactive. No duplicate product heading in page body, no settingsbutton, no other nativecard opened. Body has a small 新会话 heading (not huge) and short instruction 选择功能与所属项目. No backarrow suggesting an in-center subpage. Four equally weighted category tabs EXACTLY 技术研发 / 专利撰写 / 附图生成 / 辅助功能 with minimal icons; only the specified category active. Under tabs show only that category's concrete workflows in a compact TWO-column card grid, modest border and6pxradius, no nestedcards. Every workflow has an exact functional name and node ID in smaller muted text. No 待接入 pills or disabled grayout; this is a proposed full design, not a claim of implemented capability. One chosen workflow palegreen border/checkmark, otherswhite. Clicking a workflow only selects it, no navigation arrows on workflowcards. Footer anchored belowgrid above bottomedge: a wide project dropdown labeled 所属项目 with selected 智能温控系统 and downchevron; to right one green button EXACTLY 确认 (never 打开工作台). Small quiet helper belowprojectfield 可选择项目，或不关联项目. No request/cost/model/approval/confirmationpanel. The 确认 button transitions this SAME native workbenchcard from function selection to the selected functional work, no additional tab/card. Do not show explanatory developer annotations about this transition insideproduct. All dates anchor2026-10-17 but visible dates notneeded. Synthetic data only. Edge-to-edge actualappscreen, no devicebezel/poster/collage. Preserve readable natural Chinese and purposeful whitespace, all cards/footer visible. Category state: 辅助功能 ACTIVE, otherthreeinactive. EXACTLY TWO workflowcards in onegridrow: 申请文件终检 (F-5-13), 审查意见答复 (F-6-14). Firstselectedgreencheck. SAMEcompactgridsizes, generouswhitearea below. Show PROJECT DROPDOWN OPEN above its footerfield, confined to left projectfieldwidth; do notcoverfunctioncards or 确认 button. Small white menu with thinborder and modestshadow lists exactly fourchoices vertically: 不关联项目 · 独立会话; 智能温控系统 (currentselectedgreencheck); 锂电池管理系统; 机械连接结构. Field stillreads 所属项目 智能温控系统. The top menuoptionclarifiesnewworkcanbe independent; othersselectexistingproject. Footer green 确认 stays visible, no secondbutton. Do notchangeactiveworkbenchtab. No fake customerdata, projectIDs, treecontrols, source/modelcontrols orgenerationstate on this selectionscreen."
+      },
+      "implementationStatus": "not-started",
+      "capabilityNote": "All listed workflow choices represent requested design scope, not verified live bindings. Drawing contracts remain to be defined."
+    },
+    {
+      "date": "2026-10-17",
+      "kind": "skill-label-dsh-model-selector",
+      "pages": [
+        "25-confirmed-work"
+      ],
+      "sourceLabel": "skill",
+      "modelAuthority": "DSH current-conversation native model selection",
+      "implementationStatus": "design-only, selector embedding API not verified",
+      "promptRecord": {
+        "date": "2026-10-17",
+        "mode": "built-in image_gen",
+        "prompt": "Edit the attached exact formal Oasis workbench UI sample. Target1487x1058, one screen, same native tabs and active绿洲专业工作台, same typography, whitebase, forestgreen#13745e, spacing, two input/resultcolumns, fields, emptyresultstate, project智能温控系统 and dateanchor2026-10-17. Scope is a precise user correction: rename the source segmented option 本地 to EXACT lowercase text skill. The source switch must read skill | 专业, skill selected green. Do NOT use 本地, Skills, SKILL or Skill for this source label. When skill is selected a DSH-native model dropdown must be visible in the SAME secondrow as 编辑Markdown / 文本预览 and green生成. This modelcontrol reuses DSH's current conversation model choices, currentselection and available states, not an Oasis providerlist; do not fabricate an expanded model list. Show CLOSED model dropdown with a short clear leadinglabel 大模型 and selected displayvalue DeepSeek Flash, downchevronright, matching the minimal DSH native formappearance. DeepSeek Flash here is the EXISTING samplevalue preserved fromreference, not a hardcoded universal model. No secondmodelselector, modelsettingsbutton, credentialsform, custom providercontrols, or longexplanations. Do not change any otherlayout/content: 权利要求初稿 F-2-6, sourceatfirstrow, projectlabeland输入/结果; secondrow editmode/model/生成; 技术交底/附图说明/撰写要求/用户指令; 上游历史文稿选择文稿; emptyinputplaceholder; right 尚未生成结果. Remove any redannotation ifpresent (cleanreferenceprovided). No新增UI heading/statusbanner/review/draft/billing/costcontrol. This is a static proposed design: modeloptions must later match DSH live data rather than a copied list. Only render thecleanproductscreen, no annotations/devicebezel/poster."
+      }
+    },
+    {
+      "date": "2026-10-17",
+      "kind": "annotated-single-toolbar",
+      "pages": [
+        "25-confirmed-work"
+      ],
+      "removed": [
+        "编辑Markdown/文本预览",
+        "输入/结果"
+      ],
+      "movedToFirstRow": [
+        "大模型选择",
+        "生成"
+      ],
+      "implementationStatus": "design-only",
+      "promptRecord": {
+        "date": "2026-10-17",
+        "mode": "built-in image_gen",
+        "reference": "latest user annotated screenshot, num_last_images_to_include=1",
+        "prompt": "Edit the LAST USER ATTACHED annotated Oasis desktop screenshot according to its RED MARKUP. Use case ui-mockup. One clean revised desktop screen,1487x1058, samewhite/forestgreen#13745e/PingFang/charcoal/minimalborders, same native card tabs 功能中心 inactive / 绿洲专业工作台 active / 文档管理 inactive / plus. EXACT requested changes: completely REMOVE 编辑 Markdown and 文本预览 segmented control (crossedoutleft); completely REMOVE 输入 and 结果 segmented control (crossedoutright). Move the EXISTING 大模型 DeepSeek Flash dropdown UP into the FIRST workbenchtoolbar row in the emptycentralspace as redarrowindicates. Move green 生成 button UP into SAME FIRST ROW atfar-right (where old输入/结果 switchwas). Keep 所属项目 智能温控系统 compact towardright before生成. This creates EXACTLY ONE compact workbenchtoolbar immediately under native tabs, all verticallyaligned, reading left to right 权利要求初稿 F-2-6 | skill / 专业 (skillselectedgreen) | 大模型 DeepSeek Flash dropdown | 所属项目 智能温控系统 | 生成 greenbutton. Use natural widths that fit withoutwrap: titleabout240px,source200px,model350px,project230px,generate160px,remainingpadding/gaps. No secondtoolbarrow and no blank bandwhere oldrowwas. Modeldropdown contents reuseDSH authority, currentdisplayvalueonly, do not inventexpandedlist. Everything underneath moves up to use reclaimedheight: side-by-side equallywide inputleft / result right, thincenterdivider. Left tabs 技术交底 (activegreenunderline), 附图说明, 撰写要求, 用户指令; below 上游历史文稿 dropdown选择文稿; then large editableinputwithcaret and grayplaceholder输入技术交底内容…. Right header生成结果; emptyresultcenter documenticon 尚未生成结果 / 完成材料后点击生成. Preserve quietbottomautosavestatus 已保存 · 2026-10-17 10:24. Singlechosenworkbenchcard remainsactive. No repeated producttitle, newsettings, approval, draft, billing, extra controls or explanatoryannotations. REMOVE ALL RED HANDDRAWN LINES/CIRCLES/ARROWS from finalcleanoutput. Keep unchangedfeatures exactly, editonlyspecifiedtoolbarlayout and reclaimedheight. No separate 输入/结果 viewtoggle anywhere, no Markdown/preview modecontrols anywhere. One screen edge-to-edge, no collage/deviceframe/poster."
+      }
+    },
+    {
+      "date": "2026-10-17",
+      "kind": "narrow-adaptation-from-single-toolbar-wide",
+      "pages": [
+        "03-input-narrow",
+        "05-result-narrow"
+      ],
+      "referenceWide": "25-confirmed-work-revision-3.png",
+      "headerRows": 2,
+      "body": "input above result; both visible",
+      "removed": [
+        "编辑Markdown/文本预览",
+        "输入/结果"
+      ],
+      "implementationStatus": "static-design-only",
+      "promptRecord": {
+        "date": "2026-10-17",
+        "mode": "built-in image_gen",
+        "prompts": {
+          "03-input-narrow": "Use case ui-mockup. Adapt the selected latest WIDE Oasis workbench (Image1, authoritative controls) into a NARROW portrait desktop sidebar/workbench view, target1067x1475, matching Image2's portraitaspect only. Maintain restrained white/forestgreen#13745e/PingFang/charcoal/thinneutraldividers. Do not inherit obsolete controls from Image2. Nativepeer tabs at top: 功能中心 inactive, 绿洲专业工作台 activegreenunderline, 文档管理 inactive; fit tabs compactly withouttinytext, no repeated productheading. Responsive header keeps the SAME controls as Image1 and wraps into EXACTLY TWO compact rows: row1 权利要求初稿 F-2-6 atleft, skill / 专业 segmentedchoice (skillactive) then green生成 atfar-right; row2 大模型 DeepSeek Flash dropdown onleft roughly60%width, compact所属项目 智能温控系统 onright. Labelsandvalues mustfit withoutclipping; source label exact lowercase skill. DSHmodelcurrentselection is authoritative, displayclosedselectoronly, no inventedmodeloptions. NO 编辑Markdown/文本预览 controls ANYWHERE. NO 输入/结果 segmentedviewselector ANYWHERE. No extra header/status/settings/approval/draft/cost panels. After compactheader the wide TWO side-by-side panels become ONE fullwidth verticalstack: input area ONTOP, resultarea BELOW, both visibly present in this sameframe. Do not hide one behind tabs, don't produce side-by-side columns squeezednarrow. Materials tabs 技术交底(active), 附图说明, 撰写要求, 用户指令 inonecompactrow; below 上游历史文稿 with dropdown; then directeditableinput. Beneath input is 生成结果 area. Keep input/result regions balanced so both visible and no hugeblankgap. Content can independentlyscroll withinregions in implementation, thisisstaticdesign. Calm autosave text 已保存. Dateanchor2026-10-17. Onefocused actualappscreen, no deviceframe, poster, annotations or comparisoncollage. Preserve functionality and hierarchy fromwide, responsivespacingonly.This state is NEW/EMPTY input. 上游历史文稿 dropdown value选择文稿. Inputeditor hascaret andgrayplaceholder 输入技术交底内容…; editorabout400pxhigh. Lower 生成结果 panel about430pxhigh has centered minimaldocumenticon plus 尚未生成结果 / 完成材料后点击生成. No versioncards or resultactionbuttons because nooutputyet. Bottomquiet 已保存. Entirestackvisible within1067x1475 includingresultpanel, natural padding20–28px, do not makeinputconsumewholeviewport. Headernotmorethan220pxincludingnativetabs."
+        }
+      }
+    },
+    {
+      "date": "2026-10-17",
+      "kind": "rename-refine-to-smart-improve",
+      "pages": [
+        "05-result-narrow"
+      ],
+      "actionLabel": "智能完善",
+      "versionLabel": "智能完善版",
+      "implementationStatus": "static-design-only",
+      "promptRecord": {
+        "date": "2026-10-17",
+        "mode": "built-in image_gen",
+        "prompt": "Perform a precise Chinese UI text edit on this EXACT attached narrow Oasis workbench design,1066x1475. Change ONLY the result-action button text 修订 to 智能完善 and the selected version card name 修订版 to 智能完善版. Both new strings must be rendered verbatim, clear and not clipped. Preserve the existing pen icon for that action, preserve itsposition between 对话 and 去AI味, and widenthatbuttonjustenough by redistributing existingfooterbutton widths ifneeded. Preserve selectedversiongreenunderline and timestamp10:24. Absolutely all other controls/content/layout/style/colors/spacing unchanged: activeworkbenchtab, two-rowtoolbar, skill/专业, DSHmodeldropdown,projectlabel,生成, stackedinputandresult,材料tabs,上游历史文稿, autosavestatus, synthetictext, directeditcaret, floatinguparrow/downarrow, 保存/对话/去AI味. Do NOT restore Markdown/preview or input/resulttoggles. No new controls, no annotations, no deviceframe. Dateanchor2026-10-17. One clean revised screenshot. This is a namingchangeonly, not a newworkflowor newgeneration."
+      }
+    },
+    {
+      "date": "2026-10-17",
+      "kind": "professional-sync-async-running-wide-and-narrow",
+      "pages": [
+        "07-api-sync",
+        "08-api-async",
+        "26-api-sync-narrow",
+        "27-api-async-narrow"
+      ],
+      "references": "two user-provided old running screens and latest wide/narrow samples",
+      "sync": "compact indeterminate activity/elapsed time; wait for complete body; no streaming capability inferred",
+      "async": "submitted/processing/get result; synthetic task id and elapsed time; return later, no new request",
+      "implementationStatus": "static-design-only; asynchronous integration remains unavailable",
+      "promptRecord": {
+        "date": "2026-10-17",
+        "mode": "built-in image_gen",
+        "prompts": {
+          "07-api-sync": "Use case ui-mockup. Design a precise revised Oasis PROFESSIONAL API GENERATING state from attached prior-state reference and latest layout. Dateanchor2026-10-17. All data synthetic, design-only. Match white/forestgreen#13745e/PingFang/charcoal/thinneutralborders/modest6pxradius. Nativepeer tabs: 功能中心 INACTIVE, 绿洲专业工作台 ACTIVE greenunderline, 文档管理 inactive, plus. Workbenchtitle 权利要求初稿 F-2-6. Source switch EXACT skill / 专业 with 专业 ACTIVE green; duringrun bothsourceandservicechoicesreadonly/disabled. Professional mode shows actual service and sync/async type instead of a DSHmodel selector: use leadinglabel 服务, not 大模型, and never DeepSeek Flash in this professionalstate. No 编辑Markdown/文本预览 switch ANYWHERE; no 输入/结果 viewtoggle ANYWHERE; no repeatedproductheading/settings/review/draft/costconfirmation/查看原运行 banners/cancel/refund/retrybuttons. Running freezes input/source/service while keeping materialtext readable, priorversions retained, no auto source switch. Resultarea has versioncards 初始版本 / 智能完善版 / 生成中 (selectedgreenunderline), so pendingrun is its OWN card, never overwrites a priorversion. Atactivegeneratingresultfooter four muted disabledactions 保存 / 对话 / 智能完善 / 去AI味. Preserve smallfloatingup/downarrowicons forlonginput; no fullwidthplaceholdernav. The progressindicator shows activity only, NO numericpercent/fabricatedcompletionestimate. Do NOT render implementationnote尚未接入 insideproduct; gallerycaption records thatboundary. No collage/deviceframe/developerannotations. Single focused actual app screen.Target1487x1058 WIDE, latest Image2 is authoritative singletoolbarandgeometry; Image1 only supplies compactrunningindicatorstyle. Exactly ONE topworkbenchtoolbar undernative tabs: function/node | skill/专业 | 服务 Fast · 同步 (readonly dropdown) | 所属项目 智能温控系统 | disabled spinner 生成中. No secondtoolbar. Body equal leftinput/rightresultcolumns. Left materials tabs 技术交底(active), 附图说明, 撰写要求, 用户指令; 上游历史文稿disclosure_1017.md; readonlysynthetictext about logging data sequentially, checksum, twoalternatingindexslots, recovery. Rightheader生成结果, then versioncards. Within current生成中version show a COMPACT palegreen horizontal statusstrip nearresulttop with spinner and 正在生成 · Fast · 同步 · 00:37, and a thin indeterminateactivitybar (no percent). Below a quietcentered message 正在等待服务返回完整结果, secondarytext 返回后显示本次生成内容. IMPORTANT: synchronous API in this product returns a completebody, no proven streaming. Therefore DO NOT show any partial claimtext, fake streamingcaret or premature generatedbody in this PENDING version. Preserve visualfocuson compactstrip andcalmwaitingarea. Old initial/intelligentenhancementversions remain asretainedcards above, notthecurrentruncontent. Leftfooter已保存, rightdisabledresultactions. Keep title/source/service/project/generatingbutton allsamefirstrowreadable.",
+          "08-api-async": "Use case ui-mockup. Design a precise revised Oasis PROFESSIONAL API GENERATING state from attached prior-state reference and latest layout. Dateanchor2026-10-17. All data synthetic, design-only. Match white/forestgreen#13745e/PingFang/charcoal/thinneutralborders/modest6pxradius. Nativepeer tabs: 功能中心 INACTIVE, 绿洲专业工作台 ACTIVE greenunderline, 文档管理 inactive, plus. Workbenchtitle 权利要求初稿 F-2-6. Source switch EXACT skill / 专业 with 专业 ACTIVE green; duringrun bothsourceandservicechoicesreadonly/disabled. Professional mode shows actual service and sync/async type instead of a DSHmodel selector: use leadinglabel 服务, not 大模型, and never DeepSeek Flash in this professionalstate. No 编辑Markdown/文本预览 switch ANYWHERE; no 输入/结果 viewtoggle ANYWHERE; no repeatedproductheading/settings/review/draft/costconfirmation/查看原运行 banners/cancel/refund/retrybuttons. Running freezes input/source/service while keeping materialtext readable, priorversions retained, no auto source switch. Resultarea has versioncards 初始版本 / 智能完善版 / 生成中 (selectedgreenunderline), so pendingrun is its OWN card, never overwrites a priorversion. Atactivegeneratingresultfooter four muted disabledactions 保存 / 对话 / 智能完善 / 去AI味. Preserve smallfloatingup/downarrowicons forlonginput; no fullwidthplaceholdernav. The progressindicator shows activity only, NO numericpercent/fabricatedcompletionestimate. Do NOT render implementationnote尚未接入 insideproduct; gallerycaption records thatboundary. No collage/deviceframe/developerannotations. Single focused actual app screen.Target1487x1058 WIDE, Image2 (new synchronouswide) is authoritative for exactsingletoolbar,columns,inputcontent, versions, typography and footer. Image1 supplies requestedoldASYNC stepperstructureonly. Change service to Basic · 异步, source专业selectedlocked, buttondisabledspinner生成中. Preserve singletoolbarwithfunction/node,skill/专业,service,project,button. Rightcurrent生成中version contains asyncstagepanel with heading Basic · 异步工作流 and three horizontally connectedstages 已提交 (greencheck), 处理中 (currentgreenring), 获取结果 (pendinggraycircle). Below thinseparator, taskmetadata 任务编号：DEMO-1017-082 and 已等待 02:13, then quietline 可切换卡片，稍后回来查看。 No fake resultbody or percentage/progressbar; no 未接入 or 示例 developerstatus inproduct; those aredocumentedoutsideimage. Retain current生成中 selectedversion, earlier 初始版本 and 智能完善版, notold 对话修改版selected. No compactsync activitystrip inthisasyncstate, the distinctstagepanelisprogress. Leftinputandtitleunchanged. Footerfourdisabledresultactions uses 智能完善 exact. No modeldropdown, localword, removedselectors, cancel/retry/originalrunbanner.",
+          "26-api-sync-narrow": "Use case ui-mockup. Design a precise revised Oasis PROFESSIONAL API GENERATING state from attached prior-state reference and latest layout. Dateanchor2026-10-17. All data synthetic, design-only. Match white/forestgreen#13745e/PingFang/charcoal/thinneutralborders/modest6pxradius. Nativepeer tabs: 功能中心 INACTIVE, 绿洲专业工作台 ACTIVE greenunderline, 文档管理 inactive, plus. Workbenchtitle 权利要求初稿 F-2-6. Source switch EXACT skill / 专业 with 专业 ACTIVE green; duringrun bothsourceandservicechoicesreadonly/disabled. Professional mode shows actual service and sync/async type instead of a DSHmodel selector: use leadinglabel 服务, not 大模型, and never DeepSeek Flash in this professionalstate. No 编辑Markdown/文本预览 switch ANYWHERE; no 输入/结果 viewtoggle ANYWHERE; no repeatedproductheading/settings/review/draft/costconfirmation/查看原运行 banners/cancel/refund/retrybuttons. Running freezes input/source/service while keeping materialtext readable, priorversions retained, no auto source switch. Resultarea has versioncards 初始版本 / 智能完善版 / 生成中 (selectedgreenunderline), so pendingrun is its OWN card, never overwrites a priorversion. Atactivegeneratingresultfooter four muted disabledactions 保存 / 对话 / 智能完善 / 去AI味. Preserve smallfloatingup/downarrowicons forlonginput; no fullwidthplaceholdernav. The progressindicator shows activity only, NO numericpercent/fabricatedcompletionestimate. Do NOT render implementationnote尚未接入 insideproduct; gallerycaption records thatboundary. No collage/deviceframe/developerannotations. Single focused actual app screen.Target1066x1476 NARROW portrait. Image1 (newSYNCwide) gives exactprofessionalstate; Image2 (newnarrowresult) gives narrow responsivegeometry ONLY, do notinheritits完成正文 or skillselected. Nativetabsandtworowcompactheader: firstrow 权利要求初稿 F-2-6 | skill / 专业 (专业selected, locked) | disabledspinner生成中. Secondrow 服务 Fast · 同步 disabled dropdown atleft, 所属项目 智能温控系统 atright. No DSHmodelselector. Body SINGLE fullwidthstack, readonlyinput ABOVE currentgeneratingresult BELOW, bothpresent andallfooteractionsvisible. Uppersection材料tabs 技术交底/附图说明/撰写要求/用户指令, 上游历史文稿disclosure_1017.md, inputtextabout sequentiallogging/checksum/twoalternatingslots in2shortparagraphs. Compactinputeditorabout260px, quiet已保存 beneath. Lower生成结果 thenversioncards 初始版本 / 智能完善版 / 生成中 (selected). Currentversionbody compactpalegreenstrip spinner 正在生成 · Fast · 同步 · 00:37 plusindeterminateactivityline withoutpercent; centeredwaitingmessage 正在等待服务返回完整结果 and 返回后显示本次生成内容. No partialbody or streamingcaret, no oldcontentincurrentrun. Disabledactions 保存 / 对话 / 智能完善 / 去AI味 atbottomofresultregion, no output已保存 claim. Preserve readabletext,nocroppedbutton,nothugeblankgap and balancedverticalareas. No输入/结果toggle or Markdown/preview selector. Onefocused screen.",
+          "27-api-async-narrow": "Use case ui-mockup. Design a precise revised Oasis PROFESSIONAL API GENERATING state from attached prior-state reference and latest layout. Dateanchor2026-10-17. All data synthetic, design-only. Match white/forestgreen#13745e/PingFang/charcoal/thinneutralborders/modest6pxradius. Nativepeer tabs: 功能中心 INACTIVE, 绿洲专业工作台 ACTIVE greenunderline, 文档管理 inactive, plus. Workbenchtitle 权利要求初稿 F-2-6. Source switch EXACT skill / 专业 with 专业 ACTIVE green; duringrun bothsourceandservicechoicesreadonly/disabled. Professional mode shows actual service and sync/async type instead of a DSHmodel selector: use leadinglabel 服务, not 大模型, and never DeepSeek Flash in this professionalstate. No 编辑Markdown/文本预览 switch ANYWHERE; no 输入/结果 viewtoggle ANYWHERE; no repeatedproductheading/settings/review/draft/costconfirmation/查看原运行 banners/cancel/refund/retrybuttons. Running freezes input/source/service while keeping materialtext readable, priorversions retained, no auto source switch. Resultarea has versioncards 初始版本 / 智能完善版 / 生成中 (selectedgreenunderline), so pendingrun is its OWN card, never overwrites a priorversion. Atactivegeneratingresultfooter four muted disabledactions 保存 / 对话 / 智能完善 / 去AI味. Preserve smallfloatingup/downarrowicons forlonginput; no fullwidthplaceholdernav. The progressindicator shows activity only, NO numericpercent/fabricatedcompletionestimate. Do NOT render implementationnote尚未接入 insideproduct; gallerycaption records thatboundary. No collage/deviceframe/developerannotations. Single focused actual app screen.Target1065x1476 NARROWportrait. Image2 (newsynchronousnarrow) is authoritative for EXACT two-rowheader/verticalgeometry/native tabs/materials/input/versions/footer. Image1 supplies professionalASYNC steps andmetadataonly. Change service dropdown to Basic · 异步 and preserve专业selectedlocked,生成中disabledspinner. Keep inputabove/resultbelow, nottwocolumns, no view/mode selectors. Lower生成结果 has 初始版本 / 智能完善版 / 生成中(selected) cards. Replace syncgreenactivitystripandwaitingicon/message with ASYNCpanel: small heading Basic · 异步工作流, three horizontal connectedstages 已提交 greencheck / 处理中 greenring / 获取结果 pendinggraycircle. Underfine separator show 任务编号：DEMO-1017-082 then 已等待 02:13 then 可切换卡片，稍后回来查看。 Fit clearwithinresultarea, shorteninputheightslightly ifneeded whilekeepingboth inputandresult visible; no tinyfonts, no clippedfooter. Preservedisabledresultactions 保存 / 对话 / 智能完善 / 去AI味 atbottom. No old正文incurrentgeneratingversion, no percentage, no syncstatusbar, no DSHmodeldropdown, no developer未接入/示例note insideproduct, no originalrunbanner/retry/cancel/refund. Allotherstyle, sourcewordskill, smartimprovement naminganddatesunchanged."
+        }
+      }
+    }
+  ],
+  "updatedAt": "2026-10-18",
+  "remainingSamples20261017": {
+    "approvedBaseline": "confirmation-manifest.json",
+    "reviewManifest": "remaining-manifest.json",
+    "gallery": "remaining.html",
+    "prompts": "grouped-remaining-prompts-20261017.json",
+    "count": 14,
+    "status": "awaiting-user-check"
+  },
+  "fiveChanges20261018": {
+    "status": "awaiting-user-check",
+    "keys": [
+      "28-version-tabs-wide",
+      "29-version-tabs-narrow",
+      "30-settings-upgrade"
+    ],
+    "prompts": "five-changes-prompts-20261018.json",
+    "gallery": "index.html#updates"
+  },
+  "noPicker20261018": {
+    "keys": [
+      "28-version-tabs-wide",
+      "29-version-tabs-narrow"
+    ],
+    "prompts": "no-picker-prompts-20261018.json",
+    "status": "superseded-by-user-correction"
+  },
+  "pickerCorrection20261018": {
+    "status": "awaiting-user-check",
+    "skill": "DSH model picker only, without label prefix",
+    "professional": "no model or service picker",
+    "both": "no non-model picker such as Fast sync",
+    "wideFile": "28-version-tabs-wide.png",
+    "narrowFile": "29-version-tabs-narrow-revision-3.png",
+    "method": "Restore existing correct skill sample; retain correct professional sample"
+  },
+  "pendingConfirmation20261018": {
+    "status": "approved-by-user",
+    "count": 15,
+    "manifest": "pending-confirmation-manifest.json",
+    "gallery": "pending-confirmation.html"
+  },
+  "designApproval20261021": {
+    "status": "approved-by-user",
+    "count": 15,
+    "record": "design-approval-20261021.json",
+    "recordSHA256": "f651fec12df08ced51145f9d4a748641a002d14f8ddba2b1e0c26a28ddd96a68"
+  }
+}

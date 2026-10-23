@@ -12,6 +12,8 @@ import { accountCommandSchemas } from './oasis-account-contract.js'
 import { OasisAccountError } from './oasis-account.js'
 import { importCommands, sanitizeImportDiagnostics } from './website-import-contract.js'
 import { WebsiteImportError } from './website-import-client.js'
+import { v340PrepareCommandSchema } from './v340-preparation.js'
+import { v340Commands } from './v340-runtime-contract.js'
 
 export const OASIS_WORKBENCH_RPC_CHANNEL = '/oasis-workbench'
 
@@ -213,6 +215,26 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
       return { ok: true, value: await service.replaceState(workspaceId, expectedRevision, state) }
     }
 
+    if (endpoint === 'workflow/v340/catalog') {
+      const parsed = parsePayload(z.object({}).strict(), payload)
+      if (!parsed.success) return parsed
+      return { ok: true, value: service.getV340Catalog() }
+    }
+    const v340Methods={'task/create':'createV340Task','task/draft':'updateV340Draft','run/observe':'observeV340Run','run/stop':'stopV340Run','result/draft':'saveV340ResultDraft',
+      'result/edit':'editV340Result','result/review':'reviewV340Result','result/prepare-save':'prepareV340Save','result/commit-save':'commitV340Save',
+      'result/conversation-draft':'prepareV340ConversationDraft','result/saved-file':'resolveV340SavedFile'}
+    if(endpoint.startsWith('workflow/v340/')&&Object.hasOwn(v340Methods,endpoint.slice('workflow/v340/'.length))){
+      const action=endpoint.slice('workflow/v340/'.length),parsed=v340Commands[action].safeParse(payload)
+      if(!parsed.success)return {ok:false,error:{code:'bad-request',message:'新版任务输入无效',details:{}}}
+      try{return await (action==='result/commit-save'?writebackResult:materialResult)(()=>service[v340Methods[action]](parsed.data))}
+      catch{return {ok:false,error:{code:'V340_OPERATION_FAILED',message:'新版任务状态未确认，请刷新原任务；不会自动派发。',details:{}}}}
+    }
+    if (endpoint === 'workflow/v340/prepare') {
+      // Avoid echoing input text, file paths or configuration in validation errors.
+      const parsed = v340PrepareCommandSchema.safeParse(payload)
+      if (!parsed.success) return { ok: false, error: { code: 'bad-request', message: 'V3.4.0输入无效', details: {} } }
+      return materialResult(() => service.prepareV340(parsed.data))
+    }
     if (endpoint === 'workflow/catalog') {
       const parsed = parsePayload(workflowCatalogPayloadSchema, payload)
       if (!parsed.success) return parsed

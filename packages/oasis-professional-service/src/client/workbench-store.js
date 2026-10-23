@@ -6,6 +6,7 @@ import {
 } from './workbench-model.js'
 import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
 import { generationUnavailableReason, hasPendingUnifiedRun } from '../generation-contract.js'
+import {getV340ResultDrafts,getV340Versions} from '../v340-runtime-contract.js'
 
 export const EMPTY_WORKSPACE_STATE = createInitialWorkspaceState(null)
 
@@ -13,6 +14,7 @@ const EMPTY_PAGE_OPERATION = Object.freeze({
   materialPath: '',
   materialConfirmed: false,
   reviewNote: '',
+  resultEditDrafts: Object.freeze({}),
   writebackDirectory: '',
   writebackConfirmed: false,
   writebackPlan: null,
@@ -71,7 +73,78 @@ export function createWorkbenchStore({
   const runtimes = new Map()
   const listeners = new Set()
   const controller = new AbortController()
+  const handoffController=new AbortController()
   const pendingObservations = new Map()
+  const v340Queue=new Map()
+  function assertV340Handoff(workspaceId,pageId,target){
+    assertKnown(workspaceId)
+    const current=getCurrent(workspaceId),page=pageFor(workspaceId,pageId),op=operationFor(current,pageId)
+    const selected=op.v340Selection??{runId:page.v340?.activeRunId},run=page.v340?.runs[selected.runId]
+    const versionId=selected.versionId??run?.activeVersionId??run?.runId
+    const version=run&&getV340Versions(run).find(v=>v.versionId===versionId)
+    if(current.syncStatus!=='ready'||current.activePageId!==pageId||selected.runId!==target.runId||versionId!==target.versionId
+      ||version?.result.sha256!==target.resultSha256||version.review.status!=='approved'||current.pages.some(hasPendingUnifiedRun)
+      ||op.v340Edits?.[JSON.stringify([target.runId,target.versionId])]||getV340ResultDrafts(run)[target.versionId])throw Error('当前任务、审核版本或未保存编辑已变化')
+    return{current,selection:op.v340Selection}
+  }
+  async function performV340Handoff(workspaceId,pageId,target,action,extra,effect){
+    const signal=handoffController.signal
+    let onAbort
+    const interrupted=new Promise(resolve=>{onAbort=()=>resolve(false);signal.addEventListener('abort',onAbort,{once:true});if(signal.aborted)onAbort()})
+    try{
+      const job=queueV340(workspaceId,async context=>{
+        if(signal.aborted)return false
+        let started=false
+        try{
+          await Promise.race([flushWorkspace(workspaceId,context),interrupted])
+          if(closing||disposed||signal.aborted)return false
+          const captured=assertV340Handoff(workspaceId,pageId,target)
+          updatePageOperation(workspaceId,pageId,{activeOperation:'v340-handoff',error:null});started=true
+          if(!knownWorkspaceIds.has(workspaceId))return false
+          const result=await Promise.race([callV340(action,{workspaceId,taskId:pageId,expectedRevision:captured.current.revision,...target,...extra},signal),interrupted])
+          if(closing||disposed||signal.aborted)return false
+          const latest=assertV340Handoff(workspaceId,pageId,target)
+          if(latest.current.revision!==captured.current.revision||latest.selection!==captured.selection)throw Error('当前任务或版本已变化，请重新操作')
+          if(effect(result)===false)throw Error('原生接口或项目已变化，请重新操作')
+          updatePageOperation(workspaceId,pageId,{feedback:action==='result/conversation-draft'?'固定审核版本已放入对话草稿，尚未发送。':
+            result.matchesReviewed?'已打开当前文件；读取时与固定审核版本一致。':'已打开当前文件；文件内容已变化，原审核结论不适用于当前文件。'})
+          return true
+        }catch(error){
+          if(closing||disposed||signal.aborted)return false
+          updatePageOperation(workspaceId,pageId,{error:error.message,errorCode:error.code??null})
+          throw error
+        }finally{if(started&&!closing&&!disposed)updatePageOperation(workspaceId,pageId,{activeOperation:null})}
+      })
+      // A read queued behind a hung write must release its caller as well as suppress later effects.
+      return await Promise.race([job,interrupted])
+    }finally{signal.removeEventListener('abort',onAbort)}
+  }
+  function queueV340(workspaceId,work){
+    assertOpen();assertKnown(workspaceId)
+    const prior=v340Queue.get(workspaceId)??Promise.resolve()
+    const job=prior.catch(()=>{}).then(async()=>{
+      assertOpen()
+      const runtime=runtimeFor(workspaceId),context={edits:[]}
+      runtime.v340Work=context
+      try{return await work(context)}
+      finally{
+        runtime.v340Work=null
+        // Ordinary edits accepted during this job must settle before the next queued mutation.
+        if(!closing&&!disposed&&!controller.signal.aborted)await flushWorkspaceInternal(workspaceId)
+      }
+    })
+    v340Queue.set(workspaceId,job)
+    void job.finally(()=>{if(v340Queue.get(workspaceId)===job)v340Queue.delete(workspaceId)}).catch(()=>{})
+    return job
+  }
+  function callV340(...args){
+    // Accepted work may outlive a shutdown deadline while hashing or awaiting another local step.
+    // Recheck immediately at the transport boundary, not only after its response.
+    assertOpen()
+    // A synchronous state subscriber may cancel a handoff while accepted writes still drain.
+    args[2]?.throwIfAborted()
+    return remote.v340(...args)
+  }
   const reducerEnvironment = { createId, now: clock }
   let closing = false
   let disposed = false
@@ -95,6 +168,11 @@ export function createWorkbenchStore({
     }
   }
 
+  // Accepted work owns its retained state even after the visible Workspace list changes.
+  function assertRetained(workspaceId) {
+    if (!states.has(workspaceId)) throw new Error('action requires a known Workspace')
+  }
+
   function runtimeFor(workspaceId) {
     let runtime = runtimes.get(workspaceId)
     if (!runtime) {
@@ -109,6 +187,7 @@ export function createWorkbenchStore({
         saveTimer: null,
         saveGeneration: 0,
         editGeneration: 0,
+        v340Work: null,
       }
       runtimes.set(workspaceId, runtime)
     }
@@ -162,6 +241,13 @@ export function createWorkbenchStore({
       catalogStatus: current.catalogStatus,
       catalogError: current.catalogError,
       workflows: current.workflows,
+      v340Catalog:current.v340Catalog??null,
+      v340CatalogStatus:current.v340CatalogStatus??'idle',
+      v340CatalogError:current.v340CatalogError??null,
+      v340Creating:current.v340Creating??false,
+      v340CreateError:current.v340CreateError??null,
+      closedV340Tabs:current.closedV340Tabs??[],
+      ...(current.closedV340Tabs?.includes(recordState.activePageId)?{activePageId:recordState.pages.find(p=>!current.closedV340Tabs.includes(p.pageId))?.pageId??null}:{}),
       unifiedFixtureEnabled: current.unifiedFixtureEnabled === true,
       apiExecutionAvailable: current.apiExecutionAvailable === true,
       localGenerationEnabled: current.localGenerationEnabled === true,
@@ -200,9 +286,29 @@ export function createWorkbenchStore({
     return state.pageOperations[pageId] ?? EMPTY_PAGE_OPERATION
   }
 
+  function resultDraft(workspaceId, pageId, runId) {
+    const drafts = operationFor(getCurrent(workspaceId), pageId).resultEditDrafts
+    return drafts && Object.hasOwn(drafts, runId) ? drafts[runId] : undefined
+  }
+
+  function assertNoDirtyResult(workspaceId, pageId, runId) {
+    const op=operationFor(getCurrent(workspaceId),pageId)
+    if(op.v340InputDraft||Object.keys(op.v340Edits??{}).length)throw Error('新版未保存草稿仍保留，请先保存或复制处理后重新载入。')
+    const drafts = operationFor(getCurrent(workspaceId), pageId).resultEditDrafts ?? {}
+    if (runId === undefined ? Object.values(drafts).some(draft => draft.dirty) : resultDraft(workspaceId, pageId, runId)?.dirty) {
+      throw new Error('存在未保存的结果编辑，请先保存为新版本或明确放弃编辑。')
+    }
+  }
+
+  function removeResultDraft(workspaceId, pageId, runId) {
+    const drafts = { ...operationFor(getCurrent(workspaceId), pageId).resultEditDrafts }
+    delete drafts[runId]
+    updatePageOperation(workspaceId, pageId, { resultEditDrafts: Object.freeze(drafts) })
+  }
+
   function updatePageOperation(workspaceId, pageId, changes) {
     assertOpen()
-    assertKnown(workspaceId)
+    assertRetained(workspaceId)
     pageFor(workspaceId, pageId)
     const current = getCurrent(workspaceId)
     const operation = Object.freeze({ ...operationFor(current, pageId), ...changes })
@@ -337,6 +443,7 @@ export function createWorkbenchStore({
     const runtime = runtimeFor(workspaceId)
     runtime.pendingDraft = draft
     clearScheduledSave(runtime)
+    if (runtime.v340Work) return
     const generation = runtime.saveGeneration
     const startDrain = () => {
       if (disposed || generation !== runtime.saveGeneration) return
@@ -351,7 +458,7 @@ export function createWorkbenchStore({
   }
 
   async function flushWorkspaceInternal(workspaceId) {
-    assertKnown(workspaceId)
+    assertRetained(workspaceId)
     const runtime = runtimeFor(workspaceId)
     clearScheduledSave(runtime)
     while (runtime.hydrationPromise) await runtime.hydrationPromise
@@ -360,22 +467,33 @@ export function createWorkbenchStore({
     return getCurrent(workspaceId)
   }
 
-  async function flushWorkspace(workspaceId) {
+  async function flushWorkspace(workspaceId, owner = null) {
     assertOpen()
+    const active=runtimes.get(workspaceId)?.v340Work
+    if(v340Queue.has(workspaceId)&&(!owner||active!==owner))throw new Error('项目正在保存，请稍后重试')
     return flushWorkspaceInternal(workspaceId)
   }
 
-  function applyAuthoritativeReplacement(workspaceId, result) {
+  function runV340PageOperation(context, workspaceId, pageId, name, operation, onSuccess) {
+    return runPageOperation(workspaceId, pageId, name, operation, onSuccess, context)
+  }
+
+  function applyAuthoritativeReplacement(workspaceId, result, edits = []) {
     if (result?.committed === true) {
       const current = getCurrent(workspaceId)
-      const authoritative = preserveClientState(
+      let authoritative = preserveClientState(
         ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current)),
         current,
       )
       if (current.syncStatus === 'conflict' || current.revision > authoritative.revision) {
         preserveDraftConflict(workspaceId, authoritative)
       }
+      for (const {actions,environment} of edits) {
+        for (const action of actions) authoritative = reduceWorkspaceState(authoritative, action, environment)
+      }
+      if(edits.length)authoritative=stateWith(authoritative,{syncStatus:'saving'})
       setState(workspaceId, authoritative)
+      if(edits.length)scheduleWorkspaceSave(workspaceId,workspaceStateToDraft(getCurrent(workspaceId)))
       return authoritative
     }
     if (result?.committed === false && result.reason === 'revision-conflict') {
@@ -407,9 +525,9 @@ export function createWorkbenchStore({
     throw error
   }
 
-  async function runPageOperation(workspaceId, pageId, operationName, operation, onSuccess) {
+  async function runPageOperation(workspaceId, pageId, operationName, operation, onSuccess, context = null) {
     assertOpen()
-    assertKnown(workspaceId)
+    assertRetained(workspaceId)
     pageFor(workspaceId, pageId)
     if (remote === null || typeof operation !== 'function') {
       throw new Error(`${operationName} requires the Oasis Host`)
@@ -420,18 +538,21 @@ export function createWorkbenchStore({
       activeOperation: operationName, error: null, errorCode: null, feedback: null, indexWarningManifest: null,
     })
     try {
-      await flushWorkspace(workspaceId)
+      await flushWorkspace(workspaceId,context)
       const current = getCurrent(workspaceId)
       if (current.syncStatus !== 'ready') {
         throw new Error(`Workspace is not ready for ${operationName}`)
       }
       const editGeneration = runtimeFor(workspaceId).editGeneration
+      const editIndex=context?.edits.length??0
       const result = await operation(current)
       if (closing || disposed || controller.signal.aborted) return getCurrent(workspaceId)
       if (runtimeFor(workspaceId).editGeneration !== editGeneration && result?.current) {
-        preserveDraftConflict(workspaceId, ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current)))
+        if(!context||context.edits.length-editIndex!==runtimeFor(workspaceId).editGeneration-editGeneration) {
+          preserveDraftConflict(workspaceId, ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current)))
+        }
       }
-      const applied = applyAuthoritativeReplacement(workspaceId, result)
+      const applied = applyAuthoritativeReplacement(workspaceId, result, context?.edits.slice(editIndex))
       updatePageOperation(workspaceId, pageId, {
         activeOperation: null,
         error: null,
@@ -467,9 +588,23 @@ export function createWorkbenchStore({
   function persistReadyAction(workspaceId, action) {
     assertOpen()
     const current = getCurrent(workspaceId)
-    const next = reduceWorkspaceState(current, action, reducerEnvironment)
+    const runtime=runtimeFor(workspaceId),captured=structuredClone(action)
+    let pageId,timestamp
+    const environment=runtime.v340Work?{
+      createId:()=>pageId??(pageId=createId()),now:()=>timestamp??(timestamp=clock()),
+    }:reducerEnvironment
+    const next = reduceWorkspaceState(current, captured, environment)
     if (next === current) return current
-    runtimeFor(workspaceId).editGeneration += 1
+    runtime.editGeneration += 1
+    if(runtime.v340Work){
+      // Replay accepted effects, since the Host response can change open-panel's creation condition.
+      // Keep one entry per edit so the generation/conflict checks still count accepted edits.
+      const actions=captured.type==='open-panel' ? [
+        ...(pageCreatedBy(captured,current,next)?[{type:'create-page'}]:[]),
+        {type:'set-panel-mode',panelMode:'normal'},
+      ]:[captured]
+      runtime.v340Work.edits.push({actions,environment})
+    }
     const saving = stateWith(next, {
       syncStatus: remote === null ? 'ready' : 'saving',
       syncError: null,
@@ -477,7 +612,7 @@ export function createWorkbenchStore({
     })
     setState(workspaceId, saving)
     if (remote !== null) {
-      scheduleWorkspaceSave(workspaceId, workspaceStateToDraft(saving))
+      scheduleWorkspaceSave(workspaceId, workspaceStateToDraft(getCurrent(workspaceId)))
     }
     return saving
   }
@@ -523,7 +658,7 @@ export function createWorkbenchStore({
 
         const saving = stateWith(hydrated, { syncStatus: 'saving' })
         setState(workspaceId, saving)
-        const draft = workspaceStateToDraft(saving)
+        const draft = workspaceStateToDraft(getCurrent(workspaceId))
         if (closing) {
           runtime.pendingDraft = draft
         } else {
@@ -547,7 +682,7 @@ export function createWorkbenchStore({
 
   function dispatch(workspaceId, action) {
     assertOpen()
-    assertKnown(workspaceId)
+    assertRetained(workspaceId)
     const current = getCurrent(workspaceId)
     if (remote === null || ['ready', 'saving'].includes(current.syncStatus)) {
       return persistReadyAction(workspaceId, action)
@@ -622,7 +757,7 @@ export function createWorkbenchStore({
     },
 
     subscribe(listener) {
-      if (closing || disposed) return () => {}
+      if (disposePromise || closing || disposed) return () => {}
       listeners.add(listener)
       return () => listeners.delete(listener)
     },
@@ -638,11 +773,32 @@ export function createWorkbenchStore({
 
     hydrateWorkspace,
 
+    async loadV340Catalog(workspaceId){
+      assertOpen();assertKnown(workspaceId)
+      if(getCurrent(workspaceId).v340CatalogStatus==='ready')return getCurrent(workspaceId).v340Catalog
+      if(typeof remote?.getV340Catalog!=='function'){
+        setState(workspaceId,stateWith(getCurrent(workspaceId),{v340CatalogStatus:'unavailable',v340CatalogError:null}));return null
+      }
+      const runtime=runtimeFor(workspaceId)
+      if(runtime.v340CatalogPromise)return runtime.v340CatalogPromise
+      setState(workspaceId,stateWith(getCurrent(workspaceId),{v340CatalogStatus:'loading',v340CatalogError:null}))
+      runtime.v340CatalogPromise=(async()=>{
+        try{
+          const catalog=await remote.getV340Catalog(controller.signal)
+          if(!closing&&!disposed)setState(workspaceId,stateWith(getCurrent(workspaceId),{v340Catalog:catalog,v340CatalogStatus:'ready',v340CatalogError:null}))
+          return catalog
+        }catch(error){
+          if(!closing&&!disposed)setState(workspaceId,stateWith(getCurrent(workspaceId),{v340Catalog:null,v340CatalogStatus:'error',v340CatalogError:'新版目录读取失败，请重试。'}))
+          throw error
+        }finally{runtime.v340CatalogPromise=null}
+      })()
+      return runtime.v340CatalogPromise
+    },
     async loadWorkflowCatalog(workspaceId) {
       assertOpen()
       assertKnown(workspaceId)
       const current = getCurrent(workspaceId)
-      if (current.catalogStatus === 'ready') return current.workflows
+      if (current.catalogStatus === 'ready') {await store.loadV340Catalog(workspaceId).catch(()=>null);return getCurrent(workspaceId).workflows}
       if (remote === null || typeof remote.getWorkflowCatalog !== 'function') {
         throw new Error('workflow catalog is unavailable')
       }
@@ -652,6 +808,7 @@ export function createWorkbenchStore({
       runtime.catalogPromise = (async () => {
         try {
           const response = await remote.getWorkflowCatalog(undefined, controller.signal)
+          await store.loadV340Catalog(workspaceId).catch(()=>null)
           if (closing || disposed) return []
           const workflows = Array.isArray(response?.workflows) ? response.workflows : null
           if (workflows === null) throw new Error('Malformed workflow catalog response')
@@ -722,6 +879,7 @@ export function createWorkbenchStore({
     async reloadWorkspace(workspaceId) {
       assertOpen()
       assertKnown(workspaceId)
+      for (const page of getCurrent(workspaceId).pages) assertNoDirtyResult(workspaceId, page.pageId)
       const runtime = runtimeFor(workspaceId)
       runtime.pendingActions.length = 0
       runtime.pendingDraft = null
@@ -734,10 +892,14 @@ export function createWorkbenchStore({
       assertKnown(workspaceId)
       const runtime = runtimeFor(workspaceId)
       while (runtime.hydrationPromise) await runtime.hydrationPromise
+      while(v340Queue.has(workspaceId))await v340Queue.get(workspaceId)
       return flushWorkspace(workspaceId)
     },
 
-    flushWorkspace,
+    async flushWorkspace(workspaceId){
+      while(v340Queue.has(workspaceId))await v340Queue.get(workspaceId)
+      return flushWorkspace(workspaceId)
+    },
 
     setPanelMode(workspaceId, panelMode) {
       return dispatch(workspaceId, { type: 'set-panel-mode', panelMode })
@@ -765,6 +927,128 @@ export function createWorkbenchStore({
       return pageCreatedBy(action, before, after)
     },
 
+    v340Action(workspaceId,pageId,action,payload={}){
+      return queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,`v340-${action}`,current=>callV340(action,{
+        workspaceId,taskId:pageId,expectedRevision:current.revision,...payload,
+      },controller.signal)))
+    },
+    saveV340Draft(workspaceId,pageId,draft){
+      const page=pageFor(workspaceId,pageId)
+      if(hasPendingUnifiedRun(page))throw Error('未决运行锁定输入与来源')
+      const captured=structuredClone(draft)
+      const job=queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,'v340-input',current=>callV340('task/draft',{
+        workspaceId,taskId:pageId,expectedRevision:current.revision,draft:captured},controller.signal),()=>
+          JSON.stringify(operationFor(getCurrent(workspaceId),pageId).v340InputDraft)===JSON.stringify(captured)?{v340InputDraft:null,feedback:'输入已保存'}:{}))
+      updatePageOperation(workspaceId,pageId,{v340InputDraft:captured,v340SavePlan:null,v340SaveConfirmed:false})
+      return job
+    },
+    saveV340ResultDraft(workspaceId,pageId,target,body){
+      const key=JSON.stringify([target.runId,target.versionId])
+      const op=operationFor(getCurrent(workspaceId),pageId),edit={...target,body}
+      const job=queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,'v340-edit-draft',current=>callV340('result/draft',{
+        workspaceId,taskId:pageId,expectedRevision:current.revision,runId:target.runId,baseSha256:target.baseSha256,body,format:'core-markdown'},controller.signal),()=>{
+          const edits={...operationFor(getCurrent(workspaceId),pageId).v340Edits}
+          if(edits[key]===edit)delete edits[key]
+          return{v340Edits:edits}
+        }))
+      updatePageOperation(workspaceId,pageId,{v340Edits:{...op.v340Edits,[key]:edit},v340SavePlan:null,v340SaveConfirmed:false})
+      return job
+    },
+    editV340Result(workspaceId,pageId,target){
+      return queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,'v340-edit',async current=>{
+        if(operationFor(current,pageId).v340Edits?.[JSON.stringify([target.runId,target.versionId])])throw Error('请先保存当前本地编辑草稿')
+        const run=pageFor(workspaceId,pageId).v340.runs[target.runId],draft=getV340ResultDrafts(run)[target.versionId]
+        if(!draft)throw Error('请先保存结果编辑草稿')
+        const digest=await globalThis.crypto.subtle.digest('SHA-256',new TextEncoder().encode(draft.body))
+        const draftSha256=[...new Uint8Array(digest)].map(n=>n.toString(16).padStart(2,'0')).join('')
+        return callV340('result/edit',{workspaceId,taskId:pageId,expectedRevision:current.revision,...target,draftSha256,requestKey:createRequestKey()},controller.signal)
+      },()=>({v340SavePlan:null,v340SaveConfirmed:false})))
+    },
+    reviewV340Result(workspaceId,pageId,target,confirmation){
+      return queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,'v340-review',current=>{
+        const op=operationFor(current,pageId),selection=op.v340Selection
+        if(current.activePageId!==pageId||op.v340Edits?.[JSON.stringify([target.runId,target.versionId])]
+          ||selection&&(selection.runId!==target.runId||selection.versionId!==target.versionId))throw Error('当前任务或未保存编辑已变化')
+        if(!confirmation||confirmation.workspaceId!==workspaceId||confirmation.revision!==current.revision
+          ||['runId','versionId','resultSha256'].some(k=>confirmation[k]!==target[k]))throw Error('审核确认已失效')
+        return callV340('result/review',{workspaceId,taskId:pageId,expectedRevision:current.revision,...target,confirmed:true},controller.signal)
+      }))
+    },
+    prepareV340Save(workspaceId,pageId,target){
+      return queueV340(workspaceId,async context=>{
+        await flushWorkspace(workspaceId,context)
+        const current=getCurrent(workspaceId)
+        if(current.syncStatus!=='ready')throw Error('请先处理项目保存冲突')
+        if(operationFor(current,pageId).v340Edits?.[JSON.stringify([target.runId,target.versionId])])throw Error('请先保存当前本地编辑草稿')
+        const plan=await callV340('result/prepare-save',{workspaceId,taskId:pageId,expectedRevision:current.revision,...target},controller.signal)
+        if(getCurrent(workspaceId).revision!==current.revision)throw Error('保存确认已失效')
+        updatePageOperation(workspaceId,pageId,{v340SavePlan:{...plan,target,revision:current.revision},v340SaveConfirmed:false});return plan
+      })
+    },
+    setV340SaveConfirmation(workspaceId,pageId,confirmed){updatePageOperation(workspaceId,pageId,{v340SaveConfirmed:confirmed===true})},
+    commitV340Save(workspaceId,pageId){
+      return queueV340(workspaceId,context=>{
+        const op=operationFor(getCurrent(workspaceId),pageId)
+        if(!op.v340SavePlan||!op.v340SaveConfirmed)throw Error('请明确确认当前固定版本的文件保存')
+        const plan=op.v340SavePlan
+        return runV340PageOperation(context,workspaceId,pageId,'writeback-commit',current=>{
+          if(current.revision!==plan.revision)throw Error('保存确认已失效')
+          return callV340('result/commit-save',{confirmationToken:plan.confirmationToken},controller.signal,workspaceId)
+        },()=>({v340SavePlan:null,v340SaveConfirmed:false,feedback:'固定版本已保存'}))
+      })
+    },
+    createV340Task(workspaceId,nodeId){
+      assertOpen();assertKnown(workspaceId)
+      const node=getCurrent(workspaceId).v340Catalog?.nodes.find(n=>n.nodeId===nodeId)
+      if(!node)throw Error('新版节点目录不可用')
+      if(getCurrent(workspaceId).v340Creating)return Promise.reject(Error('新版任务正在创建'))
+      const taskId=createId()
+      const job=queueV340(workspaceId,async context=>{
+        try{
+          await flushWorkspace(workspaceId,context)
+          const current=getCurrent(workspaceId)
+          if(current.syncStatus!=='ready'||typeof remote?.v340!=='function')throw Error('项目尚未就绪')
+          const generation=runtimeFor(workspaceId).editGeneration
+          const editIndex=context.edits.length
+          const result=await callV340('task/create',{workspaceId,taskId,expectedRevision:current.revision,nodeId,title:node.title},controller.signal)
+          if(closing||disposed)return getCurrent(workspaceId)
+          if(runtimeFor(workspaceId).editGeneration!==generation&&result?.current
+            &&(!context||context.edits.length-editIndex!==runtimeFor(workspaceId).editGeneration-generation))preserveDraftConflict(workspaceId,recordToWorkspaceState(result.current))
+          applyAuthoritativeReplacement(workspaceId,result,context?.edits.slice(editIndex))
+          store.activatePage(workspaceId,taskId)
+          await flushWorkspace(workspaceId,context)
+          return getCurrent(workspaceId)
+        }catch(error){
+          if(!closing&&!disposed)setState(workspaceId,stateWith(getCurrent(workspaceId),{v340CreateError:'新版任务创建未完成，请核对项目后重试。'}))
+          throw error
+        }finally{
+          if(!closing&&!disposed)setState(workspaceId,stateWith(getCurrent(workspaceId),{v340Creating:false}))
+        }
+      })
+      // Register accepted work before a synchronous subscriber can close or remove this Workspace.
+      setState(workspaceId,stateWith(getCurrent(workspaceId),{v340Creating:true,v340CreateError:null}))
+      return job
+    },
+    selectV340Version(workspaceId,pageId,runId,versionId){
+      const page=pageFor(workspaceId,pageId)
+      if(!page.v340?.runs[runId]||!getV340Versions(page.v340.runs[runId]).some(v=>v.versionId===versionId))throw Error('版本不属于当前任务')
+      updatePageOperation(workspaceId,pageId,{v340Selection:{runId,versionId},v340SavePlan:null,v340SaveConfirmed:false})
+    },
+    async useV340InConversation(workspaceId,pageId,target){
+      if(!conversationDrafts)throw Error('当前对话输入接口不可用')
+      const destination=conversationDrafts.capture(workspaceId)
+      return performV340Handoff(workspaceId,pageId,target,'result/conversation-draft',{},result=>conversationDrafts.insert(destination,result))
+    },
+    async openV340SavedFile(workspaceId,pageId,target,writebackId){
+      const destination=nativeFiles?.captureSavedFileTarget(workspaceId)
+      if(!destination)throw Error('安全文件预览不可用')
+      return performV340Handoff(workspaceId,pageId,target,'result/saved-file',{writebackId},result=>nativeFiles.openSavedFile(destination,result))
+    },
+    discardV340LocalDrafts(workspaceId,pageId,expected){
+      const op=operationFor(getCurrent(workspaceId),pageId)
+      if(v340Queue.has(workspaceId)||JSON.stringify({input:op.v340InputDraft,edits:op.v340Edits})!==JSON.stringify(expected))throw Error('草稿或保存状态已变化，未放弃')
+      updatePageOperation(workspaceId,pageId,{v340InputDraft:null,v340Edits:{},error:null,errorCode:null})
+    },
     selectWorkflow(workspaceId, pageId, workflowId) {
       assertKnown(workspaceId)
       const current = getCurrent(workspaceId)
@@ -1196,17 +1480,49 @@ export function createWorkbenchStore({
         workspaceId, taskId: pageId, runId, expectedRevision: current.revision,
       }, controller.signal), () => ({ generationUncertain: false, requestKey: null, feedback: 'run-stopped' }))
     },
+    updateResultEditDraft(workspaceId, pageId, runId, body) {
+      assertOpen(); assertKnown(workspaceId)
+      const current = getCurrent(workspaceId)
+      const page = pageFor(workspaceId, pageId)
+      const operation = operationFor(current, pageId)
+      const run = page.runs[runId]
+      if (!['ready', 'saving'].includes(current.syncStatus) || operation.generationUncertain
+        || operation.activeOperation !== null && operation.activeOperation !== 'result-edit'
+        || hasPendingUnifiedRun(page) || page.remoteExecutionOrder.some(id => isOasisRemoteExecutionUnresolved(page.remoteExecutions[id]))) {
+        throw new Error('任务处理中或结果未确认，不能编辑结果。')
+      }
+      if (!run?.result || run.status !== 'completed' || typeof body !== 'string' || body.length > 100000) throw new Error('结果编辑不可用')
+      const previous = resultDraft(workspaceId, pageId, runId)
+      if (previous && previous.baseArtifactId !== run.result.artifact.artifactId) throw new Error('编辑基准已变化；原草稿保留，请明确处理。')
+      const draft = Object.freeze({ baseArtifactId: run.result.artifact.artifactId, body,
+        revision: (previous?.revision ?? 0) + 1, dirty: body !== run.result.artifact.body })
+      updatePageOperation(workspaceId, pageId, { resultEditDrafts: Object.freeze({ ...operation.resultEditDrafts, [runId]: draft }),
+        writebackPlan: null, writebackConfirmed: false })
+      return draft
+    },
+    discardResultEditDraft(workspaceId, pageId, runId, expectedDraft) {
+      assertOpen(); assertKnown(workspaceId); pageFor(workspaceId, pageId)
+      if (operationFor(getCurrent(workspaceId), pageId).activeOperation !== null) throw new Error('请等待当前操作完成后再放弃编辑。')
+      if (expectedDraft !== undefined && resultDraft(workspaceId, pageId, runId) !== expectedDraft) throw new Error('草稿已变化，请重新核对后再放弃。')
+      removeResultDraft(workspaceId, pageId, runId)
+    },
     async editUnifiedResult(workspaceId, pageId, runId, body) {
       assertInputEditable(workspaceId, pageId)
       const run = pageFor(workspaceId, pageId).runs[runId]
       if (!run || run.status !== 'completed') throw new Error('请选择已完成版本')
+      const submitted = resultDraft(workspaceId, pageId, runId)
+      if (submitted && (submitted.baseArtifactId !== run.result.artifact.artifactId || submitted.body !== body)) throw new Error('编辑基准或草稿已变化，原草稿保留。')
       const requestKey = createRequestKey()
       return runPageOperation(workspaceId, pageId, 'result-edit', current => remote.editUnifiedResult({
         workspaceId, taskId: pageId, runId, artifactId: run.result.artifact.artifactId,
         expectedRevision: current.revision, requestKey, body,
-      }, controller.signal), () => ({ feedback: 'result-edited', writebackPlan: null, writebackConfirmed: false, reviewNote: '' }))
+      }, controller.signal), () => {
+        if (submitted && resultDraft(workspaceId, pageId, runId) === submitted) removeResultDraft(workspaceId, pageId, runId)
+        return { feedback: 'result-edited', writebackPlan: null, writebackConfirmed: false, reviewNote: '' }
+      })
     },
     async useInConversation(workspaceId, pageId, runId) {
+      assertNoDirtyResult(workspaceId, pageId, runId)
       if (!conversationDrafts) throw new Error('当前对话输入接口不可用')
       const target = conversationDrafts.capture(workspaceId)
       const run = pageFor(workspaceId, pageId).runs[runId]
@@ -1222,6 +1538,7 @@ export function createWorkbenchStore({
         || page?.activeRunId !== runId || page.runs[runId]?.review.status !== 'approved') {
         throw new Error('当前任务或审核版本已变化，请重新准备对话资料')
       }
+      assertNoDirtyResult(workspaceId, pageId, runId)
       conversationDrafts.insert(target, result)
       updatePageOperation(workspaceId, pageId, { feedback: 'conversation-draft-ready' })
       return true
@@ -1245,10 +1562,25 @@ export function createWorkbenchStore({
       return true
     },
 
-    async reviewRun(workspaceId, pageId, runId, status, note) {
+    async reviewRun(workspaceId, pageId, runId, status, note, confirmation) {
+      assertNoDirtyResult(workspaceId, pageId, runId)
       const page = pageFor(workspaceId, pageId)
       const run = page.runs[runId]
       if (!run) throw new Error('unknown run')
+      const checkConfirmation = () => {
+        if (!confirmation) return // Legacy non-unified review retains its existing explicit action.
+        const current = getCurrent(workspaceId)
+        const selected = pageFor(workspaceId, pageId)
+        if (confirmation.workspaceId !== workspaceId || confirmation.revision !== current.revision
+          || current.activePageId !== pageId || selected.activeRunId !== runId
+          || confirmation.artifactId !== selected.runs[runId]?.result?.artifact.artifactId
+          || hasPendingUnifiedRun(selected)
+          || selected.remoteExecutionOrder.some(id => isOasisRemoteExecutionUnresolved(selected.remoteExecutions[id]))) {
+          throw new Error('审核确认已失效，请重新核对当前固定版本。')
+        }
+        assertNoDirtyResult(workspaceId, pageId, runId)
+      }
+      checkConfirmation()
       const reviewNote = String(note)
       if (status === 'approved' && run.result.contentStatus === 'blocked') {
         throw new Error('Blocked results cannot be approved')
@@ -1260,9 +1592,9 @@ export function createWorkbenchStore({
         workspaceId,
         pageId,
         'run-review',
-        (current) => remote.reviewRun({
+        (current) => { checkConfirmation(); return remote.reviewRun({
           workspaceId, taskId: pageId, runId, expectedRevision: current.revision, status, note: reviewNote,
-        }, controller.signal),
+        }, controller.signal) },
         () => ({ feedback: status === 'approved' ? 'review-approved' : 'review-changes-requested' }),
       )
     },
@@ -1287,6 +1619,7 @@ export function createWorkbenchStore({
     },
 
     async prepareWriteback(workspaceId, pageId, runId) {
+      assertNoDirtyResult(workspaceId, pageId, runId)
       const page = pageFor(workspaceId, pageId)
       const run = page.runs[runId]
       if (!run) throw new Error('unknown run')
@@ -1355,6 +1688,8 @@ export function createWorkbenchStore({
     },
 
     activatePage(workspaceId, pageId) {
+      const current=getCurrent(workspaceId)
+      if(current.closedV340Tabs?.includes(pageId))setState(workspaceId,stateWith(current,{closedV340Tabs:current.closedV340Tabs.filter(id=>id!==pageId)}))
       return dispatch(workspaceId, { type: 'activate-page', pageId })
     },
 
@@ -1363,26 +1698,38 @@ export function createWorkbenchStore({
     },
 
     closePage(workspaceId, pageId) {
+      assertNoDirtyResult(workspaceId, pageId)
+      if(pageFor(workspaceId,pageId).v340){
+        if(hasPendingUnifiedRun(pageFor(workspaceId,pageId)))throw Error('未决运行任务保持打开')
+        const current=getCurrent(workspaceId),closed=[...new Set([...(current.closedV340Tabs??[]),pageId])]
+        return setState(workspaceId,stateWith(current,{closedV340Tabs:closed,activePageId:current.activePageId===pageId?current.pages.find(p=>!closed.includes(p.pageId))?.pageId??null:current.activePageId}))
+      }
       if (pageFor(workspaceId, pageId).generation) assertInputEditable(workspaceId, pageId)
       return dispatch(workspaceId, { type: 'close-page', pageId })
     },
 
     dispose() {
       if (disposePromise) return disposePromise
-      closing = true
-      for (const entry of pendingObservations.values()) invalidateObservation(entry)
-      const drains = Promise.all(
-        [...knownWorkspaceIds].map((workspaceId) => flushWorkspaceInternal(workspaceId)),
-      )
-      const bestEffortDrains = drains.catch(() => undefined)
+      // Start the bound before waiting for any accepted V340 work, including writes that ignore abort.
+      const queuedDrains = [...new Set([...knownWorkspaceIds, ...runtimes.keys(), ...v340Queue.keys()])].map(workspaceId => ({
+        workspaceId, queue: v340Queue.get(workspaceId) ?? Promise.resolve(),
+      }))
       let deadlineTimer = null
       const deadline = new Promise((resolveDeadline) => {
         deadlineTimer = scheduler.setTimeout(resolveDeadline, disposeDrainMs)
       })
       disposePromise = (async () => {
         try {
-          await Promise.race([bestEffortDrains, deadline])
+          // Preserve each Workspace's accepted write order without blocking independent drafts.
+          // A late queue continuation must not restart a flush after the shared deadline.
+          const drains = Promise.allSettled(queuedDrains.map(async ({workspaceId, queue}) => {
+            await queue.catch(() => undefined)
+            if (closing || disposed || controller.signal.aborted) return
+            await flushWorkspaceInternal(workspaceId)
+          }))
+          await Promise.race([drains, deadline])
         } finally {
+          closing = true
           if (deadlineTimer !== null) scheduler.clearTimeout(deadlineTimer)
           deadlineTimer = null
           controller.abort()
@@ -1402,9 +1749,31 @@ export function createWorkbenchStore({
           listeners.clear()
         }
       })()
+      // Publish the unique shutdown promise before abort listeners can reenter the store.
+      handoffController.abort()
+      for (const entry of pendingObservations.values()) invalidateObservation(entry)
       return disposePromise
     },
   }
 
-  return Object.freeze(store)
+  // Public actions stop at the close request; already accepted queue callbacks retain the internal
+  // methods until drain/deadline. Preserve the async methods' rejected-Promise calling convention.
+  const reads = new Set(['dispose','subscribe','getWorkspaceState','peekWorkspaceState'])
+  const publicStore = Object.fromEntries(Object.entries(store).map(([name,action]) => {
+    if(typeof action!=='function'||reads.has(name))return [name,action]
+    const asynchronous=action.constructor.name==='AsyncFunction'
+    const invoke=(...args)=>{
+      const unavailable=disposePromise?new Error(disposed?'workbench store is disposed':'workbench store is closing'):
+        typeof args[0]==='string'&&!knownWorkspaceIds.has(args[0])?new Error('action requires a known Workspace'):null
+      if(unavailable){
+        const error=unavailable
+        if(asynchronous)return Promise.reject(error)
+        throw error
+      }
+      return action(...args)
+    }
+    return [name,invoke]
+  }))
+
+  return Object.freeze(publicStore)
 }
