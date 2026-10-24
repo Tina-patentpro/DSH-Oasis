@@ -198,7 +198,7 @@ function createMetadata(input, artifactSizeBytes) {
   if(input.mode==='v340'){
     const info=input.v340
     if(input.workflowVersion!=='V3.4.0'||!/^Flow-\d-\d{1,2}$/.test(info?.nodeId??'')||!['local-skill','oasis-api'].includes(info?.source)
-      ||info?.evidenceKind!=='synthetic'||typeof info?.versionId!=='string'||typeof info?.sourceRunUid!=='string')throw writebackError('WRITEBACK_SOURCE_INVALID','Versioned provenance is invalid')
+      ||!['synthetic','native-model-candidate'].includes(info?.evidenceKind)||typeof info?.versionId!=='string'||typeof info?.sourceRunUid!=='string')throw writebackError('WRITEBACK_SOURCE_INVALID','Versioned provenance is invalid')
     return Object.freeze({...common,workflow:{workflowId:input.workflowId,workflowVersion:input.workflowVersion},execution:{mode:'v340',...info}})
   }
   if (input.mode === 'local-mock') {

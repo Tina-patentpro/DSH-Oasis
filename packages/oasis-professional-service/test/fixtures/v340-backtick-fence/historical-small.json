@@ -1,0 +1,38 @@
+[
+  {
+    "name": "plain-unicode",
+    "core": "普通正文\r\n中文😀",
+    "width": 3,
+    "sha256": "77c05661e485403f25de03803030d79fbcca65808d542f02167c2f28d506282d"
+  },
+  {
+    "name": "single",
+    "core": "`x`",
+    "width": 3,
+    "sha256": "56a827528fab1e99cb6dc22c7ebfd13e1d293cb58911eace44964782d9b11b0a"
+  },
+  {
+    "name": "double",
+    "core": "``x``",
+    "width": 3,
+    "sha256": "c0af04b490307616ce50ede3dcf2b2edb18199fc29ddf31089eeba2cde58bbad"
+  },
+  {
+    "name": "embedded-snapshot-and-longer-tail",
+    "core": "```oasis-v340\n不是结构\n```\n末尾``````",
+    "width": 7,
+    "sha256": "d084e42397456e473520ba3567a8a43054bedc09c7801d5f9602a30c64d657fe"
+  },
+  {
+    "name": "trailing-max",
+    "core": "中文😀\r\n`a`\n结束````",
+    "width": 5,
+    "sha256": "c1234b0c663fdc6790833b99798d39037eac03e4a2735df0a2a3d1f3a510f3c7"
+  },
+  {
+    "name": "eight-run",
+    "core": "````````x````````",
+    "width": 9,
+    "sha256": "f691da64403079138787558c9420a85d7d0e1874ec157d19d301486bdcd2c974"
+  }
+]

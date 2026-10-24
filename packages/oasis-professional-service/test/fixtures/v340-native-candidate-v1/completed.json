@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 4,
+  "panelMode": "hidden",
+  "activeTaskId": null,
+  "taskOrder": [
+    "t"
+  ],
+  "tasks": {
+    "t": {
+      "taskId": "t",
+      "title": "新版候选",
+      "workType": "cn-invention-patent",
+      "workflowId": "Flow-2-6",
+      "workflowVersion": "V3.4.0",
+      "formValues": {},
+      "professionalDraft": null,
+      "inputRefs": [],
+      "activeRunId": null,
+      "runOrder": [],
+      "runs": {},
+      "remoteExecutionOrder": [],
+      "remoteExecutions": {},
+      "createdAt": "2026-10-23T08:00:00.000Z",
+      "updatedAt": "2026-10-23T08:00:00.000Z",
+      "v340": {
+        "schemaVersion": 1,
+        "businessVersion": "V3.4.0",
+        "nodeId": "Flow-2-6",
+        "draft": {
+          "source": "local-skill",
+          "textInputs": {
+            "disclosure_text": "公开合成阀体：壳体内置弹簧与阀芯。",
+            "drawings_text": "图1：壳体和阀芯。",
+            "claim_requirements_text": "关注阀芯结构。",
+            "user_input": "仅根据公开合成材料撰写。"
+          },
+          "filePaths": {},
+          "configuration": {}
+        },
+        "activeRunId": "v340-55f7fd2e-9043-4108-b133-be5e05298c86",
+        "runOrder": [
+          "v340-55f7fd2e-9043-4108-b133-be5e05298c86"
+        ],
+        "runs": {
+          "v340-55f7fd2e-9043-4108-b133-be5e05298c86": {
+            "schemaVersion": 1,
+            "runId": "v340-55f7fd2e-9043-4108-b133-be5e05298c86",
+            "workflowRunUid": "55f7fd2e-9043-4108-b133-be5e05298c86",
+            "requestKey": "request-one",
+            "workspaceId": "w",
+            "taskId": "t",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "native-model-candidate",
+            "nativeCandidate": {
+              "version": "v340-native-candidate-1",
+              "executionScope": "injected-only",
+              "dispatchEnabled": false,
+              "realCallVerified": false,
+              "sessionId": "s",
+              "route": {
+                "provider": "synthetic-native-test",
+                "model": "fixture-model"
+              },
+              "inputSHA256": "3cbcbb7cd59b16adf33742f3195bbc6a32bdeb37fb010a1368c72a65d187f0b5",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "instructionSHA256": "72205d5a7cfb7b1aff85cfdeef75ed82888d38567e9d7e3d3024c47aa1ec9325",
+              "systemSHA256": "9fcf11153a1028589ca0eefcfa1e88ef1ef5122a82084dc9890e03414219fff2",
+              "preparedSHA256": "d1555aba113399e0139c19b61eab45e49068f000478fbbfaf054679fcdbb7577",
+              "requestSHA256": "726fac2977672b859abfdca8eaebed306cc468a680a76470c02668f2a0dfcd52",
+              "confirmationSHA256": "d7ce782416af9fd89881b63eea267a4b006ad6f8fa4c3c803b89726c718d823e",
+              "confirmedRevision": 2,
+              "budget": {
+                "maxCalls": 1,
+                "usedCalls": 1
+              },
+              "admissionSHA256": "19ee19b6b2fea49886d7468e9aca761723a55f2427598703d7e363bfd7eed835"
+            },
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "w",
+              "taskId": "t",
+              "runId": "v340-55f7fd2e-9043-4108-b133-be5e05298c86",
+              "workflowRunUid": "55f7fd2e-9043-4108-b133-be5e05298c86",
+              "requestKey": "request-one",
+              "capturedAt": "2026-10-23T08:00:00.000Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成阀体：壳体内置弹簧与阀芯。",
+                  "drawings_text": "图1：壳体和阀芯。",
+                  "claim_requirements_text": "关注阀芯结构。",
+                  "user_input": "仅根据公开合成材料撰写。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成阀体：壳体内置弹簧与阀芯。",
+                  "drawings_text": "图1：壳体和阀芯。",
+                  "claim_requirements_text": "关注阀芯结构。",
+                  "user_input": "仅根据公开合成材料撰写。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "fc9c0ee246c6ca64c15cad0449de962bf42f0b53b89d2fd40314ffe033a9a833",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "accepted",
+                    "sha256": "587cacdbfccaa8b3ac23de5e06eae264792173f8ed66df99be84d548912ce865",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "accepted",
+                    "sha256": "3db95ccf44fd9ef55c06553e13d4cb16f734b7648006002d34ef82c8fe57b853",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "3e0cd7053b2e172106e516b63d4b1b7fe7654c4fa6f653645b689531e709fa36",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "f1be3e368e1368e70b7502e4794ad2f18976ed14f5f01163debccd9bde8ce52c"
+              }
+            },
+            "inputSha256": "3cbcbb7cd59b16adf33742f3195bbc6a32bdeb37fb010a1368c72a65d187f0b5",
+            "status": "completed",
+            "failureCode": null,
+            "result": {
+              "body": "# V3.4.0累计文稿\n\n## 文档信息\n\n- business_version: V3.4.0\n- node_id: Flow-2-6\n- workflow_run_uid: 55f7fd2e-9043-4108-b133-be5e05298c86\n- generated_at: 2026-10-23T16:00:00+08:00\n- filename: claims_20261023160000_55f7fd2e.md\n- upstream_run_uid: none\n- upstream_filename: none\n- upstream_file_sha256: none\n- workflow_status: completed_with_warnings\n- deliverable_status: ready_with_warnings\n\n## 核心结论\n\n公开合成结论，未验证专业质量\n\n## 核心结果\n\n```text\n1. 一种公开测试用阀体，包括壳体和弹簧。\n```\n\n## 下游读取区\n\n```oasis-v340\n{\n  \"schema_version\": \"oasis-v340-1\",\n  \"node_id\": \"Flow-2-6\",\n  \"workflow_run_uid\": \"55f7fd2e-9043-4108-b133-be5e05298c86\",\n  \"generated_at\": \"2026-10-23T16:00:00+08:00\",\n  \"filename\": \"claims_20261023160000_55f7fd2e.md\",\n  \"upstream_run_uid\": \"none\",\n  \"upstream_filename\": \"none\",\n  \"upstream_file_sha256\": \"none\",\n  \"application_type\": \"undetermined\",\n  \"terms_master\": [],\n  \"tables\": {\n    \"T1\": {\n      \"status\": \"missing\",\n      \"rows\": []\n    },\n    \"T2\": {\n      \"status\": \"missing\",\n      \"rows\": []\n    },\n    \"T3\": {\n      \"status\": \"missing\",\n      \"rows\": []\n    },\n    \"T4\": {\n      \"status\": \"missing\",\n      \"rows\": []\n    },\n    \"T5\": {\n      \"status\": \"not_yet_generated\",\n      \"rows\": []\n    },\n    \"T6\": {\n      \"status\": \"not_yet_generated\",\n      \"rows\": []\n    }\n  },\n  \"contents\": [\n    {\n      \"content_id\": \"host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/input-disclosure_text\",\n      \"content_markdown\": \"公开合成阀体：壳体内置弹簧与阀芯。\",\n      \"content_origin\": \"user_text\",\n      \"source_input_id\": \"disclosure_text\",\n      \"source_locator\": \"文本输入\",\n      \"source_hash\": \"fc9c0ee246c6ca64c15cad0449de962bf42f0b53b89d2fd40314ffe033a9a833\",\n      \"trust_status\": \"source_fact\",\n      \"last_updated_flow\": \"Flow-2-6\",\n      \"revision_reason\": \"Host逐字保留实际输入/节点正文；技术语义未自动确认\"\n    },\n    {\n      \"content_id\": \"host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/input-drawings_text\",\n      \"content_markdown\": \"图1：壳体和阀芯。\",\n      \"content_origin\": \"user_text\",\n      \"source_input_id\": \"drawings_text\",\n      \"source_locator\": \"文本输入\",\n      \"source_hash\": \"587cacdbfccaa8b3ac23de5e06eae264792173f8ed66df99be84d548912ce865\",\n      \"trust_status\": \"source_fact\",\n      \"last_updated_flow\": \"Flow-2-6\",\n      \"revision_reason\": \"Host逐字保留实际输入/节点正文；技术语义未自动确认\"\n    },\n    {\n      \"content_id\": \"host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/input-claim_requirements_text\",\n      \"content_markdown\": \"关注阀芯结构。\",\n      \"content_origin\": \"user_text\",\n      \"source_input_id\": \"claim_requirements_text\",\n      \"source_locator\": \"文本输入\",\n      \"source_hash\": \"3db95ccf44fd9ef55c06553e13d4cb16f734b7648006002d34ef82c8fe57b853\",\n      \"trust_status\": \"source_fact\",\n      \"last_updated_flow\": \"Flow-2-6\",\n      \"revision_reason\": \"Host逐字保留实际输入/节点正文；技术语义未自动确认\"\n    },\n    {\n      \"content_id\": \"host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/input-user_input\",\n      \"content_markdown\": \"仅根据公开合成材料撰写。\",\n      \"content_origin\": \"user_text\",\n      \"source_input_id\": \"user_input\",\n      \"source_locator\": \"文本输入\",\n      \"source_hash\": \"3e0cd7053b2e172106e516b63d4b1b7fe7654c4fa6f653645b689531e709fa36\",\n      \"trust_status\": \"source_fact\",\n      \"last_updated_flow\": \"Flow-2-6\",\n      \"revision_reason\": \"Host逐字保留实际输入/节点正文；技术语义未自动确认\"\n    },\n    {\n      \"content_id\": \"host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/core\",\n      \"content_markdown\": \"1. 一种公开测试用阀体，包括壳体和弹簧。\",\n      \"content_origin\": \"workflow_analysis\",\n      \"source_input_id\": \"none\",\n      \"source_locator\": \"本节点核心结果\",\n      \"source_hash\": \"none\",\n      \"trust_status\": \"reasoned_inference\",\n      \"last_updated_flow\": \"Flow-2-6\",\n      \"revision_reason\": \"Host逐字保留实际输入/节点正文；技术语义未自动确认\"\n    },\n    {\n      \"content_id\": \"host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/summary\",\n      \"content_markdown\": \"公开合成结论，未验证专业质量\",\n      \"content_origin\": \"workflow_analysis\",\n      \"source_input_id\": \"none\",\n      \"source_locator\": \"本节点核心结论\",\n      \"source_hash\": \"none\",\n      \"trust_status\": \"reasoned_inference\",\n      \"last_updated_flow\": \"Flow-2-6\",\n      \"revision_reason\": \"Host逐字保留实际输入/节点正文；技术语义未自动确认\"\n    }\n  ],\n  \"warnings\": [\n    {\n      \"warning_id\": \"host-Flow-2-6-missing-upstream_md_file\",\n      \"first_flow\": \"Flow-2-6\",\n      \"inherited_from\": \"none\",\n      \"problem\": \"未提供：upstream_md_file\",\n      \"affected_content\": \"本次输入及下游累计快照\",\n      \"current_handling\": \"保留实际材料并继续输出\",\n      \"model_completion\": \"未评估\",\n      \"deliverable_impact\": \"需人工核对\",\n      \"recommended_action\": \"核对实际输入及其来源\",\n      \"status\": \"open\"\n    },\n    {\n      \"warning_id\": \"host-Flow-2-6-professional-review\",\n      \"first_flow\": \"Flow-2-6\",\n      \"inherited_from\": \"none\",\n      \"problem\": \"仅核对结构、来源和累计传递；技术语义及专业质量尚待人工审核。\",\n      \"affected_content\": \"本次输入及下游累计快照\",\n      \"current_handling\": \"保留实际材料并继续输出\",\n      \"model_completion\": \"未评估\",\n      \"deliverable_impact\": \"需人工核对\",\n      \"recommended_action\": \"核对实际输入及其来源\",\n      \"status\": \"open\"\n    },\n    {\n      \"warning_id\": \"host-Flow-2-6-missing-table-T1\",\n      \"first_flow\": \"Flow-2-6\",\n      \"inherited_from\": \"none\",\n      \"problem\": \"T1已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。\",\n      \"affected_content\": \"本次输入及下游累计快照\",\n      \"current_handling\": \"保留实际材料并继续输出\",\n      \"model_completion\": \"未评估\",\n      \"deliverable_impact\": \"需人工核对\",\n      \"recommended_action\": \"核对实际输入及其来源\",\n      \"status\": \"open\"\n    },\n    {\n      \"warning_id\": \"host-Flow-2-6-missing-table-T2\",\n      \"first_flow\": \"Flow-2-6\",\n      \"inherited_from\": \"none\",\n      \"problem\": \"T2已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。\",\n      \"affected_content\": \"本次输入及下游累计快照\",\n      \"current_handling\": \"保留实际材料并继续输出\",\n      \"model_completion\": \"未评估\",\n      \"deliverable_impact\": \"需人工核对\",\n      \"recommended_action\": \"核对实际输入及其来源\",\n      \"status\": \"open\"\n    },\n    {\n      \"warning_id\": \"host-Flow-2-6-missing-table-T3\",\n      \"first_flow\": \"Flow-2-6\",\n      \"inherited_from\": \"none\",\n      \"problem\": \"T3已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。\",\n      \"affected_content\": \"本次输入及下游累计快照\",\n      \"current_handling\": \"保留实际材料并继续输出\",\n      \"model_completion\": \"未评估\",\n      \"deliverable_impact\": \"需人工核对\",\n      \"recommended_action\": \"核对实际输入及其来源\",\n      \"status\": \"open\"\n    },\n    {\n      \"warning_id\": \"host-Flow-2-6-missing-table-T4\",\n      \"first_flow\": \"Flow-2-6\",\n      \"inherited_from\": \"none\",\n      \"problem\": \"T4已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。\",\n      \"affected_content\": \"本次输入及下游累计快照\",\n      \"current_handling\": \"保留实际材料并继续输出\",\n      \"model_completion\": \"未评估\",\n      \"deliverable_impact\": \"需人工核对\",\n      \"recommended_action\": \"核对实际输入及其来源\",\n      \"status\": \"open\"\n    }\n  ],\n  \"model_completions\": [],\n  \"manual_edit_manifest\": [],\n  \"revisions\": [],\n  \"input_history\": [\n    {\n      \"node_id\": \"Flow-2-6\",\n      \"workflow_run_uid\": \"55f7fd2e-9043-4108-b133-be5e05298c86\",\n      \"input_sha256\": \"f1be3e368e1368e70b7502e4794ad2f18976ed14f5f01163debccd9bde8ce52c\",\n      \"inputs\": {\n        \"upstream_md_file\": {\n          \"status\": \"not_provided\",\n          \"sha256\": \"none\",\n          \"content_origin\": \"none\",\n          \"filename\": \"not_provided\"\n        },\n        \"disclosure_file\": {\n          \"status\": \"not_provided\",\n          \"sha256\": \"none\",\n          \"content_origin\": \"none\",\n          \"filename\": \"not_provided\"\n        },\n        \"disclosure_text\": {\n          \"status\": \"accepted\",\n          \"sha256\": \"fc9c0ee246c6ca64c15cad0449de962bf42f0b53b89d2fd40314ffe033a9a833\",\n          \"filename\": \"文本输入\",\n          \"content_origin\": \"user_text\"\n        },\n        \"drawings_file\": {\n          \"status\": \"not_provided\",\n          \"sha256\": \"none\",\n          \"content_origin\": \"none\",\n          \"filename\": \"not_provided\"\n        },\n        \"drawings_text\": {\n          \"status\": \"accepted\",\n          \"sha256\": \"587cacdbfccaa8b3ac23de5e06eae264792173f8ed66df99be84d548912ce865\",\n          \"filename\": \"文本输入\",\n          \"content_origin\": \"user_text\"\n        },\n        \"claim_requirements_file\": {\n          \"status\": \"not_provided\",\n          \"sha256\": \"none\",\n          \"content_origin\": \"none\",\n          \"filename\": \"not_provided\"\n        },\n        \"claim_requirements_text\": {\n          \"status\": \"accepted\",\n          \"sha256\": \"3db95ccf44fd9ef55c06553e13d4cb16f734b7648006002d34ef82c8fe57b853\",\n          \"filename\": \"文本输入\",\n          \"content_origin\": \"user_text\"\n        },\n        \"user_input\": {\n          \"status\": \"accepted\",\n          \"sha256\": \"3e0cd7053b2e172106e516b63d4b1b7fe7654c4fa6f653645b689531e709fa36\",\n          \"filename\": \"文本输入\",\n          \"content_origin\": \"user_text\"\n        }\n      }\n    }\n  ],\n  \"current_result\": {\n    \"summary\": \"公开合成结论，未验证专业质量\",\n    \"core_result_markdown\": \"1. 一种公开测试用阀体，包括壳体和弹簧。\"\n  },\n  \"workflow_status\": \"completed_with_warnings\",\n  \"deliverable_status\": \"ready_with_warnings\"\n}\n```\n\n## 风险与待确认事项\n\n```text\n[\n  {\n    \"warning_id\": \"host-Flow-2-6-missing-upstream_md_file\",\n    \"first_flow\": \"Flow-2-6\",\n    \"inherited_from\": \"none\",\n    \"problem\": \"未提供：upstream_md_file\",\n    \"affected_content\": \"本次输入及下游累计快照\",\n    \"current_handling\": \"保留实际材料并继续输出\",\n    \"model_completion\": \"未评估\",\n    \"deliverable_impact\": \"需人工核对\",\n    \"recommended_action\": \"核对实际输入及其来源\",\n    \"status\": \"open\"\n  },\n  {\n    \"warning_id\": \"host-Flow-2-6-professional-review\",\n    \"first_flow\": \"Flow-2-6\",\n    \"inherited_from\": \"none\",\n    \"problem\": \"仅核对结构、来源和累计传递；技术语义及专业质量尚待人工审核。\",\n    \"affected_content\": \"本次输入及下游累计快照\",\n    \"current_handling\": \"保留实际材料并继续输出\",\n    \"model_completion\": \"未评估\",\n    \"deliverable_impact\": \"需人工核对\",\n    \"recommended_action\": \"核对实际输入及其来源\",\n    \"status\": \"open\"\n  },\n  {\n    \"warning_id\": \"host-Flow-2-6-missing-table-T1\",\n    \"first_flow\": \"Flow-2-6\",\n    \"inherited_from\": \"none\",\n    \"problem\": \"T1已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。\",\n    \"affected_content\": \"本次输入及下游累计快照\",\n    \"current_handling\": \"保留实际材料并继续输出\",\n    \"model_completion\": \"未评估\",\n    \"deliverable_impact\": \"需人工核对\",\n    \"recommended_action\": \"核对实际输入及其来源\",\n    \"status\": \"open\"\n  },\n  {\n    \"warning_id\": \"host-Flow-2-6-missing-table-T2\",\n    \"first_flow\": \"Flow-2-6\",\n    \"inherited_from\": \"none\",\n    \"problem\": \"T2已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。\",\n    \"affected_content\": \"本次输入及下游累计快照\",\n    \"current_handling\": \"保留实际材料并继续输出\",\n    \"model_completion\": \"未评估\",\n    \"deliverable_impact\": \"需人工核对\",\n    \"recommended_action\": \"核对实际输入及其来源\",\n    \"status\": \"open\"\n  },\n  {\n    \"warning_id\": \"host-Flow-2-6-missing-table-T3\",\n    \"first_flow\": \"Flow-2-6\",\n    \"inherited_from\": \"none\",\n    \"problem\": \"T3已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。\",\n    \"affected_content\": \"本次输入及下游累计快照\",\n    \"current_handling\": \"保留实际材料并继续输出\",\n    \"model_completion\": \"未评估\",\n    \"deliverable_impact\": \"需人工核对\",\n    \"recommended_action\": \"核对实际输入及其来源\",\n    \"status\": \"open\"\n  },\n  {\n    \"warning_id\": \"host-Flow-2-6-missing-table-T4\",\n    \"first_flow\": \"Flow-2-6\",\n    \"inherited_from\": \"none\",\n    \"problem\": \"T4已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。\",\n    \"affected_content\": \"本次输入及下游累计快照\",\n    \"current_handling\": \"保留实际材料并继续输出\",\n    \"model_completion\": \"未评估\",\n    \"deliverable_impact\": \"需人工核对\",\n    \"recommended_action\": \"核对实际输入及其来源\",\n    \"status\": \"open\"\n  }\n]\n```\n",
+              "fileName": "claims_20261023160000_55f7fd2e.md",
+              "sha256": "8f1b45aef0e539d3654086a2f1fdffe9e4e55ec712939c9b653791a51c763c7a",
+              "snapshot": {
+                "schema_version": "oasis-v340-1",
+                "node_id": "Flow-2-6",
+                "workflow_run_uid": "55f7fd2e-9043-4108-b133-be5e05298c86",
+                "generated_at": "2026-10-23T16:00:00+08:00",
+                "filename": "claims_20261023160000_55f7fd2e.md",
+                "upstream_run_uid": "none",
+                "upstream_filename": "none",
+                "upstream_file_sha256": "none",
+                "application_type": "undetermined",
+                "terms_master": [],
+                "tables": {
+                  "T1": {
+                    "status": "missing",
+                    "rows": []
+                  },
+                  "T2": {
+                    "status": "missing",
+                    "rows": []
+                  },
+                  "T3": {
+                    "status": "missing",
+                    "rows": []
+                  },
+                  "T4": {
+                    "status": "missing",
+                    "rows": []
+                  },
+                  "T5": {
+                    "status": "not_yet_generated",
+                    "rows": []
+                  },
+                  "T6": {
+                    "status": "not_yet_generated",
+                    "rows": []
+                  }
+                },
+                "contents": [
+                  {
+                    "content_id": "host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/input-disclosure_text",
+                    "content_markdown": "公开合成阀体：壳体内置弹簧与阀芯。",
+                    "content_origin": "user_text",
+                    "source_input_id": "disclosure_text",
+                    "source_locator": "文本输入",
+                    "source_hash": "fc9c0ee246c6ca64c15cad0449de962bf42f0b53b89d2fd40314ffe033a9a833",
+                    "trust_status": "source_fact",
+                    "last_updated_flow": "Flow-2-6",
+                    "revision_reason": "Host逐字保留实际输入/节点正文；技术语义未自动确认"
+                  },
+                  {
+                    "content_id": "host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/input-drawings_text",
+                    "content_markdown": "图1：壳体和阀芯。",
+                    "content_origin": "user_text",
+                    "source_input_id": "drawings_text",
+                    "source_locator": "文本输入",
+                    "source_hash": "587cacdbfccaa8b3ac23de5e06eae264792173f8ed66df99be84d548912ce865",
+                    "trust_status": "source_fact",
+                    "last_updated_flow": "Flow-2-6",
+                    "revision_reason": "Host逐字保留实际输入/节点正文；技术语义未自动确认"
+                  },
+                  {
+                    "content_id": "host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/input-claim_requirements_text",
+                    "content_markdown": "关注阀芯结构。",
+                    "content_origin": "user_text",
+                    "source_input_id": "claim_requirements_text",
+                    "source_locator": "文本输入",
+                    "source_hash": "3db95ccf44fd9ef55c06553e13d4cb16f734b7648006002d34ef82c8fe57b853",
+                    "trust_status": "source_fact",
+                    "last_updated_flow": "Flow-2-6",
+                    "revision_reason": "Host逐字保留实际输入/节点正文；技术语义未自动确认"
+                  },
+                  {
+                    "content_id": "host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/input-user_input",
+                    "content_markdown": "仅根据公开合成材料撰写。",
+                    "content_origin": "user_text",
+                    "source_input_id": "user_input",
+                    "source_locator": "文本输入",
+                    "source_hash": "3e0cd7053b2e172106e516b63d4b1b7fe7654c4fa6f653645b689531e709fa36",
+                    "trust_status": "source_fact",
+                    "last_updated_flow": "Flow-2-6",
+                    "revision_reason": "Host逐字保留实际输入/节点正文；技术语义未自动确认"
+                  },
+                  {
+                    "content_id": "host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/core",
+                    "content_markdown": "1. 一种公开测试用阀体，包括壳体和弹簧。",
+                    "content_origin": "workflow_analysis",
+                    "source_input_id": "none",
+                    "source_locator": "本节点核心结果",
+                    "source_hash": "none",
+                    "trust_status": "reasoned_inference",
+                    "last_updated_flow": "Flow-2-6",
+                    "revision_reason": "Host逐字保留实际输入/节点正文；技术语义未自动确认"
+                  },
+                  {
+                    "content_id": "host/55f7fd2e-9043-4108-b133-be5e05298c86/Flow-2-6/summary",
+                    "content_markdown": "公开合成结论，未验证专业质量",
+                    "content_origin": "workflow_analysis",
+                    "source_input_id": "none",
+                    "source_locator": "本节点核心结论",
+                    "source_hash": "none",
+                    "trust_status": "reasoned_inference",
+                    "last_updated_flow": "Flow-2-6",
+                    "revision_reason": "Host逐字保留实际输入/节点正文；技术语义未自动确认"
+                  }
+                ],
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  },
+                  {
+                    "warning_id": "host-Flow-2-6-professional-review",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "仅核对结构、来源和累计传递；技术语义及专业质量尚待人工审核。",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  },
+                  {
+                    "warning_id": "host-Flow-2-6-missing-table-T1",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "T1已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  },
+                  {
+                    "warning_id": "host-Flow-2-6-missing-table-T2",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "T2已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  },
+                  {
+                    "warning_id": "host-Flow-2-6-missing-table-T3",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "T3已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  },
+                  {
+                    "warning_id": "host-Flow-2-6-missing-table-T4",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "T4已到生产节点但未取得表内容；未伪装为尚未生产或验证通过。",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "model_completions": [],
+                "manual_edit_manifest": [],
+                "revisions": [],
+                "input_history": [
+                  {
+                    "node_id": "Flow-2-6",
+                    "workflow_run_uid": "55f7fd2e-9043-4108-b133-be5e05298c86",
+                    "input_sha256": "f1be3e368e1368e70b7502e4794ad2f18976ed14f5f01163debccd9bde8ce52c",
+                    "inputs": {
+                      "upstream_md_file": {
+                        "status": "not_provided",
+                        "sha256": "none",
+                        "content_origin": "none",
+                        "filename": "not_provided"
+                      },
+                      "disclosure_file": {
+                        "status": "not_provided",
+                        "sha256": "none",
+                        "content_origin": "none",
+                        "filename": "not_provided"
+                      },
+                      "disclosure_text": {
+                        "status": "accepted",
+                        "sha256": "fc9c0ee246c6ca64c15cad0449de962bf42f0b53b89d2fd40314ffe033a9a833",
+                        "filename": "文本输入",
+                        "content_origin": "user_text"
+                      },
+                      "drawings_file": {
+                        "status": "not_provided",
+                        "sha256": "none",
+                        "content_origin": "none",
+                        "filename": "not_provided"
+                      },
+                      "drawings_text": {
+                        "status": "accepted",
+                        "sha256": "587cacdbfccaa8b3ac23de5e06eae264792173f8ed66df99be84d548912ce865",
+                        "filename": "文本输入",
+                        "content_origin": "user_text"
+                      },
+                      "claim_requirements_file": {
+                        "status": "not_provided",
+                        "sha256": "none",
+                        "content_origin": "none",
+                        "filename": "not_provided"
+                      },
+                      "claim_requirements_text": {
+                        "status": "accepted",
+                        "sha256": "3db95ccf44fd9ef55c06553e13d4cb16f734b7648006002d34ef82c8fe57b853",
+                        "filename": "文本输入",
+                        "content_origin": "user_text"
+                      },
+                      "user_input": {
+                        "status": "accepted",
+                        "sha256": "3e0cd7053b2e172106e516b63d4b1b7fe7654c4fa6f653645b689531e709fa36",
+                        "filename": "文本输入",
+                        "content_origin": "user_text"
+                      }
+                    }
+                  }
+                ],
+                "current_result": {
+                  "summary": "公开合成结论，未验证专业质量",
+                  "core_result_markdown": "1. 一种公开测试用阀体，包括壳体和弹簧。"
+                },
+                "workflow_status": "completed_with_warnings",
+                "deliverable_status": "ready_with_warnings"
+              }
+            },
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-23T08:00:00.000Z",
+            "completedAt": "2026-10-23T08:00:00.000Z"
+          }
+        }
+      },
+      "generation": null
+    }
+  },
+  "workspaceId": "w",
+  "revision": 4,
+  "updatedAt": "2026-10-23T08:00:00.000Z"
+}

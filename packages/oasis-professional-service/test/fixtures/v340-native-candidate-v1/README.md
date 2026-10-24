@@ -1,0 +1,6 @@
+# 首批v1原生候选兼容夹具
+
+从C首批未修改实现的实际临时磁盘存储捕获；provider为synthetic-native-test，材料为公开合成阀体，不含真实调用或凭据。保留schema1/v1元数据及原摘要，不迁移。
+
+- prepared.json SHA256: 63eeedd0111afa6c64113b9b3855fbe0c328159d37725e08bb0849d8dc4b84eb
+- completed.json SHA256: f587369624861abe8276cd722685eda5b4274a7a356bcb3418a1c8e731e46f3a

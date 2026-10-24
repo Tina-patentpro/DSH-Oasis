@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 4,
+  "panelMode": "hidden",
+  "activeTaskId": null,
+  "taskOrder": [
+    "t"
+  ],
+  "tasks": {
+    "t": {
+      "taskId": "t",
+      "title": "新版候选",
+      "workType": "cn-invention-patent",
+      "workflowId": "Flow-2-6",
+      "workflowVersion": "V3.4.0",
+      "formValues": {},
+      "professionalDraft": null,
+      "inputRefs": [],
+      "activeRunId": null,
+      "runOrder": [],
+      "runs": {},
+      "remoteExecutionOrder": [],
+      "remoteExecutions": {},
+      "createdAt": "2026-10-23T08:00:00.000Z",
+      "updatedAt": "2026-10-23T08:00:00.000Z",
+      "v340": {
+        "schemaVersion": 1,
+        "businessVersion": "V3.4.0",
+        "nodeId": "Flow-2-6",
+        "draft": {
+          "source": "local-skill",
+          "textInputs": {
+            "disclosure_text": "公开合成阀体：壳体内置弹簧与阀芯。",
+            "drawings_text": "图1：壳体和阀芯。",
+            "claim_requirements_text": "关注阀芯结构。",
+            "user_input": "仅根据公开合成材料撰写。"
+          },
+          "filePaths": {},
+          "configuration": {}
+        },
+        "activeRunId": "v340-55f7fd2e-9043-4108-b133-be5e05298c86",
+        "runOrder": [
+          "v340-55f7fd2e-9043-4108-b133-be5e05298c86"
+        ],
+        "runs": {
+          "v340-55f7fd2e-9043-4108-b133-be5e05298c86": {
+            "schemaVersion": 1,
+            "runId": "v340-55f7fd2e-9043-4108-b133-be5e05298c86",
+            "workflowRunUid": "55f7fd2e-9043-4108-b133-be5e05298c86",
+            "requestKey": "request-one",
+            "workspaceId": "w",
+            "taskId": "t",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "native-model-candidate",
+            "nativeCandidate": {
+              "version": "v340-native-candidate-1",
+              "executionScope": "injected-only",
+              "dispatchEnabled": false,
+              "realCallVerified": false,
+              "sessionId": "s",
+              "route": {
+                "provider": "synthetic-native-test",
+                "model": "fixture-model"
+              },
+              "inputSHA256": "3cbcbb7cd59b16adf33742f3195bbc6a32bdeb37fb010a1368c72a65d187f0b5",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "instructionSHA256": "72205d5a7cfb7b1aff85cfdeef75ed82888d38567e9d7e3d3024c47aa1ec9325",
+              "systemSHA256": "9fcf11153a1028589ca0eefcfa1e88ef1ef5122a82084dc9890e03414219fff2",
+              "preparedSHA256": "d1555aba113399e0139c19b61eab45e49068f000478fbbfaf054679fcdbb7577",
+              "requestSHA256": "726fac2977672b859abfdca8eaebed306cc468a680a76470c02668f2a0dfcd52",
+              "confirmationSHA256": "d7ce782416af9fd89881b63eea267a4b006ad6f8fa4c3c803b89726c718d823e",
+              "confirmedRevision": 2,
+              "budget": {
+                "maxCalls": 1,
+                "usedCalls": 1
+              },
+              "admissionSHA256": "19ee19b6b2fea49886d7468e9aca761723a55f2427598703d7e363bfd7eed835"
+            },
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "w",
+              "taskId": "t",
+              "runId": "v340-55f7fd2e-9043-4108-b133-be5e05298c86",
+              "workflowRunUid": "55f7fd2e-9043-4108-b133-be5e05298c86",
+              "requestKey": "request-one",
+              "capturedAt": "2026-10-23T08:00:00.000Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成阀体：壳体内置弹簧与阀芯。",
+                  "drawings_text": "图1：壳体和阀芯。",
+                  "claim_requirements_text": "关注阀芯结构。",
+                  "user_input": "仅根据公开合成材料撰写。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成阀体：壳体内置弹簧与阀芯。",
+                  "drawings_text": "图1：壳体和阀芯。",
+                  "claim_requirements_text": "关注阀芯结构。",
+                  "user_input": "仅根据公开合成材料撰写。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "fc9c0ee246c6ca64c15cad0449de962bf42f0b53b89d2fd40314ffe033a9a833",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "accepted",
+                    "sha256": "587cacdbfccaa8b3ac23de5e06eae264792173f8ed66df99be84d548912ce865",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "accepted",
+                    "sha256": "3db95ccf44fd9ef55c06553e13d4cb16f734b7648006002d34ef82c8fe57b853",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "3e0cd7053b2e172106e516b63d4b1b7fe7654c4fa6f653645b689531e709fa36",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "f1be3e368e1368e70b7502e4794ad2f18976ed14f5f01163debccd9bde8ce52c"
+              }
+            },
+            "inputSha256": "3cbcbb7cd59b16adf33742f3195bbc6a32bdeb37fb010a1368c72a65d187f0b5",
+            "status": "prepared",
+            "failureCode": null,
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-23T08:00:00.000Z",
+            "completedAt": null
+          }
+        }
+      },
+      "generation": null
+    }
+  },
+  "workspaceId": "w",
+  "revision": 3,
+  "updatedAt": "2026-10-23T08:00:00.000Z"
+}

@@ -3,6 +3,7 @@ import { getV340Catalog, getV340Node, v340Hash } from './v340-catalog.js'
 import { prepareV340Inputs, inspectV340Document } from './v340-document.js'
 import {getV340Versions} from './v340-runtime-contract.js'
 import {restoreV340Prepared} from './v340-input-snapshot.js'
+import {assertV340NativeCandidate} from './v340-native-model.js'
 
 export const v340InputHash=snapshot=>v340Hash(canonicalJson(snapshot))
 export function validateV340Draft(nodeId,draft){
@@ -18,6 +19,7 @@ export function assertV340Integrity(record){
     validateV340Draft(state.nodeId,state.draft)
     for(const run of Object.values(state.runs)){
       const input=run.inputSnapshot
+      if(run.evidenceKind==='native-model-candidate')assertV340NativeCandidate(run)
       if(run.workspaceId!==record.workspaceId||run.taskId!==task.taskId||input.workspaceId!==record.workspaceId||input.taskId!==task.taskId
         ||input.runId!==run.runId||run.runId!==`v340-${run.workflowRunUid}`||input.workflowRunUid!==run.workflowRunUid||input.requestKey!==run.requestKey||input.capturedAt!==run.createdAt
         ||input.nodeId!==state.nodeId||input.source!==run.source||input.draft.source!==run.source

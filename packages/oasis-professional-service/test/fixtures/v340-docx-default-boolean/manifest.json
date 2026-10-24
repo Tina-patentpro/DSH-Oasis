@@ -1,0 +1,206 @@
+{
+  "version": "d0-default-boolean-fixtures-1",
+  "publicSynthetic": true,
+  "fixtures": [
+    {
+      "id": "true-1",
+      "file": "true-1.docx",
+      "defaultFlag": "1",
+      "mode": "implicit",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2850,
+      "sha256": "37df1cf5fdae0b5d8e2c650843b1bb0fef63ed8b5ff4244762acfc3cdf231b33"
+    },
+    {
+      "id": "true-word",
+      "file": "true-word.docx",
+      "defaultFlag": "true",
+      "mode": "implicit",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2853,
+      "sha256": "c86ad596dc3a1c72f8ba8f18733b43b5f4ea728a1bcf2ae0b70184516ede9e8f"
+    },
+    {
+      "id": "true-on",
+      "file": "true-on.docx",
+      "defaultFlag": "on",
+      "mode": "implicit",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2851,
+      "sha256": "3b67afa6cfa96b14d01497a84239ed56f97bd7de3f5cc4dc0773fc6050367cf8"
+    },
+    {
+      "id": "false-0",
+      "file": "false-0.docx",
+      "defaultFlag": "0",
+      "mode": "implicit",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2850,
+      "sha256": "7cdd373543dc08c082f39aea015ed810f33fbe0eeaeafb7bbc086b053a08113f"
+    },
+    {
+      "id": "false-word",
+      "file": "false-word.docx",
+      "defaultFlag": "false",
+      "mode": "implicit",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2854,
+      "sha256": "d099ebd3c16bb6c1128ed33bb56b849aadb6153061ed9e0c81a34c38850d02ba"
+    },
+    {
+      "id": "false-off",
+      "file": "false-off.docx",
+      "defaultFlag": "off",
+      "mode": "implicit",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2852,
+      "sha256": "a960350e83f69934f68fbfca23f93f83ffe751c534e085379b00cf3db93f2d2f"
+    },
+    {
+      "id": "direct-zero-1",
+      "file": "direct-zero-1.docx",
+      "defaultFlag": "1",
+      "mode": "direct-zero",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2904,
+      "sha256": "e6da59d945abfbede0d144253457478e7b081a043435cdded23674e7f636e452"
+    },
+    {
+      "id": "direct-zero-true",
+      "file": "direct-zero-true.docx",
+      "defaultFlag": "true",
+      "mode": "direct-zero",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2907,
+      "sha256": "dad03a357135de81e5fc131c0827c4c148d8fdb7e7aab76d25be02bc81e091f2"
+    },
+    {
+      "id": "direct-zero-on",
+      "file": "direct-zero-on.docx",
+      "defaultFlag": "on",
+      "mode": "direct-zero",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2905,
+      "sha256": "e99491df424c4c7891f0978a903d4624f28cf90d610f4a2563aa69d561fa4742"
+    },
+    {
+      "id": "leaf-zero-1",
+      "file": "leaf-zero-1.docx",
+      "defaultFlag": "1",
+      "mode": "leaf-zero",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 3023,
+      "sha256": "5a6140eeb952d50c9c651366a3d0dd7f8003ad42efbd90b690b33ffee23908ae"
+    },
+    {
+      "id": "leaf-zero-true",
+      "file": "leaf-zero-true.docx",
+      "defaultFlag": "true",
+      "mode": "leaf-zero",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 3026,
+      "sha256": "081e8545a3b1bbeaf4da6ea3f70021e71aeb1c64bb29e5f4489e173d1c9d2933"
+    },
+    {
+      "id": "leaf-zero-on",
+      "file": "leaf-zero-on.docx",
+      "defaultFlag": "on",
+      "mode": "leaf-zero",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 3024,
+      "sha256": "7a717579bc66afc1762f923642aea461d851d2fde2fdf73b7e31a8b42bb7776d"
+    },
+    {
+      "id": "explicit-style-0",
+      "file": "explicit-style-0.docx",
+      "defaultFlag": "0",
+      "mode": "explicit",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2891,
+      "sha256": "c11cf0ecf329c53ece59a136a5ee0fdd38ca72261e5e07c6560c5949f91848c9"
+    },
+    {
+      "id": "explicit-style-false",
+      "file": "explicit-style-false.docx",
+      "defaultFlag": "false",
+      "mode": "explicit",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2895,
+      "sha256": "32eb73afe31437194475bc1105a078267531b01b15334f1dec5fd45a1c8b3a3a"
+    },
+    {
+      "id": "explicit-style-off",
+      "file": "explicit-style-off.docx",
+      "defaultFlag": "off",
+      "mode": "explicit",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2893,
+      "sha256": "2fe68396a8776666cd71ef8bb59c843a3a6b5637eaaf5036733debaf712efcb9"
+    },
+    {
+      "id": "absent-unused",
+      "file": "absent-unused.docx",
+      "defaultFlag": null,
+      "mode": "implicit",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2836,
+      "sha256": "50ed7a736b1bcf16925d47d210bd84029f1fbe0f9c2b91642f729962d51133a9"
+    },
+    {
+      "id": "absent-explicit",
+      "file": "absent-explicit.docx",
+      "defaultFlag": null,
+      "mode": "explicit",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2877,
+      "sha256": "166a57cd1eb0795c094ea605f53fdbcb99de5f2a10c68221882f395a251d82e8"
+    },
+    {
+      "id": "invalid-empty",
+      "file": "invalid-empty.docx",
+      "defaultFlag": "",
+      "mode": "implicit",
+      "expected": "reject",
+      "exit": 2,
+      "bytes": 2849,
+      "sha256": "93bbb4f911af2fda81e18747222d328ac1c92da22fdbdb353d55ab8fabb7c9d6"
+    },
+    {
+      "id": "invalid-word",
+      "file": "invalid-word.docx",
+      "defaultFlag": "maybe",
+      "mode": "implicit",
+      "expected": "reject",
+      "exit": 2,
+      "bytes": 2854,
+      "sha256": "02f623575568e5938e8858bfbd430b7271bce30b27ef370e9f04bcc386c2dde6"
+    },
+    {
+      "id": "mixed-true-defaults",
+      "file": "mixed-true-defaults.docx",
+      "defaultFlag": "1",
+      "mode": "duplicate-default",
+      "expected": "reject",
+      "exit": 2,
+      "bytes": 2975,
+      "sha256": "3b801c3b47bf8c4a429c6b216754f5f00ab67b61e424af8e1b50923e7b64b832"
+    }
+  ]
+}

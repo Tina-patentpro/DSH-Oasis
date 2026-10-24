@@ -1,6 +1,7 @@
 import { validateWorkflowForm } from './workflow-catalog.js'
 import { claimsUpstreamSnapshotSchema } from './generation-contract.js'
 import { normalizeLocalExecutionSummary } from './local-run-summary.js'
+import { V340_NODE_IDS } from './v340-runtime-contract.js'
 
 const MAX_TEXT = 100000
 const MAX_BLOCKS = 1024
@@ -60,6 +61,16 @@ function snapshot(input) {
     text: JSON.stringify(payload),
     route: routeSnapshot(input.route), signal: input.signal })
 }
+function v340Snapshot(input){
+  record(input,['runId','sessionId','instruction','route','signal','requestText','assertCurrent'])
+  record(input.instruction,['version','body'])
+  if(!nonempty(input.runId,256)||!nonempty(input.sessionId,256)||input.instruction.version!=='V3.4.0'
+    ||!nonempty(input.instruction.body,300000)||!(input.signal instanceof AbortSignal)||typeof input.assertCurrent!=='function'
+    ||!nonempty(input.requestText,2*1024*1024)||new TextEncoder().encode(input.requestText).length>2*1024*1024)invalid('INVALID_INPUT')
+  const payload=JSON.parse(input.requestText)
+  if(payload.businessVersion!=='V3.4.0'||!V340_NODE_IDS.includes(payload.nodeId)||payload.runId!==input.runId)invalid('INVALID_INPUT')
+  return Object.freeze({sessionId:input.sessionId,system:input.instruction.body,text:input.requestText,route:routeSnapshot(input.route),signal:input.signal,assertCurrent:input.assertCurrent,strictRoute:true})
+}
 function freezeTree(value) {
   if (value && typeof value === 'object') {
     for (const child of Object.values(value)) freezeTree(child)
@@ -69,10 +80,11 @@ function freezeTree(value) {
 }
 
 // Guard the native assembler's tolerant defaults; never buffer reasoning or replay data.
-function textConsumer(BlockAssembler, summary) {
+function textConsumer(BlockAssembler, summary, maxText=MAX_TEXT, maxBytes=Infinity) {
   const assembler = new BlockAssembler()
   const blocks = new Map()
   let size = 0
+  let byteSize = 0
   let finished = false
   let terminal = false
   return {
@@ -108,7 +120,7 @@ function textConsumer(BlockAssembler, summary) {
       if (block && (block.kind !== kind || block.closed || type === 'block-start')) invalid('INVALID_OUTPUT')
       if (!block) {
         if (blocks.size >= MAX_BLOCKS) invalid('INVALID_OUTPUT')
-        block = { kind, chars: 0, closed: false }; blocks.set(index, block)
+        block = { kind, chars: 0, bytes:0, closed: false }; blocks.set(index, block)
       }
       if (type === 'block-end') block.closed = true
       if (kind === 'reasoning') return
@@ -118,8 +130,11 @@ function textConsumer(BlockAssembler, summary) {
       const text = type === 'block-end' ? chunk.block.text : chunk.text
       if (typeof text !== 'string') invalid('INVALID_OUTPUT')
       const nextSize = type === 'block-end' ? size - block.chars + text.length : size + text.length
-      if (nextSize > MAX_TEXT) invalid('INVALID_OUTPUT')
+      const partBytes=new TextEncoder().encode(text).length
+      const nextBytes=type==='block-end'?byteSize-block.bytes+partBytes:byteSize+partBytes
+      if (nextSize > maxText||nextBytes>maxBytes) invalid('INVALID_OUTPUT')
       block.chars = type === 'block-end' ? text.length : block.chars + text.length
+      block.bytes=type==='block-end'?partBytes:block.bytes+partBytes;byteSize=nextBytes
       size = nextSize
       assembler.push(type === 'block-end' ? { type, index, block: { type: 'text', text } } : { type, index, text })
     },
@@ -128,19 +143,19 @@ function textConsumer(BlockAssembler, summary) {
       const output = assembler.blocks()
       if (output.some(b => b.type !== 'text' || typeof b.text !== 'string')) invalid('INVALID_OUTPUT')
       const body = output.map(b => b.text).join('')
-      if (!body.trim() || body.length > MAX_TEXT) invalid('INVALID_OUTPUT')
+      if (!body.trim() || body.length > maxText || new TextEncoder().encode(body).length>maxBytes) invalid('INVALID_OUTPUT')
       return body
     },
   }
 }
 
 // Internal Host seam only. The caller owns authorization, durable admission and Workspace identity.
-export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMessage, timeoutMs = 120000 }) {
+function createTextAdapter({ llm, BlockAssembler, createUserMessage, timeoutMs = 120000 },capture=snapshot,maxText=MAX_TEXT,maxBytes=Infinity) {
   return { async generate(input) {
     let request
     try {
       if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0 || timeoutMs > 2147483647) invalid('INVALID_INPUT')
-      request = snapshot(input)
+      request = capture(input)
     } catch { return failure('INVALID_INPUT') }
     if (request.signal.aborted) return failure('ABORTED')
     let started = false
@@ -172,7 +187,7 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
     }
     const wait = action => Promise.race([stopPromise, Promise.resolve().then(() => { check(); return action() })])
     try {
-      consumer = textConsumer(BlockAssembler, summary)
+      consumer = textConsumer(BlockAssembler, summary,maxText,maxBytes)
       const message = freezeTree(createUserMessage({ content: [{ type: 'text', text: request.text }] }))
       const prepared = await wait(() => {
         started = true
@@ -181,6 +196,8 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
       check()
       const config = routeSnapshot(prepared.config)
       if (config.provider !== request.route.provider || config.model !== request.route.model) invalid('GENERATION_FAILED')
+      if(request.strictRoute&&Object.keys(request.route).some(k=>request.route[k]!==config[k]))invalid('GENERATION_FAILED')
+      if(request.assertCurrent)await wait(()=>request.assertCurrent())
       const options = Object.freeze({ ...config, system: request.system, sessionId: request.sessionId,
         messages: Object.freeze([message]), signal: controller.signal })
       failureStage = 'stream'
@@ -222,3 +239,5 @@ export function createDshGenerationAdapter({ llm, BlockAssembler, createUserMess
     }
   } }
 }
+export const createDshGenerationAdapter=options=>createTextAdapter(options)
+export const createDshV340GenerationAdapter=options=>createTextAdapter(options,v340Snapshot,2*1024*1024,2*1024*1024)

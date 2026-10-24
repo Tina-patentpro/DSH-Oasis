@@ -20,7 +20,8 @@ export function createV340RuntimeService({repository,preparation,executor,clock=
   const active=new Map(),admissions=new Set(),key=(workspaceId,runId)=>JSON.stringify([workspaceId,runId])
   // A durable prepared record may become visible before its creator resumes.
   const isOwned=(workspaceId,runId)=>active.has(key(workspaceId,runId))||[...admissions].some(work=>work.workspaceId===workspaceId)
-  const enabled=()=>!closing&&executor?.evidenceKind==='synthetic'&&typeof executor.generate==='function'
+  const candidate=executor?.evidenceKind==='native-model-candidate'&&executor?.dispatchEnabled===false&&typeof executor.prepareAdmission==='function'
+  const enabled=()=>!closing&&(executor?.evidenceKind==='synthetic'||candidate)&&typeof executor.generate==='function'
   const taskFor=(record,id)=>{const task=record.tasks[id];if(!Object.hasOwn(record.tasks,id)||!task?.v340)fail('V340_TASK_NOT_FOUND','未找到当前项目的新版任务。');return task}
   const runFor=(record,taskId,runId)=>{const run=taskFor(record,taskId).v340.runs[runId];if(!run||!Object.hasOwn(taskFor(record,taskId).v340.runs,runId))fail('V340_RUN_NOT_FOUND','未找到当前任务的新版运行。');return run}
   async function settle(workspaceId,taskId,runId,change,onlyIfUnowned=false){
@@ -60,7 +61,7 @@ export function createV340RuntimeService({repository,preparation,executor,clock=
       })
     },
     async createV340Run(input){
-      const {workspaceId,taskId,expectedRevision,requestKey}=parse('run/create',input)
+      const {workspaceId,taskId,expectedRevision,requestKey,candidate:confirmation}=parse('run/create',input)
       if(!enabled())fail('V340_EXECUTION_DISABLED','新版真实执行未启用；本批仅提供持久化及合成验证。')
       let releaseAdmission
       const admission={workspaceId,done:new Promise(resolve=>{releaseAdmission=resolve})}
@@ -69,8 +70,9 @@ export function createV340RuntimeService({repository,preparation,executor,clock=
         let admitted
         const result=await workspaceOperations.run(workspaceId,()=>repository.mutate(workspaceId,expectedRevision,async record=>{
           const task=taskFor(record,taskId),state=task.v340
+          if(candidate&&(state.nodeId!==(executor.nodeId??'Flow-2-6')||state.draft.source!=='local-skill')||!candidate&&confirmation)fail('V340_EXECUTION_DISABLED','当前来源或节点不属于本批内部候选。')
           for(const other of Object.values(record.tasks))for(const prior of Object.values(other.v340?.runs??{}))if(prior.requestKey===requestKey){
-            if(other.taskId!==taskId||canonicalJson(prior.inputSnapshot.draft)!==canonicalJson(state.draft))fail('V340_IDEMPOTENCY_CONFLICT','请求标识已绑定其他任务或输入。')
+            if(other.taskId!==taskId||prior.evidenceKind!==(candidate?'native-model-candidate':'synthetic')||canonicalJson(prior.inputSnapshot.draft)!==canonicalJson(state.draft))fail('V340_IDEMPOTENCY_CONFLICT','请求标识已绑定其他任务或输入。')
             return record
           }
           if(busy(record))fail('WORKSPACE_GENERATION_ACTIVE','当前项目有未决生成，请观察原运行。')
@@ -79,7 +81,8 @@ export function createV340RuntimeService({repository,preparation,executor,clock=
           const uid=uuidFactory(),runId=`v340-${uid}`,now=clock()
           if(Object.values(record.tasks).some(item=>Object.hasOwn(item.v340?.runs??{},runId)))fail('V340_RUN_ID_COLLISION','运行标识冲突，未派发。')
           const snapshot=captureV340InputSnapshot({workspaceId,taskId,runId,workflowRunUid:uid,requestKey,capturedAt:now,nodeId:state.nodeId,source:state.draft.source,resourceSHA256:getV340Catalog().resourceSHA256,draft:structuredClone(state.draft),prepared:prepared.prepared})
-          admitted={schemaVersion:1,runId,workflowRunUid:uid,requestKey,workspaceId,taskId,nodeId:state.nodeId,source:state.draft.source,evidenceKind:'synthetic',inputSchemaVersion:'v340-1',
+          const nativeCandidate=candidate?await executor.prepareAdmission({inputSnapshot:structuredClone(snapshot),inputSha256:v340InputHash(snapshot),expectedRevision,confirmation}):null
+          admitted={schemaVersion:1,runId,workflowRunUid:uid,requestKey,workspaceId,taskId,nodeId:state.nodeId,source:state.draft.source,evidenceKind:candidate?'native-model-candidate':'synthetic',...(nativeCandidate?{nativeCandidate}:{}),inputSchemaVersion:'v340-1',
             inputSnapshot:snapshot,inputSha256:v340InputHash(snapshot),status:'prepared',failureCode:null,result:null,resultDraft:null,reviewStatus:'not-reviewed',createdAt:now,completedAt:null}
           const next=structuredClone(record);next.tasks[taskId].v340.runs[runId]=admitted;next.tasks[taskId].v340.runOrder.push(runId);next.tasks[taskId].v340.activeRunId=runId;next.tasks[taskId].updatedAt=now;return next
         }))
@@ -99,13 +102,13 @@ export function createV340RuntimeService({repository,preparation,executor,clock=
               // Closing or a durable stop may precede this queued dispatch and owner installation.
               if(closing||controller.signal.aborted||runFor(repository.get(workspaceId),taskId,admitted.runId).status!=='prepared')return {status:'unknown',code:'ABORTED'}
               return executor.generate({runId:admitted.runId,workflowRunUid:admitted.workflowRunUid,workspaceId,taskId,nodeId:admitted.nodeId,
-                source:admitted.source,prepared:structuredClone(prepared),signal:controller.signal})
+                source:admitted.source,prepared:structuredClone(prepared),signal:controller.signal,...(candidate?{candidateRun:structuredClone(runFor(repository.get(workspaceId),taskId,admitted.runId))}:{})})
             })
             const response=await Promise.race([execution,stopped])
             if(response?.status==='completed'){
               try{change={status:'completed',failureCode:null,result:assembleV340Document({nodeId:admitted.nodeId,workflowRunUid:admitted.workflowRunUid,generatedAt:admitted.createdAt,prepared,output:response.output})}}
               catch{change={status:'failed',failureCode:'INVALID_OUTPUT',result:null}}
-            }else change={status:response?.status==='failed'?'failed':'unknown',failureCode:response?.code==='ABORTED'?'ABORTED':response?.status==='failed'?'EXECUTION_FAILED':'EXECUTION_UNCONFIRMED',result:null}
+            }else change={status:response?.status==='failed'?'failed':'unknown',failureCode:response?.code==='ABORTED'?'ABORTED':response?.code==='INVALID_OUTPUT'?'INVALID_OUTPUT':response?.status==='failed'?'EXECUTION_FAILED':'EXECUTION_UNCONFIRMED',result:null}
           }catch{change={status:'unknown',failureCode:'EXECUTION_UNCONFIRMED',result:null}}
           await settle(workspaceId,taskId,admitted.runId,change)
         }).catch(()=>{/* Durable prepared remains unresolved after a storage failure; never redispatch. */}).finally(()=>active.delete(key(workspaceId,admitted.runId)))

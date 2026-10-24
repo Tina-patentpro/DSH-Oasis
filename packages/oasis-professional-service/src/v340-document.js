@@ -29,6 +29,10 @@ const outputSchema = z.object({ summary: text, core_result_markdown: text,
   tables: z.object(Object.fromEntries(tableNames.map(t => [t,z.array(rowSchema).max(500).optional()]))).strict(),
   terms_master: z.array(safeRecord).max(500), warnings: z.array(warningSchema).max(128),
   model_completions: z.array(completionSchema).max(256) }).strict()
+export const parseV340ModelOutput=value=>outputSchema.parse(value)
+// The native prompt describes this same structural contract. Host provenance and
+// cumulative-document checks below remain authoritative after JSON validation.
+export const getV340ModelOutputSchema=()=>freezeV340(z.toJSONSchema(outputSchema,{unrepresentable:'any'}))
 const snapshotSchema = z.object({ schema_version: z.literal('oasis-v340-1'), node_id: z.string().max(32),
   workflow_run_uid: z.string().uuid(), generated_at: z.string().max(64), filename: z.string().max(200),
   upstream_run_uid: z.string().max(64), upstream_filename: z.string().max(255), upstream_file_sha256: z.union([sha,z.literal('none')]),
@@ -52,7 +56,12 @@ const warning = (node, code, problem) => ({ warning_id: `host-${node}-${code}`, 
   problem, affected_content: '本次输入及下游累计快照', current_handling: '保留实际材料并继续输出', model_completion: '未评估',
   deliverable_impact: '需人工核对', recommended_action: '核对实际输入及其来源', status: 'open' })
 const fence = body => {
-  const ticks = '`'.repeat(Math.max(3,...[...body.matchAll(/`+/g)].map(m => m[0].length + 1)))
+  let longest = 0, run = 0
+  for (let i = 0; i < body.length; i++) {
+    run = body.charCodeAt(i) === 96 ? run + 1 : 0
+    if (run > longest) longest = run
+  }
+  const ticks = '`'.repeat(Math.max(3, longest + 1))
   return `${ticks}text\n${body}\n${ticks}`
 }
 const fileSchema = z.object({ filename: z.string().min(1).max(255).refine(v => !/[\\/\0\r\n]/.test(v)),

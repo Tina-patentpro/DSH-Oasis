@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { v340CandidateConfirmationSchema, v340NativeCandidateSchema } from './v340-native-contract.js'
 
 // Browser-safe data contract. Resource loading and integrity checks stay in the Host.
 export const V340_NODE_IDS = ['Flow-1-1','Flow-1-2','Flow-1-3','Flow-1-4','Flow-1-5','Flow-2-6','Flow-2-7','Flow-3-8','Flow-3-9','Flow-3-10','Flow-4-11','Flow-4-12','Flow-5-13','Flow-6-14']
@@ -59,7 +60,7 @@ const inputSchema=z.object({workspaceId:v340Id,taskId:v340Id,runId:v340Id,workfl
   preparedEncoding:z.literal('values-v1').optional()}).strict()
   .refine(v=>bytes(v)<=V340_LIMITS.snapshotBytes,'V340 snapshot exceeds byte limit')
 export const v340RunSchema=z.object({schemaVersion:z.literal(1),runId:v340Id,workflowRunUid:z.string().uuid(),requestKey:v340Id,
-  workspaceId:v340Id,taskId:v340Id,nodeId:z.enum(V340_NODE_IDS),source:z.enum(['local-skill','oasis-api']),evidenceKind:z.literal('synthetic'),
+  workspaceId:v340Id,taskId:v340Id,nodeId:z.enum(V340_NODE_IDS),source:z.enum(['local-skill','oasis-api']),evidenceKind:z.enum(['synthetic','native-model-candidate']),nativeCandidate:v340NativeCandidateSchema.optional(),
   inputSchemaVersion:z.literal('v340-1'),inputSnapshot:inputSchema,inputSha256:sha,
   status:z.enum(['prepared','completed','failed','unknown']),failureCode:z.enum(['INTERRUPTED','ABORTED','EXECUTION_UNCONFIRMED','INVALID_OUTPUT','EXECUTION_FAILED']).nullable(),
   result:resultSchema.nullable(),resultDraft:editDraftSchema.nullable(),resultDrafts:z.record(v340Id,editDraftSchema).optional(),
@@ -67,6 +68,9 @@ export const v340RunSchema=z.object({schemaVersion:z.literal(1),runId:v340Id,wor
   resultVersions:z.array(versionSchema).min(1).max(8).optional(),activeVersionId:v340Id.optional(),
   reviewStatus:z.literal('not-reviewed'),createdAt:time,completedAt:time.nullable(),
 }).strict().superRefine((run,ctx)=>{
+  if((run.evidenceKind==='native-model-candidate')!==Object.hasOwn(run,'nativeCandidate')||run.evidenceKind==='native-model-candidate'&&(run.source!=='local-skill'
+    ||run.nativeCandidate?.version==='v340-native-candidate-1'&&run.nodeId!=='Flow-2-6'
+    ||run.nativeCandidate?.version==='v340-native-candidate-2'&&run.nativeCandidate.nodeId!==run.nodeId))ctx.addIssue({code:'custom',message:'V340 candidate identity mismatch'})
   if(run.status==='completed' ? !run.result||!run.completedAt||run.failureCode!==null : run.result!==null||run.resultDraft!==null)ctx.addIssue({code:'custom',message:'V340 result/status mismatch'})
   if(run.status==='prepared' ? run.completedAt!==null||run.failureCode!==null : !run.completedAt)ctx.addIssue({code:'custom',message:'V340 terminal timestamp mismatch'})
   if(['failed','unknown'].includes(run.status)&&run.failureCode===null)ctx.addIssue({code:'custom',message:'V340 failure code required'})
@@ -100,7 +104,7 @@ export const v340Commands=Object.freeze({
   'run/stop':z.object({...command,runId:v340Id}).strict(),
   'result/draft':z.object({...command,runId:v340Id,baseSha256:sha,body:v340DocumentBodySchema.nullable(),format:z.literal('core-markdown').optional()}).strict()
     .refine(c=>c.format!=='core-markdown'||c.body===null||!c.body.includes('\0')),
-  'run/create':z.object({...command,requestKey:v340Id}).strict(),
+  'run/create':z.object({...command,requestKey:v340Id,candidate:v340CandidateConfirmationSchema.optional()}).strict(),
   'result/edit':z.object({...command,runId:v340Id,versionId:v340Id,baseSha256:sha,draftSha256:sha,requestKey:v340Id}).strict(),
   'result/review':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha,confirmed:z.literal(true)}).strict(),
   'result/prepare-save':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha}).strict(),

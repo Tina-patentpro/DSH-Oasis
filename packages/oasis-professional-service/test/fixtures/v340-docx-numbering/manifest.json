@@ -1,0 +1,125 @@
+{
+  "version": "d0-numbering-fixtures-1",
+  "publicSynthetic": true,
+  "fixtures": [
+    {
+      "id": "direct",
+      "file": "direct.docx",
+      "expected": "reject",
+      "sha256": "23ca25876167dd79b3413bb33c19de1550ad81b13ea14553f976427932c2dbb3",
+      "bytes": 2850
+    },
+    {
+      "id": "style",
+      "file": "style.docx",
+      "expected": "reject",
+      "sha256": "73d57c92dea2a018ad4668a626686941536403bdb0b2c55887c7e8e7cd993d7f",
+      "bytes": 2944
+    },
+    {
+      "id": "style-chain",
+      "file": "style-chain.docx",
+      "expected": "reject",
+      "sha256": "38781dbbd62c0fb5fc3a38c39dce4ffeeb085b0f8e257adfa1107b7a8022dc3c",
+      "bytes": 3108
+    },
+    {
+      "id": "default-style",
+      "file": "default-style.docx",
+      "expected": "reject",
+      "sha256": "37df1cf5fdae0b5d8e2c650843b1bb0fef63ed8b5ff4244762acfc3cdf231b33",
+      "bytes": 2850
+    },
+    {
+      "id": "ilvl-only-inherits-id",
+      "file": "ilvl-only-inherits-id.docx",
+      "expected": "reject",
+      "sha256": "416377e2aa30867711abe3a8b6e114538af75ee11f6da0146e23646e2eb236d2",
+      "bytes": 2982
+    },
+    {
+      "id": "restart",
+      "file": "restart.docx",
+      "expected": "reject",
+      "sha256": "03bf87c9485971cf8436a78e3334589efd575f111adf3d006da86188fcc273ce",
+      "bytes": 2975
+    },
+    {
+      "id": "multilevel",
+      "file": "multilevel.docx",
+      "expected": "reject",
+      "sha256": "b8dd2c231813bf7bf6c19c3b21678541e64311fbf3e08e04c99643e60b68d7f1",
+      "bytes": 3020
+    },
+    {
+      "id": "bullet",
+      "file": "bullet.docx",
+      "expected": "reject",
+      "sha256": "60a109497cf9c7c919ac264feb063cbb0ac92281bc88f3a91c060c87a275f3e1",
+      "bytes": 2649
+    },
+    {
+      "id": "used-style-cycle",
+      "file": "used-style-cycle.docx",
+      "expected": "reject",
+      "sha256": "9cd88f7ca479e04b88bd55a80f4dc0a9393159c80a46a16d2e5a3bd5b1de1053",
+      "bytes": 2980
+    },
+    {
+      "id": "manual-plain",
+      "file": "manual-plain.docx",
+      "expected": "eligible",
+      "sha256": "cf282c5e26756a8cb09885cfb4630d15789cedd02471d5a4c0f4b3bda20d50c7",
+      "bytes": 1996
+    },
+    {
+      "id": "manual-unused-definitions",
+      "file": "manual-unused-definitions.docx",
+      "expected": "eligible",
+      "sha256": "3b13c4d469dc01b8e3b389e7351621ce0eac2b04481e43b8644e2ab3aa84c7e3",
+      "bytes": 2875
+    },
+    {
+      "id": "unused-numbering-style",
+      "file": "unused-numbering-style.docx",
+      "expected": "eligible",
+      "sha256": "6a4d01b2c124132d5e642867725b78d54ab9446d8d94c13fe984748df84ee5cc",
+      "bytes": 2990
+    },
+    {
+      "id": "unused-restart-multilevel",
+      "file": "unused-restart-multilevel.docx",
+      "expected": "eligible",
+      "sha256": "ec7266afa37047183c98bff78730460897ce660f5a1f4d2c2486a22a5067b5c9",
+      "bytes": 3202
+    },
+    {
+      "id": "direct-zero-disables",
+      "file": "direct-zero-disables.docx",
+      "expected": "eligible",
+      "sha256": "4383ff71dc3a156460362f07221d9b2c01201fcaa8b068489e012903be286d19",
+      "bytes": 2956
+    },
+    {
+      "id": "style-zero-disables",
+      "file": "style-zero-disables.docx",
+      "expected": "eligible",
+      "sha256": "7b7d0ed38b80a78f800b700d34e25bb42f2537b1596baabc64598e21fd3f99c9",
+      "bytes": 3049
+    },
+    {
+      "id": "unused-list-style-cycle",
+      "file": "unused-list-style-cycle.docx",
+      "expected": "eligible",
+      "sha256": "a1cee4aa75a0a68258f77133135f929bbed076b8d76217b41afe3d6eba173ae6",
+      "bytes": 3077
+    }
+  ],
+  "invalidFixtures": [
+    {
+      "file": "invalid-utf16-dtd.docx",
+      "sha256": "2b479c24db0a4758981c4f479dbb9982af2129ad6915150073dd12f816e6f529",
+      "bytes": 2203
+    }
+  ]
+}
