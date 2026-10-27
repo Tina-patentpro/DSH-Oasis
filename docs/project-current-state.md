@@ -1,3 +1,13 @@
+## 2026-10-27 F同源跨Document租约/v4装配子集获Max接受，重传观察仍待核
+
+[本批返回](evidence/2026-10-27-f-renderer-lease-return.md)、[152成员执行单](evidence/2026-10-27-f-renderer-lease-execution.json)及[GPT6.1 Max独立审计](evidence/2026-10-27-f-renderer-lease-independent-audit.md)接续F。报告SHA `84ee096bc22fa088f42d3fb5473183eaa7d4950d9a911c1b3f90be28bb6b2b15`，新增必改P1/P2/Minor均0；两解释器各95/95及独立实际helper/Controller/Store探针各6/6。v4对同源/同分区workspace+session的协作checkpoint binder单owner，未获锁/能力缺失不进入底层恢复，dispose后队列排空才释放；原v3双写反例保留。
+
+实际Chrome同源srcdoc独立Document/IDB证明未提交事务在Document终止后不补认、旧fence拒恢复；不是两个实际DSH Renderer或OS进程SIGKILL。显式checkpoint4及198pin开发准入接受，不代全写入方/发行。旧v2/v3/准入和夹具导航FAIL均保持。本轮R1冷A/原B/A及正常重启、最终R2首次冷A有原Session18字符/2待重试附件证据；四次退出0、端口/锁释放。R1/R2专指`.dsh-test/f-renderer-lease-20261027`及其`-r2`，不混同下方历史批次。
+
+**R2重启零自动重传未接受：** 后续观察两件公开文件向新隔离本地Host接收（四份named/object副本），卡片ready/Send可用；实现者未点retry/Send，触发者/调用链未确认，用户答复尚未取得。不能写整批uploads=0、不能归因用户或代码；异常AX/png/实物保留。无新增真实模型、专业API、外网资料上传或费用；本地收件不代表模型收到附件。完整F、全writer/跨平台、双存储、真实UNKNOWN及发行升级继续按[剩余表](evidence/2026-10-26-follow-up-remaining.md)开放。本批审计后本地收录见[记录](evidence/2026-10-27-f-renderer-lease-local-commits.md)，不推送、不改日常安装。下方原时点保留。
+
+---
+
 ## 2026-10-27 具名旧附件恢复与受控开发装配获Max最终复审接受
 
 本轮按剩余表优先处理旧FH-A01与装配接续。首轮发现A01执行来源、A02物化/配置准入、A03异步覆盖三项P2；R3复审关闭A01/A03，保留A02有效配置一项P2；两轮失败报告及R2首次冷恢复0/0均保持原字节。最终[R4补正返回](evidence/2026-10-27-f-legacy-recovery-assembly-A02-final-return.md)、[62成员执行清单](evidence/2026-10-27-f-legacy-recovery-assembly-A02-final-execution.json)及[同一GPT6.1 Max独立复审](evidence/2026-10-27-f-legacy-recovery-assembly-A02-final-independent-audit.md)接续当前结论。最终A02在具名R4无模型开发入口关闭，维持A01/A03/v3限定接受；新增必改P1/P2/Minor均0，报告SHA `eb740c0b0b0978da3af33e9993c38826fc6187934e1a6424ddb68b4a025ead9d`。

@@ -1,5 +1,7 @@
 # 后续计划当前未完成出口
 
+2026-10-27后续v4：[GPT6.1 Max独立审计](2026-10-27-f-renderer-lease-independent-audit.md)接受同源独立Document租约/helper及198pin开发装配子集，新增必改P1/P2/Minor均0，95项×两解释器及独立6探针×两解释器通过。R2实际两次公开文件本地Host接收的触发未知、重启零自动重传未接受，不得写整批uploads=0；[返回/范围](2026-10-27-f-renderer-lease-return.md)及[执行单](2026-10-27-f-renderer-lease-execution.json)保持，完整F继续开放。
+
 2026-10-27本批接续：具名旧附件恢复与固定开发装配R4经[同一GPT6.1 Max最终复审](2026-10-27-f-legacy-recovery-assembly-A02-final-independent-audit.md)接受限定子集。最终A02在具名R4无模型开发入口关闭，维持A01/A03/v3限定接受；新增必改P1/P2/Minor均0，报告SHA `eb740c0b0b0978da3af33e9993c38826fc6187934e1a6424ddb68b4a025ead9d`。 详见[R4返回](2026-10-27-f-legacy-recovery-assembly-A02-final-return.md)/[62成员执行单](2026-10-27-f-legacy-recovery-assembly-A02-final-execution.json)。首轮三P2、R3余留A02及R2冷恢复失败保持原字节；本次补正接续、不重签旧失败。R4的B证据只证明工作区空白/回A恢复，不单独证明具体B原Session。完整F继续开放。
 
 本记录接续原后续开发计划，不改变目标或把阻塞改为完成。准备层、M06范围1机械层、provider/网站校准及当前Host GUI子集分别有证据；完整计划仍未完成。

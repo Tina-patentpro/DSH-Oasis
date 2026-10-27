@@ -1,3 +1,11 @@
+## 2026-10-27 F租约/v4开发装配获独立接受，R2本地收件触发未知
+
+[Max独立审计](2026-10-27-f-renderer-lease-independent-audit.md)接受同源/同分区协作v4 binder单owner、排空后释放、精确转换与198pin开发准入；新增P1/P2/Minor均0，两解释器95/95及独立实际helper/Controller探针各6/6。真实浏览器是srcdoc独立Document/IDB，不代两个实际DSH Renderer或进程强杀。旧v3双写、导航夹具FAIL、旧版本/准入原字节保留。
+
+本轮R1冷A/原B/A及重启、R2首次冷A的原18字符/2附件可核；R2重启后来有两件公开文件向新隔离本地Host接收、ready/Send可用。实现者未点retry/Send，触发未确认，**重启零自动重传不接受**，不能汇总uploads=0或猜定因果。见[返回](2026-10-27-f-renderer-lease-return.md)/[执行单](2026-10-27-f-renderer-lease-execution.json)；四次退出0，端口关闭。真实模型/专业API/外传/费用新增0；完整F及全writer发行、跨平台、双存储和真实UNKNOWN仍OPEN。[本地收录](2026-10-27-f-renderer-lease-local-commits.md)只作版本保全，不推送。下方旧时点保留。
+
+---
+
 ## 2026-10-27 具名旧附件与受控装配R4获Max最终接受，完整F仍进行中
 
 首轮三项P2及R3余留A02、R2首次冷失败保留；[R4补正返回](2026-10-27-f-legacy-recovery-assembly-A02-final-return.md)/[执行单](2026-10-27-f-legacy-recovery-assembly-A02-final-execution.json)由[同一GPT6.1 Max最终复审](2026-10-27-f-legacy-recovery-assembly-A02-final-independent-audit.md)接续。最终A02在具名R4无模型开发入口关闭，维持A01/A03/v3限定接受；新增必改P1/P2/Minor均0，报告SHA `eb740c0b0b0978da3af33e9993c38826fc6187934e1a6424ddb68b4a025ead9d`。 固定有效workspace/root、全部同角色物化布局/settings及管理覆盖在启动前校验，支持入口强制v3/guard/bridge与固定App/Node，不代表发行装配已完成。
