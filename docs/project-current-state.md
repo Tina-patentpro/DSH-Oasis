@@ -1,3 +1,9 @@
+## 2026-10-27 用户确认R2曾人工重试；无干预重启结论不补签
+
+用户对北京时间20:01:42–43左右两附件的操作问题答复“手动点击了重试”，见[原话与限定补记](evidence/2026-10-27-f-renderer-lease-user-retry-addendum.md)。人工干预事实已确认，该次本地接收不能据此判为自动重传反例；有干预的运行也不能证明无干预重启零自动重传。完整F仍OPEN。原审计、返回/执行单、异常观察和下方旧时点文字保持；本次只做文档/本地收录，无新运行、真实模型/专业API/费用或推送。
+
+---
+
 ## 2026-10-27 F同源跨Document租约/v4装配子集获Max接受，重传观察仍待核
 
 [本批返回](evidence/2026-10-27-f-renderer-lease-return.md)、[152成员执行单](evidence/2026-10-27-f-renderer-lease-execution.json)及[GPT6.1 Max独立审计](evidence/2026-10-27-f-renderer-lease-independent-audit.md)接续F。报告SHA `84ee096bc22fa088f42d3fb5473183eaa7d4950d9a911c1b3f90be28bb6b2b15`，新增必改P1/P2/Minor均0；两解释器各95/95及独立实际helper/Controller/Store探针各6/6。v4对同源/同分区workspace+session的协作checkpoint binder单owner，未获锁/能力缺失不进入底层恢复，dispose后队列排空才释放；原v3双写反例保留。
