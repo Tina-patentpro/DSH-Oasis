@@ -1,3 +1,265 @@
+## 2026-10-27 具名旧附件恢复与受控开发装配获Max最终复审接受
+
+本轮按剩余表优先处理旧FH-A01与装配接续。首轮发现A01执行来源、A02物化/配置准入、A03异步覆盖三项P2；R3复审关闭A01/A03，保留A02有效配置一项P2；两轮失败报告及R2首次冷恢复0/0均保持原字节。最终[R4补正返回](evidence/2026-10-27-f-legacy-recovery-assembly-A02-final-return.md)、[62成员执行清单](evidence/2026-10-27-f-legacy-recovery-assembly-A02-final-execution.json)及[同一GPT6.1 Max独立复审](evidence/2026-10-27-f-legacy-recovery-assembly-A02-final-independent-audit.md)接续当前结论。最终A02在具名R4无模型开发入口关闭，维持A01/A03/v3限定接受；新增必改P1/P2/Minor均0，报告SHA `eb740c0b0b0978da3af33e9993c38826fc6187934e1a6424ddb68b4a025ead9d`。
+
+两个具名公开旧附件按原workspace唯一session、历史观察与原workspace/孤立存储等字节恢复到新隔离Profile；原18字符草稿保持，普通96/长449990字节SHA与原件一致。R4首次冷进入A及正常重启均18字符/2附件，B工作区空白、返回A保持。R4的B截图不能独立证明具体B原Session；冻结作者返回的该措辞按独立报告限定，不改原稿。恢复卡片为失败待人工重试，原receipt未恢复，没有自动上传或发送。
+
+维护入口`scripts/f-development-assembly.mjs`强制固定App/Node/R7来源、checkpoint v3、路径桥、单所有权后端及全部有效配置/物化对应；偏离workspace/layout/管理覆盖在启动前拒绝，缺v3不回退。它只接续具名开发候选，不是日常安装或发行。两解释器各73/73、196pin；R4两次正常退出0，本批共9次已退出、57583关闭、四份入口锁释放。原3554文件及公开17份在状态写回前无变化，三个活跃入口另有原字节备份。旧R7/v2/旧准入未重签，未改业务源码/依赖。
+
+完整F仍开放：任意孤儿归属、实际Host重新传输/模型收到附件、0.1.3真实模型/API UNKNOWN与Desktop运行中断、双存储失效/事务未提交崩溃、多Renderer/跨平台、全写入者发行强制接续及升级回退等；原FH-A01失败不改签为通过。无新增真实模型/API/上传/原生重试/发送/费用，未读迁认证、未改日常Profile/签名App、未提交推送发布。按[剩余出口](evidence/2026-10-26-follow-up-remaining.md)继续；下方旧时点保留。
+
+---
+
+## 2026-10-27 固定审核引用与新草稿附件恢复子集获Max独立复审接受
+
+按本轮优先项完成固定审核普通/长稿引用及旁置原生checkpoint恢复维护，详见[首轮返回](evidence/2026-10-27-f-reviewed-reference-attachments-return.md)、[修复返回](evidence/2026-10-27-f-reviewed-reference-attachments-repair-return.md)和[修复执行清单](evidence/2026-10-27-f-reviewed-reference-attachments-repair-execution.json)。首轮GPT-6.1-sol/max审计发现恢复文件可经会话切换绕过人工重传、UUID故障后已删除图片复活两项P2；原报告保持不变。修复版 `0.2.0-rc.2.oasis-draft.2` 保持固定基础组合，以恢复文件标记撤销旧会话传输/receipt，并在UUID前失效旧fence；fence不可写而IDB可写时写失效快照。
+
+同一指定[GPT6.1 Max独立复审](evidence/2026-10-27-f-reviewed-reference-attachments-repair-independent-audit.md)已关闭具名F-DR-A01/A02，新增必改P1/P2/Minor均0，报告SHA `74e4dec3f063b59addf721ced341b0c1f8c784e6e6ffdcbbccb113724d9caedb`。工具/实际内置Node各20项通过；独立旧新反例、晚到A与新B重试交错、61成员/183pin、原165未变及9条旧字节关系均核实。R7实际Desktop冷启动保持2条结构化文件引用/1图片及73字符摘要；固定审核长稿126692字符/127894字节前后全文SHA一致。普通固定稿6797字符及当前文件改变不沿用审核的首轮证据复用未变业务输入。通用Blob为真实浏览器IDB/实际Controller与假传输层验证，不能冒充Desktop实际Host上传或模型收到附件。
+
+全部13次受控启动已退出0，端口57563关闭、锁释放；早期装配失败及缺摘要观察仍原样保留。新增真实模型/API/上传/发送/费用0，未读迁认证、未改日常Profile/签名App，未提交推送发布；状态写回前3542既有文件无缺失，只有已声明并保留的他人AGENTS条款变化。本节接续送审稿中待审状态，不改写冻结原件。
+
+旧孤立附件FH-A01、双存储均不可更新/事务未提交即崩溃等限制、真实模型/API UNKNOWN、超150000固定文件引用、正式装配/发行升级及完整F仍未关闭。U1/D1、新版API映射、专业/用户接受和G/H/阶段6继续按[剩余出口](evidence/2026-10-26-follow-up-remaining.md)推进，后续真实调用另依具体输入与预算。
+
+---
+
+## 2026-10-27 F同配对存储排他/进程恢复获独立接受，新资源交付已接续
+
+按[剩余出口](evidence/2026-10-26-follow-up-remaining.md)推进，新增[同配对JSON后端单所有权及进程恢复返回](evidence/2026-10-27-f-storage-process-recovery-return.md)与[执行清单](evidence/2026-10-27-f-storage-process-recovery-execution.json)。原固定JSON后端已复现两进程旧revision双提交/覆盖，保持FAIL；新旁置通用后端用公开KV注册和内置SQLite事务保护canonical root，业务JSON不换格式。工具Node24.21.0和实际Electron内置Node24.18.1各9项定向通过；同配对进程竞争拒绝、正常close/SIGKILL后原UNKNOWN保留标识/输入hash且零重派。该恢复是实际SDK/业务服务+合成executor，不代原生模型/API恢复。
+
+最终R3/174文件配对在固定Desktop2.0.17实际核对：受保护Desktop持锁时第二受保护SDK Host未注册后端/未开域/零写入，退出后释放；R3两次正常退出0、一次同配对重启保留原生与业务草稿。首轮元数据规范化触发的旧pin失败、事后按原hash恢复的启动前锁副本及旧R1/R2原件均保留；不改签旧准入，未替换固定解释器、签名App或日常Profile。全部应用已退出，端口57543关闭，无真实生成/API/消息/费用。
+
+具名R31/R37/R44/R46/R47表明0.1.3候选已交付、源码采用及无模型准备/取消取得证据；8生成资源/2 operator-only附件已实校验。原剩余表“无新包”由本节接续，六载体PENDING_EXCLUDED、18旧UID排除、未决规则、实际模型/专业/用户/发行仍不放行。现有M06源码本轮未覆写；状态写回前3529项初始文件0缺失/0变化。
+
+[指定GPT-6.1-sol/max独立审计](evidence/2026-10-27-f-storage-process-recovery-independent-audit.md)已接受限定R3子集、未发现新增必改P1/P2；独立两解释器各9项、174pin、97members通过，报告SHA`e23be07a8add7643804c6b59650e6f5e46b9e0563f48cb5f1bffe7770ecff9ff`。送审返回/执行清单/计划/设计保持被审字节，其中待审/未勾状态由本节及新报告接续。审计另明确UNKNOWN快照仍是共享资源6858…/synthetic，不能算0.1.3原生模型恢复。
+
+候选保护是协作式，旧无保护Host可绕过，正式全写入方装配尚未接受。结构化附件、固定审核内容交付、完整F、U1/D1、新版API映射、真实双来源/G/H及阶段6继续按剩余表推进。下方旧批次的版本/源码数量/完成边界保持原时点。
+
+---
+
+## 2026-10-26 F磁盘文件桥接窄修复获独立接受，完整F仍未通过
+
+沿已授权F维护范围，以旁置通用扩展0.0.1连接Desktop公开`getPathForFile`与DSH公开`pathFor`，不改签名App、原前端、主锁或旧准入。[本批返回](evidence/2026-10-26-f-host-file-path-bridge-return.md)及[156项配对执行证据](evidence/2026-10-26-f-host-file-path-bridge-execution.json)记录：8项定向测试退出0；普通/长Markdown经原生选择器进入文件引用，新Profile没有附件文件；两次正常退出code0、一次实际重启恢复原文本和两个@路径；B草稿空、返回A保持。应用已关闭、57523无监听、入口锁释放，无发送/生成/额外费用。
+
+重启恢复的是纯文本@路径，不是结构化occurrence/芯片；文件codec的identity映射只支持相同文本投影的静态判断，没有模型读取/正文交付证据。图片、Blob、旧上传附件、固定审核版本引用、业务跨Host及UNKNOWN仍缺，完整F/P2不关闭。初版HTML link实际挂接失败已按原字节归档，未借其绿色测试冒充成功。[指定GPT-6.1/max新批独立审计](evidence/2026-10-26-f-host-file-path-bridge-independent-audit.md)已接受该窄子集、未发现新增P1/P2，独立复算8测试/156pin/32执行项/5归档项及3471文件保全一致。报告SHA为`607f33e27d529d11c96a7b7c7076cdcd045d5bbd4cea2d37555124dc58409cb9`。被审返回、局部计划与执行清单保持送审字节，其中“待审/未勾”由本节及新审计报告接续；旧审计范围不扩大。[剩余出口表](evidence/2026-10-26-follow-up-remaining.md)接续全部未完成范围。
+
+---
+
+## 2026-10-26 固定Host旁置恢复取得GUI/重启/A-B子集证据，完整F仍未通过
+
+[provider与实际网站独立审计](evidence/2026-10-26-provider-and-live-api-independent-audit.md)已完成：具名provider来源/锁/65项结果可核但U1资格不足；网站完整正文、记录5271与3元消费观察可核，预算耗尽、未质量接受。草案历史表述问题已透明更正并按审计旧hash补恢复副本，报告保留该处理过程，不扩张为DSH真实生成接受。
+
+已从固定官方2.0.17资产恢复旁置只读App，7个宿主成员与旧pin一致、签名通过，未覆盖日常2.0.18或旧准入。在独立`.dsh-test/followup-20261026`以本次147文件配对、117份当前源码及已审client做[无模型实际GUI/恢复](evidence/2026-10-26-f-host-recovery-return.md)：M06八输入/限制提示/来源禁用可见；A输入与来源切换保留、原生文件预览及普通/150000字符附件准备、两次正常退出code0、文本草稿/业务输入重启恢复、B新任务默认本地且无A输入、返回A恢复均有当前证据。应用现已正常关闭；无生成、消息发送或额外费用。
+
+两个待发送附件芯片重启未恢复，原附件字节仍在；固定审核版本引用、业务跨Host排他和UNKNOWN原运行恢复未验。第二启动入口EEXIST不代业务存储排他。[GPT-6.1/max独立审计](evidence/2026-10-26-f-host-recovery-independent-audit.md)已接受明确F子集，保留附件恢复FH-A01/P2；完整F/E/G/H、U1/D1、新业务Skill和阶段6均未通过。旧准入/旧八路径失败保留，由新配对子集证据接续，不改写旧失败。[当前剩余出口](evidence/2026-10-26-follow-up-remaining.md)继续有效。
+
+---
+
+## 2026-10-26 单次网站校准接续：正文已保存、实际扣费3元
+
+用户批准一次、最多3元后，实际网站Fast/detail39已唯一创建并完成。冻结key `task_1793014998417_8g0e1uo5puj`对应项目302保存记录5271，原正文1609字节与重开记录hash一致；流水6097观察消费3元，预算已消费，未重发。文件URL为空，无文件交付。见[单次校准回执](evidence/2026-10-26-flow2-6-live-calibration-return.md)及[费用/持久化核对](evidence/2026-10-26-flow2-6-live-reconciliation.json)。
+
+正文包含输入未支持的U形/金属/卡槽/螺栓等结构及重复定义从属项，标记为收到、未质量接受；未补写为人工确认。这仅是网站真实接口校准，新版共同八输入的无损映射、DSH账户/Workspace绑定、E/F/G0及专业接受仍未完成。下方“费用待确认、未创建”是此唯一调用前的历史时点，由本节接续。provider和本次网站批独立审计仍待出具，已有两份审计范围不扩大。
+
+---
+
+## 2026-10-26 后续计划执行：首批与M06范围1机械审计通过，真实层仍待验
+
+已按[后续开发计划](plans/2026-10-26-dsh-oasis-follow-up-development-plan.md)交付[首批准确缺件/消费规格](evidence/2026-10-26-dsh-oasis-next-batch-readiness.md)，[GPT-6.1/max独立审计](evidence/2026-10-26-dsh-oasis-readiness-independent-audit.md)在准备层接受任务1—4、关闭RA-01字段字典缺件。另承接PD已确认的M06范围1工程规格，完成新指令来源资格、UID限制警示和持续编辑/删除能力提示；[工程返回](evidence/2026-10-26-m06-range1-engineering-return.md)及[独立工程审计](evidence/2026-10-26-m06-range1-independent-audit.md)确认45选定断言/9组机械出口通过。专业语义、完整同步/结构删除、业务Skill装配、真实Host及全后续计划均未因此完成。
+
+最终串行全包1438/1438、M06目标13/13通过；旁置成对构建与离线pack122成员通过，活跃lib/资源/锁/pin/旧golden保留。较早默认并发长输入测试1项失败保留，同项隔离/串行通过，未放宽产品超时/限额，不宣称并发稳定性已修复。Host `--check`新鲜退出1，旧准入root解析同一当前目录但仍有8个pin路径漂移/缺失，未重算pin或启动Desktop。
+
+用户追加授权后，已在同commit/同锁的独立官方源树找到并补齐具体Node PTC/sandbox-local依赖；[provider查找/安装及限制](evidence/2026-10-26-dsh-provider-discovery.md)记录65通过/1个Windows专属跳过。默认实现仍不提供本合同所需全部硬内存/严格读取/网络/exec保证；两格式仍BLOCKED、U1未执行、D1未接线。此新批尚不在前述机械审计范围。
+
+用户已在实际网站完成登录；[真实服务观察](evidence/2026-10-26-live-api-service-observation.json)绑定同步Fast目录211/detail39（price3）与异步Basic目录212/detail46（price5），未按同名猜服务或启用新版来源。网站新建并选中合成校准项目302，公开输入/请求草稿已冻结，具体费用范围待确认，尚未发送workflow创建。网页登录与元数据/项目操作不代表DSH账户/目录绑定或真实生成通过。
+
+持续目标仍为全部计划完成并通过独立审计；DS-02真实资源、逐格式U1/D1、E/F/P1/U13、G0—G5/H及阶段6继续按原门推进，不将本次机械切片代全目标。无提交、推送、发布或日常Profile写入。下方旧正文保持原字节。
+
+---
+
+## 2026-10-25 本批已交付：DSH跨平台产品边界明确，U1仍阻塞
+
+用户本轮明确“明确产品应该基于DSH，与操作系统无关”。当前产品依据是DSH专业插件及公共能力合同；不再要求为产品选择最低macOS或另建独立.app/XPC。此前macOS arm64/Python3.14.8、签名XPC及11原件仅保留为历史验证/供应材料候选，不是跨平台产品的唯一运行时、已批准分发集或必须先选的产品封装。旧事实/原文不改写。
+
+[本批收口与作者复审](evidence/2026-10-25-stage5-d1-product-gates-closeout.md)及[当前逐格式判定](business-baseline/v340-extraction-product-gates.json)记录：固定DSH0.2.0-rc.2的scope/sandbox/PTC公共定义已只读核对；scope是路由所有权、sandbox定义文件效果，PTC是抽象执行接口，均不足以证明已挂载provider、硬内存/网络/进程及逐流预算满足原合同。产品方向已确认，实际DSH能力/分发接受仍OPEN，不因跨平台定位自动开放解析。
+
+543项MISSING已逐成员分类；补证283个精确Include安装路径，其中282与固定CPython源码字节一致、pyconfig.h无该精确来源路径仍待构建证据；原候选1518/543及2058拟纳入/3未决不重写，最终通知/分发仍未接受。DOCX95源码成员静态分析无直接isoschematron导入，但该模块自身导入会读取两未许可XSL，不能只删两文件推定兼容；23模板/包数据hash及7native/9资源/实体缺口保留，无裁剪/加载/升级。
+
+材料计划Task1—5按精确决定/缺件出口完成，交付COMPLETE_WITH_BLOCKERS。正式材料54/54与无.local干净副本54/54新鲜通过，无新增正式测试或产品改码；12处许可副本、27成员映射、原容量、旧v1/values-v1、原件历史、台账与来源禁用不变。
+
+PDF/DOCX仍BLOCKED、未达READY_FOR_OFFLINE_PROOF，U1未执行、D1未接线。下一步先补固定DSH具体provider/公共资源限制/解析依赖及分发更新责任，再按格式给出材料准入；明确U1范围后先冻结真实执行组件/指纹/命令，实证通过且获D1指令才接线。旧macOS硬内存NO_GO只描述该历史候选，不外推为所有DSH平台无能力。
+
+本批只读既有11原件和固定依赖/必要官方材料，没有新原始包、安装物化/构建/执行候选代码/接Host/Desktop/真实模型业务API、生产源码/测试/合同/锁/pin/Profile改动或提交推送。下方为执行前计划/历史正文，全部原字节保留；其中最低macOS/独立.app作为产品前置及“本批未执行”等旧描述由本节替代。
+
+---
+
+## 2026-10-25 LC-R2全面复审后：阶段5完成核查与下一批计划
+
+**阶段5仍进行中。** [最新全面复审](evidence/2026-10-25-stage5-d1-tar-admission-reaudit.md)在LC-R2材料范围未确认新增或遗留P1/P2；LC-R1许可正文/映射与LC-R2物理扩展头准入两项修复均完成。正式材料全组54/54（原26＋新28）及无.local干净副本通过、撤回有效；本轮只比对8份输入与11原件hash一致，未重跑材料或历史业务回归。12处许可副本、27成员关系、原容量/旧v1/values-v1和历史证据保持。
+
+完成与剩余以现有阶段5清单及本次新计划为当前入口：共同流程/A、B/C、D0和材料修复完成层保持；运行时/最终许可分发、DOCX资源/native/实体、G1承载/G4机制/G5全profile/G6交接仍未闭合。下一批先交关键决定与精确缺件，不直接进入U1/D1；其它D后续/E—H/阶段6及稳定性尾项不减。
+
+下一批详见[产品承载、分发闭包与机制解阻计划](plans/2026-10-25-stage5-d1-product-gates-plan.md)。PDF/DOCX仍BLOCKED、未达READY_FOR_OFFLINE_PROOF，U1未执行、D1未接线；全部来源禁用。**本轮仅检查/更新文档和规划，未执行新计划。** 无联网获取/安装物化/接Host/Desktop/新增真实模型业务API、产品/合同/测试/锁/pin/Profile改动或提交推送；下方旧正文原字节保留。
+
+---
+
+## 2026-10-25 阶段5 LC-R2物理tar准入P2修复完成
+
+[修复、正式回归与作者复审](evidence/2026-10-25-stage5-d1-tar-admission-repair-closeout.md)将PAX局部/全局及GNU长名称/长链接头纳入正文消费前的单条目、物理数量与累计声明字节准入；保留逻辑成员及实际总展开保护。新增28项正式材料回归，完整材料组54/54及无.local干净副本通过；默认20000等值/超限与总展开对照已覆盖。原26项仅将普通条目计数夹具显式设为USTAR，未减少断言。
+
+策略更新为v340-packaging-notice-2并绑定当前模块hash；12处许可副本、27成员通知关系、原容量、11原件及历史证据保全。只关闭LC-R2；完整来源/分发/许可、DOCX资源/实体及macOS机制余项保持。PDF/DOCX仍BLOCKED，未达READY_FOR_OFFLINE_PROOF，U1未执行、D1未接线；台账和全部来源禁用、旧v1/values-v1不变。无安装物化/Host/Desktop/真实模型业务API、产品合同/锁/pin/Profile改动或提交推送。下方历史原字节保留。
+
+---
+
+## 2026-10-25 阶段5 LC-R1通知材料P2修复完成
+
+[修复/26项材料回归/作者复审](evidence/2026-10-25-stage5-d1-packaging-notices-repair-closeout.md)补齐packaging两许可正文、hash/12位置对应及vendor/27成员映射；固定路径/文件名、拒绝任意源码和容量保护保持。原件、旧proof/失败历史未改，新增材料回归和无.local干净副本通过。
+
+只关闭LC-R1；完整分发/来源/最终通知、DOCX资源/实体、具名签名承载/强制机制仍OPEN。硬内存NO_GO_CURRENT_EVIDENCE、XPC隔离DESIGN_ONLY_NOT_IMPLEMENTED；两格式未达READY_FOR_OFFLINE_PROOF，U1未执行、D1均BLOCKED。容量、旧v1/values-v1、台账和来源禁用及其余阶段5/阶段6待办保持；无安装物化/Host/Desktop/真实模型业务API、产品/合同/锁/pin/Profile改动或提交推送。下方原字节保留。
+
+---
+
+## 2026-10-25 阶段5许可/分发/机制材料批已执行并逐格式交付
+
+[本批收口/作者复审](evidence/2026-10-25-stage5-d1-license-closure-closeout.md)、[2061成员候选](business-baseline/v340-extraction-distribution-candidate.json)及[最新清单](evidence/2026-10-23-stage5-progress-and-remaining.md)记录两许可引用具体处置、native/vendor及DOCX资源映射。原8件保全，新增3件28387574字节来源/通知原件，未安装执行。
+
+两引用处置不等于许可分发闭包通过；native/vendor实际来源/最终通知仍OPEN。DOCX2个转换XSL上游明确unlicensed、readme范围未明，native来源/实体控制待证，ABI仅静态匹配。硬内存NO_GO_CURRENT_EVIDENCE，XPC隔离DESIGN_ONLY_NOT_IMPLEMENTED，承载bundle/签名owner未定。
+
+本批COMPLETE_WITH_BLOCKERS，两格式未达READY_FOR_OFFLINE_PROOF，U1未执行、D1均BLOCKED。阶段5仍进行中；C01—C20、旧v1/values-v1、台账/来源禁用及D1/E—H/阶段6等原待办不减。仅有界公开资料/原件和文档材料，无安装物化/实际裁剪/构建/import/接Host/Desktop/真实模型业务API、生产合同/锁/pin/Profile改动或提交推送；下方历史原字节保全。
+
+---
+
+## 2026-10-25 阶段5原件批全面复审后：完成/剩余及下一批计划已更新
+
+[最新全面复审](evidence/2026-10-25-stage5-d1-acquisition-reaudit.md)在指定材料范围未确认新增P1/P2；8原件101858653字节/官方来源及静态材料一致。阶段5仍进行中；原包已取得、G1工程候选明确、DOCX cp314/7arm64扩展静态匹配未加载，未关闭部署/许可/机制接受。
+
+当前权威[完成与剩余清单](evidence/2026-10-23-stage5-progress-and-remaining.md)和[后续顺序](plans/2026-10-23-stage5-follow-up-plan.md)已刷新。下一批见[许可缺件、分发闭包与macOS强制机制计划](plans/2026-10-25-stage5-d1-license-closure-and-enforcement-plan.md)：两份runtime许可引用→native/vendor拟分发闭包→DOCX9资源/7扩展来源→硬内存/隔离分路线材料→G1与逐格式U1交接→保全复审。
+
+runtime zlib-ng/zstd声明通知缺件、实际组件/版本/来源及最终文件/通知映射仍OPEN；DOCX native/资源及实体修复影响独立待核。macOS硬内存NO_GO_CURRENT_EVIDENCE，隔离/监护DESIGN_ONLY。两格式未达READY_FOR_OFFLINE_PROOF，U1未执行、D1均BLOCKED；材料可审后再明确U1，实际通过后才获D1接线指令。
+
+原共同流程/A、B、C、D0/编号67和材料批完成层保持，D后续/E—H/阶段6及长稿/外部writer/legacy待办不减。容量、旧v1/values-v1、台账14/28/136/114、来源禁用和历史hash不变。本次仅文档/计划，无联网获取、安装物化/构建/import/机制试跑、Host/Desktop/真实模型业务API、生产/测试/合同/锁/pin/Profile改动或提交推送；下方历史原字节保留。
+
+---
+
+## 2026-10-25 阶段5原件获取及macOS机制材料批已执行
+
+用户明确获取授权下，冻结并取得8个官方来源原件/101858653字节，发布长度/SHA全部匹配。清单：`docs/business-baseline/v340-material-extraction-originals.json`；收口：`docs/evidence/2026-10-25-stage5-d1-acquisition-closeout.md`。原件仅在独立忽略目录，没有安装物化、构建/导入或运行。
+
+G1工程候选来源/验证OS/布局/隔离启动接口与版本更新边界明确；产品最低OS/封装接受未验。DOCX新增cp314原件，7扩展含arm64、静态材料匹配，旧cp312失败保留。原包不再全面暂无，但runtime full的16许可引用缺2项zlib-ng/zstd，最终vendor/native许可/来源映射仍OPEN；full与stripped不能混写树指纹。
+
+macOS严格硬内存NO_GO；sandboxed XPC/helper/监护DESIGN_ONLY，不代表禁止exec或硬上限。两格式均未达READY_FOR_OFFLINE_PROOF，U1未执行、D1均BLOCKED，原容量/旧v1/values-v1/台账/来源禁用和D1/E—H/阶段6剩余范围保持。
+
+本批网络只公开发行资料/原件，未登录业务账户/上传用户材料，无Host/Desktop/真实模型或业务API、正式测试重跑、生产/合同/锁/pin/Profile/活跃lib变更或提交推送。既有未提交成果和下方历史原字节保全。
+
+---
+
+## 2026-10-25 阶段5完成/剩余清单及下一批获取与机制计划已更新
+
+阶段5仍进行中：共同流程/A、B、C、D0、U0和运行时决策材料批在各自范围完成，最新599项材料复审无确认P1/P2。PDF先行/macOS arm64/独立Python3.14.8待取证目标保持已确认，DOCX独立解阻；G1最低OS/发行原件/产品布局/启动隔离分发余项OPEN，用户原包“暂无”。
+
+最新清单：`docs/evidence/2026-10-23-stage5-progress-and-remaining.md`；下一批：`docs/plans/2026-10-25-stage5-d1-acquisition-and-macos-gates-plan.md`。重点是G1余项、公开发行资料与确切原包获取范围/许可闭包、DOCX完整tag/native证据、macOS硬内存和文件/网络/进程隔离分别判定，以及bootstrap/缓存/外部程序前置控制和U1交接。
+
+本轮仅规划，未获取原包/安装物化/运行限制器或接Host/Desktop/真实模型API。两格式均未达到READY_FOR_OFFLINE_PROOF，U1未执行、D1均BLOCKED；获取不等于部署，Sandbox/helper或监护不代硬内存。完整D1及OCR/新增导出、E—H/阶段6等剩余工作保持，原容量/旧v1/values-v1/台账/来源禁用不改。
+
+逻辑dsh-lab链接实际DSH-Oasis，同一mac/continuity-v2及HEAD035fe82；未提交成果和下方历史原字节保留。无联网/下载/业务测试重跑、生产/合同/锁/pin/Profile/活跃lib变更或提交推送。
+
+---
+
+## 2026-10-25 阶段5运行时决策与解阻材料批全面复审完成
+
+单代理本轮新鲜证据/语义复审未确认指定范围遗留/新增P1/P2；已确认目标/G1余项、原包暂无、stdlib builtin许可、DOCX ABI、pypdf多过滤器/缓存/JBIG2及SDK隔离记录与当前字节一致。599项材料断言、370登记文件/四树、7资料/9 builtin/9资源、16交付链接核对通过，非业务回归或部署证明。
+
+报告：`docs/evidence/2026-10-25-stage5-d1-prerequisites-reaudit.md`。对象流/XRef初始化、缓存计量和可选环境注入的实际机制仍待证明；不把资料或目标常量当产品能力。两格式均未达到READY_FOR_OFFLINE_PROOF，U1未执行、D1均BLOCKED；用户待取证目标保持已确认，完整G1/原包许可/ABI/硬资源关口未关闭。
+
+本轮仅审计及三入口前缀，已审部署/清单/收口/计划、合同/源码/测试/锁/pin/台账与旧证据保留；容量、旧v1/values-v1、来源禁用及其余待办保持。无安装物化/Host/Desktop/网络/新增真实模型/API或提交推送；下方原文原字节保留。
+
+---
+
+## 2026-10-25 阶段5补件与运行时决策批已执行
+
+用户明确PDF先行、macOS arm64、独立固定Python3.14.8为待取证目标，DOCX继续独立解阻；原包/来源记录“暂无”。本批核对交付COMPLETE_WITH_BLOCKERS，见`docs/evidence/2026-10-25-stage5-d1-prerequisites-closeout.md`；部署材料/逐格式清单已追加决定、逐件缺项及资源证明责任，原文保留。
+
+新增静态材料：9项开发stdlib builtin/静态构建信息、lxml9个Schematron资源、pypdf多解码/缓存/JBIG2外部程序面、SDK RSS/废弃sandbox说明。目标选择完成但G1余项、原包/许可、匹配DOCX ABI、macOS硬内存/隔离方案仍缺。两格式均未达READY_FOR_OFFLINE_PROOF，U1未执行、D1均BLOCKED；旧U0、共同流程/A—C和D0完成层不变。
+
+未安装物化/接Host/启动Desktop/联网/新增真实模型/API或业务回归，未改源码/测试/合同/锁/pin/Profile/活跃lib或提交推送。容量、旧v1/values-v1、台账/来源禁用、D1及E—H/阶段6剩余清单保持；下方历史原字节保留。
+
+---
+
+## 2026-10-25 阶段5最新清单及下一批解阻材料计划已更新
+
+依据最新U0全面复审，阶段5仍进行中：共同流程/A、B、C、D0/编号资格及U0核对在各自证据范围完成，未确认该轮范围P1/P2。U0=COMPLETE_WITH_BLOCKERS，两格式均未达到READY_FOR_OFFLINE_PROOF，U1未执行、D1均BLOCKED。
+
+最新清单：`docs/evidence/2026-10-23-stage5-progress-and-remaining.md`；下一批：`docs/plans/2026-10-25-stage5-d1-prerequisite-materials-plan.md`（仅计划，未执行）。优先补产品平台/解释器/启动分发决定、解释器和PDF原包/来源/完整SHA/许可BOM、DOCX匹配ABI的三原包和原生闭包、实际硬资源/profile/分发证明方案。材料可审后才申请U1，U1通过再获指令接D1；PDF可先补件，DOCX独立保留阻塞。
+
+完整预检/双hash/UTF-16/新编码旧兼容/共同保存后实际相邻链、OCR及新增导出、E实际API、F当前宿主正常重启/跨进程、G真实双来源质量、H/阶段6继续待办。台账14/28/114、容量、来源禁用和旧v1/values-v1保持，不用645材料断言或67/1425/92前轮测试数计算完成比例。
+
+逻辑dsh-lab链接实际DSH-Oasis，同一mac/continuity-v2及HEAD035fe82；既有未提交成果保全。本轮仅文档计划及证据身份核对，无安装物化/接Host/Desktop/新增真实模型/API/网络、改源码/测试/合同/锁/pin/Profile/活跃lib、提交推送。下方原文原字节保留。
+
+---
+
+## 2026-10-25 阶段5 D1-U0执行成果全面复审完成
+
+本轮单代理新鲜证据/语义复审未确认指定范围遗留或新增P1/P2。运行时/离线原包许可、DOCX ABI、资源目标/实际机制、逐格式解阻及U0/U1/D1合同计划一致。645项材料/文档断言通过；370候选文件与7扩展链接声明、26交付链接核对；未新增业务回归或重跑67/1425/92前轮测试。
+
+报告：`docs/evidence/2026-10-25-stage5-d1-u0-reaudit.md`。U0仍COMPLETE_WITH_BLOCKERS；两格式均未达到READY_FOR_OFFLINE_PROOF，U1未执行、D1均BLOCKED。产品运行时决定、获准原包/许可闭包、匹配DOCX ABI及实际硬资源方案继续缺项。旧编码/数据、容量、台账与来源禁用不改，E—H/阶段6仍待办。
+
+只新增审计记录和三入口前缀，已审交付、合同/计划/源码/测试及历史证据保留；未安装物化/接Host/启动Desktop/新增真实模型/API/网络、改Profile/pin/活跃lib或提交推送。下方原文完整保留。
+
+---
+
+## 2026-10-25 阶段5 D1-U0材料核对与逐格式清单已交付
+
+当前逻辑路径dsh-lab链接实际DSH-Oasis，git顶层/HEAD035fe82一致；旧未提交成果保留。U0三任务的事实/缺件、资源/profile/身份兼容责任及复审已交付，见`docs/business-baseline/v340-material-extraction-deployment.md`、`docs/evidence/2026-10-25-stage5-d1-unblocking-checklist.md`、`docs/evidence/2026-10-25-stage5-d1-u0-closeout.md`。
+
+U0=COMPLETE_WITH_BLOCKERS；开发运行时与四候选370个登记文件已只读核对，未取得产品运行时决定、获准离线原包/许可BOM、匹配DOCX ABI/原生闭包及硬资源机制。PDF/DOCX均未达到READY_FOR_OFFLINE_PROOF，U1未执行、D1均BLOCKED。先补具体材料/选择、再明确授权U1，Host外证明后才申请对应格式D1。
+
+既有共同流程/A、B、C、D0/编号资格成果及67/1425/92前轮证据保持，未新增正式业务回归或产品格式能力。D1新预检/证据/旧兼容/实际相邻准入与OCR、E—H/阶段6继续待办。台账14/28/114、原容量、旧v1/values-v1和来源禁用不变。
+
+本轮未安装物化/接Host/启动Desktop/新增真实模型/API/网络，未改源码/测试/合同/锁/pin/Profile/活跃lib或提交推送；下方原文原字节保留，旧AGENTS指令不恢复。
+
+---
+
+## 2026-10-24 阶段5最新清单与D1-U0计划已更新
+
+阶段5整体仍进行中。共同流程/A、B、C及D0/编号资格补修已在代码/合成/离线合同范围完成；最近w:type复审指定范围无确认遗留/新增P1/P2，编号67项、主包1425项、92组私有及撤回11/5/9红证据已核对SHA。本轮只规划，未重跑测试/新增验收；候选不等于产品DOCX支持或真实生成。
+
+最新清单：`docs/evidence/2026-10-23-stage5-progress-and-remaining.md`；下一批：`docs/plans/2026-10-24-stage5-d1-unblocking-plan.md`（U0待执行）。D1产品运行时/平台选择、原始分发件/许可闭包、DOCX ABI和硬资源机制尚未取得准入；先U0材料与选择，再U1在Host外证明部署/资源，之后进入对应格式D1。推荐PDF先行，DOCX独立留阻塞，两格式D1当前均BLOCKED。
+
+D1完整预检/双hash/UTF-16/确认/新编码与旧v1、保存后实际相邻准入，OCR、E实际API、F当前Desktop/重启跨进程、G真实双来源/质量、H/阶段6继续待办。来源禁用、台账14/28/114历史gap、容量及旧证据保持；HEAD035fe82与此前未提交成果保留。
+
+本轮不恢复已撤销的旧AGENTS指令；未启动Desktop/实际DSH或新增真实模型/API/网络，未安装物化、改生产源码/测试/合同/Profile/pin/活跃lib、提交推送发布。保存计划不自动执行U0/U1/D1，下方历史记录原字节保留。
+
+---
+
+## 2026-10-24 阶段5 D0样式类型缺省修复全面复审通过
+
+单代理本轮复审未确认指定范围遗留/新增P1/P2。默认选择与继承共用有效类型解析、三真值拒绝/三假值未用声明保留、显式pStyle/零值覆盖、非段落及非法类型边界与合同/D1规则一致。原28项及旧39项原字节保留，新鲜67/67、干净67/67、全量1425/1425；完整撤回11红，单点默认/继承撤回5红/9红，原50+新增42组共92组私有检查全绿。
+
+原容量、128/129跳、旧v1/values-v1、台账14/28/114及全部来源禁用保持；正式仍67、主包1425、C累计210，不把测试数量当产品进度。详见`docs/evidence/2026-10-24-stage5-d0-style-type-reaudit.md`与`.local/stage5-d0-style-type-reaudit-20261024/audit-summary.json`。本轮无实现/合同/正式测试修改，无独立代理背书；原未提交成果与历史FAIL完整保留。
+
+D1产品运行时/分发件/ABI/完整资源机制仍BLOCKED，候选未接入Host，eligible仅是编号资格；OCR、E—H/阶段6继续原待办。未启动Desktop/实际DSH或新增真实模型/API/网络、依赖安装、Profile/pin/活跃lib改动、提交推送发布。下方历史状态保持原字节。
+
+---
+
+## 2026-10-24 阶段5 D0样式类型缺省P2修复及作者复审完成
+
+D0-BOOL-R1已修：默认选择与继承校验共用有效样式类型解析，w:type省略视为paragraph，显式四类保持区分，空值/未知类型拒绝。缺省类型下三种真值默认编号拒绝、假值未用声明保留、显式pStyle及直接/叶样式/基样式链零值取消均覆盖。合同/D1同步，候选仍未接入Host。
+
+新增28项固定二进制正式回归，原39项/旧夹具不改；修复前56绿/11红，修复后67/67、干净67/67，完整原检查器撤回仍11红；单独撤回默认/继承点分别5红/9红。全量1425/1425，原50组私有探针全通过，容量、旧v1/values-v1、台账14/28/114及来源禁用保持，C累计仍210。作者单代理复审未确认本轮范围遗留P1/P2，无独立代理背书。
+
+详见`docs/evidence/2026-10-24-stage5-d0-style-type-repair-closeout.md`与`.local/stage5-d0-style-type-repair-20261024/verification-summary.json`。D1产品运行时/分发件/ABI/完整资源机制仍BLOCKED，eligible只代表编号资格。未启动Desktop/实际DSH或新增真实模型/API、依赖安装、Profile/pin/活跃lib改动、提交推送发布。下方待修结论及旧FAIL保留原字节。
+
+---
+
+## 2026-10-24 阶段5 D0默认布尔修复全面复审：确认1项相邻P2待修
+
+原1/true/on、0/false/off判定及显式pStyle/numId=0正式路径通过；确认D0-BOOL-R1/P2：候选只接受显式w:type=paragraph，遗漏合法的缺省paragraph类型。三种真值默认编号可被错误放行，缺省叶样式零值取消也误拒绝，属于同一根因。原20项及原19项均显式声明类型，未覆盖此边界。本轮只审计，不修改检查器/合同/D1或正式测试。
+
+新鲜39/39、干净39/39及全量1397/1397；完整原检查器旁置撤回4红。原32组私有边界全绿；新增18组11绿/7红及独立退出1断言保留。原容量、旧v1/values-v1、B台账14/28/114及来源禁用未确认其它回归，C累计仍210。规范原件及页码/hash已核对，不将全部测试绿色当作无遗漏。
+
+详见`docs/evidence/2026-10-24-stage5-d0-default-boolean-reaudit.md`与`.local/stage5-d0-default-boolean-reaudit-20261024/audit-summary.json`。当前HEAD035fe82；单代理复审，无独立代理背书。候选仍未接入Host、D1仍BLOCKED；未启动Desktop/实际DSH或新增真实模型/API、依赖安装、Profile/pin/活跃lib改动、提交推送发布。下方原收口与FAIL完整保留。
+
+---
+
 ## 2026-10-24 阶段5 D0默认样式布尔P2修复及作者复审完成
 
 D0-NUM-R1已修：独立离线检查器统一默认段落样式w:default的1/true/on真值、0/false/off假值和缺省；非法值/混合重复默认拒绝。假值不取消显式pStyle编号，段落及叶样式numId=0在三种真值下仍取消继承。合同与D1计划同步，未接入Host或启用DOCX。

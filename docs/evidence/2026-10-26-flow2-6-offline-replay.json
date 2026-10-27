@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-26",
+  "kind": "OFFLINE_REPLAY_OF_CAPTURED_WEBSITE_FIELDS_NOT_DSH_E_ACCEPTANCE",
+  "cases": [
+    "observed Fast identity/schema parses; Basic remains rejected as async",
+    "existing body builder preserves exact frozen website fields/values/project/key",
+    "default non-production mode rejects the production origin before any fetch",
+    "actual unwrapped no-id response resolves exact text; original key retained; no file inferred; /api occurs once",
+    "existing explicit production mode accepts the approved origin in an injected offline transport; no policy change required",
+    "unknown: failure surfaces after exactly one synthetic fetch with no automatic retry",
+    "revoked: failure surfaces after exactly one synthetic fetch with no automatic retry"
+  ],
+  "syntheticCreateFetches": 4,
+  "realNetworkAttempts": 0,
+  "replayOrigin": "https://oasis-replay.example",
+  "defaultNonProductionModeRejectsProduction": true,
+  "existingExplicitProductionModeOfflineReplayPassed": true,
+  "sourceEnabled": false,
+  "bodySHA256": "72c617ee4d3b70754bc3a86eaa8952a3fe1ef34abd37d70f40f810fa6a494107",
+  "answerTextSHA256": "2089f39662c405c0f0ad717d6fccfbd1f4dade918667d23cde98542d4bf1a12d",
+  "limitations": [
+    "No V340 eight-input lossless mapping acceptance",
+    "No current Host/account/workspace binding",
+    "No late/cross-project full workflow acceptance; existing targeted binding regressions reported separately",
+    "No real request or extra fee"
+  ]
+}

@@ -163,3 +163,32 @@ D:\OneDrive\4、董娣相关\3、绿洲慧写3.0\绿洲前端\API接口文档-�
 - 必要测试优先使用公开合成技术交底，成功响应后走审核、编辑再审、保存、原生打开、对话草稿及重启恢复。对话仅准备草稿，发送仍由用户决定。
 - 不沿用旧单次许可、不重发旧未知运行。新真实请求须记录输入快照/标识；新运行结果未知时停止新增请求，不能因持续目标授权自动重试或换来源。无自动退款/取消推断。
 - 执行与审计清单见 `docs/plans/2026-10-14-stages1-3-execution.md`。该授权不等于运行验收通过，每阶段提交前须有当前证据。
+
+## 名称与跨项目职责补充（2026-10-24）
+
+- 用户将本项目由 `dsh-lab` 更名为 `DSH-Oasis`；当前根目录为 `/Users/tinadong7036/Documents/开发项目/DSH-Oasis`，旧路径保留兼容链接。历史原件、证据、Git历史、依赖锁与包标识不批量改写。
+- 两个用户前端以DSH-Oasis为主，本项目提供Skills与来自Dify服务器的专业服务；远程专业服务通过 `绿洲慧写-后台4.0` 接入。全部用户账户管理和财务服务统一由 `workarea` 提供；现有身份认证接入合同不在本次更名中改造，不新增账户中心或财务页面。
+- DSH所需Skills由 `专利知识库/patent-distillery` 蒸馏知识库中的知识制作，相关知识生产在WorkBuddy进行；后续资源接入须明确版本和验证结果，不据此替换当前固定资源或声明已交付。
+- 测试集库用于测试Skills和Dify，其规则可用于Skills制作；Dify工作流在Skills基础上制作，仍须独立验证。Codex与WorkBuddy通过连接器衔接指令和返回信息，Computer Use、文档及Git可以辅助。
+- 总体分工见[开发项目目录约定](../AGENTS.md)；这些职责说明不变更已有实际完成状态，不启动真实调用、安装、提交、推送或发布。
+
+<!-- oasis-coordination:start -->
+<!-- oasis-coordination:project=dsh-oasis -->
+## 跨项目协同入口
+
+项目ID：`dsh-oasis`。先读[统一协同约定](../docs/coordination/README.md)及[项目登记表](../docs/coordination/projects.json)，再按本项目规则与实际状态执行。当前协同版本以中心为准；本入口建立于2026-10-25。
+
+本项目职责：主要用户作业入口，提供Skills与经后台衔接Dify的专业服务；全部用户账户管理与财务页面归workarea。
+
+进度仍以本项目原状态入口和具名证据为准；本挂接不启动业务任务、不改变历史结论或原有运行/验收边界。
+
+本项目总计划导航（规划入口，实际进度另核）：[本项目总计划](docs/plans/2026-10-25-dsh-oasis-master-plan.md)；[跨项目兼容目标](../docs/coordination/compatibility/2026-10-25-project-compatibility.md)。
+<!-- oasis-coordination:end -->
+
+
+## 每次制定计划前的整体要求（2026-10-27，审计R1）
+
+<!-- oasis-planning-read-before-plan:2026-10-27 -->
+- 每次新建、重制、修订、拆分或续接本项目计划前，重新读取[根AGENTS全文及规划必读规则](../AGENTS.md#oasis-planning-read-before-plan)与[项目登记表](../docs/coordination/projects.json)，按根规则解析当前整体计划、独立计划索引、明确接续的适用补充、兼容矩阵、交付合同及本项目总计划；状态按`progress_sources`的`role=current_entry`定位。
+- 记录实际读取的整体计划路径、版本/修订及SHA256、适用要求、符合项、差异和缺件；与本项目原规则共同核对目标、职责、内容、依赖、交付、验收和顺序，定稿前复核相关输入变动。中心不可访问或实质冲突只阻受影响结论，其他独立准备可继续；不凭旧摘要声称已核对，不由计划生成执行许可。
+- 上文Windows主计划、旧版本表及历史阶段授权按其原时点保留；Mac当前计划/候选沿登记入口和实际状态定向核对。本条不改变首模板、DSH公共能力、双来源合同、日常Profile保全、费用及原阶段验收要求。

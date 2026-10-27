@@ -1,0 +1,40 @@
+{
+  "taskId": "DSH-FLOW26-LIVE-CALIBRATION-20261026-01",
+  "requestKey": "task_1793014998417_8g0e1uo5puj",
+  "requestPath": "docs/evidence/2026-10-26-flow2-6-live-request.json",
+  "responsePath": "docs/evidence/2026-10-26-flow2-6-live-response.json",
+  "budget": {"approvedRequests": 1, "usedRequests": 1, "approvedMaxCNY": 3, "observedChargedCNY": 3, "remainingAuthorizedRequests": 0},
+  "chargeObservation": {
+    "url": "https://lzhxpy.oasisintwrite.com/api/user/runningwater/list?page=1&limit=20",
+    "networkRequestId": "48954.562",
+    "httpStatus": 200,
+    "record": {"id": 6097, "title": "权利要求书生成-Fast执行，消耗余额：3.0", "link_id": 5309, "type": "消费", "money": 3, "pm": 0, "create_time": "2026-10-26T19:45:54"},
+    "correlation": "Observed latest charge matches service, amount and saved-session timestamp during the single authorized creation; link_id 5309 differs from saved record 5271, so a direct foreign-key relation is not asserted."
+  },
+  "persistenceObservation": {
+    "listURL": "https://lzhxpy.oasisintwrite.com/api/user/user/projectlist?page=1&limit=15&folder_id=302",
+    "listNetworkRequestId": "48954.541",
+    "detailURL": "https://lzhxpy.oasisintwrite.com/api/user/user/projectdetail/5271",
+    "detailNetworkRequestId": "48954.565",
+    "httpStatus": 200,
+    "recordId": 5271,
+    "folderId": 302,
+    "name": "权利要求书生成-Fast",
+    "created_at": "2026-10-26T19:45:54",
+    "storedInputsServerKey": "task_1793014998417_8g0e1uo5puj",
+    "storedInputMatchesFrozenRequest": true,
+    "answerUTF8Bytes": 1609,
+    "answerSHA256": "2089f39662c405c0f0ad717d6fccfbd1f4dade918667d23cde98542d4bf1a12d",
+    "storedFileURL": "",
+    "normalUIReopened": true,
+    "screenshot": ".local/oasis-follow-up-20261026/live-api-reopened.png"
+  },
+  "conclusion": "WEBSITE_CALIBRATION_FULL_TEXT_PERSISTED_CHARGED_3_CNY",
+  "qualityAcceptance": false,
+  "dshIntegrationAcceptance": false,
+  "fileDelivery": false,
+  "additionalCreateOrRetry": false,
+  "fetchInterceptionDisabledAfterCompletion": true,
+  "credentialsRecorded": false,
+  "historicalArtifacts": "Earlier observation/draft/response fields describe their recording time; this reconciliation supersedes pending-budget and NOT_YET_RECONCILED status only for this attempt."
+}

@@ -1,0 +1,77 @@
+{
+  "taskId": "DSH-FLOW26-LIVE-CALIBRATION-20261026-01",
+  "date": "2026-10-26",
+  "source": "authorized logged-in website UI and observed Network.responseReceived / getResponseBody, whitelisted service fields only",
+  "frontend": "https://app.oasisintwrite.com/workspace",
+  "apiOrigin": "https://lzhxpy.oasisintwrite.com",
+  "credentialsRecorded": false,
+  "loginPerformedByUser": true,
+  "actualWebsiteVersionVisible": "v1.0.7",
+  "project": {
+    "createdThisTask": true,
+    "id": 302,
+    "name": "DSH-Oasis-Flow2-6公开合成校准-20261026",
+    "customerName": "DSH工程合成验证（非客户资料）",
+    "responsePath": "/api/user/user/folderdetail/302",
+    "responseRequestId": "48954.265",
+    "visibleSelectionMatches": true,
+    "localDSHWorkspaceBindingAccepted": false
+  },
+  "catalogResponseRequestId": "48954.184",
+  "fast": {
+    "catalogEntryId": 211,
+    "detailId": 39,
+    "apiEndpoint": "权利要求书生成-Fast",
+    "apiType": "Workflow",
+    "isAsync": 0,
+    "price": 3,
+    "modelName": "",
+    "apiProcess": "输入内容整理,核心独立权利要求撰写,权利要求架构搭建,从属权利要求撰写,审查权利要求书初稿,权利要求",
+    "responseRequestId": "48954.189",
+    "inputSchema": [
+      {"type":"paragraph","en_name":"technical_solutions","cn_name":"技术方案"},
+      {"type":"paragraph","en_name":"technical_field","cn_name":"技术领域"},
+      {"type":"paragraph","en_name":"background_art_TD","cn_name":"背景技术"},
+      {"type":"paragraph","en_name":"beneficial_effects_TD","cn_name":"有益效果"},
+      {"type":"paragraph","en_name":"embodiments_TD","cn_name":"具体实施方式"},
+      {"type":"paragraph","en_name":"drawings_explain_TD","cn_name":"附图说明和标记"},
+      {"type":"file","en_name":"Technical_Disclosure_file","cn_name":"技术交底书文件"},
+      {"type":"paragraph","en_name":"User_input","cn_name":"用户指令"}
+    ],
+    "outputSchema": [{"type":"paragraph","en_name":"output","cn_name":"生成内容"}]
+  },
+  "basic": {
+    "catalogEntryId": 212,
+    "detailId": 46,
+    "apiEndpoint": "权利要求书生成-Basic",
+    "apiType": "Workflow",
+    "isAsync": 1,
+    "price": 5,
+    "modelName": "",
+    "apiProcess": "",
+    "responseRequestId": "48954.214",
+    "inputSchema": [
+      {"type":"file","en_name":"Technical_Disclosure_file","cn_name":"技术交底书文件"},
+      {"type":"paragraph","en_name":"technical_solutions","cn_name":"技术方案"},
+      {"type":"paragraph","en_name":"technical_field","cn_name":"技术领域"},
+      {"type":"paragraph","en_name":"background_art_TD","cn_name":"背景技术"},
+      {"type":"paragraph","en_name":"beneficial_effects_TD","cn_name":"有益效果"},
+      {"type":"paragraph","en_name":"embodiments_TD","cn_name":"具体实施方式"},
+      {"type":"paragraph","en_name":"drawings_explain_TD","cn_name":"附图说明"},
+      {"type":"paragraph","en_name":"User_input","cn_name":"用户指令"}
+    ],
+    "outputSchema": [
+      {"type":"paragraph","en_name":"claims_text","cn_name":"生成内容"},
+      {"type":"file","en_name":"claims_docx","cn_name":"权利要求书"},
+      {"type":"file","en_name":"report_docx","cn_name":"权利要求书生成报告"}
+    ]
+  },
+  "requiredFlags": "not supplied in observed schemas; do not infer required/optional semantics",
+  "schemaCompatibility": "actual service fields differ from V340 common eight inputs; no blanket lossless mapping accepted",
+  "asyncCompatibility": "Basic is asynchronous; existing synchronous legacy adapter remains disabled for it",
+  "sideEffects": {"websiteTestProjectCreated":true,"publicDraftPrepared":true,"workflowCreationRequestsSent":0,"modelRequestsSent":0},
+  "budget": {"status":"AWAITING_SPECIFIC_FEE_LIMIT","proposedMaxRequests":1,"proposedMaxCNY":3,"unknownNoReplay":true},
+  "DSHV340SourceEnabled": false,
+  "currentHostAcceptance": "not verified; admission blocked",
+  "thirdPartyAudit": "this live website observation not included in prior R1 synthetic-network-zero audit"
+}

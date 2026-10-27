@@ -1,0 +1,2349 @@
+{
+  "createdAtUTC": "2026-10-26T23:57:19.091385+00:00",
+  "scope": "paired single-owner JSON backend and offline process recovery; full F not accepted",
+  "currentAdmissionRevision": "R3_ACTUAL_EMBEDDED_NODE_ENGINE_METADATA",
+  "pinCount": 174,
+  "runtime": {
+    "toolNode": "24.21.0",
+    "desktopEmbeddedNode": "24.18.1",
+    "desktopElectron": "44.0.0",
+    "desktopSQLite": "3.53.1"
+  },
+  "tests": {
+    "toolNode": {
+      "pass": 9,
+      "fail": 0,
+      "skip": 0,
+      "exitCode": 0
+    },
+    "embeddedNode": {
+      "pass": 9,
+      "fail": 0,
+      "skip": 0,
+      "exitCode": 0
+    },
+    "firstOwnershipExpectationExit": 1,
+    "firstGuardTestsExit": 1,
+    "initialGuardTestCount": 7,
+    "extraLifecycleCharacterizationsAddedAfterInitialGreen": 2
+  },
+  "unguarded": {
+    "singleOwnerRequired": true,
+    "bothOpened": true,
+    "firstCommitted": true,
+    "staleSecondCommitted": true,
+    "sameReturnedRevision": true,
+    "persistedTitle": "SECOND-WRITER-STALE-SNAPSHOT",
+    "firstWriterLost": true,
+    "accepted": false,
+    "status": "FAIL_FIXED_PUBLIC_BACKEND_HAS_NO_CROSS_PROCESS_EXCLUSION"
+  },
+  "guarded": {
+    "singleOwnerRequired": true,
+    "firstCommitted": true,
+    "secondBackendRejected": true,
+    "refusedWriterChangedBusinessBytes": false,
+    "persistedTitle": "FIRST-WRITER-PERSISTED",
+    "firstWriterLost": false,
+    "accepted": true,
+    "status": "PASS_PAIRED_SINGLE_OWNER_JSON_BACKEND_ONLY",
+    "rejected": "writer-b: early exit: node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nError: Another Host owns this JSON storage root; no storage backend was opened\n    at failure (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/f-process-recovery-20261027/extension-r3/ownership.mjs:5:57)\n    at acquireJsonRootOwnership (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/f-process-recovery-20261027/extension-r3/ownership.mjs:30:13)\n    at async createSingleOwnerJsonBackend (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/f-process-recovery-20261027/extension-r3/index.mjs:8:21)\n    ... 3 lines matching cause stack trace ...\n    at async file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/f-process-recovery-20261027/worker.mjs:19:1 {\n  code: 'DSH_STORAGE_ROOT_BUSY',\n  [cause]: Error: database is locked\n      at acquireJsonRootOwnership (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/f-process-recovery-20261027/extension-r3/ownership.mjs:22:8)\n      at async createSingleOwnerJsonBackend (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/f-process-recovery-20261027/extension-r3/index.mjs:8:21)\n      at async Object.apply [as callback] (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/f-process-recovery-20261027/extension-r3/index.mjs:29:19)\n      at async Fiber._reload (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/oasis-follow-up-20261026/desktop217-recovery/mounted/DSH%20Desktop.app/Contents/Resources/app/node_modules/@deepseek-ai/cordis/lib/index.js:1356:5)\n      at async Fiber.await (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/oasis-follow-up-20261026/desktop217-recovery/mounted/DSH%20Desktop.app/Contents/Resources/app/node_modules/@deepseek-ai/cordis/lib/index.js:1400:24)\n      at async file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/f-process-recovery-20261027/worker.mjs:19:1 {\n    code: 'ERR_SQLITE_ERROR',\n    errcode: 5,\n    errstr: 'database is locked'\n  }\n}\n\nNode.js v24.21.0\n"
+  },
+  "recovery": [
+    {
+      "mode": "killed",
+      "loaded": {
+        "mode": "killed",
+        "before": {
+          "pid": 49409,
+          "revision": 3,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "requestKey": "public-killed-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "requestKey": "public-killed-one-request",
+              "capturedAt": "2026-10-26T23:57:50.505Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+            "status": "prepared",
+            "failureCode": null,
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.505Z",
+            "completedAt": null
+          },
+          "inputSnapshotFingerprint": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+          "syntheticDispatches": 1,
+          "fetchCalls": 0
+        },
+        "loaded": {
+          "pid": 49410,
+          "revision": 3,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "requestKey": "public-killed-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "requestKey": "public-killed-one-request",
+              "capturedAt": "2026-10-26T23:57:50.505Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+            "status": "prepared",
+            "failureCode": null,
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.505Z",
+            "completedAt": null
+          },
+          "inputSnapshotFingerprint": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "observed": {
+          "pid": 49410,
+          "revision": 4,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "requestKey": "public-killed-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "requestKey": "public-killed-one-request",
+              "capturedAt": "2026-10-26T23:57:50.505Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+            "status": "unknown",
+            "failureCode": "INTERRUPTED",
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.505Z",
+            "completedAt": "2026-10-26T23:57:50.622Z"
+          },
+          "inputSnapshotFingerprint": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "repeated": {
+          "accepted": true,
+          "pid": 49410,
+          "revision": 4,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "requestKey": "public-killed-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "requestKey": "public-killed-one-request",
+              "capturedAt": "2026-10-26T23:57:50.505Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+            "status": "unknown",
+            "failureCode": "INTERRUPTED",
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.505Z",
+            "completedAt": "2026-10-26T23:57:50.622Z"
+          },
+          "inputSnapshotFingerprint": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "fresh": {
+          "accepted": false,
+          "code": "WORKSPACE_GENERATION_ACTIVE",
+          "pid": 49410,
+          "revision": 4,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "requestKey": "public-killed-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "requestKey": "public-killed-one-request",
+              "capturedAt": "2026-10-26T23:57:50.505Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+            "status": "unknown",
+            "failureCode": "INTERRUPTED",
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.505Z",
+            "completedAt": "2026-10-26T23:57:50.622Z"
+          },
+          "inputSnapshotFingerprint": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "edit": {
+          "accepted": false,
+          "code": "V340_RUN_UNRESOLVED",
+          "pid": 49410,
+          "revision": 4,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+            "requestKey": "public-killed-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "workflowRunUid": "1050bfcc-8f45-41be-8706-dd6d71ab9460",
+              "requestKey": "public-killed-one-request",
+              "capturedAt": "2026-10-26T23:57:50.505Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+            "status": "unknown",
+            "failureCode": "INTERRUPTED",
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.505Z",
+            "completedAt": "2026-10-26T23:57:50.622Z"
+          },
+          "inputSnapshotFingerprint": "3beb8292450dd24ea475b206cc4d162a05d06782bf51ff67c8d7ef7e269e5a31",
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "other": {
+          "empty": {
+            "schemaVersion": 4,
+            "panelMode": "hidden",
+            "activeTaskId": null,
+            "taskOrder": [],
+            "tasks": {},
+            "workspaceId": "proof-b",
+            "revision": 0,
+            "updatedAt": "1970-01-01T00:00:00.000Z"
+          },
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "accepted": true,
+        "scope": "actual fixed public SDK and current business services, synthetic executor, separate Node processes; no Desktop GUI or model/API"
+      }
+    },
+    {
+      "mode": "normal-close",
+      "loaded": {
+        "mode": "normal-close",
+        "before": {
+          "pid": 49411,
+          "revision": 3,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "requestKey": "public-normal-close-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "requestKey": "public-normal-close-one-request",
+              "capturedAt": "2026-10-26T23:57:50.759Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+            "status": "prepared",
+            "failureCode": null,
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.759Z",
+            "completedAt": null
+          },
+          "inputSnapshotFingerprint": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+          "syntheticDispatches": 1,
+          "fetchCalls": 0
+        },
+        "loaded": {
+          "pid": 49412,
+          "revision": 4,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "requestKey": "public-normal-close-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "requestKey": "public-normal-close-one-request",
+              "capturedAt": "2026-10-26T23:57:50.759Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+            "status": "unknown",
+            "failureCode": "ABORTED",
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.759Z",
+            "completedAt": "2026-10-26T23:57:50.770Z"
+          },
+          "inputSnapshotFingerprint": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "observed": {
+          "pid": 49412,
+          "revision": 4,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "requestKey": "public-normal-close-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "requestKey": "public-normal-close-one-request",
+              "capturedAt": "2026-10-26T23:57:50.759Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+            "status": "unknown",
+            "failureCode": "ABORTED",
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.759Z",
+            "completedAt": "2026-10-26T23:57:50.770Z"
+          },
+          "inputSnapshotFingerprint": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "repeated": {
+          "accepted": true,
+          "pid": 49412,
+          "revision": 4,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "requestKey": "public-normal-close-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "requestKey": "public-normal-close-one-request",
+              "capturedAt": "2026-10-26T23:57:50.759Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+            "status": "unknown",
+            "failureCode": "ABORTED",
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.759Z",
+            "completedAt": "2026-10-26T23:57:50.770Z"
+          },
+          "inputSnapshotFingerprint": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "fresh": {
+          "accepted": false,
+          "code": "WORKSPACE_GENERATION_ACTIVE",
+          "pid": 49412,
+          "revision": 4,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "requestKey": "public-normal-close-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "requestKey": "public-normal-close-one-request",
+              "capturedAt": "2026-10-26T23:57:50.759Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+            "status": "unknown",
+            "failureCode": "ABORTED",
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.759Z",
+            "completedAt": "2026-10-26T23:57:50.770Z"
+          },
+          "inputSnapshotFingerprint": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "edit": {
+          "accepted": false,
+          "code": "V340_RUN_UNRESOLVED",
+          "pid": 49412,
+          "revision": 4,
+          "title": "public synthetic crash recovery",
+          "draft": {
+            "source": "local-skill",
+            "textInputs": {
+              "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+              "user_input": "仅构造未决运行，不调用真实模型。"
+            },
+            "filePaths": {},
+            "configuration": {}
+          },
+          "run": {
+            "schemaVersion": 1,
+            "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+            "requestKey": "public-normal-close-one-request",
+            "workspaceId": "proof-a",
+            "taskId": "proof-task",
+            "nodeId": "Flow-2-6",
+            "source": "local-skill",
+            "evidenceKind": "synthetic",
+            "inputSchemaVersion": "v340-1",
+            "inputSnapshot": {
+              "workspaceId": "proof-a",
+              "taskId": "proof-task",
+              "runId": "v340-dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "workflowRunUid": "dbc1242c-5c56-470f-aff6-58d216aa2a3a",
+              "requestKey": "public-normal-close-one-request",
+              "capturedAt": "2026-10-26T23:57:50.759Z",
+              "nodeId": "Flow-2-6",
+              "source": "local-skill",
+              "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+              "draft": {
+                "source": "local-skill",
+                "textInputs": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "filePaths": {},
+                "configuration": {}
+              },
+              "prepared": {
+                "nodeId": "Flow-2-6",
+                "values": {
+                  "disclosure_text": "公开合成：定位支架由底座、转轴和定位孔组成。",
+                  "user_input": "仅构造未决运行，不调用真实模型。"
+                },
+                "receipts": {
+                  "upstream_md_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "disclosure_text": {
+                    "status": "accepted",
+                    "sha256": "ea5f4325e830f7a8c5547feb043add68adad77fe024859adcaa7f6a4dcb28f94",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  },
+                  "drawings_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "drawings_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_file": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "claim_requirements_text": {
+                    "status": "not_provided",
+                    "sha256": "none",
+                    "content_origin": "none",
+                    "filename": "not_provided"
+                  },
+                  "user_input": {
+                    "status": "accepted",
+                    "sha256": "8c4671b56bae9dba87fdca2a32789644d67710453ae0191156b09a9ecfabedf7",
+                    "filename": "文本输入",
+                    "content_origin": "user_text"
+                  }
+                },
+                "warnings": [
+                  {
+                    "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+                    "first_flow": "Flow-2-6",
+                    "inherited_from": "none",
+                    "problem": "未提供：upstream_md_file",
+                    "affected_content": "本次输入及下游累计快照",
+                    "current_handling": "保留实际材料并继续输出",
+                    "model_completion": "未评估",
+                    "deliverable_impact": "需人工核对",
+                    "recommended_action": "核对实际输入及其来源",
+                    "status": "open"
+                  }
+                ],
+                "upstream": null,
+                "inputHash": "805eb8e7683e3d4bd64f7173e1141592feb7fe111f5420ed77608bed58104fec"
+              }
+            },
+            "inputSha256": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+            "status": "unknown",
+            "failureCode": "ABORTED",
+            "result": null,
+            "resultDraft": null,
+            "reviewStatus": "not-reviewed",
+            "createdAt": "2026-10-26T23:57:50.759Z",
+            "completedAt": "2026-10-26T23:57:50.770Z"
+          },
+          "inputSnapshotFingerprint": "b25204d07b7fa911db362c35ef26c5f88e3557ff18b86f2ead92612a579d8273",
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "other": {
+          "empty": {
+            "schemaVersion": 4,
+            "panelMode": "hidden",
+            "activeTaskId": null,
+            "taskOrder": [],
+            "tasks": {},
+            "workspaceId": "proof-b",
+            "revision": 0,
+            "updatedAt": "1970-01-01T00:00:00.000Z"
+          },
+          "syntheticDispatches": 0,
+          "fetchCalls": 0
+        },
+        "accepted": true,
+        "scope": "actual fixed public SDK and current business services, synthetic executor, separate Node processes; no Desktop GUI or model/API"
+      }
+    }
+  ],
+  "desktopContenderR3": {
+    "status": "PASS_DESKTOP_OWNER_REJECTS_SECOND_PUBLIC_SDK_HOST",
+    "refused": true,
+    "code": "DSH_STORAGE_ROOT_BUSY",
+    "secondBackendRegistered": false,
+    "secondDomainOpened": false,
+    "secondBusinessWriteCount": 0,
+    "businessSHA256": "89eb8d63239e9e77f3a95100436c6132e73bb851d755ccb3c2386c37b24c0b18",
+    "businessBytes": 2523,
+    "syntheticDispatches": 0,
+    "actualModelRequests": 0,
+    "actualApiCreates": 0
+  },
+  "desktopFinalExitOwnership": {
+    "status": "PASS_DESKTOP_NORMAL_EXIT_RELEASES_ROOT",
+    "backendAcquiredAfterExit": true,
+    "businessBytesUnchanged": true
+  },
+  "launches": [
+    {
+      "start": {
+        "status": "SPAWNED_ACCEPTANCE_PENDING",
+        "pid": 47244,
+        "launcherPid": 47241,
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-storage-owner-20261027",
+        "exe": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/oasis-follow-up-20261026/desktop217-recovery/mounted/DSH Desktop.app/Contents/MacOS/DSH Desktop",
+        "mode": "NO_MODEL_FRESH_PROFILE",
+        "startedAtUTC": "2026-10-26T23:47:07.005Z"
+      },
+      "exit": {
+        "code": 0,
+        "signal": null,
+        "requestedShutdown": false,
+        "endedAtUTC": "2026-10-26T23:48:42.393Z"
+      },
+      "members": [
+        {
+          "path": ".dsh-test/f-storage-owner-20261027/evidence/launch-1793058426992.json",
+          "bytes": 436,
+          "sha256": "09e259f8817bf6f3707b8fcec12475b2eb4b8d0d7bf1013e5617b5bd08dddb6a"
+        },
+        {
+          "path": ".dsh-test/f-storage-owner-20261027/evidence/launch-1793058426992.exit.json",
+          "bytes": 108,
+          "sha256": "292a70310b9d6300f40b36718a350d2d6560a1e9fd3a44d7e48c4c30e551e5f1"
+        }
+      ]
+    },
+    {
+      "start": {
+        "status": "SPAWNED_ACCEPTANCE_PENDING",
+        "pid": 47913,
+        "launcherPid": 47910,
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-storage-owner-20261027",
+        "exe": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/oasis-follow-up-20261026/desktop217-recovery/mounted/DSH Desktop.app/Contents/MacOS/DSH Desktop",
+        "mode": "NO_MODEL_FRESH_PROFILE",
+        "startedAtUTC": "2026-10-26T23:50:38.736Z"
+      },
+      "exit": {
+        "code": 0,
+        "signal": null,
+        "requestedShutdown": false,
+        "endedAtUTC": "2026-10-26T23:51:15.266Z"
+      },
+      "members": [
+        {
+          "path": ".dsh-test/f-storage-owner-20261027/evidence/launch-1793058638733.json",
+          "bytes": 436,
+          "sha256": "7cb862a1bdc80317828f034dce985a6d2bf1b70a37d6b7e539406d6dbebbe6af"
+        },
+        {
+          "path": ".dsh-test/f-storage-owner-20261027/evidence/launch-1793058638733.exit.json",
+          "bytes": 108,
+          "sha256": "77f7901bd11d641eced5caedab4b5e67cd2d38c84af8aa849dc001dfe3d49620"
+        }
+      ]
+    },
+    {
+      "start": {
+        "status": "SPAWNED_ACCEPTANCE_PENDING",
+        "pid": 48880,
+        "launcherPid": 48877,
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-storage-owner-20261027",
+        "exe": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/oasis-follow-up-20261026/desktop217-recovery/mounted/DSH Desktop.app/Contents/MacOS/DSH Desktop",
+        "mode": "NO_MODEL_FRESH_PROFILE",
+        "startedAtUTC": "2026-10-26T23:55:02.039Z"
+      },
+      "exit": {
+        "code": 0,
+        "signal": null,
+        "requestedShutdown": false,
+        "endedAtUTC": "2026-10-26T23:55:51.666Z"
+      },
+      "members": [
+        {
+          "path": ".dsh-test/f-storage-owner-20261027/evidence/launch-1793058902036.json",
+          "bytes": 436,
+          "sha256": "7910134ee82b9bb0e9cf22400f604e0f399bc5fe0c1dac3fa665907837903dcd"
+        },
+        {
+          "path": ".dsh-test/f-storage-owner-20261027/evidence/launch-1793058902036.exit.json",
+          "bytes": 108,
+          "sha256": "203092b9c6d7feef065a905db28ad364b922a3534e7e86278fae471ae5a1895f"
+        }
+      ]
+    },
+    {
+      "start": {
+        "status": "SPAWNED_ACCEPTANCE_PENDING",
+        "pid": 49077,
+        "launcherPid": 49074,
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-storage-owner-20261027",
+        "exe": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/oasis-follow-up-20261026/desktop217-recovery/mounted/DSH Desktop.app/Contents/MacOS/DSH Desktop",
+        "mode": "NO_MODEL_FRESH_PROFILE",
+        "startedAtUTC": "2026-10-26T23:55:55.597Z"
+      },
+      "exit": {
+        "code": 0,
+        "signal": null,
+        "requestedShutdown": false,
+        "endedAtUTC": "2026-10-26T23:56:14.203Z"
+      },
+      "members": [
+        {
+          "path": ".dsh-test/f-storage-owner-20261027/evidence/launch-1793058955594.json",
+          "bytes": 436,
+          "sha256": "028131df58e8c2e831f7cac3b013777544eaafd2205d9e4cf4ae984ec1e6d984"
+        },
+        {
+          "path": ".dsh-test/f-storage-owner-20261027/evidence/launch-1793058955594.exit.json",
+          "bytes": 108,
+          "sha256": "a560359e5fc6e4e310e576ee76bdc672d5939941884fb2004349ee45490e4f71"
+        }
+      ]
+    }
+  ],
+  "baselinePreservationBeforeStatus": {
+    "files": 3529,
+    "missing": [],
+    "changed": []
+  },
+  "upstreamNamedDeliveries": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-portable-consumer-intake-audit-R31.md",
+      "bytes": 4362,
+      "sha256": "9eae1bcb2129eb26e9264d36107e55d263ef9d33970aa1757cd487dabb913f8d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-controlled-primary-intake-audit-R37.md",
+      "bytes": 3210,
+      "sha256": "f417081c8901d34843c4c6ab301f42c14597e0bd359718308bf4f073ac7cfcec"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-no-model-host-runtime-audit-R44.md",
+      "bytes": 4186,
+      "sha256": "eb2d5fbe00ecb373c3a33920c2fbf7ebbe1d8f42f9b9d6207ddca399941bdc60"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-readability-correction-audit-R46.md",
+      "bytes": 5247,
+      "sha256": "82aaaedf45e66e4242170424c855fac67f46f947b18becf5afa2de946fc7a1f3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-readability-primary-intake-R47/source-adoption-R01.json",
+      "bytes": 4668,
+      "sha256": "75e31ce17c3cd7e2fbcedb941d2af9fa2955ed5a4f91514c1835ececb6331e4b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-readability-primary-intake-R47/final-verification-R01.json",
+      "bytes": 474,
+      "sha256": "306eefb909d3b2df5f42b17360c0734133ea015bf4e03d1d0cbfdf5ad15c4e93"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/IC-SKILL-M06-0.1.3-candidate/provider-delivery.json",
+      "bytes": 19270,
+      "sha256": "39a153e5516efe73ef552ad47f6391d8fe9b77fb9e14ca01af05b0b6537df27a"
+    }
+  ],
+  "members": [
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-final-exit-owner-R3.json",
+      "bytes": 127,
+      "sha256": "4d398974b0d90d58b7cb0d853ee772705a9fdd657a9ee12067d5959a37305230"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-after-exit-owner-R3.json",
+      "bytes": 127,
+      "sha256": "4d398974b0d90d58b7cb0d853ee772705a9fdd657a9ee12067d5959a37305230"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/first-start-pnpm-workspace.yaml",
+      "bytes": 61,
+      "sha256": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/f-host-admission-R3.json",
+      "bytes": 63286,
+      "sha256": "f839f347f035ee00b15f953338936fa49207b0acec98e8dd751605493db1e094"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/worker.mjs",
+      "bytes": 5649,
+      "sha256": "d74085a6555ae85673be3bf41aa6f48952e3459a65716ea401fd665b378d922e"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/guarded-normal-close-recovery.json",
+      "bytes": 30164,
+      "sha256": "4f562d144e7b76329d857c3537863c20fd4ac69ffba20e001729f18def849d00"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-contender-R3.json",
+      "bytes": 416,
+      "sha256": "cd7066ef14909559dd6caa4b6bb3f8e7b2770a9beca16d21139e2f0a296784a0"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/candidate-install.log",
+      "bytes": 1129,
+      "sha256": "0f0f6305a251df2d11c753b9d00d82fb75282882b21334723e7880184c6a8e9d"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/ownership-red.log",
+      "bytes": 822,
+      "sha256": "9f00f62ef77f866ae7ac01815e558f13c5731fa6294f5b106d00a8500e4867cb"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/ownership.json",
+      "bytes": 318,
+      "sha256": "868dac4ac1e4f11764395facdc6e3de2d2365b74e16282cd28b98e0a06cc7793"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/run.mjs",
+      "bytes": 6654,
+      "sha256": "7ea9c0ce7fbf0fd04e5da682b290cd3bb763794b7892f9d9534e3443d912b233"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/host-after-ui-check-R2.log",
+      "bytes": 408,
+      "sha256": "19a82d846f8cf68d160fa4c96e18a0f0dcde70d303424ba8189a168ddb5ebe75"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/events-failed-01.json",
+      "bytes": 1031,
+      "sha256": "09de2aee9ffaa81fe51a90952502939f72d61175bed9e294a48f75ccceec6bad"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/f-host-admission-R2.json",
+      "bytes": 63282,
+      "sha256": "0d3b4965420e580d031c3cffb0255fdaa1ed46c960bf25ea881c04bb072953ad"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/killed-recovery.json",
+      "bytes": 30076,
+      "sha256": "22642416e8d42c8875389d766babdf2ae21178973afe239a4257654af2fae7c8"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/events.json",
+      "bytes": 106498,
+      "sha256": "7e104c6774c18dacefdb8c1d8b2b4fe0a4075b973a104386e9f4f23092d68c37"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/contend-desktop-R3.mjs",
+      "bytes": 1915,
+      "sha256": "5817b7ad914730c89959e4dbfbb84135b624dc1ba51788f920d77942c8054522"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/after-final-desktop-exit-R3.mjs",
+      "bytes": 1534,
+      "sha256": "4ceff90da62dfaa576f402277fd67118f3bb85c57d4baf8fb463a0807ebd6aee"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/guard-tests-red.log",
+      "bytes": 8143,
+      "sha256": "c7fe5b696bd9ae52c3c2acc96fb2278aa3847500f1f426ff5efce3046e06c089"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/extension-install.log",
+      "bytes": 1582,
+      "sha256": "77ef22ed6c85a94eb8e4a16822177b38335e71591423120f1501779cba42b21b"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/profile-r3-lock.log",
+      "bytes": 94,
+      "sha256": "35b222f685ea7f12f5fe10c570f7b1d28541031023db7b5e005d277b227c3778"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/first-start-lock-prelaunch-recovered.yaml",
+      "bytes": 1508,
+      "sha256": "cc3b85d024be2f4d3d0654a11c1c2af153b1920c8022c1a3bbfda6d0380f429a"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/launch-R2.mjs",
+      "bytes": 2952,
+      "sha256": "f8da275683c7e0931b505ea1d363eea6b45d9c1842e4674485909aae28618a59"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/guard-tests-green01.log",
+      "bytes": 729,
+      "sha256": "2fbfa2e6aa74e679d5491704f58adb145ca4a10e07d12d59b8afcd0a51463438"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/guarded-run01.log",
+      "bytes": 128,
+      "sha256": "076362e33a22bf5970747ff086f4d229930801afceda62b4f18202dc2f3f4484"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/profile-lock.log",
+      "bytes": 34,
+      "sha256": "d5bbd3fe0d8e6c06be35897984c28c571f0f05046dfea2ec5b735f9931c5c444"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/launch-R3.mjs",
+      "bytes": 2952,
+      "sha256": "54e12774cda058a819386ae74c1c4dce4f12055f974ee8d0e8795a818d1f7904"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/launch.mjs",
+      "bytes": 2949,
+      "sha256": "b6b6257f63c3991b6e56a76528486b8cc9197b8eb0e0719a2547080b5e1c7ea8"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/f-host-admission.json",
+      "bytes": 61835,
+      "sha256": "0319a3d4487cd20efbd8cc72b0f6de0f7873c0c666dc832ed4b0aa545e29cb1e"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/extension-lock.log",
+      "bytes": 148,
+      "sha256": "cb0eae7f07774fdc4547b238c31337a631ddfaea79d98732fb5a61175cb87a51"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/extension-r3-install.log",
+      "bytes": 1515,
+      "sha256": "fe02066ef1febeb9ba08312c2e2a0d664292ec9cc58e7575a5d57972a58a74ab"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/run-01.log",
+      "bytes": 1558,
+      "sha256": "14cd0174e6e2df318c2c1c6bb07aa3fcb8339223910354f80a777513a07e2029"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-contender.log",
+      "bytes": 371,
+      "sha256": "5f8829cbf95473aad9733233c977bfbcca5b91e2db141efad953097364080085"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/run-guarded.mjs",
+      "bytes": 6976,
+      "sha256": "1198ac281afe88a2ac1ed1627cd8229a3474e742be483482d5209aed3f92a320"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-after-exit-owner.json",
+      "bytes": 127,
+      "sha256": "4d398974b0d90d58b7cb0d853ee772705a9fdd657a9ee12067d5959a37305230"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/first-start-.modules.yaml",
+      "bytes": 697,
+      "sha256": "427de94517edf52e204ed863d9a63bccdebedebe3f806a67c1612bf668ae36c5"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/normal-close-recovery.json",
+      "bytes": 30164,
+      "sha256": "8767168b9d6d271b08bb796051649e3bed32b35642608940d83ff0d3684f2e29"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/guarded-ownership.json",
+      "bytes": 2665,
+      "sha256": "c40afa1023d47410ab406f73cf95c3075883d13acf4bed4ed8644ed69190a946"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-contender-R3.log",
+      "bytes": 371,
+      "sha256": "5f8829cbf95473aad9733233c977bfbcca5b91e2db141efad953097364080085"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-final-exit-owner-R3.log",
+      "bytes": 114,
+      "sha256": "ce6a184734c58bb22b50a7db15024e495d0caf5f74226a1028ee5535aa5e04a5"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/host-check-R3-ready.log",
+      "bytes": 408,
+      "sha256": "acd68302f9dcff5a485cb131bc61f42eb3c8ef7b56df86d7c18e85c040ba2013"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/run-02.log",
+      "bytes": 128,
+      "sha256": "727db508a449fdfd9fc7714d04b92567233e1a9a5e55b6c6b143fac4e21ed8b0"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/baseline.json",
+      "bytes": 570973,
+      "sha256": "8459862c83749c35050d76e0fcb8381b9659eee6fe4bee17d3f53a36dc80b782"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/host-check-R3.log",
+      "bytes": 816,
+      "sha256": "fd6ab91ca2f2d130405b1d7582e1ee877ffad64a0823ea5f3dde87b49cf43f2e"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/profile-normalized-frozen.log",
+      "bytes": 212,
+      "sha256": "9ebb390d0d4b21763b7f5f4b7618f9d8195d7d4188d483895e784faa39b52fc5"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/profile-install.log",
+      "bytes": 767,
+      "sha256": "d1a2a0354a8788a570008ff6de02c1d8d97449816116c75b6ecd787cc9dc3e69"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/guard-tests-embedded-node.log",
+      "bytes": 931,
+      "sha256": "eec89ad1581f3ef5d31cf0788adb41651cc7372440255c86ee56af3158b370f1"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/intake.json",
+      "bytes": 3858,
+      "sha256": "c796d08ce14a0bb9d47b0e0959a2d024cd9a827a61583430b02946faf605abf2"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/host-check-R2.log",
+      "bytes": 408,
+      "sha256": "19a82d846f8cf68d160fa4c96e18a0f0dcde70d303424ba8189a168ddb5ebe75"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/guarded-killed-recovery.json",
+      "bytes": 30076,
+      "sha256": "0bcbe39a82fae7872275c3e3c48dc0e296c69a2b0cd9b246d25d7a8b84de232b"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/first-start-lock-runtime.yaml",
+      "bytes": 1509,
+      "sha256": "e236edb361a3b7a8cebe6b0c8874b18fc16e30b9807ff447bd854c404586b771"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/guarded-events.json",
+      "bytes": 106745,
+      "sha256": "0828a43b854b8ea27a9118fc6fc0ffb7e88f0cebdea8994cef297b39e00843c4"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-after-exit-owner-R3.log",
+      "bytes": 114,
+      "sha256": "ce6a184734c58bb22b50a7db15024e495d0caf5f74226a1028ee5535aa5e04a5"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/host-final-check-R2.log",
+      "bytes": 408,
+      "sha256": "19a82d846f8cf68d160fa4c96e18a0f0dcde70d303424ba8189a168ddb5ebe75"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/host-final-check-R3.log",
+      "bytes": 408,
+      "sha256": "acd68302f9dcff5a485cb131bc61f42eb3c8ef7b56df86d7c18e85c040ba2013"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/after-desktop-exit.mjs",
+      "bytes": 1528,
+      "sha256": "4094e80c520787455b693cb570e721a2a9436f1c9420a4fff313b47e724be721"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/after-first-start-drift.json",
+      "bytes": 336,
+      "sha256": "e497111d2a12e39886c0d0478dea162dbe6bd8773d5c83b6eeec1927d5955803"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/profile-r3-install.log",
+      "bytes": 286,
+      "sha256": "4db4988e1d792520166d243a87b957fe22409d184231bc2671782e37c80086ef"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/after-desktop-exit-R3.mjs",
+      "bytes": 1534,
+      "sha256": "dab99dc3820ddde613abb42ceb6948360996f0988d404dcfcbe5d1449534e3a8"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-after-exit-owner.log",
+      "bytes": 114,
+      "sha256": "ce6a184734c58bb22b50a7db15024e495d0caf5f74226a1028ee5535aa5e04a5"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/preservation-before-status.json",
+      "bytes": 62,
+      "sha256": "ae7597411e89579952cf36a7e143fb44f244e9d3850a688c1d829547d1994a3a"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-contender.json",
+      "bytes": 416,
+      "sha256": "cd7066ef14909559dd6caa4b6bb3f8e7b2770a9beca16d21139e2f0a296784a0"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/profile-normalized-frozen-CI.log",
+      "bytes": 838,
+      "sha256": "f83af863303a287b91135ce37121777c01c1ed2bba06063aac7339e356e4c883"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/worker-run01.mjs",
+      "bytes": 5447,
+      "sha256": "68b6567e2db89c37b4aab32a9450431491e4f8b7b14916ffa25f6c51de22ba9a"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/contend-desktop.mjs",
+      "bytes": 1909,
+      "sha256": "0a40ebc72e22ec063fb061596e5c9cba0c717661237061bf5a2a6a0a1aa2b5a4"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/host-check-R3-before-assembly-complete.log",
+      "bytes": 816,
+      "sha256": "fd6ab91ca2f2d130405b1d7582e1ee877ffad64a0823ea5f3dde87b49cf43f2e"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/m06-resource-observation.json",
+      "bytes": 2100,
+      "sha256": "c0fd23d1d34c347f32132d879c6bdb528a87815bbed5198f3cdfcc5c6a649ecc"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/host-check.log",
+      "bytes": 408,
+      "sha256": "36077ef9698e77f7af209d57fe124946e4ba32a36970397d427af8e1f03fc8c1"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-node-version-probe.json",
+      "bytes": 800,
+      "sha256": "39f5f475fc68c9cec8ce7e76cb27305f4259bb2951e50ebdf404bedc22678e7c"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/first-start-lock.diff",
+      "bytes": 232,
+      "sha256": "fd8b13b1ce33f55393c3af8febec47ef28d3929bd941d30b4ba878e1c8e1e341"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/events-run01.json",
+      "bytes": 1031,
+      "sha256": "09de2aee9ffaa81fe51a90952502939f72d61175bed9e294a48f75ccceec6bad"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/guard-tests-final01.log",
+      "bytes": 921,
+      "sha256": "90c572cb88400a9575f1ddb4c5e1d741eaefea1aa23f8464b4e4d2faf3020756"
+    },
+    {
+      "path": "patches/storage-json-single-owner/cordis.patch.yml",
+      "bytes": 181,
+      "sha256": "31615b60872e71f2e4e729e0929da02ec35d6b5ce3543cb763a02382ec6b4cd9"
+    },
+    {
+      "path": "patches/storage-json-single-owner/ownership.mjs",
+      "bytes": 1902,
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab"
+    },
+    {
+      "path": "patches/storage-json-single-owner/package.json",
+      "bytes": 551,
+      "sha256": "93d345e12046679171a22f9e126fe1d13caf4ea65e028f8552f527fd39b8bbbc"
+    },
+    {
+      "path": "patches/storage-json-single-owner/index.mjs",
+      "bytes": 1475,
+      "sha256": "9d1c8da0ed70accc2b679bccbfc72c9a353f96573155fbef0951ff4df5c71bdc"
+    },
+    {
+      "path": "scripts/tests/storage-json-single-owner.test.mjs",
+      "bytes": 5709,
+      "sha256": "b9c66cc18c1a8492617991eab6d4c7bd08e72839bc8de33dae6872976f8f92e2"
+    },
+    {
+      "path": "scripts/tests/fixtures/storage-json-owner-child.mjs",
+      "bytes": 452,
+      "sha256": "62eace1782db431b92628b0d9b3b53484f6e4798c28cbf434cff7946db4e3d01"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/extension-r3/index.mjs",
+      "bytes": 1475,
+      "sha256": "9d1c8da0ed70accc2b679bccbfc72c9a353f96573155fbef0951ff4df5c71bdc"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/extension-r3/ownership.mjs",
+      "bytes": 1902,
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/extension-r3/package.json",
+      "bytes": 1391,
+      "sha256": "38ef8dff5f847ca048aea47e4faf18f689997ea1cbca6564ce5149d55cc8977a"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/extension-r3/cordis.patch.yml",
+      "bytes": 181,
+      "sha256": "31615b60872e71f2e4e729e0929da02ec35d6b5ce3543cb763a02382ec6b4cd9"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/extension-r3/pnpm-lock.yaml",
+      "bytes": 6203,
+      "sha256": "dc18241052e0008f30ed36f2fea3321d933a24ea3dc8a4e2f20ddec52b75d78b"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-R3-before-restart.ax.txt",
+      "bytes": 5418,
+      "sha256": "81cba8ea4035ff49d7e1b8532d3f469dc1e6fa3fdaf096e6fbd92b0b57195c58"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-R3-before-restart.png",
+      "bytes": 115475,
+      "sha256": "2d082db3386b1fb2648d2abcab489accb85d7d713427a825526f18e63e98a22d"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-R3-after-restart.ax.txt",
+      "bytes": 5418,
+      "sha256": "81cba8ea4035ff49d7e1b8532d3f469dc1e6fa3fdaf096e6fbd92b0b57195c58"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-R3-after-restart.png",
+      "bytes": 115475,
+      "sha256": "2d082db3386b1fb2648d2abcab489accb85d7d713427a825526f18e63e98a22d"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-before-restart.ax.txt",
+      "bytes": 5504,
+      "sha256": "c1408f5a2d27c0d8d0d16549d477c3344a3b84f06e451f483041aefa8735b94c"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-before-restart.png",
+      "bytes": 100589,
+      "sha256": "3439f16a1abfb6406db5de8245ca37ba1cdcde7ccbb1dddb10fd35330c0e0c5e"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-after-restart.ax.txt",
+      "bytes": 5418,
+      "sha256": "81cba8ea4035ff49d7e1b8532d3f469dc1e6fa3fdaf096e6fbd92b0b57195c58"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/desktop-after-restart.png",
+      "bytes": 115475,
+      "sha256": "2d082db3386b1fb2648d2abcab489accb85d7d713427a825526f18e63e98a22d"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/r3-killed-recovery.json",
+      "bytes": 30076,
+      "sha256": "d97d46a198a00e69f06054ea544f47d4a5ed13673395ef1800e7af0470022a0b"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/r3-normal-close-recovery.json",
+      "bytes": 30164,
+      "sha256": "acd060f6cb9f7005b3358d670bd29a499f768e3bc57c26d0fa1f14cd448e4b1a"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/guarded-R3.log",
+      "bytes": 128,
+      "sha256": "076362e33a22bf5970747ff086f4d229930801afceda62b4f18202dc2f3f4484"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/r3-ownership.json",
+      "bytes": 2683,
+      "sha256": "84bc8b65922409eda6aef0083b6400d022ec2c7c96d40aeef69d8ddc80368124"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/r3-events.json",
+      "bytes": 106763,
+      "sha256": "0058efe7e46268854e108c44430c1a404c0fa8a0a7e8d126b5d03835b7f3e831"
+    },
+    {
+      "path": ".local/f-process-recovery-20261027/run-guarded-R3.mjs",
+      "bytes": 6954,
+      "sha256": "345f28684fc62d6742d836e74967ad7a5bb22eac63fd8a69bc13fe2bee247fa1"
+    }
+  ],
+  "zeroBudgetBoundary": {
+    "realModelRequests": 0,
+    "realApiCreates": 0,
+    "websiteBudgetRemainingRequests": 0,
+    "chatSends": 0,
+    "externalUploads": 0,
+    "networkCounterScope": "only worker global fetch is instrumented; not OS egress accounting"
+  },
+  "limits": [
+    "Cooperative lock: all writers of a root must use this paired backend; an old unguarded Host is not excluded by the metadata lock",
+    "Actual local filesystem only, not NFS/SMB/cloud or all supported OS proof",
+    "UNKNOWN proof uses real public SDK and business services plus synthetic executor, not native-model/API or Desktop in-flight operation",
+    "Desktop R3 proves normal restart draft persistence; no reviewed/fixed artifact or complete attachment recovery",
+    "Unreleased side candidate; daily Profile and signed App not modified; no release/commit/push"
+  ],
+  "guardedProofAdmission": "R3 engine metadata and peer assembly"
+}

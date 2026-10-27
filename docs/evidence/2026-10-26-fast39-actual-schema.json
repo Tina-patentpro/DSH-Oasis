@@ -1,0 +1,158 @@
+{
+  "sourceRequestId": "48954.189",
+  "source": "observed original website metadata; allowed schema fields only; no new request",
+  "requiredFlagsPresent": false,
+  "originalSchemaFieldKeys": {
+    "input": [
+      {
+        "fieldId": "technical_solutions",
+        "keys": [
+          "type",
+          "cn_name",
+          "content",
+          "en_name"
+        ]
+      },
+      {
+        "fieldId": "technical_field",
+        "keys": [
+          "type",
+          "cn_name",
+          "content",
+          "en_name"
+        ]
+      },
+      {
+        "fieldId": "background_art_TD",
+        "keys": [
+          "type",
+          "cn_name",
+          "content",
+          "en_name"
+        ]
+      },
+      {
+        "fieldId": "beneficial_effects_TD",
+        "keys": [
+          "type",
+          "cn_name",
+          "content",
+          "en_name"
+        ]
+      },
+      {
+        "fieldId": "embodiments_TD",
+        "keys": [
+          "type",
+          "cn_name",
+          "content",
+          "en_name"
+        ]
+      },
+      {
+        "fieldId": "drawings_explain_TD",
+        "keys": [
+          "type",
+          "cn_name",
+          "content",
+          "en_name"
+        ]
+      },
+      {
+        "fieldId": "Technical_Disclosure_file",
+        "keys": [
+          "type",
+          "cn_name",
+          "content",
+          "en_name"
+        ]
+      },
+      {
+        "fieldId": "User_input",
+        "keys": [
+          "type",
+          "cn_name",
+          "content",
+          "en_name"
+        ]
+      }
+    ],
+    "output": [
+      {
+        "fieldId": "output",
+        "keys": [
+          "type",
+          "cn_name",
+          "content",
+          "en_name"
+        ]
+      }
+    ]
+  },
+  "detail": {
+    "id": 39,
+    "name": "权利要求书生成-Fast",
+    "api_type": "Workflow",
+    "is_async": 0,
+    "price": 3,
+    "model_name": "",
+    "input_schema": [
+      {
+        "type": "paragraph",
+        "en_name": "technical_solutions",
+        "cn_name": "技术方案",
+        "content": "用于生成“技术方案”主体的核心构思、关键结构/步骤、技术要素及其协同关系输入。"
+      },
+      {
+        "type": "paragraph",
+        "en_name": "technical_field",
+        "cn_name": "技术领域",
+        "content": "用于生成“技术领域”段落的所属技术方向、应用场景与分类线索（可含关键词/IPC意向）。"
+      },
+      {
+        "type": "paragraph",
+        "en_name": "background_art_TD",
+        "cn_name": "背景技术",
+        "content": "用于生成“背景技术”段落的现有技术情况、痛点问题与改进需求描述输入。"
+      },
+      {
+        "type": "paragraph",
+        "en_name": "beneficial_effects_TD",
+        "cn_name": "有益效果",
+        "content": "用于生成“有益效果”段落的性能提升、成本/效率优势与可验证效果点输入。"
+      },
+      {
+        "type": "paragraph",
+        "en_name": "embodiments_TD",
+        "cn_name": "具体实施方式",
+        "content": "用于生成“具体实施方式/实施例”段落的实现细节、参数范围、流程与可选替换方案输入。"
+      },
+      {
+        "type": "paragraph",
+        "en_name": "drawings_explain_TD",
+        "cn_name": "附图说明和标记",
+        "content": "用于生成“附图说明”段落的各图编号、图名及图中要素对应关系的说明输入。"
+      },
+      {
+        "type": "file",
+        "en_name": "Technical_Disclosure_file",
+        "cn_name": "技术交底书文件",
+        "content": "完整的技术交底书文件"
+      },
+      {
+        "type": "paragraph",
+        "en_name": "User_input",
+        "cn_name": "用户指令",
+        "content": "请在这里填写你对本次输出的额外要求，例如重点关注内容、表达风格或需要避免的问题。   不要把正文、原始材料或核心业务内容直接写在这里。   主要输入内容应填写到对应的主材料输入字段，否则系统可能无法正确识别和处理。   没有补充要求时可填写“无”。"
+      }
+    ],
+    "output_schema": [
+      {
+        "type": "paragraph",
+        "en_name": "output",
+        "cn_name": "生成内容",
+        "content": ""
+      }
+    ]
+  }
+}

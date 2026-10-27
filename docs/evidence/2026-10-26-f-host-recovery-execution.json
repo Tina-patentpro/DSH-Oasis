@@ -1,0 +1,161 @@
+{
+  "taskId": "DSH-F-HOST-RECOVERY-20261026-01",
+  "observedAtUTC": "2026-10-26T12:31:01.407199+00:00",
+  "result": "PARTIAL_CURRENT_GUI_RESTART_AB_PASS_NOT_FULL_F",
+  "runtimeMode": "NO_MODEL_FRESH_PROFILE",
+  "noRealGenerationSubmitted": true,
+  "currentPairBound": true,
+  "oldAdmissionSHA256": "e72814abad9fae80ee5f66ca3c9bdd84fc2669041a4900d3d330b04def6119aa",
+  "newAdmissionSHA256": "092da5436842c0fa020c6899d0891374aa046d30ab3d62d3a1a65c4cbd58b5e1",
+  "sourcePairing": "117 sources identical to current main package; audited client hash bound; separate frozen dependencies/profile",
+  "workspaces": [
+    {
+      "workspaceId": "71120098-c4d4-4075-bddd-49e1371eb8f7",
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/followup-20261026/workspace-a",
+      "taskId": "503bfda5-2da2-48d2-8d07-934409a3a3c0",
+      "source": "oasis-api",
+      "textInputs": {
+        "disclosure_text": "F20261026-A public synthetic bracket disclosure. No generation requested.F20261026-A keep original input do not invent facts.",
+        "user_input": "F20261026-A-instruction"
+      },
+      "filePaths": {},
+      "runCount": 0,
+      "remoteExecutionCount": 0
+    },
+    {
+      "workspaceId": "e4d5099d-15e2-4918-9ca8-81f97a61a920",
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/followup-20261026/workspace-b",
+      "taskId": "b44d7ec2-78a0-4816-925b-557cea951323",
+      "source": "local-skill",
+      "textInputs": {},
+      "filePaths": {},
+      "runCount": 0,
+      "remoteExecutionCount": 0
+    }
+  ],
+  "normalExits": [
+    {
+      "path": ".dsh-test/followup-20261026/evidence/launch-1793016999876.exit.json",
+      "code": 0,
+      "signal": null,
+      "requestedShutdown": false,
+      "endedAtUTC": "2026-10-26T12:25:54.943Z"
+    },
+    {
+      "path": ".dsh-test/followup-20261026/evidence/launch-1793017583650.exit.json",
+      "code": 0,
+      "signal": null,
+      "requestedShutdown": false,
+      "endedAtUTC": "2026-10-26T12:30:16.520Z"
+    }
+  ],
+  "launcherLockReleased": true,
+  "secondHarnessProcessRefusedEEXIST": true,
+  "businessCrossProcessOwnershipProven": false,
+  "ordinaryFileNativePreview": true,
+  "ordinaryAnd150000FileNativeAttachmentPrepared": true,
+  "nativeUnsentTextRestored": true,
+  "pendingAttachmentChipsRestored": false,
+  "pendingAttachmentBytesStillPresent": true,
+  "reviewedArtifactFixedVersionReferenceAccepted": false,
+  "unknownRunRecoveryAccepted": false,
+  "fullFAcceptance": false,
+  "remaining": [
+    "pending attachment chips did not reappear after normal restart",
+    "fixed reviewed artifact/native long reference not exercised because sources remain disabled and no accepted artifact was created",
+    "business cross-Host/process storage and unknown-original-run recovery not exercised",
+    "full E/G0/new resource prerequisites remain open"
+  ],
+  "evidence": [
+    {
+      "path": ".local/oasis-follow-up-20261026/f-before-restart.ax.txt",
+      "sha256": "85f84e312d807a662191aba1c41d62db42dfa606459937dc7e9b5a158e83326d",
+      "bytes": 5581
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-native-attachments.ax.txt",
+      "sha256": "2ce8b4ba83be58a07ca67796a7854f6911b0c06514c38c5e09dfc124b4bacc77",
+      "bytes": 3531
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-restored-a.ax.txt",
+      "sha256": "cef2249ffa17a562b51933fed9cfd34e8ebc7259a580acc4c63498d5c7388767",
+      "bytes": 5689
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-workspace-b.ax.txt",
+      "sha256": "40d45efd874d8b9792723535ab39df69807d1667a48bb56cfaca8ef4881023bf",
+      "bytes": 5457
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-a-after-b.ax.txt",
+      "sha256": "deaf1f77caf7876047607feff5b214712e187b4746291b0b4beea97b01d7ba66",
+      "bytes": 5747
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-current-input-api.png",
+      "sha256": "5659f59fc1da14c184f8dbe3c6e8ced4f03e81c82e51171b4c06965ce3e80217",
+      "bytes": 112079
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-native-attachments.png",
+      "sha256": "bdb1fd36246d6c60e41f75b77efdad0a185bedbf250a08eb6c3b84a3dc0d4e14",
+      "bytes": 75835
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-restored-a.png",
+      "sha256": "2fbf6cd0efc64068de9dcc77001003a87d956e4f14e043be4deeb47544bb93c5",
+      "bytes": 114355
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-a-after-b.png",
+      "sha256": "4af50a4dc9b42042a68892473c83738ce9067a9ab2f2136f8c4c56eb34596f68",
+      "bytes": 115773
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-host-check.log",
+      "sha256": "c57f9d681e3cad2fd45c55b767c3edcbb3b127379194c131afe4d9edc24e58d9",
+      "bytes": 401
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-host-check-after-ui.log",
+      "sha256": "c57f9d681e3cad2fd45c55b767c3edcbb3b127379194c131afe4d9edc24e58d9",
+      "bytes": 401
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-host-check-final.log",
+      "sha256": "c57f9d681e3cad2fd45c55b767c3edcbb3b127379194c131afe4d9edc24e58d9",
+      "bytes": 401
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-second-launch-refusal.log",
+      "sha256": "5d60c8fdd3799328efac3e37d677c60c7cefb1d007e410a46df0d2feb48676c9",
+      "bytes": 907
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-candidate-install.log",
+      "sha256": "56401c190e4e4cba7946e8c5c99edcdd7f24269c4cf95e19c5a51781badcc842",
+      "bytes": 642
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-candidate-install-main-store.log",
+      "sha256": "6d8a7d002c4c58ccabc47af1e2837a1227b755d4b66755dc2e08b6f997038278",
+      "bytes": 1121
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-profile-lock.log",
+      "sha256": "e92a96a78ad6f07983298e5cb7dd7d4550d4372b3f56738938604c805a440cb0",
+      "bytes": 34
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-profile-install.log",
+      "sha256": "8f40890fc5174388036c353a89cf6bc8e7659fa2447771eac6ffd4da6d64144d",
+      "bytes": 578
+    },
+    {
+      "path": ".local/oasis-follow-up-20261026/f-before-restart-observation.json",
+      "sha256": "c847ad12e6b67e055862721b8f8be3d53f8392befa875444d9ab6cad15892e65",
+      "bytes": 724
+    }
+  ]
+}

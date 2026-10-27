@@ -1,0 +1,36 @@
+{
+  "scope": "READONLY_CAUSE_LOCALIZATION_NOT_FIX_OR_FULL_F_ACCEPTANCE",
+  "nativeVersion": "0.2.0-rc.2",
+  "actualSignedAppVersion": "2.0.17",
+  "observed": "Pending attachment chips did not restore after normal restart; stored attachment file bytes remain identical.",
+  "contract": "InputState.attachmentIds explicitly runtime-only; browser-owned objects in ConversationController.",
+  "compiledMechanism": [
+    "lib/client.js:3348 draftAttachments initialized as Map",
+    "lib/client.js:16403-16408 restores/mirrors draft text through store, not attachment objects"
+  ],
+  "pluginMechanism": "Normalizes attachmentIds into internal shape, refuses overwrite of nonempty text/attachments/references; setDraft text only.",
+  "ownership": "Native DSH input/draft capability; not a new business artifact serialization regression.",
+  "gate": "Keep full F open; no private store access, core patch or new persistence system implemented.",
+  "sources": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/oasis-follow-up-20261026/provider-source/deepseek-harness-639ed015397290b3745d163aafe02ffee4aa3f84/packages/client/ui-conversation/src/client/contract/input.ts",
+      "sha256": "c2b9d003964de6d26b0023636a8f107327af72332166186847d9cf0c7a6312b6",
+      "bytes": 15077
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/oasis-follow-up-20261026/desktop217-recovery/mounted/DSH Desktop.app/Contents/Resources/app/node_modules/@deepseek-ai/dsh-client-ui-conversation/lib/client.js",
+      "sha256": "6dde14fc827a2c0f0daf29ab0b7b769aff103ae57bb60b75008c39feccea3b6c",
+      "bytes": 716272
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/conversation-draft-bridge.js",
+      "sha256": "96c47b678ae610226502aa51bd38e1f45da294ef36cf5e6ddc0d9bd14b48e801",
+      "bytes": 2519
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/native-composer-input.js",
+      "sha256": "0dbbcc9f35cb232f79f4909df16710fd77caaaa6ef2cdad5aa8d83093878fd2c",
+      "bytes": 485
+    }
+  ]
+}
