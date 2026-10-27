@@ -19,12 +19,13 @@
 
 - 按当前段落直接pPr/numPr、所用段落样式及basedOn链、未显式指定样式时的默认段落样式、docDefaults解析属性。numId与ilvl按属性继承，不能把“段落只写ilvl”当成没有编号。样式链缺失、循环、值非法或无法确定时拒绝，不默认为普通段落。
 - 默认段落样式的`w:default`按合法布尔值统一判定：`1/true/on`等价为真，`0/false/off`等价为假，缺省属性不标记默认；空值/非法值及多个真值默认段落样式拒绝，不静默当假。假值仅表示该样式不会被隐式选为默认；正文显式pStyle使用其非零numId仍拒绝。三种真值下，段落或叶样式的显式numId=0均仍可取消继承。2026-10-24 D0-NUM-R1修复只是落实原默认样式合同，不启用DOCX或迁移历史证据。
+- 样式的`w:type`省略时按`paragraph`处理，默认选择与实际使用的basedOn继承校验必须使用同一有效类型。显式`paragraph/character/table/numbering`保持各自含义，后三者不能成为段落默认；空值/未知类型拒绝，不等同于合法缺省。省略类型的段落样式仍遵守三种真值默认编号拒绝、三种假值未用声明保留、显式pStyle使用及numId=0取消继承规则；不能靠跳过未知样式返回eligible。2026-10-24 D0-BOOL-R1落实该规范缺省，不把编号资格扩大为完整DOCX准入。
 - 数字编号、项目符号、起点/重启、lvlOverride/startOverride、多级及编号样式链接，只要有效numId非零都拒绝，不因标签格式或当前层级不同放行。先发现首个生效或无法解析段落即拒绝整份所选文件，不发布部分提取正文/prepared，不消耗额度或调用模型；原输入/草稿保持，用户可明确改用手写编号文本或移除材料。
 - 正确处理显式`numId=0`取消继承：段落直接属性优先于样式，叶样式属性优先于basedOn基样式，不能用“XML中出现numPr/numbering.xml”作为一律拒绝条件。仍须能解析实际使用链；其它profile条件继续独立检查。
 - 手写编号本身是原文，不能删除、改写或通过正则“识别为自动编号”。未被正文引用的num/abstractNum、重启/多级定义、编号样式及其未使用链不构成生效编号。保留这些对照只表示通过编号检查，不表示DOCX其它内容已支持。
 - 编号策略及上述解析/拒绝规则必须进入policySHA256，实际D1预检适配器代码进入adapterSHA256；不得沿用旧的未检查编号策略确认。禁止改变rawSHA256/textSHA256的含义来掩盖编号丢失。
 
-独立离线候选为`scripts/check-v340-docx-numbering.py`：有界stdin输入、标准库ZIP/XML，只输出body-free编号资格结果。`reject`表示生效或无法解析，`eligible`仅表示未发现生效编号，其它格式/关系/完整性/资源条件仍由D1验证；该脚本不是全文DOCX验证器、提取器或Host入口，没有接入生产，也不证明D1硬内存/时间等保护已实现。原19项正式回归见业务包`test/v340-docx-numbering-policy.test.mjs`，默认布尔新增20项见`test/v340-docx-default-boolean.test.mjs`，合计39项及各自固定二进制夹具；原19项和旧夹具原字节保留。
+独立离线候选为`scripts/check-v340-docx-numbering.py`：有界stdin输入、标准库ZIP/XML，只输出body-free编号资格结果。`reject`表示生效或无法解析，`eligible`仅表示未发现生效编号，其它格式/关系/完整性/资源条件仍由D1验证；该脚本不是全文DOCX验证器、提取器或Host入口，没有接入生产，也不证明D1硬内存/时间等保护已实现。原19项正式回归见业务包`test/v340-docx-numbering-policy.test.mjs`，默认布尔20项见`test/v340-docx-default-boolean.test.mjs`，类型缺省新增28项见`test/v340-docx-style-type.test.mjs`，合计67项及各自固定二进制夹具；原39项和旧夹具原字节保留。
 
 ## 2. 字节读取及权限
 

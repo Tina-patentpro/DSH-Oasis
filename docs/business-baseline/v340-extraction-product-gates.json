@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "status": "COMPLETE_WITH_BLOCKERS",
+  "scope": "material and product-boundary decisions, no implementation/Host/runtime acceptance",
+  "productDecision": {
+    "date": "2026-10-25",
+    "source": "direct user reply in current task",
+    "exactText": "明确产品应该基于DSH，与操作系统无关",
+    "status": "CONFIRMED_PRODUCT_DIRECTION",
+    "productBase": "DSH",
+    "operatingSystemIndependent": true,
+    "oldMacPythonRoute": "validation candidate and historical artifact only, not product platform requirement",
+    "standaloneAppRequirement": "NOT_SELECTED_NOT_A_PRODUCT_PREREQUISITE",
+    "runtimeCapabilityAcceptance": "OPEN",
+    "noPermissionExtension": true,
+    "implementationPortabilityVerified": false
+  },
+  "distributionCandidateRef": "docs/business-baseline/v340-extraction-distribution-candidate.json",
+  "distributionCandidateSHA256": "de7838799c749fc58e1171336c063feedd2c724bfb35cab598af3dd3af0501aa",
+  "distributionCandidateRole": "historical fixed macOS/Python supplier candidate, not an approved or mandatory cross-platform product distribution",
+  "DSHPublicCapabilityEvidence": [
+    {
+      "component": "@deepseek-ai/dsh-scope",
+      "version": "0.2.0-rc.2",
+      "publicEntry": "createScope/scopeTarget",
+      "supportedMaterial": "registration ownership and event routing",
+      "notEstablished": "process or OS confinement"
+    },
+    {
+      "component": "@deepseek-ai/dsh-sandbox",
+      "version": "0.2.0-rc.2",
+      "publicEntry": "Context.sandbox / SandboxProvider.confine",
+      "supportedMaterial": "abstract argv wrapping and file-effect full/partial result",
+      "notEstablished": "network/process visibility, strict read allowlist, hard memory or concrete mounted provider"
+    },
+    {
+      "component": "@deepseek-ai/dsh-ptc-runtime",
+      "version": "0.2.0-rc.2",
+      "publicEntry": "Context.ptcRuntime / PtcRuntime.resolve/run",
+      "supportedMaterial": "abstract program/bindings/timeout/abort/result seam; language/isolation descriptors are not security claims",
+      "notEstablished": "qualified parser backend, native hard-memory bound, per-binding byte cap or preaccumulation stdout/stderr budget; Python provider noted experimental/private in this fixed definition"
+    }
+  ],
+  "gateRows": [
+    {
+      "gate": "G1_PRODUCT_DIRECTION",
+      "scope": "shared",
+      "status": "CONFIRMED_DSH_OS_INDEPENDENT",
+      "evidence": "direct user clarification in current task",
+      "remaining": "no product minimum macOS or separate .app decision required"
+    },
+    {
+      "gate": "G1_DSH_CAPABILITY_BINDING",
+      "scope": "shared",
+      "status": "OPEN",
+      "evidence": "fixed DSH0.2.0-rc.2 public scope/sandbox/PTC seams inspected, no provider or Host run",
+      "remaining": "supported DSH public provider/version, plugin packaging/update ownership and actual substrate identity; abstract seam does not establish mounted provider"
+    },
+    {
+      "gate": "G2_L-P",
+      "scope": "shared runtime/PDF",
+      "status": "OPEN",
+      "evidence": "11 originals, 2061 identities, 543 source/notice conditions now classified,12 static libraries/18 vendors retained",
+      "remaining": "supplier exact build/install/strip provenance, native/vendor upstream+patch, final distribution/notice acceptance; legacy Python bundle not selected as mandatory product runtime"
+    },
+    {
+      "gate": "G3_L-D_ABI-D",
+      "scope": "DOCX only",
+      "status": "OPEN",
+      "evidence": "7 extensions static ABI only,9 resource correspondences;95 python-docx modules analyzed without execution",
+      "remaining": "3 undecided resources, native wheel build inputs/notices, entity precheck and actual qualified DSH substrate load; no actual exclusion"
+    },
+    {
+      "gate": "G4_HARD_MEMORY",
+      "scope": "shared",
+      "status": "NO_QUALIFIED_DSH_ENFORCEMENT_EVIDENCE",
+      "evidence": "no hard native-memory/descendant bound promised by inspected abstract DSH seams; old macOS API remains comparison only",
+      "remaining": "DSH provider with 268435456-byte metric/granularity/scope, startup/import/native/descendant enforcement and U1 proof"
+    },
+    {
+      "gate": "G4_FILE_NETWORK_PROCESS_MONITOR",
+      "scope": "shared",
+      "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+      "evidence": "DSH sandbox vocabulary governs file effects; network/process visibility outside it; PTC abort leaves caller bindings to settle",
+      "remaining": "qualified read boundary/network/exec/descendant controls,5000/15000ms and preaccumulation stdout2097152/stderr16384 budgets, actual exit/reclaim"
+    },
+    {
+      "gate": "G5_PROFILE",
+      "scope": "per format",
+      "status": "OPEN",
+      "evidence": "existing C01-C20/P/D/X/I matrix and parser control design retained",
+      "remaining": "before-bootstrap PDF decode/object/filter/cache/JBIG2 controls; DOCX OPC/ZIP/numbering/DTD/entity controls proven on the selected substrate"
+    },
+    {
+      "gate": "G6_U1_INPUTS",
+      "scope": "per format",
+      "status": "MATERIAL_REQUIREMENTS_ONLY",
+      "evidence": "artifact identities and future requirements separated from runnable inputs",
+      "remaining": "actual DSH provider/runtime/adapter/guard/notice/policy/package identities and precise commands after future U1 implementation scope is authorized"
+    }
+  ],
+  "sourceGapCounts": {
+    "RUNTIME_ARCHIVE_LINK": 9,
+    "RUNTIME_GENERATED_OR_INSTALLED_CODE": 12,
+    "RUNTIME_NATIVE_BUILD": 5,
+    "RUNTIME_HEADERS_AND_BUILD_INPUT": 285,
+    "RUNTIME_TCL_TK_COMPOSITION": 198,
+    "RUNTIME_OTHER_BUILD_RESOURCE": 14,
+    "PIP_TRANSFORMED_OR_GENERATED": 10,
+    "DOCX_NATIVE_BUILD": 7,
+    "DOCX_UNLICENSED_XSL": 2,
+    "DOCX_README_SCOPE": 1
+  },
+  "sourceGapTotal": 543,
+  "sourceEvidenced": 1518,
+  "sourceMissing": 543,
+  "candidateMembers": 2061,
+  "candidateInclude": 2058,
+  "candidateUndecided": 3,
+  "runtimeExtensionGroups": 110,
+  "runtimeStaticLibraries": 12,
+  "vendorPackages": 18,
+  "noticeCopiesPreserved": 12,
+  "packagingMemberMappingsPreserved": 27,
+  "DOCX": {
+    "nativeExtensions": 7,
+    "staticABIStatus": "STATIC_ABI_MATERIAL_MATCHED_NOT_LOADED",
+    "resources": 9,
+    "undecidedResources": [
+      "lxml/isoschematron/resources/xsl/XSD2Schtrn.xsl",
+      "lxml/isoschematron/resources/xsl/RNG2Schtrn.xsl",
+      "lxml/isoschematron/resources/xsl/iso-schematron-xslt1/readme.txt"
+    ],
+    "pythonDocxMembersStaticallyAnalyzed": 95,
+    "pythonDocxTemplateDataMembers": 23,
+    "directIsoschematronImports": 0,
+    "exclusionDecision": "NOT_ACCEPTED_OR_PERFORMED",
+    "resourceImpact": "isoschematron imports parse/compile both extraction XSLs; dropping only those files can break that module; no direct import in analyzed python-docx files does not prove all dynamic/resource uses",
+    "entityControl": "6.1.1 source differential remains; reject DTD/entities before parser; defaults not accepted as proof"
+  },
+  "legacyMacEvidence": {
+    "productRequirement": false,
+    "XPCProductPath": "NOT_SELECTED",
+    "hardMemory": "NO_GO_CURRENT_EVIDENCE",
+    "comparisonSourceURL": "https://github.com/apple-oss-distributions/xnu/blob/f6217f891ac0bb64f3d375211650a4c1ff8ca1ea/osfmk/kern/task.c",
+    "comparisonCommit": "f6217f891ac0bb64f3d375211650a4c1ff8ca1ea",
+    "comparisonGitBlobSHA": "205ac1358dc60a8e98f13de1219c41b8565a1cc9",
+    "comparisonContentSHA256": "f5ea4822b15aca636c4d940679e878904729b88acf312821d2ebacbf69312f71",
+    "exactFrozenValidationKernelMatch": false,
+    "finding": "comparative source checks privilege, uses MB-labelled arguments and inherits existing active/fatal flags; not a current target proof or universal DSH limitation",
+    "apiCalled": false
+  },
+  "contractRef": "docs/business-baseline/v340-material-extraction-contract.md",
+  "capacityChanged": false,
+  "legacyDataChanged": false,
+  "originalArtifactsChanged": false,
+  "sourcesEnabled": false,
+  "formatGates": {
+    "PDF": "BLOCKED",
+    "DOCX": "BLOCKED",
+    "READY_FOR_OFFLINE_PROOF": false,
+    "U1Executed": false,
+    "D1Integrated": false
+  },
+  "U1Admission": {
+    "PDF": {
+      "status": "BLOCKED",
+      "blockingGates": [
+        "G1_DSH_CAPABILITY_BINDING",
+        "G2_L-P",
+        "G4_HARD_MEMORY",
+        "G4_FILE_NETWORK_PROCESS_MONITOR",
+        "G5_PROFILE",
+        "G6_U1_INPUTS"
+      ],
+      "DOCXPrivateGapsApply": false
+    },
+    "DOCX": {
+      "status": "BLOCKED",
+      "blockingGates": [
+        "G1_DSH_CAPABILITY_BINDING",
+        "G2_L-P",
+        "G3_L-D_ABI-D",
+        "G4_HARD_MEMORY",
+        "G4_FILE_NETWORK_PROCESS_MONITOR",
+        "G5_PROFILE",
+        "G6_U1_INPUTS"
+      ]
+    },
+    "transition": "materials/decisions reviewable -> explicit U1 scope -> implement/freeze real execution inputs -> approved Host-external proof -> format passed and explicit D1 wiring instruction"
+  },
+  "evidenceDirectory": ".local/stage5-d1-product-gates-20261025",
+  "originalPackagesAcquired": 0,
+  "candidateRuntimeMaterialized": false,
+  "candidateCodeExecuted": false,
+  "hostStarted": false,
+  "desktopStarted": false,
+  "realModelOrBusinessAPI": false,
+  "sourceStatusSemantics": "1518/543 are the unchanged historical distribution-candidate statuses; supplemental exact header correspondences do not approve product distribution or final notice scope",
+  "supplementalHeaderSourceEvidence": {
+    "checked": 283,
+    "exactBytesCorrespondences": 282,
+    "noExactSourcePath": 1,
+    "unmatchedMember": "python/include/python3.14/pyconfig.h",
+    "candidateStatusesRewritten": false,
+    "buildAttestationAccepted": false,
+    "finalNoticeAccepted": false
+  }
+}
