@@ -7,6 +7,77 @@ import {resultFixture} from './v340-result-fixture.mjs'
 import {openOasisWorkbenchRepository} from '../src/workbench-repository.js'
 const hash=v=>createHash('sha256').update(v).digest('hex')
 
+test('M06 R1 review is not factual confirmation',async t=>{
+ const h=await resultFixture(t,'local-skill',{nodeId:'Flow-2-6'}),runId=h.run().runId,initial=structuredClone(h.run().result)
+ const target={runId,versionId:runId,resultSha256:initial.sha256}
+ await h.service.reviewV340Result(h.command({...target,confirmed:true}))
+ assert.equal(h.run().resultVersions[0].review.status,'approved')
+ assert.deepEqual(h.run().result,initial)
+ assert.equal(h.run().result.snapshot.contents.find(c=>c.source_input_id==='user_input').trust_status,'excluded_from_formal_text')
+ assert.ok(h.run().result.snapshot.warnings.some(w=>w.warning_id.startsWith('host-Flow-2-6-m06-limited-')&&w.status==='open'))
+ const draft=await h.service.prepareV340ConversationDraft(h.command(target))
+ assert.ok(draft.text.includes(initial.body))
+ assert.equal(h.generationCalls,1)
+ const saved=JSON.stringify(h.record());await h.repository.close()
+ const repo=await openOasisWorkbenchRepository(h.storageDomain)
+ assert.equal(JSON.stringify(repo.get('a')),saved);await repo.close()
+})
+
+test('M06 R1 published-file recovery identity',async t=>{
+ const h=await resultFixture(t,'local-skill',{nodeId:'Flow-2-6'}),runId=h.run().runId,original=structuredClone(h.run().result)
+ const target={runId,versionId:runId,resultSha256:original.sha256}
+ await h.service.reviewV340Result(h.command({...target,confirmed:true}))
+ const plan=await h.service.prepareV340Save(h.command(target)),before=JSON.stringify(h.record()),calls=h.generationCalls
+ h.failWrites=true
+ const response=await h.handler('workflow/v340/result/commit-save',{confirmationToken:plan.confirmationToken})
+ assert.equal(response.ok,false);assert.equal(response.error.code,'WRITEBACK_COMMITTED_INDEX_FAILED')
+ const manifest=response.error.details.manifest
+ assert.equal(manifest.workspaceId,'a');assert.equal(manifest.taskId,'new');assert.equal(manifest.runId,runId)
+ assert.equal(manifest.artifactId,`sha256:${original.sha256}`)
+ const main=manifest.files.find(f=>f.mediaType==='text/markdown')
+ const bytes=await readFile(join(h.root,main.relativePath))
+ assert.equal(hash(bytes),original.sha256);assert.equal(main.sha256,original.sha256)
+ assert.equal(hash(bytes),hash(original.body))
+ const manifestSHA=hash(JSON.stringify(manifest))
+ assert.match(manifestSHA,/^[a-f0-9]{64}$/)
+ assert.equal(JSON.stringify(h.record()),before);assert.equal(h.run().resultVersions[0].writebacks.length,0)
+ assert.equal(h.writebackCalls.publish,1);assert.equal(h.writebackCalls.consume,1)
+ assert.equal(h.generationCalls,calls)
+ h.failWrites=false
+ const replay=await h.handler('workflow/v340/result/commit-save',{confirmationToken:plan.confirmationToken})
+ assert.equal(replay.ok,false)
+ assert.equal(h.writebackCalls.publish,1);assert.equal(h.writebackCalls.consume,2)
+ assert.equal(h.generationCalls,calls)
+ assert.equal(hash(await readFile(join(h.root,main.relativePath))),original.sha256)
+ assert.equal(hash(JSON.stringify(manifest)),manifestSHA)
+ assert.equal(JSON.stringify(h.record()),before)
+})
+
+test('M06 R1 edit is idempotent and oversized edit preserves draft and approved parent',async t=>{
+ const h=await resultFixture(t,'local-skill',{nodeId:'Flow-2-6'}),runId=h.run().runId,original=structuredClone(h.run().result)
+ await h.service.reviewV340Result(h.command({runId,versionId:runId,resultSha256:original.sha256,confirmed:true}))
+ await h.service.saveV340ResultDraft(h.command({runId,baseSha256:original.sha256,body:'第一修订',format:'core-markdown'}))
+ const edit={runId,versionId:runId,baseSha256:original.sha256,draftSha256:hash('第一修订'),requestKey:'m06-edit-one'}
+ await h.service.editV340Result(h.command(edit))
+ const after=structuredClone(h.run()),version=h.run().resultVersions.at(-1)
+ await h.service.editV340Result(h.command(edit))
+ assert.deepEqual(h.run(),after)
+ assert.equal(h.run().resultVersions.length,2)
+ assert.equal(version.review.status,'not-reviewed')
+ assert.equal(version.result.snapshot.deliverable_status,'not_recommended_for_filing')
+ assert.deepEqual(version.result.snapshot.tables,original.snapshot.tables)
+ const body='x'.repeat(400000)
+ await h.service.saveV340ResultDraft(h.command({runId,baseSha256:version.result.sha256,body,format:'core-markdown'}))
+ const saved=JSON.stringify(h.record()),published=h.writebackCalls.publish,calls=h.generationCalls
+ const response=await h.handler('workflow/v340/result/edit',h.command({runId,versionId:version.versionId,baseSha256:version.result.sha256,draftSha256:hash(body),requestKey:'m06-too-large'}))
+ assert.equal(response.ok,false)
+ assert.equal(JSON.stringify(h.record()),saved)
+ assert.equal(h.run().coreResultDrafts[version.versionId].body,body)
+ assert.equal(h.run().resultVersions[0].review.status,'approved')
+ assert.equal(h.writebackCalls.publish,published);assert.equal(h.generationCalls,calls)
+ assert.deepEqual(h.run().result,original)
+})
+
 for(const source of ['local-skill','oasis-api'])test(`${source}: persisted edit creates immutable pending version, explicit review and no-overwrite root save survive reopen`,async t=>{
  const h=await resultFixture(t,source),original=structuredClone(h.run()),runId=h.run().runId,baseSha256=h.run().result.sha256
  assert.equal(typeof h.service.editV340Result,'function','version editing must be connected')

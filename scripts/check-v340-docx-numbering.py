@@ -47,6 +47,14 @@ def on_off(value):
     raise InvalidMetadata()
 
 
+def style_type(style):
+    """An omitted OOXML style type is paragraph; other explicit types stay distinct."""
+    value = style.get(W + 'type', 'paragraph')
+    if value not in ('paragraph', 'character', 'table', 'numbering'):
+        raise InvalidMetadata()
+    return value
+
+
 def number_property(properties):
     """Return explicit numId (including disabling zero), plus numPr presence."""
     if properties is None:
@@ -114,7 +122,7 @@ def classify(data):
             if not name or len(name) > 256 or name in styles:
                 raise InvalidMetadata()
             styles[name] = style
-            if style.get(W + 'type') == 'paragraph' and on_off(style.get(W + 'default')):
+            if style_type(style) == 'paragraph' and on_off(style.get(W + 'default')):
                 if default_style is not None:
                     raise InvalidMetadata()
                 default_style = name
@@ -126,7 +134,7 @@ def classify(data):
                 raise InvalidMetadata()
             seen.add(style_id)
             style = styles.get(style_id)
-            if style is None or style.get(W + 'type') != 'paragraph':
+            if style is None or style_type(style) != 'paragraph':
                 raise InvalidMetadata()
             number, group = number_property(style.find(W + 'pPr'))
             has_group |= group

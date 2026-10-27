@@ -23,6 +23,7 @@ import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 import { createV340PreparationService } from './v340-preparation.js'
 import { createV340RuntimeService } from './v340-runtime-service.js'
 import {createV340ResultService} from './v340-result-service.js'
+import {m06CandidateCapabilitySchema} from './v340-runtime-contract.js'
 
 function serviceError(code, message, details = {}) {
   return new WorkspaceMaterialError(code, message, details)
@@ -190,7 +191,12 @@ export function createWorkbenchService({
       return { ...getWorkflowCatalog(workType), unifiedFixtureEnabled: unifiedFixtureEnabled === true,
         localGenerationEnabled: local.localGenerationEnabled, localGenerationKind: local.localGenerationKind }
     },
-    getV340Catalog: v340.getV340Catalog,
+    getV340Catalog() {
+      const catalog=v340.getV340Catalog()
+      if(!v340Executor?.m06Candidate)return catalog
+      const m06Candidate=m06CandidateCapabilitySchema.parse(v340Executor.m06Candidate)
+      return {...catalog,nodes:catalog.nodes.map(node=>node.nodeId==='Flow-2-6'?{...node,m06Candidate}:node)}
+    },
     prepareV340: v340.prepareV340,
     addMaterial({ workspaceId, taskId, expectedRevision, relativePath, confirmed }) {
       if (confirmed !== true) {

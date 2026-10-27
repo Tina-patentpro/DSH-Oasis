@@ -145,6 +145,29 @@ export function createWorkbenchStore({
     args[2]?.throwIfAborted()
     return remote.v340(...args)
   }
+  function m06CandidateView(workspaceId,pageId){
+    assertOpen();assertRetained(workspaceId)
+    const current=getCurrent(workspaceId),page=pageFor(workspaceId,pageId),op=operationFor(current,pageId)
+    const capability=current.v340Catalog?.nodes.find(n=>n.nodeId==='Flow-2-6')?.m06Candidate
+    if(current.syncStatus!=='ready'||current.activePageId!==pageId||page.v340?.nodeId!=='Flow-2-6'
+      ||page.v340.draft.source!=='local-skill'||capability?.skillVersion!=='0.1.3'||!capability.requiresConfirmation)
+      throw Error('当前页面不是可核对的受控M06候选')
+    if(current.pages.some(hasPendingUnifiedRun)||op.v340CandidateUnconfirmed)throw Error('原请求尚未确认，请先查看原运行；不会重新生成')
+    if(op.v340InputDraft)throw Error('请先保存当前输入，再核对模型与材料')
+    const sessionId=getGenerationSession?.(workspaceId)
+    if(typeof sessionId!=='string'||!sessionId.trim())throw Error('当前DSH会话不可用，请重新核对')
+    return{current,page,op,capability,sessionId,draftKey:JSON.stringify(page.v340.draft),
+      editGeneration:runtimeFor(workspaceId).editGeneration,configurationGeneration:professionalConfigurationGeneration}
+  }
+  function assertM06Preview(workspaceId,pageId,preview,scope){
+    const next=m06CandidateView(workspaceId,pageId)
+    if(!preview||!scope||preview.workspaceId!==workspaceId||preview.taskId!==pageId||preview.sessionId!==next.sessionId
+      ||preview.expectedRevision!==next.current.revision||scope.draftKey!==next.draftKey
+      ||scope.editGeneration!==next.editGeneration||scope.configurationGeneration!==next.configurationGeneration
+      ||scope.epoch!==next.op.v340CandidateEpoch||preview.businessManifestSHA256!==next.capability.businessManifestSHA256
+      ||preview.businessResourceSHA256!==next.capability.businessResourceSHA256)throw Error('材料、会话或版本已变化，请重新核对')
+    return next
+  }
   const reducerEnvironment = { createId, now: clock }
   let closing = false
   let disposed = false
@@ -726,6 +749,7 @@ export function createWorkbenchStore({
         const current = getCurrent(workspaceId)
         const pageOperations = Object.fromEntries(Object.entries(current.pageOperations).map(([pageId, operation]) => [
           pageId, Object.freeze({ ...operation, professionalDetail: null, localModelPreview: null, apiPreview: null,
+            v340CandidatePreview:null,v340CandidateScope:null,v340CandidateEpoch:(operation.v340CandidateEpoch??0)+1,
             priceConfirmed: false, externalTransferConfirmed: false,
             runningWaterStatus: 'idle', runningWaterObservation: null }),
         ]))
@@ -744,12 +768,18 @@ export function createWorkbenchStore({
           ? workspaceItems.map((item) => item?.workspaceId).filter((id) => typeof id === 'string')
           : [],
       )
+      const removedIds=[...knownWorkspaceIds].filter(id=>!nextIds.has(id))
       knownWorkspaceIds.clear()
       for (const id of nextIds) {
         knownWorkspaceIds.add(id)
         if (!states.has(id)) {
           states.set(id, initialState(id))
         }
+      }
+      for(const id of removedIds){
+        const state=getCurrent(id),pageOperations=Object.fromEntries(Object.entries(state.pageOperations).map(([pageId,op])=>[pageId,
+          {...op,v340CandidatePreview:null,v340CandidateScope:null,v340CandidateEpoch:(op.v340CandidateEpoch??0)+1}]))
+        setState(id,stateWith(state,{pageOperations}))
       }
       for (const entry of pendingObservations.values()) {
         if (!nextIds.has(entry.workspaceId)) invalidateObservation(entry)
@@ -929,17 +959,91 @@ export function createWorkbenchStore({
 
     v340Action(workspaceId,pageId,action,payload={}){
       return queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,`v340-${action}`,current=>callV340(action,{
-        workspaceId,taskId:pageId,expectedRevision:current.revision,...payload,
+        workspaceId,taskId:pageId,...(action==='run/observe'?{}:{expectedRevision:current.revision}),...payload,
       },controller.signal)))
+    },
+    prepareV340Candidate(workspaceId,pageId){
+      let initial
+      try{
+        initial=m06CandidateView(workspaceId,pageId)
+        if(initial.op.activeOperation||initial.op.v340CandidatePreparing||initial.op.v340CandidateSubmitting)throw Error('候选操作正在进行')
+        if(typeof remote?.prepareV340Candidate!=='function')throw Error('当前Host没有候选准备入口')
+      }catch(error){return Promise.reject(error)}
+      const epoch=(initial.op.v340CandidateEpoch??0)+1
+      updatePageOperation(workspaceId,pageId,{v340CandidatePreparing:true,v340CandidatePreview:null,v340CandidateScope:null,v340CandidateEpoch:epoch,error:null})
+      return queueV340(workspaceId,async context=>{
+        try{
+          await flushWorkspace(workspaceId,context)
+          const view=m06CandidateView(workspaceId,pageId)
+          updatePageOperation(workspaceId,pageId,{activeOperation:'v340-candidate-prepare'})
+          controller.signal.throwIfAborted()
+          const preview=await remote.prepareV340Candidate({workspaceId,taskId:pageId,expectedRevision:view.current.revision,
+            sessionId:view.sessionId,confirmed:true},controller.signal)
+          const scope={draftKey:view.draftKey,editGeneration:view.editGeneration,configurationGeneration:view.configurationGeneration,epoch}
+          assertM06Preview(workspaceId,pageId,preview,scope)
+          updatePageOperation(workspaceId,pageId,{v340CandidatePreview:preview,v340CandidateScope:scope,error:null,feedback:null})
+          return preview
+        }catch(error){
+          if(!closing&&!disposed&&states.get(workspaceId)?.pages.some(page=>page.pageId===pageId))updatePageOperation(workspaceId,pageId,{v340CandidatePreview:null,v340CandidateScope:null,error:errorMessage(error)})
+          throw error
+        }finally{
+          if(!closing&&!disposed&&states.get(workspaceId)?.pages.some(page=>page.pageId===pageId))updatePageOperation(workspaceId,pageId,{activeOperation:null,v340CandidatePreparing:false})
+        }
+      })
+    },
+    cancelV340Candidate(workspaceId,pageId){
+      if(closing||disposed||!knownWorkspaceIds.has(workspaceId))return
+      const op=operationFor(getCurrent(workspaceId),pageId)
+      updatePageOperation(workspaceId,pageId,{v340CandidatePreview:null,v340CandidateScope:null,v340CandidateEpoch:(op.v340CandidateEpoch??0)+1})
+    },
+    confirmV340Candidate(workspaceId,pageId){
+      let preview,scope,inFlight=false
+      try{
+        const op=operationFor(getCurrent(workspaceId),pageId)
+        preview=structuredClone(op.v340CandidatePreview);scope=op.v340CandidateScope
+        if(op.activeOperation||op.v340CandidateSubmitting||op.v340CandidatePreparing){inFlight=true;throw Error('候选操作正在进行')}
+        assertM06Preview(workspaceId,pageId,preview,scope)
+        if(typeof remote?.createV340CandidateRun!=='function')throw Error('当前Host没有候选生成入口')
+      }catch(error){if(!inFlight)store.cancelV340Candidate(workspaceId,pageId);return Promise.reject(error)}
+      const requestKey=createRequestKey();let attempted=false,admissionKnown
+      updatePageOperation(workspaceId,pageId,{v340CandidatePreview:null,v340CandidateSubmitting:true,v340CandidateRequestKey:requestKey,error:null})
+      return queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,'v340-candidate-run',async current=>{
+        assertM06Preview(workspaceId,pageId,preview,scope);controller.signal.throwIfAborted()
+        attempted=true
+        const result=await remote.createV340CandidateRun({workspaceId,taskId:pageId,expectedRevision:current.revision,requestKey,
+          candidate:{sessionId:preview.sessionId,confirmed:true,sha256:preview.sha256}},controller.signal)
+        admissionKnown=result.committed
+        return result
+      },()=>({v340CandidateSubmitting:false,v340CandidateUnconfirmed:false,v340CandidateScope:null,feedback:'候选请求已提交，请查看原运行'}))).catch(error=>{
+        if(!closing&&!disposed&&states.get(workspaceId)?.pages.some(page=>page.pageId===pageId))updatePageOperation(workspaceId,pageId,{
+          v340CandidateSubmitting:false,v340CandidatePreview:null,v340CandidateScope:null,
+          v340CandidateUnconfirmed:attempted&&admissionKnown!==false,
+          ...(attempted?{}:{v340CandidateRequestKey:null})})
+        throw error
+      })
+    },
+    reconcileV340Candidate(workspaceId,pageId){
+      const key=operationFor(getCurrent(workspaceId),pageId).v340CandidateRequestKey
+      if(!key)return Promise.reject(Error('没有需要核对的原请求'))
+      return queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,'v340-candidate-observe',async()=>{
+        controller.signal.throwIfAborted()
+        return{committed:true,current:await remote.get(workspaceId,controller.signal)}
+      },()=>{
+        const page=pageFor(workspaceId,pageId),run=Object.values(page.v340.runs).find(r=>r.requestKey===key&&r.nativeCandidate?.businessSkillVersion==='0.1.3')
+        return{v340CandidateUnconfirmed:!run,feedback:run?'已找到原请求，请查看原运行':'尚未找到原请求，继续保留未确认状态；不会重新生成'}
+      }))
     },
     saveV340Draft(workspaceId,pageId,draft){
       const page=pageFor(workspaceId,pageId)
       if(hasPendingUnifiedRun(page))throw Error('未决运行锁定输入与来源')
+      const prior=operationFor(getCurrent(workspaceId),pageId)
+      if(prior.v340CandidateUnconfirmed||prior.v340CandidateSubmitting)throw Error('原候选请求未确认，输入与来源保持锁定')
       const captured=structuredClone(draft)
       const job=queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,'v340-input',current=>callV340('task/draft',{
         workspaceId,taskId:pageId,expectedRevision:current.revision,draft:captured},controller.signal),()=>
           JSON.stringify(operationFor(getCurrent(workspaceId),pageId).v340InputDraft)===JSON.stringify(captured)?{v340InputDraft:null,feedback:'输入已保存'}:{}))
-      updatePageOperation(workspaceId,pageId,{v340InputDraft:captured,v340SavePlan:null,v340SaveConfirmed:false})
+      updatePageOperation(workspaceId,pageId,{v340InputDraft:captured,v340SavePlan:null,v340SaveConfirmed:false,
+        v340CandidatePreview:null,v340CandidateScope:null,v340CandidateEpoch:(prior.v340CandidateEpoch??0)+1})
       return job
     },
     saveV340ResultDraft(workspaceId,pageId,target,body){
@@ -1689,6 +1793,7 @@ export function createWorkbenchStore({
 
     activatePage(workspaceId, pageId) {
       const current=getCurrent(workspaceId)
+      if(current.activePageId&&current.activePageId!==pageId)store.cancelV340Candidate(workspaceId,current.activePageId)
       if(current.closedV340Tabs?.includes(pageId))setState(workspaceId,stateWith(current,{closedV340Tabs:current.closedV340Tabs.filter(id=>id!==pageId)}))
       return dispatch(workspaceId, { type: 'activate-page', pageId })
     },
@@ -1701,6 +1806,9 @@ export function createWorkbenchStore({
       assertNoDirtyResult(workspaceId, pageId)
       if(pageFor(workspaceId,pageId).v340){
         if(hasPendingUnifiedRun(pageFor(workspaceId,pageId)))throw Error('未决运行任务保持打开')
+        const op=operationFor(getCurrent(workspaceId),pageId)
+        if(op.v340CandidateUnconfirmed||op.v340CandidateSubmitting)throw Error('原候选请求未确认，任务保持打开')
+        store.cancelV340Candidate(workspaceId,pageId)
         const current=getCurrent(workspaceId),closed=[...new Set([...(current.closedV340Tabs??[]),pageId])]
         return setState(workspaceId,stateWith(current,{closedV340Tabs:closed,activePageId:current.activePageId===pageId?current.pages.find(p=>!closed.includes(p.pageId))?.pageId??null:current.activePageId}))
       }

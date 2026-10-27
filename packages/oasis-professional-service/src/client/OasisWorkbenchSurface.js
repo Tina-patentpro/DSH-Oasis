@@ -11,6 +11,14 @@ const getNoConfiguration = () => noConfiguration
 const noSubscribe = () => () => {}
 const zero = () => 0
 
+// Keep the original business aliases local to our panel, paired with the
+// installed DSH label/surface tokens. Do not define aliases on the host root.
+const scopedThemeStyle = {
+  '--dsw-alias-text-primary': 'var(--dsw-alias-label-primary, #202123)',
+  '--dsw-alias-text-secondary': 'var(--dsw-alias-label-secondary, #66706b)',
+  '--dsw-alias-bg-subtle': 'var(--dsw-alias-bg-layer-2, var(--dsw-alias-bg-base, #f5f7f5))',
+}
+
 const reducedMotionCss = `
   [data-oasis-panel] { transition: left 180ms ease, width 180ms ease; }
   @media (prefers-reduced-motion: reduce) { [data-oasis-panel] { transition: none; } }
@@ -96,6 +104,7 @@ async function hydrateSurface({ store, workspaceId, workspaceItems, hostMode }) 
 function sectionStyle(hostMode, layout, effectiveMode) {
   if (hostMode === 'embedded') {
     return {
+      ...scopedThemeStyle,
       position: 'relative',
       width: '100%',
       height: '100%',
@@ -112,6 +121,7 @@ function sectionStyle(hostMode, layout, effectiveMode) {
     ? { right: 0, width: 360 }
     : { left: layout.panelLeft ?? 72, right: 0 }
   return {
+    ...scopedThemeStyle,
     position: 'fixed',
     top: 0,
     bottom: 0,
@@ -260,6 +270,10 @@ export function OasisWorkbenchSurface({
       resume:pageId=>{store.activatePage(workspaceId,pageId);setCenter(false)},
       discardLocal:(pageId,expected)=>store.discardV340LocalDrafts(workspaceId,pageId,expected),
       saveDraft:(pageId,draft)=>store.saveV340Draft(workspaceId,pageId,draft),
+      prepareCandidate:pageId=>store.prepareV340Candidate(workspaceId,pageId),
+      confirmCandidate:pageId=>store.confirmV340Candidate(workspaceId,pageId),
+      cancelCandidate:pageId=>store.cancelV340Candidate(workspaceId,pageId),
+      reconcileCandidate:pageId=>store.reconcileV340Candidate(workspaceId,pageId),
       saveEditDraft:(pageId,target,body)=>store.saveV340ResultDraft(workspaceId,pageId,target,body),
       edit:(pageId,target)=>store.editV340Result(workspaceId,pageId,target),
       review:(pageId,target,confirmation)=>store.reviewV340Result(workspaceId,pageId,target,confirmation),

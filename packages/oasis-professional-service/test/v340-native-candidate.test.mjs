@@ -135,6 +135,18 @@ test('compact long input is restored at the actual candidate seam without reread
   assert.equal(run.status,'completed');assert.equal(JSON.parse(h.seen.options.messages[0].content[0].text).values.upstream_md_file.body,prior.body)
   assert.ok(Buffer.byteLength(run.result.body)<=1024*1024)
 })
+
+test('M06 R1 rejected instruction output stays failed without redispatch',async t=>{
+ const output={...MODEL_OUTPUT,updates:[{content_id:'instruction-as-fact',content_markdown:'参数99秒',content_origin:'workflow_analysis',
+  source_input_id:'user_input',source_locator:'仅根据公开合成材料撰写。',source_hash:'none',trust_status:'reasoned_inference',
+  last_updated_flow:'Flow-2-6',revision_reason:'公开合成拒绝测试'}]}
+ const h=await setup(t,{output});await h.create();const run=await h.settle()
+ assert.equal(run.status,'failed');assert.equal(run.failureCode,'INVALID_OUTPUT');assert.equal(run.result,null)
+ assert.equal(h.seen.stream,1);assert.equal(h.seen.prepare,1)
+ await h.create()
+ assert.equal(h.seen.stream,1);assert.equal(h.seen.prepare,1)
+ assert.equal(h.run().status,'failed')
+})
 test('a selected material changed after confirmation is rejected before native preparation',async t=>{
   const h=await setup(t);await writeFile(join(h.root,'disclosure.md'),'公开材料 A')
   await h.service.updateV340Draft(h.command({draft:draft({filePaths:{disclosure_file:'disclosure.md'}})}))

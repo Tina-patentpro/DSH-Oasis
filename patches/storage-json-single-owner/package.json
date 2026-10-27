@@ -1,0 +1,16 @@
+{
+  "name": "dsh-storage-json-single-owner",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./index.mjs",
+  "exports": { ".": "./index.mjs", "./package.json": "./package.json" },
+  "engines": { "node": ">=24.18.1 <25" },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-storage-json": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-storage": "0.2.0-rc.2",
+    "@deepseek-ai/cordis": "4.0.4"
+  },
+  "files": ["index.mjs", "ownership.mjs", "cordis.patch.yml"],
+  "dsh": { "manifestVersion": 1, "bundle": { "patch": "./cordis.patch.yml" } }
+}

@@ -17,7 +17,7 @@ import {
 } from '../workbench-contract.js'
 import { claimsApiPreparationSchema, claimsApiPreviewSchema, workspaceBindingReadSchema, workspaceBindingSavedSchema } from '../claims-api-execution-contract.js'
 import { accountStatusSchema } from '../oasis-account-contract.js'
-import {v340Commands,v340CatalogResponseSchema} from '../v340-runtime-contract.js'
+import {v340Commands,v340CatalogResponseSchema,v340CandidatePreviewSchema} from '../v340-runtime-contract.js'
 
 const CHANNEL = '/oasis-workbench'
 
@@ -63,8 +63,26 @@ export function createWorkbenchRemote(connection) {
 
   return Object.freeze({
     async getV340Catalog(signal){return unwrap(await call(CHANNEL,'workflow/v340/catalog',{},signal),v340CatalogResponseSchema)},
+    async prepareV340Candidate(payload,signal){
+      const input=v340Commands['candidate/prepare'].parse(payload)
+      const result=unwrap(await call(CHANNEL,'workflow/v340/candidate/prepare',input,signal),v340CandidatePreviewSchema)
+      if(['workspaceId','taskId','sessionId','expectedRevision'].some(k=>result[k]!==input[k]))throw new WorkbenchRemoteError('malformed-response','候选准备身份不一致',{})
+      return result
+    },
+    async createV340CandidateRun(payload,signal){
+      const input=v340Commands['candidate/run'].parse(payload)
+      const result=unwrap(await call(CHANNEL,'workflow/v340/candidate/run',input,signal),workbenchReplaceResponseSchema)
+      if(result.current.workspaceId!==input.workspaceId)throw new WorkbenchRemoteError('malformed-response','候选项目身份不一致',{})
+      if(result.committed){
+        const run=Object.values(result.current.tasks[input.taskId]?.v340?.runs??{}).find(r=>r.requestKey===input.requestKey)
+        if(!run||run.nodeId!=='Flow-2-6'||run.source!=='local-skill'||run.nativeCandidate?.businessSkillVersion!=='0.1.3'
+          ||run.nativeCandidate.sessionId!==input.candidate.sessionId||run.nativeCandidate.confirmationSHA256!==input.candidate.sha256)
+          throw new WorkbenchRemoteError('malformed-response','候选运行身份不一致，请核对原请求',{})
+      }
+      return result
+    },
     async v340(action,payload,signal,expectedWorkspaceId){
-      if(!Object.hasOwn(v340Commands,action)||action==='run/create')throw new WorkbenchRemoteError('V340_OPERATION_DISABLED','新版操作不可用')
+      if(!Object.hasOwn(v340Commands,action)||action==='run/create'||action.startsWith('candidate/'))throw new WorkbenchRemoteError('V340_OPERATION_DISABLED','新版操作不可用')
       const input=v340Commands[action].parse(payload)
       const workspaceId=input.workspaceId??expectedWorkspaceId
       if(!workspaceId)throw new WorkbenchRemoteError('V340_INVALID_INPUT','缺少当前项目身份')

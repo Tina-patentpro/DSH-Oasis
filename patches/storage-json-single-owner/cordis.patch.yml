@@ -1,0 +1,7 @@
+- id: storage-json
+  disabled: true
+- insert:
+    - id: storage-json-single-owner
+      name: dsh-storage-json-single-owner
+      config:
+        root: !!js dshHomePath('storages')

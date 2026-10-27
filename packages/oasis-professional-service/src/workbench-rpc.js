@@ -174,7 +174,7 @@ async function writebackResult(operation) {
   }
 }
 
-export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null) {
+export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null, {m06Candidate013=false}={}) {
   return async function handleWorkbenchRpc(endpoint, payload) {
     if (endpoint.startsWith('import/')) {
       const action = endpoint.slice('import/'.length)
@@ -220,6 +220,13 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
       if (!parsed.success) return parsed
       return { ok: true, value: service.getV340Catalog() }
     }
+    if(m06Candidate013===true&&['workflow/v340/candidate/prepare','workflow/v340/candidate/run'].includes(endpoint)){
+      const action=endpoint.slice('workflow/v340/'.length),parsed=v340Commands[action].safeParse(payload)
+      if(!parsed.success)return {ok:false,error:{code:'bad-request',message:'受控候选确认输入无效。',details:{}}}
+      try{return await materialResult(()=>action==='candidate/prepare'
+        ?service.prepareV340CandidateConfirmation(parsed.data):service.createV340Run(parsed.data))}
+      catch{return {ok:false,error:{code:'V340_OPERATION_FAILED',message:'候选状态未确认，请重新核对原任务；不会自动派发。',details:{}}}}
+    }
     const v340Methods={'task/create':'createV340Task','task/draft':'updateV340Draft','run/observe':'observeV340Run','run/stop':'stopV340Run','result/draft':'saveV340ResultDraft',
       'result/edit':'editV340Result','result/review':'reviewV340Result','result/prepare-save':'prepareV340Save','result/commit-save':'commitV340Save',
       'result/conversation-draft':'prepareV340ConversationDraft','result/saved-file':'resolveV340SavedFile'}
@@ -239,7 +246,7 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
       const parsed = parsePayload(workflowCatalogPayloadSchema, payload)
       if (!parsed.success) return parsed
       return { ok: true, value: { ...service.getWorkflowCatalog(parsed.data.workType),
-        ...(professionalService?.previewClaims ? { apiExecutionAvailable: true } : {}) } }
+        ...(m06Candidate013===true ? {apiExecutionAvailable:false} : professionalService?.previewClaims ? { apiExecutionAvailable: true } : {}) } }
     }
 
     if (endpoint === 'professional/bootstrap') {

@@ -1,0 +1,230 @@
+{
+  "version": "d0-style-type-fixtures-1",
+  "publicSynthetic": true,
+  "fixtures": [
+    {
+      "id": "missing-type-default-1",
+      "file": "missing-type-default-1.docx",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2831,
+      "sha256": "84dfd3b7fbfbf6e7bd65dcfdaed902f2194fbe714b6ab1444406752a407fcc9b"
+    },
+    {
+      "id": "explicit-plain-over-default-1",
+      "file": "explicit-plain-over-default-1.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2939,
+      "sha256": "a5ad572370986aa1885cef1218a20406d9f627d7bf6fa4215f6a94eec660fc6d"
+    },
+    {
+      "id": "missing-type-direct-zero-1",
+      "file": "missing-type-direct-zero-1.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2885,
+      "sha256": "e684252b36f32d661cf7166f5001a1576c61a3e39e5199a4f9dcb675ef57cfcf"
+    },
+    {
+      "id": "missing-type-default-true",
+      "file": "missing-type-default-true.docx",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2834,
+      "sha256": "788c42ad1d2d0f8ed7ef97e291607a1ec105840fae8c9e3a63015959be4668a6"
+    },
+    {
+      "id": "explicit-plain-over-default-true",
+      "file": "explicit-plain-over-default-true.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2942,
+      "sha256": "f4b32fe7954d18e5137c7c9902816a2b3e79812f6a8226b173691e6a44970ef1"
+    },
+    {
+      "id": "missing-type-direct-zero-true",
+      "file": "missing-type-direct-zero-true.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2888,
+      "sha256": "fa31c1e7e551b5c4e4ed3213d5dd6fd6fb68892eeed46d7bded680c37aa88228"
+    },
+    {
+      "id": "missing-type-default-on",
+      "file": "missing-type-default-on.docx",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2832,
+      "sha256": "914aeae68d9438e7b9f7d16d85ad8db0d53a86bf24cd0ab9641911478496b507"
+    },
+    {
+      "id": "explicit-plain-over-default-on",
+      "file": "explicit-plain-over-default-on.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2940,
+      "sha256": "c00b3c1c7f5e09d59ebc990906a00e2c98fd3f79dbcf8d8ec51d099b52793363"
+    },
+    {
+      "id": "missing-type-direct-zero-on",
+      "file": "missing-type-direct-zero-on.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2886,
+      "sha256": "077fb3826c61dbee6ca7ea626bf3ea1e89edd61ab1bba0007a854d38748d2640"
+    },
+    {
+      "id": "missing-type-unused-0",
+      "file": "missing-type-unused-0.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2831,
+      "sha256": "64c7ba1a8eb2e8eb5b41c238dc00536dfd1940a7c52c3995a69b5821b7ca086b"
+    },
+    {
+      "id": "missing-type-unused-false",
+      "file": "missing-type-unused-false.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2835,
+      "sha256": "126f58cfbedc0d899b5b68ad3602e86ba93ad46ed10e7fcd9f6f927ac93fc8e4"
+    },
+    {
+      "id": "missing-type-unused-off",
+      "file": "missing-type-unused-off.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2833,
+      "sha256": "11cf9a0ad6ef3d9694b8c2949dd3febc8183513a8dfe07cc3a5bb5be39c04dcc"
+    },
+    {
+      "id": "missing-type-leaf-zero-1",
+      "file": "missing-type-leaf-zero-1.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 3004,
+      "sha256": "0fcf151df0faed22d17aedebe5864cad280a464194b2ff3c251a13896bb7b05d"
+    },
+    {
+      "id": "missing-type-leaf-zero-true",
+      "file": "missing-type-leaf-zero-true.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 3007,
+      "sha256": "76d1e80a3d8c3f5ef5bbf1f7c8994444df4b102f2fe3b9c58130d8362fc75077"
+    },
+    {
+      "id": "missing-type-leaf-zero-on",
+      "file": "missing-type-leaf-zero-on.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 3005,
+      "sha256": "547eb309995b2034c80a011f2c79f020f831d82351541ccb3b8d92603e75eecb"
+    },
+    {
+      "id": "missing-type-explicit-manual",
+      "file": "missing-type-explicit-manual.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2874,
+      "sha256": "5dfe2071d10876bbe600529efde66a61241096bcfbb1c48873a42ec0de13beb8"
+    },
+    {
+      "id": "character-default-does-not-conflict",
+      "file": "character-default-does-not-conflict.docx",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2912,
+      "sha256": "cad174ccac6a7959429e9873322e773c71f1fab0d986bfda25e5d1c409d8171d"
+    },
+    {
+      "id": "false-default-unused-alongside-true",
+      "file": "false-default-unused-alongside-true.docx",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2978,
+      "sha256": "2767760d329fc2220f45845e5faf161df5a5f4d0c6b06ab3c6865d4d2d9c6790"
+    },
+    {
+      "id": "missing-type-false-explicit-0",
+      "file": "missing-type-false-explicit-0.docx",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2872,
+      "sha256": "2d5bc7f412773da6d86d91d76d3e5ec31ea30272858283bbfd17f75bebff9c54"
+    },
+    {
+      "id": "missing-type-false-explicit-false",
+      "file": "missing-type-false-explicit-false.docx",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2876,
+      "sha256": "1f14b2653b1cc794f58cb39cc98047cd77f8acbc7dfad906324a0c5a9cdcf954"
+    },
+    {
+      "id": "missing-type-false-explicit-off",
+      "file": "missing-type-false-explicit-off.docx",
+      "expected": "reject",
+      "exit": 0,
+      "bytes": 2874,
+      "sha256": "0667d7298a1fa62c776423186ce1c2d5235e72c85c0fa43e3562f8b5f54d2bb3"
+    },
+    {
+      "id": "missing-type-plain-over-default",
+      "file": "missing-type-plain-over-default.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2921,
+      "sha256": "edb387c1ac55ef8686bb26f2b82c564a3e353b333a08f39abcc0f23a35ca2c39"
+    },
+    {
+      "id": "missing-base-type-leaf-zero",
+      "file": "missing-base-type-leaf-zero.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 3005,
+      "sha256": "98f6fc011bb86587eeab8b7ca629746c1d5a50c0953f7918813b81a6a5d23b1d"
+    },
+    {
+      "id": "invalid-empty-type",
+      "file": "invalid-empty-type.docx",
+      "expected": "reject",
+      "exit": 2,
+      "bytes": 2842,
+      "sha256": "8ff790ef76a16c7378af027e9725f024186325523d945ac5364da9e6c3301109"
+    },
+    {
+      "id": "invalid-unknown-type",
+      "file": "invalid-unknown-type.docx",
+      "expected": "reject",
+      "exit": 2,
+      "bytes": 2849,
+      "sha256": "5865883fd528ef36762ef1ade77ade10d833e25fc6c895332836e75c8346c7cc"
+    },
+    {
+      "id": "unused-character-default",
+      "file": "unused-character-default.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2851,
+      "sha256": "b801751cebd908a701b99eff07ef466ebae4822814fcda0e15fe7980761cf6ad"
+    },
+    {
+      "id": "unused-table-default",
+      "file": "unused-table-default.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2847,
+      "sha256": "49a690bae57d15e6518f9e065e7d42f3e1737b7c82fd7f262ca4f8007cdd54b1"
+    },
+    {
+      "id": "unused-numbering-default",
+      "file": "unused-numbering-default.docx",
+      "expected": "eligible",
+      "exit": 0,
+      "bytes": 2851,
+      "sha256": "4542178af294a79a00b5ed9230a47ef6bdc1733e996bd102d27270e287645621"
+    }
+  ]
+}
