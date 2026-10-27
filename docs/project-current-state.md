@@ -1,3 +1,13 @@
+## 2026-10-27 R2同配对无干预重启与无夹具开发装配获Max限定接受
+
+GPT6.1 Max首轮审计发现F-R2-U-A01/P2（测试观察器畸形URL异常退出/query泄漏），原FAIL与109成员保持；新增v2捕获解析及证据writer异常，异常计数不能补0。最终[修复增量独立处置](evidence/2026-10-27-f-r2-unattended-repair-independent-audit.md)已在具名v2范围关闭该项，新增Critical/P1/P2/Minor均0，报告SHA `d955533f8a8544ee2eea296e73c89486aaaa62f139ebf2ed23867e392ddcff3b`。
+
+新隔离Profile复用R2固定配对及两个公开原件，**不是旧R2 Profile迁移或历史请求补签**。修复版同Profile正常重启无点击观察111.237秒：35个实际HTTP请求，Host二进制上传开始/未分类/证据写入失败均0；原A Session18字符、两待人工重试附件、IDB原字节及禁用发送保持，Host无attachments目录。无夹具195pin新空Profile两次启动保留原生未发送及Flow-2-6任务草稿；legacy seed源码pin只作校验输入，运行未装夹具。作者两解释器各99/99、独立定向各5/5，6次启动退出0、57583关闭。详见[追加返回](evidence/2026-10-27-f-r2-unattended-repair-return.md)/[54成员执行单](evidence/2026-10-27-f-r2-unattended-repair-execution.json)与[首轮审计](evidence/2026-10-27-f-r2-unattended-independent-audit.md)。
+
+计数文件归档路径偏差已按新fixture精确路径、PID/UUID、时间和hash核对；空目录收集结果不作0，原位置不移动或重签。完整F继续OPEN：真实Host重传/模型消费、任意孤儿、多个实际Renderer、双存储/强杀/跨平台、全writer发行强制接续及安装器/升级降级/回退仍未验。产品代码/依赖未改，无新增真实模型/专业API/费用、retry/Send、推送或发布。历史失败/人工重试及旧审计均保留。
+
+---
+
 ## 2026-10-27 用户确认R2曾人工重试；无干预重启结论不补签
 
 用户对北京时间20:01:42–43左右两附件的操作问题答复“手动点击了重试”，见[原话与限定补记](evidence/2026-10-27-f-renderer-lease-user-retry-addendum.md)。人工干预事实已确认，该次本地接收不能据此判为自动重传反例；有干预的运行也不能证明无干预重启零自动重传。完整F仍OPEN。原审计、返回/执行单、异常观察和下方旧时点文字保持；本次只做文档/本地收录，无新运行、真实模型/专业API/费用或推送。

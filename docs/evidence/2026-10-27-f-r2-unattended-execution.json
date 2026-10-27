@@ -1,0 +1,490 @@
+{
+  "schemaVersion": 1,
+  "scope": "R2 pairing new-profile unattended normal restart / fixture-free development assembly and public drafts only",
+  "atUTC": "2026-10-27T13:42:39.034523+00:00",
+  "baseHEAD": "efd70b5b0575ae33a0b50ade077ed63d4f53c653",
+  "baselineFiles": 3587,
+  "baselineChangedBeforeStatus": {},
+  "planningDrift": {},
+  "admissions": {
+    "f-r2-unattended-20261027": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/f-assembly.json",
+      "bytes": 42525,
+      "sha256": "2ab457b451bf29b2d78f45423a8fe75811f15c9c8ea8cf3ccfae62492e0a71e3",
+      "pinnedFiles": 198,
+      "fixture": true
+    },
+    "f-development-clean-20261027": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/f-assembly.json",
+      "bytes": 41575,
+      "sha256": "31318410058fffb1d065790a93827a14d72542a10370d8574d091a91649b7990",
+      "pinnedFiles": 195,
+      "fixture": false
+    }
+  },
+  "preservation": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/pre-audit-preservation.json",
+  "observations": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/recovery-observation.json",
+  "tests": {
+    "tool": {
+      "count": 97,
+      "exit": 0
+    },
+    "embedded": {
+      "count": 97,
+      "exit": 0
+    },
+    "commands": [
+      "tools/node-v24.21.0-darwin-arm64/bin/node --test scripts/tests/*.test.mjs",
+      "ELECTRON_RUN_AS_NODE=1 <fixedApp>/Contents/MacOS/DSH Desktop --test scripts/tests/*.test.mjs"
+    ]
+  },
+  "newProfessionalApiCreates": 0,
+  "newRealModelCalls": 0,
+  "fees": 0,
+  "agentRetryClicks": 0,
+  "agentSendClicks": 0,
+  "localHostFileReceives": 0,
+  "fullF": false,
+  "allOwnedAppsExited": true,
+  "portsClosed": [
+    57583
+  ],
+  "members": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/assembly-launch-1793108281680.exit.json": {
+      "bytes": 108,
+      "sha256": "2e5dc707756edd386d516646cbd34b0a0bed98e80a5712699b56ee2db358dd23"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/assembly-launch-1793108281680.json": {
+      "bytes": 227,
+      "sha256": "b154bdf5639d9d71f981c25cccf2b09c4b6d8f096ce7e09a51da73869fa5f91e"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/assembly-launch-1793108281680.stderr.log": {
+      "bytes": 554,
+      "sha256": "6c46d35483cc642de02c632b9c87aedde9bef193f44711c7c66255877b6c8e7c"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/assembly-launch-1793108281680.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/assembly-launch-1793108372657.exit.json": {
+      "bytes": 108,
+      "sha256": "9de94a6b062414999f3c2642288cfb3fd5580a3465900f0b2375f8988d1fff07"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/assembly-launch-1793108372657.json": {
+      "bytes": 227,
+      "sha256": "3ba01f7c08c002d90b5dd3ba7c189593dce63652d5af23324533ac8225fae6b0"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/assembly-launch-1793108372657.stderr.log": {
+      "bytes": 413,
+      "sha256": "d56ac5ba7c192d9494899b9cc141b06b83245b5fa92b14e9dbfe223c97296810"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/assembly-launch-1793108372657.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/f-assembly-inputs.json": {
+      "bytes": 40704,
+      "sha256": "fd139c8af67a69e12cc39592d52d0a00f9e60dbde114eeb8a4e3dd6c410854fb"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/evidence/f-assembly.json": {
+      "bytes": 41575,
+      "sha256": "31318410058fffb1d065790a93827a14d72542a10370d8574d091a91649b7990"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/home/profiles/desktop/cordis.patch.yml": {
+      "bytes": 1111,
+      "sha256": "206af7107bb1015848067642279e844661690eabfc9f4235573456f5538c2b96"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/home/profiles/desktop/cordis.yml": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/home/profiles/desktop/node_modules/.modules.yaml": {
+      "bytes": 671,
+      "sha256": "90335c217a1c34618df11db52cc0dbb5d23a2d20dfbf583eb1886d89f3ed0d99"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/home/profiles/desktop/node_modules/.package-map.json": {
+      "bytes": 1720,
+      "sha256": "1636c21b4105be24468d26d849065656b67370735dae3ec763a31a59c7f2bd81"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/home/profiles/desktop/node_modules/.pnpm-workspace-state-v1.json": {
+      "bytes": 1037,
+      "sha256": "edb891e7137b1bdca2a4e516233f96ae5938e4c303d57c99aa2b3bdbbe00cbde"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/home/profiles/desktop/package.json": {
+      "bytes": 1414,
+      "sha256": "b9a073e21ec9ba1b01297396be0bfa13fe0678f9a17f2abd046564819b200878"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/home/profiles/desktop/pnpm-lock.yaml": {
+      "bytes": 1772,
+      "sha256": "8311c0c043206f3c90d1b506f332c6840cb28468ddf967efa283226f45f2eb37"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-development-clean-20261027/home/profiles/desktop/pnpm-workspace.yaml": {
+      "bytes": 61,
+      "sha256": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/assembly-launch-1793108153712.exit.json": {
+      "bytes": 108,
+      "sha256": "dc2ae2dcda5e7eee9bd17f653f5c2440ce3ec86767b84a6cc6247b2e3e95b02d"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/assembly-launch-1793108153712.json": {
+      "bytes": 223,
+      "sha256": "e169188e97c9351ef1f82ee93aa27746fc772936676a6253794372f1b301e511"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/assembly-launch-1793108153712.stderr.log": {
+      "bytes": 554,
+      "sha256": "4bd3f443c32f6c2aa2df664d64ca36e742676e6fa7788fbab0b97bf509f98522"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/assembly-launch-1793108153712.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/assembly-launch-1793108200948.exit.json": {
+      "bytes": 108,
+      "sha256": "3ffae1fa0c4e5ebeaa3cb9bde15d7acef879300a1e5944ae22117a64ee4ac260"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/assembly-launch-1793108200948.json": {
+      "bytes": 223,
+      "sha256": "90323f427f0ff6a5326804f50224405862f7707bc4b961da0824961e013e2ceb"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/assembly-launch-1793108200948.stderr.log": {
+      "bytes": 554,
+      "sha256": "4ab719a87140dd6c477d72216c3933bc31c6fbbd2132290d89939ac75085018f"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/assembly-launch-1793108200948.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/f-assembly-inputs.json": {
+      "bytes": 41670,
+      "sha256": "a3e5c8972f53cd090de884d71935c9ac0327408d542f0e554aedffd1ead366b5"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/f-assembly.json": {
+      "bytes": 42525,
+      "sha256": "2ab457b451bf29b2d78f45423a8fe75811f15c9c8ea8cf3ccfae62492e0a71e3"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/upload-observation-79796-95ad914a-2c51-4d4f-b741-28dabebc8879.jsonl": {
+      "bytes": 5897,
+      "sha256": "134fd442beeb0b54dd8fc2e0d0494566d812ca0360a26f446a7f5940640d940d"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/evidence/upload-observation-79916-fb936a87-2dd8-4bc9-b696-d7c3de53ced7.jsonl": {
+      "bytes": 4558,
+      "sha256": "b11ebaa5ee690df35360fb560caf3b673608f868b9b182bdde1d4ddcaf1c7e5a"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/home/profiles/desktop/cordis.patch.yml": {
+      "bytes": 1271,
+      "sha256": "5e04c45c906a2df4fb955e34c37406b131bb9b0d29081a6438d6b10559294d7a"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/home/profiles/desktop/cordis.yml": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/home/profiles/desktop/node_modules/.modules.yaml": {
+      "bytes": 671,
+      "sha256": "be8875e02b9bf483c25b236920645b516879873a2af3af570b11d81179334f46"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/home/profiles/desktop/node_modules/.package-map.json": {
+      "bytes": 1720,
+      "sha256": "1636c21b4105be24468d26d849065656b67370735dae3ec763a31a59c7f2bd81"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/home/profiles/desktop/node_modules/.pnpm-workspace-state-v1.json": {
+      "bytes": 1033,
+      "sha256": "e0589460882b5d35e5dfd9553a7a5b525c9a49da03e4715d849c62de5fa3cee9"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/home/profiles/desktop/package.json": {
+      "bytes": 1414,
+      "sha256": "b9a073e21ec9ba1b01297396be0bfa13fe0678f9a17f2abd046564819b200878"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/home/profiles/desktop/pnpm-lock.yaml": {
+      "bytes": 1772,
+      "sha256": "8311c0c043206f3c90d1b506f332c6840cb28468ddf967efa283226f45f2eb37"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-r2-unattended-20261027/home/profiles/desktop/pnpm-workspace.yaml": {
+      "bytes": 61,
+      "sha256": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/assembly-clean-spec.json": {
+      "bytes": 397,
+      "sha256": "4b9691ac838b0a5af66d7aa92e65fee7fafe710fbd8d7ebf93b79675522d39e5"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/assembly-spec.json": {
+      "bytes": 856,
+      "sha256": "0828c09b9e2706710da1bf4cd8cbe281bcc965d19242bc3575b460c398eb2813"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/baseline.json": {
+      "bytes": 586199,
+      "sha256": "f664b9eb16872eea77629603a2877a8d073bca7e0aebde8b897c14cbd1cf07ff"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/clean-first.ax.txt": {
+      "bytes": 5565,
+      "sha256": "f21e481681b2e560174d1ddd7054656a3fcb9e029685901721574d9bc804c40e"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/clean-first.png": {
+      "bytes": 104991,
+      "sha256": "07eb8981fad6cb08d3a9d4ec69a339803208ac385b3b5b270107d0cb58d4467c"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/clean-profile-install.log": {
+      "bytes": 902,
+      "sha256": "53bfe1b27642ca50742029645fee8e8209b0b54aa30a4481e91b43a2233bdf62"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/clean-profile-lock.log": {
+      "bytes": 34,
+      "sha256": "9ee56c6933865eace6b8c41dc5ee18c466dddc4d915fd26fd32c4ccf3416f157"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/clean-restart.ax.txt": {
+      "bytes": 5429,
+      "sha256": "1c52fb7fd9375cdbb481a4b7bfcfe8bc00310e0e2153a7cd5ada30fee6a4c70a"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/clean-restart.png": {
+      "bytes": 113351,
+      "sha256": "45a1ef7558bba87c636c62df4413deebc061bb9de3c2edbca82bf678d4ac4a07"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/create-clean.json": {
+      "bytes": 39441,
+      "sha256": "730582ff10241c04dee106fddae2b3598d616cd5a495d8d2bd0a18c0acdbd53f"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/create.json": {
+      "bytes": 40335,
+      "sha256": "e9877c2a335e1b257dac7dba23686e2a2dfcb168e6d7ad04b429b5005a14c4f6"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-after-restart/http_127.0.0.1_57583.indexeddb.blob/1/00/2": {
+      "bytes": 96,
+      "sha256": "53f292233c61aa19aaa98a7e2a2b6e5d0392ae43e779546d753ff7fbf85b0357"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-after-restart/http_127.0.0.1_57583.indexeddb.blob/1/00/3": {
+      "bytes": 449990,
+      "sha256": "159d0f0fa12bf8c4434c6007e661fb191734e408681899d7288b9a73e2747393"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-after-restart/http_127.0.0.1_57583.indexeddb.leveldb/000003.log": {
+      "bytes": 4405,
+      "sha256": "53adfb9d1af6245dc4a4d4e2b8adb6d2c8fe4f413923eae488db0c2876b19f66"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-after-restart/http_127.0.0.1_57583.indexeddb.leveldb/CURRENT": {
+      "bytes": 16,
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-after-restart/http_127.0.0.1_57583.indexeddb.leveldb/LOCK": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-after-restart/http_127.0.0.1_57583.indexeddb.leveldb/LOG": {
+      "bytes": 528,
+      "sha256": "dfcff1b2bde8c22e1723b6b42571f7f6cc5d4db537a3223e4cf1cb117af4a5c5"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-after-restart/http_127.0.0.1_57583.indexeddb.leveldb/LOG.old": {
+      "bytes": 528,
+      "sha256": "7c1be3797651870fbdbc85ef525c9ef8c8490c7ae62bed6636163a77df3352bd"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-after-restart/http_127.0.0.1_57583.indexeddb.leveldb/MANIFEST-000001": {
+      "bytes": 23,
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-before-restart/http_127.0.0.1_57583.indexeddb.blob/1/00/2": {
+      "bytes": 96,
+      "sha256": "53f292233c61aa19aaa98a7e2a2b6e5d0392ae43e779546d753ff7fbf85b0357"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-before-restart/http_127.0.0.1_57583.indexeddb.blob/1/00/3": {
+      "bytes": 449990,
+      "sha256": "159d0f0fa12bf8c4434c6007e661fb191734e408681899d7288b9a73e2747393"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-before-restart/http_127.0.0.1_57583.indexeddb.leveldb/000003.log": {
+      "bytes": 4386,
+      "sha256": "25d73d9cd8c7f8787f945d45bd007f0a114e5a50e0e84a8ccffe1dc6fdf2e4ee"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-before-restart/http_127.0.0.1_57583.indexeddb.leveldb/CURRENT": {
+      "bytes": 16,
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-before-restart/http_127.0.0.1_57583.indexeddb.leveldb/LOCK": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-before-restart/http_127.0.0.1_57583.indexeddb.leveldb/LOG": {
+      "bytes": 528,
+      "sha256": "7c1be3797651870fbdbc85ef525c9ef8c8490c7ae62bed6636163a77df3352bd"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-before-restart/http_127.0.0.1_57583.indexeddb.leveldb/LOG.old": {
+      "bytes": 485,
+      "sha256": "a77a3fbf4d1daea861e35a6db2f987c16edbdbe05e24c9fc9a33075a77ca92f6"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/idb-before-restart/http_127.0.0.1_57583.indexeddb.leveldb/MANIFEST-000001": {
+      "bytes": 23,
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/native-first.ax.txt": {
+      "bytes": 3295,
+      "sha256": "91f4026a8e1dcc78cd92602801b553632164f08a83ac6a6341d17ab542e693cc"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/native-first.png": {
+      "bytes": 72340,
+      "sha256": "b8bebd681f185bf373164e2ceb09569008d02ad69fa0c99e3f84d5e108d7398c"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/native-restart-dwell.ax.txt": {
+      "bytes": 3266,
+      "sha256": "e6f427d262209803e959b23908fb44271272c8a6caa605c672ae7b39ab925b8f"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/native-restart-dwell.png": {
+      "bytes": 71852,
+      "sha256": "d416f1225d92988d9d3d704a5a8a2266de3f77a80ec8f099e53d0efb35f49db6"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/native-restart-initial.ax.txt": {
+      "bytes": 3266,
+      "sha256": "e6f427d262209803e959b23908fb44271272c8a6caa605c672ae7b39ab925b8f"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/native-restart-initial.png": {
+      "bytes": 71748,
+      "sha256": "ac19241ebe44ccba9dd7aaa0e8c2d154e3ed7bb1b5ffe67cae6f9c833f71ddf6"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/observer-green-embedded.log": {
+      "bytes": 320,
+      "sha256": "62f639af7e732fde17184b4867d7021dc383d4f3ebc21e000420361fc570179f"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/observer-green-tool.log": {
+      "bytes": 323,
+      "sha256": "63fb13944232ac8e7ad8a35c380cdeddddf71e386b1757f44ef6c759fbcac5c2"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/observer-red.log": {
+      "bytes": 1610,
+      "sha256": "550f89f385e77fb01d76afe7eba721809da877abe6c2c732eedf40f5e26b8f5a"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/00-AGENTS.md": {
+      "bytes": 11819,
+      "sha256": "686366733a49511cd3cbdef80e8d2c69a356847140a154543452e7f079be03eb"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/01-AGENTS.md": {
+      "bytes": 21857,
+      "sha256": "a9cda42f49b52fe78485681d5a8d015a57f50f5288dc96c9e09d56ba59962d8b"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/02-README.md": {
+      "bytes": 16860,
+      "sha256": "604fdce04bc547a1dec40a345cf412f6a7bf828624d28393bc2666ba4c52685a"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/03-projects.json": {
+      "bytes": 23053,
+      "sha256": "32f62af49b9d6c975dc4f10071efb1fbf4e8d28859a1bb451b0ef6cae0f88ff9"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/04-2026-10-25-independent-projects-and-compatibility.md": {
+      "bytes": 22340,
+      "sha256": "f1036ad6f50b85f814f5f405ff8e30afae85d53346ea23a55152aadc1e4838ee"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/05-independent-plans.json": {
+      "bytes": 41879,
+      "sha256": "f00ccd3fbc90f4d4eb728670bb8a413d8f81d4ae1c34f3600eaa5a809cf26020"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/06-2026-10-25-project-compatibility.md": {
+      "bytes": 25222,
+      "sha256": "6f9e521afe6de2a23c17b42ce51afb821fd24266651206bcd06bd691183e05de"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/07-CONTRACTS.md": {
+      "bytes": 10712,
+      "sha256": "2f04f96b62610e80563ebbb7769726694ce3687d8d6fd4f4ba111dc8a809b67b"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/08-2026-10-25-research-rules-and-migration-addendum.md": {
+      "bytes": 6688,
+      "sha256": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/09-2026-10-25-dsh-oasis-master-plan.md": {
+      "bytes": 25542,
+      "sha256": "ebaba82b7d7e8bdacd7a572a3392d93b8ebe69763af147bc33d09e62afb14086"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/10-2026-10-26-dsh-oasis-follow-up-development-plan.md": {
+      "bytes": 23426,
+      "sha256": "eb03e05a0ececf7ce36637266827fbbffb96d1e1f5e262dbbb45f03b6dff7704"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/11-2026-10-26-follow-up-remaining.md": {
+      "bytes": 7676,
+      "sha256": "3cc7ce1d10f8a1566be209e932161a79d2555aa9372d7b74db4cda0fcba71fa4"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/12-project-current-state.md": {
+      "bytes": 279841,
+      "sha256": "8e0f438bf43d5e9269777ac353be62273bd8202d4e4c306ab8dfc097cb9e7ec0"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs/13-2026-10-23-stage5-progress-and-remaining.md": {
+      "bytes": 80229,
+      "sha256": "cb90e180272dc3bc77bf1d709349fe9593a1b44aa0cf470f4f54cbe346fa24c8"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/planning-inputs.json": {
+      "bytes": 4982,
+      "sha256": "5fb9916fa94da4405cfefe3d2b3a0922ba8660ee084d582a04e92b19f74f8b43"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/pre-audit-preservation.json": {
+      "bytes": 1462,
+      "sha256": "94402370c7b620408b2acd7116f09253734e3f837fb4fd69d8d5407d2c7208d7"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/profile-install.log": {
+      "bytes": 902,
+      "sha256": "f501e856e3a69d89068619bfb167e4b02ed4397b12186259cf2fbad589b21546"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/profile-lock.log": {
+      "bytes": 34,
+      "sha256": "abdf3aeb3bbd502e8e4fe88b35056291f12964be74e253e18641bfdf54fe7711"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/progress-review.md": {
+      "bytes": 2073,
+      "sha256": "5f575d70bcec6614a0c97ad1a9d41cfb5803f2ecbbe9cdcb4335e9428ef12788"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/proof/index.mjs": {
+      "bytes": 1565,
+      "sha256": "8f483d44ae8b125cfe4bc28e5d1abf285321e49d10f0a0f1dc7660179ebf75ee"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/proof/lib/client.js": {
+      "bytes": 616072,
+      "sha256": "264edd3783f566b9b6f4b02ec476b97ed4ceaafdb1ad39672db789c8e39c35b7"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/proof/package.json": {
+      "bytes": 455,
+      "sha256": "2b6c83ad7f16a037e7992e34d2558520044e83377150597db6e38a5715598f58"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/recovery-observation.json": {
+      "bytes": 2132,
+      "sha256": "2245f956d720265f5bd4b5cb72ac4b38a6b2cc23b741f06050cede3bb64b8e04"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/restart-observation-dwell.json": {
+      "bytes": 1368,
+      "sha256": "51cfb49948ef7c5dcb72dc8b959f1b81c8341b0f3bf76dd7a42d4a17edbd22b8"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/restart-observation-start.json": {
+      "bytes": 1221,
+      "sha256": "8f5a19849f79a8a3cddda74b53c5eb3418ed226ab9ab6d6a725a0ffef098cbcc"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/seal-clean.json": {
+      "bytes": 250,
+      "sha256": "63252c23e47448fe7825c02518b0eb2d2e0080e8400573a319bac2d54c67857d"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/seal.json": {
+      "bytes": 246,
+      "sha256": "60d7d649afe393ec86827a8be9ee0953ae7c20bce3485732a6b727044ce82c69"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/snapshot-path-correction.txt": {
+      "bytes": 187,
+      "sha256": "83b841e212a464931ac8be9aa17db29e7416da9bbd6e90d7bd673194207ffb0e"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/tests-embedded.log": {
+      "bytes": 9642,
+      "sha256": "7fc03c94caa80b0add197cc1a18f92ff63ca4553ffe4a0e12977ae6923b33426"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-r2-unattended-20261027/tests-tool.log": {
+      "bytes": 9654,
+      "sha256": "4749e3d274bf22e8fb610fdc951f99da92e0e7faa003ccd531835a4fb7874ac6"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-27-f-r2-unattended-return.md": {
+      "bytes": 4732,
+      "sha256": "b97c7a63a8b9c523c5240392429e0495ee26caf85d1117bce672529fb09e4f95"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-27-f-r2-unattended-assembly.md": {
+      "bytes": 3647,
+      "sha256": "b0797c72592b9328ac64054bb0255c868d796987dcb3282f9243445da736adc4"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/patches/f-host-assembly/2026-10-27-fixture-free-handoff.md": {
+      "bytes": 2079,
+      "sha256": "05c5c839fbf5d69e4693b03541c5cb94038be4724e698538b7a9c70ac06b49e2"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/fixtures/recovery-upload-observer.mjs": {
+      "bytes": 1123,
+      "sha256": "c29e62904fcea943c0e9ac15697aa60a180c66e85d7f179b5ac94a755ecd2fbd"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/recovery-upload-observer.test.mjs": {
+      "bytes": 2079,
+      "sha256": "54b44a1416cfd64d8f90d0e0f72318c5361468783a53e1b869cac25db824890f"
+    }
+  }
+}
