@@ -105,3 +105,16 @@ for(const [name,relativePath,value]of [
 ])test('the supported no-model entry refuses '+name+' outside its fixed composition',()=>{
  const f=fixture();try{api.createFAssembly(f.spec);const path=join(f.root,relativePath);mkdirSync(join(path,'..'),{recursive:true});writeFileSync(path,value);assert.throws(()=>api.verifyFAssembly(f.root),/override|Profile|market|machine|configuration/)}finally{f.close()}
 })
+test('an explicitly selected leased v4 is the exact materialized conversation component',()=>{
+ const f=fixture();try{delete f.spec.checkpoint3;f.spec.checkpoint4=resolve('.local/f-renderer-lease-20261027/conversation4');const pin=api.createFAssembly(f.spec)
+ assert.equal(pin.conversationVersion,'0.2.0-rc.2.oasis-draft.4');assert.equal(pin.checkpoint4,f.spec.checkpoint4);assert.equal(pin.checkpoint3,undefined);assert.equal(pin.packagePaths[0],f.spec.checkpoint4);assert.equal(api.verifyFAssembly(f.root).mode,'NO_MODEL_F_ASSEMBLY')
+ }finally{f.close()}
+})
+test('a v4 request cannot silently use an older checkpoint or ambiguous dual selection',()=>{
+ const f=fixture();try{f.spec.checkpoint4=f.spec.checkpoint3;assert.throws(()=>api.createFAssembly(f.spec),/checkpoint|ambiguous|revision/);assert.equal(existsSync(f.root),false)
+ delete f.spec.checkpoint3;assert.throws(()=>api.createFAssembly(f.spec),/checkpoint|version|identity/);assert.equal(existsSync(f.root),false)
+ }finally{f.close()}
+})
+test('legacy selection cannot omit the converter source imported by the supported entry',()=>{
+ const f=fixture();try{api.createFAssembly(f.spec);editPin(f,pin=>{delete pin.files[resolve('patches/dsh-0.2.0-rc.2/conversation-draft-checkpoint-4.mjs')]});assert.throws(()=>api.verifyFAssembly(f.root),/pin|source|mandatory/)}finally{f.close()}
+})

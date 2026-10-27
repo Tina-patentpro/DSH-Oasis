@@ -27,3 +27,7 @@ spec指定`baseAdmission`、不存在的`root`及已物化`checkpoint3`准确路
 首轮A03后，恢复seed使用`legacy-draft-seed.mjs`：校验完全部File后再核活跃目标/生命周期/归属，事务内`add`仅不存在时写入；失败只移除自身generation的fence，保留新写入者。恢复目标正活跃时不seed。v3仅将checkpoint加载中的无关原生Store通知与实际draft/revision/phase/引用/附件变化区分，真实编辑及编辑后清空仍拒绝覆盖；首次冷接续事实和后续重启另外取证，不由Node测试推定全平台可靠。
 
 正式装配接续在此只覆盖支持的开发启动入口和具名候选。旧不守约Host仍可绕过协作锁；发行强制接续、全平台/多Renderer/强杀与升级回退、真实模型/API中断及完整F另按剩余表，不能以本入口关闭。原FH-A01失败和原准入/审计保持原字节，本批新恢复不改写历史。
+
+2026-10-27后续增量：spec可显式指定唯一`checkpoint4`，选择`.oasis-draft.4`；与`checkpoint3`同时存在即拒绝，版本4请求不得拿版本3 artifact顶替。v4只对同浏览器分区/同源的workspace+session checkpoint binder增加公共Web Locks互斥；失败/能力缺失不进入底层恢复或写入，不阻原生编辑，不自动等待接管。持锁至dispose后的队列排空；排空异常保持锁到文档销毁。真实编辑、归属、fence及人工重传守卫沿v3保持，数据schema不变。维护入口的完整输入清单也固定其导入的v4转换源码，即使选择legacy模式也不能删掉导入源pin。
+
+跨Document验证用具名公开浏览器fixture和真实IndexedDB；不把它称为两个实际DSH Renderer或全平台证明。临时旧seed观察fixture仍沿已审单Renderer范围，不声称它、旧版本或其它不守约写入者受v4 lease约束。v4开发实际恢复、来源化装配与正式发行/强制升级仍分层；冻结的v2/v3、R4准入和旧失败由Git及原证据保留，不重新签名。

@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url'
 import {createRequire} from 'node:module'
 import {isDeepStrictEqual} from 'node:util'
 import {patchConversationDraftCheckpoint3}from'../patches/dsh-0.2.0-rc.2/conversation-draft-checkpoint-3.mjs'
+import {patchConversationDraftCheckpoint4}from'../patches/dsh-0.2.0-rc.2/conversation-draft-checkpoint-4.mjs'
 import {fileHash,verifyPins,makeLaunchSpec,acquireLaunchLock,startOwnedChild} from './macos-development-launch.mjs'
 const reviewedR7='e9ae83ecb2abe5bf75759fceb0e4c75266d558cd9a99ab6ee254e5205167e37e'
 const script=fileURLToPath(import.meta.url)
@@ -18,7 +19,11 @@ function baseFor(path){
  if(base.mode!=='NO_MODEL_FRESH_PROFILE'||base.approvedRealRequests!==0)throw Error('reviewed mode mismatch')
  return base
 }
-function composition(base,fixture,checkpoint3){
+function checkpointSelection(spec){
+ if(spec.checkpoint3&&spec.checkpoint4)throw Error('ambiguous checkpoint revision selection')
+ return{path:spec.checkpoint4??spec.checkpoint3,revision:spec.checkpoint4?4:3}
+}
+function composition(base,fixture,checkpoint3,revision=3){
  const oldProfile=join(base.root,'home/profiles/desktop'),manifest=read(join(oldProfile,'package.json'))
  for(const key of requiredDeps)if(!manifest.dependencies[key]?.startsWith('link:'))throw Error('mandatory assembly dependency missing')
  let patch=readFileSync(join(oldProfile,'cordis.patch.yml'),'utf8')
@@ -28,12 +33,13 @@ function composition(base,fixture,checkpoint3){
  patch=patch.slice(0,index).replace('port: 57563','port: 57583')
  if(!checkpoint3||realpathSync(checkpoint3)!==resolve(checkpoint3))throw Error('canonical checkpoint version3 artifact required')
  const oldConversation=manifest.dependencies['@deepseek-ai/dsh-client-ui-conversation'].slice(5)
- const expectedPackage=read(join(oldConversation,'package.json'));expectedPackage.version='0.2.0-rc.2.oasis-draft.3';expectedPackage.oasisPatchRevision='draft-checkpoint-3'
+ const expectedPackage=read(join(oldConversation,'package.json'));expectedPackage.version='0.2.0-rc.2.oasis-draft.'+revision;expectedPackage.oasisPatchRevision='draft-checkpoint-'+revision
  if(JSON.stringify(read(join(checkpoint3,'package.json')))!==JSON.stringify(expectedPackage)
   ||readFileSync(join(checkpoint3,'lib/index.js'),'utf8')!==readFileSync(join(oldConversation,'lib/index.js'),'utf8')
   ||readFileSync(join(checkpoint3,'pnpm-workspace.yaml'),'utf8')!==readFileSync(join(oldConversation,'pnpm-workspace.yaml'),'utf8'))throw Error('checkpoint version3 package identity mismatch')
  const original=readFileSync(join(base.app,'Contents/Resources/app/node_modules/@deepseek-ai/dsh-client-ui-conversation/lib/client.js'),'utf8')
- if(readFileSync(join(checkpoint3,'lib/client.js'),'utf8')!==patchConversationDraftCheckpoint3(original))throw Error('checkpoint version3 compiled identity mismatch')
+ const convert=revision===4?patchConversationDraftCheckpoint4:patchConversationDraftCheckpoint3
+ if(readFileSync(join(checkpoint3,'lib/client.js'),'utf8')!==convert(original))throw Error('checkpoint compiled version identity mismatch')
  checkMaterialization(base,checkpoint3,expectedPackage,oldConversation)
  manifest.dependencies['@deepseek-ai/dsh-client-ui-conversation']='link:'+checkpoint3
  patch=patch.replace(/^(- id: ui-conversation\n  name: )"[^\n]+"$/m,(_all,prefix)=>prefix+JSON.stringify(join(checkpoint3,'lib/index.js')))
@@ -46,9 +52,9 @@ function composition(base,fixture,checkpoint3){
  }
  manifest.name='dsh-profile-f-supported-assembly';
  const packagePaths=requiredDeps.map(id=>manifest.dependencies[id].slice(5))
- return {manifest,patch,packagePaths,fixtureFiles,oldProfile,checkpoint3}
+ return {manifest,patch,packagePaths,fixtureFiles,oldProfile,checkpoint3,revision}
 }
-function sourcePins(base,{packagePaths,fixtureFiles,checkpoint3}){
+function sourcePins(base,{packagePaths,fixtureFiles,checkpoint3,revision}){
  const files={...fixtureFiles}
  for(const [path,hash]of Object.entries(base.files)){
   if(path.startsWith(join(base.root,'home/profiles/desktop')+'/')||path.includes('/probe/')||path.endsWith('/launch-R7.mjs'))continue
@@ -56,6 +62,7 @@ function sourcePins(base,{packagePaths,fixtureFiles,checkpoint3}){
  }
  for(const path of [script,fileURLToPath(new URL('./macos-development-launch.mjs',import.meta.url)),...packagePaths.map(p=>join(p,'package.json'))])files[path]=fileHash(path)
  for(const path of [fileURLToPath(new URL('../patches/dsh-0.2.0-rc.2/conversation-draft-checkpoint-3.mjs',import.meta.url)),fileURLToPath(new URL('../patches/f-host-assembly/legacy-draft-seed.mjs',import.meta.url)),...['package.json','lib/index.js','lib/client.js','pnpm-workspace.yaml',...metadataNames].map(name=>join(checkpoint3,name))])files[path]=fileHash(path)
+ for(const name of ['conversation-draft-checkpoint-4.mjs','draft-checkpoint-lease.mjs']){const path=fileURLToPath(new URL('../patches/dsh-0.2.0-rc.2/'+name,import.meta.url));files[path]=fileHash(path)}
  return files
 }
 function checkMaterialization(base,profile,manifest,reference){
@@ -94,10 +101,11 @@ export function createFAssembly(spec){
  const base=baseFor(resolve(spec.baseAdmission)),root=resolve(spec.root)
  if(realpathSync(dirname(root))!==dirname(root))throw Error('assembly requires canonical parent without links')
  if(existsSync(root))throw Error('assembly output already exists')
- const {manifest,patch,packagePaths,fixtureFiles,oldProfile,checkpoint3}=composition(base,spec.fixture,spec.checkpoint3)
+ const selected=checkpointSelection(spec)
+ const {manifest,patch,packagePaths,fixtureFiles,oldProfile,checkpoint3,revision}=composition(base,spec.fixture,selected.path,selected.revision)
  // The reviewed packages remain retained, explicit immutable inputs, not latest/market resolution.
  const pin={schemaVersion:1,mode:'NO_MODEL_F_ASSEMBLY',root,app:base.app,node:base.node,baseAdmission:resolve(spec.baseAdmission),baseAdmissionSHA256:reviewedR7,
-  versions:base.versions,conversationVersion:'0.2.0-rc.2.oasis-draft.3',checkpoint3,realCallBudget:0,packagePaths,fixture:spec.fixture,files:sourcePins(base,{packagePaths,fixtureFiles,checkpoint3}),materialized:false}
+  versions:base.versions,conversationVersion:'0.2.0-rc.2.oasis-draft.'+revision,...(revision===4?{checkpoint4:checkpoint3}:{checkpoint3}),realCallBudget:0,packagePaths,fixture:spec.fixture,files:sourcePins(base,{packagePaths,fixtureFiles,checkpoint3,revision}),materialized:false}
  for(const name of ['user','home','userdata','cache','temp','evidence','workspace-a','workspace-b','home/profiles/desktop'])mkdirSync(join(root,name),{recursive:true})
  const profile=join(root,'home/profiles/desktop')
  save(join(profile,'package.json'),manifest);save(join(profile,'cordis.yml'),'[]\n');save(join(profile,'cordis.patch.yml'),patch)
@@ -110,10 +118,11 @@ export function verifyFAssembly(root,{requireMaterialized=false}={}){
  root=realpathSync(root);const pin=read(join(root,'evidence/f-assembly.json'))
  if(pin.root!==root||pin.mode!=='NO_MODEL_F_ASSEMBLY'||pin.realCallBudget!==0)throw Error('mandatory assembly policy mismatch')
  const base=baseFor(pin.baseAdmission)
- if(pin.app!==base.app||pin.node!==base.node||pin.baseAdmissionSHA256!==reviewedR7||pin.conversationVersion!=='0.2.0-rc.2.oasis-draft.3'||JSON.stringify(pin.versions)!==JSON.stringify(base.versions))throw Error('reviewed execution source identity mismatch')
+ const selected=checkpointSelection(pin)
+ if(pin.app!==base.app||pin.node!==base.node||pin.baseAdmissionSHA256!==reviewedR7||pin.conversationVersion!=='0.2.0-rc.2.oasis-draft.'+selected.revision||JSON.stringify(pin.versions)!==JSON.stringify(base.versions))throw Error('reviewed execution source identity mismatch')
  verifyPins(pin)
  const profile=join(root,'home/profiles/desktop'),manifest=read(join(profile,'package.json')),patch=readFileSync(join(profile,'cordis.patch.yml'),'utf8')
- const expected=composition(base,pin.fixture,pin.checkpoint3)
+ const expected=composition(base,pin.fixture,selected.path,selected.revision)
  if(JSON.stringify(pin.packagePaths)!==JSON.stringify(expected.packagePaths)||JSON.stringify(manifest)!==JSON.stringify(expected.manifest)||patch!==expected.patch)throw Error('reviewed mandatory composition/configuration mismatch')
  if(readFileSync(join(profile,'cordis.yml'),'utf8')!=='[]\n'||readFileSync(join(profile,'pnpm-workspace.yaml'),'utf8')!==readFileSync(join(expected.oldProfile,'pnpm-workspace.yaml'),'utf8'))throw Error('reviewed effective workspace/root configuration mismatch')
  // These managed entry layers are consumed before/alongside the Profile patch.
