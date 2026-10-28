@@ -1,3 +1,15 @@
+## 2026-10-28 F受控Profile生命周期接续：Max接受修订2子集
+
+新增受支持desktop/sdk/recovery/maintenance的共用启动锁和维护JSON根排他，以及固定Profile干净安装/明确current升级/指定release回退。首轮F-PL-A01/P2（通用writer允许存储根链接、实际guarded SDK外写）保留[FAIL报告](2026-10-28-f-profile-lifecycle-independent-audit.md)、原131成员/14链接及失败源码；修订2另用新根和准确source绑定，不能只改旧根expected hash冒充修复。
+
+[同一GPT6.1 Max增量处置](2026-10-28-f-profile-lifecycle-repair-independent-audit.md)在修订2入口/新根关闭A01，新增Critical/P1/P2/Minor均0，SHA `fe89eb0dc7a4488fcf90a1821a0c6b19989716b1deb06b403561de8b16955b7f`。作者119项×两解释器，独立14项×两解释器；新增109成员/21链接、3×195pin一致。共用准入在四角色回调前拒绝既存/悬空/后代数据根链接及错误类型，缺根只读、不读取数据正文/认证。见[修复返回](2026-10-28-f-profile-lifecycle-repair-return.md)/[执行单](2026-10-28-f-profile-lifecycle-repair-execution.json)。
+
+实际新私有Profile自有checkpoint v3→v4→原v3后，原生/业务草稿升级后新增编辑保持，公开合成UNKNOWN零派发；额外无Desktop三阶段切换保存三份JSON原字节一致、六公开IDB成员不变。首轮＋修复6次GUI均退出0，端口关闭、锁释放。busy时四角色/升级/回退回调0、旧F CLI及公共受保护SDK拒绝已实证，但旧stock writer绕过FAIL仍保留。
+
+**本节接续下方DS-04/F旧时点，未关闭完整F：** 已取得私有Profile安装及已审自有v3/v4同数据根兼容，不再笼统称该子集“未验”。全写入方发行强制接续、非合作方检查后改路径、签名App安装器、上游/跨平台升级、旧管理根迁移、真实磁盘满/断电/强杀自动恢复、双存储/多个实际Renderer、真实Host重传/模型消费与真实UNKNOWN等仍OPEN；E/U1/D1/G/H及专业/用户/资金/发布出口不变。无新增真实模型/API/费用、上传/准备/生成/Send，不推送。按[本地收录](2026-10-28-f-profile-lifecycle-local-commits.md)分批提交；原状态/失败证据保留，并行AGENTS/P28排除。
+
+---
+
 ## 2026-10-27 R2同配对无干预重启与无夹具开发装配获Max限定接受
 
 GPT6.1 Max首轮审计发现F-R2-U-A01/P2（测试观察器畸形URL异常退出/query泄漏），原FAIL与109成员保持；新增v2捕获解析及证据writer异常，异常计数不能补0。最终[修复增量独立处置](2026-10-27-f-r2-unattended-repair-independent-audit.md)已在具名v2范围关闭该项，新增Critical/P1/P2/Minor均0，报告SHA `d955533f8a8544ee2eea296e73c89486aaaa62f139ebf2ed23867e392ddcff3b`。

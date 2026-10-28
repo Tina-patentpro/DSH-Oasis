@@ -1,3 +1,15 @@
+## 2026-10-28 F受控Profile生命周期及修订2写入准入获Max限定接受
+
+按剩余表继续无需真实调用的F装配。新增受控Profile安装/check/start/upgrade/rollback，支持desktop/sdk/recovery/maintenance共用两层启动锁，维护再取得JSON根所有权。首轮Max审计发现F-PL-A01/P2：通用writer未拒绝存储根链接，实际guarded SDK可写到管理根外；[首轮FAIL](evidence/2026-10-28-f-profile-lifecycle-independent-audit.md)、原源码及131成员/14链接保持。另增修订2入口和新私有根，前置拒绝既存/悬空/后代链接及错误类型，缺根check不创建、仅读目录元数据。
+
+[同一GPT6.1 Max修复增量处置](evidence/2026-10-28-f-profile-lifecycle-repair-independent-audit.md)关闭A01限定范围，新增Critical/P1/P2/Minor均0，报告SHA `fe89eb0dc7a4488fcf90a1821a0c6b19989716b1deb06b403561de8b16955b7f`。两固定解释器作者各119/119、独立各14/14；109成员/21链接、三版各195pin及公开快照一致。准确来源见[修复返回](evidence/2026-10-28-f-profile-lifecycle-repair-return.md)/[执行单](evidence/2026-10-28-f-profile-lifecycle-repair-execution.json)。
+
+新私有根完成实际干净Profile安装、自有checkpoint v3→v4→原v3；原生与Flow-2-6草稿的v4新增编辑均保留，公开合成UNKNOWN的dispatches仍0。另一次不启动Desktop的同根切换，三份业务JSON逐字节一致、六个公开IDB成员不变。首轮及修复共6次实际GUI退出0，57583关闭、两根启动锁释放。受支持入口busy时回调0，旧F CLI和已有受保护SDK拒绝；未受控stock writer仍可绕过的实际FAIL保留。
+
+**完整F继续OPEN。** 此处是私有开发Profile生命周期，不是签名App安装器、上游/跨平台升级或旧管理根迁移；任意未受控writer/检查后改路径、真实磁盘满/断电/强杀自动恢复、真实Host重传/模型消费、原生模型/API UNKNOWN及其余原出口仍缺。未新增真实模型/专业API/费用、上传/准备/生成/Send，不读迁认证、不改日常Profile/签名App，不推送发布。源码与证据按[本地收录](evidence/2026-10-28-f-profile-lifecycle-local-commits.md)分批保全；并行AGENTS和预存P28总计划排除，下方旧时点完整保留。
+
+---
+
 ## 2026-10-27 R2同配对无干预重启与无夹具开发装配获Max限定接受
 
 GPT6.1 Max首轮审计发现F-R2-U-A01/P2（测试观察器畸形URL异常退出/query泄漏），原FAIL与109成员保持；新增v2捕获解析及证据writer异常，异常计数不能补0。最终[修复增量独立处置](evidence/2026-10-27-f-r2-unattended-repair-independent-audit.md)已在具名v2范围关闭该项，新增Critical/P1/P2/Minor均0，报告SHA `d955533f8a8544ee2eea296e73c89486aaaa62f139ebf2ed23867e392ddcff3b`。
