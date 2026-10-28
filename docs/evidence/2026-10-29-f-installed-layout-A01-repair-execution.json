@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "id": "F-INSTALLED-A01-REPAIR-20261029",
+  "atUTC": "2026-10-28T23:02:42.570908+00:00",
+  "originalExecutionSHA256": "537d149205190b7285ae58204fad77ab227d9929d4e34a584e4a6e5df070ff28",
+  "originalAuditSHA256": "f24c463d342732782b6812a1a0ced488c8522e05ed4306d5a0ea1af07099d783",
+  "historicalMemberRelocations": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/f-installed-runtime.test.mjs": {
+      "archive": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-installed-layout-audit-original-runtime-test.mjs.txt",
+      "originalSHA256": "cde772700df176b42ee546626cacd8b309c99848eb67261ad18c23c07528ed5a",
+      "reason": "test fixture source one-line repair; original expected hash and bytes preserved"
+    }
+  },
+  "originalResolvedMembers": 326,
+  "otherOriginalLiveMembersUnchanged": 325,
+  "sourceChanges": {
+    "testOnly": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/f-installed-runtime.test.mjs",
+    "oldSHA256": "cde772700df176b42ee546626cacd8b309c99848eb67261ad18c23c07528ed5a",
+    "newSHA256": "6dcd0f47f680a3f7a08d9b36538fa45e969c0a50381072664595ab19a448b354",
+    "productionChanges": 0,
+    "bundlesRebuilt": 0,
+    "newGUIStarts": 0
+  },
+  "tests": {
+    "cleanEach": {
+      "passed": 8,
+      "failed": 0,
+      "exitCode": 0,
+      "hasHistoricalLocal": false
+    },
+    "affectedEach": {
+      "passed": 15,
+      "failed": 0,
+      "exitCode": 0
+    },
+    "interpreters": [
+      "24.21.0",
+      "24.18.1"
+    ]
+  },
+  "members": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/A01-affected-embedded.log": {
+      "sha256": "b97b2ced7b45f89487fa52e2022a7b61a9127d7bbe61de3a1b65d97908c595dd",
+      "bytes": 4343
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/A01-affected-tool.log": {
+      "sha256": "2ac7c09b56a1eb09936322bb0663b12395832797c52545cca905611f7ab10993",
+      "bytes": 4352
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/A01-clean-embedded.log": {
+      "sha256": "cc762c77bb9949fc2215f482097e36d395a79579efca6761b67ad6174ca84120",
+      "bytes": 2563
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/A01-clean-tool.log": {
+      "sha256": "84d7ade6a7c37fdc8b584db1a2372b8eecb4548a62440af3f857a0d6a19f908f",
+      "bytes": 2559
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/A01-repair-preparation.json": {
+      "sha256": "7dcb35dc277a3db9042ede9998222614500e9752ae454fc16649e2de1bf68d06",
+      "bytes": 766
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/A01-repair-tests.json": {
+      "sha256": "d6cb4a44f459cf47111e61bb765f59581137dc5acb7ba9c0f14e8efed211362c",
+      "bytes": 2599
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/A01-test-only.diff": {
+      "sha256": "18d7c2737d6b5d5b899786c19eb8fbb74ca496d802b2ac1921536aefc9556279",
+      "bytes": 1251
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/clean-source-r0-red.json": {
+      "sha256": "7861a0ad510851d1bd3eb1e1b008304c036fbbb5b065f3f62057e978abc8cd9b",
+      "bytes": 331
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/clean-source-r0-red.log": {
+      "sha256": "3c82df8d014f9237a1c37579b0816691e87a164deee997a3cb3c67a163f547d9",
+      "bytes": 14914
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/frozen-members.json": {
+      "sha256": "bad1e7d407083de09a5718fbe9fbd20abee58f93e5db4a711f33b8baa984d0e1",
+      "bytes": 131618
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/other-worktree-preserved.json": {
+      "sha256": "2b00d827079568c3307d729be36d0fc38bea7b5c242b3965a3492a182d3a7f48",
+      "bytes": 162
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/post-audit-dispatch-check.json": {
+      "sha256": "f9d6d561e55796b570dd1112e874dc2a83c774adf90cf507b8dfeabdcbf16e33",
+      "bytes": 1142
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/audit-members.json": {
+      "sha256": "87ec998676b3d59ae0679ea435b18469ff1b95d01b07341e0d05c6022e842608",
+      "bytes": 7340
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/clean-checkout-original-repro.json": {
+      "sha256": "94918e7c7c32c54777883bd0cc9a6409a024406d73954725479ef4eb6c3612a8",
+      "bytes": 449
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/clean-checkout-original-repro.log": {
+      "sha256": "0a8ed8287fd37953ff0358895a51ebd5ee8401ebe530e86d9c95984c000500eb",
+      "bytes": 14314
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/clean-checkout-proposed-fixture-only.log": {
+      "sha256": "94ce5b6e9d3f38d1faf8b9ba5cf2cd11322fe0fd7f9e2faffc2631ac770eafa9",
+      "bytes": 2645
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/clean-checkout-repro.log": {
+      "sha256": "d54b0578ca47183dfcc0b9270fe0f1f2454a3169183cf2810eb322747e119f7e",
+      "bytes": 13954
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/execution-preflight.json": {
+      "sha256": "4231165e2011fb1eee11fb4c4d00ec4522f4f7881ba3ced44b813ee03daff3bb",
+      "bytes": 6632
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/final-verification.json": {
+      "sha256": "037f4b8eb4502e82c7546f6a4e894f8cfb344f856b6c9476c06ec798e22bb5f8",
+      "bytes": 1358
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/independent-probe-results.json": {
+      "sha256": "fdf05cce076f54b2405243663ca347ec0a0b20dd859776edb4f7792f3d13dc98",
+      "bytes": 1475
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/interpreter-versions.json": {
+      "sha256": "4b441c772b811581f47494fb8f0f6e2968fa41fdf4e6b5c67039e8f2bfdb8fb0",
+      "bytes": 507
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/packet-verification-initial.json": {
+      "sha256": "f3069969bbc66a2769ebf9cc8ac128e11a74f6dc098ad563f204c2ce65079092",
+      "bytes": 145
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/provider-probes-embedded.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/provider-probes-embedded.stdout.log": {
+      "sha256": "04553ea18391e7b0eff1d8d48718a88543ad43fa5f086d09c93c0278c729cfd8",
+      "bytes": 892
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/provider-probes-tool.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/provider-probes-tool.stdout.log": {
+      "sha256": "609ac4eb681ceae2a48c1c545fe7c4077aee0a523514d8c54f774b60de968ae5",
+      "bytes": 891
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/provider-probes.test.mjs": {
+      "sha256": "c2ecdc4a90f6dcb1a719b8b0fce1b1b4f0ec657066d698803c766508ae979d57",
+      "bytes": 3944
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/snapshot-byte-comparison.json": {
+      "sha256": "2a5f98599cd93d303e1cc7e24bc19ee51ed2b9aefb51f74c0ab8f132ce8dd4fa",
+      "bytes": 260
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/targeted-embedded.log": {
+      "sha256": "010c783d5497341aeec4842ffa8ddec3b3e7b7bd775f3f8c6dcd202f5a0eb829",
+      "bytes": 4434
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/targeted-tool.log": {
+      "sha256": "768a4f0adda501829d58bce46104912eb0546d9dc9895a2ff7b32cec6e9e3dc7",
+      "bytes": 4434
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/test-results.json": {
+      "sha256": "c6ba4c19ac140511248cd88d547d97aa03816c6da2b3074fc59601fb4c16fdc8",
+      "bytes": 2573
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/verify-existing.mjs": {
+      "sha256": "1ce35fd14a2659a71c04f86060e3170e12e30d95d5bc0eabc76eb74e2fb5d676",
+      "bytes": 1999
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/verify-existing.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-audit-20261029/verify-existing.stdout.log": {
+      "sha256": "a5c6c12fb5c5eced0e948e93bee5e8d8dc8fd82c7f0fc9509c782fe1f309ce6f",
+      "bytes": 2499
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-installed-layout-A01-repair-return.md": {
+      "sha256": "26c55e7dfc8125d0a380f09fa92d1b3d26ba6acb0887295608fd6401214522af",
+      "bytes": 2327
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-installed-layout-audit-original-runtime-test.mjs.txt": {
+      "sha256": "cde772700df176b42ee546626cacd8b309c99848eb67261ad18c23c07528ed5a",
+      "bytes": 12611
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-installed-layout-execution.json": {
+      "sha256": "537d149205190b7285ae58204fad77ab227d9929d4e34a584e4a6e5df070ff28",
+      "bytes": 89682
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-installed-layout-independent-audit.md": {
+      "sha256": "f24c463d342732782b6812a1a0ced488c8522e05ed4306d5a0ea1af07099d783",
+      "bytes": 12353
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/f-installed-runtime.test.mjs": {
+      "sha256": "6dcd0f47f680a3f7a08d9b36538fa45e969c0a50381072664595ab19a448b354",
+      "bytes": 12597
+    }
+  },
+  "fullF": "OPEN",
+  "newRealCallsOrFees": 0,
+  "push": false,
+  "independentReauditPending": true
+}

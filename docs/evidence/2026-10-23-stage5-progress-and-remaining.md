@@ -1,3 +1,13 @@
+## 2026-10-29 F随包入口与离线安装候选获Max限定接受，阶段5仍进行中
+
+本轮用户接受随包入口子集、完整F仍开放。新增安装级租约/provider准入、固定来源builder及独立controller，在最终安装路径离线物化，排除旧源码/日常App依赖链接。R3实际新根自有v3→v4→原v3保留原生/Flow-2-6草稿的v4新增编辑；两次切换各三JSON＋六公开IDB字节保持，公开合成UNKNOWN零派发。三次R3 GUI退出0，端口关闭/锁释放；运行中四角色/升级/回退六例拒绝、回调0，作者原两解释器各134/134。
+
+[首轮Max FAIL](2026-10-29-f-installed-layout-independent-audit.md)的F-IN-A01/P2为测试读取忽略目录；原报告、326成员及失败测试另存。只改一行同字节tracked来源后，[同一Max复审](2026-10-29-f-installed-layout-A01-repair-independent-audit.md)关闭该项，新增Critical/P1/P2/Minor均0，SHA `cb2530295cacf0879b4f3cc6a1e1a0ef6f9c0251e217299e799b2d3850c5c722`；独立干净源码各8/8、受影响各15/15，修复39成员和原326历史解析一致。R0/R1缺侧栏、R2重复会话Host FAIL/exit1及旧stock绕过反例均保留；详见[返回](2026-10-29-f-installed-layout-return.md)/[修复返回](2026-10-29-f-installed-layout-A01-repair-return.md)。
+
+完整F与阶段5未完成。正式外层安装器/最终分发许可、任意旧writer/OS强制、上游/跨平台、旧根迁移、真实模型/API UNKNOWN及附件消费、双存储/多个实际Renderer、磁盘满/断电/强杀自动恢复等继续按原出口。固定vendor App签名只证原App完整性，不代自有组合发行批准。本轮无新增真实模型/API/上传/准备/生成/Send/费用，不读迁认证、不改日常安装、不推送发布，按已授权本地批次收录；以下旧记录原字节保留。
+
+---
+
 ## 2026-10-28 F受控Profile干净安装及同根升级回退获Max限定接受
 
 按[剩余表](2026-10-26-follow-up-remaining.md)继续F无真实调用接续。支持入口共用两层启动锁，维护另取JSON根所有权；首轮Max发现F-PL-A01/P2实际guarded SDK可沿数据根链接外写，原[FAIL](2026-10-28-f-profile-lifecycle-independent-audit.md)/131成员/14链接/源码保留。修订2另立入口/新根，把既存/悬空/后代链接与错误类型拒绝前置到四角色回调前，缺根check不创建、仅读目录元数据。

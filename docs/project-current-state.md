@@ -1,3 +1,13 @@
+## 2026-10-29 F随包入口与离线安装布局获Max限定接受
+
+用户明确接受“随包入口子集，完整F仍开放”。新增独立安装controller、安装级租约/provider准入和固定来源builder，排除旧node_modules/日常App链接，在最终路径离线物化。R3两包各27174文件/14链接，固定官方App签名保持；新安装根实际自有v3→v4→原v3，两份草稿均保留v4新增编辑。升级/回退切换各三JSON＋六公开IDB逐字节一致，公开合成UNKNOWN派发0；运行中四角色及升级/回退拒绝，回调0。作者原两解释器各134/134，三次R3 GUI退出0、端口/锁释放。
+
+[首轮Max FAIL](evidence/2026-10-29-f-installed-layout-independent-audit.md)发现测试依赖忽略目录F-IN-A01/P2；原326成员、失败测试及R0/R1 UI FAIL、R2 Host FAIL/exit1保留。仅改一行读取同字节tracked provider；[同一Max复审](evidence/2026-10-29-f-installed-layout-A01-repair-independent-audit.md)关闭A01，新增Critical/P1/P2/Minor均0，SHA `cb2530295cacf0879b4f3cc6a1e1a0ef6f9c0251e217299e799b2d3850c5c722`。独立两解释器干净源码各8/8、受影响各15/15；历史326按单个原字节归档映射及修复39成员一致。详见[执行返回](evidence/2026-10-29-f-installed-layout-return.md)/[修复返回](evidence/2026-10-29-f-installed-layout-A01-repair-return.md)。
+
+**完整F仍OPEN。** 本批是随包支持入口/离线目录安装候选，不是任意旧stock或OS强制保护、外层签名安装器/最终许可分发接受、上游或跨平台升级；真实模型/API UNKNOWN、真实附件消费、旧根迁移、双存储/多个实际Renderer、磁盘满/断电/强杀自动恢复等原出口保持。无新增真实模型/API/上传/材料核对/生成/Send/费用，不读迁认证、不改日常安装，不推送发布；按本地批次收录，以下历史原字节保留。
+
+---
+
 ## 2026-10-28 F受控Profile生命周期及修订2写入准入获Max限定接受
 
 按剩余表继续无需真实调用的F装配。新增受控Profile安装/check/start/upgrade/rollback，支持desktop/sdk/recovery/maintenance共用两层启动锁，维护再取得JSON根所有权。首轮Max审计发现F-PL-A01/P2：通用writer未拒绝存储根链接，实际guarded SDK可写到管理根外；[首轮FAIL](evidence/2026-10-28-f-profile-lifecycle-independent-audit.md)、原源码及131成员/14链接保持。另增修订2入口和新私有根，前置拒绝既存/悬空/后代链接及错误类型，缺根check不创建、仅读目录元数据。
