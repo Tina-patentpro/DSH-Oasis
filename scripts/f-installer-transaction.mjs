@@ -52,7 +52,11 @@ export async function runInstallerTransaction({root,bundle,expectedSHA256,expect
   if(report.current!==expectedCurrent)throw Error('installer current revision conflict')
   txPath(root,transactionRoot,{create:true});clone(join(root,'data/home/profiles/desktop'),join(transactionRoot,'before-profile'));syncTree(join(transactionRoot,'before-profile'))
   save(join(transactionRoot,'before-installation.json'),fs.readFileSync(join(root,'installation.json')))
-  save(join(transactionRoot,'transaction.json'),{schemaVersion:1,root,transactionRoot,beforeCurrent:expectedCurrent,beforeStateSHA256:hash(join(transactionRoot,'before-installation.json')),targetRelease:input.id,profile:tree(join(transactionRoot,'before-profile')),bundle,realCallBudget:0})
+  const recordedAtUTC=new Date().toISOString()
+  save(join(transactionRoot,'transaction.json'),{schemaVersion:1,root,transactionRoot,beforeCurrent:expectedCurrent,beforeStateSHA256:hash(join(transactionRoot,'before-installation.json')),targetRelease:input.id,profile:tree(join(transactionRoot,'before-profile')),bundle,realCallBudget:0,recordedAtUTC})
+  const receipts=join(root,'installer-receipts');if(!fs.existsSync(receipts))fs.mkdirSync(receipts,{mode:0o700});assertInstalledPath(root,receipts)
+  const receipt={schemaVersion:1,root,id:basename(transactionRoot),transactionRoot,transactionSHA256:hash(join(transactionRoot,'transaction.json')),sourceSHA256:hash(script),beforeCurrent:expectedCurrent,targetRelease:input.id,recordedAtUTC}
+  const raw=JSON.stringify(receipt,null,2)+'\n';save(join(receipts,receipt.id+'.'+createHash('sha256').update(raw).digest('hex')+'.json'),raw)
  })
  const transactionSHA256=hash(join(transactionRoot,'transaction.json')),argv=[join(root,'control/scripts/f-installed-runtime.mjs'),'--upgrade',root,bundle,expectedSHA256,expectedCurrent]
  save(join(transactionRoot,'dispatch.json'),{argv,node:join(root,'control/node'),dispatchedAtUTC:new Date().toISOString(),transactionSHA256,dispatches:1})
@@ -106,8 +110,9 @@ export async function prepareInstallerRecovery({root,transactionRoot,expectedTra
  const plan={schemaVersion:1,root,transactionRoot,transactionSHA256:expectedTransactionSHA256,restoreProfile:!valid,observed}
  return{plan,sha256:digest(plan)}
 }
-export async function applyInstallerRecovery({plan,expectedPlanSHA256}){
+export async function applyInstallerRecovery({plan,expectedPlanSHA256,userConsent}){
  if(digest(plan)!==expectedPlanSHA256||plan.schemaVersion!==1)throw Error('recovery plan hash mismatch')
+ if(userConsent&&(userConsent.planSHA256!==expectedPlanSHA256||!/^[a-f0-9]{64}$/.test(userConsent.toolId??'')||userConsent.confirmation!=='RESTORE '+expectedPlanSHA256.slice(0,12)))throw Error('invalid user recovery confirmation')
  const {root,transactionRoot:tx}=plan,{j,before}=journal(root,tx,plan.transactionSHA256)
  const fresh=await prepareInstallerRecovery({root,transactionRoot:tx,expectedTransactionSHA256:plan.transactionSHA256})
  if(!isDeepStrictEqual(fresh.plan,plan))throw Error('recovery observation changed; prepare a new explicit plan')
@@ -124,6 +129,7 @@ export async function applyInstallerRecovery({plan,expectedPlanSHA256}){
   const {locks:priorLocks,...expected}=plan.observed,{locks:ownLocks,...observed}=observation(root,j,false)
   if(!isDeepStrictEqual(observed,expected))throw Error('recovery observation changed during lease acquisition')
   recoveryStarted=true
+  if(userConsent)save(join(tx,'user-recovery-confirmation.json'),{...userConsent,planSHA256:expectedPlanSHA256,plan,recordedAtUTC:new Date().toISOString()})
   if(fs.existsSync(marker)){save(join(tx,'original-recovery-marker.json'),fs.readFileSync(marker));markerSHA=hash(marker)}
   else{save(marker,{reason:'explicit installer recovery incomplete',transactionSHA256:plan.transactionSHA256});markerSHA=hash(marker)}
   if(plan.restoreProfile){
@@ -147,13 +153,23 @@ export async function executeNativeInstallerRequest(requestPath,expectedSHA256){
  requestPath=fs.realpathSync(requestPath)
  if(hash(requestPath)!==expectedSHA256)throw Error('native installer request hash mismatch')
  const request=read(requestPath),base=canonicalDirectory(request.allowedRoot),root=request.root
- if(request.schemaVersion!==1||request.ownerUid!==fs.statSync(base).uid||process.getuid()!==request.ownerUid)throw Error('native installer must run as its recorded target user; privileged identity not accepted')
+ if(![1,2].includes(request.schemaVersion)||request.ownerUid!==fs.statSync(base).uid||process.getuid()!==request.ownerUid)throw Error('native installer must run as its recorded target user; privileged identity not accepted')
  if(dirname(root)!==base||!/^[-\w .']{1,100}$/.test(basename(root))||request.realCallBudget!==0)throw Error('native installer target outside explicit test root')
  const bundle=join(dirname(requestPath),'bundle')
  if(!/^[-\w]{1,80}$/.test(request.transactionId??''))throw Error('explicit native installer transaction identity required')
+ let recovery,sourceRoot
+ if(request.schemaVersion===2){
+  const files=[...runtime.installationControlFiles,'scripts/f-installer-transaction.mjs','scripts/f-user-recovery.mjs'];sourceRoot=join(dirname(requestPath),'companion');canonicalDirectory(sourceRoot)
+  if(!isDeepStrictEqual(Object.keys(request.recoveryFiles??{}).sort(),[...files].sort()))throw Error('native recovery source hash identities required')
+  const activeRoot=resolve(dirname(script),'..');canonicalDirectory(activeRoot)
+  for(const p of files)if(hash(assertInstalledPath(sourceRoot,join(sourceRoot,p),{directory:false}))!==request.recoveryFiles[p]||hash(assertInstalledPath(activeRoot,join(activeRoot,p),{directory:false}))!==request.recoveryFiles[p])throw Error('native recovery source hash mismatch before import')
+  recovery=await import('./f-user-recovery.mjs')
+ }
+ const persist=()=>recovery.installPersistentRecovery({root,sourceRoot,expectedFiles:request.recoveryFiles})
  let result
- if(request.action==='install')result=await runtime.installFBundle({root,bundle,expectedSHA256:request.bundleSHA256})
- else if(request.action==='upgrade')result=await runInstallerTransaction({root,bundle,expectedSHA256:request.bundleSHA256,expectedCurrent:request.expectedCurrent,transactionRoot:join(root,'installer-transactions',request.transactionId)})
+ if(request.action==='install'){result=await runtime.installFBundle({root,bundle,expectedSHA256:request.bundleSHA256});if(recovery)await persist()}
+ else if(request.action==='upgrade'){if(recovery)await persist();result=await runInstallerTransaction({root,bundle,expectedSHA256:request.bundleSHA256,expectedCurrent:request.expectedCurrent,transactionRoot:join(root,'installer-transactions',request.transactionId)})}
+ else if(request.action==='rollback'&&recovery){await persist();result=await runtime.rollbackFInstallation(root,{releaseId:request.bundleSHA256,expectedCurrent:request.expectedCurrent})}
  else throw Error('explicit native installer action required')
  save(join(root,'data/evidence','native-request-'+request.transactionId+'.json'),{schemaVersion:1,uid:process.getuid(),gid:process.getgid(),pid:process.pid,parentPid:process.ppid,requestSHA256:expectedSHA256,root,action:request.action,completedAtUTC:new Date().toISOString(),exitCode:result.exitCode??0,realCallBudget:0})
  return result
