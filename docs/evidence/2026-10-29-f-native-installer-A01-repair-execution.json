@@ -1,0 +1,981 @@
+{
+  "schemaVersion": 1,
+  "id": "F-NATIVE-INSTALLER-A01-REPAIR-20261029-R3",
+  "atUTC": "2026-10-29T00:20:59.213269+00:00",
+  "baseHEAD": "0b05f1cbed61446bed9c22f4e3d4dbe21170dc90",
+  "firstPacketSHA256": "aace8909db3eae7c05648639d41a0d64ad036807d0187a6532cfad3d0063b71b",
+  "firstAuditSHA256": "272e0d7b9306c97cb5b4687afe4ccba423a5955384874e21debe21e2d2a9f1e7",
+  "originalSource": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-native-installer-audit-original-transaction.mjs.txt",
+    "sha256": "1a809bf26e00c9ffef0fed83ed07f7c19c0ec92f2e880656530155e8405793a4"
+  },
+  "source": {
+    "scripts/f-installer-transaction.mjs": {
+      "sha256": "f5eaa81c14b6c28eae6d6c2419ef5d0f46bff7784f8fcc3b4e3f6b47af61e09f",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/frozen-source-r3/scripts/f-installer-transaction.mjs"
+    },
+    "scripts/tests/f-installer-recovery.test.mjs": {
+      "sha256": "c8a6c3856717f2f389d35bd63a7d88e8b0565775f654defa16ea23b92b764c1b",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/frozen-source-r3/scripts/tests/f-installer-recovery.test.mjs"
+    },
+    "docs/evidence/2026-10-29-f-native-installer-A01-repair-return.md": {
+      "sha256": "584057605764a8ececd3b4132020945687ef801f099661dd126302dff974701a",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/frozen-source-r3/docs/evidence/2026-10-29-f-native-installer-A01-repair-return.md"
+    }
+  },
+  "members": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-27340613-845b-4f7a-9082-d2eeea5d4a5c.exit.json": {
+      "sha256": "1acbe0984fc58116976e12d5e803e94308e8b9d29ad9b2de51c7e266415652f3",
+      "bytes": 78
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-27340613-845b-4f7a-9082-d2eeea5d4a5c.json": {
+      "sha256": "494450a922eaa97cbb5b280e4e23d67302e2663574fd3f85a26613d097ab6ec7",
+      "bytes": 297
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-27340613-845b-4f7a-9082-d2eeea5d4a5c.stderr.log": {
+      "sha256": "40c8d66ebaa5ab57f8260a423872778a793593e3722cf0dd6a48bcd23992f2d6",
+      "bytes": 649
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-27340613-845b-4f7a-9082-d2eeea5d4a5c.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-2d13897b-d5d1-440e-9478-9902d0c3af55.exit.json": {
+      "sha256": "ac1e2da26977ff185907a780ae1a7aa229999e3cc302acff83df8284b9dc6157",
+      "bytes": 78
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-2d13897b-d5d1-440e-9478-9902d0c3af55.json": {
+      "sha256": "fae56a3eb0a38ead9318d11ca80cf09286770d20c183db364f5c6b9f2637026f",
+      "bytes": 297
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-2d13897b-d5d1-440e-9478-9902d0c3af55.stderr.log": {
+      "sha256": "4d9947c23f62027f2405f0d4b1673903e4d0607856e98cb2ed91aeefe4770587",
+      "bytes": 508
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-2d13897b-d5d1-440e-9478-9902d0c3af55.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-5fc1eb70-cb5e-40e8-bdfe-a2ef4661feb1.exit.json": {
+      "sha256": "62486077527b970be4c1ced94542030496a9604cbf2807f42cf536a4c10bddb6",
+      "bytes": 78
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-5fc1eb70-cb5e-40e8-bdfe-a2ef4661feb1.json": {
+      "sha256": "60a1aab647093542374dd1ae2db9d86c793b714d9a839121acfaea2fb66b742c",
+      "bytes": 297
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-5fc1eb70-cb5e-40e8-bdfe-a2ef4661feb1.stderr.log": {
+      "sha256": "10246d40fe49d4a2913a745c10806584ce953071feea546e1663a09f3170ecbd",
+      "bytes": 169
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/installed-launch-5fc1eb70-cb5e-40e8-bdfe-a2ef4661feb1.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/native-request-227d1254-9a2a-4fb8-bb78-33c9008679a8.json": {
+      "sha256": "d0680ad24dac334eb62d59a1dca06cd82af8373687950d9157fbf2da16bde936",
+      "bytes": 415
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/native-request-93297eb9-55fe-46aa-8759-e10f08f7b540.json": {
+      "sha256": "a477cf543bee78e10298269c3d09d66a1fbb11e155f58e318061a6cb0748a901",
+      "bytes": 415
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data/evidence/native-request-a5880ae1-e39e-445f-b0f1-2463ed7532e0.json": {
+      "sha256": "e4a1c0a8512770232fc48b8ebb12a5ca9be7d43e4af3cd43e96f582f0ac28d45",
+      "bytes": 415
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-installation.json": {
+      "sha256": "0a4e1b4f476ac8f28881c7010ecce79aab1cc8269dab1d403a4418aff73b3f20",
+      "bytes": 975
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/cordis.patch.yml": {
+      "sha256": "91ab78469a9f505cd2ea5703dc1504700ec964b171978e8331efa9fefd23f792",
+      "bytes": 1960
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/cordis.yml": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/.modules.yaml": {
+      "sha256": "dcd3567ffe2ec2b2b892909cc1b55db6a197090648c9a03298a67d91b179afd4",
+      "bytes": 706
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/.package-map.json": {
+      "sha256": "00a9231e5a9e6a5de5d30390f337e5d22d45f39004dac227925dbf2bcb006c1b",
+      "bytes": 2707
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/.pnpm-workspace-state-v1.json": {
+      "sha256": "961ada8c59c0c235d902664a42fd9fed3e3b0a39f6c37bfc68f580bdc91fb35c",
+      "bytes": 1064
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/.pnpm/lock.yaml": {
+      "sha256": "0d03e678f29f95ca37c9ee1b113a6434d033c6c4835cee164831385d05c3a1d2",
+      "bytes": 2839
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/package.json": {
+      "sha256": "1820e2236f0775fc01a9c8cc8107ccd9fba29442bdbf6ddbcdf56cc1a913dc95",
+      "bytes": 2152
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/pnpm-lock.yaml": {
+      "sha256": "0d03e678f29f95ca37c9ee1b113a6434d033c6c4835cee164831385d05c3a1d2",
+      "bytes": 2839
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/pnpm-workspace.yaml": {
+      "sha256": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba",
+      "bytes": 61
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/child.json": {
+      "sha256": "c126be87e01e73cd4c07261779119e97614f63381a0afec75f2e168e5723c7b8",
+      "bytes": 90
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/dispatch.json": {
+      "sha256": "b6ffc872f2e8d9c68f01a8f2f828073243f7ae91f99b8676469d08aabc0fd9e3",
+      "bytes": 895
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/outcome.json": {
+      "sha256": "0d30802c8c453370eea9f2322c95a0fc7d45e12bb2e74bbcf197e1d51dd83879",
+      "bytes": 507
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/recovery-result.json": {
+      "sha256": "bd768956c3a09f445af6139b7b9893dc2a5e85228edc3afb35bed4d1c89bfa74",
+      "bytes": 183
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/transaction.json": {
+      "sha256": "0778d0970986d71575f25fefc6c2309844204b3a7f919cbf4fab86062d732109",
+      "bytes": 3696
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/upgrade.stderr.log": {
+      "sha256": "cd86566503a0e2ad7170fa06d905864d92808ae4b55263b91428d9888a16dd7c",
+      "bytes": 818
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/upgrade.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-installation.json": {
+      "sha256": "0a4e1b4f476ac8f28881c7010ecce79aab1cc8269dab1d403a4418aff73b3f20",
+      "bytes": 975
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/cordis.patch.yml": {
+      "sha256": "91ab78469a9f505cd2ea5703dc1504700ec964b171978e8331efa9fefd23f792",
+      "bytes": 1960
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/cordis.yml": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/.modules.yaml": {
+      "sha256": "dcd3567ffe2ec2b2b892909cc1b55db6a197090648c9a03298a67d91b179afd4",
+      "bytes": 706
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/.package-map.json": {
+      "sha256": "00a9231e5a9e6a5de5d30390f337e5d22d45f39004dac227925dbf2bcb006c1b",
+      "bytes": 2707
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/.pnpm-workspace-state-v1.json": {
+      "sha256": "961ada8c59c0c235d902664a42fd9fed3e3b0a39f6c37bfc68f580bdc91fb35c",
+      "bytes": 1064
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/.pnpm/lock.yaml": {
+      "sha256": "0d03e678f29f95ca37c9ee1b113a6434d033c6c4835cee164831385d05c3a1d2",
+      "bytes": 2839
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/package.json": {
+      "sha256": "1820e2236f0775fc01a9c8cc8107ccd9fba29442bdbf6ddbcdf56cc1a913dc95",
+      "bytes": 2152
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/pnpm-lock.yaml": {
+      "sha256": "0d03e678f29f95ca37c9ee1b113a6434d033c6c4835cee164831385d05c3a1d2",
+      "bytes": 2839
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/pnpm-workspace.yaml": {
+      "sha256": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba",
+      "bytes": 61
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/child.json": {
+      "sha256": "711ad9cdaad8775036272e434905db4c1bb5a1a9b4f1d90b8b5dd4c4f89f1105",
+      "bytes": 90
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/dispatch.json": {
+      "sha256": "d37c8f6aedf1f0f4f0c347bcae4bfa3fa792f89f3f63cfc40cd33dd19977ea18",
+      "bytes": 879
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/failed-profile/cordis.patch.yml": {
+      "sha256": "5fd241aa0860fb602f4866753a879ca359e34add3c6fd386439b8d89f95846bb",
+      "bytes": 1960
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/failed-profile/cordis.yml": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/failed-profile/package.json": {
+      "sha256": "e5f962f32a1af393acae7076dd92ec0ae8643464d28addcf2911012cbc3c87ef",
+      "bytes": 2152
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/failed-profile/pnpm-workspace.yaml": {
+      "sha256": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba",
+      "bytes": 61
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/outcome.json": {
+      "sha256": "d148cdd2b730f4aea739c941580af781887c60cf5aca3261710c62103e92ffc1",
+      "bytes": 446
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/recovery-result.json": {
+      "sha256": "63ff0565d2581d7d9284df68305eca63289f3c7a6aff7315f38dbe08cf0d0f56",
+      "bytes": 182
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/stale-lock-0.json": {
+      "sha256": "b84966ff8f2a3e5700d261846da332690b0cae9a413a88dfddbca5ada3d167ce",
+      "bytes": 551
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/stale-lock-1.json": {
+      "sha256": "b84966ff8f2a3e5700d261846da332690b0cae9a413a88dfddbca5ada3d167ce",
+      "bytes": 551
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/transaction.json": {
+      "sha256": "661a925d41a3ed4c2f37deba8802c90e46837c32f485c2c3a43f57876d0f3c7b",
+      "bytes": 3672
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/upgrade.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/upgrade.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/A01-repair-preflight.json": {
+      "sha256": "a64f76ef2f0cbd17724fd1d9cd91b7eb959d170bc89144bf77e4ea50321f1649",
+      "bytes": 849
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg": {
+      "sha256": "8aef6442b9da533576974dad3d6403f33411f22b7bbabc561fd1bfa536900258",
+      "bytes": 549531806
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Distribution.xml": {
+      "sha256": "ac7e2f0369881351f4b5165c2feff66677f3aebb90d2312522f37cb34db0bad5",
+      "bytes": 613
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Scripts/postinstall": {
+      "sha256": "aaee08788908d003455d65c58a913c14d75ba5aae8c103639692d031aa449a54",
+      "bytes": 316
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Scripts/resources/bundle/bundle.json": {
+      "sha256": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9",
+      "bytes": 4988759
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/installed-lease.mjs": {
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "bytes": 5372
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/ownership.mjs": {
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+      "bytes": 1902
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Scripts/resources/companion/scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Scripts/resources/companion/scripts/f-installer-transaction.mjs": {
+      "sha256": "f5eaa81c14b6c28eae6d6c2419ef5d0f46bff7784f8fcc3b4e3f6b47af61e09f",
+      "bytes": 14977
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Scripts/resources/request.json": {
+      "sha256": "571d406f3892c55e63c1fbf424a9995e6cc22b3a0c3f956cbcde9d64772634c4",
+      "bytes": 580
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/build-receipt.json": {
+      "sha256": "1bbb9279be8cafced7915142dd30767c29dbf14a30cabab588d6c134780f2594",
+      "bytes": 2742
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/archive-duplicate-r0.py": {
+      "sha256": "8791336ae329b6ca9b2d7cec3767b93e043e22a177c8bda7e0c5ecc1962cccf3",
+      "bytes": 2002
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/archive-duplicate-r0.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/archive-duplicate-r0.stdout.log": {
+      "sha256": "25ac7a4ab08a02cb4a3ff3c5a54b965db651409a0cb993cf45a9264d0eef52fd",
+      "bytes": 83
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/affected-app.json": {
+      "sha256": "4ec6a2313dab31ed3c4de045ddd4dc912d801274bfc9e294e7a8d935c88460d6",
+      "bytes": 792
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/affected-app.log": {
+      "sha256": "c37343842e7c639c4f196d94804f5f8593874e49ed06d8ba69f59c19c48bf12b",
+      "bytes": 3531
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/affected-tool.json": {
+      "sha256": "c504841065654afa6cf0c3a4294e832dbfffe08c5c9093b4715ede89de60c639",
+      "bytes": 617
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/affected-tool.log": {
+      "sha256": "8cdaded057d090d6452647e9798a169a8fae6e89a5f200c104794c28be6b2c4f",
+      "bytes": 3546
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/clean-actual-app-node.json": {
+      "sha256": "847a959d38daa6f0d002be2314fcec899a56ee81b8ff57bed43aca7226566b3d",
+      "bytes": 1482
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/clean-actual-app-node.log": {
+      "sha256": "057ee87ff327dfd9f49c64dd298847b780c6223a8d850ede25dbe9f760bca670",
+      "bytes": 111895
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/clean-source.json": {
+      "sha256": "db80f933f01ead6decb7a5f2c67f374acbdca978110bce1358fd9b04b885b756",
+      "bytes": 334
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/clean-tool-node.json": {
+      "sha256": "56a76215afebde1e86cdd1c7594b76d4e702708af80b4a5589ba313731def57b",
+      "bytes": 1287
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/clean-tool-node.log": {
+      "sha256": "73fb08fc09d9f4dd1450e54ecf6cba268c334f4438588a9b43e1dd2e0fdbc6a7",
+      "bytes": 112641
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/duplicate-expanded-scratch-cleanup.json": {
+      "sha256": "76c78d6ae8e0e28882a57c85b48b52b5a33ae4679d7a2085296349b787b8e6e7",
+      "bytes": 1420
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/execution-preflight.json": {
+      "sha256": "e4668d77fcd5cce691861925c52abb44a263291bfbfbfc265c95314351b69390",
+      "bytes": 7342
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/expanded-tree-comparison.json": {
+      "sha256": "308266b4423b910dd5b2a8c8479f620c01110256c3906f1695e200d90eb2b52f",
+      "bytes": 19340789
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/failure-retention-independent.json": {
+      "sha256": "a2bf6d1005bde998b8498a9e9e7fe47586792dfeeb9d832800ff44b8f8afac2a",
+      "bytes": 1918
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/final-audit-binding.json": {
+      "sha256": "24ec21d9e4796db7e904d6e17ec735153f8d3ec8c8bc2577ea237de432740c39",
+      "bytes": 777
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/frozen-identity.json": {
+      "sha256": "d6f13696d95ce899ea01cc23242870ade9166c47f8ec8e6a94ccce28b11297fe",
+      "bytes": 2782
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/legacy17-independent.json": {
+      "sha256": "41654b314143254c55771bda048920d47cdf7f7a32abf67627a939477ab1ca9b",
+      "bytes": 255
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/other-worktree-independent.json": {
+      "sha256": "e898c0d594003ee057a12d0b6d39be203f4b4434a1ad132ab62e872f83caffad",
+      "bytes": 402
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/package-transport-independent.json": {
+      "sha256": "7c6966e9ccedb7eafca1a6855319cb02ebb55ea40ebf6816e1e77ca1c2136a0a",
+      "bytes": 995
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/pkg-expand-r2.json": {
+      "sha256": "4427b3d792dd3b3155154fc7524366c4b8e813095ea98958eb27158337a3bc28",
+      "bytes": 405
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/pkg-signature-independent.json": {
+      "sha256": "4b5398ab7ba5917f8cf0923970dc883e00c5c49eab8f3ee81607d4607b803155",
+      "bytes": 324
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/remote-ref-retention.json": {
+      "sha256": "ed07274bf4f59c5637fd4da6594c34f1716ca0e5d3408dd96496ab42f0a6181b",
+      "bytes": 1189
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/retention-independent.json": {
+      "sha256": "3db966e6011913338a2f848305acc8fc004bf7d6ee37e1d25df62441bd0690fd",
+      "bytes": 2992
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/stale-transaction-observation-app.json": {
+      "sha256": "5af8e82bc9c0eafa996ff2bdb3a5d452f429ada497360e9c2b31a7c4827138aa",
+      "bytes": 3309
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/stale-transaction-observation-tool.json": {
+      "sha256": "4d25640df7e20c0910ab0d23dcfd306211c3b49e2621fc43723a53972b4f3f20",
+      "bytes": 3309
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/stale-transaction-observation.json": {
+      "sha256": "5af8e82bc9c0eafa996ff2bdb3a5d452f429ada497360e9c2b31a7c4827138aa",
+      "bytes": 3309
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/stale-transaction-probe-app.json": {
+      "sha256": "d1fe0dfaf8f44184c4938796754ae090510b025156687ca1d8a453b5c6d6193f",
+      "bytes": 625
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/stale-transaction-probe-app.log": {
+      "sha256": "f8e2300028deb335c68d36ee81f931eb8ca181daf1f30d34429530afbab3bdb0",
+      "bytes": 1305
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/stale-transaction-probe-tool.json": {
+      "sha256": "9a613ddba4accd9eb9b909556a7302fb657c0921b317be2cce1448ace940bb44",
+      "bytes": 429
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/stale-transaction-probe-tool.log": {
+      "sha256": "d4db30ba6335aea723649ef1516d47982f44a329461752094e64d23ffde4ddb4",
+      "bytes": 1309
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/stale-transaction-probe.test.mjs": {
+      "sha256": "1004e12719d595948ab45644755d26ae3402592dff5a40bd6043f0c605154978",
+      "bytes": 3675
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/verify-failure-retention-exit.json": {
+      "sha256": "21bc09eb7cd03894c7d18d0c97839a9493a036f8bdd2e48a681017daa0d9c2d8",
+      "bytes": 280
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/verify-failure-retention.log": {
+      "sha256": "8e1eee2f50c7c0147b9ed9aa5a35e9c6d1732e0d6e89cc22a0019a75f95f749f",
+      "bytes": 1676
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/verify-failure-retention.mjs": {
+      "sha256": "a12b2723478e8d7a6b0b0829c19b24cc5938c87753beb48bc167b14a540beaad",
+      "bytes": 2723
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/verify-package-exit.json": {
+      "sha256": "ef6affb4a589e8f7fa090a2edabfc4dfb83a14200cbb53db8eb34e4bb0ca45a9",
+      "bytes": 270
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/verify-package.log": {
+      "sha256": "c6be96f5fbae522b6ef2d1a2574e2d12f47a19c3edb1aa1091e6f8969c238017",
+      "bytes": 931
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/audit-independent/verify-package.mjs": {
+      "sha256": "8c34828f9f2ac25ddc0552706b441a20c02d2016337e9866600c0bb6005ee200",
+      "bytes": 1802
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/expanded-r0-archive-manifest.json": {
+      "sha256": "5126c9ee8002e59004c3ac52fa295bbe8f7dbf3c71e918052feba7aff6cad652",
+      "bytes": 8753913
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/expanded-r0-byte-preserving.tar.gz": {
+      "sha256": "5d67f7a727925923ad64d30495dc444b6fd940e7eb11937506d86f03a1a050ae",
+      "bytes": 547014076
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/failure-kill-r3.mjs": {
+      "sha256": "2c18eda887ad5c4bf680103c0ea6cf989b9f15eaea9b8b2eb650e92ee3be9d7a",
+      "bytes": 4968
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/failure-kill-r3.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/failure-kill-r3.stdout.log": {
+      "sha256": "b88c373fc46178331189e08e9344d188b1e8c0f90183fafdc0c6f2765efa722a",
+      "bytes": 137
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/freeze-r3.py": {
+      "sha256": "fa5f60707d0e729f51d8702452d0ec459ee1bcde0201f634db13747097655d82",
+      "bytes": 6152
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/frozen-source-r3/docs/evidence/2026-10-29-f-native-installer-A01-repair-return.md": {
+      "sha256": "584057605764a8ececd3b4132020945687ef801f099661dd126302dff974701a",
+      "bytes": 5299
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/frozen-source-r3/scripts/f-installer-transaction.mjs": {
+      "sha256": "f5eaa81c14b6c28eae6d6c2419ef5d0f46bff7784f8fcc3b4e3f6b47af61e09f",
+      "bytes": 14977
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/frozen-source-r3/scripts/tests/f-installer-recovery.test.mjs": {
+      "sha256": "c8a6c3856717f2f389d35bd63a7d88e8b0565775f654defa16ea23b92b764c1b",
+      "bytes": 3773
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-after-r3-failures.ax.txt": {
+      "sha256": "b3a5479802cf6fff127fab54fbcae0c7f69f9fc2aaacfb17bfcd84e89380f4aa",
+      "bytes": 5649
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-after-r3-failures.png": {
+      "sha256": "f28d4a464d39b6984a94d569780e995ad2ed5e398442c966cb1c88fceab6d94a",
+      "bytes": 124775
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-gui-after-r3-argv.json": {
+      "sha256": "77ac97a877ab4cefc0982e6d0ddac6ba8f95821fe344939cccf81932b653f643",
+      "bytes": 416
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-gui-after-r3-exit.json": {
+      "sha256": "982b9e9bfb10ffe83cad665807abcfd3fa97b37822db5ab7831157a499548a9e",
+      "bytes": 16
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-gui-after-r3.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-gui-after-r3.stdout.log": {
+      "sha256": "360ea8bc67f002e302f1c541c6bf6bc09301aca393a1dc18d11a56828c585dd5",
+      "bytes": 432
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-build-r3.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-build-r3.stdout.log": {
+      "sha256": "15c944b078eaa34ad67a23259363b631a1dab9e4c147c3d1dc7863fe89a80bac",
+      "bytes": 2436
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-failure-r3.mjs": {
+      "sha256": "4d8c0375e9bb8ca5e9b2065823cc48263ff4f993531bb49ec4f6416eab4986ed",
+      "bytes": 4298
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-failure-r3.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-failure-r3.stdout.log": {
+      "sha256": "a2809fa2df57865870eebdf345a4234a0d5776464a081934d8f381c0f880e44c",
+      "bytes": 121
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-r3-before-data.json": {
+      "sha256": "52bd488defcf74bab72bdb5d4a64aceed9090eefd7eec125f9a418102339afd2",
+      "bytes": 1397
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-r3-executed-source.json": {
+      "sha256": "d870ee01a4307b66bd81dabfd8df0b73c13e725fafeeeac16dc2c4bdd64e1fb7",
+      "bytes": 1047
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-r3-exit.json": {
+      "sha256": "296119ac5593f7c5d0d29c938de4f18ed94f0ab192b9a6d1a07a5f2fd6355ef2",
+      "bytes": 305
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-r3-fault.json": {
+      "sha256": "e4135a6cc71a23da627865979bbf84211b0215e874e9cf4aca5e017eb8948000",
+      "bytes": 440
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-r3-recovered.json": {
+      "sha256": "e8e88cd5ba96baaff57d0ac11bdd005aac0174f9bb94a179a61a60cd17116b0f",
+      "bytes": 3139
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-r3-recovery-plan.json": {
+      "sha256": "5607de83fc20592862a3f908180aa9fd4f9745b67c77c4fc133c5d1f8764c420",
+      "bytes": 1003
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/native-upgrade-r3-spec.json": {
+      "sha256": "e996e7c91fac1daf684cc96945923144ae44dbdc2234690100c29c3b1f3ba512",
+      "bytes": 751
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/post-freeze-historical-link-retention.json": {
+      "sha256": "726016a1884a5ef11108f501e260a9d0ef0157058fc1b1942050ad9f873eb4e4",
+      "bytes": 1412
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/post-freeze-r0-r1-target-observation.json": {
+      "sha256": "ca8970695d4055584eac4b07199166b4a04ec8aff9465002d3044904d95f3a9f",
+      "bytes": 668
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/recovery-revision-green-r1.log": {
+      "sha256": "357a73291165ed3a4536e1b501befc97f41a1217f1ab8213736246a799470b4d",
+      "bytes": 1866
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/recovery-revision-green.log": {
+      "sha256": "8098c7f86b450bfdd48f6b7a2b6ca39fa860c324da6b4220e6b9c002b38af773",
+      "bytes": 3888
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/recovery-revision-red.log": {
+      "sha256": "f91bb024bf22ce08db1873963c3fd45bacc660415e5b855b0d6fda00bfa417b9",
+      "bytes": 3063
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/recovery-revision-regressions.test.mjs": {
+      "sha256": "27db0e16874f9a4dbaf366533f5bdefd1e631ddaa92047a59cd1b077e007f5d1",
+      "bytes": 3813
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/recovery-revision-tracked-red.log": {
+      "sha256": "bf0b328572692fdd95540694dd13c761049a46d1fbf7d9ee298c0ca63301e50d",
+      "bytes": 2883
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/reopen-after-recovery-r3.py": {
+      "sha256": "0dd6881a399ff741b27e247e9651c26c64077b7351c8f13b6184d381f08c1e8d",
+      "bytes": 619
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-before-kill-data.json": {
+      "sha256": "52bd488defcf74bab72bdb5d4a64aceed9090eefd7eec125f9a418102339afd2",
+      "bytes": 1397
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-final-runtime-check.json": {
+      "sha256": "17abdb469f09e328e25a32795742a4aa6a3ec1c7583e8deabf9a95b4be21afd9",
+      "bytes": 1469
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-final-scripts-actual-app.log": {
+      "sha256": "5dbc59041abf4bdfbde25ecdbe23d916e102c18202bd8b4d5fb04906fa286ef6",
+      "bytes": 15678
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-final-scripts-results.json": {
+      "sha256": "4df29a822686ad24495639248e827c7aa08b803f9bd0a531f2a272c7256e4c8b",
+      "bytes": 2725
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-final-scripts-tool.log": {
+      "sha256": "4dacf6bafcdddbd5ec50331dbc8f352a304cd8f8ce0d5ff30b990c58eedc0088",
+      "bytes": 15688
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-process-group-kill-check-before.json": {
+      "sha256": "c28481eaf891c60153316c86eb884e9cf878e3caac25520fe2506417070bd6b4",
+      "bytes": 107
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-process-group-kill-outcome.json": {
+      "sha256": "c1e5ca2b98938bb1398f3f8628db24cc55a5b85395777ebf32244a519b425b67",
+      "bytes": 491
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-process-group-kill-process-observation.json": {
+      "sha256": "a58c05a75ecc608e40d04d9f0da92c86b9811a254db5764c5d0203db094e9353",
+      "bytes": 753
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-process-group-kill-recovered.json": {
+      "sha256": "550471432752708d249968c5ecfabfcd6f56e39f5b01336dfef0cd5327e80ce2",
+      "bytes": 2342
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-process-group-kill-recovery-plan.json": {
+      "sha256": "4a498705ec912e6f19b9bbeaf5691a7d6f113018e9d70df184d4fea8a81642d4",
+      "bytes": 1625
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-process-group-kill-trigger.json": {
+      "sha256": "250c986e6c2816da3a1b34fdb00ba6c290368b4968791dc64f769c488383a1c3",
+      "bytes": 304
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-before-kill/000003.log": {
+      "sha256": "d60775908f01f33fe8ac1be2d250b0a8234d2599d9ad6c8e3121a331b9949302",
+      "bytes": 5192
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-before-kill/CURRENT": {
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "bytes": 16
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-before-kill/LOCK": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-before-kill/LOG": {
+      "sha256": "724bac56edb3a65c1ac13bfa01470f4260767c01d9f3f6ec8638200f3fe25c00",
+      "bytes": 590
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-before-kill/LOG.old": {
+      "sha256": "e049b757cc207695777534815b6d02688a6932712a262e1b1a887453fa605094",
+      "bytes": 590
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-before-kill/MANIFEST-000001": {
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed",
+      "bytes": 23
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-before-kill/f_install_public.json": {
+      "sha256": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+      "bytes": 348
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-before-kill/oasis_workbench.json": {
+      "sha256": "4182dfb2d5fbf403eb3eff30a77604e3eb9456ebd5b0cf35afa782af2510fce5",
+      "bytes": 2665
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-before-kill/workspace.json": {
+      "sha256": "6ff325cbdd2b9dc60482ae3659719c872b60a45a0300ea3b1e483466ce25c78c",
+      "bytes": 1293
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-final-closed/data/home/storages/f_install_public.json": {
+      "sha256": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+      "bytes": 348
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-final-closed/data/home/storages/oasis_workbench.json": {
+      "sha256": "4182dfb2d5fbf403eb3eff30a77604e3eb9456ebd5b0cf35afa782af2510fce5",
+      "bytes": 2665
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-final-closed/data/home/storages/workspace.json": {
+      "sha256": "6ff325cbdd2b9dc60482ae3659719c872b60a45a0300ea3b1e483466ce25c78c",
+      "bytes": 1293
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/000003.log": {
+      "sha256": "d30584ebbc40e7c567b4fcab1d66e61169f0b6c1a315f8c95c84f7dc0e31f11e",
+      "bytes": 5211
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/CURRENT": {
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "bytes": 16
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOCK": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG": {
+      "sha256": "93325589026f565f94ba7639fbd41d0ba513bffbce2822db33352fefa328addf",
+      "bytes": 590
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG.old": {
+      "sha256": "724bac56edb3a65c1ac13bfa01470f4260767c01d9f3f6ec8638200f3fe25c00",
+      "bytes": 590
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-public-final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/MANIFEST-000001": {
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed",
+      "bytes": 23
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-quarantine-verification.json": {
+      "sha256": "39fb510bd6e07c432a2edcf24f5d9e9592e65b26bc08e594d865e10eb87b64d2",
+      "bytes": 902
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/repair-retention-before-audit.json": {
+      "sha256": "9836a3a86ae7694f2c2c7f10f7d0db350b149706973799006d1603c993ffd406",
+      "bytes": 457
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/retire-r2-upgrade-staging.mjs": {
+      "sha256": "7fad9acd74b3b8866f7a8aa40f0f4c03a22022dacdc67ecefd0f54d0e27331fa",
+      "bytes": 1868
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/retire-r2-upgrade-staging.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/retire-r2-upgrade-staging.stdout.log": {
+      "sha256": "83c5b04f90fc7cb6ee977cb4488188c5bec17615304696fa41f5e529b4be2b87",
+      "bytes": 78
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/retire-r3-staging.mjs": {
+      "sha256": "cbd25d1961376bb82b1aac90698d5333743eb0ec65a6064c4f7c9a5ecd197b21",
+      "bytes": 1844
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/retire-r3-staging.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/retire-r3-staging.stdout.log": {
+      "sha256": "3c13e35fd0427ad569ed2577d56c77b55f74ec1e0bbcdd5d6e0436bd33c55a5f",
+      "bytes": 70
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/retired-r2-upgrade-staging-payload.json": {
+      "sha256": "e66da195fe3a36984285990fbbda9b366fdd48f5359ea8bef42adb1e209f745f",
+      "bytes": 3270662
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/retired-r3-staging-payload.json": {
+      "sha256": "1210c294318f8c7d85029be5a0b7a86465b1b118de776ae86e081989c8ac73c9",
+      "bytes": 3270654
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/verify-quarantines-r3.mjs": {
+      "sha256": "8ff32d6906d68b7ecc54148912df87163ba32fe972db5828e4a91e1ccafd2cc4",
+      "bytes": 1634
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/verify-quarantines-r3.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/verify-quarantines-r3.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-native-installer-audit-original-transaction.mjs.txt": {
+      "sha256": "1a809bf26e00c9ffef0fed83ed07f7c19c0ec92f2e880656530155e8405793a4",
+      "bytes": 14327
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-native-installer-execution.json": {
+      "sha256": "aace8909db3eae7c05648639d41a0d64ad036807d0187a6532cfad3d0063b71b",
+      "bytes": 97963
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-native-installer-independent-audit.md": {
+      "sha256": "272e0d7b9306c97cb5b4687afe4ccba423a5955384874e21debe21e2d2a9f1e7",
+      "bytes": 11288
+    }
+  },
+  "symbolicLinkMembers": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/@deepseek-ai/dsh-client-ui-conversation": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c6",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/@deepseek-ai/dsh-client-ui-primitives": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c0",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/@deepseek-ai/dsh-web-frontend": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c1",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/dsh-better-sidebar": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c2",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/dsh-desktop-host-file-path-bridge": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c4",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/dsh-storage-json-single-owner": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c5",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0/before-profile/node_modules/oasis-professional-service": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c3",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/@deepseek-ai/dsh-client-ui-conversation": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c6",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/@deepseek-ai/dsh-client-ui-primitives": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c0",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/@deepseek-ai/dsh-web-frontend": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c1",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/dsh-better-sidebar": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c2",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/dsh-desktop-host-file-path-bridge": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c4",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/dsh-storage-json-single-owner": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c5",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/before-profile/node_modules/oasis-professional-service": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c3"
+  },
+  "nativeR3": {
+    "package": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg",
+    "sha256": "8aef6442b9da533576974dad3d6403f33411f22b7bbabc561fd1bfa536900258",
+    "resources": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Scripts/resources",
+    "requestSHA256": "571d406f3892c55e63c1fbf424a9995e6cc22b3a0c3f956cbcde9d64772634c4",
+    "request": {
+      "schemaVersion": 1,
+      "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C",
+      "allowedRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029",
+      "ownerUid": 501,
+      "ownerGid": 20,
+      "action": "upgrade",
+      "bundleSHA256": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9",
+      "expectedCurrent": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+      "transactionId": "a5880ae1-e39e-445f-b0f1-2463ed7532e0",
+      "realCallBudget": 0
+    },
+    "commands": [
+      {
+        "command": "/usr/bin/pkgbuild",
+        "args": [
+          "--nopayload",
+          "--identifier",
+          "com.oasis.f.controlled-installer.571d406f3892c55e63c1fbf4",
+          "--version",
+          "0.1.0",
+          "--scripts",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Scripts",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/component.pkg"
+        ],
+        "stdout": "pkgbuild: Adding top-level postinstall script\npkgbuild: Wrote package to /Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/component.pkg\n"
+      },
+      {
+        "command": "/usr/bin/productbuild",
+        "args": [
+          "--distribution",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build/Distribution.xml",
+          "--package-path",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg.build",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg"
+        ],
+        "stdout": "productbuild: Wrote product to /Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-native-installer-20261029/DSH-Oasis Controlled Upgrade R3.pkg\n"
+      }
+    ],
+    "signed": false,
+    "notarized": false,
+    "formalReleaseAccepted": false,
+    "realCallBudget": 0
+  },
+  "executedNativeSource": {
+    "ppid": 54372,
+    "command": "/tmp/PKInstallSandbox.8Af1Vr/Scripts/com.oasis.f.controlled-installer.571d406f3892c55e63c1fbf4.K2wbQC/resources/bundle/payload/node/bin/node /tmp/PKInstallSandbox.8Af1Vr/Scripts/com.oasis.f.controlled-installer.571d406f3892c55e63c1fbf4.K2wbQC/resources/companion/scripts/f-installer-transaction.mjs --package /tmp/PKInstallSandbox.8Af1Vr/Scripts/com.oasis.f.controlled-installer.571d406f3892c55e63c1fbf4.K2wbQC/resources/request.json 571d406f3892c55e63c1fbf424a9995e6cc22b3a0c3f956cbcde9d64772634c4",
+    "executed": "/private/tmp/PKInstallSandbox.8Af1Vr/Scripts/com.oasis.f.controlled-installer.571d406f3892c55e63c1fbf4.K2wbQC/resources/companion/scripts/f-installer-transaction.mjs",
+    "sourceSHA256": "f5eaa81c14b6c28eae6d6c2419ef5d0f46bff7784f8fcc3b4e3f6b47af61e09f",
+    "requestSHA256": "571d406f3892c55e63c1fbf424a9995e6cc22b3a0c3f956cbcde9d64772634c4",
+    "actualBundleSHA256": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9",
+    "actualUidReceiptWillBeChecked": true,
+    "realCallBudget": 0
+  },
+  "tests": {
+    "newRegressions": 3,
+    "redFail": 3,
+    "greenAffectedPass": 16,
+    "allScriptsTool": 150,
+    "allScriptsActualApp": 150,
+    "exitCodes": [
+      0,
+      0
+    ]
+  },
+  "realFailures": {
+    "native-upgrade-r3-recovered.json": {
+      "outcome": {
+        "code": 1,
+        "signal": null,
+        "exitCode": 1,
+        "currentValid": true,
+        "current": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+        "transactionSHA256": "0778d0970986d71575f25fefc6c2309844204b3a7f919cbf4fab86062d732109",
+        "transactionRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/a5880ae1-e39e-445f-b0f1-2463ed7532e0",
+        "dispatches": 1,
+        "outcome": "FAILED_OR_UNKNOWN_NO_RETRY"
+      },
+      "restored": {
+        "status": "F_INSTALLED_CANDIDATE_CHECKED",
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C",
+        "dataRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data",
+        "current": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+        "checkpoint": 3,
+        "releases": [
+          "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1"
+        ],
+        "realCallBudget": 0,
+        "arbitraryLegacyWriterEnforced": false,
+        "outerInstallerReleaseAccepted": false
+      },
+      "sameNinePublicFiles": true,
+      "afterData": {
+        "data/home/storages/f_install_public.json": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+        "data/home/storages/workspace.json": "6ff325cbdd2b9dc60482ae3659719c872b60a45a0300ea3b1e483466ce25c78c",
+        "data/home/storages/oasis_workbench.json": "4182dfb2d5fbf403eb3eff30a77604e3eb9456ebd5b0cf35afa782af2510fce5",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/000003.log": "d60775908f01f33fe8ac1be2d250b0a8234d2599d9ad6c8e3121a331b9949302",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/CURRENT": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOCK": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG": "724bac56edb3a65c1ac13bfa01470f4260767c01d9f3f6ec8638200f3fe25c00",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG.old": "e049b757cc207695777534815b6d02688a6932712a262e1b1a887453fa605094",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/MANIFEST-000001": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed"
+      },
+      "nativeReceipt": {
+        "schemaVersion": 1,
+        "uid": 501,
+        "gid": 20,
+        "pid": 54372,
+        "parentPid": 54367,
+        "requestSHA256": "571d406f3892c55e63c1fbf424a9995e6cc22b3a0c3f956cbcde9d64772634c4",
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C",
+        "action": "upgrade",
+        "completedAtUTC": "2026-10-29T00:14:53.568Z",
+        "exitCode": 1,
+        "realCallBudget": 0
+      },
+      "realCallBudget": 0
+    },
+    "repair-process-group-kill-recovered.json": {
+      "result": {
+        "status": "F_INSTALLED_CANDIDATE_CHECKED",
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C",
+        "dataRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data",
+        "current": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+        "checkpoint": 3,
+        "releases": [
+          "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1"
+        ],
+        "realCallBudget": 0,
+        "arbitraryLegacyWriterEnforced": false,
+        "outerInstallerReleaseAccepted": false
+      },
+      "afterData": {
+        "data/home/storages/f_install_public.json": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+        "data/home/storages/workspace.json": "6ff325cbdd2b9dc60482ae3659719c872b60a45a0300ea3b1e483466ce25c78c",
+        "data/home/storages/oasis_workbench.json": "4182dfb2d5fbf403eb3eff30a77604e3eb9456ebd5b0cf35afa782af2510fce5",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/000003.log": "d60775908f01f33fe8ac1be2d250b0a8234d2599d9ad6c8e3121a331b9949302",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/CURRENT": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOCK": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG": "724bac56edb3a65c1ac13bfa01470f4260767c01d9f3f6ec8638200f3fe25c00",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG.old": "e049b757cc207695777534815b6d02688a6932712a262e1b1a887453fa605094",
+        "data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/MANIFEST-000001": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed"
+      },
+      "sameNinePublicFiles": true,
+      "quarantine": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/installer-transactions/public-process-group-kill-r3/quarantined-release",
+      "realCallBudget": 0
+    }
+  },
+  "finalRuntime": {
+    "atUTC": "2026-10-29T00:18:11.670970+00:00",
+    "argv": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/control/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/control/scripts/f-installed-runtime.mjs",
+      "--check",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"status\":\"F_INSTALLED_CANDIDATE_CHECKED\",\"root\":\"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C\",\"dataRoot\":\"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/data\",\"current\":\"f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1\",\"checkpoint\":3,\"releases\":[\"f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1\"],\"realCallBudget\":0,\"arbitraryLegacyWriterEnforced\":false,\"outerInstallerReleaseAccepted\":false}\n",
+    "stderr": "",
+    "rootLocksAndMarkerAbsent": true,
+    "port57593Closed": true,
+    "guiExitCode": 0,
+    "businessInputAndUnsentNativeDraftObserved": true,
+    "businessRunOrdersEmpty": true,
+    "unknown": {
+      "status": "UNKNOWN",
+      "requestId": "F-INSTALL-PUBLIC-20261028",
+      "dispatches": 0
+    },
+    "newRealCallsFeesPush": 0,
+    "fullF": "OPEN"
+  },
+  "preservation": {
+    "atUTC": "2026-10-29T00:20:05.488262+00:00",
+    "original270And21": true,
+    "originalEightFrozenSources": true,
+    "actualSourceChangedOnly": [
+      "scripts/f-installer-transaction.mjs"
+    ],
+    "original3633Tracked": true,
+    "otherWorktree86": true,
+    "remoteRefsUnchanged": true,
+    "preflightDrift": [],
+    "priorSevenPacketsAnd35LinksAnd17Proof": "prior independently audited retention files; final closure will recheck exact originals",
+    "errors": []
+  },
+  "fullF": "OPEN",
+  "formalReleaseAccepted": false,
+  "unsigned": true,
+  "notarized": false,
+  "newRealCallsUploadsSendsFeesPush": 0,
+  "independentReauditPending": true
+}

@@ -1,3 +1,13 @@
+## 2026-10-29 F原生PKG与显式失败恢复获Max限定接受
+
+新增macOS原生受控PKG及独立operator恢复API。R2系统Installer新装exit0、UID501；R3升级真实pnpm故障exit1后显式恢复，以及精确进程组SIGKILL后显式恢复均通过check，两次各九公开文件逐字节保持，最终GUI双草稿显示/正常退出0、端口/锁释放、公开UNKNOWN派发0。原R3运行时/provider/builder及依赖锁不变。详见[原执行返回](2026-10-29-f-native-installer-return.md)、[A01修复返回](2026-10-29-f-native-installer-A01-repair-return.md)。
+
+[首轮Max FAIL](2026-10-29-f-native-installer-independent-audit.md)发现旧事务可覆盖后来成功版本登记（A01/P2）；首轮270文件/21链接、原失败源码/包及复现保持。新增完整state/current资格约束与持租约后非锁复核，修复185文件/14链接另冻结。[同一GPT6.1 Max复审](2026-10-29-f-native-installer-A01-repair-independent-audit.md)限定关闭A01，新增Critical/P1/P2/Minor均0，报告SHA `d550c3db7d50c08b1d5175d43d34e083c6dd917f4f0577b7d2990644800e44b8`。作者两解释器各150/150；独立干净源码各31/31、原A01拒绝各1/1、接管漂移各3/3。历史失败及旧干净全scripts的忽略输入缺件记录均保留。
+
+**完整F仍OPEN。** 接受仅为私有候选/受控operator伴随API；普通用户持久恢复入口与自助流程、R3新装/系统Installer成功升级回退、外层签名/公证/最终许可分发均未验收。旧未受控writer/OS强制、真实模型/API UNKNOWN及真实附件消费等原出口保持。无新增真实模型/API/上传/核对材料/生成/Send/费用，不读迁认证、不改日常安装、不推送发布。[本地分批提交记录](2026-10-29-f-native-installer-local-commits.md)另列。以下历史原字节保留。
+
+---
+
 ## 2026-10-29 F随包入口及可迁移安装布局接续：Max限定接受，完整F开放
 
 按用户“接受随包入口子集，完整F仍开放”推进。R3离线包排除旧依赖链接并在最终安装路径物化，安装级双锁及provider构造前租约约束受支持desktop/sdk/recovery/maintenance。实际新根自有v3→v4→原v3保留两份草稿的v4新增编辑；两次切换各三JSON/六IDB原字节保持，公开UNKNOWN派发0，三次R3 GUI退出0。作者两解释器原各134/134；运行中六入口拒绝且回调0。
