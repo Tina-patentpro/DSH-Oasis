@@ -1,3 +1,15 @@
+## 2026-10-29 F普通用户持久恢复与R3原生生命周期：Max接受A01-R2子集
+
+本轮新增安装根内独立恢复入口、原发布回执/计划绑定和中文明确确认，原固定runtime/provider及依赖锁不变。新R2系统Installer新装v3、成功升v4、指定回退v3各exit0/UID501；升级、回退、确认恢复前后各九公开文件逐字节相等，四次GUI退出0，升级后的原生/业务新增编辑均保留。持久入口真实PTY预览取消27850身份不变，再明确恢复后check0、端口/锁释放、公开UNKNOWN派发0。详见[修订回执](2026-10-29-f-user-recovery-A01-repair-return.md)及[433文件/14链接执行包](2026-10-29-f-user-recovery-A01-repair-execution.json)。
+
+[首轮Max FAIL](2026-10-29-f-user-recovery-independent-audit.md)发现F-UR-A01/P2：shell前导在完整性检查前执行继承PATH的dirname。原334/14、原包和失败源码归档保留；仅修复两个前导的PATH/绝对命令，新增两回归RED→GREEN。[同一GPT6.1 Max独立复审](2026-10-29-f-user-recovery-A01-repair-independent-audit.md)在新冻结0497…/准确R2范围关闭A01，新增Critical/P1/P2/Minor必改项均0，报告SHA `da6da0899713e8532d257a918821a8465416204e6e716be679df470289ac53de`。作者两解释器脚本各168/168，独立干净源码各49/49及用户路由各10/10；三PKG、31417成员失败候选归档、COW全树、全部旧十包和五份195pin/17原件/另一工作树86均独立核对。
+
+修订R1初装曾ENOSPC/exit1，原部分程序、marker、三whole包和日志保持，未在该根重试，也不补签为初装恢复通过。另记COW维护仅对准确相同副本共享字节，原文件字节/模式/链接保留，不声称inode/时间/扩展属性等价。新R2另根、另请求、另包完成验证；旧FAIL、原计划及送审原字节由本节与复审接续，下面历史不改写。
+
+**完整F仍OPEN。** 本次仅私有受控入口/自有R3版本子集；工具跨版本迁移、初装/回退/恢复自身中断、旧未受控writer/OS强制、真实UNKNOWN/附件/产物消费、跨平台/多Renderer及外层签名公证/正式许可分发、专业与真人接受均未关闭。无新增业务模型/API/上传/生成/Send/费用，不读迁认证、不改日常App/Profile，不推送发布。[本地分批记录](2026-10-29-f-user-recovery-local-commits.md)另列。
+
+---
+
 ## 2026-10-29 F原生PKG与显式失败恢复获Max限定接受
 
 新增macOS原生受控PKG及独立operator恢复API。R2系统Installer新装exit0、UID501；R3升级真实pnpm故障exit1后显式恢复，以及精确进程组SIGKILL后显式恢复均通过check，两次各九公开文件逐字节保持，最终GUI双草稿显示/正常退出0、端口/锁释放、公开UNKNOWN派发0。原R3运行时/provider/builder及依赖锁不变。详见[原执行返回](2026-10-29-f-native-installer-return.md)、[A01修复返回](2026-10-29-f-native-installer-A01-repair-return.md)。

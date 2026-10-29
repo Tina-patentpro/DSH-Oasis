@@ -1,0 +1,2541 @@
+{
+  "schemaVersion": 1,
+  "id": "F-USER-RECOVERY-A01-REPAIR-20261029-R2",
+  "atUTC": "2026-10-29T07:06:56.744848+00:00",
+  "baseHEAD": "57e8edf2fe29341546caaf663558ae454c1756c2",
+  "firstPacketSHA256": "4139d900c4524aa8496951294f375ec71d60c0cc5c1672d7e449db7edae85c3e",
+  "firstAudit": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-user-recovery-independent-audit.md",
+    "sha256": "8fce619f722d180b6c889405ef9bed23d8a5e8f3e7cd2dbb6aea928fab5d4e7c",
+    "result": "FAIL",
+    "finding": "F-UR-A01/P2"
+  },
+  "originalSourceArchives": {
+    "scripts/f-user-recovery.mjs": {
+      "originalSHA256": "d035347f5e7fd6d46b7efa6821a01dffdc52e4d44323997436a3297c2cdb6ee3",
+      "trackedArchive": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-user-recovery-audit-original-entry.mjs.txt",
+      "sameBytes": true
+    },
+    "scripts/f-native-installer.mjs": {
+      "originalSHA256": "026caaade578e65b3f916bf345d97738639f93ce530a9f1b93ff69b3afb621ab",
+      "trackedArchive": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-user-recovery-audit-original-native-installer.mjs.txt",
+      "sameBytes": true
+    }
+  },
+  "source": {
+    "scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/f-installed-runtime.mjs"
+    },
+    "scripts/f-installer-transaction.mjs": {
+      "sha256": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/f-installer-transaction.mjs"
+    },
+    "scripts/f-native-installer.mjs": {
+      "sha256": "37eb5e87693d03b5c57a82a0a9b4f4f5758a48a37f9ae2404cfda1e7f72ffe2f",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/f-native-installer.mjs"
+    },
+    "scripts/f-user-recovery.mjs": {
+      "sha256": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/f-user-recovery.mjs"
+    },
+    "scripts/tests/f-user-recovery.test.mjs": {
+      "sha256": "0b6a45b5058b3d16b15bca3083be3f673f428fe98eb58552be70ddf302c44345",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/tests/f-user-recovery.test.mjs"
+    },
+    "scripts/tests/f-native-lifecycle.test.mjs": {
+      "sha256": "0d2333025d361f5e2ea3b4bb005529807570ef444cd7b47dfe1351b8bda3c352",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/tests/f-native-lifecycle.test.mjs"
+    },
+    "scripts/tests/f-shell-entry-environment.test.mjs": {
+      "sha256": "55ec93d6149c7a6394a490268eb81a6124bdc6d8c91739a253eab8ce26303697",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/tests/f-shell-entry-environment.test.mjs"
+    },
+    "docs/plans/2026-10-29-f-user-recovery-native-lifecycle.md": {
+      "sha256": "790de00fc5fbd1b08e2fcf9dd02f980a7a08f04b12fd71987c33d92190cef894",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/docs/plans/2026-10-29-f-user-recovery-native-lifecycle.md"
+    },
+    "docs/evidence/2026-10-29-f-user-recovery-A01-repair-return.md": {
+      "sha256": "1e9d33993ac30e0133717b6f5b7c7541dc921f425c3807e00bd200730c4f1ef0",
+      "frozen": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/docs/evidence/2026-10-29-f-user-recovery-A01-repair-return.md"
+    }
+  },
+  "members": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-20261029/public R3 A01 R1 ' root/RECOVERY_REQUIRED": {
+      "sha256": "fa4096bc7a24b29c7bebce4d84cf15d6432ba0635dabde0dea485ba04bdccbd6",
+      "bytes": 66
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-20261029/public R3 A01 R1 ' root/control/scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-527571d6-6b98-49c5-b94f-cb71262a859f.exit.json": {
+      "sha256": "e8715447b2d5f75608ac2f8fd89b2e42aeb8bf03c34914ca788caa56d870a1e8",
+      "bytes": 78
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-527571d6-6b98-49c5-b94f-cb71262a859f.json": {
+      "sha256": "a239e3bf02ffdec6819dea7edaa59ad95ccc824dabefbe0c523b4454798aa164",
+      "bytes": 302
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-527571d6-6b98-49c5-b94f-cb71262a859f.stderr.log": {
+      "sha256": "10246d40fe49d4a2913a745c10806584ce953071feea546e1663a09f3170ecbd",
+      "bytes": 169
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-527571d6-6b98-49c5-b94f-cb71262a859f.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-6186a710-e17d-4bd3-b198-a01f180e04e6.exit.json": {
+      "sha256": "85beb6ec42cdb8df8752337204941a4e30f4aa96429ae9100d0409c5104d85b0",
+      "bytes": 78
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-6186a710-e17d-4bd3-b198-a01f180e04e6.json": {
+      "sha256": "85a91f00d36239376843e23c24959d4e92510ed93fc21e3018a50cb0e37528c4",
+      "bytes": 302
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-6186a710-e17d-4bd3-b198-a01f180e04e6.stderr.log": {
+      "sha256": "10246d40fe49d4a2913a745c10806584ce953071feea546e1663a09f3170ecbd",
+      "bytes": 169
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-6186a710-e17d-4bd3-b198-a01f180e04e6.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-7a23079f-c0fc-4e38-a352-ef73fed89090.exit.json": {
+      "sha256": "282bac0338944a6d740f7ce709faee10ec6463c6b74583500667e25ab987305e",
+      "bytes": 78
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-7a23079f-c0fc-4e38-a352-ef73fed89090.json": {
+      "sha256": "1c674490ab620a8218460b76815c3f9abcb7fe4818a48e63adc89bb65edcd15b",
+      "bytes": 302
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-7a23079f-c0fc-4e38-a352-ef73fed89090.stderr.log": {
+      "sha256": "1de3f3021122d7b52c158d036e7b990d8e5e6837371381e045c5ad236e3b1e4e",
+      "bytes": 654
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-7a23079f-c0fc-4e38-a352-ef73fed89090.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-f3218b08-1a22-4dd4-9a9f-63c224702762.exit.json": {
+      "sha256": "3638aa5482cd3e44a704207f819486618b7bf646abb7bbe2a71d3e0ba38579cc",
+      "bytes": 78
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-f3218b08-1a22-4dd4-9a9f-63c224702762.json": {
+      "sha256": "28c98cbb55f8328f4147bdc3be0684fdb8dddd3f3768df9fe5c6fd9d2574374f",
+      "bytes": 302
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-f3218b08-1a22-4dd4-9a9f-63c224702762.stderr.log": {
+      "sha256": "38a06c89c3bdf8dbda8f9ebd0c5833debe810e752e47c403dbc201b3e57f1482",
+      "bytes": 654
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/installed-launch-f3218b08-1a22-4dd4-9a9f-63c224702762.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/native-request-2a11d2c2-431d-4232-a518-1d6ba67773e5.json": {
+      "sha256": "3b0853e387c74d369f3108ecf3fd19c599b1bd9bdbab33277e21270835217e95",
+      "bytes": 420
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/native-request-6575f487-b436-4a54-99bc-3b0493e65041.json": {
+      "sha256": "87bc1f63e7dbaca79ee2991674798a90677617384aa5e76f19303425fb1d46ab",
+      "bytes": 420
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/evidence/native-request-c4f402fb-f2a8-4afa-a30f-cbdb59ef90bd.json": {
+      "sha256": "c9ebeec458cb9cdec1b4c1c752f5c4d10bef89cac78657fe9ed7fbc89ccb92f0",
+      "bytes": 421
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-receipts/6575f487-b436-4a54-99bc-3b0493e65041.2e4315a0557e60082758b6b3387830df80dc0533c46d3b366ba581c2131ab3fb.json": {
+      "sha256": "2e4315a0557e60082758b6b3387830df80dc0533c46d3b366ba581c2131ab3fb",
+      "bytes": 806
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-receipts/user-entry-interruption-a01-r2.354b21920937f43a356b774906a34f84a9390db1b2b58e0c80097147dbe137bb.json": {
+      "sha256": "354b21920937f43a356b774906a34f84a9390db1b2b58e0c80097147dbe137bb",
+      "bytes": 794
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-installation.json": {
+      "sha256": "25cc556ae05dbb0b19a01a157498b8255b89723273d887ab2b48f9eac3c62bb5",
+      "bytes": 980
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/cordis.patch.yml": {
+      "sha256": "7ffa557aa1a2fdcf6227eee2da99db250706e557a7f78b2870c2cbff9cf18b8c",
+      "bytes": 1970
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/cordis.yml": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/.modules.yaml": {
+      "sha256": "e14a9c051dad30ee99f93ba4d22bdfc8f37873b7db8bba8d3e1d66c113bc9c06",
+      "bytes": 711
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/.package-map.json": {
+      "sha256": "00a9231e5a9e6a5de5d30390f337e5d22d45f39004dac227925dbf2bcb006c1b",
+      "bytes": 2707
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/.pnpm-workspace-state-v1.json": {
+      "sha256": "5bcb7806014ce33e4d1a6dc59f3c32ddc1bb390ddfa451123cd6fd5446b69854",
+      "bytes": 1069
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/.pnpm/lock.yaml": {
+      "sha256": "c7102597f2a05154d8f2dc72943ceab7116e3a6e983b24e761684c1e630dec82",
+      "bytes": 2874
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/package.json": {
+      "sha256": "d31e967e1c26496ad10dbc3748f38ad810307746f390097f219f9da4f61e0250",
+      "bytes": 2187
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/pnpm-lock.yaml": {
+      "sha256": "c7102597f2a05154d8f2dc72943ceab7116e3a6e983b24e761684c1e630dec82",
+      "bytes": 2874
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/pnpm-workspace.yaml": {
+      "sha256": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba",
+      "bytes": 61
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/child.json": {
+      "sha256": "db040e746eb411fe09fd9931eedd8d2a09e23b3c11df9924241755219ba0b012",
+      "bytes": 90
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/dispatch.json": {
+      "sha256": "331ba6b7f010a2d6c494ceb6fe4bf7b1ed6301c52d9aabbe9bb5151f531ecb90",
+      "bytes": 910
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/outcome.json": {
+      "sha256": "404ab2f2ffe429fd3a6f8137bd70f9691857c6a72cbe7955b2c7c3f92b0a7ce9",
+      "bytes": 495
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/transaction.json": {
+      "sha256": "d8ed11dd5f5e8499cbef238b5b69dd77a8e1827dbd26f34462d3b899131862a1",
+      "bytes": 3753
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/upgrade.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/upgrade.stdout.log": {
+      "sha256": "fa3146fc21fc8a141c00018e3923defd8bb8b60fc310da1500cdabf78b6370cd",
+      "bytes": 642
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-installation.json": {
+      "sha256": "1934c7d26d0c81723daa45c92616c719ada7b7358d3ec6138f5e09d54eff90d0",
+      "bytes": 1120
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/cordis.patch.yml": {
+      "sha256": "7ffa557aa1a2fdcf6227eee2da99db250706e557a7f78b2870c2cbff9cf18b8c",
+      "bytes": 1970
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/cordis.yml": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/.modules.yaml": {
+      "sha256": "e14a9c051dad30ee99f93ba4d22bdfc8f37873b7db8bba8d3e1d66c113bc9c06",
+      "bytes": 711
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/.package-map.json": {
+      "sha256": "00a9231e5a9e6a5de5d30390f337e5d22d45f39004dac227925dbf2bcb006c1b",
+      "bytes": 2707
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/.pnpm-workspace-state-v1.json": {
+      "sha256": "5bcb7806014ce33e4d1a6dc59f3c32ddc1bb390ddfa451123cd6fd5446b69854",
+      "bytes": 1069
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/.pnpm/lock.yaml": {
+      "sha256": "c7102597f2a05154d8f2dc72943ceab7116e3a6e983b24e761684c1e630dec82",
+      "bytes": 2874
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/package.json": {
+      "sha256": "d31e967e1c26496ad10dbc3748f38ad810307746f390097f219f9da4f61e0250",
+      "bytes": 2187
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/pnpm-lock.yaml": {
+      "sha256": "c7102597f2a05154d8f2dc72943ceab7116e3a6e983b24e761684c1e630dec82",
+      "bytes": 2874
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/pnpm-workspace.yaml": {
+      "sha256": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba",
+      "bytes": 61
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/child.json": {
+      "sha256": "6a647ed692da7af587d269a7b30d5b865b7463d39446f64cb98afbb5eec1bb30",
+      "bytes": 90
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/dispatch.json": {
+      "sha256": "a9fc3e6d6718e31130bc1b2a8987ec54d3e9e389d887e8c037cacdc48fe65214",
+      "bytes": 903
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/failed-profile/cordis.patch.yml": {
+      "sha256": "997bf3d3d7d9137aed00233048e047816e246026b8f70c1d0fbc7cd7570279c4",
+      "bytes": 1970
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/failed-profile/cordis.yml": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/failed-profile/package.json": {
+      "sha256": "70a6ca80331a85e6a6cc2d9a5bce07b431092a16340e383436018c07ab688801",
+      "bytes": 2187
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/failed-profile/pnpm-workspace.yaml": {
+      "sha256": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba",
+      "bytes": 61
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/outcome.json": {
+      "sha256": "b79509f83d49d8294dd394af5cd4029c06c7ecb065cb710bbc55ee67e96c8689",
+      "bytes": 453
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/recovery-result.json": {
+      "sha256": "5e483b3872e7afb576713b11a6f9c9894e6fa9237a52bc7dad3535a7b8b12bc6",
+      "bytes": 182
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/stale-lock-0.json": {
+      "sha256": "700b122d37430ad7ff84add6d7c91735b1822fe651eb28dfb24fc857d8875fb1",
+      "bytes": 561
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/stale-lock-1.json": {
+      "sha256": "700b122d37430ad7ff84add6d7c91735b1822fe651eb28dfb24fc857d8875fb1",
+      "bytes": 561
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/transaction.json": {
+      "sha256": "8bdc6b59ddfa4f12ebe334c41e040003c5dbf4cec14afd985c03d78105cbfe60",
+      "bytes": 3740
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/upgrade.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/upgrade.stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/user-recovery-confirmation.json": {
+      "sha256": "6d17ac411901d7d3490565b33926c6e9e200cbd6e6cabcea46a00bdb9c30e5f9",
+      "bytes": 1903
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/maintenance/1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48/README.txt": {
+      "sha256": "4b11b92d6c7c57a0089b9d88c74ed79546a9fbb27bd9b2667ac1717ba1ea114f",
+      "bytes": 493
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/maintenance/1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48/manifest.json": {
+      "sha256": "aa505e966cd964deff9fc8f5065286904c43ec4991a663677cbe379273bf04c1",
+      "bytes": 1535
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/maintenance/1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48/patches/storage-json-single-owner/installed-lease.mjs": {
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "bytes": 5372
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/maintenance/1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48/patches/storage-json-single-owner/ownership.mjs": {
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+      "bytes": 1902
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/maintenance/1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48/scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/maintenance/1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48/scripts/f-installer-transaction.mjs": {
+      "sha256": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+      "bytes": 17179
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/maintenance/1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48/scripts/f-user-recovery.mjs": {
+      "sha256": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049",
+      "bytes": 12884
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/恢复DSH-Oasis.command": {
+      "sha256": "6826f2b3909f6f58f6abaac5fa34815ee17e0bc61f7260c828738baf495c5837",
+      "bytes": 4096
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/affected-actual-app.json": {
+      "sha256": "e1715bc5d0da0150a7e1cf8ab26a5152a2ddbfa5f50a6a746f9d4edb66da5542",
+      "bytes": 1310
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/affected-actual-app.log": {
+      "sha256": "2c35de5e8c0a8a66f06e56905b5dd5512078159670b8555c49ea36607495b95a",
+      "bytes": 5691
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/affected-tool.json": {
+      "sha256": "b31cf865f548dad523d16e717a68466315b5b1097f243f32c732f65d6d875f12",
+      "bytes": 1138
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/affected-tool.log": {
+      "sha256": "b6d631b73a4ab1b6e801ff32788109820253a9c13a2a0bd55e12feec390d100f",
+      "bytes": 5699
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/clean-source.json": {
+      "sha256": "e23e53765b4f08ba6aebf70f9c94b509e5d955906c96569487242889fc44d015",
+      "bytes": 795
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/current-app-signature.json": {
+      "sha256": "e42eb361695a02d59886bc381f84f8150d1ba3e9c1285f4ca8af1a7d429f49ee",
+      "bytes": 718
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/data-and-runtime-independent.json": {
+      "sha256": "2acf9fc7993a26083239be172c88aa62cdade9a00f4af1cc0f8282e3115dba2c",
+      "bytes": 1338
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/execution-preflight.json": {
+      "sha256": "94ddba16f5a3304aa797fef2eaffc3f3ed38982ae3efe262077626f097fb7d80",
+      "bytes": 14174
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/final-closeout.json": {
+      "sha256": "8c061e68ec8f55438bf1991fc4ae6f29ddfb2d808a273224786592e589f1df8d",
+      "bytes": 2459
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/installation-metadata-before.json": {
+      "sha256": "efefd0128b3c90044d65f0017c6874ad95e40059ba32f2983715e26c20813db5",
+      "bytes": 20291742
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/installed-check.json": {
+      "sha256": "602c17deb7195c652342f9302dee73f3dc6b3ae53cf491c338d37500d29ddc97",
+      "bytes": 1502
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/installed-list.json": {
+      "sha256": "a4b853eca94f7bf256e2493996fbcc662223632bc55be4ebc6ef8e73f46a3856",
+      "bytes": 806
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/native-path-preflight-reproduction.json": {
+      "sha256": "0f23c5093845048b7de23d043252db8fc524d4b34984d46bc02f3eb43fda8135",
+      "bytes": 4196
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/path-preflight-fixture/bin/dirname": {
+      "sha256": "b0eedfc2d2c5e4ff3a459e9bdab71d8328785fc9970a63b3c45357f446ecf70b",
+      "bytes": 262
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/path-preflight-fixture/dirname-executed-before-any-integrity-check.txt": {
+      "sha256": "dafdf443cf864d664a2df55060c29e54cc3171befc22a7f0c7ba950b7ed07fad",
+      "bytes": 31
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/path-preflight-fixture/恢复DSH-Oasis.command": {
+      "sha256": "753de3892032805030e5339ce1b00771f48f2401ae14fb390ee8849de7b9438c",
+      "bytes": 4033
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/path-preflight-reproduction.json": {
+      "sha256": "fc40577aaf77e775f3bb817ab1e17bd80542d368429e08e741db981e1633c7b7",
+      "bytes": 1213
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/retention-independent.json": {
+      "sha256": "fc8b5e0e9edf3e21289069ab9a3e5d76c87b36ba4f620a242e72de18a34c357f",
+      "bytes": 6066
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/retention-independent.log": {
+      "sha256": "3c707e14ff414cd86ef08ede269ce3de5d120019f6959053287c0be3126e9225",
+      "bytes": 290
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/stream-verification.json": {
+      "sha256": "1a926f6137dfb9681a11373a7f861088ba317370e72d5e012d2fb5f3cb58ece2",
+      "bytes": 7636
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/stream-verification.log": {
+      "sha256": "c283f65dc7dfe94124563000d199a081d831b36cdb77559e3b18064cc0fe6efe",
+      "bytes": 183
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/user-route-actual-app.json": {
+      "sha256": "977eeaf75f5b0a20adc077b5ee3a432168f6441e8c03719867865df43035679c",
+      "bytes": 1021
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/user-route-actual-app.log": {
+      "sha256": "69d5e3aeb7b0cb4d8d3441d197b75f6f748daff0aef03180b8d69b68b29c9d8a",
+      "bytes": 1265
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/user-route-probes.test.mjs": {
+      "sha256": "cfb4938c7b70adb683b7597f06f69e0fc2102c83ea1ae03ddff636b650634b41",
+      "bytes": 7423
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/user-route-tool.json": {
+      "sha256": "f42f1a82d22f45a9321d3fc183c863621001b29fa8efc9337dd39b89348c2760",
+      "bytes": 849
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/user-route-tool.log": {
+      "sha256": "695d04bfa56db91bb933e2d97eab2e691afb4667b22c34c09cb28b1e293c1d8e",
+      "bytes": 1264
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/verify-retention-independent.py": {
+      "sha256": "c4015a57ecfafe4633a22981bdec0cce4be67ce18194214c7b333da55d392f2f",
+      "bytes": 5743
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-20261029/audit-independent/verify-streams.py": {
+      "sha256": "5bcb4335818bd26160756777a59fb407e0076dfb2e8dec4f22caf4017c0907c2",
+      "bytes": 9661
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/A01-execution-preflight.json": {
+      "sha256": "b7f9d60cc4704e4d718412759b73c77a289b0c728634e7274edea47a29f83d72",
+      "bytes": 7769
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg": {
+      "sha256": "c3ccc4113979970ac19631b11a08ab8e19788edc26a94209c8027fe396514910",
+      "bytes": 549540298
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg.build/Distribution.xml": {
+      "sha256": "7043c2d06923e755fd79c01ae6d7ccb768e858d087bd2504d43713a407f8537d",
+      "bytes": 613
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg.build/Scripts/postinstall": {
+      "sha256": "d40c14b9db76f014a18d82b1f9179d337a84de6a6fff969a84bf0d6103fbd6b7",
+      "bytes": 457
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg.build/Scripts/resources/bundle/bundle.json": {
+      "sha256": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+      "bytes": 4988760
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/installed-lease.mjs": {
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "bytes": 5372
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/ownership.mjs": {
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+      "bytes": 1902
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg.build/Scripts/resources/companion/scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg.build/Scripts/resources/companion/scripts/f-installer-transaction.mjs": {
+      "sha256": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+      "bytes": 17179
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg.build/Scripts/resources/companion/scripts/f-user-recovery.mjs": {
+      "sha256": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049",
+      "bytes": 12884
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg.build/Scripts/resources/request.json": {
+      "sha256": "5ce6f643f2631381b07dc44e18f003476d6aaf8d8602c7c78b9ef07a7ff71a1b",
+      "bytes": 1092
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg.build/build-receipt.json": {
+      "sha256": "26127d823e2ed6eaa21040cf695ef75c66de24363ca5a1167be3784b600a697e",
+      "bytes": 3941
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg": {
+      "sha256": "70672ed40e401208b96c5fd2d158ff80c0470a6b28c03cb7dd32dc9dd208fddc",
+      "bytes": 40508758
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/Distribution.xml": {
+      "sha256": "71f3cbeca81cbcd1ca6ea07fe501ffdf26b0555cab6f36b1ce9c1dfacb56f90f",
+      "bytes": 613
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/Scripts/postinstall": {
+      "sha256": "af005f8720a2e79934ae74a0bad0d8f07cac98c6c203ed5143f115a4c887578b",
+      "bytes": 440
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/installed-lease.mjs": {
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "bytes": 5372
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/ownership.mjs": {
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+      "bytes": 1902
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/Scripts/resources/companion/scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/Scripts/resources/companion/scripts/f-installer-transaction.mjs": {
+      "sha256": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+      "bytes": 17179
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/Scripts/resources/companion/scripts/f-user-recovery.mjs": {
+      "sha256": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049",
+      "bytes": 12884
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/Scripts/resources/request.json": {
+      "sha256": "5321d63e5c86306c52ffc2e19e2c613d9cd47d6b42d6b3b85e405e2999134b71",
+      "bytes": 1182
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/Scripts/resources/runner-node": {
+      "sha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b",
+      "bytes": 122129232
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/Scripts/resources/target-bundle.json": {
+      "sha256": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+      "bytes": 4988760
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg.build/build-receipt.json": {
+      "sha256": "13740abcfcec215a34e0a20bc3947cdbc0c5aa1eefaec124f85290f0847e35ad",
+      "bytes": 4082
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg": {
+      "sha256": "71612cddfa1ce0863d8e30077e27c5d9acc92aabebb60569a91de84a0c21483d",
+      "bytes": 549532739
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg.build/Distribution.xml": {
+      "sha256": "c96811be76d7c81376797179b7c9db37c48d837be316b54c40e8653d0781d8eb",
+      "bytes": 613
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg.build/Scripts/postinstall": {
+      "sha256": "17d58307e2324ecb610a9db1f92d6492ca8bd436d5b8e521065e40e6870cffb6",
+      "bytes": 457
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg.build/Scripts/resources/bundle/bundle.json": {
+      "sha256": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9",
+      "bytes": 4988759
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/installed-lease.mjs": {
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "bytes": 5372
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/ownership.mjs": {
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+      "bytes": 1902
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg.build/Scripts/resources/companion/scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg.build/Scripts/resources/companion/scripts/f-installer-transaction.mjs": {
+      "sha256": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+      "bytes": 17179
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg.build/Scripts/resources/companion/scripts/f-user-recovery.mjs": {
+      "sha256": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049",
+      "bytes": 12884
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg.build/Scripts/resources/request.json": {
+      "sha256": "d3f1f58cf9eb82d6837e416e00c34ede19aa87236a0a00b08122151a2328d57b",
+      "bytes": 1181
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg.build/build-receipt.json": {
+      "sha256": "4c1497b0c7fc4074ee3a55d7f6df94d06c47b94b84ea16a935dd2e15b385500e",
+      "bytes": 4032
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/archive-own-quarantine.py": {
+      "sha256": "e005b5ebadcb0454564a327d4aedb2bc17a54385ba5f92b92899d2e961055c6c",
+      "bytes": 2178
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-install-dispatch.json": {
+      "sha256": "b16f0594d51a58c41f6cbd4fa1816c82a86f8c5088da9b1546a6dea0b91be718",
+      "bytes": 171
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-install-exit.json": {
+      "sha256": "f9c4cfea65229f61dd8d9256a202161201129a24a7de8eb23521986d3ae1509a",
+      "bytes": 172
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-install.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-install.stdout.log": {
+      "sha256": "c8498f3f308b904e829be9f92daa0e9b4ca41ea97be37998b93e3ca60ea62903",
+      "bytes": 3510
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-rollback-dispatch.json": {
+      "sha256": "51600e152fdf8c1dd5a2437a7009da2ff3b9f45d9f0c1449e009f985ff291ccf",
+      "bytes": 172
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-rollback-exit.json": {
+      "sha256": "81bdd3534cdf6a31e2b8aed463232a97d1402d2f382285f1885f329ee6297602",
+      "bytes": 173
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-rollback.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-rollback.stdout.log": {
+      "sha256": "06fa18a08bbc41024920e03b4a51f4ebf8658265de9d7e766618bfe9b1e558e0",
+      "bytes": 3645
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-upgrade-dispatch.json": {
+      "sha256": "44bf2272ee53d81fbe101a50a033191748828cd267972a0588c8624d106541ae",
+      "bytes": 171
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-upgrade-exit.json": {
+      "sha256": "83b8cd9d06c4a5a336da283f2eb1b4b89a7ff573d290829c922c604f5b0c3af7",
+      "bytes": 172
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-upgrade.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/build-upgrade.stdout.log": {
+      "sha256": "0f71609cfe06f1d4171b9542714cf608eee7306036b5048304807c6a67678d9f",
+      "bytes": 3595
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cancel-observation.py": {
+      "sha256": "7c858d62fab09bcdb865603019b67daa2fe988498b7e486a887af12182982fc6",
+      "bytes": 1558
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/code-before-native.json": {
+      "sha256": "14d272a88ba70551ca33eee5af833211d97768b2e01827e78377b616b33ba199",
+      "bytes": 771
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/compact-control-nodes.py": {
+      "sha256": "66fc5807662d4e5a7de10be07f287e97e2c701e87903385a3021705938896ba5",
+      "bytes": 1585
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/compact-controls-under-lease.mjs": {
+      "sha256": "6ca32cd4aa692163ac13af185a4f702425291613ff2789c14b157d476a83ed6f",
+      "bytes": 675
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/compact-remaining-duplicates.py": {
+      "sha256": "8148ba07a48266c189bc0848f401edeeebc701727641fba677cd026e4a9b9f66",
+      "bytes": 2902
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/compact-u1-small-under-lease.mjs": {
+      "sha256": "1fc74ca1182e1680108cf66881462482dc28b90a103f2f5d4b3c68932d1b3e69",
+      "bytes": 686
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/compare-public.py": {
+      "sha256": "540e50739c1bf13a56551682ff826bcc2a59c9a57c7c5da4215f05ad59af9dc0",
+      "bytes": 592
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/control-node-COW-preservation.json": {
+      "sha256": "3e056b8a6cc273fa5144ed37d6f1802a57065e612cdbf89e5d478e8e5d3cf36f",
+      "bytes": 1052
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/control-node-after-U1-check.json": {
+      "sha256": "237190fc00481159d7757c0d908c9779e3c66d7c6de36177579daf9798cf7b6b",
+      "bytes": 670
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cow-after-full-check.json": {
+      "sha256": "237190fc00481159d7757c0d908c9779e3c66d7c6de36177579daf9798cf7b6b",
+      "bytes": 670
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cow-deduplicate-new-root.py": {
+      "sha256": "f7d0cdd0453cca3a01d8fc9727f2c15260124144a62ddde3309c459d185eb943",
+      "bytes": 3082
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cow-deduplicate.py": {
+      "sha256": "8b67d094342e63df9d9ae3dacc2d8ef775e2bc707e1605e5044c12d1e895c5f2",
+      "bytes": 3027
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cow-duplicates-verified-before-retirement.json": {
+      "sha256": "b14aae6c662273ecdcd968c54f1ca733963d65a531e79872ebea0d92d776c57d",
+      "bytes": 134067
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cow-new-under-lease.mjs": {
+      "sha256": "d9706ce2193661f21343ba21317f651400b0f043f4a640daa5a6eb98c581915d",
+      "bytes": 714
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cow-space-result.json": {
+      "sha256": "a738fac0e492b10072540d2e92bac30ff5c5127f985f8d2d46f8f746d3053685",
+      "bytes": 245
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cow-under-lease-exit.json": {
+      "sha256": "47b8b6b49d4695fe6e036bd916538aff4f46773e212ca0d429db80f3963e2cfe",
+      "bytes": 15
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cow-under-lease.mjs": {
+      "sha256": "d5a5f8525232aad8adfaa8e3f66d8fa6192cdf620cc0370d542de6b2a1f3b4cb",
+      "bytes": 687
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cow-under-lease.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/cow-under-lease.stdout.log": {
+      "sha256": "a74be112d8a55354d36ab6a164b1a4d5ee5253732c7e3221e2e07034341f77e6",
+      "bytes": 46
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/create-failure-bundle.py": {
+      "sha256": "d58d12897bdb16a9327187f9c30250b972cb81c1df1e575e562b0d922f69b65c",
+      "bytes": 1091
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/failure-interruption.mjs": {
+      "sha256": "b7bd365bdbfe735e62b82e2062977a1f4a5621a041a934a1197537f0d7eca2c8",
+      "bytes": 3316
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/final-observation.py": {
+      "sha256": "addd7c891369e7b8b4c6c2cb1b90f7a251c88e67608f39debfd1f95b3ce03b10",
+      "bytes": 1950
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/final-tests-actual-app.log": {
+      "sha256": "ed341f3a05932c5e5875eb84379b5a6a16372bdb5fdf7ef4089bb28ea18d9315",
+      "bytes": 17611
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/final-tests-tool.log": {
+      "sha256": "6f4506d4d8b67fd71d04e50c89a65d6efe406cc8bd89b8de5f42d71ce8941cc4",
+      "bytes": 17620
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/final-tests.json": {
+      "sha256": "e05d37e4e0ca9e9b9a9f5accfbf9b5cfd4d060fc928bd7fd55fbba174e9e4236",
+      "bytes": 3050
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/first-failed-source-archives.json": {
+      "sha256": "a4a94c98e9e25804509fb4d03b2bd05c09345fb5fa572bb985763e3be2de5980",
+      "bytes": 640
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/install-spec.json": {
+      "sha256": "1f4dff10c5899443df11d8555297294653009b77503a5fb78e8173e1ef03c5fe",
+      "bytes": 659
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/native-action.py": {
+      "sha256": "35cba51d4a9e38d4dc455f7d3562149424c80cf21fc74d42b761ddd1fac31f6b",
+      "bytes": 2758
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/native-install-dispatch.json": {
+      "sha256": "309ca9b47b143ee56ff79b356cd9262ab1fb0c8243de84af8c32957e133649d4",
+      "bytes": 671
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/native-install-exit.json": {
+      "sha256": "797ceb072ada3472ff97554a020381c0d7868d30e91466aa53d9b6e3f42d3db1",
+      "bytes": 276
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/native-install-system-log-extract.txt": {
+      "sha256": "e82102061edcb1185a6f676436024358953d99e78c6cf96d3b092bbdc37e5b73",
+      "bytes": 8747
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/native-install.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/native-install.stdout.log": {
+      "sha256": "876309593ac2d0dc4a572524c887d11258dac00df9fb4b309a494180742ce597",
+      "bytes": 3546
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/r1-failed-COW-byte-preservation.json": {
+      "sha256": "2f42d8f27ea241cfbf342807e1456854695fa9d31f236e788242d941be4a345c",
+      "bytes": 20536657
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/repair-preparation.json": {
+      "sha256": "20e78cb41efc563e2049033b36e376036db39b2776bae392d8296b1302d01bff",
+      "bytes": 3351
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/rollback-spec.json": {
+      "sha256": "2cde44a67b254e9b2c2f6f6f0653cf552b292b0a85747edfab2aa6a133628703",
+      "bytes": 750
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/run-user-entry.py": {
+      "sha256": "64684132c0a4e34ed4d008f2cb36605168742cc4e05b344f6e131046ec4ae92c",
+      "bytes": 872
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/scratch-cow-deduplication.json": {
+      "sha256": "3d07ace1e7513aaa4e7cc4ca90e0e7fc0c53e497772f80daa0a86b25ea787b75",
+      "bytes": 437043
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/seed-sdk.mjs": {
+      "sha256": "917f180021050608e286fa11c88f57865b038afb51c60fa3fb1fcffe66c62a32",
+      "bytes": 528
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/shell-green-exit.json": {
+      "sha256": "344247d0076df7f690638c627f171be54bd8769e5e495c20e21f417e288002bd",
+      "bytes": 132
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/shell-green.log": {
+      "sha256": "c41a3130af4e33294a900ef26586859c8da05866fd669018a3f8df1a1e8d375c",
+      "bytes": 323
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/shell-red-exit.json": {
+      "sha256": "5a46129db2ac6fcf15725a6d98aa302cd84f5785db69175f2c178d5a143f14cb",
+      "bytes": 132
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/shell-red.log": {
+      "sha256": "00ae91c914df76f180e2965dc93e22b2dd0d8484403a3109d0ed01f16feb1cff",
+      "bytes": 2101
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/snapshot-public.py": {
+      "sha256": "33ce8e5ede1e78c0c028b3f7424e466fe52801f7332f3801a7c17ce09108a125",
+      "bytes": 1053
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/start-app.py": {
+      "sha256": "232b2339008a03afc957237681aec82ca53f27c7f5c05c9012217900fde3c08f",
+      "bytes": 772
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/u1-small-COW-byte-preservation.json": {
+      "sha256": "b31589814c142458b998922407b3cbd552b519a95ba296ae3ac32a9cc70c7fe4",
+      "bytes": 53028792
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/u1-small-after-check.json": {
+      "sha256": "237190fc00481159d7757c0d908c9779e3c66d7c6de36177579daf9798cf7b6b",
+      "bytes": 670
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/upgrade-spec.json": {
+      "sha256": "e757e9849cda83045ec990b0b42cec7e5f2c636da8a247b1aadf115cdd27d800",
+      "bytes": 748
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/verify-user-restored.mjs": {
+      "sha256": "713ff0ba82f7a3597092a0a78ea3cef5ae68d3a1549ff21625606dda962fcd4f",
+      "bytes": 3301
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/A01-r1-failure-binding.json": {
+      "sha256": "40ef7990243e6c10ee21e8c4f72c0a98e3b5a40e02450225dae739694346ed9e",
+      "bytes": 635
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg": {
+      "sha256": "bd81cd14cf6f6319182615bed53bd3e370a1d3d6ef9e85cbc81905b2b4ecfa64",
+      "bytes": 549540252
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Distribution.xml": {
+      "sha256": "dda3b6195e92ce36283f96e4848ae516944b30da088bafa1d165e8052a805014",
+      "bytes": 613
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts/postinstall": {
+      "sha256": "118baf8f1079e0b36179be2c1240f11803249d86fbc69f772137bf14b4ebaf79",
+      "bytes": 457
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts/resources/bundle/bundle.json": {
+      "sha256": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+      "bytes": 4988760
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/installed-lease.mjs": {
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "bytes": 5372
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/ownership.mjs": {
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+      "bytes": 1902
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts/resources/companion/scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts/resources/companion/scripts/f-installer-transaction.mjs": {
+      "sha256": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+      "bytes": 17179
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts/resources/companion/scripts/f-user-recovery.mjs": {
+      "sha256": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049",
+      "bytes": 12884
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts/resources/request.json": {
+      "sha256": "ff24bb5ff9f1814018a51f4aa4f60b013297b77ef9113c3f41a3d7d79d5be824",
+      "bytes": 1098
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/build-receipt.json": {
+      "sha256": "c2ed3b2e91e7e9b43f69510e441c934f88005426977709394b82d471e7685e83",
+      "bytes": 3980
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg": {
+      "sha256": "46fada7cafb57406e5b7849a7099e53ee2825e4ed386ef3b4ccaef8b9be2b0b6",
+      "bytes": 40508736
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Distribution.xml": {
+      "sha256": "8f512eddb0a0bd513f7a7cd66241d29cf02477695985be9d470e4caff7f18841",
+      "bytes": 613
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/postinstall": {
+      "sha256": "d51a88a0575579264d2faaba8c3b69da031231afbaf534ce3fdd3d6757629236",
+      "bytes": 440
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/installed-lease.mjs": {
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "bytes": 5372
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/ownership.mjs": {
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+      "bytes": 1902
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/resources/companion/scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/resources/companion/scripts/f-installer-transaction.mjs": {
+      "sha256": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+      "bytes": 17179
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/resources/companion/scripts/f-user-recovery.mjs": {
+      "sha256": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049",
+      "bytes": 12884
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/resources/request.json": {
+      "sha256": "109d5e59ca0456ba8d4b2c962f72706da72494832ff662067c1d6542c887c5d9",
+      "bytes": 1188
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/resources/runner-node": {
+      "sha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b",
+      "bytes": 122129232
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/resources/target-bundle.json": {
+      "sha256": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+      "bytes": 4988760
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/build-receipt.json": {
+      "sha256": "3f2c4f7100d3ae9124e277a3e200348048e985a9fae6652778a392bf0638d552",
+      "bytes": 4121
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg": {
+      "sha256": "cee76a00a15fc24f97ebdc95d9b2c077dba3810b20eb1f29769dda70e059932e",
+      "bytes": 549532625
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Distribution.xml": {
+      "sha256": "df433020936429f1c638834afb0263d823890204d1be6148dc8a39ba3eec5c44",
+      "bytes": 613
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts/postinstall": {
+      "sha256": "bc8e060873e75d723f3b16b7bb745b95213a73465e04c339872d7b69a0930974",
+      "bytes": 457
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts/resources/bundle/bundle.json": {
+      "sha256": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9",
+      "bytes": 4988759
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/installed-lease.mjs": {
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "bytes": 5372
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts/resources/companion/patches/storage-json-single-owner/ownership.mjs": {
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+      "bytes": 1902
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts/resources/companion/scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts/resources/companion/scripts/f-installer-transaction.mjs": {
+      "sha256": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+      "bytes": 17179
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts/resources/companion/scripts/f-user-recovery.mjs": {
+      "sha256": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049",
+      "bytes": 12884
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts/resources/request.json": {
+      "sha256": "b36f4c8bc106f41263304d0ff6a94d5cbadf7c504784491ec239d9d81b7f3867",
+      "bytes": 1187
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/build-receipt.json": {
+      "sha256": "b45f85e345fd78b51ea46ba6645d03f14b714184e258af42524565f9d214f5d7",
+      "bytes": 4071
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/actual-installed-hostile-PATH-refusal.json": {
+      "sha256": "091819e02904fd21963de16c12b8d6c693084859f81c94a98e8baa2d5986a65e",
+      "bytes": 868
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/archive-own-quarantine-exit.json": {
+      "sha256": "d410bb9135e9901a0e34f8e40e85f016abcfc54f21c910ce0765f281405a2c23",
+      "bytes": 104
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/archive-own-quarantine.py": {
+      "sha256": "4496c9a2e17ab5867b77cf9dbe6a2ab556ac15fa6dcf9b80487c76094dab90bb",
+      "bytes": 2178
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/archive-own-quarantine.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/archive-own-quarantine.stdout.log": {
+      "sha256": "11baa2ae99c7a3c49a9fbb0746df07efb2c007134f620ef42c231b88dfa584a0",
+      "bytes": 56
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/build-install-exit.json": {
+      "sha256": "425e7c04737f32779601299d4b4d0545d20e9581cc4df8abbd793f4b3e44e42d",
+      "bytes": 175
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/build-install.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/build-install.stdout.log": {
+      "sha256": "aef9b1b3249c5cab93e4e8d671f6ef9aed63a5d0a33e09ce78f10999acf33d07",
+      "bytes": 3549
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/build-rollback-exit.json": {
+      "sha256": "d16ce784391156fed5a16982ed15a0e37b91200a337da6b46a5c69ea3fd1ba4f",
+      "bytes": 176
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/build-rollback.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/build-rollback.stdout.log": {
+      "sha256": "e25a09c0dcd296b0e194609f45a96de2e99af375aa87113c0d6ab10d68edc0bf",
+      "bytes": 3684
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/build-upgrade-exit.json": {
+      "sha256": "0fa39825cdb850493f82bf6b0108071524b63e2ca37c0f9ef85eb008d640e0ad",
+      "bytes": 175
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/build-upgrade.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/build-upgrade.stdout.log": {
+      "sha256": "1a72d857152d445b544affb020475efd80ee5a38628d42446eba70c25b2a84e5",
+      "bytes": 3634
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cancel-after-identity.json": {
+      "sha256": "36877a25197c114efeb3d0045254f841cf468413df9d414096b24124a9d3ad45",
+      "bytes": 8599521
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cancel-before-identity.json": {
+      "sha256": "36877a25197c114efeb3d0045254f841cf468413df9d414096b24124a9d3ad45",
+      "bytes": 8599521
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cancel-no-mutation.json": {
+      "sha256": "b71787e6f3fbc9266cfa770ab4f648022b8adcdf8e59178ddd839c4c22ce7066",
+      "bytes": 132
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cancel-observation.py": {
+      "sha256": "a00bf7a0e2e008598ff8969ab2ab7f96627e5a535a58fbc928ee9ecc980382e3",
+      "bytes": 1558
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/code-before-native.json": {
+      "sha256": "14d272a88ba70551ca33eee5af833211d97768b2e01827e78377b616b33ba199",
+      "bytes": 771
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/compact-new-program.py": {
+      "sha256": "86fb42a85450ce427a693f3fbf02e007ecd49852b1ea0885bd5bca02564671a5",
+      "bytes": 2908
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/compact-new-under-lease.mjs": {
+      "sha256": "209a351573045ad89e96e56df935e395f844e3cd022b4e5d0a9bd07c549c7718",
+      "bytes": 688
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/compare-public.py": {
+      "sha256": "540e50739c1bf13a56551682ff826bcc2a59c9a57c7c5da4215f05ad59af9dc0",
+      "bytes": 592
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-deduplicate-new-root.py": {
+      "sha256": "f7d0cdd0453cca3a01d8fc9727f2c15260124144a62ddde3309c459d185eb943",
+      "bytes": 3082
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-new-under-lease.mjs": {
+      "sha256": "5b47497f8b423961b7070c4a6c93dab356ef96c99855a483d3b5b204555d0235",
+      "bytes": 717
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-v3-after-full-check.json": {
+      "sha256": "3df8fd1f2a03d0a3dbe5508d051e722608bbbae676de6d0dd326284935ef105a",
+      "bytes": 620
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-v3-byte-preservation.json": {
+      "sha256": "f0b6278abde11fe174ed54e7757576c1c54bce90682d8bb4473b0a136b938945",
+      "bytes": 24767349
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-v3-exit.json": {
+      "sha256": "0d449aa4d4d2d05ab9cacfcc1934bda28ed87dd09386f6a26cc9120e5fa1bfff",
+      "bytes": 146
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-v3.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-v3.stdout.log": {
+      "sha256": "7573ea9139863aa5f23dad9c6298181e4283e5e081daf382c5649523554cf649",
+      "bytes": 69
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-v4-after-full-check.json": {
+      "sha256": "dbdc7ea020af550333ad638930b3728eda1b307e26ae5fc0a5e204b1bbe459a9",
+      "bytes": 692
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-v4-byte-preservation.json": {
+      "sha256": "cae34473b4a1c5c5908420c5c69b792692985dfcebb0e85ad0ecf745fb040c0c",
+      "bytes": 24767651
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-v4-exit.json": {
+      "sha256": "98e7a064a74d6f02e86da83ae808997e10747b4fd4a36004c8a1bdc2b715ed7d",
+      "bytes": 146
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-v4.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/cow-v4.stdout.log": {
+      "sha256": "a53bf02168d7b644630ef37ae202289f4b3be332346476d942b8af4e4b0a14de",
+      "bytes": 68
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/create-failure-bundle.py": {
+      "sha256": "4e5102809eb9befd711bab8d71014b5d34a880ee537f95ac6604ac86296ddd42",
+      "bytes": 1091
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-before-user-entry.json": {
+      "sha256": "5705951931b512741ffb537bac488d231e0e358ceb48d7428a74b0544567c295",
+      "bytes": 738
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-bundle.json": {
+      "sha256": "060ec9ef659bf6dc67bce2023cc82d3fde1cab3a5fa96292dbd0c4281f8c15ab",
+      "bytes": 643
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-check-before.json": {
+      "sha256": "c28481eaf891c60153316c86eb884e9cf878e3caac25520fe2506417070bd6b4",
+      "bytes": 107
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-dispatch.json": {
+      "sha256": "2bc44f19fbbf91c289a472cbd5ca882f6bdcc31bd38508c679274d13f13c899b",
+      "bytes": 1295
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-group-ended.json": {
+      "sha256": "c3c09858ad41ff33eba999ae78a7617900f119425a056d5599e60bd3168557a0",
+      "bytes": 68
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-interruption-exit.json": {
+      "sha256": "ab386576d764de1363cd19f581a0b4eeed1787fa34a63daa8fd4a27339d934a3",
+      "bytes": 137
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-interruption.mjs": {
+      "sha256": "4479f99638221d07ba417cc861fe22a201b14c7bcd73f7480f7f904b71631af2",
+      "bytes": 3319
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-interruption.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-interruption.stdout.log": {
+      "sha256": "e8beccdeafa208494dde266f06729f8bdcd0a83e2833aca927bf9d5c17cbb46a",
+      "bytes": 416
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-outcome.json": {
+      "sha256": "ed2f05b90aef973c7ba2695fbe6dd5cac0a81b27325c877a379bdbf9fe4df0e9",
+      "bytes": 494
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/failure-owned-process.json": {
+      "sha256": "12a3d39760b835323dbb14ab8f29a540f909b7967318a807eeb768632ab61694",
+      "bytes": 799
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/final-observation.py": {
+      "sha256": "addd7c891369e7b8b4c6c2cb1b90f7a251c88e67608f39debfd1f95b3ce03b10",
+      "bytes": 1950
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/final-runtime-observation.json": {
+      "sha256": "79bfb6eca120c38e3901cceb2b0984a6f56b01b83b3f531ffca9c92663b03a4b",
+      "bytes": 1751
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/freeze.py": {
+      "sha256": "25c84542a4c508144d9a493a93a64575a757386b98645695476d144fdbeafcfa",
+      "bytes": 5557
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/docs/evidence/2026-10-29-f-user-recovery-A01-repair-return.md": {
+      "sha256": "1e9d33993ac30e0133717b6f5b7c7541dc921f425c3807e00bd200730c4f1ef0",
+      "bytes": 6144
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/docs/plans/2026-10-29-f-user-recovery-native-lifecycle.md": {
+      "sha256": "790de00fc5fbd1b08e2fcf9dd02f980a7a08f04b12fd71987c33d92190cef894",
+      "bytes": 6433
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/f-installed-runtime.mjs": {
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/f-installer-transaction.mjs": {
+      "sha256": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+      "bytes": 17179
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/f-native-installer.mjs": {
+      "sha256": "37eb5e87693d03b5c57a82a0a9b4f4f5758a48a37f9ae2404cfda1e7f72ffe2f",
+      "bytes": 6389
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/f-user-recovery.mjs": {
+      "sha256": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049",
+      "bytes": 12884
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/tests/f-native-lifecycle.test.mjs": {
+      "sha256": "0d2333025d361f5e2ea3b4bb005529807570ef444cd7b47dfe1351b8bda3c352",
+      "bytes": 4015
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/tests/f-shell-entry-environment.test.mjs": {
+      "sha256": "55ec93d6149c7a6394a490268eb81a6124bdc6d8c91739a253eab8ce26303697",
+      "bytes": 2577
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/frozen-source/scripts/tests/f-user-recovery.test.mjs": {
+      "sha256": "0b6a45b5058b3d16b15bca3083be3f673f428fe98eb58552be70ddf302c44345",
+      "bytes": 9960
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-recovered-dispatch.json": {
+      "sha256": "06eb378c6947559a9567faaad02c1bafa43c279ef039d73b3a4b202102362cd3",
+      "bytes": 570
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-recovered-exit.json": {
+      "sha256": "47b8b6b49d4695fe6e036bd916538aff4f46773e212ca0d429db80f3963e2cfe",
+      "bytes": 15
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-recovered-restored.ax.txt": {
+      "sha256": "2d1aeabb9fc9980f1d78e61b112faff42ae4cf793e17aad04aff98cf6f0d1693",
+      "bytes": 5716
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-recovered-restored.png": {
+      "sha256": "349115337aaf67f898ec0f80f65ded16103cba5e5f61b559f594e8b865a61982",
+      "bytes": 126561
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-recovered.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-recovered.stdout.log": {
+      "sha256": "d0a1037ae09587fba273aef40f96255ad49a6ba68942783c334294667e7702d1",
+      "bytes": 442
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-rollback-dispatch.json": {
+      "sha256": "b812ca4ed0b0530884e92587d2b59f2e6f898eb7ea5dc7ed3b577706280a333d",
+      "bytes": 570
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-rollback-exit.json": {
+      "sha256": "47b8b6b49d4695fe6e036bd916538aff4f46773e212ca0d429db80f3963e2cfe",
+      "bytes": 15
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-rollback-restored.ax.txt": {
+      "sha256": "2d1aeabb9fc9980f1d78e61b112faff42ae4cf793e17aad04aff98cf6f0d1693",
+      "bytes": 5716
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-rollback-restored.png": {
+      "sha256": "349115337aaf67f898ec0f80f65ded16103cba5e5f61b559f594e8b865a61982",
+      "bytes": 126561
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-rollback.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-rollback.stdout.log": {
+      "sha256": "2d573a71969e3f4abd329749d2baabac133f2a7ba68f8422be4defdb636061a7",
+      "bytes": 442
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v3-cua-timeout-observation.json": {
+      "sha256": "b367a9c46a1cd24f57ef01679e4e076d1828f5462c9d0b541ad5e1191c514d27",
+      "bytes": 201
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v3-dispatch.json": {
+      "sha256": "1355121a2f629029e971e904e2aa69844e1427b7466221496bd5fa47057a3d6c",
+      "bytes": 570
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v3-exit.json": {
+      "sha256": "47b8b6b49d4695fe6e036bd916538aff4f46773e212ca0d429db80f3963e2cfe",
+      "bytes": 15
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v3-public.ax.txt": {
+      "sha256": "8afabe66ea3d1bba8a4fcbd36bcef3b754e341c6dfe2307881a46dc8b6821c17",
+      "bytes": 5758
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v3-public.png": {
+      "sha256": "e5e85ad446562d4183e1e3da70938e57fe9cc5029597ecc995da2075aca35aa6",
+      "bytes": 103401
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v3.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v3.stdout.log": {
+      "sha256": "1c1160db5d6e85daedf3ef7b7d3babea703eb15ec45cae85edcc0118f1e67bc2",
+      "bytes": 442
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v4-dispatch.json": {
+      "sha256": "9e3a07ad2d41bcdfd620365f0efddd433cddea747f7cf603b52c1c9e62b97f5f",
+      "bytes": 570
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v4-edited.ax.txt": {
+      "sha256": "6e8782a528e5c1b0831c9022c1f8ad55619c96f8c435ad6586e8d3dab8e084ed",
+      "bytes": 5866
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v4-edited.png": {
+      "sha256": "3527e9b43e328aa6e75258c50c12ec93d2f44e7a9b954d7cfe34d1190061a8eb",
+      "bytes": 110734
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v4-exit.json": {
+      "sha256": "47b8b6b49d4695fe6e036bd916538aff4f46773e212ca0d429db80f3963e2cfe",
+      "bytes": 15
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v4-restored.ax.txt": {
+      "sha256": "e26491df8e22c767cca63dcb22857d364f0f78588abefa545cd8a03a8390ec2b",
+      "bytes": 1148
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v4.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/gui-v4.stdout.log": {
+      "sha256": "12bd4373988d9715a53b9f82b6e11f7cdd0bd5d208b3c0969760b23d98126b97",
+      "bytes": 442
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/install-space-preflight.json": {
+      "sha256": "fe1dcb7a657d3c02ae6b902411c745dc0cc01af4b33e0125b90a2ccc20cb452b",
+      "bytes": 168
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/install-spec.json": {
+      "sha256": "c250c26bdc9f068527875412886d2be5780453ed25843493abfa865e82f53e54",
+      "bytes": 668
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-action.py": {
+      "sha256": "35cba51d4a9e38d4dc455f7d3562149424c80cf21fc74d42b761ddd1fac31f6b",
+      "bytes": 2758
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-install-dispatch.json": {
+      "sha256": "3cd61ec2b5513b33edcfa7192a60f059944d1c1625303f8dac556248f7963c8a",
+      "bytes": 677
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-install-exit.json": {
+      "sha256": "8657eb18d415ada6e62c0e17d185de35bd29866c3433036bf58b7f46c3ee0a8f",
+      "bytes": 279
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-install-verified.json": {
+      "sha256": "f394035df0f6a1820acb51844107f223e38b95981b4c2d49c52350284828b5f6",
+      "bytes": 2517
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-install.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-install.stdout.log": {
+      "sha256": "78996ca3610c76aad90d8d551154a2d5f34e2337047fda0f34e7942e8699b048",
+      "bytes": 4248
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-rollback-dispatch.json": {
+      "sha256": "00748d7dba25e70c4815869dc635e1d893cddfaa100a414223276e546b21a04d",
+      "bytes": 679
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-rollback-exit.json": {
+      "sha256": "5a530a6a8e8d4880280c0b99c6cc9508c69a0e750385f5b694fcec00128043c3",
+      "bytes": 280
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-rollback-verified.json": {
+      "sha256": "3fe4526e9f9cdaf998def1ab9bec200aa58145599003af3f5016a7db29a74b0e",
+      "bytes": 2589
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-rollback.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-rollback.stdout.log": {
+      "sha256": "2dcad8a0707aa740e72f08f5a56c6fa7a558af42c5571fd7a1adc4fafc1f626e",
+      "bytes": 2171
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-upgrade-dispatch.json": {
+      "sha256": "907ba04a8b0d33bd787c191776f0d89eab1ce8a26d3e175d202bbbb669150f6c",
+      "bytes": 677
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-upgrade-exit.json": {
+      "sha256": "1dd225797e04244f3227dcfb34a7efa14db59112dad1fdfaf90baf71199af5fa",
+      "bytes": 279
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-upgrade-verified.json": {
+      "sha256": "dc29502cfe875ed83225ef3919e56c2f89dd63f1d94b23dc58481c1484d1723a",
+      "bytes": 2586
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-upgrade.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/native-upgrade.stdout.log": {
+      "sha256": "0e7ce77935a02f942ac68bd1e2b8d73030fe5b459c0d2c455b60fa40bfa42abf",
+      "bytes": 6128
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/public-failed-candidate-archive-manifest.json": {
+      "sha256": "8685be386ed03686b2e340d9771b3e45929d9780cc9c18b4727be596a0f7bde4",
+      "bytes": 7429899
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/public-failed-candidate-byte-preserving.tar.gz": {
+      "sha256": "60664c3f2614430f1ca1c56ea9c22fbe19967f4c7b1794b2a48fced53ac1bed3",
+      "bytes": 546100654
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/public-failure-probe-bundle/bundle.json": {
+      "sha256": "e87c567c600cb00df211d380c27862fe4eb9fbe2ceff72463c6ccb8e40234cca",
+      "bytes": 4988825
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/retention-before-audit.json": {
+      "sha256": "89aaa578425e82bb7a04a25b15d30ef0c6eee28963cadfa9fb98a07494c8fc93",
+      "bytes": 3659
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/rollback-spec.json": {
+      "sha256": "d2ce4cd3d45614406d2c9109028901a161936e4562fbf527f9b8b418314bb7b0",
+      "bytes": 759
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/run-user-entry.py": {
+      "sha256": "64684132c0a4e34ed4d008f2cb36605168742cc4e05b344f6e131046ec4ae92c",
+      "bytes": 872
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/seed-sdk-exit.json": {
+      "sha256": "530933cc95accf9815386df60b347c0cdd78df72a5aeed3bdff2dd83cd4b8174",
+      "bytes": 240
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/seed-sdk.mjs": {
+      "sha256": "917f180021050608e286fa11c88f57865b038afb51c60fa3fb1fcffe66c62a32",
+      "bytes": 528
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/seed-sdk.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/seed-sdk.stdout.log": {
+      "sha256": "7ca4bce47f956dd2989eac4ffea4cc7f17bc21fcc62727b585d9672d9b43040f",
+      "bytes": 92
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshot-public.py": {
+      "sha256": "33ce8e5ede1e78c0c028b3f7424e466fe52801f7332f3801a7c17ce09108a125",
+      "bytes": 1053
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/final-closed/data/home/storages/f_install_public.json": {
+      "sha256": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+      "bytes": 348
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/final-closed/data/home/storages/oasis_workbench.json": {
+      "sha256": "5e9517bfc23d3e6e17f3276a9ac9c3269e3db6d963cda81ffb3fde261448dde1",
+      "bytes": 2712
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/final-closed/data/home/storages/workspace.json": {
+      "sha256": "98403fa02bea98d3cbc0be9ccfa9e754a39b78b076d6ae75c83dc1157725bb07",
+      "bytes": 1303
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/000003.log": {
+      "sha256": "8e7f77205f259edd9471702e7cea45e10f04ebcf55d6538e10f917b31b1192bb",
+      "bytes": 6893
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/CURRENT": {
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "bytes": 16
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOCK": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG": {
+      "sha256": "f3684cca20f4d3283ef7582abc4b6e3b2f0393feeb54037b6a2c48c7df73e4ee",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG.old": {
+      "sha256": "b2b7fc33de1b84d626ae80f26e860954744cc0b71bed98f5f6df6b994c97e014",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/final-closed/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/MANIFEST-000001": {
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed",
+      "bytes": 23
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/final-closed/files.json": {
+      "sha256": "ddaed8e54ec4e2de655b5d7ea7ccd2221b6da967cd76a847f2b62d2934db56fb",
+      "bytes": 2051
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/recovered-before-start/data/home/storages/f_install_public.json": {
+      "sha256": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+      "bytes": 348
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/recovered-before-start/data/home/storages/oasis_workbench.json": {
+      "sha256": "5e9517bfc23d3e6e17f3276a9ac9c3269e3db6d963cda81ffb3fde261448dde1",
+      "bytes": 2712
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/recovered-before-start/data/home/storages/workspace.json": {
+      "sha256": "98403fa02bea98d3cbc0be9ccfa9e754a39b78b076d6ae75c83dc1157725bb07",
+      "bytes": 1303
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/recovered-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/000003.log": {
+      "sha256": "86b1f9a0eb3608e6ef5e6def2d37bd3adb42235499890530d1f714156cc270e0",
+      "bytes": 6874
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/recovered-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/CURRENT": {
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "bytes": 16
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/recovered-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOCK": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/recovered-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG": {
+      "sha256": "b2b7fc33de1b84d626ae80f26e860954744cc0b71bed98f5f6df6b994c97e014",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/recovered-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG.old": {
+      "sha256": "5c9165ad8e12d0980d66e7272467b4a6d4cb64b6c6729cbc6166fe2ea8a4552a",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/recovered-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/MANIFEST-000001": {
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed",
+      "bytes": 23
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/recovered-before-start/files.json": {
+      "sha256": "73cb0b6deab3beda00be0df41b8ebbfdfb825f000f8d2b126b392cbe94c96e40",
+      "bytes": 2051
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-after-cycle/data/home/storages/f_install_public.json": {
+      "sha256": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+      "bytes": 348
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-after-cycle/data/home/storages/oasis_workbench.json": {
+      "sha256": "5e9517bfc23d3e6e17f3276a9ac9c3269e3db6d963cda81ffb3fde261448dde1",
+      "bytes": 2712
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-after-cycle/data/home/storages/workspace.json": {
+      "sha256": "98403fa02bea98d3cbc0be9ccfa9e754a39b78b076d6ae75c83dc1157725bb07",
+      "bytes": 1303
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-after-cycle/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/000003.log": {
+      "sha256": "86b1f9a0eb3608e6ef5e6def2d37bd3adb42235499890530d1f714156cc270e0",
+      "bytes": 6874
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-after-cycle/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/CURRENT": {
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "bytes": 16
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-after-cycle/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOCK": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-after-cycle/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG": {
+      "sha256": "b2b7fc33de1b84d626ae80f26e860954744cc0b71bed98f5f6df6b994c97e014",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-after-cycle/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG.old": {
+      "sha256": "5c9165ad8e12d0980d66e7272467b4a6d4cb64b6c6729cbc6166fe2ea8a4552a",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-after-cycle/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/MANIFEST-000001": {
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed",
+      "bytes": 23
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-after-cycle/files.json": {
+      "sha256": "73cb0b6deab3beda00be0df41b8ebbfdfb825f000f8d2b126b392cbe94c96e40",
+      "bytes": 2051
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-before-upgrade/data/home/storages/f_install_public.json": {
+      "sha256": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+      "bytes": 348
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-before-upgrade/data/home/storages/oasis_workbench.json": {
+      "sha256": "0f5a78be988a8248673ec1b9dd96edf2fac227fa13b0e350c079377c3586a240",
+      "bytes": 2673
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-before-upgrade/data/home/storages/workspace.json": {
+      "sha256": "98403fa02bea98d3cbc0be9ccfa9e754a39b78b076d6ae75c83dc1157725bb07",
+      "bytes": 1303
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-before-upgrade/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/000003.log": {
+      "sha256": "325df24bac1bf58c1bfb5dd67e90e99831aae8cfb17ffa6bd3d4b296b5c23b2c",
+      "bytes": 5163
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-before-upgrade/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/CURRENT": {
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "bytes": 16
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-before-upgrade/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOCK": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-before-upgrade/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG": {
+      "sha256": "525df2839181643bcd25d034739da7d7f51712fbed88d4a20cde2b290c2a5b76",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-before-upgrade/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG.old": {
+      "sha256": "cc7d94a01457fb793235a905da9033e3d504de7b35c68eb1258d6cec04f8c68d",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-before-upgrade/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/MANIFEST-000001": {
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed",
+      "bytes": 23
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-before-upgrade/files.json": {
+      "sha256": "700c296f36dcc63531f41418f46fe76d17caff0d557b8151ace9cc96c24916e4",
+      "bytes": 2051
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-rollback-before-start/data/home/storages/f_install_public.json": {
+      "sha256": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+      "bytes": 348
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-rollback-before-start/data/home/storages/oasis_workbench.json": {
+      "sha256": "5e9517bfc23d3e6e17f3276a9ac9c3269e3db6d963cda81ffb3fde261448dde1",
+      "bytes": 2712
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-rollback-before-start/data/home/storages/workspace.json": {
+      "sha256": "98403fa02bea98d3cbc0be9ccfa9e754a39b78b076d6ae75c83dc1157725bb07",
+      "bytes": 1303
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-rollback-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/000003.log": {
+      "sha256": "a90878c40f72abf936b9663ab6eff9999353823283f72c9ff31b4f2aeeeec035",
+      "bytes": 6855
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-rollback-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/CURRENT": {
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "bytes": 16
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-rollback-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOCK": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-rollback-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG": {
+      "sha256": "5c9165ad8e12d0980d66e7272467b4a6d4cb64b6c6729cbc6166fe2ea8a4552a",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-rollback-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG.old": {
+      "sha256": "b96fdd002a99f8df671f3501a8f787f06be91bbdc7d1ad795d9a36fddc30a235",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-rollback-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/MANIFEST-000001": {
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed",
+      "bytes": 23
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v3-rollback-before-start/files.json": {
+      "sha256": "bf02bd3446965ef863be74a3868cc52e44a572829018069dca79ce28fadfceda",
+      "bytes": 2051
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-rollback/data/home/storages/f_install_public.json": {
+      "sha256": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+      "bytes": 348
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-rollback/data/home/storages/oasis_workbench.json": {
+      "sha256": "5e9517bfc23d3e6e17f3276a9ac9c3269e3db6d963cda81ffb3fde261448dde1",
+      "bytes": 2712
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-rollback/data/home/storages/workspace.json": {
+      "sha256": "98403fa02bea98d3cbc0be9ccfa9e754a39b78b076d6ae75c83dc1157725bb07",
+      "bytes": 1303
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-rollback/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/000003.log": {
+      "sha256": "a90878c40f72abf936b9663ab6eff9999353823283f72c9ff31b4f2aeeeec035",
+      "bytes": 6855
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-rollback/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/CURRENT": {
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "bytes": 16
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-rollback/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOCK": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-rollback/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG": {
+      "sha256": "5c9165ad8e12d0980d66e7272467b4a6d4cb64b6c6729cbc6166fe2ea8a4552a",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-rollback/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG.old": {
+      "sha256": "b96fdd002a99f8df671f3501a8f787f06be91bbdc7d1ad795d9a36fddc30a235",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-rollback/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/MANIFEST-000001": {
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed",
+      "bytes": 23
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-rollback/files.json": {
+      "sha256": "5e0dac5fb74e81f2c0a0c59c738af9f8b465c71bbf69ac56cc7bf0637277dd8e",
+      "bytes": 2051
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-start/data/home/storages/f_install_public.json": {
+      "sha256": "219a76d0263e5160e986f2c538112e8f23593045f9ef3a09e3ac8cb456ed795d",
+      "bytes": 348
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-start/data/home/storages/oasis_workbench.json": {
+      "sha256": "0f5a78be988a8248673ec1b9dd96edf2fac227fa13b0e350c079377c3586a240",
+      "bytes": 2673
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-start/data/home/storages/workspace.json": {
+      "sha256": "98403fa02bea98d3cbc0be9ccfa9e754a39b78b076d6ae75c83dc1157725bb07",
+      "bytes": 1303
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/000003.log": {
+      "sha256": "325df24bac1bf58c1bfb5dd67e90e99831aae8cfb17ffa6bd3d4b296b5c23b2c",
+      "bytes": 5163
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/CURRENT": {
+      "sha256": "0f1bad70c7bd1e0a69562853ec529355462fcd0423263a3d39d6d0d70b780443",
+      "bytes": 16
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOCK": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG": {
+      "sha256": "525df2839181643bcd25d034739da7d7f51712fbed88d4a20cde2b290c2a5b76",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/LOG.old": {
+      "sha256": "cc7d94a01457fb793235a905da9033e3d504de7b35c68eb1258d6cec04f8c68d",
+      "bytes": 600
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-start/data/userdata/Partitions/dsh-desktop-renderer/IndexedDB/http_127.0.0.1_57593.indexeddb.leveldb/MANIFEST-000001": {
+      "sha256": "720a78803b84cbcc8eb204d5cf8ea6ee2f693be0ab2124ddf2b81455de02a3ed",
+      "bytes": 23
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/snapshots/v4-before-start/files.json": {
+      "sha256": "1afbc477753cefa5e84d722cd0810968c2ad574f1c7d7ec6c59bf128d0ad567f",
+      "bytes": 2051
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/start-app.py": {
+      "sha256": "232b2339008a03afc957237681aec82ca53f27c7f5c05c9012217900fde3c08f",
+      "bytes": 772
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/upgrade-space-preflight.json": {
+      "sha256": "c17f7dad7dc4e772c909832e5df2a1b4b45f6151b9bbe6ac866071f447764072",
+      "bytes": 119
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/upgrade-spec.json": {
+      "sha256": "1ed785b8fbd81b5019ec658fab781a6d9f0cdbcf5d9d3d17cbe4c3b7eba05f03",
+      "bytes": 757
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/user-entry-cancel-dispatch.json": {
+      "sha256": "e040f18975ed96dd537361e3bbef78e3c8293b6b4464f28ea48684bd2a26f896",
+      "bytes": 701
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/user-entry-cancel-exit.json": {
+      "sha256": "ea7759a52e0f1842ba7d126865274a0e832515e51cf4a298935e7c529a183e7d",
+      "bytes": 53
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/user-entry-cancel.terminal.log": {
+      "sha256": "9f4af31b7f953cdd89069357d7dffcb6bd1e95a35229cc1058dc6e9d39184a14",
+      "bytes": 596
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/user-entry-restore-dispatch.json": {
+      "sha256": "c00b968c63e00115914026484feb375f84dd79224d768b60d491a20b00edf3c6",
+      "bytes": 703
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/user-entry-restore-exit.json": {
+      "sha256": "ea7759a52e0f1842ba7d126865274a0e832515e51cf4a298935e7c529a183e7d",
+      "bytes": 53
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/user-entry-restore.terminal.log": {
+      "sha256": "da23c0a554231e2a874fc1bd3756b6fa5ba69334cab8a37d8c522a86a75753a1",
+      "bytes": 623
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/user-entry-restored-verified.json": {
+      "sha256": "bb999f2e31372ab6ab6004fb449212631d4eb5cd440cf09bb815af4f05d448ab",
+      "bytes": 3268
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/v3-after-cycle--recovered-before-start-comparison.json": {
+      "sha256": "7e0361ea44455781ed74db1d8518b78e0dc919a72f7b04bc7bdeef2ea584fb34",
+      "bytes": 425
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/v3-before-upgrade--v4-before-start-comparison.json": {
+      "sha256": "178cb974ce4525f1902a26ca03bd3807ceca58abd4c3295d248e22a0933af996",
+      "bytes": 421
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/v4-before-rollback--v3-rollback-before-start-comparison.json": {
+      "sha256": "fff1197408e42c9f230cd41d5bc3fe7a3bcad10bb31a787081dbf44785080405",
+      "bytes": 431
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/verify-retention.py": {
+      "sha256": "36844e084f2b97534f5d886c1297da137bfe8c30e1b6a8c744a8b32157422307",
+      "bytes": 3350
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/verify-user-restored.mjs": {
+      "sha256": "695735b5f0e73470b4b0c70b6a678e194e270dbba8f044cf99a144be8551b4db",
+      "bytes": 3304
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-user-recovery-audit-original-entry.mjs.txt": {
+      "sha256": "d035347f5e7fd6d46b7efa6821a01dffdc52e4d44323997436a3297c2cdb6ee3",
+      "bytes": 12842
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-user-recovery-audit-original-native-installer.mjs.txt": {
+      "sha256": "026caaade578e65b3f916bf345d97738639f93ce530a9f1b93ff69b3afb621ab",
+      "bytes": 6347
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-user-recovery-execution.json": {
+      "sha256": "4139d900c4524aa8496951294f375ec71d60c0cc5c1672d7e449db7edae85c3e",
+      "bytes": 130097
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-user-recovery-independent-audit.md": {
+      "sha256": "8fce619f722d180b6c889405ef9bed23d8a5e8f3e7cd2dbb6aea928fab5d4e7c",
+      "bytes": 15310
+    }
+  },
+  "symbolicLinkMembers": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/@deepseek-ai/dsh-client-ui-conversation": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c6",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/@deepseek-ai/dsh-client-ui-primitives": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c0",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/@deepseek-ai/dsh-web-frontend": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c1",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/dsh-better-sidebar": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c2",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/dsh-desktop-host-file-path-bridge": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c4",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/dsh-storage-json-single-owner": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c5",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/6575f487-b436-4a54-99bc-3b0493e65041/before-profile/node_modules/oasis-professional-service": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c3",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/@deepseek-ai/dsh-client-ui-conversation": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c6",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/@deepseek-ai/dsh-client-ui-primitives": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c0",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/@deepseek-ai/dsh-web-frontend": "../../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c1",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/dsh-better-sidebar": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c2",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/dsh-desktop-host-file-path-bridge": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c4",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/dsh-storage-json-single-owner": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c5",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2/before-profile/node_modules/oasis-professional-service": "../../../../../releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c3"
+  },
+  "nativePackagesR2": {
+    "install": {
+      "package": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg",
+      "sha256": "bd81cd14cf6f6319182615bed53bd3e370a1d3d6ef9e85cbc81905b2b4ecfa64",
+      "resources": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts/resources",
+      "requestSHA256": "ff24bb5ff9f1814018a51f4aa4f60b013297b77ef9113c3f41a3d7d79d5be824",
+      "request": {
+        "schemaVersion": 2,
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+        "allowedRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029",
+        "ownerUid": 501,
+        "ownerGid": 20,
+        "action": "install",
+        "bundleSHA256": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+        "transactionId": "2a11d2c2-431d-4232-a518-1d6ba67773e5",
+        "realCallBudget": 0,
+        "recoveryFiles": {
+          "scripts/f-installed-runtime.mjs": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+          "patches/storage-json-single-owner/installed-lease.mjs": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+          "patches/storage-json-single-owner/ownership.mjs": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+          "scripts/f-installer-transaction.mjs": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+          "scripts/f-user-recovery.mjs": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049"
+        }
+      },
+      "staging": {
+        "command": "/bin/cp",
+        "args": [
+          "-cRp",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/bundles/delivery-r3-v3",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts/resources/bundle"
+        ],
+        "stdout": ""
+      },
+      "componentIntermediate": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/component.pkg",
+        "sha256": "38b48d33e2490139c9acee710dc8460680101ad468e1ed8dd991bd145f7caf30",
+        "retiredAfterSuccessfulProductbuild": true
+      },
+      "payloadMode": "FULL_FIXED_BUNDLE",
+      "commands": [
+        {
+          "command": "/usr/bin/pkgbuild",
+          "args": [
+            "--nopayload",
+            "--identifier",
+            "com.oasis.f.controlled-installer.ff24bb5ff9f1814018a51f4a",
+            "--version",
+            "0.1.0",
+            "--scripts",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Scripts",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/component.pkg"
+          ],
+          "stdout": "pkgbuild: Adding top-level postinstall script\npkgbuild: Wrote package to /Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/component.pkg\n"
+        },
+        {
+          "command": "/usr/bin/productbuild",
+          "args": [
+            "--distribution",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build/Distribution.xml",
+            "--package-path",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg.build",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg"
+          ],
+          "stdout": "productbuild: Wrote product to /Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg\n"
+        }
+      ],
+      "signed": false,
+      "notarized": false,
+      "formalReleaseAccepted": false,
+      "realCallBudget": 0
+    },
+    "upgrade": {
+      "package": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg",
+      "sha256": "cee76a00a15fc24f97ebdc95d9b2c077dba3810b20eb1f29769dda70e059932e",
+      "resources": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts/resources",
+      "requestSHA256": "b36f4c8bc106f41263304d0ff6a94d5cbadf7c504784491ec239d9d81b7f3867",
+      "request": {
+        "schemaVersion": 2,
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+        "allowedRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029",
+        "ownerUid": 501,
+        "ownerGid": 20,
+        "action": "upgrade",
+        "bundleSHA256": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9",
+        "expectedCurrent": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+        "transactionId": "6575f487-b436-4a54-99bc-3b0493e65041",
+        "realCallBudget": 0,
+        "recoveryFiles": {
+          "scripts/f-installed-runtime.mjs": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+          "patches/storage-json-single-owner/installed-lease.mjs": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+          "patches/storage-json-single-owner/ownership.mjs": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+          "scripts/f-installer-transaction.mjs": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+          "scripts/f-user-recovery.mjs": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049"
+        }
+      },
+      "staging": {
+        "command": "/bin/cp",
+        "args": [
+          "-cRp",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/bundles/delivery-r3-v4",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts/resources/bundle"
+        ],
+        "stdout": ""
+      },
+      "componentIntermediate": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/component.pkg",
+        "sha256": "a131b865fd63d35ceb21b878249aea23770a3d0d26cededc21ca62ed41bcfcd6",
+        "retiredAfterSuccessfulProductbuild": true
+      },
+      "payloadMode": "FULL_FIXED_BUNDLE",
+      "commands": [
+        {
+          "command": "/usr/bin/pkgbuild",
+          "args": [
+            "--nopayload",
+            "--identifier",
+            "com.oasis.f.controlled-installer.b36f4c8bc106f41263304d0f",
+            "--version",
+            "0.1.0",
+            "--scripts",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Scripts",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/component.pkg"
+          ],
+          "stdout": "pkgbuild: Adding top-level postinstall script\npkgbuild: Wrote package to /Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/component.pkg\n"
+        },
+        {
+          "command": "/usr/bin/productbuild",
+          "args": [
+            "--distribution",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build/Distribution.xml",
+            "--package-path",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg.build",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg"
+          ],
+          "stdout": "productbuild: Wrote product to /Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg\n"
+        }
+      ],
+      "signed": false,
+      "notarized": false,
+      "formalReleaseAccepted": false,
+      "realCallBudget": 0
+    },
+    "rollback": {
+      "package": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg",
+      "sha256": "46fada7cafb57406e5b7849a7099e53ee2825e4ed386ef3b4ccaef8b9be2b0b6",
+      "resources": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/resources",
+      "requestSHA256": "109d5e59ca0456ba8d4b2c962f72706da72494832ff662067c1d6542c887c5d9",
+      "request": {
+        "schemaVersion": 2,
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+        "allowedRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029",
+        "ownerUid": 501,
+        "ownerGid": 20,
+        "action": "rollback",
+        "bundleSHA256": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+        "expectedCurrent": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9",
+        "transactionId": "c4f402fb-f2a8-4afa-a30f-cbdb59ef90bd",
+        "realCallBudget": 0,
+        "recoveryFiles": {
+          "scripts/f-installed-runtime.mjs": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+          "patches/storage-json-single-owner/installed-lease.mjs": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+          "patches/storage-json-single-owner/ownership.mjs": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+          "scripts/f-installer-transaction.mjs": "4b2ed96e43ddbe10c752003cf814485dba325fd45837240d6524367162442264",
+          "scripts/f-user-recovery.mjs": "f024f823dfec2dadacc3d87d628ffc22273ec568567e0e54d558992bd192d049"
+        }
+      },
+      "staging": {
+        "command": "/bin/cp",
+        "args": [
+          "-cRp",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/bundles/delivery-r3-v3/payload/node/bin/node",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts/resources/runner-node"
+        ],
+        "stdout": ""
+      },
+      "componentIntermediate": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/component.pkg",
+        "sha256": "7cfbe3be26d22d25be96c18be0e2487157b1365bbe80a937df6ea73a8f6e62e9",
+        "retiredAfterSuccessfulProductbuild": true
+      },
+      "payloadMode": "REGISTERED_RELEASE_REFERENCE",
+      "commands": [
+        {
+          "command": "/usr/bin/pkgbuild",
+          "args": [
+            "--nopayload",
+            "--identifier",
+            "com.oasis.f.controlled-installer.109d5e59ca0456ba8d4b2c96",
+            "--version",
+            "0.1.0",
+            "--scripts",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Scripts",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/component.pkg"
+          ],
+          "stdout": "pkgbuild: Adding top-level postinstall script\npkgbuild: Wrote package to /Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/component.pkg\n"
+        },
+        {
+          "command": "/usr/bin/productbuild",
+          "args": [
+            "--distribution",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build/Distribution.xml",
+            "--package-path",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg.build",
+            "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg"
+          ],
+          "stdout": "productbuild: Wrote product to /Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg\n"
+        }
+      ],
+      "signed": false,
+      "notarized": false,
+      "formalReleaseAccepted": false,
+      "realCallBudget": 0
+    }
+  },
+  "nativeLifecycle": {
+    "install": {
+      "argv": [
+        "/usr/sbin/installer",
+        "-pkg",
+        "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Install.pkg",
+        "-target",
+        "CurrentUserHomeDirectory",
+        "-verboseR"
+      ],
+      "packageSHA256": "bd81cd14cf6f6319182615bed53bd3e370a1d3d6ef9e85cbc81905b2b4ecfa64",
+      "requestSHA256": "ff24bb5ff9f1814018a51f4aa4f60b013297b77ef9113c3f41a3d7d79d5be824",
+      "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+      "action": "install",
+      "beforeUTC": "2026-10-29T06:43:21.929174+00:00",
+      "realCallBudget": 0,
+      "exitCode": 0,
+      "check": {
+        "argv": [
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/control/node",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/control/scripts/f-installed-runtime.mjs",
+          "--check",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root"
+        ],
+        "exitCode": 0,
+        "stdout": "{\"status\":\"F_INSTALLED_CANDIDATE_CHECKED\",\"root\":\"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root\",\"dataRoot\":\"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data\",\"current\":\"f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1\",\"checkpoint\":3,\"releases\":[\"f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1\"],\"realCallBudget\":0,\"arbitraryLegacyWriterEnforced\":false,\"outerInstallerReleaseAccepted\":false}\n",
+        "stderr": ""
+      },
+      "nativeReceipt": {
+        "schemaVersion": 1,
+        "uid": 501,
+        "gid": 20,
+        "pid": 87091,
+        "parentPid": 80172,
+        "requestSHA256": "ff24bb5ff9f1814018a51f4aa4f60b013297b77ef9113c3f41a3d7d79d5be824",
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+        "action": "install",
+        "completedAtUTC": "2026-10-29T06:44:06.326Z",
+        "exitCode": 0,
+        "realCallBudget": 0
+      },
+      "toolId": "1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48",
+      "toolSourceMatchesPackage": true,
+      "rootUid": 501,
+      "dataUid": 501,
+      "current": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1"
+    },
+    "upgrade": {
+      "argv": [
+        "/usr/sbin/installer",
+        "-pkg",
+        "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Upgrade.pkg",
+        "-target",
+        "CurrentUserHomeDirectory",
+        "-verboseR"
+      ],
+      "packageSHA256": "cee76a00a15fc24f97ebdc95d9b2c077dba3810b20eb1f29769dda70e059932e",
+      "requestSHA256": "b36f4c8bc106f41263304d0ff6a94d5cbadf7c504784491ec239d9d81b7f3867",
+      "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+      "action": "upgrade",
+      "beforeUTC": "2026-10-29T06:48:43.368155+00:00",
+      "realCallBudget": 0,
+      "exitCode": 0,
+      "check": {
+        "argv": [
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/control/node",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/control/scripts/f-installed-runtime.mjs",
+          "--check",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root"
+        ],
+        "exitCode": 0,
+        "stdout": "{\"status\":\"F_INSTALLED_CANDIDATE_CHECKED\",\"root\":\"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root\",\"dataRoot\":\"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data\",\"current\":\"dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9\",\"checkpoint\":4,\"releases\":[\"f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1\",\"dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9\"],\"realCallBudget\":0,\"arbitraryLegacyWriterEnforced\":false,\"outerInstallerReleaseAccepted\":false}\n",
+        "stderr": ""
+      },
+      "nativeReceipt": {
+        "schemaVersion": 1,
+        "uid": 501,
+        "gid": 20,
+        "pid": 87618,
+        "parentPid": 80172,
+        "requestSHA256": "b36f4c8bc106f41263304d0ff6a94d5cbadf7c504784491ec239d9d81b7f3867",
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+        "action": "upgrade",
+        "completedAtUTC": "2026-10-29T06:49:47.659Z",
+        "exitCode": 0,
+        "realCallBudget": 0
+      },
+      "toolId": "1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48",
+      "toolSourceMatchesPackage": true,
+      "rootUid": 501,
+      "dataUid": 501,
+      "current": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9"
+    },
+    "rollback": {
+      "argv": [
+        "/usr/sbin/installer",
+        "-pkg",
+        "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/DSH-Oasis A01 R2 Rollback.pkg",
+        "-target",
+        "CurrentUserHomeDirectory",
+        "-verboseR"
+      ],
+      "packageSHA256": "46fada7cafb57406e5b7849a7099e53ee2825e4ed386ef3b4ccaef8b9be2b0b6",
+      "requestSHA256": "109d5e59ca0456ba8d4b2c962f72706da72494832ff662067c1d6542c887c5d9",
+      "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+      "action": "rollback",
+      "beforeUTC": "2026-10-29T06:52:23.701419+00:00",
+      "realCallBudget": 0,
+      "exitCode": 0,
+      "check": {
+        "argv": [
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/control/node",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/control/scripts/f-installed-runtime.mjs",
+          "--check",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root"
+        ],
+        "exitCode": 0,
+        "stdout": "{\"status\":\"F_INSTALLED_CANDIDATE_CHECKED\",\"root\":\"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root\",\"dataRoot\":\"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data\",\"current\":\"f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1\",\"checkpoint\":3,\"releases\":[\"f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1\",\"dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9\"],\"realCallBudget\":0,\"arbitraryLegacyWriterEnforced\":false,\"outerInstallerReleaseAccepted\":false}\n",
+        "stderr": ""
+      },
+      "nativeReceipt": {
+        "schemaVersion": 1,
+        "uid": 501,
+        "gid": 20,
+        "pid": 87841,
+        "parentPid": 80172,
+        "requestSHA256": "109d5e59ca0456ba8d4b2c962f72706da72494832ff662067c1d6542c887c5d9",
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+        "action": "rollback",
+        "completedAtUTC": "2026-10-29T06:52:40.742Z",
+        "exitCode": 0,
+        "realCallBudget": 0
+      },
+      "toolId": "1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48",
+      "toolSourceMatchesPackage": true,
+      "rootUid": 501,
+      "dataUid": 501,
+      "current": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1"
+    }
+  },
+  "persistentToolId": "1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48",
+  "exactDataComparisons": [
+    {
+      "before": "v3-after-cycle",
+      "after": "recovered-before-start",
+      "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+      "beforeCurrent": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+      "afterCurrent": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+      "exactFiles": 9,
+      "allEqual": true
+    },
+    {
+      "before": "v3-before-upgrade",
+      "after": "v4-before-start",
+      "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+      "beforeCurrent": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+      "afterCurrent": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9",
+      "exactFiles": 9,
+      "allEqual": true
+    },
+    {
+      "before": "v4-before-rollback",
+      "after": "v3-rollback-before-start",
+      "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+      "beforeCurrent": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9",
+      "afterCurrent": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+      "exactFiles": 9,
+      "allEqual": true
+    }
+  ],
+  "ordinaryEntry": {
+    "cancel": {
+      "filesAndLinks": 27850,
+      "allEqual": true,
+      "businessFiles": 9,
+      "recoveryResultAbsent": true,
+      "confirmationAbsent": true
+    },
+    "restored": {
+      "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+      "toolId": "1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48",
+      "exitCode": 0,
+      "consent": {
+        "toolId": "1b9a7869939f11cfc9640786e7919eaff72c3abb99407bf3a4aec5cbe1b93d48",
+        "planSHA256": "d31fa8f0799df3c44b5a08c196438efe7aa3e275feaa5d5c49c67ec6775947b5",
+        "confirmation": "RESTORE d31fa8f0799d",
+        "userAnswer": "恢复",
+        "selectedReceiptId": "user-entry-interruption-a01-r2",
+        "plan": {
+          "schemaVersion": 1,
+          "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+          "transactionRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/installer-transactions/user-entry-interruption-a01-r2",
+          "transactionSHA256": "8bdc6b59ddfa4f12ebe334c41e040003c5dbf4cec14afd985c03d78105cbfe60",
+          "restoreProfile": true,
+          "observed": {
+            "stateSHA256": "1934c7d26d0c81723daa45c92616c719ada7b7358d3ec6138f5e09d54eff90d0",
+            "current": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+            "locks": [
+              {
+                "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/startup.lock",
+                "sha256": "700b122d37430ad7ff84add6d7c91735b1822fe651eb28dfb24fc857d8875fb1",
+                "dev": 16777230,
+                "ino": 16146401
+              },
+              {
+                "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/startup.lock",
+                "sha256": "700b122d37430ad7ff84add6d7c91735b1822fe651eb28dfb24fc857d8875fb1",
+                "dev": 16777230,
+                "ino": 16146402
+              }
+            ],
+            "profileSHA256": "460c8dd95d158ece0ff1259bd813ffe102be26bcc97d41e7cedd066e64343efd",
+            "candidateSHA256": "9a669185a9e31140c5eb282bae2b75a574acaf16f609633e4194cc10f58e674a",
+            "markerSHA256": null
+          }
+        },
+        "recordedAtUTC": "2026-10-29T06:59:27.595Z"
+      },
+      "report": {
+        "status": "F_INSTALLED_CANDIDATE_CHECKED",
+        "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+        "dataRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data",
+        "current": "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+        "checkpoint": 3,
+        "releases": [
+          "f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1",
+          "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9"
+        ],
+        "realCallBudget": 0,
+        "arbitraryLegacyWriterEnforced": false,
+        "outerInstallerReleaseAccepted": false
+      },
+      "originalFailureProfileAndCandidateHashesPreserved": true,
+      "staleLocksArchived": 2,
+      "publicFilesUnchanged": 9,
+      "unknown": {
+        "status": "UNKNOWN",
+        "requestId": "F-INSTALL-PUBLIC-20261028",
+        "dispatches": 0
+      },
+      "workbenchTableNames": [
+        "workspaces"
+      ],
+      "newRealCallsUploadsSendsFeesPush": 0
+    },
+    "faultDescriptor": {
+      "source": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-installed-layout-20261028/bundles/delivery-r3-v4",
+      "sourceSHA256": "dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9",
+      "bundle": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/public-failure-probe-bundle",
+      "expectedSHA256": "e87c567c600cb00df211d380c27862fe4eb9fbe2ceff72463c6ccb8e40234cca",
+      "publicSyntheticFailureIdentity": true,
+      "samePayloadManifestFiles": 27174,
+      "samePayloadManifestLinks": 14,
+      "onlyMetadataAdded": "publicRecoveryProbe",
+      "realCallBudget": 0
+    },
+    "archiveManifest": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/public-failed-candidate-archive-manifest.json",
+    "actualHostilePATH": {
+      "argv": [
+        "/bin/sh",
+        "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/恢复DSH-Oasis.command",
+        "--list"
+      ],
+      "env": {
+        "PATH": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029/hostile-bin:/usr/bin:/bin",
+        "HOME": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-r2-20261029",
+        "NODE_OPTIONS": "--require=/PUBLIC-MUST-NOT-LOAD"
+      },
+      "exitCode": 0,
+      "stdout": "DSH-Oasis 升级恢复：请先退出应用。此入口不重新派发生成，也不自动启动应用。\n没有可恢复的已记录升级事务。旧未记录事务请保留现场联系支持。\n",
+      "stderr": "",
+      "markerAbsent": true,
+      "launcherSHA256": "6826f2b3909f6f58f6abaac5fa34815ee17e0bc61f7260c828738baf495c5837"
+    }
+  },
+  "initialInstallR1Failure": {
+    "work": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029",
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-20261029/public R3 A01 R1 ' root",
+    "installerExitCode": 1,
+    "reason": "ENOSPC",
+    "originalMarkerPreserved": true,
+    "sameRootRetry": false,
+    "allThreePackagesPreserved": {
+      "install": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Install.pkg",
+        "sha256": "c3ccc4113979970ac19631b11a08ab8e19788edc26a94209c8027fe396514910"
+      },
+      "upgrade": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Upgrade.pkg",
+        "sha256": "71612cddfa1ce0863d8e30077e27c5d9acc92aabebb60569a91de84a0c21483d"
+      },
+      "rollback": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/DSH-Oasis A01 R1 Rollback.pkg",
+        "sha256": "70672ed40e401208b96c5fd2d158ff80c0470a6b28c03cb7dd32dc9dd208fddc"
+      }
+    },
+    "exactFailureFileTreeIdentity": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/r1-failed-COW-byte-preservation.json",
+    "subsequentControlNodeSharingProof": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029/control-node-COW-preservation.json"
+  },
+  "finalRuntime": {
+    "atUTC": "2026-10-29T07:03:15.337365+00:00",
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root",
+    "check": {
+      "argv": [
+        "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/control/node",
+        "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/control/scripts/f-installed-runtime.mjs",
+        "--check",
+        "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"status\":\"F_INSTALLED_CANDIDATE_CHECKED\",\"root\":\"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root\",\"dataRoot\":\"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data\",\"current\":\"f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1\",\"checkpoint\":3,\"releases\":[\"f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1\",\"dde6842ebb0f62039fd6cfc866c0296dda26773d91d314eae72ae4491ade9df9\"],\"realCallBudget\":0,\"arbitraryLegacyWriterEnforced\":false,\"outerInstallerReleaseAccepted\":false}\n",
+      "stderr": ""
+    },
+    "port57593Closed": true,
+    "locksAndMarkerAbsent": true,
+    "publicUNKNOWN": {
+      "status": "UNKNOWN",
+      "requestId": "F-INSTALL-PUBLIC-20261028",
+      "dispatches": 0
+    },
+    "twoBusinessTasksEmptyRunsAndRemoteExecutions": true,
+    "fourAppInstancesNormalExit0": true,
+    "finalCodeMatchesNativeBuild": true,
+    "newRealCallsUploadsSendsFeesPush": 0
+  },
+  "tests": {
+    "work": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/f-user-recovery-A01-20261029",
+    "results": {
+      "tool": {
+        "argv": [
+          "tools/node-v24.21.0-darwin-arm64/bin/node",
+          "--test",
+          "scripts/tests/conversation-draft-checkpoint.test.mjs",
+          "scripts/tests/desktop-host-file-path-bridge.test.mjs",
+          "scripts/tests/draft-checkpoint-lease.test.mjs",
+          "scripts/tests/draft-checkpoint.test.mjs",
+          "scripts/tests/draft-checkpoint3.test.mjs",
+          "scripts/tests/f-development-assembly.test.mjs",
+          "scripts/tests/f-installed-bundle.test.mjs",
+          "scripts/tests/f-installed-runtime.test.mjs",
+          "scripts/tests/f-installer-recovery.test.mjs",
+          "scripts/tests/f-installer-transaction.test.mjs",
+          "scripts/tests/f-native-installer.test.mjs",
+          "scripts/tests/f-native-lifecycle.test.mjs",
+          "scripts/tests/f-profile-lifecycle-2.test.mjs",
+          "scripts/tests/f-profile-lifecycle.test.mjs",
+          "scripts/tests/f-shell-entry-environment.test.mjs",
+          "scripts/tests/f-user-recovery.test.mjs",
+          "scripts/tests/installed-writer-lease.test.mjs",
+          "scripts/tests/legacy-draft-recovery.test.mjs",
+          "scripts/tests/legacy-draft-seed.test.mjs",
+          "scripts/tests/recovery-upload-observer-2.test.mjs",
+          "scripts/tests/recovery-upload-observer.test.mjs",
+          "scripts/tests/storage-json-single-owner.test.mjs"
+        ],
+        "envOverride": {},
+        "version": "v24.21.0",
+        "exitCode": 0,
+        "seconds": 23.332571029663086
+      },
+      "actual-app": {
+        "argv": [
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-native-installer-20261029/native public root ' C/releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/App/DSH Desktop.app/Contents/MacOS/DSH Desktop",
+          "--test",
+          "scripts/tests/conversation-draft-checkpoint.test.mjs",
+          "scripts/tests/desktop-host-file-path-bridge.test.mjs",
+          "scripts/tests/draft-checkpoint-lease.test.mjs",
+          "scripts/tests/draft-checkpoint.test.mjs",
+          "scripts/tests/draft-checkpoint3.test.mjs",
+          "scripts/tests/f-development-assembly.test.mjs",
+          "scripts/tests/f-installed-bundle.test.mjs",
+          "scripts/tests/f-installed-runtime.test.mjs",
+          "scripts/tests/f-installer-recovery.test.mjs",
+          "scripts/tests/f-installer-transaction.test.mjs",
+          "scripts/tests/f-native-installer.test.mjs",
+          "scripts/tests/f-native-lifecycle.test.mjs",
+          "scripts/tests/f-profile-lifecycle-2.test.mjs",
+          "scripts/tests/f-profile-lifecycle.test.mjs",
+          "scripts/tests/f-shell-entry-environment.test.mjs",
+          "scripts/tests/f-user-recovery.test.mjs",
+          "scripts/tests/installed-writer-lease.test.mjs",
+          "scripts/tests/legacy-draft-recovery.test.mjs",
+          "scripts/tests/legacy-draft-seed.test.mjs",
+          "scripts/tests/recovery-upload-observer-2.test.mjs",
+          "scripts/tests/recovery-upload-observer.test.mjs",
+          "scripts/tests/storage-json-single-owner.test.mjs"
+        ],
+        "envOverride": {
+          "ELECTRON_RUN_AS_NODE": "1"
+        },
+        "version": "v24.18.1",
+        "exitCode": 0,
+        "seconds": 24.298444032669067
+      }
+    },
+    "allScriptsTool": 168,
+    "allScriptsActualApp": 168,
+    "newTestsTotal": 18,
+    "repairRegressions": 2,
+    "repairRedFail": 2,
+    "repairGreenPass": 2,
+    "sameSevenSourceHashesAsR2Build": true,
+    "fixtureLimits": "mock signature/pnpm/interpreter proxy only in fixtures; actual package and GUI separate"
+  },
+  "preservation": {
+    "atUTC": "2026-10-29T06:54:19.277023+00:00",
+    "packets": [
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-28-f-profile-lifecycle-execution.json",
+        "sha256": "40a7a194477dd9096d308c59f5c58ba697619e6820164573e67cb74380698a30",
+        "members": 131,
+        "links": 14,
+        "retained": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-28-f-profile-lifecycle-repair-execution.json",
+        "sha256": "57f4683b89a2095ffa0695078b18d75ac28143914206b91abf60cf32b8e70d92",
+        "members": 109,
+        "links": 21,
+        "retained": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-27-f-r2-unattended-execution.json",
+        "sha256": "7fa2c01d2e022051cd68cb8f35636efde40af0987bb499b844fddb936b922f61",
+        "members": 109,
+        "links": 0,
+        "retained": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-27-f-r2-unattended-repair-execution.json",
+        "sha256": "09d8555f91011bf60142b902c0c5eee06243c2390f1cce0e3792f618b43f2a1b",
+        "members": 54,
+        "links": 0,
+        "retained": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-27-f-renderer-lease-execution.json",
+        "sha256": "2bc7508e32743d5f9401185abb66a72f5a26264392117865911d9cb2de30d65d",
+        "members": 152,
+        "links": 0,
+        "retained": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-installed-layout-execution.json",
+        "sha256": "537d149205190b7285ae58204fad77ab227d9929d4e34a584e4a6e5df070ff28",
+        "members": 326,
+        "links": 0,
+        "retained": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-installed-layout-A01-repair-execution.json",
+        "sha256": "58c42ba15c7f7b8618e1d333ad3c5bb5234085177d5cef318a10f73854ce6779",
+        "members": 39,
+        "links": 0,
+        "retained": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-native-installer-execution.json",
+        "sha256": "aace8909db3eae7c05648639d41a0d64ad036807d0187a6532cfad3d0063b71b",
+        "members": 270,
+        "links": 21,
+        "retained": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-native-installer-A01-repair-execution.json",
+        "sha256": "54571ced32458aa6b687a54d670815a69fd7038f404c2be51b964d1ae718d616",
+        "members": 185,
+        "links": 14,
+        "retained": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-user-recovery-execution.json",
+        "sha256": "4139d900c4524aa8496951294f375ec71d60c0cc5c1672d7e449db7edae85c3e",
+        "members": 334,
+        "links": 14,
+        "retained": true
+      }
+    ],
+    "fiveLifecycle195Pins": [
+      {
+        "release": "fb52fc94-f399-4fea-97c6-0467d1d84c35",
+        "pins": 195
+      },
+      {
+        "release": "83d0b087-e88a-4b5a-989b-1f0263a75cae",
+        "pins": 195
+      },
+      {
+        "release": "724ec489-d9db-4256-8eb1-fa1dde091f1f",
+        "pins": 195
+      },
+      {
+        "release": "c5c61a34-3999-429f-8ab3-e448766c2245",
+        "pins": 195
+      },
+      {
+        "release": "281a7d48-11de-42e4-b7d7-8285e170732a",
+        "pins": 195
+      }
+    ],
+    "originalPublicFiles": 17,
+    "otherWorktree86Unchanged": true,
+    "remoteRefsUnchanged": true,
+    "oldMacBranchUnchanged": true,
+    "codeNativeIdentitiesUnchanged": true,
+    "preflightInputDrift": []
+  },
+  "fullF": "OPEN",
+  "formalReleaseAccepted": false,
+  "unsigned": true,
+  "notarized": false,
+  "humanUsabilityAcceptance": false,
+  "newRealCallsUploadsSendsFeesPush": 0,
+  "independentReauditPending": true
+}
