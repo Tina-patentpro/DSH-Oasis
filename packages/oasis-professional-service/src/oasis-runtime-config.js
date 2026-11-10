@@ -33,7 +33,7 @@ export const OASIS_SETTINGS_SCHEMA = z.object({
     workspaceId: z.string(), workspacePath: z.string(),
     environmentKind: z.union([z.const('non-production'), z.const('production')]),
     apiBaseOrigin: z.string(), accountId: z.number(), folderId: z.number(),
-    apiId: z.number(), apiEndpoint: z.string(), apiProcess: z.string(),
+    apiId: z.number(), catalogEntryId: z.number(), apiEndpoint: z.string(), apiProcess: z.string(),
     schemaHash: z.string(), folderName: z.string(), confirmedAt: z.string(),
   })).default([]),
 })

@@ -13,7 +13,22 @@ const labels={upstream_md:'前序累计文稿',research_request:'研究请求',r
  supplemental_data:'补充数据',technical_analysis_material:'技术分析材料',technical_feedback:'技术反馈'}
 function label(field){const base=field.id.replace(/_(?:file|text)$/,'');return labels[base]??(/^comparison_doc_/.test(base)?`对比文件${base.split('_').at(-1)}`:field.boundary)}
 
+export function V340InputFields({node,draft,disabled=false,onChange,idPrefix='preview',onError=()=>{}}){
+ return (node?.inputs??[]).map(field=>{
+     const file=field.id.endsWith('_file'),config=field.channel==='配置',channel=file?'filePaths':config?'configuration':'textInputs'
+     const value=draft[channel][field.id]??'',name=`${label(field)}${file?'文件':field.id.endsWith('_text')?'文本':''}`
+     return h('label',{key:field.id,style:{display:'grid',gap:5,marginBottom:12,fontSize:13}},name,
+      field.id==='application_type'?h('select',{'aria-label':name,value,disabled,onChange:e=>onChange(channel,field.id,e.target.value)},h('option',{value:''},'未指定'),...[['invention','发明'],['utility_model','实用新型'],['undetermined','待确定']].map(([id,title])=>h('option',{key:id,value:id},title))):
+      config?h('input',{'aria-label':name,defaultValue:typeof value==='object'?JSON.stringify(value):value,key:`${idPrefix}-${field.id}`,disabled,
+       onBlur:e=>{try{onChange(channel,field.id,e.target.value===''?'':JSON.parse(e.target.value))}catch{onError('配置格式不正确，输入保留；请修正后保存。')}}}):
+      h(file?'input':'textarea',{'aria-label':name,value,disabled,maxLength:file?1024:300000,rows:file?undefined:4,
+       placeholder:file?'当前项目内的相对路径（.md / .txt）':undefined,onChange:e=>onChange(channel,field.id,e.target.value)}),
+      h('small',{style:{color:'var(--dsw-alias-text-secondary,#66706b)'}},field.id==='user_input'?'仅填写本次增删改、范围或偏好。':file?'一次选择一个当前项目文件；运行前按明确路径读取正文。':field.importance==='expected'?'建议提供，缺失将产生警示。':'可选补充'))
+    })
+}
+
 export function V340GenerationPage({page,state,node,operation={},actions={},markdownRenderer,savedFileUnavailableReason='安全文件预览不可用'}){
+ const recovery=!!state.v340Catalog?.nativeBusinessRecovery
  const draft=operation.v340InputDraft??page.v340.draft
  const picked=operation.v340Selection??{runId:page.v340.activeRunId,versionId:null}
  const run=page.v340.runs[picked.runId],versions=run?getV340Versions(run):[]
@@ -28,7 +43,7 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
  const editing=!!persisted||local?.body!=null,editBody=local?.body??persisted?.body??version?.result.snapshot.current_result.core_result_markdown??''
  const pending=state.pages.some(hasPendingUnifiedRun),disabled=state.syncStatus!=='ready'||pending||operation.v340CandidateUnconfirmed===true
  const working=operation.activeOperation!=null||operation.v340CandidatePreparing||operation.v340CandidateSubmitting
- const [tab,setTab]=useState('input'),[error,setError]=useState(null),[confirmation,setConfirmation]=useState(null)
+ const [tab,setTab]=useState(recovery?'result':'input'),[error,setError]=useState(null),[confirmation,setConfirmation]=useState(null)
  const live=useRef(true),inFlight=useRef(false),entry=useRef(null)
  const identity=JSON.stringify([state.workspaceId,state.revision,page.pageId,target,editing,disabled])
  const current=useRef(identity);current.current=identity
@@ -42,12 +57,13 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
   try{await action(()=>actions.review?.(page.pageId,target,{workspaceId:state.workspaceId,revision:state.revision,...target}))}finally{inFlight.current=false}
  }
  const plan=operation.v340SavePlan,planMatches=plan&&target&&JSON.stringify(plan.target)===JSON.stringify(target)&&plan.revision===state.revision&&!editing
- const candidate=node?.m06Candidate?.skillVersion==='0.1.3'&&page.v340.nodeId==='Flow-2-6'&&draft.source==='local-skill'
+ const candidate=!recovery&&node?.m06Candidate?.skillVersion==='0.1.3'&&page.v340.nodeId==='Flow-2-6'&&draft.source==='local-skill'
  const candidatePreview=operation.v340CandidatePreview
  return h('section',{'aria-label':'共同输入与结果','className':'oasis-v340',style:{container:'oasis-v340 / inline-size',minWidth:0,padding:16}},
   h('style',null,`.oasis-v340 *{box-sizing:border-box}.oasis-v340 .v340-panes{display:grid;grid-template-columns:minmax(0,1fr);gap:16}.oasis-v340 .v340-pane[data-visible=false]{display:none}.oasis-v340 input,.oasis-v340 textarea,.oasis-v340 select{max-width:100%;width:100%;border:1px solid #dce4df;border-radius:7px;padding:9px;color:inherit;background:var(--dsw-alias-bg-base,#fff)}.oasis-v340 button:disabled{opacity:.55;cursor:not-allowed}.oasis-v340 input:disabled,.oasis-v340 textarea:disabled,.oasis-v340 select:disabled{opacity:.65;cursor:not-allowed}@container oasis-v340 (min-width:680px){.oasis-v340 .v340-panes{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.oasis-v340 .v340-pane[data-visible=false]{display:block}.oasis-v340 .v340-tabs{display:none}}`),
   h('header',{style:{display:'flex',flexWrap:'wrap',gap:12,justifyContent:'space-between',alignItems:'center',marginBottom:14}},
-   h('strong',null,page.title),h(GenerationSourceSwitch,{value:draft.source,disabled:disabled||!node,onChange:source=>{void action(()=>actions.saveDraft?.(page.pageId,{...draft,source}))}})),
+   h('strong',null,page.title),h(GenerationSourceSwitch,{value:draft.source,disabled:recovery||disabled||!node,onChange:source=>{void action(()=>actions.saveDraft?.(page.pageId,{...draft,source}))}})),
+  recovery?h('p',{role:'note'},'本地业务恢复验收：仅处理本次合成任务，不生成、不联网或发送；审核仅为工程验证。'):null,
   page.v340.nodeId==='Flow-2-6'?h('p',{role:'note','aria-label':'当前能力限制'},m06LimitationNotice):null,
   h('nav',{className:'v340-tabs','aria-label':'输入与结果',style:{display:'flex',gap:8,marginBottom:12}},...['input','result'].map(id=>h('button',{key:id,type:'button',style:button,'aria-pressed':tab===id,onClick:()=>setTab(id)},id==='input'?'输入材料':'查看结果'))),
   h('div',{className:'v340-panes'},
@@ -55,17 +71,7 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
     h('h3',null,node?.title??'当前任务'),
     !node?h('section',{role:'alert'},h('p',null,state.v340CatalogError??'新版目录尚不可用，输入草稿仍保留。'),
       h('button',{type:'button',style:button,disabled:!actions.retryCatalog||state.v340CatalogStatus==='loading',onClick:()=>action(()=>actions.retryCatalog?.())},'重试新版目录')):null,
-    ...(node?.inputs??[]).map(field=>{
-     const file=field.id.endsWith('_file'),config=field.channel==='配置',channel=file?'filePaths':config?'configuration':'textInputs'
-     const value=draft[channel][field.id]??'',name=`${label(field)}${file?'文件':field.id.endsWith('_text')?'文本':''}`
-     return h('label',{key:field.id,style:{display:'grid',gap:5,marginBottom:12,fontSize:13}},name,
-      field.id==='application_type'?h('select',{'aria-label':name,value,disabled,onChange:e=>update(channel,field.id,e.target.value)},h('option',{value:''},'未指定'),...[['invention','发明'],['utility_model','实用新型'],['undetermined','待确定']].map(([id,title])=>h('option',{key:id,value:id},title))):
-      config?h('input',{'aria-label':name,defaultValue:typeof value==='object'?JSON.stringify(value):value,key:`${page.pageId}-${field.id}`,disabled,
-       onBlur:e=>{try{update(channel,field.id,e.target.value===''?'':JSON.parse(e.target.value))}catch{setError('配置格式不正确，输入保留；请修正后保存。')}}}):
-      h(file?'input':'textarea',{'aria-label':name,value,disabled,maxLength:file?1024:300000,rows:file?undefined:4,
-       placeholder:file?'当前项目内的相对路径（.md / .txt）':undefined,onChange:e=>update(channel,field.id,e.target.value)}),
-      h('small',{style:{color:'var(--dsw-alias-text-secondary,#66706b)'}},field.id==='user_input'?'仅填写本次增删改、范围或偏好。':file?'一次选择一个当前项目文件；运行前按明确路径读取正文。':field.importance==='expected'?'建议提供，缺失将产生警示。':'可选补充'))
-    }),
+    h(V340InputFields,{node,draft,disabled:recovery||disabled,onChange:update,onError:setError,idPrefix:page.pageId}),
     node?h('p',{role:'status'},operation.v340InputDraft?'输入正在保存；失败时保留本地草稿。':'输入已保存'):null,
     operation.v340InputDraft?h('button',{type:'button',style:button,disabled:working,onClick:()=>action(()=>actions.saveDraft?.(page.pageId,operation.v340InputDraft))},'重试保存输入'):null,
     candidate?h('section',{'aria-label':'M06受控候选'},
@@ -90,7 +96,7 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
     h('nav',{'aria-label':'结果版本',style:{display:'flex',flexWrap:'wrap',gap:6}},
      ...page.v340.runOrder.flatMap(id=>getV340Versions(page.v340.runs[id]).map((v,index)=>h('button',{key:`${id}/${v.versionId}`,type:'button',style:button,
       'aria-current':target?.versionId===v.versionId?'true':undefined,onClick:()=>actions.selectVersion?.(page.pageId,id,v.versionId)},`${page.v340.runOrder.length>1?`运行${page.v340.runOrder.indexOf(id)+1} · `:''}版本 ${index+1}`)))),
-    !version?h('p',{role:'status'},run?.status==='unknown'?'运行状态未确认；不会自动重发。':run?.status==='prepared'?'原运行尚未完成。':'暂无生成结果'):h('article',{style:{display:'grid',gap:12,marginTop:12}},
+    !version?h('p',{role:'status'},run?.status==='unknown'?'运行状态未确认；不会自动重发。':run?.status==='prepared'?'原运行尚未完成。':run?.status==='failed'?`本次生成失败（${run.failureCode}）；未取得正文，不会自动重试。`:'暂无生成结果'):h('article',{style:{display:'grid',gap:12,marginTop:12}},
      h('small',null,`${run.source==='local-skill'?'本地 Skills':'专业 API'} · ${run.evidenceKind==='native-model-candidate'?'受控候选':'合成验收'} · ${version.review.status==='approved'?'已审核':'待审核'}`),
      ...legacy.map(({key,draft})=>h('section',{key,'aria-label':'旧草稿恢复'},h('p',null,'旧草稿格式未确认，可能包含整份累计文稿。请先复制保留；原草稿保持，可另起核心正文编辑。'),
        h('textarea',{'aria-label':'旧草稿原文',readOnly:true,rows:8,value:draft.body}),
@@ -131,7 +137,7 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
       h('small',null,'打开的是当前文件；固定审核结论仅绑定所选版本，文件变化需重新核对。')))),
     run&&['prepared','unknown'].includes(run.status)?h('div',null,h('button',{type:'button',style:button,disabled:working,onClick:()=>action(()=>actions.observe?.(page.pageId,run.runId))},'查看原运行'),
      h('button',{type:'button',style:button,disabled:working||run.status!=='prepared',onClick:()=>action(()=>actions.stop?.(page.pageId,run.runId))},'停止等待')):null)),
-  error||operation.error?h('p',{role:'alert'},error??'操作未完成，草稿和原记录已保留。'):null,
+  error||operation.error?h('p',{role:'alert'},operation.candidateModelUnavailable?'当前DSH模型引用的API凭据不可用；未开始生成，请在DSH模型设置中核对。':error??'操作未完成，草稿和原记录已保留。'):null,
   operation.feedback?h('p',{role:'status'},operation.feedback):null,
   operation.indexWarningManifest?h('section',{role:'alert'},h('p',null,'文件可能已经发布，但保存索引尚未完成。请保留恢复清单，不要覆盖或重复保存。'),h('pre',{style:{whiteSpace:'pre-wrap'}},JSON.stringify(operation.indexWarningManifest,null,2))):null)
 }

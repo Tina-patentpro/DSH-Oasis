@@ -1,6 +1,7 @@
 import {randomUUID} from 'node:crypto'
 import {v340Commands,getV340Versions,getV340ResultDrafts,V340_LIMITS,V340_CONVERSATION_TEXT_LIMIT,formatV340ConversationDraft} from './v340-runtime-contract.js'
-import {reviseV340Document} from './v340-document.js'
+import {reviseV340Document,m06StructuredEditHash} from './v340-document.js'
+import {restoreV340Prepared} from './v340-input-snapshot.js'
 import {v340Hash} from './v340-catalog.js'
 import {hasPendingUnifiedRun} from './generation-contract.js'
 import {isOasisRemoteExecutionUnresolved} from './workbench-contract.js'
@@ -26,12 +27,14 @@ export function createV340ResultService({repository,writebackManager,materialMan
     const {run,versions,version}=selected(record,c)
     const draft=getV340ResultDrafts(run)[c.versionId]
     const prior=versions.find(v=>v.editRequestKey===c.requestKey)
-    if(prior){if(prior.parentVersionId!==c.versionId||prior.result.snapshot.manual_edit_manifest.at(-1)?.after_sha256!==c.draftSha256)fail('V340_EDIT_CONFLICT','修订请求已绑定其他内容。');return record}
+    if(prior){const manifest=prior.result.snapshot.manual_edit_manifest.at(-1);if(prior.parentVersionId!==c.versionId||manifest?.after_sha256!==c.draftSha256
+      ||(manifest?.structured_edit_sha256??'none')!==m06StructuredEditHash(c.m06Structure))fail('V340_EDIT_CONFLICT','修订请求已绑定其他内容。');return record}
     if(draft&&draft.format!=='core-markdown')fail('V340_DRAFT_FORMAT_REQUIRED','旧草稿格式未确认，请先复制保留，并明确另起核心正文编辑。')
     if(busy(record)||versions.length>=8||!draft||draft.baseSha256!==c.baseSha256||v340Hash(draft.body)!==c.draftSha256)fail('V340_EDIT_STALE','编辑草稿已变化或版本已达上限；原草稿保留。')
     const uid=uuidFactory(),versionId=`revision-${uid}`,now=clock()
     if(versions.some(v=>v.versionId===versionId))fail('V340_EDIT_CONFLICT','版本标识冲突。')
-    const result=reviseV340Document(version.result,{workflowRunUid:uid,generatedAt:now,body:draft.body})
+    const result=reviseV340Document(version.result,{workflowRunUid:uid,generatedAt:now,body:draft.body,m06Structure:c.m06Structure,
+      ...(c.m06Structure===undefined?{}:{prepared:restoreV340Prepared(run.inputSnapshot)})})
     const next=structuredClone(record),target=next.tasks[c.taskId].v340.runs[c.runId]
     target.resultVersions=[...structuredClone(versions),{versionId,parentVersionId:c.versionId,editRequestKey:c.requestKey,result,createdAt:now,
       review:{status:'not-reviewed',sha256:result.sha256,updatedAt:now},writebacks:[]}]

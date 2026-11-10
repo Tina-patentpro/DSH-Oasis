@@ -1,0 +1,73 @@
+{
+  "recordedAt": "2026-11-09T20:39:48.213001+08:00",
+  "status": "OFFLINE_HOST_CANDIDATE_READY_FOR_REVIEW",
+  "preflightSHA256": "ebe28e6acb221a4eebe3fb0ce07722dfd96a729644769284c47cd2a2c2065402",
+  "activeInstall": {
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1",
+    "bundleSHA256": "947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b",
+    "profileCheckExit": 1,
+    "reason": "active installed Profile differs from current receipt",
+    "activeProfilePreserved": true,
+    "candidateInstalled": false
+  },
+  "candidate": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/bundle",
+    "bundleSHA256": "a25f1a190803aaccc3f614b607b2d1502458999d41221f5751969e93b3a62e2b",
+    "archiveSHA256": "e94f9136f7d93373569444180fb2351b09db52ba2851fb84411e5125a56a0bc5",
+    "controllerSHA256": "8338fec253a916eb780a8fc739f6d973ba22475772db98698543758a408ad405",
+    "profileTemplateSHA256": "64f63f0eeef3c2ee5891c9615da3df9a641b1840304f308af3f8cf2c55a401e6",
+    "changedPayloadFiles": [
+      {
+        "path": "controller/scripts/f-installed-runtime.mjs",
+        "beforeSHA256": "34cfa35cb3e62d004fedd13e06f7270932743e287931bb1ce1b5ee18224f982b",
+        "afterSHA256": "8338fec253a916eb780a8fc739f6d973ba22475772db98698543758a408ad405"
+      },
+      {
+        "path": "profile-template.json",
+        "beforeSHA256": "9e420a9b516aeea07cde7bcedbf568035cec74c8d05a711feef747df0be20ccd",
+        "afterSHA256": "64f63f0eeef3c2ee5891c9615da3df9a641b1840304f308af3f8cf2c55a401e6"
+      }
+    ],
+    "unchangedPayloadFiles": 27171,
+    "unchangedLinks": 14,
+    "businessPackage": "0.1.0-rc.5",
+    "businessMembersByteIdentical": 125,
+    "signedAppVerified": true,
+    "policy": "m06-native-generation-v2"
+  },
+  "verification": {
+    "preparedRequest": {
+      "url": "https://api.deepseek.com/anthropic/v1/messages",
+      "method": "POST",
+      "model": "deepseek-flash",
+      "max_tokens": 16384,
+      "thinking": {
+        "type": "enabled"
+      },
+      "effort": "low",
+      "maxRetries": 0,
+      "interceptedRequests": 1,
+      "responseFixtureStatus": 503,
+      "realCalls": 0,
+      "preparedInputHash": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b",
+      "preparedSHA256": "fb01f3abfc715ef6330aa6d11e47b6909d95509a286c68d987388ccdffd0af8e",
+      "systemSHA256": "7d998e25aa7dc05470e4bf16d7f58e9dd0165d226ba32a30a695b1b39e191d00",
+      "resourceSHA256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d"
+    },
+    "requestTest": "actual composed provider and model rows; network-denied process with intercepted fetch and one synthetic HTTP 503",
+    "controllerRegressionTestsPassed": 33,
+    "v2ProfileMaterialization": "fixed pnpm offline, isolated configuration-only fixture; actual Desktop prepareDesktopProfile plus composeEntries",
+    "preflightInputsRechecked": 32,
+    "priorProtectedPathsRechecked": 48,
+    "priorBusinessStateSHA256": "fc225f6b49dde37bac2b87bbe2222e18136986202156175e010484d25bab93d1",
+    "composedProfileWireEvidence": {
+      "desktop-profile-materialization.log": "f1275e13cb109d322145bf5d6fe7d5ad8b900ad61b775e95712b0e7a60ccf38d",
+      "desktop-profile-composition.log": "cb4ced8a7db0229e25cf94f1d5a20d9d71bb92bfd65ac4261c70d03803139169",
+      "request-composed-green.log": "b3663c5a585d313868ad5253e2a6ba03e982acf79756dd37fe02968dcf037c21"
+    }
+  },
+  "appStarts": 0,
+  "realCalls": 0,
+  "liveCallsRemaining": 0,
+  "reviewBoundary": "No native App validation, active installation, real provider request, actual fee, user acceptance, or release."
+}

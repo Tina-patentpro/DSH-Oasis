@@ -118,7 +118,7 @@ test('malformed attachments are explicitly unsupported and oversized expansion i
   await assert.rejects(c.listItems({ folderId: 2, kind: 'records', page: 1 }), { code: 'IMPORT_TOO_MANY_ITEMS' })
 })
 
-async function fixture(t) {
+async function fixture(t, {settingsNamespace='oasis-professional-service'}={}) {
   assert.equal(typeof serviceModule.createWebsiteImportService, 'function')
   const root = await realpath(await mkdtemp(join(tmpdir(), 'oasis-import-')))
   t.after(() => rm(root, { recursive: true, force: true }))
@@ -128,11 +128,11 @@ async function fixture(t) {
   const row = { key: 'history:9:text', revision: 'a'.repeat(64), role: 'text', inputField: null, kind: 'text', sourceId: 9, fileName: 'claims_OIW.md', name: 'claims', size: 6, downloadable: true, reason: null }
   let body = '# text', downloads = 0
   const accountService = { status: async () => ({ authenticated: true, accountId: 7, revision }), captureToken: async () => { const r = revision; return async () => { if (r !== revision) throw Error('changed'); return 'test-secret' } } }
-  const settings = { writable: true, describe: () => [{ ns: 'oasis-professional-service', revision: settingsRevision, value }],
-    update: async (ns, patch, r) => { assert.equal(r, settingsRevision); value = { ...value, ...patch }; settingsRevision++ } }
+  const settings = { writable: true, describe: () => [{ ns: settingsNamespace, revision: settingsRevision, value }],
+    update: async (ns, patch, r) => { assert.equal(ns, settingsNamespace); assert.equal(r, settingsRevision); value = { ...value, ...patch }; settingsRevision++ } }
   const client = { project: async id => ({ id, name: 'website' }), listProjects: async () => ({ total: 1, items: [{ id: 2, name: 'website' }] }),
     listItems: async () => ({ total: 1, pageState: 'complete', recordIds: [9], issues: [], items: [row] }), download: async (row, folder, { budget }) => { downloads++; const bytes = Buffer.from(body); budget.remaining -= bytes.length; return bytes } }
-  const service = serviceModule.createWebsiteImportService({ workspaceRegistry: { get: id => id === 'a' ? workspace : null }, accountService, settings, createClient: () => client,
+  const service = serviceModule.createWebsiteImportService({ workspaceRegistry: { get: id => id === 'a' ? workspace : null }, accountService, settings, settingsNamespace, createClient: () => client,
     now: () => clock, isWorkspaceBusy: () => active })
   const open = () => service.open({ workspaceId: 'a', confirmed: true })
   async function select() { const s = await open(); await service.items({ token: s.token, folderId: 2, kind: 'records', page: 1 }); return s }
@@ -141,6 +141,16 @@ async function fixture(t) {
     expire: () => { clock += 16 * 60 * 1000 }, busy: () => { active = true },
     accountChange: () => { revision = 'r2' }, body: text => { body = text }, move: path => { workspace.path = path } }
 }
+
+test('explicit native entry settings owner supports project association without using another namespace', async t => {
+  const h = await fixture(t, {settingsNamespace:'oasis-m06-workarea-live-013'})
+  const session = await h.select()
+  const result = await h.service.commit({token:session.token,folderId:2,keys:[],versions:{},confirmed:true})
+  assert.equal(result.associationStatus,'saved')
+  assert.equal(h.settings().websiteProjectLinks[0].folderId,2)
+  await h.service.unlink({token:(await h.open()).token,expectedSettingsRevision:1,confirmed:true})
+  assert.deepEqual(h.settings().websiteProjectLinks,[])
+})
 
 test('expanded history pages cross 40 rows without leaking URLs and save only the selected attachment', async t => {
   const h = await fixture(t), n = network(), c = n.client()

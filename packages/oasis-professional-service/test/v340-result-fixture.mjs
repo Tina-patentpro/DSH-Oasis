@@ -17,7 +17,7 @@ export async function resultFixture(t,source='local-skill',options={}){
  const writebackManager=Object.fromEntries(Object.keys(fixture.writebackCalls).map(name=>[name,(...args)=>{fixture.writebackCalls[name]++;return manager[name](...args)}]))
  fixture.service=createWorkbenchService({repository:fixture.repository,workspaceRegistry:fixture.workspaceRegistry,clock:options.clock??(()=> '2026-10-22T01:00:00.000Z'),
   writebackManager,
-  v340Executor:{evidenceKind:'synthetic',async generate(){fixture.generationCalls++;return{status:'completed',output:{summary:'公开合成结论',core_result_markdown:'公开原始正文',updates:[],tables:{},terms_master:[],warnings:[],model_completions:[]}}}}})
+  v340Executor:{evidenceKind:'synthetic',async generate(){fixture.generationCalls++;return{status:'completed',output:options.output??{summary:'公开合成结论',core_result_markdown:'公开原始正文',updates:[],tables:{},terms_master:[],warnings:[],model_completions:[]}}}}})
  fixture.handler=createWorkbenchRpcHandler(fixture.service)
  fixture.remote=createWorkbenchRemote({rpc:{async call(_channel,endpoint,payload){fixture.calls.push(endpoint);return fixture.handler(endpoint.replace('oasis-workbench/',''),payload)}}})
  fixture.record=()=>fixture.repository.get('a')

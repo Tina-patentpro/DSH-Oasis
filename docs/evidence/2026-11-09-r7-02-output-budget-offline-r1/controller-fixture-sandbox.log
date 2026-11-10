@@ -1,0 +1,476 @@
+✖ recovery launch spec carries exclusive zero-real policy and does not launch App (40.961875ms)
+✔ recovery installation rejects budget (39.98575ms)
+✔ recovery installation rejects guard drift (38.410167ms)
+✔ recovery installation rejects mixed mode (37.153167ms)
+✔ recovery installation rejects foreign root (30.913083ms)
+✖ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (39.574708ms)
+✔ native M06 preparation rejects second model request (39.294667ms)
+✔ native M06 preparation rejects API budget (37.733792ms)
+✔ native M06 preparation rejects foreign root (40.351958ms)
+✔ native M06 preparation rejects foreign endpoint (32.178042ms)
+✔ native M06 preparation rejects provider retries (23.195167ms)
+✔ native M06 preparation rejects output above scope (22.538666ms)
+✔ native M06 preparation rejects another model provider (18.290125ms)
+✔ native M06 preparation rejects mixed recovery (16.200875ms)
+✔ native M06 preparation rejects guard drift (17.545667ms)
+✖ v2 materializes Low and 16384 with no retry policy change in an offline install fixture (16.547333ms)
+✔ v2 rejects unsanctioned output budget (17.583375ms)
+✔ v2 rejects provider output mismatch (15.741834ms)
+✔ v2 rejects SDK retries (17.19925ms)
+✔ v2 rejects High Profile default (15.715459ms)
+✔ v2 rejects duplicate Profile default (17.44675ms)
+✖ installed zero spec uses sealed prepared Profile and live writer without spawning App (38.555083ms)
+✔ installed zero policy rejects nonzero budgets and incorrect guard bindings before creating root (36.875125ms)
+✔ installed zero policy rejects rehashed wrong guard before creating root (36.38475ms)
+✖ Desktop preparation failure leaves recovery refusal and releases maintenance lease (37.839917ms)
+✖ fresh installation verifies signatures, materializes only at final paths and carries standalone control (30.986667ms)
+✖ Desktop resolves client modules from the installed release rather than the data-only directory (32.22475ms)
+✖ installed same-root upgrade then explicit rollback preserve later public edits and UNKNOWN (34.546833ms)
+✖ four installed writers and maintenance refuse busy before callbacks; old current is not guessed (33.45875ms)
+✖ package drift refuses before installation and pnpm failure restores the existing current (32.900792ms)
+✖ installation data aliases and controller drift fail closed before callbacks (26.129334ms)
+✔ a correctly rehashed bundle still cannot enable model plugins or bind a component outside its payload (21.708375ms)
+✖ failure after active Profile replacement restores old bytes; failed restore leaves explicit recovery refusal (19.473167ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 21
+ℹ fail 12
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 440.486916
+
+✖ failing tests:
+
+test at scripts/tests/f-installed-native-business-recovery.test.mjs:21:1
+✖ recovery launch spec carries exclusive zero-real policy and does not launch App (40.961875ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-business-recovery.test.mjs:22:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69821', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-business-recovery.test.mjs:22:46)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.start (node:internal/test_runner/test:1262:17),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at scripts/tests/f-installed-native-m06-generation.test.mjs:29:1
+✖ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (39.574708ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-m06-generation.test.mjs:30:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69822', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-m06-generation.test.mjs:30:46)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.start (node:internal/test_runner/test:1262:17),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at scripts/tests/f-installed-native-m06-generation.test.mjs:74:1
+✖ v2 materializes Low and 16384 with no retry policy change in an offline install fixture (16.547333ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-m06-generation.test.mjs:77:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69822', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-m06-generation.test.mjs:77:12)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at scripts/tests/f-installed-native-zero.test.mjs:42:1
+✖ installed zero spec uses sealed prepared Profile and live writer without spawning App (38.555083ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-zero.test.mjs:44:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69823', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-zero.test.mjs:44:12)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.start (node:internal/test_runner/test:1262:17),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at scripts/tests/f-installed-native-zero.test.mjs:86:1
+✖ Desktop preparation failure leaves recovery refusal and releases maintenance lease (37.839917ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /PUBLIC preparation failed/. Input:
+  
+  'Error: spawnSync /bin/ps EPERM'
+  
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-zero.test.mjs:92:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-zero.test.mjs:92:31
+        at waitForActual (node:assert:632:21)
+        at strict.rejects (node:assert:769:31)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-native-zero.test.mjs:92:15),
+    expected: /PUBLIC preparation failed/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at scripts/tests/f-installed-runtime.test.mjs:51:1
+✖ fresh installation verifies signatures, materializes only at final paths and carries standalone control (30.986667ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:52:31)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69824', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:52:31)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.start (node:internal/test_runner/test:1262:17),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at scripts/tests/f-installed-runtime.test.mjs:58:1
+✖ Desktop resolves client modules from the installed release rather than the data-only directory (32.22475ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:59:29)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69824', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:59:29)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at scripts/tests/f-installed-runtime.test.mjs:69:1
+✖ installed same-root upgrade then explicit rollback preserve later public edits and UNKNOWN (34.546833ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:70:29)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69824', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:70:29)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at scripts/tests/f-installed-runtime.test.mjs:75:1
+✖ four installed writers and maintenance refuse busy before callbacks; old current is not guessed (33.45875ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:76:29)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69824', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:76:29)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at scripts/tests/f-installed-runtime.test.mjs:83:1
+✖ package drift refuses before installation and pnpm failure restores the existing current (32.900792ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:86:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69824', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:86:12)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at scripts/tests/f-installed-runtime.test.mjs:91:1
+✖ installation data aliases and controller drift fail closed before callbacks (26.129334ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:92:29)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69824', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:92:29)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+test at scripts/tests/f-installed-runtime.test.mjs:108:1
+✖ failure after active Profile replacement restores old bytes; failed restore leaves explicit recovery refusal (19.473167ms)
+  Error: spawnSync /bin/ps EPERM
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+      at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:109:29)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'spawnSync /bin/ps',
+    path: '/bin/ps',
+    spawnargs: [ '-p', '69824', '-o', 'lstart=' ],
+    error: Error: spawnSync /bin/ps EPERM
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at startTime (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:41:14)
+        at acquireInstalledLease (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/patches/storage-json-single-owner/installed-lease.mjs:60:95)
+        at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/f-installed-runtime.mjs:256:14)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/scripts/tests/f-installed-runtime.test.mjs:109:29)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+Exit: 1

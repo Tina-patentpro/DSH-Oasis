@@ -11,6 +11,8 @@
   "exports": {
     ".": "./src/index.js",
     "./m06-controlled-host-013": "./src/m06-controlled-host-013.js",
+    "./m06-workarea-host-013": "./src/m06-workarea-host-013.js",
+    "./m06-native-business-recovery": "./src/m06-native-business-recovery-host.js",
     "./client": "./lib/client.js",
     "./package.json": "./package.json"
   },
@@ -18,7 +20,9 @@
     "src",
     "lib",
     "docs/api/oasis-professional-service-baseline.json",
-    "cordis.patch.yml"
+    "cordis.patch.yml",
+    "THIRD-PARTY-NOTICES.md",
+    "licenses"
   ],
   "scripts": {
     "build": "tsdown --config tsdown.config.mjs",

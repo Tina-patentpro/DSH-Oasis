@@ -7,6 +7,12 @@ const STANDALONE_HOST_SNAPSHOT = Object.freeze({ mode: 'standalone' })
 const subscribeStandaloneHost = () => () => {}
 const getStandaloneHostSnapshot = () => STANDALONE_HOST_SNAPSHOT
 
+export function openStandaloneWorkbench({store,workspaceId}) {
+  // Resolve the trusted Host mode before openPanel can enqueue a persisted action.
+  if(store.websiteImportRemote===null||store.peekWorkspaceState?.(workspaceId)?.v340CatalogStatus==='ready')return store.openPanel(workspaceId)
+  return store.loadV340Catalog(workspaceId).then(()=>store.openPanel(workspaceId))
+}
+
 function useLivePanelHostSnapshot(coordinator) {
   return useSyncExternalStore(
     coordinator === null ? subscribeStandaloneHost : coordinator.subscribe,
@@ -56,7 +62,7 @@ export function WorkbenchEntry({
       return
     }
     if (coordinator && coordinator.getSnapshot().mode !== 'standalone') return
-    store.openPanel(workspaceId)
+    void Promise.resolve(openStandaloneWorkbench({store,workspaceId})).catch(() => {})
   }
 
   const hostMode = hostSnapshot.mode

@@ -18,6 +18,8 @@ import {
 import { isOasisRemoteExecutionUnresolved, oasisRunningWaterPageSchema, WORKBENCH_LIMITS } from './workbench-contract.js'
 import { getWorkflowDefinition } from './workflow-catalog.js'
 import { WorkspaceMaterialError } from './workspace-materials.js'
+import { buildM06Fast39Registry, inspectM06Fast39Fragment, shrinkM06Fast39Evidence, assertM06Fast39RecordCapacity } from './m06-fast39-result.js'
+import { FAST39_DIRECT_FIELDS, fast39EvidenceStatus } from './m06-fast39-contract.js'
 
 function remoteError(code, message, details = {}) {
   return new WorkspaceMaterialError(code, message, details)
@@ -181,7 +183,9 @@ export function createOasisRemoteService({
   materialManager,
   getRuntime,
   settings,
+  settingsNamespace = OASIS_SETTINGS_NAMESPACE,
   workspaceRegistry,
+  fast39Delivery,
   workspaceOperations = createWorkspaceOperationGuard(),
   clock = () => new Date().toISOString(),
   executionIdFactory,
@@ -214,6 +218,58 @@ export function createOasisRemoteService({
   const claimsConfirmations = new Map()
   const claimsAdmissions = new Map()
   const linkedClaimsBindings = new Map()
+  // Optional receive-only captured context, not a setting or an activation flag.
+  // No current application composition supplies it. Detach it from caller edits.
+  const capturedFast39 = fast39Delivery == null ? null : structuredClone(fast39Delivery)
+
+  function assertFast39Snapshot(current, taskId, executionId) {
+    const d = capturedFast39, task = requireTask(current, taskId), e = requireExecution(task, executionId)
+    const match = d && current.workspaceId === d.workspaceId && taskId === d.taskId && executionId === d.executionId
+      && task.workType === 'cn-invention-patent' && task.workflowId === d.workflowId && task.workflowVersion === d.workflowVersion
+      && !e.unifiedClaims && e.submittedAt !== null && e.requestKey === d.requestKey && e.inputSha === d.inputSha
+      && e.apiBaseOrigin === d.apiBaseOrigin && e.environmentKind === d.environmentKind && e.accountId === d.accountId
+      && e.folderSnapshot.folderId === d.folderId && e.serviceSnapshot.apiId === d.apiId
+      && Number.isSafeInteger(d.catalogEntryId) && e.serviceSnapshot.catalogEntryId === d.catalogEntryId
+      && e.serviceSnapshot.apiEndpoint === d.apiEndpoint && e.serviceSnapshot.apiProcess === d.apiProcess
+      && e.serviceSnapshot.schemaHash === d.schemaHash && typeof d.packetText === 'string'
+    if (!match) throw remoteError('FAST39_BINDING_MISMATCH', '当前任务与原专业服务及材料记录不一致，结果未写入。')
+    const keys = Object.keys(e.formValues), material = e.materialSnapshots[0], upload = e.uploadedFiles[0]
+    if (keys.length !== 8 || FAST39_DIRECT_FIELDS.some(k => !Object.hasOwn(e.formValues, k) || e.formValues[k] !== '')
+      || e.formValues.User_input !== d.User_input || e.materialSnapshots.length !== 1 || e.uploadedFiles.length !== 1
+      || e.formValues.Technical_Disclosure_file !== material?.referenceId
+      || material?.sha256 !== createHash('sha256').update(d.packetText, 'utf8').digest('hex')
+      || upload?.fieldId !== 'Technical_Disclosure_file' || upload?.referenceId !== material.referenceId || upload?.sha256 !== material.sha256) {
+      throw remoteError('FAST39_BINDING_MISMATCH', '原提交材料或来源范围不一致，结果未写入。')
+    }
+    return e
+  }
+
+  function fast39FailureCandidate(current, taskId, executionId, inspected, result) {
+    const next = structuredClone(current), now = clock(), e = next.tasks[taskId].remoteExecutions[executionId]
+    Object.assign(e, { status: inspected.status, safeError: { code: inspected.code,
+      message: inspected.code === 'FAST39_RESULT_TOO_LARGE' ? '结果超过可保存容量，已保留可容纳的收据；请人工处理，不要重复生成。'
+        : '专业服务结果仍需人工核对；已保留原提交及可用收据，不会自动重新生成。' }, updatedAt: now,
+    ...(inspected.evidence ? { fast39Result: inspected.evidence } : {}),
+    ...(Number.isSafeInteger(result.recordId) ? { recordId: result.recordId, recordIdSource: 'create' } : {}) })
+    next.tasks[taskId].updatedAt = now
+    return next
+  }
+
+  function fitFast39Candidate(current, candidate, taskId, executionId, inspected, result) {
+    const check = value => assertM06Fast39RecordCapacity({ ...value, schemaVersion: 4, revision: current.revision + 1, updatedAt: clock() })
+    try { check(candidate); return candidate } catch (error) {
+      if (error?.code !== 'FAST39_RESULT_TOO_LARGE') throw error
+      if (inspected.evidence) {
+        const evidence = shrinkM06Fast39Evidence(inspected.evidence)
+        const small = fast39FailureCandidate(current, taskId, executionId, { evidence,
+          status: fast39EvidenceStatus(evidence), code: evidence.fragment.structured_result_error.code }, result)
+        try { check(small); return small } catch (smallError) {
+          if (smallError?.code !== 'FAST39_RESULT_TOO_LARGE') throw smallError
+        }
+      }
+      throw remoteError('FAST39_RESULT_PERSISTENCE_FAILED', '剩余空间不足，结果未能保存，原提交记录保持；请人工处理，不要重复生成。')
+    }
+  }
 
   function linkedScope(workspaceId, state) {
     const link = parseWebsiteProjectLinks(state.value.websiteProjectLinks).find(item => item.workspaceId === workspaceId)
@@ -306,7 +362,7 @@ export function createOasisRemoteService({
   }
 
   function bindingSettings(expectedRevision) {
-    const descriptor = settings?.describe({ redactSecrets: true }).find(item => item.ns === OASIS_SETTINGS_NAMESPACE)
+    const descriptor = settings?.describe({ redactSecrets: true }).find(item => item.ns === settingsNamespace)
     if (!descriptor || !Number.isSafeInteger(descriptor.revision)) {
       throw remoteError('SETTINGS_UNAVAILABLE', 'Native settings revision is unavailable')
     }
@@ -356,6 +412,7 @@ export function createOasisRemoteService({
   async function setExecution(workspaceId, taskId, executionId, patch) {
     return mutateLatest(workspaceId, taskId, (current) => {
       const execution = requireExecution(requireTask(current, taskId), executionId)
+      if (execution.fast39Result) return current
       if (execution.unifiedClaims && ['completed', 'failed'].includes(execution.status)) {
         throw remoteError('REMOTE_EXECUTION_TERMINAL', 'A terminal execution cannot be resumed')
       }
@@ -419,13 +476,27 @@ export function createOasisRemoteService({
     )))
   }
 
-  async function complete(workspaceId, taskId, executionId, result, source) {
+  async function complete(workspaceId, taskId, executionId, result, source, fast39Inspection, expectedRevision) {
     const execution = requireExecution(requireTask(repository.get(workspaceId), taskId), executionId)
+    if (execution.fast39Result && !fast39Inspection) return { committed: true, current: repository.get(workspaceId) }
     const identityError = resultIdentityError(execution, result)
     if (identityError) {
+      if (fast39Inspection) throw remoteError('FAST39_BINDING_MISMATCH', '专业服务响应不属于原请求，结果未写入。')
       return setExecution(workspaceId, taskId, executionId, {
         status: 'failed',
         safeError: identityError,
+      })
+    }
+    if (Object.hasOwn(result, 'enhancedFragment') && !fast39Inspection) {
+      // C4 cannot be downgraded into a legacy completed artifact. The current
+      // dispatcher has no frozen packet2/delivery binding, so retain its existing
+      // request facts and require explicit recovery instead of claiming acceptance.
+      return setExecution(workspaceId, taskId, executionId, {
+        status: 'submission-unknown',
+        ...(source === 'create' && Number.isSafeInteger(result.recordId)
+          ? { recordId: result.recordId, recordIdSource: 'create' } : {}),
+        safeError: { code: 'FAST39_BINDING_REQUIRED',
+          message: '已收到专业服务的新格式响应，但当前版本尚未完成该服务的结果接入。原提交记录已保留，请勿重复生成，需人工核对。' },
       })
     }
     if (execution.unifiedClaims && (typeof result.answerText !== 'string' || !result.answerText.trim() || result.answerText.length > 100000)) {
@@ -433,9 +504,10 @@ export function createOasisRemoteService({
         code: 'REMOTE_TEXT_REQUIRED', message: 'No bounded nonempty text was received; file links are not a text result and the request will not be repeated',
       } })
     }
-    return mutateLatest(workspaceId, taskId, (current) => {
+    const operation = (current) => {
       const task = requireTask(current, taskId)
       const currentExecution = requireExecution(task, executionId)
+      if (fast39Inspection) assertFast39Snapshot(current, taskId, executionId)
       if (currentExecution.status === 'completed') return current
       if (task.runOrder.length >= WORKBENCH_LIMITS.maxRunsPerTask) {
         throw remoteError('RUN_LIMIT_REACHED', 'Task run limit has been reached')
@@ -498,13 +570,16 @@ export function createOasisRemoteService({
         ...(source === 'create' && Number.isSafeInteger(result.recordId)
           ? { recordId: result.recordId, recordIdSource: 'create' } : {}),
         safeError: null, updatedAt: completedAt, completedAt,
+        ...(fast39Inspection ? { fast39Result: fast39Inspection.evidence } : {}),
       })
       next.tasks[taskId].runs[runId] = run
       next.tasks[taskId].runOrder.push(runId)
       next.tasks[taskId].activeRunId = runId
       next.tasks[taskId].updatedAt = completedAt
-      return next
-    })
+      return fast39Inspection ? fitFast39Candidate(current, next, taskId, executionId, fast39Inspection, result) : next
+    }
+    return expectedRevision === undefined ? mutateLatest(workspaceId, taskId, operation)
+      : repository.mutate(workspaceId, expectedRevision, operation)
   }
 
   async function poll(workspaceId, taskId, executionId, client) {
@@ -514,6 +589,7 @@ export function createOasisRemoteService({
     try {
       for (let attempt = 0; attempt < pollLimit; attempt += 1) {
         const execution = requireExecution(requireTask(repository.get(workspaceId), taskId), executionId)
+        if (execution.fast39Result) return { committed: true, current: repository.get(workspaceId) }
         let progress
         try {
           progress = await client.queryProcess(execution.requestKey, { signal: controller.signal })
@@ -816,18 +892,19 @@ export function createOasisRemoteService({
         active.client.getApiDetail(selection.apiEndpoint).then(detailWithoutRaw),
         active.client.getFolderDetail(selection.folderId),
       ])
-      if (!services.some(item => item.apiId === selection.apiId && item.apiEndpoint === selection.apiEndpoint
-        && item.apiProcess === selection.apiProcess) || detail.id !== selection.apiId || detail.name !== selection.apiEndpoint) {
+      assertCatalogIdentity(services, selection, active.environmentKind)
+      if (detail.id !== selection.apiId || detail.name !== selection.apiEndpoint) {
         throw remoteError('REMOTE_SERVICE_MISMATCH', 'The displayed Oasis service changed')
       }
       if (detail.schemaHash !== selection.schemaHash) throw remoteError('REMOTE_SCHEMA_CHANGED', 'The displayed service schema changed')
-      const folder = safeFolder(folderValue, selection.folderId)
+      const folder = safeFolder(folderValue, selection.folderId,
+        active.environmentKind === 'production' ? selection.accountId : undefined)
       const binding = workspaceApiBindingSchema.parse({ ...selection, folderName: folder.name, confirmedAt: clock() })
       const next = parseWorkspaceApiBindings([...bindings.filter(item => item.workspaceId !== selection.workspaceId), binding])
       await active.assertCurrent()
       await bindingWorkspace(selection.workspaceId, selection.workspacePath)
       try {
-        await settings.update(OASIS_SETTINGS_NAMESPACE, { workspaceApiBindings: next }, expectedSettingsRevision)
+        await settings.update(settingsNamespace, { workspaceApiBindings: next }, expectedSettingsRevision)
       } catch (error) {
         if (error?.code !== 'SETTINGS_CONFLICT') throw error
         throw remoteError('SETTINGS_CONFLICT', 'Native settings changed; read and confirm again')
@@ -867,6 +944,53 @@ export function createOasisRemoteService({
     },
 
     getServiceDetail,
+
+    // Receive-only consumer for an explicitly captured C4 context. It is not
+    // registered as an RPC/tool, and never uploads, creates, queries or charges.
+    async acceptFast39Response({ workspaceId, taskId, executionId, expectedRevision, result }) {
+      return workspaceOperations.run(workspaceId, async () => {
+      const d = capturedFast39
+      if (!d) throw remoteError('FAST39_BINDING_REQUIRED', '该专业服务的结果接入尚未绑定，原提交记录保持。')
+      if (d.workspaceId !== workspaceId || d.taskId !== taskId || d.executionId !== executionId) {
+        throw remoteError('FAST39_BINDING_MISMATCH', '结果接入不属于当前项目和任务。')
+      }
+      await bindingWorkspace(workspaceId, d.workspacePath)
+      const active = await runtime()
+      const observed = repository.get(workspaceId), execution = assertFast39Snapshot(observed, taskId, executionId)
+      assertExecutionEnvironment(active, execution)
+      await assertExecutionAccount(active, execution)
+      if (typeof active.assertCurrent !== 'function') throw remoteError('REMOTE_RUNTIME_CHANGED', '当前账户状态无法核实，结果未写入。')
+      await active.assertCurrent()
+      await bindingWorkspace(workspaceId, d.workspacePath)
+      const current = repository.get(workspaceId), saved = assertFast39Snapshot(current, taskId, executionId)
+      if (current.revision !== expectedRevision) return { committed: false, reason: 'revision-conflict', current }
+      const identityError = resultIdentityError(saved, result)
+      if (identityError) throw remoteError('FAST39_BINDING_MISMATCH', '专业服务响应不属于原请求，结果未写入。')
+      const registry = buildM06Fast39Registry(d)
+      const inspected = inspectM06Fast39Fragment({ fragment: result.enhancedFragment, requestKey: saved.requestKey, registry,
+        frozenDeliverySha256: d.frozenDeliverySha256, originalEnqueueFact: d.originalEnqueueFact })
+      if (saved.fast39Result) {
+        const run = Object.values(current.tasks[taskId].runs).find(r => r.executionId === executionId)
+        if (canonicalJson(saved.fast39Result) === canonicalJson(inspected.evidence)
+          && (!run || (run.result.answerText === result.answerText && canonicalJson(run.result.fileUrls) === canonicalJson(result.fileUrls)))) {
+          return { committed: true, current }
+        }
+        throw remoteError('FAST39_RECEIPT_ALREADY_RECORDED', '该请求已有收据，后到响应未覆盖原记录；请人工核对。')
+      }
+      if (['completed', 'failed'].includes(saved.status)) throw remoteError('REMOTE_EXECUTION_TERMINAL', '已结束的请求不能写入新响应。')
+      if (inspected.status === 'completed') {
+        // The same response owns two independent representations. The legacy
+        // backend adds output_schema labels; C4 preserves six original strings.
+        // Keep the existing legacy body/hash and separately validated fragment.
+        return complete(workspaceId, taskId, executionId, result, 'create', inspected, expectedRevision)
+      }
+      return repository.mutate(workspaceId, expectedRevision, latest => {
+        assertFast39Snapshot(latest, taskId, executionId)
+        const candidate = fast39FailureCandidate(latest, taskId, executionId, inspected, result)
+        return fitFast39Candidate(latest, candidate, taskId, executionId, inspected, result)
+      })
+      })
+    },
 
     async start({
       workspaceId,
@@ -1002,6 +1126,11 @@ export function createOasisRemoteService({
         const active = execution.unifiedClaims && execution.submittedAt === null ? admission.active : await runtime()
         assertExecutionEnvironment(active, execution)
         await assertExecutionAccount(active, execution)
+        if (execution.fast39Result || execution.safeError?.code === 'FAST39_BINDING_REQUIRED') {
+          // Keep the latch across reload/continue after ownership checks. A later
+          // legacy body cannot discharge missing C4 validation or create again.
+          return { committed: true, current: repository.get(workspaceId) }
+        }
         const detail = claimsDetail(await active.client.getApiDetail(execution.serviceSnapshot.apiEndpoint), execution.unifiedClaims ? execution.environmentKind : undefined)
         if (detail.schemaHash !== execution.serviceSnapshot.schemaHash || detail.id !== execution.serviceSnapshot.apiId) {
           return setExecution(workspaceId, taskId, executionId, {

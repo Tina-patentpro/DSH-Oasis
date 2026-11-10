@@ -1,0 +1,81 @@
+{
+  "recordedAt": "2026-11-09T21:14:28.490178+08:00",
+  "status": "R7_02_OFFLINE_SWITCH_VERIFIED",
+  "preflightSHA256": "13f80a51ef70c253cebdf22ecde309479b8731acfdfce111f67a596d4241bf94",
+  "executionRecheckSHA256": "31ea2babd25084d1745da9a0b4cda7744fe0f9bb542239cb6a4fc09fa55125ef",
+  "installed": {
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1",
+    "oldBundleSHA256": "947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b",
+    "bundleSHA256": "a25f1a190803aaccc3f614b607b2d1502458999d41221f5751969e93b3a62e2b",
+    "controllerSHA256": "8338fec253a916eb780a8fc739f6d973ba22475772db98698543758a408ad405",
+    "archiveSHA256": "e94f9136f7d93373569444180fb2351b09db52ba2851fb84411e5125a56a0bc5",
+    "businessMembersByteIdentical": 125,
+    "receiptSHA256": "0a8c3c4f9a9724e1ab3c4e55491413eaeb0350cc2e12ee5a11cf9650b3502234",
+    "activeProfilePatchSHA256": "97380f7e41623b5593e4e0290b0e8529772ece4b5608afb9df61ac18a73c1f3c",
+    "installationSHA256": "7df3b7f3f40861d7ed3263e4996fb58b1fe42b114e12ac90e083287a5137a0a8",
+    "previousReleaseStillRegistered": true,
+    "profileAndReceiptMatch": true,
+    "maintenanceLocksReleased": true,
+    "checkExit": 0
+  },
+  "installedRequest": {
+    "url": "https://api.deepseek.com/anthropic/v1/messages",
+    "method": "POST",
+    "model": "deepseek-flash",
+    "max_tokens": 16384,
+    "thinking": {
+      "type": "enabled"
+    },
+    "effort": "low",
+    "maxRetries": 0,
+    "interceptedRequests": 1,
+    "responseFixtureStatus": 503,
+    "realCalls": 0,
+    "preparedInputHash": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b",
+    "preparedSHA256": "fb01f3abfc715ef6330aa6d11e47b6909d95509a286c68d987388ccdffd0af8e",
+    "systemSHA256": "7d998e25aa7dc05470e4bf16d7f58e9dd0165d226ba32a30a695b1b39e191d00",
+    "resourceSHA256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d"
+  },
+  "workspace": {
+    "status": "INSTALLED_RC5_READONLY_RECORDS_VERIFIED",
+    "workspaceB": "11e1a348-0248-42a1-8141-bcb6306caccc",
+    "revisionB": 84,
+    "sessionId": "session-be573ee0-ae7a-4d40-99d5-d607f6106786",
+    "scope": "rc.5 business schema and stored B session header / ownership; no native candidate endpoint invoked",
+    "workspaceRows": [
+      {
+        "workspaceId": "e74001f3-dfd7-42e6-a5d3-6c05a4d527a6",
+        "revision": 118,
+        "tasks": 5
+      },
+      {
+        "workspaceId": "11e1a348-0248-42a1-8141-bcb6306caccc",
+        "revision": 84,
+        "tasks": 2
+      }
+    ],
+    "originalBRunCount": 3,
+    "originalUnknownPreserved": true,
+    "protectedPaths": 48,
+    "sessionLogSHA256": "3ecca9626d51fd28733263ad6c1db1c4432c7a52e34c64ba925fb0599b2c71dd",
+    "businessSHA256": "fc225f6b49dde37bac2b87bbe2222e18136986202156175e010484d25bab93d1",
+    "appStarts": 0,
+    "realCalls": 0
+  },
+  "profileJournal": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/evidence/profile-reconciliation-1d5f21d1-ad33-426a-b74f-cfe126948bc9",
+  "controllerJournal": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/evidence/controller-handoff-e314ec60-2da2-42cf-ba89-c77d436618cb",
+  "protectedEvidence": {
+    "profile-reconciliation.json": "4bb0b69dd144bea4960c96af1bf78597e31d328fc4f2f7532a19548dda84a978",
+    "controller-handoff.json": "84db78c2d9c8dbd740df935d4ffa9d9e1f8292d153809bae371337602cc9cb6f",
+    "upgrade.stdout": "6778e3b7cd1e0119f46f1bb6a796a71aac3b65f46021364223186cd4279690d5",
+    "installed-check.json": "6778e3b7cd1e0119f46f1bb6a796a71aac3b65f46021364223186cd4279690d5",
+    "installed-settings.json": "4123aaf703c4dcb66951c430ade332e6ce55c5177f78ee8510e22083bce34c33",
+    "installed-wire-check.log": "da193473010b8bcd30cc00a64e1b51cdbbed1c4cd620a75310ae4b796bec66cb",
+    "installed-record-read.json": "cece5bef376b28fb468216a68bd195e8d7ac33959501ef74d583376a4d11ee3f"
+  },
+  "appStarts": 0,
+  "newLaunchEvidenceFiles": 0,
+  "newRealCalls": 0,
+  "authorizedCallsRemaining": 0,
+  "nativeCandidateObserved": false
+}

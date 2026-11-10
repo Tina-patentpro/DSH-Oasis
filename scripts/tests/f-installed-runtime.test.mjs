@@ -109,8 +109,11 @@ test('failure after active Profile replacement restores old bytes; failed restor
  const h=setup(t);await api.installFBundle({...h.v3,root:h.root});const profile=join(h.root,'data/home/profiles/desktop/package.json'),before=fs.readFileSync(profile),data=join(h.root,'data/home/storages/public.json');save(data,'PUBLIC UNKNOWN later edit')
  h.failProfile();await assert.rejects(()=>api.upgradeFInstallation(h.root,{...h.v4,expectedCurrent:h.v3.expectedSHA256}),/PNPM/)
  assert.deepEqual(fs.readFileSync(profile),before);assert.equal(fs.readFileSync(data,'utf8'),'PUBLIC UNKNOWN later edit');assert.equal(api.checkFInstallation(h.root).current,h.v3.expectedSHA256)
- const next=bundle(h.base,'v4-after-failure');h.failProfile();const original=fs.cpSync
- const mock=t.mock.method(fs,'cpSync',function(from,to,...args){if(String(from).endsWith('/profile-snapshot')&&to===dirname(profile))throw Error('PUBLIC restore copy failure');return original.call(this,from,to,...args)})
+ const next=bundle(h.base,'v4-after-failure');h.failProfile()
+ const originalCopy=fs.cpSync,originalExec=cp.execFileSync
+ const mock=process.platform==='darwin'
+  ?t.mock.method(cp,'execFileSync',function(command,args,...options){if(command==='/bin/cp'&&String(args[1]).endsWith('/profile-snapshot')&&args[2]===dirname(profile))throw Error('PUBLIC restore copy failure');return originalExec.call(this,command,args,...options)})
+  :t.mock.method(fs,'cpSync',function(from,to,...args){if(String(from).endsWith('/profile-snapshot')&&to===dirname(profile))throw Error('PUBLIC restore copy failure');return originalCopy.call(this,from,to,...args)})
  await assert.rejects(()=>api.upgradeFInstallation(h.root,{...next,expectedCurrent:h.v3.expectedSHA256}),/recovery incomplete/);mock.mock.restore()
  assert.equal(fs.existsSync(join(h.root,'RECOVERY_REQUIRED')),true);let entered=0
  for(const role of ['desktop','sdk','recovery','maintenance'])await assert.rejects(()=>api.withInstalledWriter(h.root,role,async()=>{entered++}),/recovery incomplete/)

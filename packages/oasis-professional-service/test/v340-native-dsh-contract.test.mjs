@@ -7,6 +7,7 @@ import { setupNative, MODEL_OUTPUT } from './helpers/v340-native-harness.mjs'
 import { NODE_CASES } from './helpers/v340-native-cases.mjs'
 import { createV340NativeCandidate } from '../src/v340-native-model.js'
 import { v340Hash } from '../src/v340-catalog.js'
+import { openOasisWorkbenchRepository } from '../src/workbench-repository.js'
 
 const draft=()=>({source:'local-skill',textInputs:{user_input:'公开合成来源文本：壳体长度为十毫米。'},filePaths:{},configuration:{}})
 for(const {nodeId} of NODE_CASES)test(nodeId+' uses installed native LlmRuntime and assembler with offline provider only',async t=>{
@@ -35,4 +36,42 @@ for(const {nodeId} of NODE_CASES)test(nodeId+' uses installed native LlmRuntime 
  assert.equal(typeof call.messages[0].id,'string');assert.equal(call.messages[0].role,'user')
  assert.equal(call.tools,undefined);assert.doesNotMatch(h.run().result.body,/PRIVATE_REASONING/)
  await h.create();assert.equal(attempts,1)
+})
+
+const invalidProvenance={...MODEL_OUTPUT,updates:[{
+ content_id:'host/forged',content_markdown:'SYNTHETIC_RAW_CANARY',content_origin:'workflow_analysis',
+ source_input_id:'user_input',source_locator:'公开合成资料',source_hash:'none',
+ trust_status:'reasoned_inference',last_updated_flow:'Flow-2-6',revision_reason:'公开合成负例',
+}]}
+for(const [name,body,reason,expected]of[
+ ['JSON syntax','SYNTHETIC_RAW_CANARY','stop',{failureStage:'result-json',finishKind:'stop'}],
+ ['output schema',JSON.stringify({raw:'SYNTHETIC_RAW_CANARY'}),'stop',{failureStage:'result-schema',finishKind:'stop'}],
+ ['document assembly',JSON.stringify(invalidProvenance),'stop',{failureStage:'result-assembly',finishKind:'stop'}],
+ ['token limit','SYNTHETIC_RAW_CANARY','max-tokens',{failureStage:'stream',finishKind:'max-tokens'}],
+ ['valid output',JSON.stringify(MODEL_OUTPUT),'stop',{finishKind:'stop'}],
+])test('installed SDK safely distinguishes '+name+' through durable settlement',async t=>{
+ t.mock.method(globalThis,'fetch',()=>assert.fail('no network permitted'))
+ const ctx=new Context();ctx.provide('workspaceRegistry',{get:()=>undefined});t.after(()=>ctx.fiber.dispose())
+ await ctx.plugin(LlmRuntime).await()
+ let attempts=0,executor
+ class Provider extends LlmAdapter{
+  async resolveModel(provider,model){return{provider,id:model,name:model}}
+  async *stream(){
+   attempts++
+   yield{type:'text-delta',index:0,text:body}
+   yield{type:'usage',usage:{inputTokens:11,outputTokens:13,totalTokens:24,reasoningTokens:5,cacheReadTokens:-1,raw:'SYNTHETIC_RAW_CANARY'}}
+   yield{type:'finish',reason:{kind:reason}}
+  }
+ }
+ t.after(ctx.llm.registerAdapter(['synthetic-native-test'],new Provider()))
+ const h=await setupNative(t,{wrapExecutor:e=>({...e,generate:args=>executor.generate(args)})})
+ executor=createV340NativeCandidate({ctx:{...h.ctx,llm:ctx.llm},native:{BlockAssembler,createUserMessage}})
+ await h.create();const run=await h.settle()
+ assert.equal(run.status,name==='valid output'?'completed':'failed')
+ if(name!=='valid output'){assert.equal(run.failureCode,'INVALID_OUTPUT');assert.equal(run.result,null)}
+ assert.deepEqual(run.executionSummary,{...expected,usage:{inputTokens:11,outputTokens:13,totalTokens:24,reasoningTokens:5}})
+ assert.doesNotMatch(JSON.stringify(h.repository.get('w')),/SYNTHETIC_RAW_CANARY/)
+ await h.repository.close();const reopened=await openOasisWorkbenchRepository(h.disk)
+ assert.deepEqual(reopened.get('w').tasks.t.v340.runs[run.runId].executionSummary,run.executionSummary)
+ await reopened.close();assert.equal(attempts,1)
 })

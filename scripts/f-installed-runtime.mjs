@@ -5,7 +5,7 @@ import {join,resolve,dirname,relative,sep,isAbsolute} from 'node:path'
 import {fileURLToPath,pathToFileURL} from 'node:url'
 import {createHash,randomUUID} from 'node:crypto'
 import {isDeepStrictEqual} from 'node:util'
-import {canonicalDirectory,assertInstalledPath,assertInstalledDataRoots,acquireInstalledLease,installedGateSHA256} from '../patches/storage-json-single-owner/installed-lease.mjs'
+import {canonicalDirectory,assertInstalledPath,assertInstalledDataRoots,acquireInstalledLease,assertInstalledLease,installedGateSHA256} from '../patches/storage-json-single-owner/installed-lease.mjs'
 import {acquireJsonRootOwnership} from '../patches/storage-json-single-owner/ownership.mjs'
 const script=fileURLToPath(import.meta.url)
 export const installationVersions=Object.freeze({desktop:'2.0.17',dsh:'0.2.0-rc.2',cordis:'4.0.4',sidebar:'0.24.1',node:'24.21.0',pnpm:'11.8.0'})
@@ -18,7 +18,13 @@ const read=p=>JSON.parse(fs.readFileSync(p,'utf8'))
 export const installationFileHash=p=>createHash('sha256').update(fs.readFileSync(p)).digest('hex')
 const idOK=id=>typeof id==='string'&&/^[a-f0-9]{64}$/.test(id)
 const save=(p,x)=>fs.writeFileSync(p,typeof x==='string'?x:JSON.stringify(x,null,2)+'\n',{flag:'wx',mode:0o600})
-const copy=(from,to)=>fs.cpSync(from,to,{recursive:true,dereference:false,verbatimSymlinks:true,force:false,errorOnExist:true,mode:fs.constants.COPYFILE_FICLONE})
+const copy=(from,to)=>{
+ try{fs.lstatSync(to);throw Error('installation copy destination already exists')}catch(error){if(error.code!=='ENOENT')throw error}
+ // On the fixed macOS target use clonefile without a full-copy fallback. Large
+ // vendor releases must not exhaust the volume while preserving old versions.
+ if(process.platform==='darwin')cp.execFileSync('/bin/cp',['-cRp',from,to],{stdio:'pipe'})
+ else fs.cpSync(from,to,{recursive:true,dereference:false,verbatimSymlinks:true,force:false,errorOnExist:true,mode:fs.constants.COPYFILE_FICLONE})
+}
 function atomic(p,x){const tmp=p+'.'+randomUUID()+'.tmp';save(tmp,x);fs.renameSync(tmp,p)}
 function inside(root,path){return path===root||path.startsWith(root+sep)}
 function fileTree(root,{ignore=[]}={}){
@@ -41,6 +47,52 @@ export function verifySignedInstallationApp(app){
  const version=cp.execFileSync('/usr/bin/plutil',['-extract','CFBundleShortVersionString','raw','-o','-',join(app,'Contents/Info.plist')],{encoding:'utf8'}).toString().trim()
  if(version!==installationVersions.desktop)throw Error('fixed signed App version mismatch')
 }
+function nativeZeroPolicy(release,template){
+ if(!Object.hasOwn(template,'nativeZeroGeneration'))return false
+ const p=template.nativeZeroGeneration,guards=['src/index.js','src/workbench-rpc.js']
+ if(p?.schemaVersion!==1||p.policy!=='m06-native-zero-generation-installed-v1'||!idOK(p.archiveSHA256)
+  ||!isDeepStrictEqual(p.budget,{model:0,api:0,upload:0,payment:0})
+  ||!isDeepStrictEqual(Object.keys(p.guardedFiles??{}).sort(),guards.toSorted()))throw Error('installed native zero budget/guard policy mismatch')
+ for(const file of guards)if(!idOK(p.guardedFiles[file])||installationFileHash(join(release,template.components['oasis-professional-service'],file))!==p.guardedFiles[file])throw Error('installed native zero guard drift')
+ return true
+}
+function nativeRecoveryPolicy(release,template){
+ if(!Object.hasOwn(template,'nativeBusinessRecovery'))return false
+ const p=template.nativeBusinessRecovery,s=p?.scope,guards=['src/index.js','src/workbench-rpc.js','src/workbench-connection.js','src/m06-native-business-recovery.js','src/v340-runtime-contract.js','lib/client.js']
+ if(template.nativeZeroGeneration||p?.schemaVersion!==1||p.policy!=='m06-native-business-recovery-v1'||!idOK(p.archiveSHA256)
+  ||!isDeepStrictEqual(p.budget,{model:0,api:0,upload:0,payment:0})||!isDeepStrictEqual(Object.keys(p.guardedFiles??{}).sort(),guards.toSorted())
+  ||s?.schemaVersion!==1||s.policy!==p.policy||typeof s.root!=='string'||!isAbsolute(s.root)||resolve(s.root)!==s.root
+  ||s.workspacePath!==join(s.root,'data/workspace-a')||!['workspaceId','taskId','runId'].every(k=>typeof s[k]==='string'&&s[k].trim()===s[k]&&s[k].length>0)||!idOK(s.inputSha256))throw Error('installed native recovery policy mismatch')
+ for(const file of guards)if(!idOK(p.guardedFiles[file])||installationFileHash(join(release,template.components['oasis-professional-service'],file))!==p.guardedFiles[file])throw Error('installed native recovery guard drift')
+ const entries=[]
+ function scan(v){if(Array.isArray(v))return v.forEach(scan);if(!v||typeof v!=='object')return
+  if(typeof v.id==='string'&&v.id.startsWith('oasis-professional-service-')&&v.disabled!==true)entries.push(v)
+  Object.values(v).forEach(scan)
+ }scan(template.patch)
+ if(entries.length!==1||entries[0].id!=='oasis-professional-service-m06-native-recovery'||entries[0].name!=='@OASIS_RELEASE_ROOT@/'+template.components['oasis-professional-service']+'/src/m06-native-business-recovery-host.js')throw Error('installed recovery entry mismatch')
+ return true
+}
+function nativeM06GenerationPolicy(release,template){
+ if(!Object.hasOwn(template,'nativeM06Generation'))return false
+ const p=template.nativeM06Generation,guards=['src/index.js','src/workbench-rpc.js','src/v340-native-model.js','src/dsh-generation-adapter.js','lib/client.js']
+ if(template.nativeZeroGeneration||template.nativeBusinessRecovery||p?.schemaVersion!==1||p.policy!=='m06-native-generation-v1'
+  ||!idOK(p.archiveSHA256)||!idOK(p.inputSHA256)||typeof p.root!=='string'||!isAbsolute(p.root)||resolve(p.root)!==p.root
+  ||p.provider!=='deepseek-official'||p.model!=='deepseek-flash'||p.maxTokens!==8192
+  ||!isDeepStrictEqual(p.budget,{model:1,api:0,upload:0,payment:0})
+  ||!isDeepStrictEqual(Object.keys(p.guardedFiles??{}).sort(),guards.toSorted()))throw Error('installed native M06 generation policy mismatch')
+ for(const file of guards)if(!idOK(p.guardedFiles[file])||installationFileHash(join(release,template.components['oasis-professional-service'],file))!==p.guardedFiles[file])throw Error('installed native M06 generation guard drift')
+ const rows=[]
+ function scan(v){if(Array.isArray(v))return v.forEach(scan);if(!v||typeof v!=='object')return
+  if(typeof v.id==='string')rows.push(v)
+  Object.values(v).forEach(scan)
+ }scan(template.patch)
+ const providers=rows.filter(r=>r.id==='llm-deepseek'),entries=rows.filter(r=>r.id.startsWith('oasis-professional-service-')&&r.disabled!==true)
+ if(providers.length!==1||providers[0].disabled!==false||!isDeepStrictEqual(providers[0].config,
+  {baseURL:'https://api.deepseek.com/anthropic',maxTokens:8192,retryPolicy:{mode:'normal',maxRetries:0}})
+  ||entries.length!==1||entries[0].id!=='oasis-professional-service-m06-native-generation'
+  ||entries[0].name!=='@OASIS_RELEASE_ROOT@/'+template.components['oasis-professional-service']+'/src/m06-controlled-host-013.js')throw Error('installed native M06 provider/entry mismatch')
+ return true
+}
 function verifyPolicy(payload,manifest){
  const template=read(assertInstalledPath(payload,join(payload,'profile-template.json'),{directory:false})),expected=componentVersions(manifest.checkpoint)
  if(template.checkpoint!==manifest.checkpoint||!isDeepStrictEqual(Object.keys(template.components??{}).sort(),Object.keys(expected).sort())||template.manifest?.packageManager!=='pnpm@11.8.0'||template.manifest?.scripts)throw Error('installed component/profile policy mismatch')
@@ -52,20 +104,24 @@ function verifyPolicy(payload,manifest){
  }
  const bundles=template.manifest?.dsh?.profile?.bundles??[]
  for(const id of ['@deepseek-ai/dsh-base','@deepseek-ai/dsh-web-app','dsh-better-sidebar','oasis-professional-service','dsh-desktop-host-file-path-bridge','dsh-storage-json-single-owner'])if(!bundles.includes(id))throw Error('installed mandatory bundle policy missing')
- const found=new Set()
+ const nativeM06Generation=nativeM06GenerationPolicy(payload,template),found=new Set()
+ if((nativeM06Generation?1:0)!==manifest.realCallBudget)throw Error('installed native M06 manifest budget mismatch')
  function scan(v){if(Array.isArray(v))return v.forEach(scan);if(!v||typeof v!=='object')return
-  if(disabledPlugins.includes(v.id)){if(v.disabled!==true)throw Error('installed no-model policy override');found.add(v.id)}
+  if(disabledPlugins.includes(v.id)){if(v.disabled!==true&&!(nativeM06Generation&&v.id==='llm-deepseek'&&v.disabled===false))throw Error('installed no-model policy override');found.add(v.id)}
   Object.values(v).forEach(scan)
  }scan(template.patch)
  if(disabledPlugins.some(id=>!found.has(id)))throw Error('installed no-model policy missing')
  const guard=join(payload,template.components['dsh-storage-json-single-owner'])
  if(installationFileHash(join(guard,'index.mjs'))!==installedProviderIndexSHA256||installationFileHash(join(guard,'installed-lease.mjs'))!==installedGateSHA256())throw Error('installed provider lease policy drift')
+ nativeZeroPolicy(payload,template)
+ nativeRecoveryPolicy(payload,template)
 }
 export function verifyFBundle(bundle,expectedSHA256){
  canonicalDirectory(bundle)
  if(!idOK(expectedSHA256)||installationFileHash(assertInstalledPath(bundle,join(bundle,'bundle.json'),{directory:false}))!==expectedSHA256)throw Error('bundle manifest hash mismatch')
  const manifest=read(join(bundle,'bundle.json')),payload=assertInstalledPath(bundle,join(bundle,'payload'))
- if(manifest.schemaVersion!==1||manifest.kind!=='OASIS_F_OFFLINE_BUNDLE'||manifest.realCallBudget!==0||!isDeepStrictEqual(manifest.versions,installationVersions)||![3,4].includes(manifest.checkpoint))throw Error('unsupported fixed installation bundle')
+ const budgetOK=manifest.kind==='OASIS_F_OFFLINE_BUNDLE'&&manifest.realCallBudget===0||manifest.kind==='OASIS_F_NATIVE_M06_BUNDLE'&&manifest.realCallBudget===1
+ if(manifest.schemaVersion!==1||!budgetOK||!isDeepStrictEqual(manifest.versions,installationVersions)||![3,4].includes(manifest.checkpoint))throw Error('unsupported fixed installation bundle')
  const tree=fileTree(payload),files={},links={}
  for(const [key,row]of Object.entries(tree))if(row.type==='file')files[key]=row.sha256;else links[key]=row.target
  if(!isDeepStrictEqual(files,manifest.files)||!isDeepStrictEqual(links,manifest.links))throw Error('bundle payload file/link drift')
@@ -114,6 +170,23 @@ function activate(root,release){
  save(join(profile,'package.json'),{...template.manifest,dependencies});save(join(profile,'cordis.yml'),'[]\n')
  save(join(profile,'cordis.patch.yml'),applyTemplate(template.patch,release));save(join(profile,'pnpm-workspace.yaml'),fs.readFileSync(join(release,'pnpm-workspace.yaml'),'utf8'))
  materialize(root,release,profile)
+ const nativeZeroGeneration=nativeZeroPolicy(release,template),nativeBusinessRecovery=nativeRecoveryPolicy(release,template),nativeM06Generation=nativeM06GenerationPolicy(release,template)
+ if(nativeBusinessRecovery&&template.nativeBusinessRecovery.scope.root!==root)throw Error('installed recovery root mismatch')
+ if(nativeM06Generation&&template.nativeM06Generation.root!==root)throw Error('installed native M06 root mismatch')
+ if(nativeZeroGeneration||nativeBusinessRecovery||nativeM06Generation){
+  // Prepare configuration only, before finishRelease seals the active Profile.
+  // This fixed Node subprocess never invokes Desktop, Host boot or plugin apply.
+  const program=`import {pathToFileURL} from 'node:url';
+   globalThis.fetch=()=>{throw Error('offline Desktop preparation cannot fetch')};
+   const [modulePath,home]=process.argv.slice(1);
+   const {prepareDesktopProfile}=await import(pathToFileURL(modulePath).href);
+   const p=prepareDesktopProfile('1',home,'darwin','desktop',undefined,
+    {requested:'disabled',effective:'disabled',legacyDefaulted:true},{lanAddresses:[],aaEnabled:false});
+   console.log(JSON.stringify({requiresDependencyMigration:p.requiresDependencyMigration,port:p.port,networkExposure:p.networkExposure}));`
+  const result=JSON.parse(cp.execFileSync(join(release,'node/bin/node'),['--input-type=module','--eval',program,join(release,'App/DSH Desktop.app/Contents/Resources/app/lib/profile.js'),join(root,'data/home')],
+   {cwd:release,env:{...installedEnvironment(root),...(nativeZeroGeneration?{OASIS_NATIVE_ZERO_GENERATION:'1'}:nativeBusinessRecovery?{OASIS_NATIVE_BUSINESS_RECOVERY:'1'}:{})},encoding:'utf8',stdio:'pipe'}))
+  if(result.requiresDependencyMigration!==false||result.networkExposure!=='loopback'||!Number.isSafeInteger(result.port))throw Error('installed native zero Desktop preparation incomplete')
+ }
 }
 function controls(root){return Object.fromEntries(installationControlFiles.map(p=>[p,installationFileHash(assertInstalledPath(root,join(root,'control',p),{directory:false}))]))}
 function stateFor(root){
@@ -146,7 +219,7 @@ export function checkFInstallation(root){
  validateNodeModules(root,profile);validateNodeModules(root,current.dir)
  const template=read(join(current.dir,'profile-template.json'))
  for(const [name,path]of Object.entries(template.components))if(fs.realpathSync(join(profile,'node_modules',name))!==fs.realpathSync(join(current.dir,path)))throw Error('installed mandatory component mismatch')
- return{status:'F_INSTALLED_CANDIDATE_CHECKED',root,dataRoot:join(root,'data'),current:state.current,checkpoint:current.row.checkpoint,releases:Object.keys(state.releases),realCallBudget:0,arbitraryLegacyWriterEnforced:false,outerInstallerReleaseAccepted:false}
+ return{status:'F_INSTALLED_CANDIDATE_CHECKED',root,dataRoot:join(root,'data'),current:state.current,checkpoint:current.row.checkpoint,releases:Object.keys(state.releases),realCallBudget:nativeM06GenerationPolicy(current.dir,template)?1:0,arbitraryLegacyWriterEnforced:false,outerInstallerReleaseAccepted:false}
 }
 export async function withInstalledWriter(root,role,callback){
  if(typeof callback!=='function')throw Error('installed writer callback required')
@@ -217,16 +290,40 @@ export async function rollbackFInstallation(root,{releaseId,expectedCurrent}){
   atomic(join(root,'installation.json'),{...state,current:releaseId});return checkFInstallation(root)
  })
 }
-export async function startFInstallation(root){
+function installedEnvironment(root,leaseEnv={}){
+ const dataRoot=join(root,'data'),home=join(dataRoot,'user'),node=join(root,'control/node')
+ return{...leaseEnv,PATH:dirname(node)+':/usr/bin:/bin:/usr/sbin:/sbin',HOME:home,CFFIXED_USER_HOME:home,ZDOTDIR:home,DSH_HOME:join(dataRoot,'home'),TMPDIR:join(dataRoot,'temp'),MAC_CHROMIUM_TMPDIR:join(dataRoot,'temp'),XDG_CACHE_HOME:join(dataRoot,'cache'),XDG_CONFIG_HOME:join(home,'.config'),XDG_DATA_HOME:join(home,'.local/share'),NPM_CONFIG_USERCONFIG:'/dev/null',NPM_CONFIG_GLOBALCONFIG:'/dev/null',NPM_CONFIG_CACHE:join(dataRoot,'cache/npm'),COREPACK_ENABLE_NETWORK:'0',npm_config_manage_package_manager_versions:'false',DSH_TELEMETRY_DISABLED:'1',HTTP_PROXY:'http://127.0.0.1:9',HTTPS_PROXY:'http://127.0.0.1:9',ALL_PROXY:'http://127.0.0.1:9',NO_PROXY:'localhost,127.0.0.1,::1',SHELL:'/bin/zsh',LANG:'en_US.UTF-8',LC_ALL:'en_US.UTF-8',CI:'true'}
+}
+export async function withInstalledLaunchSpec(root,callback){
+ if(typeof callback!=='function')throw Error('installed launch spec callback required')
  return withInstalledWriter(root,'desktop',async({current,dataRoot,env:leaseEnv})=>{
-  const release=join(root,'releases',current),home=join(dataRoot,'user'),node=join(root,'control/node'),prefix=join(dataRoot,'evidence','installed-launch-'+randomUUID())
-  const env={...leaseEnv,PATH:dirname(node)+':/usr/bin:/bin:/usr/sbin:/sbin',HOME:home,CFFIXED_USER_HOME:home,ZDOTDIR:home,DSH_HOME:join(dataRoot,'home'),TMPDIR:join(dataRoot,'temp'),MAC_CHROMIUM_TMPDIR:join(dataRoot,'temp'),XDG_CACHE_HOME:join(dataRoot,'cache'),XDG_CONFIG_HOME:join(home,'.config'),XDG_DATA_HOME:join(home,'.local/share'),NPM_CONFIG_USERCONFIG:'/dev/null',NPM_CONFIG_GLOBALCONFIG:'/dev/null',NPM_CONFIG_CACHE:join(dataRoot,'cache/npm'),COREPACK_ENABLE_NETWORK:'0',npm_config_manage_package_manager_versions:'false',DSH_TELEMETRY_DISABLED:'1',HTTP_PROXY:'http://127.0.0.1:9',HTTPS_PROXY:'http://127.0.0.1:9',ALL_PROXY:'http://127.0.0.1:9',NO_PROXY:'localhost,127.0.0.1,::1',SHELL:'/bin/zsh',LANG:'en_US.UTF-8',LC_ALL:'en_US.UTF-8',CI:'true'}
+  const release=join(root,'releases',current),template=read(join(release,'profile-template.json'))
+  const nativeZeroGeneration=nativeZeroPolicy(release,template),nativeBusinessRecovery=nativeRecoveryPolicy(release,template),nativeM06Generation=nativeM06GenerationPolicy(release,template),env=installedEnvironment(root,leaseEnv)
+  if(nativeZeroGeneration)env.OASIS_NATIVE_ZERO_GENERATION='1'
+  if(nativeBusinessRecovery){if(template.nativeBusinessRecovery.scope.root!==root)throw Error('installed recovery root mismatch');env.OASIS_NATIVE_BUSINESS_RECOVERY='1'}
+  if(nativeM06Generation){
+   if(template.nativeM06Generation.root!==root)throw Error('installed native M06 root mismatch')
+   // Desktop synthesizes the Chromium proxy into the Host's outbound policy.
+   // A host-specific NO_PROXY exception admits only the approved endpoint;
+   // Chromium retains its loopback-only bypass and blocked default route.
+   delete env.HTTP_PROXY;delete env.HTTPS_PROXY;delete env.ALL_PROXY
+   env.NO_PROXY+=',api.deepseek.com'
+  }
+  assertInstalledLease(join(dataRoot,'home/storages'),env)
+  // Loader rows resolve from the release; every writable directory uses data/.
+  return await callback({root,current,dataRoot,nativeZeroGeneration,nativeBusinessRecovery,nativeM06Generation,realCallBudget:nativeM06Generation?1:0,
+   exe:join(release,'App/DSH Desktop.app/Contents/MacOS/DSH Desktop'),args:['--user-data-dir='+join(dataRoot,'userdata'),'--proxy-server=http://127.0.0.1:9','--proxy-bypass-list=localhost;127.0.0.1;[::1]','--disable-background-networking'],cwd:release,env,shell:false})
+ })
+}
+export async function startFInstallation(root){
+ return withInstalledLaunchSpec(root,async({current,dataRoot,...spec})=>{
+  const prefix=join(dataRoot,'evidence','installed-launch-'+randomUUID())
   const out=fs.openSync(prefix+'.stdout.log','wx',0o600),err=fs.openSync(prefix+'.stderr.log','wx',0o600);let child
   const stop=()=>child?.kill('SIGTERM');process.on('SIGINT',stop);process.on('SIGTERM',stop)
   try{
    // The client registry resolves Loader rows relative to the launch directory.
    // Only the release owns runtime modules; data remains at the explicit HOME paths.
-   child=cp.spawn(join(release,'App/DSH Desktop.app/Contents/MacOS/DSH Desktop'),['--user-data-dir='+join(dataRoot,'userdata'),'--proxy-server=http://127.0.0.1:9','--proxy-bypass-list=localhost;127.0.0.1;[::1]','--disable-background-networking'],{cwd:release,env,stdio:['ignore',out,err],shell:false})
+   child=cp.spawn(spec.exe,spec.args,{cwd:spec.cwd,env:spec.env,stdio:['ignore',out,err],shell:spec.shell})
    const exitPromise=new Promise((ok,fail)=>{child.once('error',fail);child.once('close',(code,signal)=>ok({code,signal}))})
    save(prefix+'.json',{root,current,pid:child.pid,launcherPid:process.pid,startedAtUTC:new Date().toISOString()});console.log(JSON.stringify({root,current,pid:child.pid,prefix}))
    const exit=await exitPromise;save(prefix+'.exit.json',{...exit,endedAtUTC:new Date().toISOString()});return exit

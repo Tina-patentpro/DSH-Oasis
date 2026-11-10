@@ -46,7 +46,7 @@ export function createWorkspaceApiBindingController({ remote, getWorkspaceId, ge
       return operate(async () => {
         const detail = await remote.getProfessionalDetail(endpoint)
         assertScope()
-        if (detail.id !== selected.apiId || detail.name !== selected.apiEndpoint) throw new Error('服务已变化')
+        if (!Number.isSafeInteger(detail.id) || detail.id < 0 || detail.name !== selected.apiEndpoint) throw new Error('服务已变化')
         return { detail }
       })
     },
@@ -62,7 +62,7 @@ export function createWorkspaceApiBindingController({ remote, getWorkspaceId, ge
       if (confirmed !== true || !scope.config.settingsWritable || !service || !detail || folderId === '') throw new Error('请明确确认所选项目绑定')
       const payload = { workspaceId: options.workspaceId, workspacePath: options.workspacePath,
         expectedSettingsRevision: options.settingsRevision, environmentKind: options.environmentKind, apiBaseOrigin: options.apiBaseOrigin,
-        accountId: options.accountId, folderId: Number(folderId), apiId: service.apiId, apiEndpoint: service.apiEndpoint,
+        accountId: options.accountId, folderId: Number(folderId), apiId: detail.id, catalogEntryId: service.apiId, apiEndpoint: service.apiEndpoint,
         apiProcess: service.apiProcess, schemaHash: detail.schemaHash, confirmed: true }
       return operate(async () => {
         await remote.confirmWorkspaceBinding(payload)

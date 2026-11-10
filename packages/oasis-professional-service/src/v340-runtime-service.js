@@ -9,6 +9,7 @@ import { canonicalJson } from './local-mock-runner.js'
 import { WorkspaceMaterialError } from './workspace-materials.js'
 import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 import { captureV340InputSnapshot,restoreV340Prepared } from './v340-input-snapshot.js'
+import { normalizeLocalExecutionSummary } from './local-run-summary.js'
 
 const fail=(code,message)=>{throw new WorkspaceMaterialError(code,message)}
 const parse=(name,input)=>{const result=v340Commands[name].safeParse(input);if(!result.success)fail('V340_INVALID_INPUT','新版任务输入无效。');return result.data}
@@ -122,10 +123,12 @@ export function createV340RuntimeService({repository,preparation,executor,clock=
                 source:admitted.source,prepared:structuredClone(prepared),signal:controller.signal,...(candidate?{candidateRun:structuredClone(runFor(repository.get(workspaceId),taskId,admitted.runId))}:{})})
             })
             const response=await Promise.race([execution,stopped])
+            const executionSummary=normalizeLocalExecutionSummary(response?.executionSummary)
             if(response?.status==='completed'){
-              try{change={status:'completed',failureCode:null,result:assembleV340Document({nodeId:admitted.nodeId,workflowRunUid:admitted.workflowRunUid,generatedAt:admitted.createdAt,prepared,output:response.output})}}
-              catch{change={status:'failed',failureCode:'INVALID_OUTPUT',result:null}}
-            }else change={status:response?.status==='failed'?'failed':'unknown',failureCode:response?.code==='ABORTED'?'ABORTED':response?.code==='INVALID_OUTPUT'?'INVALID_OUTPUT':response?.status==='failed'?'EXECUTION_FAILED':'EXECUTION_UNCONFIRMED',result:null}
+              delete executionSummary.failureStage
+              try{change={status:'completed',failureCode:null,result:assembleV340Document({nodeId:admitted.nodeId,workflowRunUid:admitted.workflowRunUid,generatedAt:admitted.createdAt,prepared,output:response.output}),executionSummary}}
+              catch{change={status:'failed',failureCode:'INVALID_OUTPUT',result:null,executionSummary:{...executionSummary,failureStage:'result-assembly'}}}
+            }else change={status:response?.status==='failed'?'failed':'unknown',failureCode:response?.code==='ABORTED'?'ABORTED':response?.code==='INVALID_OUTPUT'?'INVALID_OUTPUT':response?.status==='failed'&&['MODEL_UNAVAILABLE','MODEL_LIMITED'].includes(response?.code)?response.code:response?.status==='failed'?'EXECUTION_FAILED':'EXECUTION_UNCONFIRMED',result:null,executionSummary}
           }catch{change={status:'unknown',failureCode:'EXECUTION_UNCONFIRMED',result:null}}
           await settle(workspaceId,taskId,admitted.runId,change)
         }).catch(()=>{/* Durable prepared remains unresolved after a storage failure; never redispatch. */}).finally(()=>active.delete(key(workspaceId,admitted.runId)))

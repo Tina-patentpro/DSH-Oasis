@@ -20,6 +20,7 @@ export function OasisAccountSettings({ controller }) {
   return h('section', { 'aria-label': '绿洲账户', style: { display: 'grid', gap: 10 } },
     h('h3', null, '绿洲账户'),
     h('p', null, '专业 API 使用网站账户登录；本地 Skills 不需要登录。服务地址随版本维护，无需配置。'),
+    snapshot.nativeZeroGeneration ? h('p',{role:'status'},'零生成验收未开放登录或刷新账户；不会读取凭据或发起账户请求。') :
     !snapshot.connected || snapshot.credentialStatus !== 'ready' ? h('p', { role: 'status' }, '登录服务尚未就绪，请检查本机 Host 连接或刷新状态。')
       : !snapshot.credentialWritable ? h('p', { role: 'status' }, '当前模式未开放账户登录或凭据不可写；本地 Skills 不受影响。') : null,
     snapshot.credentialConfigured ? h('div', null,
@@ -38,7 +39,7 @@ export function OasisAccountSettings({ controller }) {
         autoComplete: mode === 'sms' ? 'one-time-code' : 'current-password', maxLength: mode === 'sms' ? 8 : 256, disabled })),
       h('small', null, '点击发送或登录，仅将对应登录信息发送到绿洲网站服务；不上传项目材料、不生成内容。'),
       h('button', { type: 'submit', disabled }, '登录')),
-    h('button', { type: 'button', disabled: !snapshot.connected || snapshot.busy, onClick: () => { clear(); void controller.refresh() } }, '刷新登录状态'),
+    h('button', { type: 'button', disabled: !snapshot.connected || snapshot.busy || snapshot.nativeZeroGeneration, onClick: () => { clear(); void controller.refresh() } }, '刷新登录状态'),
     snapshot.error ? h('div', { role: 'alert' }, snapshot.error) : null,
     snapshot.notice ? h('div', { role: 'status' }, snapshot.notice) : null)
 }

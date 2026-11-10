@@ -11,7 +11,7 @@ export const controlledEntry = await import(entryUrl).catch(error => {
 const controlled=controlledEntry
 
 // Only external Host services are adapted; repository/preparation/RPC/native SDK stay real.
-export async function setupM06ControlledHost(t, { candidate = true, beforeApply } = {}) {
+export async function setupM06ControlledHost(t, { candidate = true, beforeApply, entry } = {}) {
   if (candidate) assert.equal(typeof controlled.apply, 'function', 'controlled 013 Host entry is missing')
   const storageCleanup=[]
   const h = await setupNative({after:cleanup=>storageCleanup.push(cleanup)})
@@ -53,7 +53,7 @@ export async function setupM06ControlledHost(t, { candidate = true, beforeApply 
   // Default must remain disabled even without optional injection; normal legacy flag is off for the control.
   if (!candidate) ctx.settings = { register: (_namespace, _schema, options) => ({ get: () => options.base }) }
   beforeApply?.(ctx, calls, routes)
-  dispose = await (candidate ? controlled.apply : applyDefault)(ctx)
+  dispose = await (entry?.apply ?? (candidate ? controlled.apply : applyDefault))(ctx)
   async function rpc(endpoint, payload) {
     const path = '/api/oasis-workbench/' + endpoint, route = routes.get(path)
     assert.ok(route, 'registered endpoint required: ' + endpoint)

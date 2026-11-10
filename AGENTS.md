@@ -1,5 +1,11 @@
 # AGENTS.md — 绿洲统一专业工作台项目规则
 
+> 当前传播工作线：[BM1-R1／S2-R1](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-public-channels-s2-r1>)；落地页复用Frontpage，公众号由WorkBuddy运营，workarea保留作业及账户财务职责。
+
+> 当前测试集资产用途：[BM1-R1／S1](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)；规则用于Skills/Dify制作输入，样例用于开发测试及公众号/网站素材，评价答案保持隔离。
+
+> 当前执行分工以 [BM1-R1](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>) 为准：WorkBuddy采集与内容运营，Codex全部开发及Skills/工作流制作；旧阶段目标和历史证据保持。
+
 ## 1. 范围与优先级
 
 适用根目录：
@@ -178,7 +184,7 @@ D:\OneDrive\4、董娣相关\3、绿洲慧写3.0\绿洲前端\API接口文档-�
 
 项目ID：`dsh-oasis`。先读[统一协同约定](../docs/coordination/README.md)及[项目登记表](../docs/coordination/projects.json)，再按本项目规则与实际状态执行。当前协同版本以中心为准；本入口建立于2026-10-25。
 
-本项目职责：主要用户作业入口，提供Skills与经后台衔接Dify的专业服务；全部用户账户管理与财务页面归workarea。
+本项目职责：由Codex开发主要用户作业入口，提供Skills与经后台衔接Dify的专业服务；全部用户账户管理与财务页面归workarea，GitHub说明由WorkBuddy撰写。
 
 进度仍以本项目原状态入口和具名证据为准；本挂接不启动业务任务、不改变历史结论或原有运行/验收边界。
 
@@ -201,3 +207,73 @@ D:\OneDrive\4、董娣相关\3、绿洲慧写3.0\绿洲前端\API接口文档-�
 - 状态从progress_sources中role=current_entry及具名证据定位，本项目原读取顺序和更严格条件继续适用。在原允许的执行/交接位置追加复核记录，关联有效执行/批准基线；记录时间/时区、执行者、项目/现有步骤、整体与本项目计划、适用补充的绝对路径、版本/修订、SHA256及适用理由。文件内补充另记章节/锚点、绑定父文件完整原始字节hash；未声明版本、无Git、首次/缺基线和仅身份核对如实标明，不伪造已读或无差异。可用[EXEC-R2记录模板](../docs/coordination/templates/plan-execution-preflight.md)。
 - 按原身份→现身份列差异、内容/效力影响、受影响步骤和依据，区分可在既有授权内继续、调整后执行受影响步骤或受阻准备；相关入口/输入变动有界重读并另留记录。固定包hash失配按原合同处理，不只换expected hash、不重签/覆盖旧证据或并行修改。沿用仍有效同范围授权，保留原来源/许可、阶段/事务、资金/权限、专业/用户接受及发布门；复核不产生许可、不重做成果、不形成循环依赖或全局等待。未知运行先只读核对原回执，不自动重派。
 - 本节仅修订原EXEC-R1追加块，前置原规则及EXEC-R1快照/审计保持；记录不等新会话加载或业务通过。本轮为文档审计，不开始或恢复业务实施；其他任务范围仍按各自实际授权核对。
+
+
+<!-- oasis-business-mode:BM1 -->
+## 当前业务模式与规划约束（2026-11-05，BM1）
+
+- 每次规划及开始/恢复执行，沿根R1/EXEC-R2、projects.json的business_mode_reference及独立索引current_followup读取[BM1整体补充](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md>)和[本项目BM1](<docs/plans/2026-10-25-dsh-oasis-master-plan.md#oasis-business-mode-bm1>)；登记实际版本、完整原字节hash与适用差异，不以本硬编码链接代替未来登记解析。BM1仅接续冲突商业方向/优先级，原职责、读取顺序、合同、批次、接受及历史保持。
+- 本项目重点：以DSH插件优先交付可用业务Skills，保留后发收费专业服务入口；与WorkBuddy用户插件共享业务合同，后者的机制/目录/实现归属待绑定。
+- Skills优先上线；收费专业能力约1—2个月、全自制开源后台替换约2—3个月为目标窗口，准确起算点/日期待确定，不默认采用此前助手提出的Skills上线日T0。近期复用阿里云青岛第三方开发版；旧按次/充值/余额暂保留降优先级。 用户账户财务页面仍归workarea，事实仍归实际后台；本地Skills不等网站或自制后台整体完成。
+- WorkBuddy用户插件为待绑定计划组件；连接器兼具内部效率、对外专业展示和GitHub Star/咨询线索价值。两者分别定义产物/状态，不由静态、fake、源码公开或Star推定真实运行、专业接受或用户插件已上线。
+- 只复用已完成成果并补本次增量；复用已交工程闭环和F限定接受、11月5日Fast39/JTTI复测记录；原记录记调用/提取通过、内容partial，来源ID/锁止件/输出投影问题已定位，原R1/R2 FAIL与正式绑定/G0 OPEN保留。不重取已得回执/提取证据，不由BM1新增调用或修复。
+- 本轮仅文档维护，不恢复代码/业务测试、知识/Skill/工作流生产、模型/API/Dify/数据库/支付、WorkBuddy投递或GitHub发布，不安装/构建/提交/推送。原R1/EXEC-R2、来源/许可/资金/权限/Batch、专业/用户/发布门和FAIL/UNKNOWN继续有效。
+
+
+<!-- oasis-business-roles:BM1-R1 -->
+<a id="oasis-business-roles-bm1-r1"></a>
+## 当前执行分工接续（BM1-R1，2026-11-05）
+
+WorkBuddy负责从微信公众号、腾讯IMA和大型专利所定期采集信息并保存源知识库，基于已有知识库撰写并发布公众号/网站推文，撰写各项目GitHub说明；Codex负责所有项目开发、知识蒸馏、Skills及工作流制作。
+
+**本项目：** Codex复用现有DSH工程，优先装配和交付首批Skills，后发收费服务按原API/权限/费用合同接入；WorkBuddy依据同版技术事实撰写安装、使用和版本说明。WorkBuddy用户插件的开发执行者已明确为Codex，机制与具体实现目录仍待核。
+
+**协同链路：** WorkBuddy交具名来源包→Codex按适用规则制作/验证Skill及工作流→提供同版技术事实包→WorkBuddy撰写说明和推文并按实际范围发布。已有知识可先消费，说明草稿可先交；不要求新采集/宣传/Star先完成才开发，也不把未完成开发全部设为内容选题前置。
+
+采集/发布周期、渠道账号、来源许可和实际发布范围按对应运营计划绑定，本轮不新建定时任务、不投递、不采集或发布。技术事实、API/规则/验证与AGENTS由Codex维护，WorkBuddy据同版事实撰写GitHub面向用户说明；本轮用户明确授权的README治理同步由Codex完成，不代未来运营文稿生产。
+
+**兼容与历史：** BM1的全面开源、DSH/WorkBuddy插件入口、Skills优先、收费能力约1—2个月、青岛第三方后台过渡与自制替换约2—3个月、旧财务保留及连接器双重定位保持；起算点/准确日期未定。WorkBuddy用户插件开发执行者已明确为Codex，具体机制/实现项目和目录待核。当前协同1.2.2，基础规划1.3.1／NS1-R1＋BM1-R1；旧执行者分工冲突由本节接续，原阶段、来源/许可/资金/接受/FAIL/UNKNOWN不重置。
+
+读取入口：[BM1整体职责补充](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>)／[简洁总计划](<../docs/coordination/plans/2026-11-05-overall-plan-brief-bm1-r1.md>)；准确读取/原始完整字节hash、差异及修改前证据见[本轮记录](<../docs/coordination/execution/2026-11-05-bm1-roles-r1/修订说明.md>)。每次规划/开始或恢复执行仍按R1/EXEC-R2解析登记当前followup，不仅凭本链接或旧摘要。本轮仅文档和必要治理结构核验，不制作产品、不采集发文、不投递、不部署/收费、不安装/构建/提交/推送/发布。
+
+
+<!-- oasis-test-assets:BM1-R1-S1 -->
+<a id="oasis-test-assets-bm1-r1-s1"></a>
+## 测试集规则与样例用途补充（BM1-R1／S1，2026-11-05）
+
+用途补充接续BM1-R1；协同仍1.2.2，原角色和业务阶段不变。详见[整体用途补充](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)。
+
+- 测试集规则中适用且制作可见的部分，作为Codex制作Skills和Dify工作流的信息输入与规则基础，记录准确版本/原始SHA256、效力/用途、采用落点、条件及例外；不将全部规则自动生效或全部样例自动纳入生成。
+- 样例用于各项目开发过程中的适配测试，也作为WorkBuddy撰写公众号、网站推文的素材；Codex负责全部开发、测试及技术事实校核，WorkBuddy负责选材、撰稿和按实际范围发布。样例/测试结果/已发布文章分别留证。
+- 制作可见规则与题面、评价专用答案/评分材料、可公开宣传素材分开。evaluation_only答案不进入Skill正文/提示词、Dify生成上下文或对外素材；宣传仅引用可公开部分或有来源的演示派生稿，不改原可见性/原件/收据，不把已暴露答案的评价称独立盲测。
+- 每次规划或开始/恢复执行，按R1/EXEC-R2从登记解析本S1及相关合同；用原任务/交接记录绑定所选规则/样例/用途和派生关系，记录版本/hash及差异。未选样例不要求先全库盘点，原准入/Batch/来源/许可/接受门继续。
+- 本项目适用：Codex按所选业务Skill的规则采用范围与目标Host合同复用样例做开发测试，固定Skill/规则/输入/结果版本；本地Skills与远程专业服务分别验证。测试材料不自动变成首发包或产品生成输入，宣传只引用同版已核事实，不新增模板或调用。
+- 本次仅文档维护，不选择/制作新规则或样例，不运行产品/业务测试、调用模型/API/Dify/数据库/支付、投递WorkBuddy、撰写或发布推文；原FAIL/UNKNOWN、冻结与接受保持。
+
+实际读取/完整原始字节hash、差异及修改前原件见[本轮修订记录](<../docs/coordination/execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md>)；这些文档不证明其他会话已经加载新要求。
+
+
+<!-- oasis-public-channels:BM1-R1-S2 -->
+<a id="oasis-public-channels-bm1-r1-s2"></a>
+<a id="oasis-public-channels-bm1-r1-s2-r1"></a>
+## 网站落地页与微信公众号工作线（BM1-R1／S2）
+
+落地页复用现有Frontpage工程；微信公众号为内容运营工作线。详见[整体S2](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-public-channels-s2>)、[落地页总计划](<../Frontpage/docs/plans/2026-11-05-frontpage-master-plan.md>)及[公众号总计划](<../docs/coordination/plans/2026-11-05-wechat-official-account-workstream-plan.md>)。
+
+- Codex负责网站/必要工具开发、集成、获准技术动作与事实校核；WorkBuddy负责选题、文案、稿件、GitHub说明及公众号/网站内容发布。静态部署可同时形成一次公开事件，两角色分别引用同一回执，不要求重复发布；原仅人工激活及专业/法律审核门不因分工被替代。
+- Frontpage承担品牌/开源产品/案例/文章/咨询与私有部署入口；workarea承担用户作业、专业服务、账户与财务。复用现有页面/路由及内容机制，源码存在不等当前线上部署或发布接口已验证，不复制网站、账户、钱包、CMS或后台。
+- 本项目任务：提供Skills/插件安装使用、准确入口、版本和真实能力事实供落地页/公众号引用；不在插件另建宣传网站或账户财务。
+- 沿原技术事实/稿件交接绑定版本、原始hash、公开范围与实际渠道回执；S1评价答案隔离及原来源/许可/专业/用户/发布门保持。文稿可先准备，不以全平台、全部案例或连接器闭环为共同前置。
+- 每次规划及开始/恢复执行，按根R1/EXEC-R2从登记current_followup解析S2、S1及适用合同，记录实际版本/hash和差异；不以本链接或旧摘要代替本次读取。
+- 本轮仅文档维护，未建设网站、生成推文、投递、登录公众号、配置定时发布、运行业务测试、调用模型/API/数据库/支付、部署、提交/推送或发布。旧计划/收据/FAIL/UNKNOWN及历史字节保持。
+
+修改前原件、版本/hash、差异与本轮验证见[修订记录](<../docs/coordination/execution/2026-11-05-bm1-r1-public-channels-s2/修订说明.md>)；不推定其他会话或WorkBuddy已经加载。
+
+S2-R1审计接续：静态公开事件只发生一次，LP-03准备/事后核验分开，原人工激活及专业/法律门保持；版本/hash、差异和修改前字节见[本轮审计](<../docs/coordination/execution/2026-11-05-bm1-r1-s2-audit-r1/审计与修订记录.md>)。原S2交付记录保持原字节，本段不宣称业务运行或其他会话已加载。
+
+
+## 2026-11-07 WorkBuddy用户入口准备绑定（R3-07）
+
+本轮执行用户明确同意的R3：WorkBuddy本地原生Skill准备路线落在本项目`packages/oasis-workbuddy-user-entry`，消费适配由Codex负责。准确绑定沿[中心planned_components](../docs/coordination/projects.json)及[采用记录](packages/oasis-workbuddy-user-entry/ADOPTION.md)，本段接续旧文的机制/目录待核，不改业务Skill的patent-distillery制作归属或DSH自定义Host加载方式。
+
+已交固定M06八输入/七输出/资源角色及权限、费用、审核/保存/恢复差异合同；当前另有私有静态候选，实际可导入性/行为未验证，没有安装或运行接受。应用启动、真实调用、源CI/B/A、权利/专业/用户与发布门保持；不从WorkBuddy元数据/原生Skill提示推定一次llm或DSH存储保证。原计划/收据/FAIL/UNKNOWN保留，见[本轮执行记录](docs/evidence/2026-11-07-workbuddy-m06-consumption-r1/execution-ledger.md)。

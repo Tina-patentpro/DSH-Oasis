@@ -5,6 +5,7 @@ import { hasPendingUnifiedRun } from '../generation-contract.js'
 import { PanelChrome } from './PanelChrome.js'
 import { PanelPages } from './PanelPages.js'
 import { WebsiteImportDialog } from './WebsiteImportDialog.js'
+import {selectV340Entry} from './v340-zero-preview.js'
 
 const noConfiguration = Object.freeze({ canSubmit: true })
 const getNoConfiguration = () => noConfiguration
@@ -71,11 +72,10 @@ export async function ensureEmbeddedWorkspaceHidden({ store, workspaceId, worksp
   await Promise.all([
     store.hydrateWorkspace(workspaceId),
     store.loadWorkflowCatalog(workspaceId),
-    typeof store.loadProfessionalBootstrap === 'function'
-      ? store.loadProfessionalBootstrap(workspaceId).catch(() => null)
-      : Promise.resolve(null),
   ])
   const current = store.getWorkspaceState(workspaceId)
+  if(current.v340Catalog?.nativeZeroGeneration===true||current.v340Catalog?.nativeBusinessRecovery){store.setLocalPanelMode(workspaceId,'hidden');return true}
+  if(typeof store.loadProfessionalBootstrap==='function')await store.loadProfessionalBootstrap(workspaceId).catch(()=>null)
   if (current.panelMode === 'hidden') return true
   if (['ready', 'saving'].includes(current.syncStatus)) {
     store.setPanelMode(workspaceId, 'hidden')
@@ -94,10 +94,8 @@ async function hydrateSurface({ store, workspaceId, workspaceItems, hostMode }) 
   await Promise.all([
     store.hydrateWorkspace(workspaceId),
     store.loadWorkflowCatalog(workspaceId),
-    typeof store.loadProfessionalBootstrap === 'function'
-      ? store.loadProfessionalBootstrap(workspaceId).catch(() => null)
-      : Promise.resolve(null),
   ])
+  if(store.getWorkspaceState(workspaceId).v340Catalog?.nativeZeroGeneration!==true&&!store.getWorkspaceState(workspaceId).v340Catalog?.nativeBusinessRecovery&&typeof store.loadProfessionalBootstrap==='function')await store.loadProfessionalBootstrap(workspaceId).catch(()=>null)
   return true
 }
 
@@ -152,12 +150,16 @@ export function OasisWorkbenchSurface({
 }) {
   const [center, setCenter] = useState(false)
   const [importWorkspace, setImportWorkspace] = useState(null)
+  const [previewWorkspace,setPreviewWorkspace]=useState(null)
   const state = useSyncExternalStore(
     store.subscribe,
     () => store.peekWorkspaceState(workspaceId),
     () => store.peekWorkspaceState(workspaceId),
   )
   const panelRef = useRef(null)
+  const nativeZeroGeneration=state.v340Catalog?.nativeZeroGeneration===true
+  const nativeRecovery=!!state.v340Catalog?.nativeBusinessRecovery
+  useEffect(()=>{setPreviewWorkspace(null)},[workspaceId,state.v340Catalog])
   useSyncExternalStore(store.conversationDrafts?.subscribe ?? noSubscribe,
     store.conversationDrafts?.getSnapshot ?? zero, store.conversationDrafts?.getSnapshot ?? zero)
   const conversationUnavailableReason = store.conversationDrafts?.unavailableReason(workspaceId) ?? (store.conversationDrafts ? null : '当前对话输入接口不可用')
@@ -237,7 +239,7 @@ export function OasisWorkbenchSurface({
     style: sectionStyle(hostMode, layout, effectiveMode),
   },
   createElement('style', null, reducedMotionCss),
-  importWorkspace === workspaceId && store.websiteImportRemote && store.connectionSettings ? createElement(WebsiteImportDialog, {
+  !nativeZeroGeneration && !nativeRecovery && importWorkspace === workspaceId && store.websiteImportRemote && store.connectionSettings ? createElement(WebsiteImportDialog, {
     key: workspaceId, workspaceId, remote: store.websiteImportRemote, accountController: store.connectionSettings,
     onClose: () => setImportWorkspace(null),
     onOpenFiles: coordinator?.nativeAvailability(workspaceId)?.editor ? () => { setImportWorkspace(null); coordinator.openNativeTool(workspaceId, 'editor') } : undefined,
@@ -251,23 +253,27 @@ export function OasisWorkbenchSurface({
       layoutStatus: hostMode === 'embedded' ? 'better-sidebar-owned' : layout.status,
     },
     titleRef,
-    onOpenFunctionCenter: () => setCenter(true),
+    onOpenFunctionCenter: () => {setPreviewWorkspace(null);setCenter(true)},
     showFunctionCenter: center || state.pages.find(page => page.pageId === state.activePageId)?.view === 'chooser',
     onActivatePage: (pageId) => { setCenter(false); void actions.activatePage(pageId).catch(() => {}) },
     onClosePage: (pageId) => { void actions.closePage(pageId).catch(() => {}) },
-    onCreatePage: () => { setCenter(false); store.createPage(workspaceId) },
-    onHide: () => { if (hostMode === 'standalone') void actions.hidePanel().catch(() => {}) },
+    onCreatePage: nativeRecovery?undefined:() => { setCenter(false); store.createPage(workspaceId) },
+    onHide: () => { if (hostMode === 'standalone') {if(nativeZeroGeneration)store.setLocalPanelMode(workspaceId,'hidden');else void actions.hidePanel().catch(() => {})} },
     onToggleExpanded: () => {
-      if (hostMode === 'standalone') {
+      if (hostMode === 'standalone' && !nativeZeroGeneration && !nativeRecovery) {
         store.setPanelMode(workspaceId, state.panelMode === 'expanded' ? 'normal' : 'expanded')
       }
     },
   }),
   createElement(PanelPages, {
+    zeroPreview:previewWorkspace===workspaceId,
+    onCloseZeroPreview:()=>{setPreviewWorkspace(null);setCenter(true)},
+    prepareZeroPreview:(command,signal)=>store.prepareV340ZeroPreview(workspaceId,command,signal),
     v340Actions:{
       retryCatalog:()=>store.loadV340Catalog(workspaceId),
-      create:nodeId=>{void store.createV340Task(workspaceId,nodeId).then(()=>setCenter(false)).catch(()=>{})},
-      resume:pageId=>{store.activatePage(workspaceId,pageId);setCenter(false)},
+      create:nodeId=>{try{void Promise.resolve(selectV340Entry({catalog:state.v340Catalog,nodeId,
+        openPreview:()=>setPreviewWorkspace(workspaceId),createTask:id=>store.createV340Task(workspaceId,id)})).then(()=>setCenter(false)).catch(()=>{})}catch{}},
+      resume:async pageId=>{await store.activatePage(workspaceId,pageId);setCenter(false)},
       discardLocal:(pageId,expected)=>store.discardV340LocalDrafts(workspaceId,pageId,expected),
       saveDraft:(pageId,draft)=>store.saveV340Draft(workspaceId,pageId,draft),
       prepareCandidate:pageId=>store.prepareV340Candidate(workspaceId,pageId),

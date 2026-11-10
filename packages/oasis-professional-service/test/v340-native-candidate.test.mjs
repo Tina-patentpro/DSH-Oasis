@@ -185,6 +185,24 @@ test('candidate context: removal of membership during pending prepare prevents s
 test('candidate context: malformed JSON safe failure includes no raw payload',async t=>{
  const canary='SYNTHETIC_SECRET_CANARY';const h=await setup(t,{stream:()=> (async function*(){yield text(canary);yield finish})()});await h.create();const r=await h.settle();assert.equal(r.status,'failed');assert.equal(r.failureCode,'INVALID_OUTPUT');assert.doesNotMatch(JSON.stringify(h.repository.get('w')),/SECRET_CANARY/)
 })
+for(const [name,body,terminal,expected]of [
+ ['token limit','SYNTHETIC_RAW_PAYLOAD',{type:'finish',reason:{kind:'max-tokens'}},{failureStage:'stream',finishKind:'max-tokens'}],
+ ['invalid JSON','SYNTHETIC_RAW_PAYLOAD',finish,{failureStage:'result-json',finishKind:'stop'}],
+ ['valid result',JSON.stringify(MODEL_OUTPUT),finish,{finishKind:'stop'}],
+])test('candidate retains only safe execution metadata through '+name+' and cold reread',async t=>{
+ const h=await setup(t,{stream:()=> (async function*(){
+  yield text(body)
+  yield {type:'usage',usage:{inputTokens:17,outputTokens:19,totalTokens:36,reasoningTokens:7,raw:'SYNTHETIC_SECRET_CANARY',cacheReadTokens:-1}}
+  yield terminal
+ })()})
+ await h.create();const r=await h.settle()
+ assert.equal(r.status,name==='valid result'?'completed':'failed')
+ assert.deepEqual(r.executionSummary,{...expected,usage:{inputTokens:17,outputTokens:19,totalTokens:36,reasoningTokens:7}})
+ assert.doesNotMatch(JSON.stringify(h.repository.get('w')),/SYNTHETIC_RAW_PAYLOAD|SECRET_CANARY/)
+ const runId=r.runId;await h.repository.close();const reopened=await openOasisWorkbenchRepository(h.disk)
+ assert.deepEqual(reopened.get('w').tasks.t.v340.runs[runId].executionSummary,r.executionSummary)
+ await reopened.close();assert.equal(h.seen.stream,1)
+})
 test('candidate context: unicode oversized streamed response is rejected without partial document',async t=>{
  const h=await setup(t,{stream:()=> (async function*(){yield text('中'.repeat(700000));yield finish})()});await h.create();const r=await h.settle();assert.equal(r.status,'unknown');assert.equal(r.result,null)
 })

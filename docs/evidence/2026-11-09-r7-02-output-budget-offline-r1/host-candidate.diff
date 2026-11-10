@@ -1,0 +1,82 @@
+--- baseline/controller/scripts/f-installed-runtime.mjs
++++ candidate/controller/scripts/f-installed-runtime.mjs
+@@ -75,9 +75,12 @@
+ function nativeM06GenerationPolicy(release,template){
+  if(!Object.hasOwn(template,'nativeM06Generation'))return false
+  const p=template.nativeM06Generation,guards=['src/index.js','src/workbench-rpc.js','src/v340-native-model.js','src/dsh-generation-adapter.js','lib/client.js']
+- if(template.nativeZeroGeneration||template.nativeBusinessRecovery||p?.schemaVersion!==1||p.policy!=='m06-native-generation-v1'
++ const legacy=p?.schemaVersion===1&&p.policy==='m06-native-generation-v1'
++ const lowBudget=p?.schemaVersion===2&&p.policy==='m06-native-generation-v2'&&p.reasoningEffort==='low'
++ const maxTokens=lowBudget?16384:8192
++ if(template.nativeZeroGeneration||template.nativeBusinessRecovery||(!legacy&&!lowBudget)
+   ||!idOK(p.archiveSHA256)||!idOK(p.inputSHA256)||typeof p.root!=='string'||!isAbsolute(p.root)||resolve(p.root)!==p.root
+-  ||p.provider!=='deepseek-official'||p.model!=='deepseek-flash'||p.maxTokens!==8192
++  ||p.provider!=='deepseek-official'||p.model!=='deepseek-flash'||p.maxTokens!==maxTokens
+   ||!isDeepStrictEqual(p.budget,{model:1,api:0,upload:0,payment:0})
+   ||!isDeepStrictEqual(Object.keys(p.guardedFiles??{}).sort(),guards.toSorted()))throw Error('installed native M06 generation policy mismatch')
+  for(const file of guards)if(!idOK(p.guardedFiles[file])||installationFileHash(join(release,template.components['oasis-professional-service'],file))!==p.guardedFiles[file])throw Error('installed native M06 generation guard drift')
+@@ -88,9 +91,13 @@
+  }scan(template.patch)
+  const providers=rows.filter(r=>r.id==='llm-deepseek'),entries=rows.filter(r=>r.id.startsWith('oasis-professional-service-')&&r.disabled!==true)
+  if(providers.length!==1||providers[0].disabled!==false||!isDeepStrictEqual(providers[0].config,
+-  {baseURL:'https://api.deepseek.com/anthropic',maxTokens:8192,retryPolicy:{mode:'normal',maxRetries:0}})
++  {baseURL:'https://api.deepseek.com/anthropic',maxTokens,retryPolicy:{mode:'normal',maxRetries:0}})
+   ||entries.length!==1||entries[0].id!=='oasis-professional-service-m06-native-generation'
+   ||entries[0].name!=='@OASIS_RELEASE_ROOT@/'+template.components['oasis-professional-service']+'/src/m06-controlled-host-013.js')throw Error('installed native M06 provider/entry mismatch')
++ if(lowBudget&&!isDeepStrictEqual(rows.filter(r=>r.id==='agent-default-model'),[{
++  id:'agent-default-model',name:'@deepseek-ai/dsh-agent-default-model',
++  config:{provider:'deepseek-official',model:'deepseek-flash',reasoningEffort:'low'},
++ }]))throw Error('installed native M06 Low default mismatch')
+  return true
+ }
+ function verifyPolicy(payload,manifest){
+--- baseline/profile-template.json
++++ candidate/profile-template.json
+@@ -54,7 +54,7 @@
+       "disabled": false,
+       "config": {
+         "baseURL": "https://api.deepseek.com/anthropic",
+-        "maxTokens": 8192,
++        "maxTokens": 16384,
+         "retryPolicy": {
+           "mode": "normal",
+           "maxRetries": 0
+@@ -121,17 +121,26 @@
+           "name": "@OASIS_RELEASE_ROOT@/components/c2/lib/index.js"
+         }
+       ]
++    },
++    {
++      "id": "agent-default-model",
++      "name": "@deepseek-ai/dsh-agent-default-model",
++      "config": {
++        "provider": "deepseek-official",
++        "model": "deepseek-flash",
++        "reasoningEffort": "low"
++      }
+     }
+   ],
+   "checkpoint": 3,
+   "nativeM06Generation": {
+-    "schemaVersion": 1,
+-    "policy": "m06-native-generation-v1",
++    "schemaVersion": 2,
++    "policy": "m06-native-generation-v2",
+     "archiveSHA256": "e94f9136f7d93373569444180fb2351b09db52ba2851fb84411e5125a56a0bc5",
+     "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1",
+     "provider": "deepseek-official",
+     "model": "deepseek-flash",
+-    "maxTokens": 8192,
++    "maxTokens": 16384,
+     "inputSHA256": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b",
+     "budget": {
+       "model": 1,
+@@ -145,6 +154,7 @@
+       "src/v340-native-model.js": "d09f9eed1809e6fbe507d1f8e43ba7de28414dd831bcefd73f1d9fa3975c96e8",
+       "src/dsh-generation-adapter.js": "58abef1b5b9da5bac9c4d81449da6ac7dd9a440fda7518d5973366b41a95e8a6",
+       "lib/client.js": "5a47576e2452b8d4c88fb82ca35a6d6c34bcbbf7ef1e5b2cbfb453644650e2eb"
+-    }
++    },
++    "reasoningEffort": "low"
+   }
+ }

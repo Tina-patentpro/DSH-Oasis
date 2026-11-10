@@ -1,0 +1,23 @@
+{
+  "patch": [
+    {
+      "id": "llm-deepseek",
+      "config": {
+        "baseURL": "https://api.deepseek.com/anthropic",
+        "maxTokens": 16384,
+        "retryPolicy": {
+          "mode": "normal",
+          "maxRetries": 0
+        }
+      }
+    },
+    {
+      "id": "agent-default-model",
+      "config": {
+        "provider": "deepseek-official",
+        "model": "deepseek-flash",
+        "reasoningEffort": "low"
+      }
+    }
+  ]
+}

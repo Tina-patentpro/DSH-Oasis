@@ -147,6 +147,7 @@ export function createWorkbenchStore({
   }
   function m06CandidateView(workspaceId,pageId){
     assertOpen();assertRetained(workspaceId)
+    if(getCurrent(workspaceId).v340Catalog?.nativeBusinessRecovery)throw Error('本次仅允许本地业务恢复')
     const current=getCurrent(workspaceId),page=pageFor(workspaceId,pageId),op=operationFor(current,pageId)
     const capability=current.v340Catalog?.nodes.find(n=>n.nodeId==='Flow-2-6')?.m06Candidate
     if(current.syncStatus!=='ready'||current.activePageId!==pageId||page.v340?.nodeId!=='Flow-2-6'
@@ -204,6 +205,7 @@ export function createWorkbenchStore({
         catalogPromise: null,
         professionalPromise: null,
         professionalGeneration: 0,
+        zeroPreviewEpoch: 0,
         drainPromise: null,
         pendingActions: [],
         pendingDraft: null,
@@ -707,6 +709,7 @@ export function createWorkbenchStore({
     assertOpen()
     assertRetained(workspaceId)
     const current = getCurrent(workspaceId)
+    if(current.v340Catalog?.nativeBusinessRecovery)throw Error('本次恢复不允许替换任务状态')
     if (remote === null || ['ready', 'saving'].includes(current.syncStatus)) {
       return persistReadyAction(workspaceId, action)
     }
@@ -777,6 +780,7 @@ export function createWorkbenchStore({
         }
       }
       for(const id of removedIds){
+        runtimeFor(id).zeroPreviewEpoch += 1
         const state=getCurrent(id),pageOperations=Object.fromEntries(Object.entries(state.pageOperations).map(([pageId,op])=>[pageId,
           {...op,v340CandidatePreview:null,v340CandidateScope:null,v340CandidateEpoch:(op.v340CandidateEpoch??0)+1}]))
         setState(id,stateWith(state,{pageOperations}))
@@ -803,6 +807,16 @@ export function createWorkbenchStore({
 
     hydrateWorkspace,
 
+    async prepareV340ZeroPreview(workspaceId,command,signal){
+      assertOpen();assertKnown(workspaceId)
+      const current=getCurrent(workspaceId),catalog=current.v340Catalog,runtime=runtimeFor(workspaceId)
+      const epoch=runtime.zeroPreviewEpoch
+      if(current.syncStatus!=='ready'||catalog?.nativeZeroGeneration!==true||command.workspaceId!==workspaceId||command.nodeId!=='Flow-2-6'||typeof remote?.prepareV340!=='function')throw Error('零生成预览上下文不可用')
+      const result=await remote.prepareV340(command,signal)
+      assertOpen();assertKnown(workspaceId)
+      if(signal?.aborted||runtimeFor(workspaceId)!==runtime||runtime.zeroPreviewEpoch!==epoch||getCurrent(workspaceId).v340Catalog!==catalog||getCurrent(workspaceId).syncStatus!=='ready')throw Error('零生成预览上下文已改变')
+      return result
+    },
     async loadV340Catalog(workspaceId){
       assertOpen();assertKnown(workspaceId)
       if(getCurrent(workspaceId).v340CatalogStatus==='ready')return getCurrent(workspaceId).v340Catalog
@@ -872,6 +886,7 @@ export function createWorkbenchStore({
       assertOpen()
       assertKnown(workspaceId)
       const current = getCurrent(workspaceId)
+      if(current.v340Catalog?.nativeZeroGeneration===true||current.v340Catalog?.nativeBusinessRecovery)return null
       if (current.professionalStatus === 'ready') return current.professionalBootstrap
       if (remote === null || typeof remote.getProfessionalBootstrap !== 'function') {
         return setState(workspaceId, stateWith(current, {
@@ -932,6 +947,7 @@ export function createWorkbenchStore({
     },
 
     setPanelMode(workspaceId, panelMode) {
+      if(getCurrent(workspaceId).v340Catalog?.nativeBusinessRecovery)return store.setLocalPanelMode(workspaceId,panelMode)
       return dispatch(workspaceId, { type: 'set-panel-mode', panelMode })
     },
 
@@ -945,6 +961,7 @@ export function createWorkbenchStore({
 
     openPanel(workspaceId) {
       const before = getCurrent(workspaceId)
+      if(before.v340Catalog?.nativeZeroGeneration===true||before.v340Catalog?.nativeBusinessRecovery){store.setLocalPanelMode(workspaceId,'normal');return null}
       const action = { type: 'open-panel' }
       const after = dispatch(workspaceId, action)
       return pageCreatedBy(action, before, after)
@@ -958,6 +975,7 @@ export function createWorkbenchStore({
     },
 
     v340Action(workspaceId,pageId,action,payload={}){
+      if(getCurrent(workspaceId).v340Catalog?.nativeBusinessRecovery&&!action.startsWith('result/'))throw Error('本次恢复未开放此操作')
       return queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,`v340-${action}`,current=>callV340(action,{
         workspaceId,taskId:pageId,...(action==='run/observe'?{}:{expectedRevision:current.revision}),...payload,
       },controller.signal)))
@@ -970,7 +988,7 @@ export function createWorkbenchStore({
         if(typeof remote?.prepareV340Candidate!=='function')throw Error('当前Host没有候选准备入口')
       }catch(error){return Promise.reject(error)}
       const epoch=(initial.op.v340CandidateEpoch??0)+1
-      updatePageOperation(workspaceId,pageId,{v340CandidatePreparing:true,v340CandidatePreview:null,v340CandidateScope:null,v340CandidateEpoch:epoch,error:null})
+      updatePageOperation(workspaceId,pageId,{v340CandidatePreparing:true,v340CandidatePreview:null,v340CandidateScope:null,v340CandidateEpoch:epoch,error:null,candidateModelUnavailable:false})
       return queueV340(workspaceId,async context=>{
         try{
           await flushWorkspace(workspaceId,context)
@@ -984,7 +1002,7 @@ export function createWorkbenchStore({
           updatePageOperation(workspaceId,pageId,{v340CandidatePreview:preview,v340CandidateScope:scope,error:null,feedback:null})
           return preview
         }catch(error){
-          if(!closing&&!disposed&&states.get(workspaceId)?.pages.some(page=>page.pageId===pageId))updatePageOperation(workspaceId,pageId,{v340CandidatePreview:null,v340CandidateScope:null,error:errorMessage(error)})
+          if(!closing&&!disposed&&states.get(workspaceId)?.pages.some(page=>page.pageId===pageId))updatePageOperation(workspaceId,pageId,{v340CandidatePreview:null,v340CandidateScope:null,error:errorMessage(error),candidateModelUnavailable:error?.code==='MODEL_UNAVAILABLE'})
           throw error
         }finally{
           if(!closing&&!disposed&&states.get(workspaceId)?.pages.some(page=>page.pageId===pageId))updatePageOperation(workspaceId,pageId,{activeOperation:null,v340CandidatePreparing:false})
@@ -1034,6 +1052,7 @@ export function createWorkbenchStore({
       }))
     },
     saveV340Draft(workspaceId,pageId,draft){
+      if(getCurrent(workspaceId).v340Catalog?.nativeBusinessRecovery)throw Error('本次恢复的输入只读')
       const page=pageFor(workspaceId,pageId)
       if(hasPendingUnifiedRun(page))throw Error('未决运行锁定输入与来源')
       const prior=operationFor(getCurrent(workspaceId),pageId)
@@ -1103,6 +1122,7 @@ export function createWorkbenchStore({
     },
     createV340Task(workspaceId,nodeId){
       assertOpen();assertKnown(workspaceId)
+      if(getCurrent(workspaceId).v340Catalog?.nativeBusinessRecovery)throw Error('本次恢复不新建任务')
       const node=getCurrent(workspaceId).v340Catalog?.nodes.find(n=>n.nodeId===nodeId)
       if(!node)throw Error('新版节点目录不可用')
       if(getCurrent(workspaceId).v340Creating)return Promise.reject(Error('新版任务正在创建'))
@@ -1793,6 +1813,13 @@ export function createWorkbenchStore({
 
     activatePage(workspaceId, pageId) {
       const current=getCurrent(workspaceId)
+      if(current.v340Catalog?.nativeBusinessRecovery){
+        return queueV340(workspaceId,context=>runV340PageOperation(context,workspaceId,pageId,'v340-select',async state=>{
+          const result=await callV340('task/select',{workspaceId,taskId:pageId,expectedRevision:state.revision},controller.signal)
+          if(result.committed&&!closing&&!disposed){const latest=getCurrent(workspaceId);setState(workspaceId,stateWith(latest,{closedV340Tabs:latest.closedV340Tabs?.filter(id=>id!==pageId)??[]}))}
+          return result
+        }))
+      }
       if(current.activePageId&&current.activePageId!==pageId)store.cancelV340Candidate(workspaceId,current.activePageId)
       if(current.closedV340Tabs?.includes(pageId))setState(workspaceId,stateWith(current,{closedV340Tabs:current.closedV340Tabs.filter(id=>id!==pageId)}))
       return dispatch(workspaceId, { type: 'activate-page', pageId })

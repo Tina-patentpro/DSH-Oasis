@@ -1,0 +1,386 @@
+{
+  "recordedAt": "2026-11-09T17:17:33.128958+08:00",
+  "authorizationQuestionId": "call_46d2d45abca94b4e9a87e6f93191e289",
+  "preflightSHA256": "b2636c3c069f7513405fbd087601e79b06d2f86882caf34e6aea02925392a8ac",
+  "intentSHA256": "3648371c938eaa59b6b19a6dadec1132b5892a6824d6982aeab7d05ea2eb1d4b",
+  "runId": "v340-5049e502-c5c9-41b3-9a2f-b38341798c3e",
+  "requestKey": "e5aa3ed2-69d3-43e1-8ae6-61a03edd702a",
+  "createdAtUTC": "2026-11-09T09:14:44.371Z",
+  "completedAtUTC": "2026-11-09T09:15:39.518Z",
+  "status": "failed",
+  "failureCode": "INVALID_OUTPUT",
+  "executionSummary": {
+    "failureStage": "stream",
+    "finishKind": "max-tokens",
+    "usage": {
+      "inputTokens": 47713,
+      "outputTokens": 8192,
+      "totalTokens": 55905,
+      "cacheReadTokens": 0
+    }
+  },
+  "route": {
+    "provider": "deepseek-official",
+    "model": "deepseek-flash",
+    "reasoningEffort": "low"
+  },
+  "configuration": {
+    "baseURL": "https://api.deepseek.com/anthropic",
+    "maxTokens": 8192,
+    "retryPolicy": {
+      "mode": "normal",
+      "maxRetries": 0
+    }
+  },
+  "install": {
+    "fixedRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1",
+    "packageVersion": "0.1.0-rc.5",
+    "archiveSHA256": "e94f9136f7d93373569444180fb2351b09db52ba2851fb84411e5125a56a0bc5",
+    "bundleSHA256": "947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b",
+    "controllerSHA256": "34cfa35cb3e62d004fedd13e06f7270932743e287931bb1ce1b5ee18224f982b"
+  },
+  "inputHash": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b",
+  "preparedSHA256": "fb01f3abfc715ef6330aa6d11e47b6909d95509a286c68d987388ccdffd0af8e",
+  "inputSnapshotSHA256": "59c738dd8de94995a5e43722785b5f94486eb6d94a2eac53ae70bd638fb71921",
+  "businessResourceSHA256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d",
+  "businessManifestSHA256": "254a685fe95c9063be7232cb8dcb25333c1864ed9a5e670c0f62a04af3f3ccd4",
+  "confirmationSHA256": "4fe735cfa3a2f8b4a47d8b844f1ce6a8b620d526fef51edf6b25c1b9e675671c",
+  "requestSHA256": "d8a0eaf8fda4ad7aab3bece5d9c8317292c5d933511ea05934525b376f70de1c",
+  "validBody": false,
+  "feeAmountKnown": false,
+  "confirmedActions": 1,
+  "usedCalls": 1,
+  "remainingCalls": 0,
+  "attemptsCovered": "4 independent one-call grants consumed cumulatively; the three prior outcomes remain separate",
+  "originalRunProjection": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/low-original-run-r1.json",
+    "sha256": "e8a191021c328a345b0ba15c660889aec9386698e1068d11dfce8508d4f3a5fd",
+    "canonicalRunSHA256": "55a092db1e67bdd2fe46fb29a8d5a70d7d6a588ea769b37beb4f88007c97bba9",
+    "source": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/storages/oasis_workbench.json",
+    "sourceBusinessSHA256": "fc225f6b49dde37bac2b87bbe2222e18136986202156175e010484d25bab93d1"
+  },
+  "nativeExit": {
+    "pid": 55298,
+    "code": 0,
+    "endedAtUTC": "2026-11-09T09:16:22.815Z",
+    "pidAbsent": true,
+    "listenerAbsent": true,
+    "launchReceipt": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/evidence/installed-launch-784bf79a-80be-4def-956b-f87e3b15cc46.json",
+    "launchReceiptSHA256": "d43f4880d4ebd4ad79c896b8db0a8370608b41c850398cce1706bc814cdac1b7",
+    "exitReceipt": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/evidence/installed-launch-784bf79a-80be-4def-956b-f87e3b15cc46.exit.json",
+    "exitReceiptSHA256": "2fd698f35bb263cac4b01e758e424d4d4e8a64423a2549cacc5df7bdd5f898c4"
+  },
+  "preservation": {
+    "previousWorkspaceAUnchanged": true,
+    "oldBRunsUnchanged": true,
+    "workspaceBRevisionBefore": 82,
+    "workspaceBRevisionAfter": 84,
+    "workspaceBProjectionMatchesBaseline": true,
+    "otherPresentProtectedFilesUnchanged": 44,
+    "alreadyMissing": 2,
+    "changedProtectedPaths": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/sessions/--Users-tinadong7036-Documents-~5F00~53D1~9879~76EE-DSH-Oasis-.dsh-test-m06-native-business-recovery-20261108-r1-data-workspace-b--/session-be573ee0-ae7a-4d40-99d5-d607f6106786/session.v4.jsonl.zstd",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/storages/oasis_workbench.json"
+    ],
+    "protectedAfter": [
+      {
+        "path": "/Users/tinadong7036/.dsh/profiles/desktop/package.json",
+        "exists": true,
+        "sha256": "60fd1bd1faaf94e2f5feeabb5a07e14aadb8e27969aac53a430e92dd7a549069",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Applications/DSH Desktop.app/Contents/Info.plist",
+        "exists": true,
+        "sha256": "a71bf3b267ceca46ea4f25f114b0f133a43167f4c346adb3397a369aa8c35852",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+        "exists": true,
+        "sha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/sessions/--Users-tinadong7036-Documents-~5F00~53D1~9879~76EE-DSH-Oasis-.dsh-test-m06-native-business-recovery-20261108-r1-data-workspace-a--/session-ef67605d-1651-4194-a181-54ff103e710f/session.lock",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/sessions/--Users-tinadong7036-Documents-~5F00~53D1~9879~76EE-DSH-Oasis-.dsh-test-m06-native-business-recovery-20261108-r1-data-workspace-a--/session-ef67605d-1651-4194-a181-54ff103e710f/session.v4.jsonl.zstd",
+        "exists": true,
+        "sha256": "f217afa72768c1ca9f0c12153d908675c4b49510d9c3d2d6f7b3d33374070a34",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/sessions/--Users-tinadong7036-Documents-~5F00~53D1~9879~76EE-DSH-Oasis-.dsh-test-m06-native-business-recovery-20261108-r1-data-workspace-b--/session-be573ee0-ae7a-4d40-99d5-d607f6106786/session.lock",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/sessions/--Users-tinadong7036-Documents-~5F00~53D1~9879~76EE-DSH-Oasis-.dsh-test-m06-native-business-recovery-20261108-r1-data-workspace-b--/session-be573ee0-ae7a-4d40-99d5-d607f6106786/session.v4.jsonl.zstd",
+        "exists": true,
+        "sha256": "3ecca9626d51fd28733263ad6c1db1c4432c7a52e34c64ba925fb0599b2c71dd",
+        "sameAsPreflight": false
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/storages/oasis_workbench.json",
+        "exists": true,
+        "sha256": "fc225f6b49dde37bac2b87bbe2222e18136986202156175e010484d25bab93d1",
+        "sameAsPreflight": false
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/storages/workspace.json",
+        "exists": true,
+        "sha256": "4106acb78abd607d3fab5a96d26eda2a86c38902614f60335751cfa2efeff419",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/workspace-a/claims_20261108124209_123045ba.md",
+        "exists": true,
+        "sha256": "e2a953274804fbdd226b4052f5bb38f0ccb34aaf0343bf635710eacb71f64517",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/workspace-a/claims_20261108124209_123045ba.oasis.json",
+        "exists": true,
+        "sha256": "4919c3ab3126cbc6c46e79e040988750bb9f8fbc705d7bd57d729d6791c72019",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/workspace-a/claims_20261108144502_f87ff184.md",
+        "exists": true,
+        "sha256": "4392ed1e7e4520a215487ab9ef347c96cd2137bbe1dc1fe64f36462299b573c4",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/workspace-a/claims_20261108144502_f87ff184.oasis.json",
+        "exists": true,
+        "sha256": "f1794322f56424dad0f405f37684e43cd1e25b1de3b2351032c90c562676cf81",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-p4-unknown-update-20261106-r1/control/scripts/f-installed-runtime.mjs",
+        "exists": true,
+        "sha256": "73a568deaa95f77e3805e52acfcc7a6e38ffaec5869c913be388d366c01ff2c7",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-p4-unknown-update-20261106-r1/data/home/storages/oasis_workbench.json",
+        "exists": true,
+        "sha256": "a7e3eb4111ebe1148889417c11e4692128f9f10aba83185f4d4d6fbedc7c4b86",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-p4-unknown-update-20261106-r1/installation.json",
+        "exists": true,
+        "sha256": "0a35349f3ad48c8b9d69ce7f5e04a36fe899b75bbfbd017ea0192df6b29f5dab",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-public-installed-20261107-r1/control/scripts/f-installed-runtime.mjs",
+        "exists": true,
+        "sha256": "83017595aea900498bfd4c884bb37a69322cc982ceaaf9785d8658f14e71ec4c",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-public-installed-20261107-r1/installation.json",
+        "exists": true,
+        "sha256": "4066a46d14786b25c43bc345a0bd62dcf2eab2e4c275663cc4f8b2f7f00392b1",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-rc1-business-recovery-offline-20261107-r1/data/home/storages/oasis_workbench.json",
+        "exists": true,
+        "sha256": "c911b85a99981d671d4a9c51607bc4033e0b89da201dbf4d19c7ee9c7333e36b",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-rc1-business-recovery-offline-20261107-r1/data/workspace-a/claims_20261107202437_0c324380.md",
+        "exists": true,
+        "sha256": "4d486f429f5802215e0e546cc2dfc9431243a528a28038bf1d206c0231c6eed0",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-rc1-business-recovery-offline-20261107-r1/installation.json",
+        "exists": true,
+        "sha256": "f7315f318ed35b4f3388e10f92a0a936bcf7927a39d35afe88f4197d8ac4cb9f",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-zero-preview-installed-20261107-r1/installation.json",
+        "exists": true,
+        "sha256": "22d5c1c6a74c0cc0446704f9d54f28e2bc81d0930aa9820d0fc602e7dde44681",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-projection-pairing-package-20261106-r1/archive/oasis-professional-service-0.0.1.tgz",
+        "exists": true,
+        "sha256": "d2b9a4b76ba69b5b799c13265de3735d981c575adbfdc0dae7b75dbdacc30457",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-first-release-review-20261107-r1/oiw-m06-public-review-r1.zip",
+        "exists": true,
+        "sha256": "cadf07dca01d5ace8cb204cac9650d8ddcec5c8efaeef6d7c2afbd8c7d847ce1",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-release-20261107-r1/oasis-professional-service-0.1.0-rc.1.tgz",
+        "exists": true,
+        "sha256": "a7cf9a5dd59db1da2c7fe34fb4eac413c3dbb0d2baad7ab88147c7bfaab63bc3",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2/oasis-professional-service-0.0.1.tgz",
+        "exists": true,
+        "sha256": "6f2f16e771cb56bf5514b35de87bbf0903d6bd4faabad36cfef4f4ac327504bb",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2/workspace/claims_20261106140131_02fe3575.md",
+        "exists": true,
+        "sha256": "18250e4cd496d52f0f0459782ca2305dd2fdcaf646794ecdfbbbbf63c814237c",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-zero-preview-20261107-r1/archive/oasis-professional-service-0.0.1.tgz",
+        "exists": true,
+        "sha256": "5160c4e910018e71cdd3f46452a2cc80b1cab6aab810bd4ae23dc5b5a7a89785",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-zero-preview-installed-20261107-r1/bundle/bundle.json",
+        "exists": false,
+        "sha256": null,
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-zero-preview-installed-20261107-r1/bundle/payload/controller/scripts/f-installed-runtime.mjs",
+        "exists": false,
+        "sha256": null,
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-public-build-r1/verification.json",
+        "exists": true,
+        "sha256": "b643d95c5ea03e36ebe5e7337a58c3c5ba98262212fc5312b65da4b174efc50b",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-rc1-business-recovery-r1/before-close-record.json",
+        "exists": true,
+        "sha256": "59ade738034858a1452b1cdaf695247068c04b84a88f342f5cd4c255a912415c",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-rc1-business-recovery-r1/execution-return.md",
+        "exists": true,
+        "sha256": "8de72b23cc2cd754a0c358692404d9315273f1b77d80f348ff866050a905cb23",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-rc1-business-recovery-r1/sdk-recovery-attempt1.mjs",
+        "exists": true,
+        "sha256": "d6849258fdda18ebdc8ac6c7e2a403dfeab9650d1e3278ff3ecb1990173833cf",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-rc1-business-recovery-r1/sdk-recovery.mjs",
+        "exists": true,
+        "sha256": "fa30b25d08b50edab316fe55a9057702d0a8bc91d3205d304fc3088b11382446",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-rc1-business-recovery-r1/verification.json",
+        "exists": true,
+        "sha256": "18449a0a194581a9c8e1e3e13b69d6e9649eb31597b6c7ac31001c7faa24c05b",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-zero-preview-installed-r1/installation-spec.json",
+        "exists": true,
+        "sha256": "5d1b90ba5ec432f5234627db35fa174167280d099d630a178b62f20aafb86613",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-07-project-summary-and-remediation-plan-r3.md",
+        "exists": true,
+        "sha256": "5fd36e94c5cb288486eb34ecce57889aa1f2498b21da24d956393e6dc56d7d4f",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-first-release-r1/LICENSE-CANDIDATE.zh-CN.md",
+        "exists": true,
+        "sha256": "5127ea772ba201b71404949456ebf43a193f79d1b0161f8e65172873d6ffc1f4",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-first-release-r1/public-review-files.json",
+        "exists": true,
+        "sha256": "15082b837c74cae2a7b9b1b6c06f7749088d32cf6b8d0add9f78aab16b1eeac6",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-first-release-r1/release-manifest.json",
+        "exists": true,
+        "sha256": "5e067f4344211995803e7154fbde312b31319311e5b1ca157c6abb6f8cd29ab8",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.1/BUSINESS-RECOVERY-R1.md",
+        "exists": true,
+        "sha256": "05ba2088b9faa264ba4aaec4c20104f9ade676c12667190fb0aa13f7730b4289",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.1/business-recovery-r1.json",
+        "exists": true,
+        "sha256": "33aa9023d2e9e1d22d13433abf033ebd0e94ecd14fe71ab65d5bd9b5eeef53f9",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.1/release-manifest.json",
+        "exists": true,
+        "sha256": "7155d348c145deb21fdee6efb0565cb13c1409b58a9ab7377e87fa356a159d58",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/lib/client.js",
+        "exists": true,
+        "sha256": "5a47576e2452b8d4c88fb82ca35a6d6c34bcbbf7ef1e5b2cbfb453644650e2eb",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/lib/client.js.map",
+        "exists": true,
+        "sha256": "5a4775bdce544b8233677e5aa3953cd03383ee871f9d1f6aa6cc4e9bac49c3a7",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-candidate-0.1.3.json",
+        "exists": true,
+        "sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+        "sameAsPreflight": true
+      },
+      {
+        "path": "/Users/tinadong7036/Library/Application Support/DSH Desktop/profile-selection/state.json",
+        "exists": true,
+        "sha256": "0cba813c06a0b07a51c85da63d2b64413197e23bce1c3a9ad4c44b25b67efb3a",
+        "sameAsPreflight": true
+      }
+    ],
+    "preflightInputsUnchangedBeforeStatusAppend": true
+  },
+  "actions": [
+    "one installed App launch",
+    "same B session select Low",
+    "one candidate prepare",
+    "one candidate run confirmation",
+    "view same original run",
+    "close DevTools and menu quit"
+  ],
+  "stop": "No valid body. R7-03 gate remains closed and no further call is authorized."
+}

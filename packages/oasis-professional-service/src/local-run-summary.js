@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 const finishKinds = ['stop', 'max-tokens', 'tool-calls', 'error', 'aborted']
-const failureStages = ['preparation', 'stream', 'result-contract']
+const failureStages = ['preparation', 'stream', 'result-contract', 'result-json', 'result-schema', 'result-assembly']
 const tokenFields = ['inputTokens', 'outputTokens', 'totalTokens', 'cacheReadTokens', 'reasoningTokens']
 const count = z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER)
 export const localExecutionSummarySchema = z.object({

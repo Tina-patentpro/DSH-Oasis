@@ -50,11 +50,11 @@ async function sameFile(path, bytes) {
   } catch (error) { if (error.code === 'ENOENT') return false; throw error }
   finally { await handle?.close() }
 }
-export function createWebsiteImportService({ workspaceRegistry, accountService, settings, createClient = createWebsiteImportClient, now = Date.now, isWorkspaceBusy = () => false, workspaceOperations = createWorkspaceOperationGuard() }) {
+export function createWebsiteImportService({ workspaceRegistry, accountService, settings, settingsNamespace = NS, createClient = createWebsiteImportClient, now = Date.now, isWorkspaceBusy = () => false, workspaceOperations = createWorkspaceOperationGuard() }) {
   const tickets = new Map()
   let disposed = false
   function descriptor() {
-    const d = settings?.describe({ redactSecrets: true }).find(x => x.ns === NS)
+    const d = settings?.describe({ redactSecrets: true }).find(x => x.ns === settingsNamespace)
     if (!d || !Number.isSafeInteger(d.revision)) importFail('IMPORT_SETTINGS_UNAVAILABLE')
     return { ...d, links: parseWebsiteProjectLinks(d.value.websiteProjectLinks) }
   }
@@ -172,7 +172,7 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
         if (isWorkspaceBusy(t.workspaceId)) importFail('IMPORT_WORKSPACE_BUSY')
         // Freeze before the first potentially persisted mutation: unknown settings outcome is not retryable.
         t.consumed = true; t.selection = selection
-        await settings.update(NS, { websiteProjectLinks: links }, d.revision)
+        await settings.update(settingsNamespace, { websiteProjectLinks: links }, d.revision)
         await check(t); linkCheck(t, args.folderId)
         const manifest = `.oasis-import-${randomUUID()}.jsonl`, items = []
         let journal, fatal = false
@@ -238,7 +238,7 @@ export function createWebsiteImportService({ workspaceRegistry, accountService, 
         if (args.expectedSettingsRevision !== t.settingsRevision || d.revision !== t.settingsRevision) importFail('IMPORT_SETTINGS_CHANGED')
         if (!settings.writable || typeof settings.update !== 'function') importFail('IMPORT_SETTINGS_UNAVAILABLE')
         // One native settings CAS clears only this Workspace's association and service binding.
-        await settings.update(NS, {
+        await settings.update(settingsNamespace, {
           websiteProjectLinks: d.links.filter(v => v.workspaceId !== t.workspaceId),
           workspaceApiBindings: (d.value.workspaceApiBindings ?? []).filter(v => v.workspaceId !== t.workspaceId),
         }, d.revision)

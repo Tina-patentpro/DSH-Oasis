@@ -1,4 +1,5 @@
 import { clientRequestSchema } from '@deepseek-ai/dsh-client-connection'
+import {nativeBusinessRecoveryEndpoints} from './m06-native-business-recovery.js'
 
 const endpoints = Object.freeze([
   'workflow/v340/result/edit','workflow/v340/result/review','workflow/v340/result/prepare-save','workflow/v340/result/commit-save',
@@ -15,13 +16,14 @@ const endpoints = Object.freeze([
   'artifact/conversation-draft','artifact/saved-file','artifact/prepare-writeback','artifact/commit-writeback',
 ])
 
-export function registerWorkbenchRoutes(connection, handler, {m06Candidate013=false}={}) {
+export function registerWorkbenchRoutes(connection, handler, {m06Candidate013=false,nativeBusinessRecovery=null}={}) {
   if (typeof connection?.fetch?.register !== 'function' || typeof handler !== 'function') {
     throw new TypeError('DSH exact Fetch registration and business handler are required')
   }
   const disposers = []
   try {
-    const selected=m06Candidate013===true?[...endpoints,'workflow/v340/candidate/prepare','workflow/v340/candidate/run']:endpoints
+    if(nativeBusinessRecovery&&!m06Candidate013)throw new TypeError('Native recovery requires controlled routes')
+    const selected=nativeBusinessRecovery?nativeBusinessRecoveryEndpoints:m06Candidate013===true?[...endpoints,'workflow/v340/candidate/prepare','workflow/v340/candidate/run']:endpoints
     for (const endpoint of selected) {
       const method = 'oasis-workbench/' + endpoint
       const path = '/api/' + method

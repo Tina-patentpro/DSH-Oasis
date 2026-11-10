@@ -141,6 +141,56 @@ async function prepareRemote(harness) {
 const REMOTE_EXECUTION = { workspaceId: 'workspace-a', taskId: 'task-a', executionId: 'execution-remote-a' }
 const REMOTE_RUN = { workspaceId: 'workspace-a', taskId: 'task-a', runId: 'run-remote-a' }
 
+test('C4 enhanced response cannot complete through an unbound legacy path or cause another create', async () => {
+  for (const enhancedFragment of [{ structured_result: { outputs: { quality_status: 'partial' } } },
+    { structured_result_error: { code: 'FAST39_NO_SUPPORTED_CLAIM' } }, null]) {
+    const client = createClient()
+    client.createWorkflow = async input => {
+      client.calls.push(['create', structuredClone(input)])
+      return { resolved: true, result: { key: input.key, answerText: '旧投影有正文也不能冒充增强接受', fileUrls: [], enhancedFragment } }
+    }
+    const h = createHarness({ client }); await prepareRemote(h)
+    const previousRunOrder = h.repository.get().tasks['task-a'].runOrder
+    await h.service.continue(REMOTE_EXECUTION)
+    const task = h.repository.get().tasks['task-a']
+    assert.equal(task.remoteExecutions['execution-remote-a'].status, 'submission-unknown')
+    assert.equal(task.remoteExecutions['execution-remote-a'].safeError.code, 'FAST39_BINDING_REQUIRED')
+    assert.deepEqual(task.runOrder, previousRunOrder)
+    assert.equal(Object.hasOwn(task.remoteExecutions['execution-remote-a'], 'fast39Result'), false)
+    assert.equal(client.calls.filter(([name]) => name === 'create').length, 1)
+    assert.equal(client.calls.filter(([name]) => name === 'query').length, 0)
+    client.queryProcess = async key => {
+      client.calls.push(['query', key])
+      return { key, status: 'completed', progressPercent: 100, result: { key, answerText: '后到旧投影', fileUrls: [] } }
+    }
+    const checkpoint = JSON.stringify(h.repository.get())
+    await h.service.continue(REMOTE_EXECUTION)
+    assert.equal(client.calls.filter(([name]) => name === 'create').length, 1)
+    assert.equal(client.calls.filter(([name]) => name === 'query').length, 0)
+    assert.equal(JSON.stringify(h.repository.get()), checkpoint)
+  }
+})
+
+test('C4 blocked checkpoint keeps account and environment checks after serialized reload', async () => {
+  const client = createClient({ createWorkflow: async input => ({ resolved: true,
+    result: { recordId: 90, key: input.key, answerText: '正文', fileUrls: [], enhancedFragment: { structured_result: {} } } }) })
+  const h = createHarness({ client }); await prepareRemote(h); await h.service.continue(REMOTE_EXECUTION)
+  const serialized = JSON.stringify(h.repository.get())
+  const second = createHarness({ initial: JSON.parse(serialized) })
+  assert.equal(second.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a'].recordId, 90)
+  assert.equal(second.repository.get().tasks['task-a'].remoteExecutions['execution-remote-a'].recordIdSource, 'create')
+  second.client.getUserDetail = async () => ({ id: 202, balance: 20 })
+  await assert.rejects(second.service.continue(REMOTE_EXECUTION), { code: 'REMOTE_ACCOUNT_MISMATCH' })
+  assert.equal(JSON.stringify(second.repository.get()), serialized)
+  second.client.getUserDetail = async () => ({ id: 101, balance: 20 })
+  second.runtime.apiBaseOrigin = 'https://other-staging.example'
+  await assert.rejects(second.service.continue(REMOTE_EXECUTION), { code: 'REMOTE_ENVIRONMENT_MISMATCH' })
+  second.runtime.apiBaseOrigin = 'https://oasis-staging.example'
+  await second.service.continue(REMOTE_EXECUTION)
+  assert.equal(JSON.stringify(second.repository.get()), serialized)
+  assert.equal(second.client.calls.filter(([name]) => ['upload', 'create', 'query'].includes(name)).length, 0)
+})
+
 test('S6 new execution and result bind the authenticated account into input integrity', async () => {
   const h = createHarness()
   await prepareRemote(h)

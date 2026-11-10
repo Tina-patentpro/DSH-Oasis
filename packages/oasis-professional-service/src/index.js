@@ -24,6 +24,7 @@ import { hasPendingUnifiedRun } from './generation-contract.js'
 import { isOasisRemoteExecutionUnresolved } from './workbench-contract.js'
 import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 import { createM06BusinessNativeCandidate013 } from './v340-native-model.js'
+import {createM06NativeBusinessRecovery,loadNativeBusinessRecoveryScope} from './m06-native-business-recovery.js'
 
 export const name = 'oasis-professional-service'
 export const Config = OASIS_SETTINGS_SCHEMA.volatile()
@@ -68,28 +69,39 @@ function registerStatusTool(ctx) {
 export async function apply(ctx, config) { return applyWorkbench(ctx,config,false) }
 // Selected only by the explicit subpath entry, never by user/RPC configuration.
 export async function applyM06ControlledCandidate013(ctx, config) { return applyWorkbench(ctx,config,true) }
+export async function applyM06NativeBusinessRecovery(ctx, config) { return applyWorkbench(ctx,config,true,false,true) }
+// Explicit trusted composition for actual local M06 plus native website association.
+// Existing controlled/no-account candidates and all remote generation gates remain intact.
+export async function applyM06WorkareaCandidate013(ctx, config) { return applyWorkbench(ctx,config,true,true) }
 
-async function applyWorkbench(ctx, config, controlledM06) {
-  if(controlledM06&&(process.env.OASIS_UNIFIED_FIXTURE==='1'||process.env.OASIS_NATIVE_OFFLINE==='1'
+async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false, recoveryEntry = false) {
+  const recoveryScope=recoveryEntry?await loadNativeBusinessRecoveryScope():null
+  if(!recoveryEntry&&process.env.OASIS_NATIVE_BUSINESS_RECOVERY!==undefined)throw Error('Recovery mode requires its dedicated trusted entry')
+  const nativeZeroGeneration=process.env.OASIS_NATIVE_ZERO_GENERATION==='1'
+  if(nativeZeroGeneration&&!controlledM06)throw new Error('Native zero-generation requires the controlled M06 entry.')
+  if(controlledM06&&!recoveryEntry&&(process.env.OASIS_UNIFIED_FIXTURE==='1'||process.env.OASIS_NATIVE_OFFLINE==='1'
     ||typeof ctx?.llm?.prepareCall!=='function'||typeof ctx?.sessions?.get!=='function'
     ||typeof ctx?.sessionProjections?.stateOf!=='function'||typeof ctx?.agentDefaultModel?.currentSelection!=='function')){
     throw new Error('M06受控入口需要当前DSH原生模型上下文，且不能混用旧合成模式。')
   }
   const settingsScope = registerOasisSettings(ctx, config)
+  // Native settings are owned by the actual loader entry id, including explicit
+  // controlled entries; this trusted identity is never supplied by business RPC.
+  const settingsNamespace = ctx.fiber?.entry?.options?.id ?? 'oasis-professional-service'
   const repository = await openOasisWorkbenchRepository(ctx.storageDomain)
   const materialManager = createWorkspaceMaterialManager({ workspaceRegistry: ctx.workspaceRegistry })
   const nativeOffline = isNativeOfflineEnvironment()
   const fixtureEnabled = isUnifiedFixtureEnvironment() && !nativeOffline
-  const accountService = createOasisAccountService({ credentials: ctx.credentials, enabled: !fixtureEnabled && !nativeOffline && !controlledM06 })
+  const accountService = recoveryEntry?null:createOasisAccountService({ credentials: ctx.credentials, enabled: !fixtureEnabled && !nativeOffline && (!controlledM06 || websiteAccount) })
   const workspaceOperations = createWorkspaceOperationGuard()
-  const importService = createWebsiteImportService({ workspaceRegistry: ctx.workspaceRegistry, accountService, settings: ctx.settings, workspaceOperations,
+  const importService = recoveryEntry?null:createWebsiteImportService({ workspaceRegistry: ctx.workspaceRegistry, accountService, settings: ctx.settings, settingsNamespace, workspaceOperations,
     isWorkspaceBusy: workspaceId => Object.values(repository.get(workspaceId).tasks).some(task => hasPendingUnifiedRun(task)
       || Object.values(task.remoteExecutions).some(isOasisRemoteExecutionUnresolved)),
   })
   let localGeneration
   let v340Executor
   try {
-    if(controlledM06)v340Executor=createM06BusinessNativeCandidate013({ctx,native:await import('@deepseek-ai/dsh-llm')})
+    if(controlledM06&&!recoveryEntry)v340Executor=createM06BusinessNativeCandidate013({ctx,native:await import('@deepseek-ai/dsh-llm')})
     const modelEnabled = !fixtureEnabled && normalizeProductRuntimeConfig(settingsScope.get()).localModelEnabled
     localGeneration = controlledM06 ? null : nativeOffline ? createNativeOfflineRuntime(ctx, await import('@deepseek-ai/dsh-llm'))
       : modelEnabled ? bindNativeModelRuntime(ctx, await import('@deepseek-ai/dsh-llm'), true) : null
@@ -106,12 +118,13 @@ async function applyWorkbench(ctx, config, controlledM06) {
     localGeneration,
     v340Executor,
   })
-  const professionalService = createOasisRemoteService({
+  const professionalService = recoveryEntry?null:createOasisRemoteService({
     resolveConfig: normalizeProductRuntimeConfig,
     repository,
     workspaceOperations,
     materialManager,
     settings: ctx.settings,
+    settingsNamespace,
     workspaceRegistry: ctx.workspaceRegistry,
     executionIdFactory: randomUUID,
     runIdFactory: randomUUID,
@@ -148,11 +161,13 @@ async function applyWorkbench(ctx, config, controlledM06) {
   let disposeTool
   let disposeRpc
   try {
+    const nativeBusinessRecovery=recoveryEntry?createM06NativeBusinessRecovery({repository,workspaceRegistry:ctx.workspaceRegistry,scope:recoveryScope}):null
+    if(nativeBusinessRecovery)await nativeBusinessRecovery.validate()
     disposeTool = registerStatusTool(ctx)
     disposeRpc = registerWorkbenchRoutes(
       ctx.connection,
-      createWorkbenchRpcHandler(service, professionalService, accountService, importService,{m06Candidate013:controlledM06}),
-      {m06Candidate013:controlledM06},
+      createWorkbenchRpcHandler(service, professionalService, accountService, importService,{m06Candidate013:controlledM06,nativeZeroGeneration,nativeBusinessRecovery}),
+      {m06Candidate013:controlledM06,nativeBusinessRecovery},
     )
   } catch (error) {
     try {
@@ -167,8 +182,8 @@ async function applyWorkbench(ctx, config, controlledM06) {
   let closePromise
   return function disposeOasisWorkbenchHost() {
     closePromise ??= (async () => {
-      accountService.dispose()
-      importService.dispose()
+      accountService?.dispose()
+      importService?.dispose()
       try {
         await disposeRpc()
       } finally {

@@ -2,6 +2,8 @@ import { createHash } from 'node:crypto'
 import { unifiedInputSha256 } from './unified-fixture.js'
 import { isUnifiedRun } from './generation-contract.js'
 import { assertV340Integrity } from './v340-runtime-integrity.js'
+import { fast39CanonicalJson, parseFast39Json } from './m06-fast39-json.js'
+import { renderM06Fast39Pending, renderM06Fast39Output } from './m06-fast39-render.js'
 
 import { defineDomain, domainTable } from '@deepseek-ai/dsh-storage-domain'
 
@@ -76,6 +78,18 @@ function assertRunIntegrity(record) {
       })
       if (executionInputSha256 !== execution.inputSha) {
         throw new Error(`remote execution input integrity mismatch for task ${taskId} execution ${executionId}`)
+      }
+      const normal = execution.fast39Result?.fragment.structured_result
+      if (normal) {
+        const q = parseFast39Json(normal.outputs.quality_report)
+        const anchorSha = createHash('sha256').update(fast39CanonicalJson(q.outline_anchor.basis), 'utf8').digest('hex')
+        const run = Object.values(task.runs).find(item => item.executionId === executionId)
+        const projection = run?.mode === 'oasis-api' ? run.remoteResponse : run?.result
+        if (anchorSha !== q.outline_anchor.sha256 || !projection
+          || renderM06Fast39Pending(q) !== normal.outputs.pending_confirmation
+          || renderM06Fast39Output(normal.outputs, q) !== normal.outputs.output) {
+          throw new Error(`Fast39 reported anchor/result integrity mismatch for task ${taskId} execution ${executionId}`)
+        }
       }
     }
     for (const runId of task.runOrder) {

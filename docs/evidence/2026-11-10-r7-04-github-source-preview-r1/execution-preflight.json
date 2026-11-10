@@ -1,0 +1,388 @@
+{
+  "recordedAt": "2026-11-10T13:15:07.688498+08:00",
+  "rule": "EXEC-R2",
+  "executor": "Codex 单代理",
+  "project": "dsh-oasis",
+  "step": "R7-04 GitHub 源码公开与本地提交",
+  "versions": {
+    "coordination": "1.2.2",
+    "overall": "1.3.1 / NS1-R1 / P1108",
+    "projectPlan": "R7"
+  },
+  "registration": {
+    "currentFollowup": "PLAN-PROGRESS-REFRESH-20261108-P1108",
+    "anchor": "oasis-plan-progress-p1108",
+    "projectFollowup": {
+      "id": "PLAN-PROGRESS-REFRESH-20261108-P1108",
+      "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "anchor": "oasis-plan-progress-p1108",
+      "revision": "P1108",
+      "previous_followup_id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "addendum_anchor": "oasis-plan-progress-p1108",
+      "source_report": "docs/coordination/daily/2026-11-07-231113-scheduled-progress.md",
+      "record": "docs/coordination/execution/2026-11-08-plan-progress-refresh-p1108/修订说明.md",
+      "status": "planning_only",
+      "supersedes_only": "obsolete local next-actions within P1108; original work packages, contracts, gates, evidence and role references retained"
+    }
+  },
+  "approval": {
+    "source": "user",
+    "text": "提交本地和github，GitHub从私有转为开放"
+  },
+  "git": {
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis",
+    "localHEAD": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+    "remote": "Tina-patentpro/DSH-Oasis",
+    "remoteDefault": "mac/continuity-v2",
+    "remoteHead": "6f2a2fc20d112c63a377bd4dd633534e2e241051",
+    "visibilityObservedByGitHubConnector": "public",
+    "admin": true
+  },
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "sha256": "2844afb8e805966b1be1c83cb288df49ef152de2d8ef2777a22e83126bef6b0c",
+      "priorSHA256": "2844afb8e805966b1be1c83cb288df49ef152de2d8ef2777a22e83126bef6b0c",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "sha256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "priorSHA256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "sha256": "c8a0bce2cf7ffecbda9caf763b5dc9d6cb2ed248e06a429b8262a3feb8bd5867",
+      "priorSHA256": "c8a0bce2cf7ffecbda9caf763b5dc9d6cb2ed248e06a429b8262a3feb8bd5867",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "sha256": "1fc3af719042e758387baee73aae3109954244eb6c68d1471f55b500ac2af64d",
+      "priorSHA256": "1fc3af719042e758387baee73aae3109954244eb6c68d1471f55b500ac2af64d",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "sha256": "e6dc6a30ec311102a32cfb8dbd46837594095fe23c34d39501208923f8408e67",
+      "priorSHA256": "e6dc6a30ec311102a32cfb8dbd46837594095fe23c34d39501208923f8408e67",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "sha256": "95d6efafa951ff370974be1640aaf6f5593af698b8cfb0a8583649e7d1195184",
+      "priorSHA256": "95d6efafa951ff370974be1640aaf6f5593af698b8cfb0a8583649e7d1195184",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "priorSHA256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "priorSHA256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "sha256": "ff06b4699351b798c27482bbef3c1ac886fda7def80ed1def4e7470576e9ba2b",
+      "priorSHA256": "ff06b4699351b798c27482bbef3c1ac886fda7def80ed1def4e7470576e9ba2b",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利业务Skills清单.md",
+      "sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "priorSHA256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-07-github-operations-workstream-plan.md",
+      "sha256": "506883853f1ca0f0258b4060cf830ef8550568aa07652bc14e28faca885c2776",
+      "priorSHA256": "506883853f1ca0f0258b4060cf830ef8550568aa07652bc14e28faca885c2776",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "sha256": "566f665829e04c675c7bb4334d0ea0e1b52f92231009de88b51631e8fb5a560d",
+      "priorSHA256": "566f665829e04c675c7bb4334d0ea0e1b52f92231009de88b51631e8fb5a560d",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "sha256": "5e2e90e3b2ee9e6369e714dd029dedfc0ee15ba68db6b20b2f51185b86e66cef",
+      "priorSHA256": "36023464366c9ac82c174f256dcf2892bca57113c56a6c447641af9bcade0d7c",
+      "effect": "R7-02 后发有效正文，不将技术验证视为专业接受"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "sha256": "1731ade9b7bb79d77ab49d56c0f9d1bd6f1edbad2732a6225669aad254583798",
+      "priorSHA256": "57d47efff9b610717c53be773592bd6379d2a3c9d6622ba13820d2e3f8c3901e",
+      "effect": "R7-02 后发有效正文，不将技术验证视为专业接受"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-08-project-summary-and-next-plan-r7.md",
+      "sha256": "107a0ab769751fce16c0d5412fd0c9740190ff78f1b477e6b13e8ee7721db368",
+      "priorSHA256": "107a0ab769751fce16c0d5412fd0c9740190ff78f1b477e6b13e8ee7721db368",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/execution-return.md",
+      "sha256": "767d9033b37a1750ca2ca519a41b3019bcd5f0e2c07a53038267b5b462db6342",
+      "priorSHA256": "767d9033b37a1750ca2ca519a41b3019bcd5f0e2c07a53038267b5b462db6342",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/token-limit-analysis-r1.md",
+      "sha256": "02b5fe9f5629b03be09dc2c74f7b44c616d673c2bb339d6ceffedf78d5a185aa",
+      "priorSHA256": "02b5fe9f5629b03be09dc2c74f7b44c616d673c2bb339d6ceffedf78d5a185aa",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/authorization-consumption-r1.json",
+      "sha256": "2e8a0b45ce4a86144bf042faf4d1c4d0fd75a7d94b9e335c3d0720bd1c35deae",
+      "priorSHA256": "2e8a0b45ce4a86144bf042faf4d1c4d0fd75a7d94b9e335c3d0720bd1c35deae",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/one-call-proposal-r1.json",
+      "sha256": "ac085dfbe0dd6fc1b00436c97f54bd2a148e3a77230712d139416ec454a3e2b1",
+      "priorSHA256": "ac085dfbe0dd6fc1b00436c97f54bd2a148e3a77230712d139416ec454a3e2b1",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/real-call-original-result-r1.json",
+      "sha256": "4806b1adcd20e9f9d042739a4e55d60c6f92c2c5832bd85322bd092cda1fd90c",
+      "priorSHA256": "4806b1adcd20e9f9d042739a4e55d60c6f92c2c5832bd85322bd092cda1fd90c",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-SKILL.md",
+      "sha256": "b64aa31b270218e9dd17b7f54352cf2a1360ff05e035d5a8a6d2a2ba9dbfd9ef",
+      "priorSHA256": "b64aa31b270218e9dd17b7f54352cf2a1360ff05e035d5a8a6d2a2ba9dbfd9ef",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+      "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+      "priorSHA256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/low-execution-preflight-r1.json",
+      "sha256": "b2636c3c069f7513405fbd087601e79b06d2f86882caf34e6aea02925392a8ac",
+      "priorSHA256": "b2636c3c069f7513405fbd087601e79b06d2f86882caf34e6aea02925392a8ac",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/low-verification-r1.json",
+      "sha256": "c2cc3a6e7e895ddb48008ce97372e93b25b8c8e038cb387fa94b5ba11495a9f8",
+      "priorSHA256": "c2cc3a6e7e895ddb48008ce97372e93b25b8c8e038cb387fa94b5ba11495a9f8",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/low-original-run-r1.json",
+      "sha256": "e8a191021c328a345b0ba15c660889aec9386698e1068d11dfce8508d4f3a5fd",
+      "priorSHA256": "e8a191021c328a345b0ba15c660889aec9386698e1068d11dfce8508d4f3a5fd",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/low-execution-return-r1.md",
+      "sha256": "57e8a5da1fbb9f5f7aba67054cb401cd88c006dc27c3ce3f3ce4cdea990a18b1",
+      "priorSHA256": "57e8a5da1fbb9f5f7aba67054cb401cd88c006dc27c3ce3f3ce4cdea990a18b1",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-result-substage-20261109-r1/bundle/bundle.json",
+      "sha256": "947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b",
+      "priorSHA256": "947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-result-substage-20261109-r1/bundle/payload/controller/scripts/f-installed-runtime.mjs",
+      "sha256": "34cfa35cb3e62d004fedd13e06f7270932743e287931bb1ce1b5ee18224f982b",
+      "priorSHA256": "34cfa35cb3e62d004fedd13e06f7270932743e287931bb1ce1b5ee18224f982b",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/profiles/desktop/cordis.patch.yml",
+      "sha256": "97380f7e41623b5593e4e0290b0e8529772ece4b5608afb9df61ac18a73c1f3c",
+      "priorSHA256": "97380f7e41623b5593e4e0290b0e8529772ece4b5608afb9df61ac18a73c1f3c",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b/profile-snapshot/cordis.patch.yml",
+      "sha256": "66838cd9a733b2f09c440ec69be4f1e010b05ee6296b498d4e0df26bc2037241",
+      "priorSHA256": "66838cd9a733b2f09c440ec69be4f1e010b05ee6296b498d4e0df26bc2037241",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/installation.json",
+      "sha256": "7df3b7f3f40861d7ed3263e4996fb58b1fe42b114e12ac90e083287a5137a0a8",
+      "priorSHA256": "7df3b7f3f40861d7ed3263e4996fb58b1fe42b114e12ac90e083287a5137a0a8",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b/receipt.json",
+      "sha256": "cf1d375675bd97794f14873c17063782ef86dd58b0700dd197ec46739c7a7eff",
+      "priorSHA256": "cf1d375675bd97794f14873c17063782ef86dd58b0700dd197ec46739c7a7eff",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-offline-r1/review.md",
+      "sha256": "d3b226786248679e15742c9f774c7d12de7cc24845e90d27d7ae064bf866e46d",
+      "priorSHA256": "d3b226786248679e15742c9f774c7d12de7cc24845e90d27d7ae064bf866e46d",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-offline-r1/execution-preflight.json",
+      "sha256": "ebe28e6acb221a4eebe3fb0ce07722dfd96a729644769284c47cd2a2c2065402",
+      "priorSHA256": "ebe28e6acb221a4eebe3fb0ce07722dfd96a729644769284c47cd2a2c2065402",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-offline-r1/verification.json",
+      "sha256": "bdf9d54601fde0acc3b90992819707317fc4a170127a643c311c330b5bf94a04",
+      "priorSHA256": "bdf9d54601fde0acc3b90992819707317fc4a170127a643c311c330b5bf94a04",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-offline-r1/profile-difference.json",
+      "sha256": "4129a7f1e0b18dfc4c6681aa609e5a79d686cb0bb01c52a838648fcaf5ad8ee2",
+      "priorSHA256": "4129a7f1e0b18dfc4c6681aa609e5a79d686cb0bb01c52a838648fcaf5ad8ee2",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/bundle/bundle.json",
+      "sha256": "a25f1a190803aaccc3f614b607b2d1502458999d41221f5751969e93b3a62e2b",
+      "priorSHA256": "a25f1a190803aaccc3f614b607b2d1502458999d41221f5751969e93b3a62e2b",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/bundle/payload/controller/scripts/f-installed-runtime.mjs",
+      "sha256": "8338fec253a916eb780a8fc739f6d973ba22475772db98698543758a408ad405",
+      "priorSHA256": "8338fec253a916eb780a8fc739f6d973ba22475772db98698543758a408ad405",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/bundle/payload/profile-template.json",
+      "sha256": "64f63f0eeef3c2ee5891c9615da3df9a641b1840304f308af3f8cf2c55a401e6",
+      "priorSHA256": "64f63f0eeef3c2ee5891c9615da3df9a641b1840304f308af3f8cf2c55a401e6",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "sha256": "8338fec253a916eb780a8fc739f6d973ba22475772db98698543758a408ad405",
+      "priorSHA256": "8338fec253a916eb780a8fc739f6d973ba22475772db98698543758a408ad405",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/f-installed-controller-handoff.mjs",
+      "sha256": "cd0f46945b8ec33492f80dd4499069371003c3ee545bfa7a60ba8fe68a939e02",
+      "priorSHA256": "cd0f46945b8ec33492f80dd4499069371003c3ee545bfa7a60ba8fe68a939e02",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-offline-r1/desktop-profile-materialization.log",
+      "sha256": "f1275e13cb109d322145bf5d6fe7d5ad8b900ad61b775e95712b0e7a60ccf38d",
+      "priorSHA256": "f1275e13cb109d322145bf5d6fe7d5ad8b900ad61b775e95712b0e7a60ccf38d",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-offline-r1/desktop-profile-composition.log",
+      "sha256": "cb4ced8a7db0229e25cf94f1d5a20d9d71bb92bfd65ac4261c70d03803139169",
+      "priorSHA256": "cb4ced8a7db0229e25cf94f1d5a20d9d71bb92bfd65ac4261c70d03803139169",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-offline-r1/request-composed-green.log",
+      "sha256": "b3663c5a585d313868ad5253e2a6ba03e982acf79756dd37fe02968dcf037c21",
+      "priorSHA256": "b3663c5a585d313868ad5253e2a6ba03e982acf79756dd37fe02968dcf037c21",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-install-r1/verification.json",
+      "sha256": "e8bed7e6c44ae5c5f63939e75be6a97855c915115edc5b11f2e8be7fe7cc72d4",
+      "priorSHA256": "e8bed7e6c44ae5c5f63939e75be6a97855c915115edc5b11f2e8be7fe7cc72d4",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-install-r1/execution-return.md",
+      "sha256": "b3dd9afeae8858efa2b4bfa637b49e6760469ee03c398737e8018e720010c4f1",
+      "priorSHA256": "b3dd9afeae8858efa2b4bfa637b49e6760469ee03c398737e8018e720010c4f1",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-install-r1/execution-recheck.json",
+      "sha256": "31ea2babd25084d1745da9a0b4cda7744fe0f9bb542239cb6a4fc09fa55125ef",
+      "priorSHA256": "31ea2babd25084d1745da9a0b4cda7744fe0f9bb542239cb6a4fc09fa55125ef",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-02-output-budget-install-r1/installed-settings.json",
+      "sha256": "4123aaf703c4dcb66951c430ade332e6ce55c5177f78ee8510e22083bce34c33",
+      "priorSHA256": "4123aaf703c4dcb66951c430ade332e6ce55c5177f78ee8510e22083bce34c33",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/a25f1a190803aaccc3f614b607b2d1502458999d41221f5751969e93b3a62e2b/receipt.json",
+      "sha256": "0a8c3c4f9a9724e1ab3c4e55491413eaeb0350cc2e12ee5a11cf9650b3502234",
+      "priorSHA256": "0a8c3c4f9a9724e1ab3c4e55491413eaeb0350cc2e12ee5a11cf9650b3502234",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-10-r7-02-native-preparation-r1/execution-preflight.json",
+      "sha256": "b1c11c9defe53c9f5aca2c90b3fe481549d30a1929997d738d75b59046efb1b4",
+      "priorSHA256": "b1c11c9defe53c9f5aca2c90b3fe481549d30a1929997d738d75b59046efb1b4",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-10-r7-02-native-preparation-r1/verification.json",
+      "sha256": "8ed664bec30bd7df230728cd740d4adf06f4aabb7a560fe3d8b50e76cf3fa12e",
+      "priorSHA256": "8ed664bec30bd7df230728cd740d4adf06f4aabb7a560fe3d8b50e76cf3fa12e",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-10-r7-02-native-preparation-r1/single-live-test-proposal.json",
+      "sha256": "df6772736785ed74557199761392d898132a9fb0e42c6144113a424326583e39",
+      "priorSHA256": "df6772736785ed74557199761392d898132a9fb0e42c6144113a424326583e39",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-10-r7-02-native-preparation-r1/execution-return.md",
+      "sha256": "9e3a7d313af234ce6eef5f9b12c926e85dea55d1a7b4c5b1d2e8419f5b9d0960",
+      "priorSHA256": "9e3a7d313af234ce6eef5f9b12c926e85dea55d1a7b4c5b1d2e8419f5b9d0960",
+      "effect": "当前适用内容复核，原绑定字节一致"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-10-r7-02-live-16384-r1/verification.json",
+      "sha256": "919919f13b75b79c2dd697e5c866bc5535e5a890a74d359afaa2b189356af901"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-10-r7-02-live-16384-r1/execution-return.md",
+      "sha256": "b5be916fe629f66622f8e5aa8512a7a267c7c95bf74ee1f98e749057b68814d0"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.5/RL-CONTINUATION-R1.md",
+      "sha256": "f1d7dc4679eb3c302d52352d2865a9060126b7ea178d6b20d27d3c4ed572add8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.5/TECHNICAL-FACTS-R1.md",
+      "sha256": "0f09863481dd1f8b1dfdb40bb481abb5319f808166ddd01f34f38df48b31ec15"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/archive-identity.json",
+      "sha256": "d94888cb30e03aec9e16e47fb055e0f1d1412e2793cd8b9fd2361dbad24985bc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-07-github-operations-workstream-plan.md",
+      "sha256": "506883853f1ca0f0258b4060cf830ef8550568aa07652bc14e28faca885c2776"
+    }
+  ],
+  "readScope": "根规则和登记、R7-04、GH1公开条件、两个状态入口、已采用许可/同版公开边界及实际回执。其他支路按原条件。",
+  "difference": "本地开发和公开默认分支已分叉；当前公开默认分支的 Apache-2.0/NOTICE 保持。新公开提交限定为已采用社区许可的 M06 rc.5 源码预览，使用隔离历史。"
+}

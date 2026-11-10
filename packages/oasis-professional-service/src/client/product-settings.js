@@ -5,7 +5,7 @@ const initial = () => ({ connected: false, settingsStatus: 'unavailable', settin
   defaultGenerationSource: 'local-skill', outputDirectoryPrefix: '',
   credentialStatus: 'unavailable', credentialStored: false, credentialConfigured: false, credentialWritable: false,
   accountId: null, accountRevision: null, retryAfterSeconds: 0,
-  busy: false, restartRequired: false, canSubmit: false, error: null, notice: null })
+  busy: false, restartRequired: false, canSubmit: false, error: null, notice: null, nativeZeroGeneration:false,nativeBusinessRecovery:false })
 
 export function createProductSettings({ remote, onInvalidated = () => {} }) {
   let snapshot = Object.freeze(initial())
@@ -35,9 +35,16 @@ export function createProductSettings({ remote, onInvalidated = () => {} }) {
   }
   async function refresh() {
     readSettings()
-    if (!snapshot.connected) return false
+    if (!snapshot.connected || snapshot.nativeZeroGeneration || snapshot.nativeBusinessRecovery) return false
     const current = generation, id = ++readId
     try {
+      if(typeof remote.getV340Catalog==='function'){
+        const catalog=await remote.getV340Catalog()
+        if(disposed||current!==generation||id!==readId)return false
+        if(catalog.nativeZeroGeneration===true||catalog.nativeBusinessRecovery){
+          publish({nativeZeroGeneration:catalog.nativeZeroGeneration===true,nativeBusinessRecovery:!!catalog.nativeBusinessRecovery,credentialStatus:'unavailable',credentialConfigured:false,credentialStored:false,credentialWritable:false,accountId:null,accountRevision:null});return false
+        }
+      }
       const value = await remote.accountStatus()
       if (disposed || current !== generation || id !== readId) return false
       receive(value)
@@ -91,7 +98,7 @@ export function createProductSettings({ remote, onInvalidated = () => {} }) {
           : services.settingsScope.bind({ namespace: 'oasis-professional-service' })
         const onHost = () => {
           generation++; readId++
-          publish({ connected: connection.generation.getSnapshot() != null, credentialConfigured: false, credentialWritable: false })
+          publish({ connected: connection.generation.getSnapshot() != null, credentialConfigured: false, credentialWritable: false, nativeZeroGeneration:false,nativeBusinessRecovery:false })
           invalidate(); void refresh()
         }
         disposers.push(scope.subscribe(() => { readSettings(); invalidate() }), connection.generation.subscribe(onHost))

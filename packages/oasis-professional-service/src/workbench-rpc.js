@@ -174,8 +174,15 @@ async function writebackResult(operation) {
   }
 }
 
-export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null, {m06Candidate013=false}={}) {
+export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null, {m06Candidate013=false,nativeZeroGeneration=false,nativeBusinessRecovery=null}={}) {
+  if(nativeBusinessRecovery){
+    if(!m06Candidate013||nativeZeroGeneration)throw new TypeError('Native recovery requires an exclusive controlled composition')
+    return nativeBusinessRecovery.wrap(createWorkbenchRpcHandler(service,professionalService,accountService,importService,{m06Candidate013:true}))
+  }
+  if(nativeZeroGeneration&&!m06Candidate013)throw new TypeError('Native zero-generation requires the controlled M06 entry')
+  const readonlyEndpoints=new Set(['state/get','workflow/catalog','workflow/v340/catalog','workflow/v340/prepare'])
   return async function handleWorkbenchRpc(endpoint, payload) {
+    if(nativeZeroGeneration&&!readonlyEndpoints.has(endpoint))return {ok:false,error:{code:'NATIVE_ZERO_GENERATION',message:'本次仅检查界面与输入，不允许生成、联网或修改业务记录。',details:{}}}
     if (endpoint.startsWith('import/')) {
       const action = endpoint.slice('import/'.length)
       const schema = Object.hasOwn(importCommands, action) ? importCommands[action] : null
@@ -218,7 +225,8 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
     if (endpoint === 'workflow/v340/catalog') {
       const parsed = parsePayload(z.object({}).strict(), payload)
       if (!parsed.success) return parsed
-      return { ok: true, value: service.getV340Catalog() }
+      const catalog=service.getV340Catalog()
+      return { ok: true, value: nativeZeroGeneration?{...catalog,nativeZeroGeneration:true}:catalog }
     }
     if(m06Candidate013===true&&['workflow/v340/candidate/prepare','workflow/v340/candidate/run'].includes(endpoint)){
       const action=endpoint.slice('workflow/v340/'.length),parsed=v340Commands[action].safeParse(payload)

@@ -95,7 +95,9 @@ export function PanelChrome({
   const autoExpanded = state.panelMode === 'normal' && effectiveExpanded
   const operationInFlight = Object.values(state.pageOperations ?? {})
     .some((operation) => operation.activeOperation !== null)
-  const canPersist = ['ready', 'saving'].includes(state.syncStatus) && !operationInFlight
+  const canView = ['ready', 'saving'].includes(state.syncStatus) && !operationInFlight
+  const canPersist = canView && state.v340Catalog?.nativeZeroGeneration!==true
+  const canCreate = canPersist && !state.v340Catalog?.nativeBusinessRecovery && typeof onCreatePage === 'function'
 
   function moveTab(event, pageId) {
     if (!canPersist) return
@@ -175,7 +177,7 @@ export function PanelChrome({
       overflowX: 'auto',
     },
   },
-  onOpenFunctionCenter ? createElement('button', { type: 'button', onClick: onOpenFunctionCenter, disabled: !canPersist,
+  onOpenFunctionCenter ? createElement('button', { type: 'button', onClick: onOpenFunctionCenter, disabled: !canView,
     'aria-pressed': showFunctionCenter, style: { ...iconButtonStyle, width: 'auto', padding: '6px 8px', flexShrink: 0 } }, '功能中心') : null,
   ...state.pages.map((page) => createElement('div', {
     key: page.pageId,
@@ -228,16 +230,16 @@ export function PanelChrome({
     title: '新建任务页',
     'aria-label': '新建任务页',
     'data-testid': 'oasis-new-page',
-    disabled: !canPersist,
-    onClick: onCreatePage,
+    disabled: !canCreate,
+    onClick: canCreate ? onCreatePage : undefined,
     style: {
       ...iconButtonStyle,
       width: 30,
       height: 30,
       flex: '0 0 auto',
       fontSize: 20,
-      cursor: canPersist ? 'pointer' : 'not-allowed',
-      opacity: canPersist ? 1 : 0.5,
+      cursor: canCreate ? 'pointer' : 'not-allowed',
+      opacity: canCreate ? 1 : 0.5,
     },
   }, '+')))
 }

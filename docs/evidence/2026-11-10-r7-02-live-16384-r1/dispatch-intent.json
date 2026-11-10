@@ -1,0 +1,47 @@
+{
+  "recordedAt": "2026-11-10T11:44:42.136103+08:00",
+  "preflightSHA256": "284ada58690afe8011d2e515914025f5d5ebdf86124c72a45dca49847a3e2984",
+  "status": "reserved-before-click",
+  "clickLimit": 1,
+  "actualChargeAuthorized": true,
+  "observedSource": "App DevTools Network Response, loopback candidate/prepare",
+  "observedResponse": {
+    "ok": true,
+    "value": {
+      "workspaceId": "11e1a348-0248-42a1-8141-bcb6306caccc",
+      "taskId": "d8d762fe-36ae-49dd-b275-b7ffff04fda7",
+      "sessionId": "session-be573ee0-ae7a-4d40-99d5-d607f6106786",
+      "expectedRevision": 84,
+      "nodeId": "Flow-2-6",
+      "sha256": "e018f64df4401caca6ac2c2715c26eb2e3dd8a88384995a6f574045233161531",
+      "route": {
+        "provider": "deepseek-official",
+        "model": "deepseek-flash",
+        "reasoningEffort": "low"
+      },
+      "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+      "instructionSHA256": "41ae8a1bbb068df6ba98b3be0eaa128d1e53d49276dcc58d961860e4ce5aca91",
+      "businessManifestSHA256": "254a685fe95c9063be7232cb8dcb25333c1864ed9a5e670c0f62a04af3f3ccd4",
+      "businessResourceSHA256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d"
+    }
+  },
+  "wireEvidence": {
+    "url": "https://api.deepseek.com/anthropic/v1/messages",
+    "method": "POST",
+    "model": "deepseek-flash",
+    "max_tokens": 16384,
+    "thinking": {
+      "type": "enabled"
+    },
+    "effort": "low",
+    "maxRetries": 0,
+    "interceptedRequests": 1,
+    "responseFixtureStatus": 503,
+    "realCalls": 0,
+    "preparedInputHash": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b",
+    "preparedSHA256": "fb01f3abfc715ef6330aa6d11e47b6909d95509a286c68d987388ccdffd0af8e",
+    "systemSHA256": "7d998e25aa7dc05470e4bf16d7f58e9dd0165d226ba32a30a695b1b39e191d00",
+    "resourceSHA256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d"
+  },
+  "stop": "After one click inspect only the new run, never retry this authorization."
+}

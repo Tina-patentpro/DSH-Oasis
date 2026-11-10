@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { createOasisRemoteService } from '../src/oasis-remote-service.js'
-import { normalizeOasisRuntimeConfig, registerOasisSettings } from '../src/oasis-runtime-config.js'
+import { normalizeOasisRuntimeConfig, registerOasisSettings, OASIS_SETTINGS_SCHEMA } from '../src/oasis-runtime-config.js'
 import { createWorkbenchRpcHandler } from '../src/workbench-rpc.js'
 
 const ORIGIN = 'https://oasis-staging.example'
@@ -9,7 +9,7 @@ const NS = 'oasis-professional-service'
 const DETAIL = { id: 39, name: 'synthetic-claims', apiType: 'Workflow', price: 3,
   modelName: '', executionMode: 'sync', inputFields: [], outputFields: [] }
 
-function harness() {
+function harness(settingsNamespace=NS) {
   let revision = 0
   let value = { environmentKind: 'non-production', apiBaseUrl: ORIGIN, credentialOrigin: ORIGIN,
     credentialRef: 'OASIS_USER_JWT', outputDirectoryPrefix: 'keep', workspaceApiBindings: [] }
@@ -17,9 +17,9 @@ function harness() {
   const registry = new Map(['a', 'b'].map(id => [id, { path: `D:\\synthetic\\${id}`, status: async () => 'ok' }]))
   const settings = {
     writable: true,
-    describe() { return [{ ns: NS, revision, value: structuredClone(value) }] },
+    describe() { return [{ ns: settingsNamespace, revision, value: structuredClone(value) }] },
     async update(ns, patch, expected) {
-      assert.equal(ns, NS)
+      assert.equal(ns, settingsNamespace)
       if (expected !== revision) throw Object.assign(new Error('settings conflict'), { code: 'SETTINGS_CONFLICT' })
       calls.push('write')
       value = { ...value, ...structuredClone(patch) }; revision++
@@ -36,7 +36,7 @@ function harness() {
   const forbidden = () => { throw new Error('Binding must not access business storage or materials') }
   const makeService = () => createOasisRemoteService({ repository: { get: forbidden, mutate: forbidden },
     materialManager: { recheckAll: forbidden, readForUpload: forbidden },
-    settings, workspaceRegistry: { get: id => registry.get(id) },
+    settings, settingsNamespace, workspaceRegistry: { get: id => registry.get(id) },
     getRuntime: async () => runtime, clock: () => '2026-09-15T06:00:00.000Z',
     executionIdFactory: () => 'unused', runIdFactory: () => 'unused' })
   const service = makeService()
@@ -51,6 +51,13 @@ function harness() {
     value: () => structuredClone(value),
     change(patch) { value = { ...value, ...structuredClone(patch) }; revision++ } }
 }
+
+test('binding uses the trusted active native entry settings owner', async () => {
+  const h=harness('oasis-m06-workarea-live-013')
+  await h.service.bindWorkspace(await h.request())
+  assert.equal((await h.service.getWorkspaceBinding({workspaceId:'a'})).binding.apiId,39)
+  assert.equal(h.value().workspaceApiBindings[0].workspaceId,'a')
+})
 
 test('binding read is local, scoped, and explicitly unverified after reload', async () => {
   const h = harness()
@@ -176,4 +183,34 @@ test('registered settings own the default empty binding list and reject invalid 
   const binding = h.value().workspaceApiBindings[0]
   assert.doesNotThrow(() => normalizeOasisRuntimeConfig({ workspaceApiBindings: [binding] }))
   assert.throws(() => normalizeOasisRuntimeConfig({ workspaceApiBindings: [binding, binding] }))
+})
+
+test('binding distinguishes catalog entry 211 from detail service 39 and persists both identities', async () => {
+  const h=harness(),req={...await h.request(),catalogEntryId:211}
+  h.client.getCategoryCatalog=async()=>[{apiId:211,apiEndpoint:req.apiEndpoint,apiProcess:req.apiProcess}]
+  const saved=await h.service.bindWorkspace(req)
+  assert.equal(saved.binding.apiId,39);assert.equal(saved.binding.catalogEntryId,211)
+  assert.equal((await h.reload().getWorkspaceBinding({workspaceId:'a'})).binding.catalogEntryId,211)
+  assert.equal(OASIS_SETTINGS_SCHEMA({workspaceApiBindings:[saved.binding]}).workspaceApiBindings[0].catalogEntryId,211)
+  const legacy={...saved.binding};delete legacy.catalogEntryId
+  assert.equal(OASIS_SETTINGS_SCHEMA({workspaceApiBindings:[legacy]}).workspaceApiBindings[0].apiId,39)
+})
+
+test('ambiguous or drifted catalog identity cannot persist a binding', async () => {
+  for(const rows of [[{apiId:211},{apiId:211}],[{apiId:212}]]){
+    const h=harness(),req={...await h.request(),catalogEntryId:211}
+    h.client.getCategoryCatalog=async()=>rows.map(row=>({...row,apiEndpoint:req.apiEndpoint,apiProcess:req.apiProcess}))
+    await assert.rejects(h.service.bindWorkspace(req),{code:'REMOTE_SERVICE_MISMATCH'})
+    assert.equal(h.calls.includes('write'),false)
+  }
+})
+
+test('production binding rejects a same-id folder belonging to a different account', async () => {
+  const h=harness(),req=await h.request(),origin='https://lzhxpy.oasisintwrite.com'
+  h.change({environmentKind:'production',apiBaseUrl:origin,credentialOrigin:origin})
+  Object.assign(h.runtime,{environmentKind:'production',apiBaseOrigin:origin})
+  const selection={...req,expectedSettingsRevision:1,environmentKind:'production',apiBaseOrigin:origin,catalogEntryId:39}
+  h.client.getFolderDetail=async id=>({id,name:'same-name',owner_id:202})
+  await assert.rejects(h.service.bindWorkspace(selection),{code:'REMOTE_FOLDER_MISMATCH'})
+  assert.equal(h.calls.includes('write'),false)
 })

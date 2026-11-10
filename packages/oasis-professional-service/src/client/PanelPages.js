@@ -8,6 +8,7 @@ import { WritebackPanel } from './WritebackPanel.js'
 import { UnifiedGenerationPage } from './UnifiedGenerationPage.js'
 import { FunctionCenter } from './FunctionCenter.js'
 import {V340GenerationPage} from './V340GenerationPage.js'
+import {V340ZeroPreview} from './V340ZeroPreview.js'
 
 const surfaceStyle = {
   border: '1px solid var(--dsw-alias-border-l2, #dfe2e0)',
@@ -77,6 +78,7 @@ export function PanelPages({
   showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, onImport,
   effectiveMode = 'normal',
   v340Actions={},
+  zeroPreview=false,prepareZeroPreview,onCloseZeroPreview,
   onSelectWorkflow,
   onRenamePage,
   onReload,
@@ -113,8 +115,12 @@ export function PanelPages({
     return createElement(SyncRecoveryNotice, { state, onReload, onDiscardResultEditDraft, onDiscardV340Drafts:v340Actions.discardLocal })
   }
 
+  if(state.v340Catalog?.nativeZeroGeneration===true){
+    if(zeroPreview)return createElement(V340ZeroPreview,{key:state.workspaceId,workspaceId:state.workspaceId,catalog:state.v340Catalog,prepare:prepareZeroPreview,onClose:onCloseZeroPreview})
+    return createElement(FunctionCenter,{state,onSelectV340:v340Actions.create,onRetryV340Catalog:v340Actions.retryCatalog,nativeAvailability,onOpenNative,onImport})
+  }
   const page = state.pages.find((item) => item.pageId === state.activePageId)
-  if (!page&&showFunctionCenter)return createElement(FunctionCenter,{state,onSelectV340:v340Actions.create,onResumeV340:v340Actions.resume,onRetryV340Catalog:v340Actions.retryCatalog,onSelect:id=>onSelectWorkflow(null,id),nativeAvailability,onOpenNative,onImport})
+  if (!page&&(showFunctionCenter||state.v340Catalog?.nativeBusinessRecovery))return createElement(FunctionCenter,{state,onSelectV340:v340Actions.create,onResumeV340:v340Actions.resume,onRetryV340Catalog:v340Actions.retryCatalog,onSelect:id=>onSelectWorkflow(null,id),nativeAvailability,onOpenNative,onImport})
   if (!page) return createElement('div', { style: { padding: 20, color: '#66706b' } }, '请新建任务页。',
     onImport ? createElement('button', { type: 'button', onClick: onImport }, '从网站导入') : null)
 
@@ -128,7 +134,7 @@ export function PanelPages({
     'aria-label': '任务名称',
     defaultValue: page.title,
     maxLength: 200,
-    disabled: !['ready', 'saving'].includes(state.syncStatus),
+    disabled: !!state.v340Catalog?.nativeBusinessRecovery||!['ready', 'saving'].includes(state.syncStatus),
     onBlur: (event) => {
       const title = event.currentTarget.value.trim()
       if (title.length === 0) return void (event.currentTarget.value = page.title)

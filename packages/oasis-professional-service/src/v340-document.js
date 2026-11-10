@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { getV340Node, getV340Catalog, v340Hash, freezeV340 } from './v340-catalog.js'
-import { v340DocumentBodySchema } from './v340-runtime-contract.js'
+import { v340DocumentBodySchema,m06StructuredEditSchema } from './v340-runtime-contract.js'
 
 const text = z.string().min(1).max(300000).refine(v => v.trim().length > 0)
 const id = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$/)
@@ -194,23 +194,51 @@ function makeM06LimitedWarning({ workflowRunUid, inheritedWarnings }) {
     deliverable_impact: '不能据此认定完整同步、结构删除或专业审阅已完成', recommended_action: '核对当前正文、相关表格与依据；完整变更另行处理' })
 }
 
-// Human edits change the core prose, never the inherited evidence or structured technical tables.
-export function reviseV340Document(parent,{workflowRunUid,generatedAt,body}){
+export const m06StructuredEditHash=value=>value===undefined?'none':v340Hash(JSON.stringify(m06StructuredEditSchema.parse(value)))
+function replaceM06Rows(snapshot,structure,prepared,uid){
+  const edit=m06StructuredEditSchema.parse(structure),seen=new Set()
+  if(snapshot.node_id!=='Flow-2-6'||prepared?.nodeId!=='Flow-2-6')fail()
+  const input=prepareV340Inputs('Flow-2-6',prepared.values)
+  if(input.inputHash!==prepared.inputHash)fail()
+  for(const change of edit.replacements){
+    const key=`${change.table}/${change.rowId}`,table=snapshot.tables[change.table]
+    const at=table.rows.findIndex(row=>row.row_id===change.rowId)
+    if(seen.has(key)||at<0||table.rows.filter(row=>row.row_id===change.rowId).length!==1||v340Hash(JSON.stringify(table.rows[at]))!==change.beforeSha256)fail()
+    seen.add(key)
+    for(const source of change.sources){
+      const value=input.values[source.inputId],receipt=input.receipts[source.inputId]
+      const text=typeof value==='string'?value:value?.body
+      if(typeof text!=='string'||receipt?.sha256!==source.sourceSha256||v340Hash(text)!==source.sourceSha256
+        ||source.end<=source.start||source.end>text.length||text.slice(source.start,source.end)!==source.quote)fail()
+    }
+    const next=rowSchema.parse({row_id:change.rowId,data:change.data})
+    snapshot.revisions.push({revision_uid:uid,node_id:snapshot.node_id,table:change.table,row_id:change.rowId,
+      before:copy(table.rows[at]),after:copy(next),reason:edit.reason,source_evidence:copy(change.sources),assessment:'manual_revision_not_fact_confirmation'})
+    table.rows[at]=next
+  }
+  if(!edit.replacements.some(x=>x.table==='T2')||!edit.replacements.some(x=>x.table==='T4'))fail()
+}
+
+// Default edits retain all tables. Explicit M06 replacements retain before/after evidence.
+export function reviseV340Document(parent,{workflowRunUid,generatedAt,body,m06Structure,prepared}){
   const core=v340DocumentBodySchema.refine(v=>v.trim().length>0).parse(body)
   const uid=z.string().uuid().parse(workflowRunUid).toLowerCase(),snapshot=snapshotSchema.parse(copy(parent.snapshot))
   const local=stamp(generatedAt),node=getV340Node(snapshot.node_id)
   const limitedWarning=node.nodeId==='Flow-2-6'?makeM06LimitedWarning({workflowRunUid:uid,inheritedWarnings:snapshot.warnings}):null
   const oldUid=snapshot.workflow_run_uid
+  if(m06Structure!==undefined)replaceM06Rows(snapshot,m06Structure,prepared,uid)
   snapshot.workflow_run_uid=uid;snapshot.generated_at=`${local}+08:00`
   snapshot.filename=`${node.filenamePrefix}_${local.replace(/[-T:]/g,'')}_${uid.replaceAll('-','').slice(0,8)}.md`
   snapshot.manual_edit_manifest.push({source_run_uid:oldUid,source_file_sha256:parent.sha256,revision_uid:uid,
-    edited_section:'核心结果',before_sha256:v340Hash(snapshot.current_result.core_result_markdown),after_sha256:v340Hash(core),reason:'人工编辑；技术事实、表和来源仍需独立核对'})
+    edited_section:m06Structure===undefined?'核心结果':'核心结果及指定T2/T4行',before_sha256:v340Hash(snapshot.current_result.core_result_markdown),after_sha256:v340Hash(core),reason:'人工编辑；技术事实、表和来源仍需独立核对',
+    ...(m06Structure===undefined?{}:{structured_edit_sha256:m06StructuredEditHash(m06Structure)})})
   snapshot.current_result.core_result_markdown=core
   snapshot.contents.push({content_id:`host/${uid}/${node.nodeId}/core`,content_markdown:core,content_origin:'user_text',
     source_input_id:'manual_edit',source_locator:'人工修订核心正文',source_hash:v340Hash(core),trust_status:'hypothesis_to_verify',
     last_updated_flow:node.nodeId,revision_reason:'保留原正文和人工修订；不自动确认技术事实'})
   snapshot.warnings.push({...warning(node.nodeId,`manual-${uid}`,'核心正文经人工修改；累计表、来源和技术语义需要重新核对。'),inherited_from:oldUid})
   if(limitedWarning)snapshot.warnings.push(limitedWarning)
+  if(m06Structure!==undefined)snapshot.warnings.push({...warning(node.nodeId,`structured-${uid}`,'本次显式修订核心正文及指定T2/T4行，保留旧行与来源位置；语义一致性、支持及回退价值仍待专业复核。'),inherited_from:oldUid})
   snapshot.workflow_status='completed_with_warnings';snapshot.deliverable_status='not_recommended_for_filing'
   const validated=snapshotSchema.parse(snapshot),document=render(validated,validated.current_result.summary,core)
   v340DocumentBodySchema.parse(document)

@@ -1,0 +1,78 @@
+{
+  "recordedAt": "2026-11-10T11:32:27.436414+08:00",
+  "status": "R7_02_NATIVE_CANDIDATE_PREPARE_VERIFIED",
+  "preflightSHA256": "b1c11c9defe53c9f5aca2c90b3fe481549d30a1929997d738d75b59046efb1b4",
+  "scope": "One installed App start, one local candidate prepare, cancel, menu quit. No confirm/dispatch.",
+  "candidate": {
+    "method": "Developer Tools Network Response, transcribed allowed fields",
+    "requestPath": "/api/oasis-workbench/workflow/v340/candidate/prepare",
+    "safeResponseProjection": {
+      "ok": true,
+      "value": {
+        "workspaceId": "11e1a348-0248-42a1-8141-bcb6306caccc",
+        "taskId": "d8d762fe-36ae-49dd-b275-b7ffff04fda7",
+        "sessionId": "session-be573ee0-ae7a-4d40-99d5-d607f6106786",
+        "expectedRevision": 84,
+        "nodeId": "Flow-2-6",
+        "sha256": "e018f64df4401caca6ac2c2715c26eb2e3dd8a88384995a6f574045233161531",
+        "route": {
+          "provider": "deepseek-official",
+          "model": "deepseek-flash",
+          "reasoningEffort": "low"
+        },
+        "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+        "instructionSHA256": "41ae8a1bbb068df6ba98b3be0eaa128d1e53d49276dcc58d961860e4ce5aca91",
+        "businessManifestSHA256": "254a685fe95c9063be7232cb8dcb25333c1864ed9a5e670c0f62a04af3f3ccd4",
+        "businessResourceSHA256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d",
+        "dispatchEnabled": false,
+        "realCallVerified": false
+      }
+    },
+    "confirmationDigestReproduced": true
+  },
+  "configurationSource": "16384 and retries 0 from fixed active Profile and previous installed SDK verification, not fields in this preview",
+  "effectiveInstalledRequest": {
+    "url": "https://api.deepseek.com/anthropic/v1/messages",
+    "method": "POST",
+    "model": "deepseek-flash",
+    "max_tokens": 16384,
+    "thinking": {
+      "type": "enabled"
+    },
+    "effort": "low",
+    "maxRetries": 0,
+    "interceptedRequests": 1,
+    "responseFixtureStatus": 503,
+    "realCalls": 0,
+    "preparedInputHash": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b",
+    "preparedSHA256": "fb01f3abfc715ef6330aa6d11e47b6909d95509a286c68d987388ccdffd0af8e",
+    "systemSHA256": "7d998e25aa7dc05470e4bf16d7f58e9dd0165d226ba32a30a695b1b39e191d00",
+    "resourceSHA256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d"
+  },
+  "launchReceipt": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/evidence/installed-launch-b8a351c3-034d-4a64-af1f-5e9ee1435716.json",
+  "launchReceiptSHA256": "5b3802b6200d13314faa78a7e6775fd45eceedca007b3e441c0090f93455ee9d",
+  "exitReceipt": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/evidence/installed-launch-b8a351c3-034d-4a64-af1f-5e9ee1435716.exit.json",
+  "exitReceiptSHA256": "927f8b8da3d65f362c659f176c08705caa23abdfee7eb046709b3aca2c1a4be4",
+  "pid": 22939,
+  "normalExitCode": 0,
+  "installCheckExit": 0,
+  "appStarts": 1,
+  "candidatePrepares": 1,
+  "candidateRuns": 0,
+  "realCalls": 0,
+  "realCallsRemaining": 0,
+  "localTestsUsed": 1,
+  "localTestLimit": 10,
+  "localTestAllowanceRemaining": 9,
+  "businessStateSHA256": "fc225f6b49dde37bac2b87bbe2222e18136986202156175e010484d25bab93d1",
+  "workspaceRevision": 84,
+  "profileByteIdentical": true,
+  "protectedPathsChecked": 48,
+  "changedProtectedPaths": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/sessions/--Users-tinadong7036-Documents-~5F00~53D1~9879~76EE-DSH-Oasis-.dsh-test-m06-native-business-recovery-20261108-r1-data-workspace-b--/session-be573ee0-ae7a-4d40-99d5-d607f6106786/session.v4.jsonl.zstd",
+      "beforeSHA256": "3ecca9626d51fd28733263ad6c1db1c4432c7a52e34c64ba925fb0599b2c71dd",
+      "afterSHA256": "a4602aaf441b57a82b2db49acd4da3321d77f6aaec3a4ef70d59287fa14153dd"
+    }
+  ]
+}

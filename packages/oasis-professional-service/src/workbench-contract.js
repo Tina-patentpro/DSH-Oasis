@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { claimsApiSnapshotSchema } from './claims-api-execution-contract.js'
+import { fast39EvidenceSchema, fast39EvidenceStatus } from './m06-fast39-contract.js'
 import { localExecutionSummarySchema } from './local-run-summary.js'
 import { v340TaskStateSchema, V340_LIMITS, V340_NODE_IDS } from './v340-runtime-contract.js'
 
@@ -488,6 +489,7 @@ const oasisProviderSnapshotSchema = z.object({
 
 export const oasisRemoteExecutionSchema = z.object({
   unifiedClaims: claimsApiSnapshotSchema.optional(),
+  fast39Result: fast39EvidenceSchema.optional(),
   environmentKind: z.enum(['non-production', 'production']).optional(),
   accountId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER).optional(),
   executionId: identifierSchema,
@@ -531,6 +533,14 @@ export const oasisRemoteExecutionSchema = z.object({
   completedAt: timestampSchema.nullable(),
 }).strict().superRefine((value, ctx) => {
   validateRemoteEnvironment(value, ctx, value.uploadedFiles.map(file => file.url))
+  if (value.fast39Result) {
+    const evidence = value.fast39Result
+    const fragment = evidence.fragment.structured_result ?? evidence.fragment.structured_result_error
+    if (fragment.request_key !== value.requestKey || fast39EvidenceStatus(evidence) !== value.status || value.submittedAt === null
+      || (evidence.fragment.structured_result_error && value.safeError?.code !== fragment.code)) {
+      ctx.addIssue({ code: 'custom', path: ['fast39Result'], message: 'Fast39 evidence must belong to this submitted execution and outcome' })
+    }
+  }
   if (value.unifiedClaims) {
     const s = value.unifiedClaims, b = s.binding
     if (value.materialSnapshots.length || s.workspaceId !== b.workspaceId || s.workspacePath !== b.workspacePath

@@ -1,0 +1,249 @@
+{
+  "recordedAt": "2026-11-09T20:32:31.050918+08:00",
+  "timezone": "Asia/Shanghai",
+  "rule": "EXEC-R2",
+  "executor": "Codex单代理",
+  "project": "dsh-oasis",
+  "step": "R7-02 离线准备",
+  "git": {
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis",
+    "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+    "existingWorkPreserved": true
+  },
+  "versions": {
+    "coordination": "1.2.2",
+    "overall": "1.3.1 / NS1-R1 / P1108",
+    "projectPlan": "R7"
+  },
+  "applicability": {
+    "overall": [
+      "1.3.1 / NS1-R1 / P1108",
+      "oasis-next-steps-ns1, oasis-plan-progress-p1108, oasis-business-mode-bm1"
+    ],
+    "currentEntry": "11月9日R7-02 Low新增回执和前次8192截断",
+    "r7": "R7-02离线准备，按实际rc.5与后发回执接续",
+    "supplements": "BM1-R1/S1：Skills优先、Codex执行和原输入可见性；S2-R1/GH1仅保留发布边界；G1不改变本次Skill或输入；不执行并行支路",
+    "contracts": "IC-SKILL V0.1-draft及IC-ARTIFACT V0.3-draft仅核适用边界，保留原输入/输出/接受合同"
+  },
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "previousSHA256": "b915facac470e75cbe13c1e32adf94f125ae687b4cc808989c8a5818bee2c66c",
+      "sha256": "b915facac470e75cbe13c1e32adf94f125ae687b4cc808989c8a5818bee2c66c",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "previousSHA256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "sha256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "previousSHA256": "c8a0bce2cf7ffecbda9caf763b5dc9d6cb2ed248e06a429b8262a3feb8bd5867",
+      "sha256": "c8a0bce2cf7ffecbda9caf763b5dc9d6cb2ed248e06a429b8262a3feb8bd5867",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "previousSHA256": "20f37db6ba293a0c39edaaba18e7b8c5207748f862ce37653c1414ebb566292e",
+      "sha256": "20f37db6ba293a0c39edaaba18e7b8c5207748f862ce37653c1414ebb566292e",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "previousSHA256": "b0cbc2b3dda66b89e9b21a4502b623b6d79ac7d390d2afed393e6da8063dff1c",
+      "sha256": "b0cbc2b3dda66b89e9b21a4502b623b6d79ac7d390d2afed393e6da8063dff1c",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "previousSHA256": "e66244ce2d0990a3f8fa0733d94a57f79c6104b180c91aa766c449cc300db2c0",
+      "sha256": "e66244ce2d0990a3f8fa0733d94a57f79c6104b180c91aa766c449cc300db2c0",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "previousSHA256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "previousSHA256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "previousSHA256": "ff06b4699351b798c27482bbef3c1ac886fda7def80ed1def4e7470576e9ba2b",
+      "sha256": "ff06b4699351b798c27482bbef3c1ac886fda7def80ed1def4e7470576e9ba2b",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利业务Skills清单.md",
+      "previousSHA256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "身份复核"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-07-github-operations-workstream-plan.md",
+      "previousSHA256": "506883853f1ca0f0258b4060cf830ef8550568aa07652bc14e28faca885c2776",
+      "sha256": "506883853f1ca0f0258b4060cf830ef8550568aa07652bc14e28faca885c2776",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "身份复核"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "previousSHA256": "566f665829e04c675c7bb4334d0ea0e1b52f92231009de88b51631e8fb5a560d",
+      "sha256": "566f665829e04c675c7bb4334d0ea0e1b52f92231009de88b51631e8fb5a560d",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "previousSHA256": "c0ad3edf7dd6e20fe69e2919011f4bedcba4baf81b1593043471c2d43b42f6f7",
+      "sha256": "6d077e67da1cb2e49c67f6be9161773643ba66f7159e244878e78ddd798dd05c",
+      "effect": "追加Low截断，额度0，仍无有效正文，保留原历史",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "previousSHA256": "3eba685fa210f92b02eff47db6d0948cd76b8c9b2b5f162beed81f99ba94b41d",
+      "sha256": "453b2b8ba84b0077ebff2b1cccbcd3defd31adf7d81370f12142fa6956ba4b65",
+      "effect": "追加Low截断，额度0，仍无有效正文，保留原历史",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-08-project-summary-and-next-plan-r7.md",
+      "previousSHA256": "107a0ab769751fce16c0d5412fd0c9740190ff78f1b477e6b13e8ee7721db368",
+      "sha256": "107a0ab769751fce16c0d5412fd0c9740190ff78f1b477e6b13e8ee7721db368",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/execution-return.md",
+      "previousSHA256": "767d9033b37a1750ca2ca519a41b3019bcd5f0e2c07a53038267b5b462db6342",
+      "sha256": "767d9033b37a1750ca2ca519a41b3019bcd5f0e2c07a53038267b5b462db6342",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/token-limit-analysis-r1.md",
+      "previousSHA256": "02b5fe9f5629b03be09dc2c74f7b44c616d673c2bb339d6ceffedf78d5a185aa",
+      "sha256": "02b5fe9f5629b03be09dc2c74f7b44c616d673c2bb339d6ceffedf78d5a185aa",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/authorization-consumption-r1.json",
+      "previousSHA256": "2e8a0b45ce4a86144bf042faf4d1c4d0fd75a7d94b9e335c3d0720bd1c35deae",
+      "sha256": "2e8a0b45ce4a86144bf042faf4d1c4d0fd75a7d94b9e335c3d0720bd1c35deae",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/one-call-proposal-r1.json",
+      "previousSHA256": "ac085dfbe0dd6fc1b00436c97f54bd2a148e3a77230712d139416ec454a3e2b1",
+      "sha256": "ac085dfbe0dd6fc1b00436c97f54bd2a148e3a77230712d139416ec454a3e2b1",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/real-call-original-result-r1.json",
+      "previousSHA256": "4806b1adcd20e9f9d042739a4e55d60c6f92c2c5832bd85322bd092cda1fd90c",
+      "sha256": "4806b1adcd20e9f9d042739a4e55d60c6f92c2c5832bd85322bd092cda1fd90c",
+      "effect": "与已批准Low批次绑定字节一致",
+      "readScope": "适用范围和身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-SKILL.md",
+      "sha256": "b64aa31b270218e9dd17b7f54352cf2a1360ff05e035d5a8a6d2a2ba9dbfd9ef"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+      "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/low-execution-preflight-r1.json",
+      "sha256": "b2636c3c069f7513405fbd087601e79b06d2f86882caf34e6aea02925392a8ac"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/low-verification-r1.json",
+      "sha256": "c2cc3a6e7e895ddb48008ce97372e93b25b8c8e038cb387fa94b5ba11495a9f8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/low-original-run-r1.json",
+      "sha256": "e8a191021c328a345b0ba15c660889aec9386698e1068d11dfce8508d4f3a5fd"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/low-execution-return-r1.md",
+      "sha256": "57e8a5da1fbb9f5f7aba67054cb401cd88c006dc27c3ce3f3ce4cdea990a18b1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-result-substage-20261109-r1/bundle/bundle.json",
+      "sha256": "947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-result-substage-20261109-r1/bundle/payload/controller/scripts/f-installed-runtime.mjs",
+      "sha256": "34cfa35cb3e62d004fedd13e06f7270932743e287931bb1ce1b5ee18224f982b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/profiles/desktop/cordis.patch.yml",
+      "sha256": "b40bd668c00cce0a5395cbb0fabc3492ad305c4995b8a773c832eeefbdb26686"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b/profile-snapshot/cordis.patch.yml",
+      "sha256": "66838cd9a733b2f09c440ec69be4f1e010b05ee6296b498d4e0df26bc2037241"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/installation.json",
+      "sha256": "7fe8ff4fe21d292b1f85df26f702c86ef82cc4d31d2297a1778383c06200d0e3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b/receipt.json",
+      "sha256": "cf1d375675bd97794f14873c17063782ef86dd58b0700dd197ec46739c7a7eff"
+    }
+  ],
+  "authorization": {
+    "source": "用户本轮明确授权离线保全、核对、候选准备及验证",
+    "liveCallsRemaining": 0,
+    "appLaunchAuthorized": false,
+    "modelCallAuthorized": false
+  },
+  "differences": [
+    {
+      "before": "rc.4 R7计划起点",
+      "after": "rc.5及High/Low均8192截断",
+      "impact": "采用原证据，R7-03仍等有效正文"
+    },
+    {
+      "before": "隔离Profile收据快照",
+      "after": "当前活动Profile另有Low默认模型项",
+      "impact": "保全原件，在旁置候选保留Low；活动安装不改"
+    },
+    {
+      "before": "v1固定8192",
+      "after": "旁置候选固定16384/Low/SDK retries 0",
+      "impact": "仅可离线验证，待审阅；不延续旧调用许可"
+    }
+  ],
+  "install": {
+    "fixedRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1",
+    "packageVersion": "0.1.0-rc.5",
+    "archiveSHA256": "e94f9136f7d93373569444180fb2351b09db52ba2851fb84411e5125a56a0bc5",
+    "bundleSHA256": "947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b",
+    "controllerSHA256": "34cfa35cb3e62d004fedd13e06f7270932743e287931bb1ce1b5ee18224f982b"
+  },
+  "ruling": "工作区有既有未提交改动，使用旁置副本；不在本轮切换活动安装，不提交，不移授真实调用。"
+}

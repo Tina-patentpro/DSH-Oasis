@@ -1,3 +1,581 @@
+## 2026-11-10 R7-04 M06 rc.5 源码预览已提交 GitHub
+
+`Tina-patentpro/DSH-Oasis` 操作前已为公开仓库。已把限定源码预览推到 `codex/m06-rc5-source-preview`，公开提交 `ae893658` 以独立历史承载 127 个文件，匿名读取已验证。源码预览保留社区许可和第三方通知，公开投影移除私有 Windows 开发路径并关闭对应夹具入口。现有默认分支仍为 `mac/continuity-v2`。R7-03 仍待对真实正文开展编辑、再审、保存和草稿恢复。 [GitHub 预览](https://github.com/Tina-patentpro/DSH-Oasis/tree/codex/m06-rc5-source-preview) · [公开回执](2026-11-10-r7-04-github-source-preview-r1/execution-return.md)。以下历史完整字节保持。
+
+---
+
+## 2026-11-10 R7-02 Low／16384 取得有效真实正文
+
+按单次付费授权，现有 rc.5／bundle `a25f1a19` 同一 B 会话只确认一次。新 run `v340-89dd69c1-be05-4fca-bea0-a63dd2c5908d` 以 `completed / stop` 结束，outputTokens 12871，正文通过原 V3.4.0 结果合同，原任务内待审核。实际扣费金额未知。
+
+B revision 84→86，原 A 和 B 既有运行保全，App 正常退出，真实调用剩余 0。含前次本地核对共计 2 次测试，剩余 8 次。后续进入 R7-03 原稿编辑再审、保存和草稿恢复的工程验证，专业与用户接受和发行仍各自留证。 [真实验证回执](2026-11-10-r7-02-live-16384-r1/execution-return.md) · [收尾核验](2026-11-10-r7-02-live-16384-r1/verification.json)。以下历史完整字节保持。
+
+---
+
+## 2026-11-10 R7-02 原 B 会话候选核对通过
+
+现有 `a25f1a19` 开发 App 启动 1 次，Host 本地候选返回原 B 会话 revision 84 与 `deepseek-flash / low`，确认指纹匹配原 prepared 和资源。上限 16384、SDK 重试 0 沿已装配置和离线请求证据。预览已取消，App 正常退出，安装检查通过；业务状态和活动 Profile 原字节保持，原生 B 会话压缩文件变化已记录。
+
+使用 1 次本地测试，剩余 9 次；未确认生成、无新增运行，真实调用额度 0。下一步待准确单次真实验证授权，R7-03 仍待有效正文。 [原生核对回执](2026-11-10-r7-02-native-preparation-r1/execution-return.md) · [核验](2026-11-10-r7-02-native-preparation-r1/verification.json)。以下历史完整字节保持。
+
+---
+
+## 2026-11-09 R7-02 Low／16384 已离线原位切换
+
+按用户批准保全并恢复隔离 Profile 的原回执状态，完成控制器交接和同一开发安装离线切换。活动 bundle `a25f1a19`／控制器 `8338fec2`，独立安装检查退出 0，旧 `947574a6` 及回退日志保留。rc.5 归档及 125 个安装成员、原输入、Skill 资源和既有运行保全。
+
+实际安装配置经禁网 SDK 复验为 `deepseek-flash / low / max_tokens=16384`，SDK 重试 0，模拟 503 只捕获一次。B revision 84 及原会话归属保持。App 启动和真实调用均为 0，当前额度 0。原生候选和真实验证待具名授权，R7-03 仍待有效正文。 [切换回执](2026-11-09-r7-02-output-budget-install-r1/execution-return.md) · [收尾核验](2026-11-09-r7-02-output-budget-install-r1/verification.json)。以下历史完整字节保持。
+
+---
+
+## 2026-11-09 R7-02 Low／16384 离线宿主候选待审
+
+隔离 Profile 活动版与安装快照已按原字节保全，唯一结构差异为活动版多出的 Low 默认模型行。原安装只读检查仍报 Profile 与回执不符。旁置 bundle `a25f1a19`／控制器 `8338fec2`，仅改 Profile 模板及控制器，rc.5 归档和 125 个成员、原输入与八项 Skill 资源一致。
+
+固定 SDK 在禁网夹具中实际序列化 `deepseek-flash / low / max_tokens=16384`，SDK 重试 0，模拟 503 只捕获一次请求。控制器 33 项定向回归通过。候选待审，尚未切换活动安装，App 启动及真实调用均为 0，当前额度 0。R7-03 仍待有效正文。 [审阅件](2026-11-09-r7-02-output-budget-offline-r1/review.md) · [核验](2026-11-09-r7-02-output-budget-offline-r1/verification.json)。以下历史完整字节保持。
+
+---
+
+## 2026-11-09 R7-02 Low 单次运行仍达 8192 输出上限
+
+同版 rc.5／bundle `947574a6`、同一 B 会话和固定材料，经 Host 实际候选核实 `reasoningEffort=low` 后只派发一次。新 run `v340-5049e502-c5c9-41b3-9a2f-b38341798c3e` 于 17:15:39.518+08 终结为 `failed / INVALID_OUTPUT`，原摘要 `stream / max-tokens`，outputTokens 8192，无有效正文，实际费用金额未知。
+
+本次许可已消费，剩余 0。A 的 UNKNOWN、B 的旧 INVALID_OUTPUT 及前次 8192 截断各自保留。App 正常退出；B revision 82→84 仅新增本次运行及相应元数据，原运行和 A 工作区保全。按停止条件停在 R7-02，R7-03 待有效正文通过原结果合同，暂不发布。[执行回执](2026-11-09-r7-execution-r1/low-execution-return-r1.md)／[收尾核验](2026-11-09-r7-execution-r1/low-verification-r1.json)。以下历史完整字节保持。
+
+---
+
+## 2026-11-09 R7-02单次真实运行失败，已定位本次max-tokens
+
+新授权只消费一次：同rc.5／公开材料／B原任务，run c72ecef4／request9a6750e4为failed／INVALID_OUTPUT，摘要stream／max-tokens、outputTokens8192，无正文，金额未知。安全摘要链真实保留已证，不等业务通过；前两次原因不反推。新额度用完，未重试/改参数/提高预算；原生菜单正常退出exit0。A118及全部旧run保持，B80→82仅追加本run，Workspace不变，授权业务JSON/B会话文件变化列证。
+
+新稿工程/恢复/专业用户/发行仍未完成，暂不发布。[准确回执](2026-11-09-r7-execution-r1/execution-return.md)／[原结果验证](2026-11-09-r7-execution-r1/real-call-verification-r1.json)／[有界分析](2026-11-09-r7-execution-r1/token-limit-analysis-r1.md)。以下历史原字节保持。
+
+---
+
+## 2026-11-09 R7-01 rc.5安全阶段细分及限定原生检查
+
+R7获准接续后，三源码最小修正，固定SDK三处诊断合并问题RED→GREEN；源码99、实际归档102项exit0。私有rc.5归档`e94f9136`／bundle`947574a6`／控制器`34cfa35c`原位装回，新schema解析旧A/B通过；一次原生启动及菜单正常退出exit0，B旧INVALID_OUTPUT可见，无生成确认/新run/发送/重启。业务、Workspace和全部旧任务/run保持，原失败原因仍未明。
+
+本轮真实调用0，已具名请求新增一次授权但未派发，两项旧额度不复用。新稿链/编辑草稿重启/专业用户/发行接受仍缺；同版事实和RL01—09已接续，暂不发布，Fast39/格式/WorkBuddy按各自直接缺件。[执行回执](2026-11-09-r7-execution-r1/execution-return.md)／[技术事实](../release/m06-public-0.1.0-rc.5/TECHNICAL-FACTS-R1.md)。以下历史完整字节保持。
+
+---
+
+## 2026-11-08 后续计划R7（仅规划，业务状态不变）
+
+[R7进度总结与计划](../plans/2026-11-08-project-summary-and-next-plan-r7.md)按当前rc.4离线候选及R6两次未取得正文的真实运行接续：先核安全诊断是否足够、当前原生条件，再在准确新授权具备后单次真实验证，取得正文后完成新稿工程链与专业/用户接受，最后形成限定发行决定。两额度已用完，UNKNOWN不重发；暂不发布。Fast39、材料格式、WorkBuddy用户入口及来源缺路径各自独立处理，不阻固定M06准备。
+
+本轮仅总结/规划/导航，未恢复执行或新增测试、App启动、模型/API、安装/构建、源事务、投递、提交推送或发布。[输入记录](2026-11-08-project-summary-plan-r7/inputs.json)／[文档验证](2026-11-08-project-summary-plan-r7/verification.json)。下方实际运行及全部历史原字节保持。
+
+---
+
+## 2026-11-08 R6追加运行INVALID_OUTPUT；rc.4安全摘要修正离线装回
+
+追加授权仅消费一次：同安装既有B、相同公开材料，run410fc6f4／request413ac7e3为failed／INVALID_OUTPUT，无有效正文和usage；原A UNKNOWN保持锁定未重发。正常启停1/1、exit0，无重试、发送或编辑草稿重启。两项一次额度均已用，剩余0。
+
+已最小补安全执行摘要丢失：三源码、客户端与元数据共7业务成员变化，118保持，资源/提示词/许可/重试不变。源码149、实际归档102项exit0；rc.4归档1f992c42／bundle d98eabee／控制器2b8c3f4a离线原位安装及旧记录只读解析通过，未启动rc.4 App/模型。没有反推本次输出根因、补写usage或把失败认作已修复。旧A任务/Workspace/凭据保持，B会话文件和业务JSON实际变化列证；新稿/恢复/专业用户/发行接受仍缺，暂不发布。[准确回执](2026-11-08-r6-execution-r1/execution-return.md)／[技术事实](../release/m06-public-0.1.0-rc.4/TECHNICAL-FACTS-R1.md)。以下历史完整字节保持。
+
+---
+
+## 2026-11-08 R6后发：一次生成UNKNOWN，代理修正离线装回
+
+同一开发安装已按准确授权单项复用模型引用并只确认生成一次；原run `v340-4b14edd7-b895-4db1-88af-9fde2177c1c4`／requestKey `07e23fdf-2864-4f6a-aef0-426aa49ec56e`为UNKNOWN，无正文/usage，未重发。原生观察原运行后正常退出code0。固定厂商模块核明Host沿用阻断代理的缺陷，端点限定修正离线验证及37项测试exit0，已原位更新至f1efed18／d64bdcf2，业务包仍rc.3／125成员，原UNKNOWN和业务/凭据保持。修正后未启动或调用，原额度剩余0，追加独立运行待答。
+
+R6-01已交，R6-02准确组合与差异已备，R6-03编辑保存及未提交结果草稿跨重启仍未验；[rc.3技术事实与RL01—09](../release/m06-public-0.1.0-rc.3/TECHNICAL-FACTS-R1.md)准备完成，非发行放行。原专业/用户接受和暂不发布不移授，Fast39/格式/第二Host条件继续，完整目标未完成。[执行回执](2026-11-08-r6-execution-r1/execution-return.md)。以下历史完整字节保持。
+
+---
+
+## 2026-11-08 R6-01 rc.3入口原生复验通过
+
+现有rc.3组合已实际一次启动、菜单正常退出code0，无重启。全关任务页后的功能中心、创建/导入禁用及保留任务重开通过，UI-RC2-01为`FIXED_NATIVE_RETEST_PASSED`；revision15／ea5d5e2f、安装/Workspace及48保护件保持，writer已释放。未编辑/保存/发送，真实调用及发布未执行。R6-02继续准备正常生成入口/模型凭据与单次输入，完整R6未完成；[本轮回执](2026-11-08-r6-execution-r1/execution-return.md)及[台账](2026-11-08-r6-execution-r1/progress.md)给出准确范围。以下历史完整字节保持。
+
+---
+
+## 2026-11-08 项目总结与后续计划R6（仅规划）
+
+[R6计划](../plans/2026-11-08-project-summary-and-next-plan-r6.md)接续R5/P1108过时起点：rc.2原生合成业务恢复主路径及rc.3现有开发安装原位更新已交，只余UI-RC2-01针对性原生复验。先收口该差异，再准备最终同版正常生成入口/预算与125成员发行差异，办理真实本地M06新稿接受和限定首发决定；不另建隔离环境、不重做整套恢复。未提交结果编辑草稿跨重启未验，与已保存业务和原生对话草稿恢复分开。
+
+Fast39源准入/三方贯通、PDF/DOCX及WorkBuddy真实消费各按原条件独立；固定稿受限接受、许可采用及暂不发布决定保持，原阶段5-G/H、14节点/双来源、FAIL/UNKNOWN不改。整体/本项目followup仍P1108，本轮只有规划和导航，无新业务验收、应用启动、真实调用、源事务、投递、构建/安装、提交/推送或发布。[读取记录](2026-11-08-project-summary-plan-r6/inputs.json)及[文档验证](2026-11-08-project-summary-plan-r6/verification.json)绑定本轮范围，以下历史完整字节保持。
+
+---
+
+## 2026-11-08 现有开发业务安装已原位更新rc.3，同版离线核对完成
+
+用户明确选择已有rc.2业务安装后，在原路径`.dsh-test/m06-native-business-recovery-20261108-r1`原位更新至 **0.1.0-rc.3**：bundle **f03100c7**／125成员归档 **b54454a5**／控制器 **0398b0c8**。没有新建环境或迁移业务，保留历史目录名；Desktop2.0.18的另一App/Profile未被修改或降级。准确绑定见[本轮回执](2026-11-08-rc3-existing-development-update-r1/execution-return.md)。
+
+已有带日志控制器交接及离线upgrade均exit0；实际安装125成员、6 guard、入口/scope/预算/元数据配对通过，新控制器check exit0。实际新release＋官方Workspace/JSONL/Domain/JSON单writer完成一次只读SDK接续，保持revision15、同任务/run/活动版本及7/9/11警示，旧文件变动与新文件匹配状态区分正常；安装源码SSR验证修复入口，不是原生UI复验。
+
+旧rc.1/rc.2 release整个程序/Profile快照/receipt、交接原控制文件/安装元数据及48个受保护文件已核对保全；业务JSON仍 **ea5d5e2f**，Workspace/会话/Markdown/sidecar原字节保持，writer已释放。无App/Host启动、新run、真实调用/上传/费用、发送、投递、提交/推送/发布。UI-RC2-01仍为`FIXED_OFFLINE_NATIVE_RETEST_PENDING`；[后续入口原生复验范围](2026-11-08-rc3-existing-development-update-r1/next-native-ui-retest-scope.md)只准备一次针对性启停，本轮没有执行，不重做整套业务验收。[验证](2026-11-08-rc3-existing-development-update-r1/verification.json)。以下历史完整字节保持。
+
+---
+
+## 2026-11-08 用户明确现有安装为开发专用，取消额外隔离安装
+
+用户明确“不需要进行隔离安装，现有的安装就是开发专用的”。后续直接复用实际既有开发安装更新和验证，不再新建隔离环境或将额外隔离安装作为前置；保留旧版本、业务数据与历史证据，按实际变更定向验证。旧rc.3回执中的隔离安装安排由[本决定](2026-11-08-development-installation-decision-r1.md)接续，历史原件保持；准确安装身份/路径在实际更新前核对，不从旧测试目录推定。本次仅记录决定，未执行更新或启动。
+
+---
+
+## 2026-11-08 UI-RC2-01离线修复及rc.3准确候选已备好（未安装/启动）
+
+已按批准V0.1修正恢复空态和任务栏：无活动任务页复用现有功能中心/保留任务入口；恢复模式、旧零预览或无创建回调时禁用新建并移除handler，普通创建和任务选择/关闭保持。先RED再修复，源码46项和实际新归档69项定向检查通过；编译产物51项自有source map匹配、注册3个slot/0 RPC，完整bundle及固定App签名离线核验通过。没有新UI/接口或真实业务run。
+
+新private **0.1.0-rc.3／125成员**：归档 **b54454a5**／bundle **f03100c7**／控制器 **0398b0c8**。相对rc.2归档119成员不变，仅两UI源码、client.js/map及包/发行元数据6项变化；新元数据修正历史rc.1版本标识，旧包原字节保持。资源/许可/notice、11接口、scope、零预算及固定宿主保持；未运行新候选App或将旧原生证据移授。
+
+当前安装仍为rc.2的25f54985，revision15／ea5d5e2f及全部历史保持，未升级旧根。UI-RC2-01仅记**FIXED_OFFLINE_NATIVE_RETEST_PENDING**，rc.2原验收OPEN不重签。[回执](2026-11-08-m06-recovery-ui-gap-r1/execution-return.md)／[验证](2026-11-08-m06-recovery-ui-gap-r1/verification.json)。下一步按[具名范围](2026-11-08-m06-recovery-ui-gap-r1/next-offline-install-scope.md)进行该组合隔离安装与离线核对，保持旧release/控制快照和业务/会话字节；新包原生启停另办。无App/Host启动、真实调用/上传/费用、发送、投递、提交/推送/发布。以下历史完整字节保持。
+
+---
+
+## 2026-11-08 R5／P4 rc.2原生合成恢复主路径已验，保留UI缺口
+
+用户批准准确P4范围后，对25f54985 bundle／836f658e归档／6cc7d4f3控制器完成2次原生启动、2次菜单正常退出及其中1次重启；两次均code0/signal null，未追加启动或重试。原生界面恢复既有A任务；结果编辑草稿经关闭/重新打开保持，新增版本先未审再工程审核，无覆盖另存MD/回执，安全打开及固定审核资料仅放未发送对话草稿；重启后同任务/版本3、审核、回执/文件及未发送草稿恢复。旧文件变动与新文件匹配提示分别验证。
+
+同一synthetic run未重跑；业务revision10→15，新版本4392ed1e／警示7、9、11，不宜直接申请及专业/用户未接受保持。旧两版本、旧MD/sidecar和33项受保护原件保持。业务JSON由560f825e变为ea5d5e2f；第一/第二次退出逐字节一致。宿主A/B各登记一个无消息会话，workspace.json只有sessionIds/updatedAt变化、UUID/path保持，准确元数据事件已由官方只读接口核对；不声称Workspace文件原字节未变。
+
+保留**UI-RC2-01**：全关任务后的空态和任务栏仍显示可用外观的新建/导入入口；未点击禁止入口，后端同版拒绝证据复用，未现场改包。下一步先按已批准V0.1补齐现有禁用/已有任务引导及定向离线验证，再准备另版准确候选；新候选启动另办，不沿用本轮两次预算。[回执](2026-11-08-m06-rc2-native-r1/execution-return.md)／[UI观察及缺口](2026-11-08-m06-rc2-native-r1/ui-observations.json)／[验证](2026-11-08-m06-rc2-native-r1/verification.json)。本轮无真实调用/上传/费用、发送、投递、提交/推送/发布；原生合成恢复不代真实业务或专业/用户/发行接受。以下历史完整字节保持。
+
+---
+
+## 2026-11-08 R5／P3 rc.2同版安装与控制器接续已离线核验
+
+目标隔离根`.dsh-test/m06-native-business-recovery-20261108-r1`已由061d的rc.1顺序交接并升级到bundle **25f54985**／125成员归档 **836f658e**／控制器 **6cc7d4f3**。先验证新旧身份及完整载荷，再以maintenance＋JSON writer事务保全旧控制器/元数据并切换；新控制器执行既有离线升级。旧rc.1 release、receipt/profile及其他旧隔离根保持，未手工替换expected hash。
+
+交接、恢复策略及旧零模式最终19项定向测试通过，含自审发现的快照读取失败释放writer负例及修正；实际安装`--check`、实际安装业务实现＋官方Workspace/JSONL/Domain/JSON的两个独立SDK进程均通过。revision10／活动任务及业务JSON **560f825e**不变；35项受保护材料、125成员及gate/ownership/Node逐项匹配。启动规格／scope／六guard／live lease通过仅离线核对，没有spawn或Host apply。源码/归档原124项证据复用，不重建业务包或重跑夹具。
+
+[本轮回执](2026-11-08-m06-native-business-recovery-installed-r1/execution-return.md)和[验证](2026-11-08-m06-native-business-recovery-installed-r1/verification.json)给出完整身份及失败回退证据。仅完成P3；[P4准确组合原生范围](2026-11-08-m06-native-business-recovery-installed-r1/native-acceptance-scope.md)准备完成、尚未批准启动。无App/Host启动、模型/API/上传/费用、发送、投递、提交/推送/发布；SDK重读不等原生UI恢复或专业/用户接受。以下历史完整字节保持。
+
+---
+
+## 2026-11-08 R5原生业务恢复V0.1已批准并完成本地实现／离线验证
+
+用户明确同意V0.1。官方WorkspaceRegistry＋真实JSONL SessionPersistence＋installed Domain/JSON/writer的无App/Host装配及独立进程重读已验，A/B均由公开create取得UUID；未用测试get替代权威。原方案原字节保持，批准见[authorization](2026-11-08-m06-native-business-recovery-offline-r1/authorization.json)。
+
+已实现窄任务选择、11项服务端白名单、可信安装/租约/guard校验及独立无credentials/llm注入入口，复用结果页并冻结输入/生成/账户/导入；关闭重新打开及store冷载入有定向证据。受影响源码124项、实际归档124项及控制器策略/旧零模式9项通过，编译注册0 RPC；不等原生UI验收。
+
+新根`.dsh-test/m06-native-business-recovery-20261108-r1`内只形成一个明确派生synthetic run，工程修订再审和保存后由rc.2归档代码接续，record revision10/活动任务及业务JSON 560f825e在另一SDK进程保留；7/9警示、不宜直接申请和固定/当前文件区分保持。旧SDK run未重建；原固定15警示稿接受不移授。
+
+已交private本地0.1.0-rc.2／125成员归档836f658e；本根实际安装仍061d/a7cf的rc.1，**rc.2新bundle／控制器／安装组合尚未装配**。下一步先完成准确同版装配及控制器接续，再办理新组合原生范围；不直接用旧启动器启动新包。[完整回执](2026-11-08-m06-native-business-recovery-offline-r1/execution-return.md)保留失败/修正、实际hash及未验项，[验证](2026-11-08-m06-native-business-recovery-offline-r1/verification.json)另列。本轮无App/Host启动、真实调用、费用、投递、提交/推送/发布；单代理自审，非独立代码复审。以下历史完整字节保持。
+
+---
+
+## 2026-11-08 R5-01原生业务恢复最小方案V0.1已交（未实施）
+
+[方案V0.1](../business-baseline/m06-native-business-recovery-proposal-r1.md)完成任务选择、11项接口及本地写入边界设计。推荐独立受控恢复模式与新增窄task/select，复用现有结果页和修订/审核/保存服务；state/replace、生成、账户、导入及其他动作默认拒绝。原零预览四项白名单、旧061d/a7cf和冻结证据保持，方案尚未获准实施，不等原生恢复通过。
+
+本次静态核对确认：SDK runner的workspaceRegistry是测试get适配器，固定DSH公开create会分配UUID，故不能直接复制/改ID声称原生接续。方案要求先验证官方Registry的无App/Host离线装配，再通过公共服务在新权威Workspace下准备一个明确派生的合成夹具；旧completed run不重跑。该前置未验，不能自动换适配器、手写业务JSON或增加启动次数。
+
+已按新出现的P1108整体/本项目followup有界重读；保留并行中心和总计划修改，本轮只更新本方案、配套证据及两个状态入口。[读取/差异](2026-11-08-m06-native-business-recovery-proposal-r1/preflight.json)、[验证](2026-11-08-m06-native-business-recovery-proposal-r1/verification.json)。未修改产品、构建/安装、创建新根/业务数据、启动应用、真实调用、投递或发布。以下历史完整字节保持。
+
+---
+
+## 2026-11-07 项目总结与后续计划R5（仅规划）
+
+[R5计划](../plans/2026-11-07-project-summary-and-next-plan-r5.md)接续已完成的R4-01 SDK合成业务稿恢复及R4-02首发技术事实准备。0.1.0-rc.1／123成员、许可采用、隔离安装、原生只读预览和SDK修订再审/保存/冷重读证据直接复用；SDK记录activeTaskId=null尚未验UI选择/展示，不据此判定产品缺陷，也不将SDK证据扩成原生业务恢复或真实模型消费。
+
+下一步先交原生业务恢复最小方案，列公共任务选择、必要RPC与写入、固定审核版/当前文件差异、禁止真实派发及候选变化；必要设计按具体版本办理，再按准确范围做实现/离线装配和原生恢复。新公开资源真实业务、专业/用户接受及发行决定后续分别办理；PREP2源准入→三方贯通、格式和WorkBuddy独立推进。未实施本计划、启动应用、真实调用或发布；已定许可和固定稿接受不重问。
+
+[读取/差异](2026-11-07-project-summary-plan-r5/inputs.json)及[验证](2026-11-07-project-summary-plan-r5/verification.json)绑定本轮原字节和保全。以下旧完整字节保持。
+
+---
+
+## 2026-11-07 R4-01同版新根SDK离线业务稿恢复限定通过（未启动App）
+
+已按用户“继续下一步”执行准确恢复方案：原061d/a7cf组合旁置到新`.dsh-test/m06-rc1-business-recovery-offline-20261107-r1`，经真实DomainFacility/installed JSON/writer及公共业务服务形成一个synthetic run，完成修订再审/无覆盖保存，独立SDK进程冷重读同revision9/审核/回执，业务JSON SHA c911b85a前后不变。原七条警示及输入历史保留，修订九条警示与not_recommended_for_filing保持；跨项目/过期revision/重复保存拒绝，磁盘显式改动识别matchesReviewed=false，固定审核稿a18c7550/资料正文不变，未发送。
+
+初次运行器将修订版状态断言套到初稿ready_with_warnings，exit1原证据保留；核源码后仅接续既有completed run，无重新创建/派发。合成执行总计一次，后续三阶段0；各关闭后writer/provider可复取释放，最终新根controller --check exit0。新123、原rc1的123及旧134＋140成员/安装身份和22保护件保持；没有产品源码/资源/pin或旧Profile改动，未重建/重包。
+
+[SDK实际回执](2026-11-07-m06-rc1-business-recovery-r1/execution-return.md)与[发行技术事实接续](../release/m06-public-0.1.0-rc.1/BUSINESS-RECOVERY-R1.md)只接受该离线合成子集，不关闭原生业务恢复、完整F/R3-03、真实新业务/专业用户/法律复核或发布。当前零模式四项RPC不变；未启动App/Host、真实调用/上传/费用、源事务、投递、提交/推送/部署/发布。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 R4-01最小离线恢复方案及R4-02首发技术事实已交（未执行业务恢复）
+
+已完成[同版业务稿恢复最小离线方案](../business-baseline/m06-rc1-business-recovery-scope-r1.md)：准确a7cf/061d、拟用新根及公开自编样例、既有公共服务/DomainFacility/installed writer链、修订再审/无覆盖保存/SDK冷重读与授权差异均已固定。当前零生成四项RPC不含业务写入，方案不改guard或手写快照；本轮没有创建新根、业务稿或执行恢复，也不等原生业务UI恢复通过。
+
+[123成员技术事实](../release/m06-public-0.1.0-rc.1/TECHNICAL-FACTS-R1.md)、[当前RL01—09清单](../release/m06-public-0.1.0-rc.1/FIRST-RELEASE-CHECKLIST-R1.md)及逐成员JSON已交，未发送/发布；归档、安装c3和原解包123成员逐字一致，51自有map、17 Zod及准确许可原字节相符。只增归档外sidecar，tgz仍123成员，旧manifest和140采用处置不改。原142等测试直接复用，没有重包/构建/安装、应用启动、真实调用、源事务、投递、提交/推送/部署/发布。
+
+仅两个准备出口完成，实际SDK业务恢复、完整R3-03/F、同版真实业务/专业用户接受、独立法律复核和发布仍分别待办；旧受限稿接受及FAIL/UNKNOWN保持。[本轮回执](2026-11-07-m06-rc1-recovery-release-prep-r1/execution-return.md)记录准确读取、验证和原件保全。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 项目总结与后续计划R4（仅规划）
+
+[总结与后续计划R4](../plans/2026-11-07-project-summary-and-next-plan-r4.md)接续R3过时起点：固定M06稿MC01—04受限接受、准确许可正式采用、0.1.0-rc.1公开资源构建/旁置安装及061d3e6e／a7cf9a5d原生零生成预览均已具名交付。先准备同版业务稿恢复的最小离线方案及123成员首发技术事实；恢复/真实业务/发布分别满足对应范围，不用原生未发送草稿代业务revision恢复。PREP2机制复审复用，真实caller、源CI/F0/setup/F1/B/A及三方贯通仍按各自门；PDF和WorkBuddy独立，不阻本地首发。
+
+本轮仅总结/规划，应用保持退出；未重复业务测试/打包/安装、启动应用、真实调用、源事务、投递、提交/推送/部署/发布。两层current_followup仍S2-R1，GH1附加规划不产生发布许可；原R3、采用/接受、包/pin及FAIL/UNKNOWN保持。读取/hash与文档保全见[R4验证](2026-11-07-project-summary-plan-r4/verification.json)。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 0.1.0-rc.1原生零生成启停及M06只读预览限定通过，已正常退出
+
+用户已明确授权061d3e6e/a7cf9a5d组合原生零生成验收。新根两次实际App启动（PID88499/89560）、两次菜单正常退出均code0，中间按计划重启一次。八输入只读预览及两次材料准备成功，文本/本项目公开文件收据hash与准确输入一致；输入变化撤销确认与旧结果，关闭/重开和重启均不恢复预览输入/结果。原生未发送草稿标记恢复，未发送消息，不当业务revision恢复。
+
+新任务/导入/其他业务、来源/生成和账户动作保持禁用，缺前序警示open/未评估保留；未创建业务JSON。前/中/后自身controller检查及退出后writer/provider复取释放通过，最终App/目标进程/57619监听/双锁已释放。旧134＋140和本组合123成员、安装身份、UNKNOWN、受限稿、许可/公开范围及审阅原件保持；未重装/重包/改pin或依赖。
+
+[同版原生回执](../release/m06-public-0.1.0-rc.1/native-acceptance-r1.json)、[授权与实际操作记录](2026-11-07-m06-rc1-native-r1/execution-return.md)接续下方“未启动”历史。认证仅正常新根本地通道流程，未手填/迁旧认证或登录外部账户。当前仅本组合零生成预览/限定生命周期通过，完整R3-03、升级/业务恢复、真实生成/API、专业/用户业务接受、独立法律复核及发布仍分别待办；没有模型/API/上传/费用、投递、提交/推送/部署/发布。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 0.1.0-rc.1旁置隔离安装及同版离线核对完成，未启动应用
+
+已按用户准确授权将原a7cf9a5d/123成员候选安装到全新`.dsh-test/m06-public-installed-20261107-r1`，组合bundle为061d3e6e。沿固定Desktop/DSH/Sidebar/Cordis/Node/pnpm及checkpoint3；旧安装器因0.0.1固定值准确RED拒绝，仅在新副本派生一处rc1版本表，其他guard/lease/零预算不变，旧controller/expected未改。7修改、6新增、23排除仅限新c3/归档绑定/新控制器，其余27,158文件与14链接保留。
+
+实际安装、自身--check及安装模块/launch-spec只读回调均exit0；123成员逐字等于归档，7个Profile组件解析到新release，公开资源e06aa152与Zod4.4.3正确。实际安装客户端注册通过，51自有map/17Zod配对、RPC0；双writer锁与provider所有权释放，无业务JSON、未执行App/Host。旧134＋140共274成员及安装身份、UNKNOWN、受限稿、采用/审阅原件保持。
+
+[同版安装配对](../release/m06-public-0.1.0-rc.1/installation-r1.json)与[本轮回执](2026-11-07-m06-public-installed-r1/execution-return.md)接续下方“候选未安装”时点。未重建/重包，142归档检查按准确成员复用；没有复制旧Profile/认证、模型/API/上传/费用、WorkBuddy导入/投递、提交/推送/部署/发布。新组合原生启停/界面/升级恢复与真实业务仍未验；private和不启动限制保持。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 公开发行候选0.1.0-rc.1同版构建及离线验证完成，未启动或发布
+
+本轮按用户准确授权旁置生成0.1.0-rc.1/private候选，123成员归档a7cf9a5d。已采用的10件公开便携投影整合为独立资源0.1.3-public.1，容器e06aa152/manifest254a685f；原0.1.2/0.1.3 pin及主工作区原111件源/合同/patch保持。仅在发行副本的两处import显式接到新加载器；旧兼容/原混合容器、API基线及运行/评价/客户资料排除。
+
+实际归档解包141项定向检查通过，另1项合成消费证明旧内部确认被拒绝、新确认只合成派发一次且operator不进上下文。固定工具旁置构建、123成员逐件核对和编译客户端注册冒烟exit0；51件自有map输入等于归档源，17件Zod及MIT配对，RPC0。四类已排除旧资源入口准确拒绝，无回退；不据此声称全旧版本兼容。
+
+[发行候选与完整配对](../release/m06-public-0.1.0-rc.1/RELEASE.md)、[本轮回执](2026-11-07-m06-public-build-r1/execution-return.md)接续下方RL06未准备时点。本轮未安装/启动应用、真实调用/上传/费用、WorkBuddy导入/投递、提交/推送/部署/发布；旧安装身份、UNKNOWN、固定受限稿、原采用对象及审阅ZIP保持。新包原生UI/安装升级/恢复、真实业务和法律专业复核仍待，不移授旧接受。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 首发许可及准确范围已正式采用，保持未发布
+
+用户对许可5127ea77、140成员处置5e067f43明确答复：“正式采用本版及范围，暂不发布”。正式采用日期2026-11-07，许可方OasisIntWrite、代表人Tina D、联系TinaD.qd@outlook.com。RL04准确范围确认与RL05正式采用已闭合；独立法律专业复核仍未取得，RL09未授权/未发布。范围只沿原自有贡献选择及排除，不把全部140成员、第三方MIT、其他项目或未选工作流重新许可。
+
+[正式采用状态](../release/m06-first-release-r1/ADOPTION-STATUS.md)及[原话回执](2026-11-07-m06-license-adoption-r1/authorization.json)接续下方待采用时点；冻结文本、清单、21件审阅ZIP及原运行组合保持原字节。当前0.0.1/private及资源pin未改，公开运行版本/整合/构建与消费验收仍按RL06另办。未启动应用、真实调用、上传、投递、提交/推送、部署或发布。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 首发许可/公开范围/同版清单材料收口，待准确正式采用
+
+本轮已按用户要求完成可审材料：OasisIntWrite Community License 1.0定稿候选（正文九节与原草案逐字一致，补既定主体/代表人/邮箱、本批2026通知及拟采用日期）、5160c4e9/7aca55e9对应140成员的逐件处置、10件M06公开资源审阅投影及RL01—09清单。21成员审阅ZIP cadf07dc已核成员/CRC/hash；10正文逆转换精确回原，20个本机源定位符仅留内部映射，MIT与四件公开示例输入原字节保持。
+
+111件自有源码/合同/patch为准确范围选择项；20件兼容资源、2混合原容器、2构建及API/元数据内部保留；两份MIT及通知派生另列。审阅投影不是可运行包，未换业务资源/pin或给投影移授旧UI接受，当前0.0.1/private及原140内部归档不直接公开；没有新增工作流DSL、发布或真实调用。
+
+[具体采用候选与140清单](../release/m06-first-release-r1/ADOPTION-DECISION.md)、[同版首发清单](../release/m06-first-release-r1/RELEASE-CHECKLIST.md)、[本轮回执](2026-11-07-m06-release-closeout-r1/execution-return.md)已交。R3-02将正式采用交实际权利方/用户决定，准确文本/覆盖回执及独立法律复核仍未取得，不填造法律通过。原专业/用户受限稿接受、新组合原生限定验收、UNKNOWN及原字节保持；应用保持退出，未提交/推送、WorkBuddy投递、部署或发布。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 新组合M06只读预览原生零生成限定验收通过，已正常退出
+
+用户已明确允许7aca55e9/5160c4e9组合零生成验收。本轮实际进入M06八输入只读页，文本及本项目公开合成文件两次准备成功，收据hash与准确输入/文件一致；修改输入使旧结果及确认失效，关闭/重开及重启均不恢复预览输入。来源/生成/导入/任务写入与账户动作保持禁用，未创建业务存储文件；缺前序文稿警示保留。
+
+原生App两次启动、菜单正常退出均exit0，中间按计划重启一次；原生未发送草稿恢复，与预览内存分开。最终目标进程/57619端口/双启动锁释放，installed writer及provider可复取并释放；前/中/后冻结controller检查均exit0。原安装134成员、新安装140成员、归档/安装身份、UNKNOWN、固定审核稿及R3批准字节保持，未改依赖/资源/Profile配置，未重新安装或打包。
+
+[新组合原生验收回执](2026-11-07-m06-zero-preview-native-r1/execution-return.md)及[准确授权](2026-11-07-m06-zero-preview-native-r1/authorization.json)接续下方“未启动/待新包验收”，原记录原字节保留。此为零生成预览/准备和限定启停通过，完整R3-03、真实生成/API、业务revision恢复、正式许可/公开投影与发布仍分别待办；没有消息发送、真实调用/上传/费用、WorkBuddy导入/投递、源CI/B/A、提交/推送或发布。应用保持退出，后续回到同版首发许可/公开范围和发行清单收口。
+
+---
+
+## 2026-11-07 M06只读预览旁置安装候选已备，未启动应用
+
+用户“同意进行下一步”后，已将5160c4e9归档装配到全新隔离根`.dsh-test/m06-zero-preview-installed-20261107-r1`，新bundle为7aca55e9d5ccf7be21d20a3a33a7a02cbac256b7e725e69bca913ae03d624af5。固定Desktop/DSH/Sidebar/Cordis/Node/pnpm、checkpoint3及原controller/writer保持；相对原bundle19项修改、6项新增、0删除，全部限c3及新零生成archive/guard绑定，其余27,163文件和14链接不变。
+
+原冻结installer离线安装、新根自身controller --check及只构造launch-spec均exit0；140归档成员与实际安装字节、7个Profile组件解析同版，双writer锁及provider所有权已释放，无业务JSON。原1c5b/6f2f安装的134成员、UNKNOWN、固定审核稿及R3批准字节保持，未复制旧Profile/认证。新组合App/Host/UI未启动，完整R3-03不关闭；真实调用/费用、WorkBuddy导入/投递、提交/推送/发布未执行。
+
+[准确配对、命令与保全](2026-11-07-m06-zero-preview-installed-r1/execution-return.md)及[拟验范围](2026-11-07-m06-zero-preview-installed-r1/zero-generation-acceptance-scope.json)已交；新组合启动按V0.1原范围另办。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 M06只读预览V0.1已本地实现及离线验证，新包原生待验
+
+用户明确同意V0.1进入本地实现和离线验证。Host可信零模式打开视图内存预览，共享八输入/来源组件；确认材料读取后只走既有prepare，不创建任务或持久化预览。生成、导入、账户与任务写入保持受限，四项RPC白名单不变；项目移除/取消/晚到结果及独立入口早点击边界已修复并留RED证据。
+
+源码及实际新归档各139/139，编译客户端注册冒烟exit0。新140成员私有归档SHA256为5160c4e910018e71cdd3f46452a2cc80b1cab6aab810bd4ae23dc5b5a7a89785，未安装/启动。原1c5b/6f2f已安装c3的134个成员、UNKNOWN、固定审核稿、业务资源及R3批准字节保持。旧M06输入页实际失败及新包原生/视觉待验分别保留，不将离线通过记为完整R3-03/首发完成。
+
+下一步先旁置准备准确安装候选及配对清单，具体新组合的零生成启动另办；真实调用/费用、WorkBuddy导入/投递、提交/推送和发布未执行。[实施回执/命令与未验范围](2026-11-07-m06-zero-preview-r1/execution-return.md)；[本轮实施计划](../plans/2026-11-07-m06-zero-preview-implementation-r1.md)。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 现有隔离组合零生成启停已验，M06输入页仍未通过
+
+用户已明确允许现1c5b/6f2f组合零生成启停。冻结controller实际两次启动原生Desktop并菜单正常退出，均exit0；中间正常重启恢复workspace-a和未发送草稿，原生文件面板读到public-note.md原有及后加文字。两次退出后目标进程/端口已释放，安装writer/JSON provider可重新取得并释放，冻结controller前后check exit0；原合成UNKNOWN业务JSON及固定M06稿hash不变。未更换安装物、Profile、资源或依赖。
+
+实际M06入口点击后报“新版任务创建未完成，请核对项目后重试”，未进入八输入/准备页；已静态定位任务创建写入与零生成四项只读白名单冲突的实现路径，尚无该请求运行层错误码。不得记完整R3-03/业务UI通过；不靠放行写入或伪造任务绕过。原生启停/草稿证据不代M06业务revision恢复。
+
+用户声明权利来源/许可方为OasisIntWrite、代表人Tina D，已补录自有代码/Skill/工作流来源；第三方通知和正式采用/公开范围仍分别核。专业审阅人Tina D已明确接受MC01—04，用户仅接受为保留全部15条警示的受限草稿；not_recommended_for_filing保持。预算model/API/upload/payment均0，无发送/真实调用/上传/付款、WorkBuddy导入/投递、源CI/B/A、提交/推送或发布。[本轮回执](2026-11-07-m06-zero-app-lifecycle-r1/execution-return.md)。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 R3执行：WorkBuddy入口准备机制/目录及差异合同已交
+
+用户明确同意按[R3](../plans/2026-11-07-project-summary-and-remediation-plan-r3.md)继续执行。本轮绑定官方本地原生Skill准备路线、实施项目dsh-oasis及packages/oasis-workbuddy-user-entry，目标公开App元数据仍5.9.3；[采用记录](../../packages/oasis-workbuddy-user-entry/ADOPTION.md)及固定M06八输入/七输出/资源/权限费用/审核保存差异合同已交。中心仍10项目/45包/26依赖/11合同；组件不是内部会话桥接，另有10成员私有静态候选806dee0f；可导入性/模型行为未验证，未安装/运行/接受。
+
+R3-07前两项仅技术准备完成，第三项只完成静态候选及4项打包器测试，实际导入/行为/接受和其他R3任务未代勾。M06专业/用户、权利链/正式许可/公开投影待实际输入；应用启动、源CI/B/A、真实调用及发布范围仍未开放。没有改DSH源码、原资源/pin/安装物/业务存储、原R3批准hash或旧证据，未重复打包DSH候选或运行其旧产品测试。[本轮执行及复核](2026-11-07-workbuddy-m06-consumption-r1/execution-ledger.md)。以下旧完整字节保留。
+
+---
+
+## 2026-11-07 项目总结与问题解决已融合到后续计划R3（仅规划）
+
+当前本地M06已有结构修订、6f2f/1c5b已安装布局/writer及合成UNKNOWN保全；Fast39后台→DSH旧投影配对已在源码/实际归档合成范围修正。专业/用户接受、权利链/正式采用与公开范围、准确目标Host/UI、实际工作流/三方绑定及真实复测仍各按原条件办理，不能由工程绿色代签。
+
+R3逐项给出版本配对、审阅、公开投影、原生SDK/失败续接、旧投影、源准入与格式/第二Host及停止重复验证的解决措施，保留原38项范围。优先本地M06审阅及首发决定；Fast39、PDF和WorkBuddy独立接续。既有署名OasisIntWrite、联系TinaD.qd@outlook.com及许可草案边界不重开。当前未授权的应用启动、真实调用与发布不因新计划放行，已清除的自动目标不重建。
+
+[项目总结、问题与融合后续计划R3](../plans/2026-11-07-project-summary-and-remediation-plan-r3.md)；[本轮复核与保全](2026-11-07-project-remediation-plan-r3/verification.json)。以下旧完整字节保留。
+
+---
+
+## 2026-11-06 原R1/R2完成度核对与WorkBuddy官方机制准备
+
+已逐项核对原R1/R2的38项要求、10项审查重点及三层修复范围，整体仍未完成。原M06准确文稿/结构快照、PREP2十一冻结成员、新P5归档/实际配对内容均新鲜核对；已安装根自身controller --check exit0，仍选1c5b/6f2f，UNKNOWN记录与后续文件hash不变，双租约已释放。未重复生成、更新/回退或重刷业务测试。
+
+新增只读核查：WorkBuddy官方提供本地Skill导入及另行Connector规范，本机公开元数据5.9.3；机制/目录采用方案已询问，当前仍未绑定、未安装/启动或制作消费包。PDF仍受完整分发/profile/U1准入约束。专业/用户接受、权利链/正式许可采用、Host/UI、源CI/B/A、三方绑定和真实复测及发布保持各自缺件；不由准备证据关闭。
+
+证据：[完成度核对与后续缺件](2026-11-06-plan-completion-audit-r1/completion-audit.md)。
+
+## 2026-11-06 Fast39后台→DSH旧投影配对已修正（仅离线）
+
+后台旧正文含字段名前缀，与六输出output分开保全；已移除DSH错误等值假设，旧正文自身hash及六输出确定性显示的重读校验分别保留。源码与新138成员归档各193项受影响测试通过（exit0），含8项实际后台候选函数体→DSH合成配对。新包d2b9a4b7仅内部候选，实际绑定关闭；已安装M06的1c5b/6f2f组合保持，旧d80归档及历史证据不变。
+
+实际工作流候选/三方完整绑定、生产Python/依赖、Host/UI、专业/用户与权利许可接受仍未完成；未启动应用、真实调用或发布。后续按原R1/R2核对独立剩余项，不以旧安装或局部测试代替新包/完整业务验收。
+
+证据：[本轮配对回执](2026-11-06-fast39-projection-pairing-r1/execution-return.md)。
+
+## 2026-11-06 Fast39后台C4边界候选R1（仅离线函数体mock）
+
+复用Task0隔离目录，原七源码不变；另版candidate-r1仅改两个函数并新增纯收据模块。解析前同次响应字节、六输出保全、原保存/扣费对象及队列调用合同的21项测试通过（exit0），实际绑定默认关闭。生产Python/依赖及模块启动未验证，不代表真实资金、部署或三方贯通。
+
+已定位下一接续差异：旧后台正文含字段中文名前缀，上轮DSH要求旧正文与output直接相等的合成假设不适用。先纠正DSH配对并用实际候选handler响应离线验证；工作流原Outline旁路候选、正式绑定/G0和专业/用户/发布门仍开放。未启动应用、真实调用或发布。
+
+证据：[本轮回执](2026-11-06-fast39-backend-mock-r1/execution-return.md)（项目根相对路径）。
+
+## 2026-11-06 P5本地合成消费与持久化闭环已交
+
+[回执](2026-11-06-fast39-dsh-persistence-r1/execution-return.md)：新增fast39Result strict owner/错误矩阵/完整record容量与小收据失败保全，六输出及原收据不混同旧responseSha；显式捕获上下文与账户/Workspace/服务/原输入核对，默认应用未接入，也没有新RPC/查询/重派/资金动作。原repository+文件Domain替身关闭重读、冲突、磁盘失败、迟到和共享互斥均有定向证据；非原生SDK/已安装writer再验，专业/用户未接受。
+
+最终源码185项及实际137成员d80d归档源码185项通过，客户端另版隔离构建；首68d8归档/失败及旧6f2f原件保留。新档未安装/发行，当前1c5b仍旧目标。下一接R1任务4后台隔离mock，源CI/B/A、三端真实绑定/贯通/复测/G0及App/UI/许可/接受门保持，整体目标未完成；未启动应用、真实调用、投递、提交/推送或发布。[核验](2026-11-06-fast39-dsh-persistence-r1/verification.json)。以下旧完整字节保留。
+
+---
+
+## 2026-11-06 P5客户端校验及响应传输已实现限定增量
+
+[记录](2026-11-06-fast39-dsh-consumer-r1/execution-ledger.md)：新增C4本地registry/报告及来源定位/coverage/警示显示校验，原API适配保留六输出fragment；未绑定的新格式响应不得经legacy路径冒充completed，保留原提交检查点，重读后账户/origin核验保持。149项受影响测试通过，旧投影/包/原文/FAIL/UNKNOWN保持；仅客户端可得材料及报告自洽，不代原Outline、后台字节采集或专业接受。
+
+fast39Result owner、完整错误/evidence/全记录容量失败保全与持久化、实际交付绑定和三端贯通仍待；不标P5完成。1c5b安装物未换包，整体goal保持active。下一实质步骤为同合同的本地合成存储适配；未启动应用、真实调用、源CI/B/A、投递、提交/推送或发布。[核验](2026-11-06-fast39-dsh-consumer-r1/verification.json)。以下旧完整字节保留。
+
+---
+
+## 2026-11-06 P4新包配对与合成UNKNOWN安装更新场景已验
+
+[回执](2026-11-06-m06-p4-installed-update-r1/execution-return.md)：6f2f业务归档对应新1c5b内部安装bundle，新隔离根实际升级/回退及目标重选后为新目标active；604链接、唯一M06受控入口和57619/loopback配对保持。真实installed lease/DomainFacility/JSON后端经公共服务生成完整synthetic UNKNOWN，忙租约拒绝更新、业务字节及后加文件在升级/回退后保全、重读仍锁输入/新请求/同key不重派。初始合成1次、真实模型/API/Fetch0，双锁释放，安装guard3项/52endpoint拒绝通过；不代真实未知事务、App/UI或完整F接受。
+
+134成员候选处置及首发清单/技术事实已交；资格历史限定/本机指针公开展示、权利链/正式许可采用/发行版本、专业/用户和实际启停仍待。当前未启动应用、真实调用、源CI/B/A、投递、提交/推送或发布。原包/根/文稿/FAIL/UNKNOWN保持，[核验](2026-11-06-m06-p4-installed-update-r1/verification.json)后整体goal仍active，下一步独立核R2/P5本地适配；以下旧完整字节保留。
+
+---
+
+## 2026-11-06 P3源码与公共RPC修订链完成限定出口
+
+[回执](2026-11-06-m06-structured-revision-r1/execution-return.md)：M06可选T2/T4行替换已实现，保留冻结出处和before/after，既有正文编辑和零生成写入拒绝保持。最终归档6f2f16e7…的公开R2副本产生revision-02fe3575…／Markdown18250e4c…，经公共RPC工程再审、无覆盖保存、固定引用及关闭重读；原版、其他四表、12条open警示保持，新增提示后共15条，专业/用户待接受。源码70项＋归档3项guard测试及归档8步RPC链通过，无真实模型/网络派发。
+
+本次未启动App或替换c07f/db673f66旧安装，新UI/真实Host生命周期及最终安装更新待后续。商业授权联系邮箱已按用户答复登记为TinaD.qd@outlook.com，许可权利链/正式采用仍OPEN。[原计划21项审计](2026-11-06-m06-structured-revision-r1/goal-progress-audit.json)保持整体active，下一件P4准确新包配对和隔离UNKNOWN更新保全；旧FAIL/UNKNOWN、文稿、Profile及证据原字节保留。未真实调用、投递、提交/推送或发布。[验证](2026-11-06-m06-structured-revision-r1/verification.json)。以下旧完整字节保留。
+
+---
+
+## 2026-11-06 同版安装数据布局及writer接续限定完成
+
+[回执](2026-11-06-m06-native-zero-installed-r1/execution-return.md)：既有F controller生成新db673f66… bundle/隔离root/data安装状态与回执，c07f业务归档134成员保持、604链接同release、唯一M06受控Host与57619/loopback配对。真实双层writer lease与provider gate通过，第二进程writer/存储owner拒绝及释放重取成立，最终无锁；仅所有权metadata，没有业务后端/认证/会话迁移。19项控制器定向测试＋3项已安装guard测试通过，非白名单52条拒绝及业务/凭据/模型/Fetch零副作用证据按合成/实际范围分列。
+
+新installed候选runtime_ready仅指离线规格就绪，不是启动许可或Host/UI接受；本轮没有启动应用/监听端口、真实调用、投递、提交/推送或发布。原ordinary-root候选继续false，旧bundle/回执及FAIL/UNKNOWN原字节保持，产品结构修订、专业/用户、完整F与发行/许可门开放。[验证](2026-11-06-m06-native-zero-installed-r1/verification.json)另存；以下旧完整原始字节保留。
+
+---
+
+## 2026-11-06 P2完整Desktop离线配置与剩余writer条件
+
+[实际装配回执](2026-11-06-m06-native-zero-assembly-r1/execution-return.md)已补新Profile、复制App实际依赖锚点/Host-client同c07f归档、有效57619/loopback配置；604项链接与四次固定pnpm过程有证据，原App26160文件/14链接保持。完整Desktop准备层无旧裸boot/include两警告，旧报告不改。未启动应用/监听端口，不等运行/UI通过。
+
+实际存储provider还要求已安装root/data布局及writer租约，现普通root/home与启动锁不满足；负例按预期拒绝，原组件跨进程所有权拒绝/释放重取通过，仅新metadata，无业务数据库。候选仍runtime_ready=false；下一件沿原F bundle/controller/writer准备准确新组合，禁止伪造收据/nonce或绕过原件。未真实调用、写源CI/B/A、投递、提交/推送或发布；原FAIL/UNKNOWN、专业/用户、完整F及发行保持。[验证](2026-11-06-m06-native-zero-assembly-r1/verification.json)。以下旧原始字节完整保留。
+
+---
+
+## 2026-11-06 P1原生零生成本地实现/准备出口
+
+[回执](2026-11-06-m06-native-zero-generation-r1/execution-return.md)：独立零生成启动模式及受控Host RPC派发前拒绝已实现，源码30＋共同RPC/Fetch18项及新归档3项定向验证通过。新134成员tgz为c07f2120…，仅两件Host源码变化；旧c476归档/604链接证据保持，client/资源pin及现行许可不变。零生成子路径52项注册endpoint拒绝，凭据/模型准备/adapter/受控Fetch0，业务记录不变；正常模式回归使用合成adapter，不混称实际生成。
+
+候选runtime_ready=false，--check按预期拒绝，不是Host/UI或安装验收。下一件只补完整新Profile、App锚点/新归档配对、有效端口及独立writer的离线装配；未启动应用、真实调用、源CI/B/A、投递、提交/推送或发布。阶段5-G/H、完整F、专业/用户及最终发行门保持。[核验](2026-11-06-m06-native-zero-generation-r1/verification.json)另存，以下旧字节完整保留。
+
+---
+
+## 2026-11-06 后续计划R2导航（不新增业务接受）
+
+[项目总结与后续计划R2](../plans/2026-11-06-project-summary-and-next-plan-r2.md)承接同日审阅、许可草案、实际归档及隔离依赖/配置配对成果，明确实际Host/UI、产品内修订、专业/用户、最终安装/权利与发布仍开放。下一件先准备原生上下文零生成启动合同，不重刷PREP2、不将已有M06受控Profile选择当新缺陷；Fast39源准入与修复独立接续。本轮只更新规划导航，[复核/验证](2026-11-06-project-summary-next-plan-r2/record.md)不替代阶段5-G/H、完整F或发行接受。以下旧字节完整保留。
+
+---
+
+## 2026-11-06 现有受控装配澄清与新归档两层依赖配对
+
+[本轮回执](2026-11-06-m06-profile-archive-binding-r1/binding-return.md)澄清：已有最终Profile原本已选M06受控入口，不能从裸包默认根入口推定原安装有缺陷；原10月29日配置及8项身份沿原范围复用。本轮新建隔离安装依赖视图/Profile，以固定pnpm离线先锁后冻结物化597＋7项本地链接，604目标均匹配；实际DSH boot/include合成仍仅1个业务Host，插件ID不变，Host/客户端/bundle均指向同一c476b1f0…归档。原两项非业务patch警告保持。
+
+本轮实际新增的是隔离依赖/配置配对证据，未启动应用/Host或执行原生安装器，原Profile零写入；模型/API/凭据/外部Fetch、源登记/CI、投递、提交/推送/发布均无。实际运行/UI/安装恢复、专业用户/许可/发布仍开放。[验证](2026-11-06-m06-profile-archive-binding-r1/verification.json)保留准确锁、原件及状态旧字节，以下历史完整保留。
+
+---
+
+## 2026-11-06 本地实际归档与零生成入口验证接续
+
+[本轮实际归档及回执](2026-11-06-m06-offline-package-proof-r1/proof-return.md)：固定工具离线/ignore-scripts pack一次，134个归档成员与候选原字节相同，通知3件实际随附；tgz SHA256 `c476b1f091b483d4ca2342f68cccb350d4af217f6d916cd8e59866f1084690c5`。从该归档加载自身exports/固定资源，合成外部服务与已装SDK下5项检查通过，准备只读且模型准备/适配器/凭据/受控Fetch/run新增均0。
+
+AV01归档随件取得实证，AV02为归档入口/内存路由子证据，不是实际Host/UI/安装验收；普通默认入口未改，正式发行版本/完整许可/专业用户/安装恢复/发布仍OPEN。未构建/依赖或Profile安装、实际Host启动、真实调用、源登记/CI、投递、提交/推送或发布。[验证](2026-11-06-m06-offline-package-proof-r1/verification.json)及旧字节保全另存。以下旧字节完整保留。
+
+---
+
+## 2026-11-06 首发MIT通知随件与装配复核接续
+
+两份MIT全文及包级通知已实际加入本地业务包，files仅追加两项，原src/lib及其余元数据保持；[候选清点](2026-11-06-m06-notice-packaging-r1/local-package-candidate.json)为134件，RLS01本地随件完成，最终归档/权利闭包仍待核。默认根入口与M06受控subpath的实际差异及AV01—07后续验证范围见[装配复核](2026-11-06-m06-notice-packaging-r1/assembly-and-validation.md)，本轮不改默认接线或裁剪资源。
+
+社区许可仍草案；内容、专业/用户、最终包/安装、源准入及发布门保持。[执行记录](2026-11-06-m06-notice-packaging-r1/execution.md)与[验证](2026-11-06-m06-notice-packaging-r1/verification.json)保留实际输入/增量和原件。不构建/打包/安装/启动Host、真实调用、源登记/CI、投递、提交/推送或发布。以下旧字节完整保留。
+
+---
+
+## 2026-11-06 M06首发文件范围及事实准备接续
+
+[本轮范围与回执](2026-11-06-m06-release-scope-r1/review-return.md)已交131件当前声明清点、8载荷／2项资格定位、两项MIT全文通知审阅件、公开自编R2输入审阅件与12项技术事实。客户端map64来源均与当前源码相同，其中17项为Zod；这是现有构建来源子证据，不是最终包或安装通过。现有files含旧资源／目录，未直接裁剪；六载体保持PENDING_EXCLUDED，operator历史资格不进模型。
+
+RL04示例输入、RL05许可／通知及RL08事实准备均有本地可审出口；正式采用、逐包权利、专业／用户、最终包／安装和发布仍OPEN。PREP2复用，未写源登记／CI，未改业务源码、实际许可或Profile，无真实调用／构建／安装／投递／提交／推送／发布。[验证](2026-11-06-m06-release-scope-r1/verification.json)。以下旧字节完整保留。
+
+---
+
+## 2026-11-06 RL05统一许可草案接续
+
+用户明确要求起草统一覆盖有权授权的自有代码、Skill和工作流的 [OasisIntWrite Community License 1.0 草案R1](../business-baseline/oasisintwrite-community-license-1.0-draft-r1/LICENSE-DRAFT.zh-CN.md)。正常使用、成果商业交付、客户自控部署维护及免费功能服务允许；对外收费平台/API/商业托管功能另授权。RL05为“方向明确、草案已交；正式采用/法律主体与授权链/逐包权利闭包OPEN”。[边界与26项场景](../business-baseline/oasisintwrite-community-license-1.0-draft-r1/scope-and-review.md)和[本轮记录](2026-11-06-oasisintwrite-license-draft-r1/record.md)已另存；未替换现行许可/第三方通知，未发布，原M06内容、包/安装、PREP2与专业/用户门保持。以下旧字节完整保留。
+
+---
+
+## 2026-11-06 M06离线修订建议与首发配对接续
+
+[本轮回执](2026-11-06-m06-revision-release-prep-r1/revision-return.md)已交MC01／MC02修订建议及MC03逐项来源sidecar：权1保留原有延伸属性，权2的回退结论待论证，原12项警示保留。仅离线建议及拟采用表格视图，不是Host新保存／审核累计稿；原稿、快照和旧OPEN记录保持，专业／用户及产品内接入未接受。
+
+[首发准备](2026-11-06-m06-revision-release-prep-r1/release-inputs-r1.md)核得旧v3／v4所选10成员中3项与当前相同、7项不同，原包／安装子集仅按原范围复用；许可证／署名和最终发行包／安装配对仍OPEN。PREP2不重审或重跑；源治理／B／A、正式双来源G0、完整F／U1／D1与发行均未解除。本轮无真实调用、源登记／CI、代码修改、构建／安装／部署、投递、提交／推送／发布，旧字节及FAIL／UNKNOWN保留。[验证回执](2026-11-06-m06-revision-release-prep-r1/verification.json)。
+
+---
+
+## 2026-11-06 M06内容与首发准备、PREP2复审接续
+
+[本轮内容审阅](2026-11-06-m06-prep2-review/m06-content-review.md)与[首发清单](2026-11-06-m06-prep2-review/release-checklist.md)已完成可审出口；当前稿仍有MC01／02两项P2、MC03／P3及材料缺项，未签专业／用户接受或首发就绪。原稿、修订稿、快照、资源与原工程闭环保持。
+
+[PREP2复审](2026-11-06-m06-prep2-review/prep2-technical-review.md)认为四项MR修复在限定机制层可用，未发现新实现阻断；11成员／6项pin及实际原字节加载核对通过，复用原34项隔离测试。真实源治理／CI、F0／setup／F1及授权均未执行或形成，A制作、三层修复、正式双来源G0、完整F／U1／D1及发行继续开放。单代理另轮复审不称独立接受。
+
+本轮无真实调用／上传／费用、源登记／CI写入、业务或冻结代码更改、构建／部署／提交／推送／发布，原字节及FAIL／UNKNOWN保留。详见[本轮验证](2026-11-06-m06-prep2-review/verification.json)。以下旧字节完整留存。
+
+---
+
+## 2026-11-05 更新后Fast39/JTTI真实复测：调用与提取通过，内容partial，缺陷已定位
+
+用户本轮要求复测并明确“不限制预算”，已完成原公开R2的单次新请求（上传1／create 1／零重试），当前目录214／服务39，账户33／项目302。消费5343记录3元，余额219→216；JTTI run `5e374a6f-5a89-4472-aa82-dfc768b9b6c4`，36节点均成功、85934 tokens。实际文档提取6675字节与材料包同SHA256，开始节点User_input及server_key一致；正文未再出现旧补造结构，缺前序、锁止实现不足、无图像/实验及未评估警示保留，状态partial。已定位来源ID在六字段语义/合并→Outline之间丢失；锁止件由终版节点删除（核心/整合稿仍有）；Dify原始六输出经后台旧合同仅投影output，但本次组合正文保留警示。不能视为完整权利要求或正式双来源接受。见[本轮返回](2026-11-05-fast39-jtti-retest-return.md)。
+
+原文、消费回执语义副本、节点提示指纹/摘录和诊断已保全；节点整包下载被浏览器来源/下载权限检查拒绝，未绕过，不声称取得完整原始节点归档。隔离Desktop已停止、Profile原字节/固定pin恢复；本轮未修复产品/后台/工作流、未提交推送发布。旧R1/R2 FAIL及其历史根因未知保持，正式绑定、G0和专业/用户接受仍OPEN；新增预算授权不撤销UNKNOWN只观察原运行的约束。以下旧原字节后缀保留。
+
+---
+
+## 2026-11-05 Fast39既有运行取证R2：原服务端回执已核，节点证据访问受阻
+
+见[本轮返回](2026-11-05-fast39-existing-runs-return-r2.md)。已只读取得原消费5341/5342的workflow_log，按原server_key及时间绑定R1/R2；run_id分别360f4bab-92a2-4829-bfb9-0fb9b7166270、290ddaa9-9cbe-4def-a617-b34e624ebd0a，同原workflow_id。保存inputs与冻结请求一致（另有server_key）；原outputs均仅output，与本地失败原文去“生成内容: ”前缀后逐字一致，未见另有警示字段遭常规投影遗漏。文件提取/关键节点实际提示和输出仍缺：当前同名Dify应用所有时间日志为空，旧浏览器入口受客户端阻止，tokyo SSH超时、jtti SSH认证未通过。已请求现存节点导出路径或可用只读入口；不认定日志删除、不猜唯一根因，不修复或重跑。新增生成/模型/上传/create/付费均0；有只读页面请求，不能再称网络0。原FAIL、正式来源禁用与G0 OPEN保持，旧原字节完整留在下方。
+
+---
+
+## 2026-11-05 Fast39无费用链路核对：本地字段保全，远端根因未定
+
+按用户本次任务1范围完成只读核对，见[诊断返回](2026-11-05-fast39-chain-return.md)。R1/R2全部已提供材料、receipts和User_input在当前生产函数的内存序列化回放中完整保留；真实网络/上传/create/模型/费用均0。后台10月17日本地快照显示inputs整体转发、上传仅存文件，且结果按output_schema投影；不证明10月31日线上部署或实际材料解析。仍缺两原运行的接收/转发、文件下载/提取、关键LLM实际输入与原始outputs，不能唯一归因于解析、接线、生成或投影。任务1按事实/缺件出口交付，未决定或实施修复，不追加R3/Basic调用；原R1/R2 FAIL、正式来源禁用及G0 OPEN保持。原计划/源码/锁/Profile/既有证据不改，无提交推送发布。以下原字节完整保留。
+
+---
+
+> 2026-10-31 R2实际校准：已按新许可完成项目302的唯一一次Fast39 R2调用，上传1／创建1／零重试，报价3元、余额222→219。实际请求含冻结R2约束，返回仍补造配合槽、旋转/卡止机构、螺栓/销钉和0°至90°，缺项警示与来源说明仍缺，未见改善，工程校准FAIL，正式API与G0保持OPEN。原文已保存/原生打开及重启恢复，普通Profile与固定pin恢复；本地成果/完整未发送草稿及R1原文回执保持。停止追加付费调参，下一步先无费用核字段接收/转发。详见[本轮返回](2026-10-31-m06-fast39-r2-calibration-return.md)。
+
+> 2026-10-31 无费用接续：已在既有材料编码器追加独立R2语义/输出约束提案及纯响应检查；R1原函数、材料包和原FAIL保持。明确不得补造技术事实、要求非事实、逐项缺失警示及特征来源；格式齐全仍待来源审阅，不自动批准。实际失败正文与伪装标题反例回归通过，受影响合同86/86；网络/模型/上传/create/重试均0。普通Host/来源、远端服务、固定组合和Profile未改，正式API及G0仍OPEN，远端效果未验证。见[本轮返回](2026-10-31-m06-fast39-semantics-return.md)。
+
+> 2026-10-31 接续：已按明确授权完成材料包R1／项目302的唯一一次Fast39受限校准，报价3元、余额225→222，上传1次／创建1次／零重试。取得正文、无覆盖保存、原生打开及普通候选重启恢复；输出补造矩形截面、枢轴、接触面和平板滑块，材料一致性校准FAIL，正式新版API来源继续禁用、G0 OPEN。本地成功闭环、旧失败、完整未发送草稿及固定组合保持；临时入口已移除。此为受限API证据，非共同界面接入、专业/用户接受或远端项目持久化验收。详见[本轮返回](2026-10-31-m06-fast39-r1-calibration-return.md)。
+
+## 2026-10-31 新版M06本地工程闭环完成：一次新生成、修订再审、保存与引用恢复
+
+[本轮实际返回](2026-10-31-m06-public-r2-local-loop-return.md)：按用户新一次许可，公开R2经deepseek-official/deepseek-flash真实完成；新run `v340-d4fda3b7-6cf4-4191-b727-2f36827e8276`／requestKey `e7fc0b80-36a8-4e1c-a78d-fbafb694d4cd`，约85秒。原失败请求完整保留、未重试。工程审阅后加入范围说明，原版/审核保留，修订版回到待审并重新审核；Markdown和快照已无覆盖保存、哈希及累计MD读取验真、原生打开。固定审核版本已放入对话草稿且未发送，正常重启恢复版本/审核/文件/草稿，业务记录前后相同、revision20。模型仅新增1次，API/上传0，代码/日常/固定组合不变。仅受限工程闭环完成，专业与用户接受、Fast39及双来源G0仍OPEN；历史原字节后缀保留。
+
+---
+
+## 2026-10-31 单项凭据复用完成，R2元数据/重启及调用前检查通过
+
+[本轮返回](2026-10-31-m06-credential-reuse-return.md)：按用户明确授权，仅经DSH凭据服务复用日常已保存DEEPSEEK_API_KEY至独立R2，源resolve1、目标set1；日常凭据文件原字节、R2其他引用和既有账户/连接记录保持。临时入口已卸下，Profile原字节与固定pin恢复；原始入口重启后显示API密钥已配置，模型/材料核对通过并取消生成确认。原失败对象/requestKey、revision12、单项runOrder、三材料及账户33/302关联保持；模型/上传/create均0，不重试原请求。凭据阻塞解除，真实文字、Fast39与双来源/G0仍未验。未改业务代码、日常配置或固定组合，未提交/推送/发布；历史原字节后缀保留。
+
+---
+
+## 2026-10-30 凭据问题定位：日常模型已配置，独立R2未共享该引用
+
+[本轮排查](2026-10-30-m06-credential-reference-return.md)：日常Desktop2.0.18原生模型页明确显示DeepSeek API密钥已配置，home中有DEEPSEEK_API_KEY；校准R2 Desktop2.0.17的独立home没有该引用，原生SDK描述为false。不是空设置页判断，不要求重复配置；旧SDK仍展示模型目录不代表共享日常凭据。未发现同Profile引用错名，业务代码/固定组合未改。临时观察已卸下、R2 Profile原字节恢复；原请求不重试，模型/上传/create均0。仅复用这一已有模型凭据的方案已备，跨Profile访问尚待明确决定，尚未复制。302关联与历史失败保持；真实文字闭环及G0仍未完成。历史原字节后缀保留。
+
+---
+
+## 2026-10-30 无费用修复：302保存/重启恢复通过，本地凭据检查先行阻断
+
+[本轮修复返回](2026-10-30-m06-nofee-repair-return.md)：隔离入口绝对路径/file URL身份不一致导致原生设置覆盖项被跳过；仅统一同一源码入口名称，账户33/项目302已零文件保存并实际重启恢复。原生SDK凭据描述configured=false，新增生成确认前检查及安全失败码/失败页，未读取密钥，不再依据空编辑框判断。4项新增回归、16文件292/292及客户端构建通过；原run/requestKey、revision12、单次运行及三材料哈希保持，未重试、上传或新建生成。本轮费用动作0，未登录Dify/后台、未改日常或固定组合。旧失败无底层错误，历史原因/费用不追认；真实本地文字闭环、Fast39受限校准、双来源/G0仍未完成。历史原字节后缀保留。
+
+---
+
+## 2026-10-30 原生已登录；一次本地校准失败，项目读取修复而保存未确认
+
+[本轮实际返回](2026-10-30-m06-native-login-and-single-call-return.md)：账户33已在独立候选登录；按用户确认模型配置及公开R2一次授权实际提交，原runId `v340-1e49d8b0-1f88-4b09-9730-29dd97b50ded` 返回failed／EXECUTION_FAILED、无正文，原记录保留且未重试，提供方执行/费用不能据通用代码推断。不再以密钥编辑框空白判断未配置。修复独立入口设置owner读写，两个RED及119/119定向验证；实际六项目读取和302归属核对恢复。零文件关联提交无成功回执，随后只读未见当前关联，未二次提交；Fast39上传/create均0，3元额度未使用。任务1/2、真实文字闭环和G0仍未完成，不要求重登录、不进Dify/后台。历史原字节后缀保留。
+
+---
+
+## 2026-10-30 任务1/2单次授权已齐，独立窗口配置尚未就绪
+
+[本轮接续](2026-10-30-m06-tasks12-authorized-resume-return.md)：用户批准公开R2一次本地校准及材料包R1／项目302／一次不超过3元Fast39受限校准；未消耗。复核旧锁进程已不在、端口空闲后保留原锁并恢复同一R2窗口，公开草稿与零运行状态保持。现有workarea API重新返回Fast39同步／3元及项目302；网页已选302，原生账户仍显示登录表单，模型页未显示已配置凭据。已请求仅补该独立窗口配置，不重复索取费用授权。14源码身份与86已有文件保持；无新模型派发、上传、create或费用，任务1/2和G0未关闭；不访问Dify/后台、不改日常Profile。历史原字节后缀保留。
+
+---
+
+## 2026-10-30 新计划任务1/2：绑定缺陷已修复，真实运行待原生配置
+
+[本轮返回](2026-10-30-m06-workarea-tasks12-return.md)：修复目录211/详情39身份混用与生产项目归属校验，原生设置保留可选目录身份；未恢复绑定UI。新增显式M06/workarea账户关联入口及未采用的无损材料包方案。独立R2 Desktop2.0.17/DSH0.2.0-rc.2实际打开，公开三文件/四文本已保存并完成原生模型/材料核对，inputHash与R2冻结输入一致，runOrder=0。原生密钥为空，已请求在独立窗口配置及明确一次本地校准、材料包语义/项目302与一次最多3元方案；未收到即不派发。11文件122/122通过，原F只读check通过。真实生成、审核保存/引用恢复、线上绑定和G0仍未完成；无上传/创建/新费用、Dify/后台控制台或日常Profile改动。历史原字节后缀保留。
+
+---
+
+## 2026-10-30 workarea现有API已实读，PDF父进程组件已补
+
+[本轮返回](2026-10-30-workarea-pdf-integration-return.md)：workarea登录后的目录及Fast39/Basic46详情均已实际读取，未进入管理控制台。八输入映射仍缺前序/附图文件/要求材料字段；不塞进明确禁止正文的User_input，不要求候选1七字段JSON。新增PDF父进程限时、取消、有界收流与结果验真组件，回收失败锁住会话；9项新管道单元及既有API/绑定/prepare共46/46。实际启动器/完整分发/profile资格、U1/D1及权威归属仍缺，PDF正式入口与新版远程来源未开放，真实双来源/G0未完成。无上传/创建/费用、VM/实验扩展、固定组合或日常Profile变更；历史原字节后缀保留。
+
+---
+
+## 2026-10-29 API路线按用户纠正
+
+[纠正记录](2026-10-29-workarea-api-only-continuation.json)：本轮只登录workarea并消费现有后台API，不再以Dify/后台控制台认证或新建服务为前提。旧自拟合同候选保留未采用，实际映射/输出按API合同核对，原共用输入、归属/费用/UNKNOWN和审核门保持。当前只缺工作台登录态以继续在线核对；先前Dify登录请求作废，PDF状态不变，历史后缀保留。
+
+---
+
+## 2026-10-29 后台入口解阻，Dify认证待用户
+
+[访问记录](2026-10-29-m06-admin-access.json)已证实后台登录成功并从Fast39真实配置定位Dify服务器；Fast39字段/结果仍不匹配新M06，未修改或保存。实际Dify登录页已打开，需用户完成认证后续核应用/DSL/服务合同；不再重复索取后台地址。无真实生成/费用，正式来源与原PDF门保持，历史后缀原字节保留。
+
+---
+
+## 2026-10-29 PDF/M06组件实现接续
+
+[实现返回](2026-10-29-pdf-m06-implementation-return.md)记录有界解析、内核隔离/cgroup、解析器原件验证及M06合同适配组件。最终源码只回放原PDF与OOM两项，权限拒绝及256MiB OOM实际通过，VM已停止；定向检查通过。完整运行时分发/Host新编码及新版远程服务绑定未完成，U1/D1/G0继续OPEN，未启用正式来源，旧证据原字节后缀保持。
+
+---
+
+## 2026-10-29 PDF/API最小合同接续
+
+[API合同候选与PDF兼容接续](2026-10-29-pdf-api-minimal-return.md)已交：八输入独立编码/七输出及UNKNOWN等规则、后续提取v4预留；18项离线检查通过。未获得实际远程服务/绑定/提供方接受，未开放PDF或API来源；解析/执行/分发、U1/D1/G0仍缺，无新增容器实验或真实生成。旧证据/摘要和本文原字节后缀保持，作者自查。
+
+---
+
+## 2026-10-29 用户简化后的两个隔离用例通过
+
+[最小试验](2026-10-29-pdf-container-minimal-return.md)：公开PDF在256MiB/禁网/无主机bind下exit0、正文哈希一致；384MiB native分配触发OOMKilled/137。实际Lima/Alpine＋Docker子路径，不冒称Colima默认启动通过。VM已停止，无模型/API生成或费用；完整格式/严格读/no-exec/Host与双来源未验，U1/D1/G0保持，原历史字节保留。
+
+---
+
+## 2026-10-29 解阻R2：现服务与完整Profile覆盖层已核
+
+[本轮回执](2026-10-29-pdf-docx-g0-unblock-r2-return.md)记录用户完成网站登录后的Fast39/Basic46实际字段及本地退回包；无生成/上传/费用。已更正bare-bundle误判：现F Profile原已选择唯一M06受控Host、禁用真实提供方，新配置探针不算新增装配。硬资源的本地容器试验路线待用户决定，未安装或开放格式；原生模型/远程M06合同与实际请求范围仍缺，U1/D1/G0不关闭。旧记录原字节后缀保留，作者自查。
+
+---
+
+## 2026-10-29 PDF/DOCX与新版Flow-2-6准入接续
+
+[本轮返回](2026-10-29-pdf-docx-and-flow26-g0-return.md)完成固定provider15成员原归档比对，PDF/DOCX硬资源/访问/回收与最终装配缺件仍在，均未READY/U1/D1；DOCX特有缺件不作PDF前置。未来提取v3与当前M06 v3身份冲突已验证，未改冻结版本。独立公开R2经实际Workspace材料管理器/共同准备与8项定向检查，缺前序明示；无真实Host/模型/API或产物接受。API语义/项目绑定仍缺，新版双来源G0不关闭。作者自查，无源码/依赖/pin/旧证据改动；历史原字节后缀保留。
+
+---
+
+## 2026-10-29 M06差异与F恢复自身中断：保全/拒绝子集完成
+
+[本轮返回](2026-10-29-m06-f-intake-and-interruption-return.md)接续用户“进行1和2”：M06 0.1.3的8资源/2资格附件、七输出schema和R47五采用文件核对保持，49项定向通过；新版API八输入/结果/项目绑定仍未具备。F26当前0.1.11仅阶段6文稿试行，候选原0.1.9绑定及六载体/18UID排除不变，不自动升级。后台R6隔离技术交付与本主目录采用/业务服务分开；需求按角色列出，未发外部消息。
+
+F恢复自身五中断点在新公开夹具以工具/内置Node各5/5通过，相关五测试文件各27/27通过。实际SIGKILL后公开业务字节与before-image保留，四类writer回调0；部分状态仍可预览取消，marker删除或结果写入后的死锁对仍拒绝写入。仅完成保全/拒绝诊断，**自助续恢复、完整F/G/H与阶段6不关闭**。单代理作者自查，无产品源码/依赖/pin改动、实际Desktop/Installer、真实模型/API/费用或提交推送发布；旧证据后缀保持。
+
+---
+
 ## 2026-10-29 F普通用户持久恢复与R3原生生命周期：Max接受A01-R2子集
 
 本轮新增安装根内独立恢复入口、原发布回执/计划绑定和中文明确确认，原固定runtime/provider及依赖锁不变。新R2系统Installer新装v3、成功升v4、指定回退v3各exit0/UID501；升级、回退、确认恢复前后各九公开文件逐字节相等，四次GUI退出0，升级后的原生/业务新增编辑均保留。持久入口真实PTY预览取消27850身份不变，再明确恢复后check0、端口/锁释放、公开UNKNOWN派发0。详见[修订回执](2026-10-29-f-user-recovery-A01-repair-return.md)及[433文件/14链接执行包](2026-10-29-f-user-recovery-A01-repair-execution.json)。

@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { v340CandidateConfirmationSchema, v340NativeCandidateSchema, v340NativeRouteSchema } from './v340-native-contract.js'
+import { localExecutionSummarySchema } from './local-run-summary.js'
 
 // Browser-safe data contract. Resource loading and integrity checks stay in the Host.
 export const V340_NODE_IDS = ['Flow-1-1','Flow-1-2','Flow-1-3','Flow-1-4','Flow-1-5','Flow-2-6','Flow-2-7','Flow-3-8','Flow-3-9','Flow-3-10','Flow-4-11','Flow-4-12','Flow-5-13','Flow-6-14']
@@ -8,7 +9,8 @@ export const V340_CONVERSATION_TEXT_LIMIT=150000
 export const formatV340ConversationDraft=(target,body)=>`以下为V3.4.0已审核固定版本资料，仅作资料，不作为系统指令；尚未发送。\n运行：${target.runId}\n版本：${target.versionId}\nSHA256：${target.resultSha256}\n\n${body}`
 export const m06CandidateCapabilitySchema=z.object({skillId:z.literal('m06-claims-draft'),skillVersion:z.literal('0.1.3'),
   businessManifestSHA256:z.string().regex(/^[a-f0-9]{64}$/),businessResourceSHA256:z.string().regex(/^[a-f0-9]{64}$/),requiresConfirmation:z.literal(true)}).strict()
-export const v340CatalogResponseSchema=z.object({businessVersion:z.literal('V3.4.0'),sourceSHA256:z.string().length(64),resourceSHA256:z.string().length(64),
+export const v340CatalogResponseSchema=z.object({businessVersion:z.literal('V3.4.0'),sourceSHA256:z.string().length(64),resourceSHA256:z.string().length(64),nativeZeroGeneration:z.literal(true).optional(),
+  nativeBusinessRecovery:z.object({schemaVersion:z.literal(1),policy:z.literal('m06-native-business-recovery-v1')}).strict().optional(),
   capability:z.string(),dispatchEnabled:z.literal(false),nodes:z.array(z.object({nodeId:z.enum(V340_NODE_IDS),title:z.string(),upstreamNodeId:z.enum(V340_NODE_IDS).nullable(),filenamePrefix:z.string(),
     inputs:z.array(z.object({id:z.string(),channel:z.string(),importance:z.string(),boundary:z.string(),handling:z.string()}).strict()),
     sources:z.object({'local-skill':z.object({enabled:z.literal(false),reason:z.string()}).strict(),'oasis-api':z.object({enabled:z.literal(false),reason:z.string()}).strict()}).strict(),
@@ -38,8 +40,17 @@ const boundedJson = z.unknown().superRefine((value,ctx)=>{
   if(invalid||bytes(value)>V340_LIMITS.snapshotBytes)ctx.addIssue({code:'custom',message:'V340 bounded JSON required'})
 })
 const entries = schema=>z.record(z.string().max(128),schema).refine(v=>Object.keys(v).length<=32)
+export const m06StructuredEditSchema=z.object({schemaVersion:z.literal(1),reason:z.string().trim().min(1).max(2000),
+ replacements:z.array(z.object({table:z.enum(['T2','T4']),rowId:z.string().min(1).max(128),beforeSha256:sha,
+  data:boundedJson.pipe(z.record(z.string().max(128),z.json()).refine(v=>Object.keys(v).length<=64)),
+  sources:z.array(z.object({inputId:z.enum(['disclosure_file','disclosure_text','drawings_file','drawings_text']),sourceSha256:sha,
+   quote:z.string().min(1).max(300000).refine(v=>!v.includes('\0')),start:z.number().int().min(0).max(300000),end:z.number().int().min(1).max(300000)}).strict()).min(1).max(16)
+ }).strict()).min(2).max(16)}).strict().refine(v=>bytes(v)<=65536,'M06 structured edit exceeds byte limit')
 export const v340DraftSchema=z.object({source:z.enum(['local-skill','oasis-api']),textInputs:entries(z.string().max(300000)),filePaths:entries(z.string().min(1).max(1024)),configuration:entries(boundedJson)}).strict()
   .refine(v=>bytes(v)<=V340_LIMITS.snapshotBytes,'V340 draft exceeds byte limit')
+export const v340ReadonlyPrepareSchema=z.object({workspaceId:v340Id,nodeId:z.enum(V340_NODE_IDS),confirmed:z.literal(true),textInputs:entries(z.string().max(300000)),filePaths:entries(z.string().min(1).max(1024)),configuration:entries(boundedJson)}).strict().refine(v=>bytes(v)<=V340_LIMITS.snapshotBytes)
+export const v340ReadonlyPreparedSchema=z.object({evidenceKind:z.literal('input-preparation'),dispatchEnabled:z.literal(false),businessVersion:z.literal('V3.4.0'),workspaceId:v340Id,nodeId:z.enum(V340_NODE_IDS),
+ sources:boundedJson,prepared:boundedJson.pipe(z.object({nodeId:z.enum(V340_NODE_IDS),values:z.record(z.string(),z.json()),receipts:z.record(z.string(),z.json()),warnings:z.array(z.json()),upstream:z.json().nullable(),inputHash:sha}).strict())}).strict()
 const resultSchema=z.object({body:v340DocumentBodySchema,fileName:z.string().min(1).max(255),sha256:sha,snapshot:boundedJson}).strict()
 const savedFile=z.object({relativePath:z.string().min(1).max(1024),sha256:sha,mediaType:z.enum(['text/markdown','application/json'])}).strict()
 export const v340SavedRecordSchema=z.object({writebackId:v340Id,artifactId:z.string().regex(/^sha256:[a-f0-9]{64}$/),relativeDirectory:z.literal('.'),
@@ -70,11 +81,12 @@ const inputSchema=z.object({workspaceId:v340Id,taskId:v340Id,runId:v340Id,workfl
 export const v340RunSchema=z.object({schemaVersion:z.literal(1),runId:v340Id,workflowRunUid:z.string().uuid(),requestKey:v340Id,
   workspaceId:v340Id,taskId:v340Id,nodeId:z.enum(V340_NODE_IDS),source:z.enum(['local-skill','oasis-api']),evidenceKind:z.enum(['synthetic','native-model-candidate']),nativeCandidate:v340NativeCandidateSchema.optional(),
   inputSchemaVersion:z.literal('v340-1'),inputSnapshot:inputSchema,inputSha256:sha,
-  status:z.enum(['prepared','completed','failed','unknown']),failureCode:z.enum(['INTERRUPTED','ABORTED','EXECUTION_UNCONFIRMED','INVALID_OUTPUT','EXECUTION_FAILED']).nullable(),
+  status:z.enum(['prepared','completed','failed','unknown']),failureCode:z.enum(['INTERRUPTED','ABORTED','EXECUTION_UNCONFIRMED','INVALID_OUTPUT','EXECUTION_FAILED','MODEL_UNAVAILABLE','MODEL_LIMITED']).nullable(),
   result:resultSchema.nullable(),resultDraft:editDraftSchema.nullable(),resultDrafts:z.record(v340Id,editDraftSchema).optional(),
   coreResultDrafts:z.record(v340Id,coreDraftSchema).optional(),
   resultVersions:z.array(versionSchema).min(1).max(8).optional(),activeVersionId:v340Id.optional(),
   reviewStatus:z.literal('not-reviewed'),createdAt:time,completedAt:time.nullable(),
+  executionSummary:localExecutionSummarySchema.optional(),
 }).strict().superRefine((run,ctx)=>{
   if((run.evidenceKind==='native-model-candidate')!==Object.hasOwn(run,'nativeCandidate')||run.evidenceKind==='native-model-candidate'&&(run.source!=='local-skill'
     ||run.nativeCandidate?.version==='v340-native-candidate-1'&&run.nodeId!=='Flow-2-6'
@@ -106,6 +118,7 @@ export const v340TaskStateSchema=z.object({schemaVersion:z.literal(1),businessVe
 export const hasPendingV340Run=task=>Object.values(task?.v340?.runs??{}).some(run=>['prepared','unknown'].includes(run.status))
 const command={workspaceId:v340Id,taskId:v340Id,expectedRevision:z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER)}
 export const v340Commands=Object.freeze({
+  'task/select':z.object({...command}).strict(),
   'candidate/prepare':z.object({...command,sessionId:v340Id,confirmed:z.literal(true)}).strict(),
   'candidate/run':z.object({...command,requestKey:v340Id,candidate:v340CandidateConfirmationSchema}).strict(),
   'task/create':z.object({...command,nodeId:z.enum(V340_NODE_IDS),title:z.string().trim().min(1).max(200)}).strict(),
@@ -115,7 +128,7 @@ export const v340Commands=Object.freeze({
   'result/draft':z.object({...command,runId:v340Id,baseSha256:sha,body:v340DocumentBodySchema.nullable(),format:z.literal('core-markdown').optional()}).strict()
     .refine(c=>c.format!=='core-markdown'||c.body===null||!c.body.includes('\0')),
   'run/create':z.object({...command,requestKey:v340Id,candidate:v340CandidateConfirmationSchema.optional()}).strict(),
-  'result/edit':z.object({...command,runId:v340Id,versionId:v340Id,baseSha256:sha,draftSha256:sha,requestKey:v340Id}).strict(),
+  'result/edit':z.object({...command,runId:v340Id,versionId:v340Id,baseSha256:sha,draftSha256:sha,requestKey:v340Id,m06Structure:m06StructuredEditSchema.optional()}).strict(),
   'result/review':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha,confirmed:z.literal(true)}).strict(),
   'result/prepare-save':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha}).strict(),
   'result/commit-save':z.object({confirmationToken:z.string().min(1).max(512)}).strict(),

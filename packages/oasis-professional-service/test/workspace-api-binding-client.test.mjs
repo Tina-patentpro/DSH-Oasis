@@ -38,3 +38,10 @@ test('late detail after invalidation is discarded and not assigned to another pr
   h.changeWorkspace(); h.controller.invalidate(); release(h.detail)
   await job; assert.equal(h.controller.getSnapshot().detail, null)
 })
+
+test('binding controller keeps catalog and detail ids separate without restoring any settings UI',async()=>{
+  const h=harness();h.detail.id=39
+  await h.controller.read();await h.controller.selectService('claims');h.controller.selectFolder('3')
+  await h.controller.confirm(true)
+  assert.equal(h.calls[1].catalogEntryId,2);assert.equal(h.calls[1].apiId,39)
+})

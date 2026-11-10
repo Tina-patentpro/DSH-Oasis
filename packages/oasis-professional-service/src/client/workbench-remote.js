@@ -17,7 +17,7 @@ import {
 } from '../workbench-contract.js'
 import { claimsApiPreparationSchema, claimsApiPreviewSchema, workspaceBindingReadSchema, workspaceBindingSavedSchema } from '../claims-api-execution-contract.js'
 import { accountStatusSchema } from '../oasis-account-contract.js'
-import {v340Commands,v340CatalogResponseSchema,v340CandidatePreviewSchema} from '../v340-runtime-contract.js'
+import {v340Commands,v340CatalogResponseSchema,v340CandidatePreviewSchema,v340ReadonlyPrepareSchema,v340ReadonlyPreparedSchema} from '../v340-runtime-contract.js'
 
 const CHANNEL = '/oasis-workbench'
 
@@ -63,6 +63,12 @@ export function createWorkbenchRemote(connection) {
 
   return Object.freeze({
     async getV340Catalog(signal){return unwrap(await call(CHANNEL,'workflow/v340/catalog',{},signal),v340CatalogResponseSchema)},
+    async prepareV340(payload,signal){
+      const input=v340ReadonlyPrepareSchema.parse(payload)
+      const result=unwrap(await call(CHANNEL,'workflow/v340/prepare',input,signal),v340ReadonlyPreparedSchema)
+      if(result.workspaceId!==input.workspaceId||result.nodeId!==input.nodeId||result.prepared.nodeId!==input.nodeId)throw new WorkbenchRemoteError('malformed-response','只读准备身份不一致',{})
+      return result
+    },
     async prepareV340Candidate(payload,signal){
       const input=v340Commands['candidate/prepare'].parse(payload)
       const result=unwrap(await call(CHANNEL,'workflow/v340/candidate/prepare',input,signal),v340CandidatePreviewSchema)

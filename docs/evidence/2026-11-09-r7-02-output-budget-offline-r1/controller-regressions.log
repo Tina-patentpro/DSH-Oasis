@@ -1,0 +1,44 @@
+✔ recovery launch spec carries exclusive zero-real policy and does not launch App (158.778792ms)
+✔ recovery installation rejects budget (37.732083ms)
+✔ recovery installation rejects guard drift (40.093708ms)
+✔ recovery installation rejects mixed mode (44.469083ms)
+✔ recovery installation rejects foreign root (40.839375ms)
+✔ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (180.990125ms)
+✔ native M06 preparation rejects second model request (39.06075ms)
+✔ native M06 preparation rejects API budget (42.516458ms)
+✔ native M06 preparation rejects foreign root (93.767875ms)
+✔ native M06 preparation rejects foreign endpoint (28.171625ms)
+✔ native M06 preparation rejects provider retries (24.645958ms)
+✔ native M06 preparation rejects output above scope (22.931708ms)
+✔ native M06 preparation rejects another model provider (21.192666ms)
+✔ native M06 preparation rejects mixed recovery (21.351542ms)
+✔ native M06 preparation rejects guard drift (26.810917ms)
+✔ v2 materializes Low and 16384 with no retry policy change in an offline install fixture (116.246667ms)
+✔ v2 rejects unsanctioned output budget (21.375375ms)
+✔ v2 rejects provider output mismatch (21.828709ms)
+✔ v2 rejects SDK retries (23.746458ms)
+✔ v2 rejects High Profile default (25.587959ms)
+✔ v2 rejects duplicate Profile default (21.49725ms)
+{"root":"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/tmp/f-install-unit-dcCEfb/installed","current":"63a428eed733900c1dca3b1b21f2c35714a2ca13403f44a7b607a8205ca0772a","pid":69856,"prefix":"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/tmp/f-install-unit-dcCEfb/installed/data/evidence/installed-launch-140d58a9-2527-45fc-b2b3-2ed47e92d79a"}
+✔ installed zero spec uses sealed prepared Profile and live writer without spawning App (237.76225ms)
+✔ installed zero policy rejects nonzero budgets and incorrect guard bindings before creating root (45.437208ms)
+✔ installed zero policy rejects rehashed wrong guard before creating root (37.184708ms)
+✔ Desktop preparation failure leaves recovery refusal and releases maintenance lease (73.213625ms)
+{"root":"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/tmp/f-install-unit-LM6EZr/installed","current":"6c6abdbdd709e869cf35ff013cd6d1a1dfb64fff522fa9adbbdc473d1bb4d864","pid":69857,"prefix":"/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/r7-02-output-budget-20261109-r1/controller-tests/tmp/f-install-unit-LM6EZr/installed/data/evidence/installed-launch-74df46e9-f356-4271-b164-136fea30a9bb"}
+✔ fresh installation verifies signatures, materializes only at final paths and carries standalone control (100.899333ms)
+✔ Desktop resolves client modules from the installed release rather than the data-only directory (134.303792ms)
+✔ installed same-root upgrade then explicit rollback preserve later public edits and UNKNOWN (256.570833ms)
+✔ four installed writers and maintenance refuse busy before callbacks; old current is not guessed (93.45775ms)
+✔ package drift refuses before installation and pnpm failure restores the existing current (125.861667ms)
+✔ installation data aliases and controller drift fail closed before callbacks (60.702666ms)
+✔ a correctly rehashed bundle still cannot enable model plugins or bind a component outside its payload (16.452916ms)
+✔ failure after active Profile replacement restores old bytes; failed restore leaves explicit recovery refusal (128.056583ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 959.251792
+Exit: 0

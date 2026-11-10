@@ -1,0 +1,64 @@
+{
+  "recordedAt": "2026-11-10T11:47:38.302136+08:00",
+  "status": "R7_02_REAL_BODY_CONTRACT_PASSED",
+  "runId": "v340-89dd69c1-be05-4fca-bea0-a63dd2c5908d",
+  "requestKey": "dfbd6190-9d0f-4e85-9dbd-30e7247953fc",
+  "runCreatedAtUTC": "2026-11-10T03:44:50.136Z",
+  "runCompletedAtUTC": "2026-11-10T03:46:05.957Z",
+  "result": {
+    "status": "completed",
+    "runId": "v340-89dd69c1-be05-4fca-bea0-a63dd2c5908d",
+    "reviewStatus": "not-reviewed",
+    "resultFileName": "claims_20261110114450_89dd69c1.md",
+    "bodySHA256": "76edc895aa38614942860c5cf8fda861a542e3cb377f462b06dcbde206a00442",
+    "bodyBytes": 57201,
+    "originalV340ResultContract": "accepted",
+    "stateIntegrity": "validated using installed rc.5"
+  },
+  "executionSummary": {
+    "finishKind": "stop",
+    "usage": {
+      "inputTokens": 732,
+      "outputTokens": 12871,
+      "totalTokens": 60579,
+      "cacheReadTokens": 46976
+    }
+  },
+  "feeAmountKnown": false,
+  "realCallsUsed": 1,
+  "realCallsRemaining": 0,
+  "generalTestsUsedIncludingThisValidation": 2,
+  "generalTestAllowanceRemaining": 8,
+  "profileByteIdentical": true,
+  "protectedPathsChecked": 48,
+  "changedProtectedPaths": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/sessions/--Users-tinadong7036-Documents-~5F00~53D1~9879~76EE-DSH-Oasis-.dsh-test-m06-native-business-recovery-20261108-r1-data-workspace-b--/session-be573ee0-ae7a-4d40-99d5-d607f6106786/session.v4.jsonl.zstd",
+      "beforeSHA256": "a4602aaf441b57a82b2db49acd4da3321d77f6aaec3a4ef70d59287fa14153dd",
+      "afterSHA256": "c3e9c7ed6059567accf323bac217d7afe955f0953f6dd8b225573007a704d170"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/storages/oasis_workbench.json",
+      "beforeSHA256": "fc225f6b49dde37bac2b87bbe2222e18136986202156175e010484d25bab93d1",
+      "afterSHA256": "25f0a6fba93227c83de58316e8e3a546cc71b21114e96d79484f5df37d9a1377"
+    }
+  ],
+  "originalBusinessBytesReproducedByRemovingThisRunAndItsMetadata": true,
+  "workspaceRevisionBefore": 84,
+  "workspaceRevisionAfter": 86,
+  "installCheckExit": 0,
+  "normalAppExitCode": 0,
+  "launchReceipt": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/evidence/installed-launch-09a6398e-f7c0-4130-8e8c-08ccb3100fd9.json",
+  "launchReceiptSHA256": "f917f4c3d88cf0dbd280a09965ac4a2bcdee763008d8300ad96efda965872336",
+  "exitReceipt": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/evidence/installed-launch-09a6398e-f7c0-4130-8e8c-08ccb3100fd9.exit.json",
+  "exitReceiptSHA256": "68276ad78b5d45781179a3175b8ffb02bd333e097539d0d3db5321f6000adc52",
+  "businessStore": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/storages/oasis_workbench.json",
+  "businessStoreSHA256": "25f0a6fba93227c83de58316e8e3a546cc71b21114e96d79484f5df37d9a1377",
+  "draftLocation": "Existing B task in app, pending review; no standalone file saved",
+  "evidenceSHA256": {
+    "execution-preflight.json": "284ada58690afe8011d2e515914025f5d5ebdf86124c72a45dca49847a3e2984",
+    "dispatch-intent.json": "eb2511595cdccf41ffd50f00c252bf4226b5167f2b7bddc6aae3e7ade40c5121",
+    "dispatch-receipt.json": "fea07b12713465ad6c3ada289b9d3bbff7604cee90587efa6c8e8da327856e30",
+    "result-contract-verification.json": "aad432e9244bbe58e3ae49c555d60d3d3108ee46af8fd6cbe76b686f607dd118"
+  }
+}
