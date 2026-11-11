@@ -1,7 +1,7 @@
 import { importCommands, importResponses, IMPORT_PROTOCOL_VERSION } from '../website-import-contract.js'
 import {
   savedFileResponseSchema,
-  v340ConversationDraftResponseSchema,v340SavedFileResponseSchema,
+  v340ConversationDraftResponseSchema,v340SavedFileResponseSchema,v340FilePreviewResponseSchema,
   localGenerationPreviewSchema,
   conversationDraftResponseSchema,
   oasisProfessionalBootstrapSchema,
@@ -18,6 +18,9 @@ import {
 import { claimsApiPreparationSchema, claimsApiPreviewSchema, workspaceBindingReadSchema, workspaceBindingSavedSchema } from '../claims-api-execution-contract.js'
 import { accountStatusSchema } from '../oasis-account-contract.js'
 import {v340Commands,v340CatalogResponseSchema,v340CandidatePreviewSchema,v340ReadonlyPrepareSchema,v340ReadonlyPreparedSchema} from '../v340-runtime-contract.js'
+
+import { isCurrentClaimsCandidate } from '../local-skill-suites.js'
+import { localSkillPreferenceSchema } from '../local-skill-preference-contract.js'
 
 const CHANNEL = '/oasis-workbench'
 
@@ -62,6 +65,13 @@ export function createWorkbenchRemote(connection) {
   }
 
   return Object.freeze({
+    async getLocalSkillSuite() {
+      return unwrap(await call(CHANNEL, 'skill-suite/get', {}), localSkillPreferenceSchema)
+    },
+    async setLocalSkillSuite(suite) {
+      const value = localSkillPreferenceSchema.parse({ suite })
+      return unwrap(await call(CHANNEL, 'skill-suite/set', value), localSkillPreferenceSchema)
+    },
     async getV340Catalog(signal){return unwrap(await call(CHANNEL,'workflow/v340/catalog',{},signal),v340CatalogResponseSchema)},
     async prepareV340(payload,signal){
       const input=v340ReadonlyPrepareSchema.parse(payload)
@@ -81,7 +91,7 @@ export function createWorkbenchRemote(connection) {
       if(result.current.workspaceId!==input.workspaceId)throw new WorkbenchRemoteError('malformed-response','候选项目身份不一致',{})
       if(result.committed){
         const run=Object.values(result.current.tasks[input.taskId]?.v340?.runs??{}).find(r=>r.requestKey===input.requestKey)
-        if(!run||run.nodeId!=='Flow-2-6'||run.source!=='local-skill'||run.nativeCandidate?.businessSkillVersion!=='0.1.3'
+        if(!run||run.nodeId!=='Flow-2-6'||run.source!=='local-skill'||!isCurrentClaimsCandidate(run.nativeCandidate)
           ||run.nativeCandidate.sessionId!==input.candidate.sessionId||run.nativeCandidate.confirmationSHA256!==input.candidate.sha256)
           throw new WorkbenchRemoteError('malformed-response','候选运行身份不一致，请核对原请求',{})
       }
@@ -92,11 +102,11 @@ export function createWorkbenchRemote(connection) {
       const input=v340Commands[action].parse(payload)
       const workspaceId=input.workspaceId??expectedWorkspaceId
       if(!workspaceId)throw new WorkbenchRemoteError('V340_INVALID_INPUT','缺少当前项目身份')
-      const readSchema=action==='result/conversation-draft'?v340ConversationDraftResponseSchema:action==='result/saved-file'?v340SavedFileResponseSchema:null
+      const readSchema=action==='result/conversation-draft'?v340ConversationDraftResponseSchema:action==='result/saved-file'?v340SavedFileResponseSchema:action==='result/preview-file'?v340FilePreviewResponseSchema:null
       const schema=readSchema??(action==='result/prepare-save'?writebackPrepareResponseSchema:workbenchReplaceResponseSchema)
       const result=unwrap(await call(CHANNEL,`workflow/v340/${action}`,input,signal),schema)
       if(result.current&&result.current.workspaceId!==workspaceId||result.manifest&&result.manifest.workspaceId!==workspaceId)throw new WorkbenchRemoteError('malformed-response','新版项目身份不一致',{})
-      if(readSchema&&(['workspaceId','taskId','runId','versionId','resultSha256','expectedRevision',...(action==='result/saved-file'?['writebackId']:[])].some(k=>result[k]!==input[k])
+      if(readSchema&&(['workspaceId','taskId','runId','versionId','resultSha256','expectedRevision',...(['result/saved-file','result/preview-file'].includes(action)?['writebackId']:[])].some(k=>result[k]!==input[k])
         ||result.artifactId!==`sha256:${input.resultSha256}`))throw new WorkbenchRemoteError('malformed-response','新版固定版本身份不一致',{})
       return result
     },

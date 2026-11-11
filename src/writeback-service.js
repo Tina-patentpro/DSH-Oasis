@@ -1,3 +1,4 @@
+import { localClaimsProvenanceSchema } from './workbench-contract.js'
 import { createHash, randomUUID } from 'node:crypto'
 import {
   lstat as nodeLstat,
@@ -228,7 +229,7 @@ function createMetadata(input, artifactSizeBytes) {
       || !['1', '2'].includes(input.workflowVersion) || info.executionVersion !== input.workflowVersion
       || info.inputSchemaVersion !== (input.workflowVersion === '2' ? 'claims-disclosure-2' : '1')
       || !/^[a-f0-9]{64}$/.test(info.contextSnapshot?.instructionSha256)
-      || (input.workflowVersion === '2' && (info.contextSnapshot?.skillProvenance?.skillId !== 'flow-2-6'
+      || (input.workflowVersion === '2' && (!localClaimsProvenanceSchema.safeParse(info.contextSnapshot?.skillProvenance).success
         || info.contextSnapshot.skillProvenance.assemblySha256 !== info.contextSnapshot.instructionSha256))) {
       throw writebackError('WRITEBACK_SOURCE_INVALID', 'Native offline provenance is required')
     }

@@ -1,9 +1,7 @@
 # DSH-Oasis M06 源码预览
 
-M06 是 DSH-Oasis 专业工作台的发明专利权利要求初稿模块。本分支提供基于 `0.1.0-rc.5` 的源码预览、构建后的客户端和随包公开 Skill 资源。
+本分支对应 DSH NEXT 开发版使用的 Oasis 插件 `0.1.0-rc.5.next.6`。在「设置 → 绿洲工作台 → 本地 Skills 套件」可以选择绿洲慧写或中国专利 Skill，默认选择绿洲慧写。中国专利 Skill 的权利要求起草资源固定在上游提交 `b4bbec6`。
 
-2026 年 11 月 10 日，固定开发组合使用公开样例获得一次真实生成正文，正文通过 V3.4.0 结果合同核验。当前处于待审核阶段。实际使用依赖匹配的 DSH 宿主、受控安装和模型配置，向所选模型提供方提交材料可能产生费用。
+本机已在 DSH NEXT 2.0.22-next、Harness 0.2.2-rc.1 和 Better Sidebar 0.30.1 上验证两套 Skill。使用同一份公开校准材料，各完成一次原生模型生成。离线联调入口可验证生成、保存和预览。真实生成使用当前 DSH 会话所选模型，提交材料可能产生费用。
 
-本分支的自有贡献适用 [OasisIntWrite Community License 1.0](LICENSE)，第三方材料沿各自许可，见[第三方通知](THIRD-PARTY-NOTICES.md)。本分支的许可范围以随附文件为准。
-
-[源码清单](SOURCE-PREVIEW.json)记录预览与固定归档的差异。预览已移除 Windows 开发夹具的私有路径，并关闭该夹具入口。
+[源码清单](SOURCE-PREVIEW.json)记录已验证归档的 SHA-256 和本预览的文件差异。随附内容为插件源码、公开 Skill 资源及构建后的客户端。项目自有贡献适用 [OasisIntWrite Community License 1.0](LICENSE)，第三方材料沿用各自许可，见[第三方通知](THIRD-PARTY-NOTICES.md)。

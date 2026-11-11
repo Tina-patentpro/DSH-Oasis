@@ -1,6 +1,7 @@
 import {createElement as h,useEffect,useRef,useState} from 'react'
 import {getV340Versions,getV340LegacyResultDrafts,V340_CONVERSATION_TEXT_LIMIT,formatV340ConversationDraft} from '../v340-runtime-contract.js'
 import {hasPendingUnifiedRun} from '../generation-contract.js'
+import { claimsCandidateFor, localSkillUnavailableReason, PATENT_DISCLOSURE_CLAIMS_ID } from '../local-skill-suites.js'
 import {GenerationSourceSwitch} from './GenerationSourceSwitch.js'
 import {SafeMarkdownPreview} from './SafeMarkdownPreview.js'
 
@@ -29,6 +30,8 @@ export function V340InputFields({node,draft,disabled=false,onChange,idPrefix='pr
 
 export function V340GenerationPage({page,state,node,operation={},actions={},markdownRenderer,savedFileUnavailableReason='安全文件预览不可用'}){
  const recovery=!!state.v340Catalog?.nativeBusinessRecovery
+ const offline=state.v340Catalog?.nextOffline===true&&page.v340.nodeId==='Flow-2-6'
+ const safePreview = offline || state.v340Catalog?.managedSkillSuite === true
  const draft=operation.v340InputDraft??page.v340.draft
  const picked=operation.v340Selection??{runId:page.v340.activeRunId,versionId:null}
  const run=page.v340.runs[picked.runId],versions=run?getV340Versions(run):[]
@@ -44,11 +47,34 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
  const pending=state.pages.some(hasPendingUnifiedRun),disabled=state.syncStatus!=='ready'||pending||operation.v340CandidateUnconfirmed===true
  const working=operation.activeOperation!=null||operation.v340CandidatePreparing||operation.v340CandidateSubmitting
  const [tab,setTab]=useState(recovery?'result':'input'),[error,setError]=useState(null),[confirmation,setConfirmation]=useState(null)
+ const [offlineConfirmation,setOfflineConfirmation]=useState(null)
+ const [filePreview,setFilePreview]=useState(null)
  const live=useRef(true),inFlight=useRef(false),entry=useRef(null)
- const identity=JSON.stringify([state.workspaceId,state.revision,page.pageId,target,editing,disabled])
+ const identity=JSON.stringify([state.workspaceId,state.revision,page.pageId,target,editing,disabled,draft.source])
+ const previewIdentity=JSON.stringify([state.workspaceId,state.revision,page.pageId,target,editing])
+ const currentPreview=useRef(previewIdentity);currentPreview.current=previewIdentity
+ const previewRequest=useRef(0)
  const current=useRef(identity);current.current=identity
  useEffect(()=>{live.current=true;return()=>{live.current=false;actions.cancelCandidate?.(page.pageId)}},[])
- useEffect(()=>{setConfirmation(null)},[identity])
+ useEffect(()=>{setConfirmation(null);setOfflineConfirmation(null)},[identity])
+ useEffect(()=>{previewRequest.current+=1;setFilePreview(null)},[previewIdentity])
+ async function runOffline() {
+  if (!live.current||offlineConfirmation!==current.current||disabled||working||operation.v340InputDraft||inFlight.current) return
+  inFlight.current=true
+  setOfflineConfirmation(null)
+  try { await action(()=>actions.runOffline(page.pageId)) } finally { inFlight.current=false }
+ }
+ async function openPreview(writebackId) {
+  const request=++previewRequest.current
+  const captured=previewIdentity
+  setFilePreview(null)
+  await action(async()=>{
+   const value=await actions.previewSaved(page.pageId,target,writebackId)
+   if(value&&live.current&&currentPreview.current===captured&&previewRequest.current===request) {
+    setFilePreview({value,identity:captured})
+   }
+  })
+ }
  async function action(fn){setError(null);try{await fn?.()}catch{if(live.current)setError('操作未完成，草稿与原版本仍保留。请核对当前项目和版本后重试。')}}
  function update(channel,id,value){const next=structuredClone(draft);if(value==='')delete next[channel][id];else next[channel][id]=value;void action(()=>actions.saveDraft?.(page.pageId,next))}
  async function approve(){
@@ -57,8 +83,12 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
   try{await action(()=>actions.review?.(page.pageId,target,{workspaceId:state.workspaceId,revision:state.revision,...target}))}finally{inFlight.current=false}
  }
  const plan=operation.v340SavePlan,planMatches=plan&&target&&JSON.stringify(plan.target)===JSON.stringify(target)&&plan.revision===state.revision&&!editing
- const candidate=!recovery&&node?.m06Candidate?.skillVersion==='0.1.3'&&page.v340.nodeId==='Flow-2-6'&&draft.source==='local-skill'
- const candidatePreview=operation.v340CandidatePreview
+ const capability=claimsCandidateFor(node,state.localSkillSuite)
+ const skillUnavailable=draft.source==='local-skill'?localSkillUnavailableReason(state.localSkillSuite,Boolean(capability)):null
+ const candidate=!recovery&&capability?.requiresConfirmation===true&&page.v340.nodeId==='Flow-2-6'&&draft.source==='local-skill'
+ const external=capability?.skillId===PATENT_DISCLOSURE_CLAIMS_ID
+ const pendingPreview=operation.v340CandidatePreview
+ const candidatePreview=pendingPreview?.businessSkillId===capability?.skillId?pendingPreview:null
  return h('section',{'aria-label':'共同输入与结果','className':'oasis-v340',style:{container:'oasis-v340 / inline-size',minWidth:0,padding:16}},
   h('style',null,`.oasis-v340 *{box-sizing:border-box}.oasis-v340 .v340-panes{display:grid;grid-template-columns:minmax(0,1fr);gap:16}.oasis-v340 .v340-pane[data-visible=false]{display:none}.oasis-v340 input,.oasis-v340 textarea,.oasis-v340 select{max-width:100%;width:100%;border:1px solid #dce4df;border-radius:7px;padding:9px;color:inherit;background:var(--dsw-alias-bg-base,#fff)}.oasis-v340 button:disabled{opacity:.55;cursor:not-allowed}.oasis-v340 input:disabled,.oasis-v340 textarea:disabled,.oasis-v340 select:disabled{opacity:.65;cursor:not-allowed}@container oasis-v340 (min-width:680px){.oasis-v340 .v340-panes{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.oasis-v340 .v340-pane[data-visible=false]{display:block}.oasis-v340 .v340-tabs{display:none}}`),
   h('header',{style:{display:'flex',flexWrap:'wrap',gap:12,justifyContent:'space-between',alignItems:'center',marginBottom:14}},
@@ -74,8 +104,15 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
     h(V340InputFields,{node,draft,disabled:recovery||disabled,onChange:update,onError:setError,idPrefix:page.pageId}),
     node?h('p',{role:'status'},operation.v340InputDraft?'输入正在保存；失败时保留本地草稿。':'输入已保存'):null,
     operation.v340InputDraft?h('button',{type:'button',style:button,disabled:working,onClick:()=>action(()=>actions.saveDraft?.(page.pageId,operation.v340InputDraft))},'重试保存输入'):null,
+    offline?h('section',{'aria-label':'M06 离线生成'},
+      h('button',{type:'button',style:button,disabled:disabled||working||!!operation.v340InputDraft||!actions.runOffline,
+        onClick:()=>setOfflineConfirmation(current.current)},'准备离线生成'),
+      offlineConfirmation===identity?h('section',{'aria-label':'离线生成确认'},
+        h('p',null,draft.source==='local-skill'?'使用固定 M06 Skill 和模拟模型。':'使用 M06 专业 API 合同和模拟响应。'),
+        h('button',{type:'button',style:button,disabled:disabled||working,onClick:runOffline},'确认离线生成'),
+        h('button',{type:'button',style:button,onClick:()=>setOfflineConfirmation(null)},'取消')):null):
     candidate?h('section',{'aria-label':'M06受控候选'},
-      h('p',null,'M06 0.1.3 受控候选；尚未取得专业与用户接受。'),
+      h('p',null,external?'中国专利 Skill · 权利要求初稿':'M06 0.1.3 受控候选；尚未取得专业与用户接受。'),
       h('button',{type:'button',style:{...button,width:'100%'},disabled:disabled||working||!!operation.v340InputDraft||!actions.prepareCandidate,
         onClick:()=>action(()=>actions.prepareCandidate?.(page.pageId))},'核对模型与材料'),
       candidatePreview?h('section',{'aria-label':'候选生成确认'},
@@ -90,7 +127,7 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
       h('p',null,'原请求尚未确认，输入和来源保持锁定；不会重新生成。'),
       h('button',{type:'button',style:button,disabled:working||!actions.reconcileCandidate,
         onClick:()=>action(()=>actions.reconcileCandidate?.(page.pageId))},'核对原请求状态')):null,
-    !candidate?h('p',{role:'status',style:{fontSize:12}},node?.sources[draft.source].reason??'新版来源尚未就绪'):null),
+    !candidate&&!offline?h('p',{role:'status',style:{fontSize:12}},skillUnavailable??node?.sources[draft.source].reason??'新版来源尚未就绪'):null),
    h('section',{className:'v340-pane','data-visible':tab==='result',style:{minWidth:0}},
     h('h3',null,'生成结果'),
     h('nav',{'aria-label':'结果版本',style:{display:'flex',flexWrap:'wrap',gap:6}},
@@ -98,6 +135,8 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
       'aria-current':target?.versionId===v.versionId?'true':undefined,onClick:()=>actions.selectVersion?.(page.pageId,id,v.versionId)},`${page.v340.runOrder.length>1?`运行${page.v340.runOrder.indexOf(id)+1} · `:''}版本 ${index+1}`)))),
     !version?h('p',{role:'status'},run?.status==='unknown'?'运行状态未确认；不会自动重发。':run?.status==='prepared'?'原运行尚未完成。':run?.status==='failed'?`本次生成失败（${run.failureCode}）；未取得正文，不会自动重试。`:'暂无生成结果'):h('article',{style:{display:'grid',gap:12,marginTop:12}},
      h('small',null,`${run.source==='local-skill'?'本地 Skills':'专业 API'} · ${run.evidenceKind==='native-model-candidate'?'受控候选':'合成验收'} · ${version.review.status==='approved'?'已审核':'待审核'}`),
+     run.nativeCandidate?.businessSkillId===PATENT_DISCLOSURE_CLAIMS_ID?h('small',null,
+       '中国专利 Skill · GitHub 版本 '+run.nativeCandidate.businessSkillVersion.slice(0,7)):null,
      ...legacy.map(({key,draft})=>h('section',{key,'aria-label':'旧草稿恢复'},h('p',null,'旧草稿格式未确认，可能包含整份累计文稿。请先复制保留；原草稿保持，可另起核心正文编辑。'),
        h('textarea',{'aria-label':'旧草稿原文',readOnly:true,rows:8,value:draft.body}),
        h('small',null,'“编辑结果”从原版本核心正文开始；不会自动抽取、转换或删除旧草稿。'))),
@@ -132,9 +171,14 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
        h('button',{type:'button',style:button,disabled:disabled||working||!operation.v340SaveConfirmed,onClick:()=>action(()=>actions.commitSave?.(page.pageId))},'确认保存文件')):null):null,
      ...version.writebacks.map(saved=>h('section',{key:saved.writebackId,style:{overflowWrap:'anywhere'}},
       h('p',{role:'status'},`已保存：${saved.files.find(f=>f.mediaType==='text/markdown')?.relativePath}`),
-      h('button',{type:'button',style:button,disabled:disabled||working||editing||legacy.length>0||version.review.status!=='approved'||!!savedFileUnavailableReason||!actions.openSaved,
-       title:savedFileUnavailableReason??undefined,onClick:()=>action(()=>actions.openSaved?.(page.pageId,target,saved.writebackId))},'打开当前文件'),
+      h('button',{type:'button',style:button,disabled:disabled||working||editing||legacy.length>0||version.review.status!=='approved'||(safePreview?!actions.previewSaved:!!savedFileUnavailableReason||!actions.openSaved),
+       title:safePreview?undefined:savedFileUnavailableReason??undefined,onClick:()=>safePreview?openPreview(saved.writebackId):action(()=>actions.openSaved?.(page.pageId,target,saved.writebackId))},safePreview?'安全预览当前文件':'打开当前文件'),
       h('small',null,'打开的是当前文件；固定审核结论仅绑定所选版本，文件变化需重新核对。')))),
+    filePreview?.identity===previewIdentity?h('section',{'aria-label':'安全文件预览'},
+      h('h4',null,filePreview.value.fileName),
+      h('p',{role:'status'},filePreview.value.matchesReviewed?'当前文件与固定审核版本一致。':'当前文件已修改，原审核结论仅适用于固定版本。'),
+      h('pre',{tabIndex:0,style:{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}},filePreview.value.text),
+      h('button',{type:'button',style:button,onClick:()=>{previewRequest.current+=1;setFilePreview(null)}},'关闭预览')):null,
     run&&['prepared','unknown'].includes(run.status)?h('div',null,h('button',{type:'button',style:button,disabled:working,onClick:()=>action(()=>actions.observe?.(page.pageId,run.runId))},'查看原运行'),
      h('button',{type:'button',style:button,disabled:working||run.status!=='prepared',onClick:()=>action(()=>actions.stop?.(page.pageId,run.runId))},'停止等待')):null)),
   error||operation.error?h('p',{role:'alert'},operation.candidateModelUnavailable?'当前DSH模型引用的API凭据不可用；未开始生成，请在DSH模型设置中核对。':error??'操作未完成，草稿和原记录已保留。'):null,

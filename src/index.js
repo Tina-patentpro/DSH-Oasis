@@ -1,3 +1,6 @@
+import { createNextOfflineRuntime } from './m06-next-offline.js'
+import { openInstalledSkillPreference } from './installed-skill-preference.js'
+import { DEFAULT_LOCAL_SKILL_SUITE } from './local-skill-suites.js'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import { randomUUID } from 'node:crypto'
 import { isUnifiedFixtureEnvironment, isNativeOfflineEnvironment } from './unified-fixture-environment.js'
@@ -74,7 +77,11 @@ export async function applyM06NativeBusinessRecovery(ctx, config) { return apply
 // Existing controlled/no-account candidates and all remote generation gates remain intact.
 export async function applyM06WorkareaCandidate013(ctx, config) { return applyWorkbench(ctx,config,true,true) }
 
-async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false, recoveryEntry = false) {
+export async function applyM06NextOffline(ctx, config) {
+  return applyWorkbench(ctx, config, false, false, false, true)
+}
+
+async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false, recoveryEntry = false, nextOffline = false) {
   const recoveryScope=recoveryEntry?await loadNativeBusinessRecoveryScope():null
   if(!recoveryEntry&&process.env.OASIS_NATIVE_BUSINESS_RECOVERY!==undefined)throw Error('Recovery mode requires its dedicated trusted entry')
   const nativeZeroGeneration=process.env.OASIS_NATIVE_ZERO_GENERATION==='1'
@@ -85,6 +92,8 @@ async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false
     throw new Error('M06受控入口需要当前DSH原生模型上下文，且不能混用旧合成模式。')
   }
   const settingsScope = registerOasisSettings(ctx, config)
+  let installedSkillPreference
+  const getLocalSkillSuite = () => installedSkillPreference?.get().suite ?? settingsScope.get().localSkillSuite
   // Native settings are owned by the actual loader entry id, including explicit
   // controlled entries; this trusted identity is never supplied by business RPC.
   const settingsNamespace = ctx.fiber?.entry?.options?.id ?? 'oasis-professional-service'
@@ -92,20 +101,33 @@ async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false
   const materialManager = createWorkspaceMaterialManager({ workspaceRegistry: ctx.workspaceRegistry })
   const nativeOffline = isNativeOfflineEnvironment()
   const fixtureEnabled = isUnifiedFixtureEnvironment() && !nativeOffline
-  const accountService = recoveryEntry?null:createOasisAccountService({ credentials: ctx.credentials, enabled: !fixtureEnabled && !nativeOffline && (!controlledM06 || websiteAccount) })
+  const accountService = recoveryEntry||nextOffline?null:createOasisAccountService({ credentials: ctx.credentials, enabled: !fixtureEnabled && !nativeOffline && (!controlledM06 || websiteAccount) })
   const workspaceOperations = createWorkspaceOperationGuard()
-  const importService = recoveryEntry?null:createWebsiteImportService({ workspaceRegistry: ctx.workspaceRegistry, accountService, settings: ctx.settings, settingsNamespace, workspaceOperations,
+  const importService = recoveryEntry||nextOffline?null:createWebsiteImportService({ workspaceRegistry: ctx.workspaceRegistry, accountService, settings: ctx.settings, settingsNamespace, workspaceOperations,
     isWorkspaceBusy: workspaceId => Object.values(repository.get(workspaceId).tasks).some(task => hasPendingUnifiedRun(task)
       || Object.values(task.remoteExecutions).some(isOasisRemoteExecutionUnresolved)),
   })
   let localGeneration
   let v340Executor
+  let offlineRuntime
   try {
-    if(controlledM06&&!recoveryEntry)v340Executor=createM06BusinessNativeCandidate013({ctx,native:await import('@deepseek-ai/dsh-llm')})
+    if (nextOffline) {
+      offlineRuntime = createNextOfflineRuntime(ctx.llm, await import('@deepseek-ai/dsh-llm'))
+      v340Executor = offlineRuntime.executor
+    }
+    if (controlledM06 && !nativeZeroGeneration && !recoveryEntry
+      && ['oasis-professional-service-m06-native-generation', 'oasis-professional-service'].includes(settingsNamespace)) {
+      // Reuse the saved setting from the original managed installation.
+      installedSkillPreference = await openInstalledSkillPreference(ctx.storageDomain, 'oasis-professional-service-m06-native-generation',
+        getLocalSkillSuite() ?? DEFAULT_LOCAL_SKILL_SUITE)
+    }
+    if(controlledM06&&!recoveryEntry)v340Executor=createM06BusinessNativeCandidate013({ctx,native:await import('@deepseek-ai/dsh-llm'),getLocalSkillSuite})
     const modelEnabled = !fixtureEnabled && normalizeProductRuntimeConfig(settingsScope.get()).localModelEnabled
-    localGeneration = controlledM06 ? null : nativeOffline ? createNativeOfflineRuntime(ctx, await import('@deepseek-ai/dsh-llm'))
+    localGeneration = controlledM06 || nextOffline ? null : nativeOffline ? createNativeOfflineRuntime(ctx, await import('@deepseek-ai/dsh-llm'))
       : modelEnabled ? bindNativeModelRuntime(ctx, await import('@deepseek-ai/dsh-llm'), true) : null
   } catch (error) {
+    await installedSkillPreference?.close()
+    await offlineRuntime?.dispose()
     await repository.close()
     throw error
   }
@@ -116,9 +138,10 @@ async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false
     workspaceRegistry: ctx.workspaceRegistry,
     unifiedFixtureEnabled: fixtureEnabled,
     localGeneration,
+    getLocalSkillSuite,
     v340Executor,
   })
-  const professionalService = recoveryEntry?null:createOasisRemoteService({
+  const professionalService = recoveryEntry||nextOffline?null:createOasisRemoteService({
     resolveConfig: normalizeProductRuntimeConfig,
     repository,
     workspaceOperations,
@@ -166,14 +189,19 @@ async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false
     disposeTool = registerStatusTool(ctx)
     disposeRpc = registerWorkbenchRoutes(
       ctx.connection,
-      createWorkbenchRpcHandler(service, professionalService, accountService, importService,{m06Candidate013:controlledM06,nativeZeroGeneration,nativeBusinessRecovery}),
-      {m06Candidate013:controlledM06,nativeBusinessRecovery},
+      createWorkbenchRpcHandler(service, professionalService, accountService, importService, {
+        m06Candidate013: controlledM06, nativeZeroGeneration, nativeBusinessRecovery, nextOffline,
+        getLocalSkillSuite, settingsNamespace, installedSkillPreference,
+      }),
+      {m06Candidate013:controlledM06,nativeBusinessRecovery, nextOffline,managedSkillSuite:Boolean(installedSkillPreference)},
     )
   } catch (error) {
     try {
       disposeTool?.()
     } finally {
       await localGeneration?.dispose()
+      await installedSkillPreference?.close()
+      await offlineRuntime?.dispose()
       await repository.close()
     }
     throw error
@@ -193,6 +221,8 @@ async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false
           await service.closeV340Runtime()
           await service.closeLocalGeneration()
           await localGeneration?.dispose()
+          await installedSkillPreference?.close()
+          await offlineRuntime?.dispose()
           await repository.close()
         }
       }

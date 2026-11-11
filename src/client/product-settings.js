@@ -1,8 +1,10 @@
 import { OASIS_PRODUCT_ORIGIN, accountStatusSchema } from '../oasis-account-contract.js'
+import { DEFAULT_LOCAL_SKILL_SUITE, LOCAL_SKILL_SUITES, OASIS_PLUGIN_NAMESPACE_PATTERN } from '../local-skill-suites.js'
 
 const initial = () => ({ connected: false, settingsStatus: 'unavailable', settingsWritable: false,
   environmentKind: 'production', apiBaseUrl: OASIS_PRODUCT_ORIGIN, credentialOrigin: OASIS_PRODUCT_ORIGIN, downloadOrigins: [],
   defaultGenerationSource: 'local-skill', outputDirectoryPrefix: '',
+  localSkillSuite: DEFAULT_LOCAL_SKILL_SUITE, managedSkillSuite: false, savingLocalSkillSuite: false, localSkillSuiteError: null,
   credentialStatus: 'unavailable', credentialStored: false, credentialConfigured: false, credentialWritable: false,
   accountId: null, accountRevision: null, retryAfterSeconds: 0,
   busy: false, restartRequired: false, canSubmit: false, error: null, notice: null, nativeZeroGeneration:false,nativeBusinessRecovery:false })
@@ -12,6 +14,15 @@ export function createProductSettings({ remote, onInvalidated = () => {} }) {
   const listeners = new Set()
   let scope, generation = 0, readId = 0, disposed = false, pending = false
   let detach = () => {}
+  let detachScope = () => {}, configForms, scopeNamespace
+  function watchScope(next, namespace) {
+    if (scope === next && scopeNamespace === namespace) return
+    detachScope()
+    scope = next
+    scopeNamespace = namespace
+    detachScope = scope.subscribe(() => { readSettings(); invalidate() })
+    readSettings()
+  }
   const invalidate = () => { try { Promise.resolve(onInvalidated({ reload: false })).catch(() => {}) } catch {} }
   function publish(patch) {
     if (disposed) return
@@ -21,10 +32,13 @@ export function createProductSettings({ remote, onInvalidated = () => {} }) {
     for (const listener of listeners) listener()
   }
   function readSettings() {
+    if (snapshot.managedSkillSuite) return
     try {
       const view = scope?.getSnapshot()
       if (view?.status !== 'ready' || view.mode !== 'host') throw Error()
-      publish({ settingsStatus: 'ready', settingsWritable: snapshot.connected && view.writable === true })
+      const localSkillSuite = view.value?.localSkillSuite ?? DEFAULT_LOCAL_SKILL_SUITE
+      if (!Object.hasOwn(LOCAL_SKILL_SUITES, localSkillSuite)) throw Error()
+      publish({ settingsStatus: 'ready', settingsWritable: snapshot.connected && view.writable === true, localSkillSuite })
     } catch { publish({ settingsStatus: 'unavailable', settingsWritable: false }) }
   }
   function receive(result) {
@@ -41,6 +55,15 @@ export function createProductSettings({ remote, onInvalidated = () => {} }) {
       if(typeof remote.getV340Catalog==='function'){
         const catalog=await remote.getV340Catalog()
         if(disposed||current!==generation||id!==readId)return false
+        if (catalog.managedSkillSuite === true) {
+          publish({ managedSkillSuite: true, settingsWritable: false })
+          const { suite } = await remote.getLocalSkillSuite()
+          if (disposed || current !== generation || id !== readId) return false
+          publish({ settingsStatus: 'ready', settingsWritable: true, localSkillSuite: suite })
+        }
+        const namespace = catalog.settingsNamespace
+        if (configForms && typeof namespace === 'string' && OASIS_PLUGIN_NAMESPACE_PATTERN.test(namespace)
+          && namespace !== scopeNamespace) watchScope(configForms.get(namespace), namespace)
         if(catalog.nativeZeroGeneration===true||catalog.nativeBusinessRecovery){
           publish({nativeZeroGeneration:catalog.nativeZeroGeneration===true,nativeBusinessRecovery:!!catalog.nativeBusinessRecovery,credentialStatus:'unavailable',credentialConfigured:false,credentialStored:false,credentialWritable:false,accountId:null,accountRevision:null});return false
         }
@@ -86,22 +109,27 @@ export function createProductSettings({ remote, onInvalidated = () => {} }) {
         if (!active) return
         active = false; generation++; readId++
         for (const fn of disposers) fn()
+        detachScope()
+        detachScope = () => {}
         scope = null
+        scopeNamespace = null
+        configForms = null
         publish({ ...initial(), busy: pending, restartRequired: snapshot.restartRequired })
         invalidate()
       }
       try {
         const connection = services.connection
         if (!connection?.isLoopback || !services.remote?.$host?.isLoopback) throw Error()
-        scope = typeof services.configForms?.get === 'function'
-          ? services.configForms.get('oasis-professional-service')
-          : services.settingsScope.bind({ namespace: 'oasis-professional-service' })
+        configForms = typeof services.configForms?.get === 'function' ? services.configForms : null
+        const namespace = 'oasis-professional-service'
+        watchScope(configForms ? configForms.get(namespace) : services.settingsScope.bind({ namespace }), namespace)
         const onHost = () => {
           generation++; readId++
-          publish({ connected: connection.generation.getSnapshot() != null, credentialConfigured: false, credentialWritable: false, nativeZeroGeneration:false,nativeBusinessRecovery:false })
+          publish({ connected: connection.generation.getSnapshot() != null, credentialConfigured: false, credentialWritable: false,
+            nativeZeroGeneration: false, nativeBusinessRecovery: false, managedSkillSuite: false, savingLocalSkillSuite: false, localSkillSuiteError: null })
           invalidate(); void refresh()
         }
-        disposers.push(scope.subscribe(() => { readSettings(); invalidate() }), connection.generation.subscribe(onHost))
+        disposers.push(connection.generation.subscribe(onHost))
         if (services.remote.$on) disposers.push(services.remote.$on('credentials/record-updated', key => {
           if (key === 'oasis-professional-service/website-account') { invalidate(); void refresh() }
         }))
@@ -110,6 +138,35 @@ export function createProductSettings({ remote, onInvalidated = () => {} }) {
       return detach
     },
     refresh,
+    async saveLocalSkillSuite(suite) {
+      if (!Object.hasOwn(LOCAL_SKILL_SUITES, suite) || !snapshot.settingsWritable || snapshot.savingLocalSkillSuite
+        || snapshot.nativeZeroGeneration || snapshot.nativeBusinessRecovery
+        || (!snapshot.managedSkillSuite && typeof scope?.set !== 'function')) return false
+      if (suite === snapshot.localSkillSuite) return true
+      const activeScope = scope, current = generation, managed = snapshot.managedSkillSuite
+      publish({ savingLocalSkillSuite: true, localSkillSuiteError: null })
+      try {
+        if (managed) {
+          const saved = await remote.setLocalSkillSuite(suite)
+          if (disposed || generation !== current) return false
+          if (saved.suite !== suite) throw Error()
+          ++readId
+          publish({ localSkillSuite: suite })
+          invalidate()
+          return true
+        }
+        const accepted = await activeScope.set('localSkillSuite', suite)
+        if (disposed || generation !== current || scope !== activeScope) return false
+        readSettings()
+        if (!accepted || snapshot.localSkillSuite !== suite) throw Error()
+        return true
+      } catch {
+        if (!disposed && generation === current) publish({ localSkillSuiteError: '未能保存 Skills 套件，请重新选择。' })
+        return false
+      } finally {
+        if (!disposed && generation === current) publish({ savingLocalSkillSuite: false })
+      }
+    },
     login: payload => action('accountLogin', payload),
     sendSms: payload => action('accountSms', payload),
     logout: () => action('accountLogout', { confirmed: true }),

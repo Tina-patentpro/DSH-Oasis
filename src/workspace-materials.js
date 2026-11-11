@@ -1,3 +1,4 @@
+import { constants as fsConstants } from 'node:fs'
 import { createHash } from 'node:crypto'
 import {
   lstat as nodeLstat,
@@ -304,7 +305,7 @@ export function createWorkspaceMaterialManager({
     return Object.freeze(checked)
   }
 
-  async function readForUpload(workspaceId, reference, policy) {
+  async function readForUpload(workspaceId, reference, policy, expectedAbsolutePath) {
     if (reference?.kind !== 'project-file') {
       throw materialError(
         'LEGACY_MATERIAL_REQUIRES_RECONFIRMATION',
@@ -319,16 +320,32 @@ export function createWorkspaceMaterialManager({
     }
     const root = await resolveWorkspaceRoot(workspaceRegistry, fileSystem, workspaceId)
     const absolutePath = await resolveMaterialFile(fileSystem, root, normalizedPath)
+    if (expectedAbsolutePath !== undefined && pathKey(absolutePath) !== pathKey(expectedAbsolutePath)) {
+      throw materialError('MATERIAL_CHANGED', 'Material resolved outside the captured file path')
+    }
     let handle
     try {
-      handle = await fileSystem.open(absolutePath, 'r')
+      handle = await fileSystem.open(absolutePath, expectedAbsolutePath === undefined ? 'r' : fsConstants.O_RDONLY | fsConstants.O_NOFOLLOW)
       if (typeof handle.readFile !== 'function') throw new TypeError('fileSystem.open handle.readFile is required for upload')
       const before = await handle.stat()
-      if (!before.isFile()) throw materialError('MATERIAL_NOT_FILE', 'Material path must name a regular file')
+      if (!before.isFile() || (expectedAbsolutePath !== undefined && before.nlink !== 1)) throw materialError('MATERIAL_NOT_FILE', 'Material path must name a regular file')
       if (before.size > policy.maxFileBytes) {
         throw materialError('MATERIAL_TOO_LARGE', 'Material file exceeds the configured size limit')
       }
-      const bytes = await handle.readFile()
+      let bytes
+      if (expectedAbsolutePath === undefined) {
+        bytes = await handle.readFile()
+      } else {
+        const buffer = Buffer.alloc(before.size + 1)
+        let total = 0
+        while (total < buffer.length) {
+          const { bytesRead } = await handle.read(buffer, total, buffer.length - total, total)
+          if (bytesRead === 0) break
+          total += bytesRead
+        }
+        if (total !== before.size) throw materialError('MATERIAL_CHANGED', 'Preview file size changed while reading')
+        bytes = buffer.subarray(0, total)
+      }
       if (bytes.byteLength > policy.maxFileBytes) {
         throw materialError('MATERIAL_TOO_LARGE', 'Material file exceeds the configured size limit')
       }

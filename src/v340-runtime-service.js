@@ -88,6 +88,9 @@ export function createV340RuntimeService({repository,preparation,executor,clock=
         let admitted
         const result=await workspaceOperations.run(workspaceId,()=>repository.mutate(workspaceId,expectedRevision,async record=>{
           const task=taskFor(record,taskId),state=task.v340
+          if (executor.canExecute && !executor.canExecute(state.nodeId, state.draft.source)) {
+            fail('V340_EXECUTION_DISABLED', '当前离线来源仅支持权利要求初稿。')
+          }
           if(candidate&&(state.nodeId!==(executor.nodeId??'Flow-2-6')||state.draft.source!=='local-skill')||!candidate&&confirmation)fail('V340_EXECUTION_DISABLED','当前来源或节点不属于本批内部候选。')
           for(const other of Object.values(record.tasks))for(const prior of Object.values(other.v340?.runs??{}))if(prior.requestKey===requestKey){
             if(other.taskId!==taskId||prior.evidenceKind!==(candidate?'native-model-candidate':'synthetic')||canonicalJson(prior.inputSnapshot.draft)!==canonicalJson(state.draft))fail('V340_IDEMPOTENCY_CONFLICT','请求标识已绑定其他任务或输入。')

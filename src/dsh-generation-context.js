@@ -1,7 +1,7 @@
 import { resolve, isAbsolute } from 'node:path'
 import { WorkspaceMaterialError } from './workspace-materials.js'
 
-// Fixed 0.1.2-rc.1 public projection/read APIs. No Agent resume, selection mutation or prompt assembly.
+// Read the public DSH model-selection projection. No Agent resume, selection mutation or prompt assembly.
 export function resolveDshGenerationContext(ctx, { workspaceId, sessionId }, { includeWorkspaceRoot = false } = {}) {
   try {
     const workspace = ctx.workspaceRegistry.get(workspaceId)
@@ -15,8 +15,10 @@ export function resolveDshGenerationContext(ctx, { workspaceId, sessionId }, { i
     if (includeWorkspaceRoot && (!isAbsolute(workspacePath) || !isAbsolute(sessionCwd)
       || workspacePath.includes('\0') || sessionCwd.includes('\0'))) throw new Error()
     const projection = ctx.sessionProjections.stateOf(session, 'modelSelection')
-    if (!projection || !Object.hasOwn(projection, 'pending')) throw new Error()
-    let picked = projection.pending
+    if (!projection) throw new Error()
+    const key = Object.hasOwn(projection, 'next') ? 'next' : 'pending'
+    if (!Object.hasOwn(projection, key)) throw new Error()
+    let picked = projection[key]
     if (picked === null) {
       const header = session.requestHeader()
       picked = header === undefined ? ctx.agentDefaultModel.currentSelection() : {

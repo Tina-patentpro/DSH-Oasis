@@ -7,6 +7,7 @@ import {
 import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
 import { generationUnavailableReason, hasPendingUnifiedRun } from '../generation-contract.js'
 import {getV340ResultDrafts,getV340Versions} from '../v340-runtime-contract.js'
+import { claimsCandidateFor, isCurrentClaimsCandidate } from '../local-skill-suites.js'
 
 export const EMPTY_WORKSPACE_STATE = createInitialWorkspaceState(null)
 
@@ -149,9 +150,10 @@ export function createWorkbenchStore({
     assertOpen();assertRetained(workspaceId)
     if(getCurrent(workspaceId).v340Catalog?.nativeBusinessRecovery)throw Error('本次仅允许本地业务恢复')
     const current=getCurrent(workspaceId),page=pageFor(workspaceId,pageId),op=operationFor(current,pageId)
-    const capability=current.v340Catalog?.nodes.find(n=>n.nodeId==='Flow-2-6')?.m06Candidate
+    const node=current.v340Catalog?.nodes.find(n=>n.nodeId==='Flow-2-6')
+    const capability=claimsCandidateFor(node,connectionSettings?.getSnapshot()?.localSkillSuite)
     if(current.syncStatus!=='ready'||current.activePageId!==pageId||page.v340?.nodeId!=='Flow-2-6'
-      ||page.v340.draft.source!=='local-skill'||capability?.skillVersion!=='0.1.3'||!capability.requiresConfirmation)
+      ||page.v340.draft.source!=='local-skill'||capability?.requiresConfirmation!==true)
       throw Error('当前页面不是可核对的受控M06候选')
     if(current.pages.some(hasPendingUnifiedRun)||op.v340CandidateUnconfirmed)throw Error('原请求尚未确认，请先查看原运行；不会重新生成')
     if(op.v340InputDraft)throw Error('请先保存当前输入，再核对模型与材料')
@@ -165,7 +167,8 @@ export function createWorkbenchStore({
     if(!preview||!scope||preview.workspaceId!==workspaceId||preview.taskId!==pageId||preview.sessionId!==next.sessionId
       ||preview.expectedRevision!==next.current.revision||scope.draftKey!==next.draftKey
       ||scope.editGeneration!==next.editGeneration||scope.configurationGeneration!==next.configurationGeneration
-      ||scope.epoch!==next.op.v340CandidateEpoch||preview.businessManifestSHA256!==next.capability.businessManifestSHA256
+      ||scope.epoch!==next.op.v340CandidateEpoch||preview.businessSkillId!==next.capability.skillId
+      ||preview.businessSkillVersion!==next.capability.skillVersion||preview.businessManifestSHA256!==next.capability.businessManifestSHA256
       ||preview.businessResourceSHA256!==next.capability.businessResourceSHA256)throw Error('材料、会话或版本已变化，请重新核对')
     return next
   }
@@ -980,6 +983,17 @@ export function createWorkbenchStore({
         workspaceId,taskId:pageId,...(action==='run/observe'?{}:{expectedRevision:current.revision}),...payload,
       },controller.signal)))
     },
+    runV340Offline(workspaceId, pageId) {
+      if (getCurrent(workspaceId).v340Catalog?.nextOffline !== true) throw Error('当前 Host 未启用离线生成')
+      return store.v340Action(workspaceId,pageId,'offline/run',{ requestKey:createRequestKey(), confirmed:true })
+    },
+    async previewV340SavedFile(workspaceId, pageId, target, writebackId) {
+      const catalog = getCurrent(workspaceId).v340Catalog
+      if (catalog?.nextOffline !== true && catalog?.managedSkillSuite !== true) throw Error('当前 Host 未启用安全预览')
+      let preview
+      const opened = await performV340Handoff(workspaceId,pageId,target,'result/preview-file',{writebackId},result=>{ preview=result })
+      return opened ? preview : null
+    },
     prepareV340Candidate(workspaceId,pageId){
       let initial
       try{
@@ -1047,7 +1061,7 @@ export function createWorkbenchStore({
         controller.signal.throwIfAborted()
         return{committed:true,current:await remote.get(workspaceId,controller.signal)}
       },()=>{
-        const page=pageFor(workspaceId,pageId),run=Object.values(page.v340.runs).find(r=>r.requestKey===key&&r.nativeCandidate?.businessSkillVersion==='0.1.3')
+        const page=pageFor(workspaceId,pageId),run=Object.values(page.v340.runs).find(r=>r.requestKey===key&&isCurrentClaimsCandidate(r.nativeCandidate))
         return{v340CandidateUnconfirmed:!run,feedback:run?'已找到原请求，请查看原运行':'尚未找到原请求，继续保留未确认状态；不会重新生成'}
       }))
     },

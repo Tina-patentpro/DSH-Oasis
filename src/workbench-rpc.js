@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { localSkillPreferenceSchema } from './local-skill-preference-contract.js'
+import { localSkillUnavailableReason, LOCAL_SKILL_SUITE_UNAVAILABLE, OASIS_PLUGIN_NAMESPACE_PATTERN } from './local-skill-suites.js'
 
 import { workbenchEditableDraftSchema } from './workbench-domain.js'
 import {
@@ -174,15 +176,30 @@ async function writebackResult(operation) {
   }
 }
 
-export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null, {m06Candidate013=false,nativeZeroGeneration=false,nativeBusinessRecovery=null}={}) {
+export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null, {m06Candidate013=false,nativeZeroGeneration=false,nativeBusinessRecovery=null,getLocalSkillSuite=()=>undefined,settingsNamespace,installedSkillPreference,nextOffline=false}={}) {
   if(nativeBusinessRecovery){
     if(!m06Candidate013||nativeZeroGeneration)throw new TypeError('Native recovery requires an exclusive controlled composition')
-    return nativeBusinessRecovery.wrap(createWorkbenchRpcHandler(service,professionalService,accountService,importService,{m06Candidate013:true}))
+    return nativeBusinessRecovery.wrap(createWorkbenchRpcHandler(service,professionalService,accountService,importService,{m06Candidate013:true,getLocalSkillSuite,settingsNamespace}))
   }
   if(nativeZeroGeneration&&!m06Candidate013)throw new TypeError('Native zero-generation requires the controlled M06 entry')
   const readonlyEndpoints=new Set(['state/get','workflow/catalog','workflow/v340/catalog','workflow/v340/prepare'])
+  function withLocalSkill(action, supportsPatentDisclosure = false) {
+    const message = localSkillUnavailableReason(getLocalSkillSuite(), supportsPatentDisclosure)
+    if (message) return { ok: false, error: { code: LOCAL_SKILL_SUITE_UNAVAILABLE, message, details: {} } }
+    return materialResult(action)
+  }
   return async function handleWorkbenchRpc(endpoint, payload) {
     if(nativeZeroGeneration&&!readonlyEndpoints.has(endpoint))return {ok:false,error:{code:'NATIVE_ZERO_GENERATION',message:'本次仅检查界面与输入，不允许生成、联网或修改业务记录。',details:{}}}
+    if (installedSkillPreference && (endpoint === 'skill-suite/get' || endpoint === 'skill-suite/set')) {
+      const parsed = parsePayload(endpoint === 'skill-suite/get' ? z.object({}).strict() : localSkillPreferenceSchema, payload)
+      if (!parsed.success) return parsed
+      try {
+        return { ok: true, value: endpoint === 'skill-suite/get'
+          ? installedSkillPreference.get() : await installedSkillPreference.set(parsed.data) }
+      } catch {
+        return { ok: false, error: { code: 'SKILL_SUITE_SAVE_FAILED', message: '未能保存 Skills 套件，请重新选择。', details: {} } }
+      }
+    }
     if (endpoint.startsWith('import/')) {
       const action = endpoint.slice('import/'.length)
       const schema = Object.hasOwn(importCommands, action) ? importCommands[action] : null
@@ -226,14 +243,28 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
       const parsed = parsePayload(z.object({}).strict(), payload)
       if (!parsed.success) return parsed
       const catalog=service.getV340Catalog()
-      return { ok: true, value: nativeZeroGeneration?{...catalog,nativeZeroGeneration:true}:catalog }
+      const namespace = typeof settingsNamespace === 'string' && settingsNamespace.length <= 128
+        && OASIS_PLUGIN_NAMESPACE_PATTERN.test(settingsNamespace) ? { settingsNamespace } : {}
+      return { ok: true, value: { ...catalog, ...namespace, ...(nextOffline ? { nextOffline: true } : {}), ...(nativeZeroGeneration ? { nativeZeroGeneration: true } : {}),
+        ...(installedSkillPreference ? { managedSkillSuite: true } : {}) } }
     }
     if(m06Candidate013===true&&['workflow/v340/candidate/prepare','workflow/v340/candidate/run'].includes(endpoint)){
       const action=endpoint.slice('workflow/v340/'.length),parsed=v340Commands[action].safeParse(payload)
       if(!parsed.success)return {ok:false,error:{code:'bad-request',message:'受控候选确认输入无效。',details:{}}}
-      try{return await materialResult(()=>action==='candidate/prepare'
-        ?service.prepareV340CandidateConfirmation(parsed.data):service.createV340Run(parsed.data))}
+      try{return await withLocalSkill(()=>action==='candidate/prepare'
+        ?service.prepareV340CandidateConfirmation(parsed.data):service.createV340Run(parsed.data), service.patentDisclosureCandidateEnabled === true)}
       catch{return {ok:false,error:{code:'V340_OPERATION_FAILED',message:'候选状态未确认，请重新核对原任务；不会自动派发。',details:{}}}}
+    }
+    if (nextOffline && endpoint === 'workflow/v340/offline/run') {
+      const parsed = v340Commands['offline/run'].safeParse(payload)
+      if (!parsed.success) return { ok: false, error: { code: 'bad-request', message: '请确认离线生成。', details: {} } }
+      const { confirmed, ...command } = parsed.data
+      return materialResult(() => service.createV340Run(command))
+    }
+    if ((nextOffline || installedSkillPreference) && endpoint === 'workflow/v340/result/preview-file') {
+      const parsed = v340Commands['result/preview-file'].safeParse(payload)
+      if (!parsed.success) return { ok: false, error: { code: 'bad-request', message: '文件预览身份无效。', details: {} } }
+      return materialResult(() => service.previewV340SavedFile(parsed.data))
     }
     const v340Methods={'task/create':'createV340Task','task/draft':'updateV340Draft','run/observe':'observeV340Run','run/stop':'stopV340Run','result/draft':'saveV340ResultDraft',
       'result/edit':'editV340Result','result/review':'reviewV340Result','result/prepare-save':'prepareV340Save','result/commit-save':'commitV340Save',
@@ -254,7 +285,7 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
       const parsed = parsePayload(workflowCatalogPayloadSchema, payload)
       if (!parsed.success) return parsed
       return { ok: true, value: { ...service.getWorkflowCatalog(parsed.data.workType),
-        ...(m06Candidate013===true ? {apiExecutionAvailable:false} : professionalService?.previewClaims ? { apiExecutionAvailable: true } : {}) } }
+        ...(m06Candidate013===true ? {apiExecutionAvailable:false} : !nextOffline && professionalService?.previewClaims ? { apiExecutionAvailable: true } : {}) } }
     }
 
     if (endpoint === 'professional/bootstrap') {
@@ -338,7 +369,7 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
     if (endpoint === 'task/create-unified') {
       const parsed = parsePayload(taskCreatePayloadSchema, payload)
       if (!parsed.success) return parsed
-      return materialResult(() => service.createUnifiedRun(parsed.data))
+      return withLocalSkill(() => service.createUnifiedRun(parsed.data))
     }
     if (endpoint === 'task/select-upstream') {
       const parsed = parsePayload(z.object({ ...materialCommandBase, relativePath: z.string().min(1).max(1024).nullable(), confirmed: z.literal(true) }).strict(), payload)
@@ -348,7 +379,7 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
     if (endpoint === 'task/prepare-local') {
       const parsed = parsePayload(z.object({ ...materialCommandBase, sessionId: workspaceIdSchema }).strict(), payload)
       if (!parsed.success) return parsed
-      return materialResult(() => service.prepareLocalRun(parsed.data))
+      return withLocalSkill(() => service.prepareLocalRun(parsed.data), service.localGenerationKind === 'native-model')
     }
     if (endpoint === 'task/prepare-api') {
       const parsed = parsePayload(z.object({ ...materialCommandBase,
@@ -372,7 +403,7 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
         confirmation: z.object({ sha256: z.string().regex(/^[a-f0-9]{64}$/), confirmed: z.literal(true) }).strict().optional(),
       }).strict(), payload)
       if (!parsed.success) return parsed
-      return materialResult(() => service.createLocalRun(parsed.data))
+      return withLocalSkill(() => service.createLocalRun(parsed.data), service.localGenerationKind === 'native-model')
     }
     if (endpoint === 'task/preview-api') {
       const parsed = parsePayload(z.object({ ...materialCommandBase,

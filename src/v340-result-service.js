@@ -20,6 +20,36 @@ function allow(record,run,versionId){if(busy(record)||getV340ResultDrafts(run)[v
 export function createV340ResultService({repository,writebackManager,materialManager,clock=()=>new Date().toISOString(),uuidFactory=randomUUID}){
  const parse=(name,input)=>{const p=v340Commands[name].safeParse(input);if(!p.success)fail('V340_INVALID_INPUT','结果操作输入无效。');return p.data}
  const manager=()=>{if(!writebackManager)fail('V340_SAVE_UNAVAILABLE','当前项目保存不可用。');return writebackManager}
+ async function savedFile(input, preview) {
+   const c=parse(preview?'result/preview-file':'result/saved-file',input),record=repository.get(c.workspaceId)
+   if(record.revision!==c.expectedRevision)fail('REVISION_CONFLICT','请刷新当前版本后重新打开。')
+   const {run,version}=selected(record,c);allow(record,run,c.versionId)
+   if(version.review.status!=='approved')fail('V340_REVIEW_REQUIRED','请选择已明确审核的固定版本。')
+   const saved=version.writebacks.find(w=>w.writebackId===c.writebackId),file=saved?.files.find(f=>f.mediaType==='text/markdown')
+   if(!file||saved.artifactId!==`sha256:${c.resultSha256}`||file.sha256!==c.resultSha256)fail('WRITEBACK_NOT_FOUND','未找到当前固定版本的保存回执。')
+   if(!materialManager)fail('V340_SAVE_UNAVAILABLE','安全文件读取不可用。')
+   const policy={acceptedExtensions:['.md'],maxFileBytes:V340_LIMITS.documentBytes,contentReadMode:'metadata-only'}
+   async function resolveCurrentPath() {
+     try { return await manager().resolveSavedFile(c.workspaceId,file.relativePath) }
+     catch (error) {
+       if (!preview) throw error
+       fail('V340_PREVIEW_FILE_UNAVAILABLE','保存文件不存在、已重定向或无法安全读取。')
+     }
+   }
+   const absolutePath=await resolveCurrentPath()
+   const current=await materialManager.inspect(c.workspaceId,file.relativePath,policy,absolutePath)
+   let text
+   if (preview) {
+     const read=await materialManager.readForUpload(c.workspaceId,{kind:'project-file',...current},policy,absolutePath)
+     try { text=new TextDecoder('utf-8',{fatal:true}).decode(read.bytes) }
+     catch { fail('V340_PREVIEW_ENCODING','文件不是有效的 UTF-8 Markdown。') }
+     if (text.includes('\0')) fail('V340_PREVIEW_ENCODING','文件包含不可预览的二进制内容。')
+   }
+   if(await resolveCurrentPath()!==absolutePath)fail('V340_SAVE_STALE','项目根目录已变化，请重新打开当前项目文件。')
+   if(repository.get(c.workspaceId).revision!==c.expectedRevision)fail('REVISION_CONFLICT','任务已变化，请重新打开。')
+   const identity={...c,artifactId:saved.artifactId,currentSha256:current.sha256,matchesReviewed:current.sha256===c.resultSha256}
+   return preview ? {...identity,fileName:current.displayName,text} : {...identity,absolutePath,kind:'current-file'}
+ }
  return{
   async editV340Result(input){
    const c=parse('result/edit',input)
@@ -74,20 +104,8 @@ export function createV340ResultService({repository,writebackManager,materialMan
    if(text.length>V340_CONVERSATION_TEXT_LIMIT)fail('V340_REFERENCE_TOO_LARGE','固定版本全文超过对话草稿上限；请复制完整正文或导出Markdown并打开。未插入或截断正文。')
    return{...c,artifactId:`sha256:${c.resultSha256}`,text}
   },
-  async resolveV340SavedFile(input){
-   const c=parse('result/saved-file',input),record=repository.get(c.workspaceId)
-   if(record.revision!==c.expectedRevision)fail('REVISION_CONFLICT','请刷新当前版本后重新打开。')
-   const {run,version}=selected(record,c);allow(record,run,c.versionId)
-   if(version.review.status!=='approved')fail('V340_REVIEW_REQUIRED','请选择已明确审核的固定版本。')
-   const saved=version.writebacks.find(w=>w.writebackId===c.writebackId),file=saved?.files.find(f=>f.mediaType==='text/markdown')
-   if(!file||saved.artifactId!==`sha256:${c.resultSha256}`||file.sha256!==c.resultSha256)fail('WRITEBACK_NOT_FOUND','未找到当前固定版本的保存回执。')
-   if(!materialManager)fail('V340_SAVE_UNAVAILABLE','安全文件读取不可用。')
-   const absolutePath=await manager().resolveSavedFile(c.workspaceId,file.relativePath)
-   const current=await materialManager.inspect(c.workspaceId,file.relativePath,{acceptedExtensions:['.md'],maxFileBytes:V340_LIMITS.documentBytes,contentReadMode:'metadata-only'},absolutePath)
-   if(await manager().resolveSavedFile(c.workspaceId,file.relativePath)!==absolutePath)fail('V340_SAVE_STALE','项目根目录已变化，请重新打开当前项目文件。')
-   if(repository.get(c.workspaceId).revision!==c.expectedRevision)fail('REVISION_CONFLICT','任务已变化，请重新打开。')
-   return{...c,artifactId:saved.artifactId,absolutePath,kind:'current-file',currentSha256:current.sha256,matchesReviewed:current.sha256===c.resultSha256}
-  },
+  resolveV340SavedFile: input => savedFile(input, false),
+  previewV340SavedFile: input => savedFile(input, true),
   async commitV340Save(input){
    const c=parse('result/commit-save',input),m=manager(),plan=m.consume(c.confirmationToken)
    const info=plan.metadata.execution

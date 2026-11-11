@@ -95,7 +95,7 @@ async function hydrateSurface({ store, workspaceId, workspaceItems, hostMode }) 
     store.hydrateWorkspace(workspaceId),
     store.loadWorkflowCatalog(workspaceId),
   ])
-  if(store.getWorkspaceState(workspaceId).v340Catalog?.nativeZeroGeneration!==true&&!store.getWorkspaceState(workspaceId).v340Catalog?.nativeBusinessRecovery&&typeof store.loadProfessionalBootstrap==='function')await store.loadProfessionalBootstrap(workspaceId).catch(()=>null)
+  if(store.getWorkspaceState(workspaceId).v340Catalog?.nextOffline!==true&&store.getWorkspaceState(workspaceId).v340Catalog?.nativeZeroGeneration!==true&&!store.getWorkspaceState(workspaceId).v340Catalog?.nativeBusinessRecovery&&typeof store.loadProfessionalBootstrap==='function')await store.loadProfessionalBootstrap(workspaceId).catch(()=>null)
   return true
 }
 
@@ -276,6 +276,8 @@ export function OasisWorkbenchSurface({
       resume:async pageId=>{await store.activatePage(workspaceId,pageId);setCenter(false)},
       discardLocal:(pageId,expected)=>store.discardV340LocalDrafts(workspaceId,pageId,expected),
       saveDraft:(pageId,draft)=>store.saveV340Draft(workspaceId,pageId,draft),
+      runOffline:pageId=>store.runV340Offline(workspaceId,pageId),
+      previewSaved:(pageId,target,writebackId)=>store.previewV340SavedFile(workspaceId,pageId,target,writebackId),
       prepareCandidate:pageId=>store.prepareV340Candidate(workspaceId,pageId),
       confirmCandidate:pageId=>store.confirmV340Candidate(workspaceId,pageId),
       cancelCandidate:pageId=>store.cancelV340Candidate(workspaceId,pageId),
@@ -292,14 +294,15 @@ export function OasisWorkbenchSurface({
       observe:(pageId,runId)=>store.v340Action(workspaceId,pageId,'run/observe',{runId}),
       stop:(pageId,runId)=>store.v340Action(workspaceId,pageId,'run/stop',{runId}),
     },
-    onImport: store.websiteImportRemote && store.connectionSettings ? () => setImportWorkspace(workspaceId) : undefined,
+    onImport: !state.v340Catalog?.nextOffline && store.websiteImportRemote && store.connectionSettings ? () => setImportWorkspace(workspaceId) : undefined,
     markdownRenderer,
     savedFileUnavailableReason: coordinator?.captureSavedFileTarget(workspaceId) ? null : '安全文件预览不可用',
     onOpenSavedFile: (pageId, runId, writebackId) => store.openSavedFile(workspaceId, pageId, runId, writebackId),
     showFunctionCenter: center,
     nativeAvailability: coordinator?.nativeAvailability(workspaceId) ?? {},
     onOpenNative: type => coordinator?.openNativeTool(workspaceId, type) === true,
-    state: { ...state, professionalConfigurationBlocked: !configuration.canSubmit, conversationUnavailableReason },
+    state: { ...state, localSkillSuite: configuration.localSkillSuite,
+      professionalConfigurationBlocked: !configuration.canSubmit, conversationUnavailableReason },
     effectiveMode,
     onSelectWorkflow: (pageId, workflowId) => {
       if (!pageId||store.getWorkspaceState(workspaceId).pages.find(page => page.pageId === pageId)?.workflowId) {

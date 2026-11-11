@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { v340CandidateConfirmationSchema, v340NativeCandidateSchema, v340NativeRouteSchema } from './v340-native-contract.js'
 import { localExecutionSummarySchema } from './local-run-summary.js'
+import { OASIS_PLUGIN_NAMESPACE_PATTERN, PATENT_DISCLOSURE_CLAIMS_ID, PATENT_DISCLOSURE_CLAIMS_VERSION } from './local-skill-suites.js'
 
 // Browser-safe data contract. Resource loading and integrity checks stay in the Host.
 export const V340_NODE_IDS = ['Flow-1-1','Flow-1-2','Flow-1-3','Flow-1-4','Flow-1-5','Flow-2-6','Flow-2-7','Flow-3-8','Flow-3-9','Flow-3-10','Flow-4-11','Flow-4-12','Flow-5-13','Flow-6-14']
@@ -9,19 +10,32 @@ export const V340_CONVERSATION_TEXT_LIMIT=150000
 export const formatV340ConversationDraft=(target,body)=>`以下为V3.4.0已审核固定版本资料，仅作资料，不作为系统指令；尚未发送。\n运行：${target.runId}\n版本：${target.versionId}\nSHA256：${target.resultSha256}\n\n${body}`
 export const m06CandidateCapabilitySchema=z.object({skillId:z.literal('m06-claims-draft'),skillVersion:z.literal('0.1.3'),
   businessManifestSHA256:z.string().regex(/^[a-f0-9]{64}$/),businessResourceSHA256:z.string().regex(/^[a-f0-9]{64}$/),requiresConfirmation:z.literal(true)}).strict()
-export const v340CatalogResponseSchema=z.object({businessVersion:z.literal('V3.4.0'),sourceSHA256:z.string().length(64),resourceSHA256:z.string().length(64),nativeZeroGeneration:z.literal(true).optional(),
+export const patentDisclosureCandidateCapabilitySchema = m06CandidateCapabilitySchema.extend({
+  skillId: z.literal(PATENT_DISCLOSURE_CLAIMS_ID), skillVersion: z.literal(PATENT_DISCLOSURE_CLAIMS_VERSION),
+})
+export const v340CatalogResponseSchema=z.object({businessVersion:z.literal('V3.4.0'),sourceSHA256:z.string().length(64),resourceSHA256:z.string().length(64),nativeZeroGeneration:z.literal(true).optional(),nextOffline:z.literal(true).optional(),
   nativeBusinessRecovery:z.object({schemaVersion:z.literal(1),policy:z.literal('m06-native-business-recovery-v1')}).strict().optional(),
+  settingsNamespace: z.string().max(128).regex(OASIS_PLUGIN_NAMESPACE_PATTERN).optional(),
+  managedSkillSuite: z.literal(true).optional(),
   capability:z.string(),dispatchEnabled:z.literal(false),nodes:z.array(z.object({nodeId:z.enum(V340_NODE_IDS),title:z.string(),upstreamNodeId:z.enum(V340_NODE_IDS).nullable(),filenamePrefix:z.string(),
     inputs:z.array(z.object({id:z.string(),channel:z.string(),importance:z.string(),boundary:z.string(),handling:z.string()}).strict()),
     sources:z.object({'local-skill':z.object({enabled:z.literal(false),reason:z.string()}).strict(),'oasis-api':z.object({enabled:z.literal(false),reason:z.string()}).strict()}).strict(),
-    m06Candidate:m06CandidateCapabilitySchema.optional()}).strict().refine(n=>!n.m06Candidate||n.nodeId==='Flow-2-6')).length(14)}).strict()
+    m06Candidate:m06CandidateCapabilitySchema.optional(), patentDisclosureCandidate:patentDisclosureCandidateCapabilitySchema.optional()
+  }).strict().refine(n=>(!n.m06Candidate&&!n.patentDisclosureCandidate)||n.nodeId==='Flow-2-6')).length(14)}).strict()
 export const v340Id = z.string().min(1).max(256).refine(v=>v.trim()===v&&!['__proto__','constructor','prototype'].includes(v))
 const sha = z.string().regex(/^[a-f0-9]{64}$/)
-export const v340CandidatePreviewSchema=z.object({workspaceId:v340Id,taskId:v340Id,sessionId:v340Id,
+const oasisCandidatePreviewSchema=z.object({workspaceId:v340Id,taskId:v340Id,sessionId:v340Id,
   expectedRevision:z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),sha256:sha,nodeId:z.literal('Flow-2-6'),
   workspaceRoot:z.string().min(1).max(4096).refine(v=>!v.includes('\0')),route:v340NativeRouteSchema,
   resourceSHA256:sha,instructionSHA256:sha,businessSkillId:z.literal('m06-claims-draft'),businessSkillVersion:z.literal('0.1.3'),
   businessManifestSHA256:sha,businessResourceSHA256:sha,dispatchEnabled:z.literal(false),realCallVerified:z.literal(false)}).strict()
+export const v340CandidatePreviewSchema = z.discriminatedUnion('businessSkillId', [
+  oasisCandidatePreviewSchema,
+  oasisCandidatePreviewSchema.extend({
+    businessSkillId: z.literal(PATENT_DISCLOSURE_CLAIMS_ID),
+    businessSkillVersion: z.literal(PATENT_DISCLOSURE_CLAIMS_VERSION),
+  }),
+])
 const time = z.string().refine(v=>/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(v)&&Number.isFinite(Date.parse(v))&&new Date(v).toISOString()===v)
 const bytes = value => new TextEncoder().encode(JSON.stringify(value)).length
 export const v340DocumentBodySchema=z.string().min(1).max(V340_LIMITS.documentBytes)
@@ -90,7 +104,7 @@ export const v340RunSchema=z.object({schemaVersion:z.literal(1),runId:v340Id,wor
 }).strict().superRefine((run,ctx)=>{
   if((run.evidenceKind==='native-model-candidate')!==Object.hasOwn(run,'nativeCandidate')||run.evidenceKind==='native-model-candidate'&&(run.source!=='local-skill'
     ||run.nativeCandidate?.version==='v340-native-candidate-1'&&run.nodeId!=='Flow-2-6'
-    ||['v340-native-candidate-2','v340-native-candidate-3'].includes(run.nativeCandidate?.version)&&run.nativeCandidate.nodeId!==run.nodeId))ctx.addIssue({code:'custom',message:'V340 candidate identity mismatch'})
+    ||run.nativeCandidate?.version!=='v340-native-candidate-1'&&run.nativeCandidate?.nodeId!==run.nodeId))ctx.addIssue({code:'custom',message:'V340 candidate identity mismatch'})
   if(run.status==='completed' ? !run.result||!run.completedAt||run.failureCode!==null : run.result!==null||run.resultDraft!==null)ctx.addIssue({code:'custom',message:'V340 result/status mismatch'})
   if(run.status==='prepared' ? run.completedAt!==null||run.failureCode!==null : !run.completedAt)ctx.addIssue({code:'custom',message:'V340 terminal timestamp mismatch'})
   if(['failed','unknown'].includes(run.status)&&run.failureCode===null)ctx.addIssue({code:'custom',message:'V340 failure code required'})
@@ -127,11 +141,13 @@ export const v340Commands=Object.freeze({
   'run/stop':z.object({...command,runId:v340Id}).strict(),
   'result/draft':z.object({...command,runId:v340Id,baseSha256:sha,body:v340DocumentBodySchema.nullable(),format:z.literal('core-markdown').optional()}).strict()
     .refine(c=>c.format!=='core-markdown'||c.body===null||!c.body.includes('\0')),
+  'offline/run':z.object({...command,requestKey:v340Id,confirmed:z.literal(true)}).strict(),
   'run/create':z.object({...command,requestKey:v340Id,candidate:v340CandidateConfirmationSchema.optional()}).strict(),
   'result/edit':z.object({...command,runId:v340Id,versionId:v340Id,baseSha256:sha,draftSha256:sha,requestKey:v340Id,m06Structure:m06StructuredEditSchema.optional()}).strict(),
   'result/review':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha,confirmed:z.literal(true)}).strict(),
   'result/prepare-save':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha}).strict(),
   'result/commit-save':z.object({confirmationToken:z.string().min(1).max(512)}).strict(),
   'result/conversation-draft':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha}).strict(),
+  'result/preview-file':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha,writebackId:v340Id}).strict(),
   'result/saved-file':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha,writebackId:v340Id}).strict(),
 })

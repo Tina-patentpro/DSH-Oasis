@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { PATENT_DISCLOSURE_CLAIMS_ID, PATENT_DISCLOSURE_CLAIMS_VERSION } from './local-skill-suites.js'
 import { claimsApiSnapshotSchema } from './claims-api-execution-contract.js'
 import { fast39EvidenceSchema, fast39EvidenceStatus } from './m06-fast39-contract.js'
 import { localExecutionSummarySchema } from './local-run-summary.js'
@@ -656,6 +657,18 @@ export const oasisApiRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
   }
 })
 
+const oasisClaimsSkillVersion = z.enum(['public-4e2-1', '0.2.0', '0.2.1', '0.2.2'])
+const localClaimsIdentitySchema = z.discriminatedUnion('skillId', [
+  z.object({ skillId: z.literal('flow-2-6'), skillVersion: oasisClaimsSkillVersion }).strict(),
+  z.object({ skillId: z.literal(PATENT_DISCLOSURE_CLAIMS_ID), skillVersion: z.literal(PATENT_DISCLOSURE_CLAIMS_VERSION) }).strict(),
+])
+const localClaimsProvenanceFields = {
+  inputSchemaVersion: z.literal('claims-disclosure-2'), outputSchemaVersion: z.literal('claims-cumulative-2'),
+  executionContractVersion: z.literal('single-call-cumulative-1'), manifestSha256: sha256Schema, assemblySha256: sha256Schema,
+}
+export const localClaimsProvenanceSchema = z.discriminatedUnion('skillId',
+  localClaimsIdentitySchema.options.map(schema => schema.extend(localClaimsProvenanceFields)))
+
 export const dshLocalRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
   mode: z.literal('dsh-local'), source: z.literal('local-skill'), evidenceKind: z.enum(['native-offline', 'native-model']),
   fixtureVersion: z.never().optional(), executionVersion: z.enum(['1', '2']),
@@ -666,14 +679,11 @@ export const dshLocalRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
   contextSnapshot: z.object({ sessionId: identifierSchema,
     route: z.object({ provider: identifierSchema, model: identifierSchema, reasoningEffort: z.string().min(1).max(64).optional() }).strict(),
     instructionVersion: identifierSchema, instructionSha256: sha256Schema,
-    skillProvenance: z.object({ skillId: z.literal('flow-2-6'), skillVersion: z.enum(['public-4e2-1', '0.2.0', '0.2.1', '0.2.2']),
-      inputSchemaVersion: z.literal('claims-disclosure-2'), outputSchemaVersion: z.literal('claims-cumulative-2'),
-      executionContractVersion: z.literal('single-call-cumulative-1'), manifestSha256: sha256Schema, assemblySha256: sha256Schema,
-    }).strict().optional(),
+    skillProvenance: localClaimsProvenanceSchema.optional(),
   }).strict(),
 }).superRefine((run, ctx) => {
   if (run.evidenceKind === 'native-model' && (run.workflowVersion !== '2' || run.compositionVersion !== '2'
-    || !['0.2.0', '0.2.1', '0.2.2'].includes(run.contextSnapshot.skillProvenance?.skillVersion))) {
+    || !run.contextSnapshot.skillProvenance || run.contextSnapshot.skillProvenance.skillVersion === 'public-4e2-1')) {
     ctx.addIssue({ code: 'custom', message: 'real model requires formal contract 2 resources' })
   }
   if (run.executionVersion !== run.workflowVersion || (run.workflowVersion === '2') !== Boolean(run.contextSnapshot.skillProvenance)
@@ -694,7 +704,10 @@ export const localGenerationPreviewSchema = z.object({
   expectedRevision: z.number().int().nonnegative(), sha256: sha256Schema,
   route: z.object({ provider: identifierSchema, model: identifierSchema, reasoningEffort: z.string().min(1).max(64).optional() }).strict(),
   upstreamIncluded: z.boolean(), characterCount: z.number().int().nonnegative(),
-  skill: z.object({ id: z.literal('flow-2-6'), version: z.enum(['public-4e2-1', '0.2.0', '0.2.1', '0.2.2']) }).strict().nullable(),
+  skill: z.discriminatedUnion('id', [
+    z.object({ id: z.literal('flow-2-6'), version: oasisClaimsSkillVersion }).strict(),
+    z.object({ id: z.literal(PATENT_DISCLOSURE_CLAIMS_ID), version: z.literal(PATENT_DISCLOSURE_CLAIMS_VERSION) }).strict(),
+  ]).nullable(),
 }).strict()
 
 export const conversationDraftResponseSchema = z.object({
@@ -712,6 +725,12 @@ const v340SelectionResponse={versionId:identifierSchema,resultSha256:sha256Schem
 export const v340ConversationDraftResponseSchema=conversationDraftResponseSchema.extend(v340SelectionResponse).strict()
 export const v340SavedFileResponseSchema=savedFileResponseSchema.extend({...v340SelectionResponse,matchesReviewed:z.boolean(),currentSha256:sha256Schema}).strict()
   .refine(v=>v.matchesReviewed===(v.currentSha256===v.resultSha256),'Current file review status mismatch')
+
+export const v340FilePreviewResponseSchema = z.object({
+  ...v340SelectionResponse, workspaceId:identifierSchema, taskId:identifierSchema, runId:identifierSchema,
+  writebackId:identifierSchema, artifactId:z.string().regex(/^sha256:[a-f0-9]{64}$/), currentSha256:sha256Schema, matchesReviewed:z.boolean(),
+  fileName:z.string().min(1).max(1024), text:z.string().max(1024*1024),
+}).strict().refine(value=>value.matchesReviewed===(value.currentSha256===value.resultSha256))
 
 export const professionalDraftSchema = z.object({
   selectedApiEndpoint: identifierSchema,

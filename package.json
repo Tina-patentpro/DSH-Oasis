@@ -1,20 +1,22 @@
 {
   "name": "oasis-professional-service",
-  "version": "0.1.0-rc.5",
-  "description": "Oasis M06 public distribution candidate; native and live acceptance pending.",
+  "version": "0.1.0-rc.5.next.6",
+  "description": "Local DSH NEXT build with two patent Skills and an explicit offline test mode.",
   "private": true,
   "type": "module",
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
   },
-  "main": "./src/index.js",
+  "main": "./src/m06-next-merged-host.js",
   "exports": {
-    ".": "./src/index.js",
+    ".": "./src/m06-next-merged-host.js",
     "./m06-controlled-host-013": "./src/m06-controlled-host-013.js",
     "./m06-workarea-host-013": "./src/m06-workarea-host-013.js",
     "./client": "./lib/client.js",
     "./package.json": "./package.json",
-    "./m06-native-business-recovery": "./src/m06-native-business-recovery-host.js"
+    "./m06-native-business-recovery": "./src/m06-native-business-recovery-host.js",
+    "./m06-next-offline": "./src/m06-next-offline-host.js",
+    "./m06-next-merged": "./src/m06-next-merged-host.js"
   },
   "files": [
     "src",
@@ -27,43 +29,43 @@
     "PUBLIC-RELEASE.json"
   ],
   "peerDependencies": {
-    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
-    "@deepseek-ai/cordis": "4.0.4",
-    "@deepseek-ai/dsh-credentials": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-connection": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-conversation": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-layout": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-primitives": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-settings": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-storage-domain": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-settings": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-tools": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-workspace": "0.2.0-rc.2",
-    "@deepseek-ai/schemastery": "^3.18.4",
+    "@deepseek-ai/dsh-llm": "0.2.2-rc.1",
+    "@deepseek-ai/cordis": "4.1.0",
+    "@deepseek-ai/dsh-credentials": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-client-connection": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-layout": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-primitives": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-settings": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-storage-domain": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-settings": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-tools": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-workspace": "0.2.2-rc.1",
+    "@deepseek-ai/schemastery": "3.19.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zod": "4.4.3"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-llm": "0.2.0-rc.2",
-    "@deepseek-ai/cordis": "4.0.4",
-    "@deepseek-ai/dsh-client-connection": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-conversation": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-layout": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-primitives": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-client-ui-settings": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-credentials": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-settings": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-storage-domain": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-tools": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-workspace": "0.2.0-rc.2",
-    "@deepseek-ai/schemastery": "3.18.4",
+    "@deepseek-ai/dsh-llm": "0.2.2-rc.1",
+    "@deepseek-ai/cordis": "4.1.0",
+    "@deepseek-ai/dsh-client-connection": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-layout": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-primitives": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-client-ui-settings": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-credentials": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-settings": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-storage-domain": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-tools": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-workspace": "0.2.2-rc.1",
+    "@deepseek-ai/schemastery": "3.19.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "tsdown": "0.22.14",
     "zod": "4.4.3",
-    "@deepseek-ai/dsh-scope": "0.2.0-rc.2",
-    "@deepseek-ai/dsh-storage": "0.2.0-rc.2"
+    "@deepseek-ai/dsh-scope": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-storage": "0.2.2-rc.1"
   },
   "dsh": {
     "client": {
@@ -82,12 +84,21 @@
   },
   "license": "SEE LICENSE IN LICENSE",
   "oasisRelease": {
-    "version": "0.1.0-rc.5",
+    "version": "0.1.0-rc.5.next.6",
     "resourceVersion": "0.1.3-public.1",
     "publicationAuthorized": false,
     "nativeAcceptance": false,
     "realGenerationVerified": false,
     "verifiedEntry": "./m06-controlled-host-013",
-    "legacyResourcesIncluded": false
+    "legacyResourcesIncluded": false,
+    "baseVersion": "0.1.0-rc.5"
+  },
+  "oasisNextCompatibility": {
+    "desktop": "2.0.22-next",
+    "dsh": "0.2.2-rc.1",
+    "cordis": "4.1.0",
+    "sidebar": "0.30.1",
+    "sourceArchiveSHA256": "e94f9136f7d93373569444180fb2351b09db52ba2851fb84411e5125a56a0bc5",
+    "offlineEntry": "./m06-next-offline"
   }
 }
