@@ -103,10 +103,12 @@ export function assertV340NativeCandidate(run){
 
 // Never installed by index/Host. Only explicit internal injection can exercise this candidate.
 // The llm context owns native credentials/permission handling; no tokens are copied or stored here.
-function createNativeCandidate({nodeId='Flow-2-6',ctx,native,timeoutMs=120000,business=false}){
+function createNativeCandidate({nodeId='Flow-2-6',ctx,native,timeoutMs=120000,business=false,recordEvidence,captureDiagnostics=false}){
+  if(recordEvidence!==undefined&&(business!=='0.1.3'||typeof recordEvidence!=='function'))throw new TypeError('Invalid controlled M06 evidence recorder')
+  if(typeof captureDiagnostics!=='boolean'||captureDiagnostics&&(business!=='0.1.3'||typeof recordEvidence!=='function'))throw new TypeError('Invalid controlled M06 diagnostic capture')
   getV340Node(nodeId)
   const instruction=instructionFor(nodeId,business),consumed=new Set(),receiptVersion=receiptVersionFor(business)
-  const adapter=createDshV340GenerationAdapter({llm:ctx?.llm,BlockAssembler:native?.BlockAssembler,createUserMessage:native?.createUserMessage,timeoutMs})
+  const adapter=createDshV340GenerationAdapter({llm:ctx?.llm,BlockAssembler:native?.BlockAssembler,createUserMessage:native?.createUserMessage,timeoutMs,captureDiagnostics})
   function context(workspaceId,sessionId){
     const current=resolveDshGenerationContext(ctx,{workspaceId,sessionId},{includeWorkspaceRoot:true})
     if(current.route.provider==='oasis-offline')fail()
@@ -150,8 +152,25 @@ function createNativeCandidate({nodeId='Flow-2-6',ctx,native,timeoutMs=120000,bu
         const prepared=preparedValue(nodeId,restoreV340Prepared(run.inputSnapshot))
         if(canonicalJson(prepared)!==canonicalJson(input.prepared))fail()
         consumed.add(key)
-        const response=await adapter.generate({runId:run.runId,sessionId:receipt.sessionId,route:receipt.route,
-          instruction:{version:'V3.4.0',body:systemFor(nodeId,false,business)},requestText:requestText(run.inputSnapshot,prepared),signal:input.signal,assertCurrent})
+        const system=systemFor(nodeId,false,business),text=requestText(run.inputSnapshot,prepared)
+        // Trusted engineering composition only; a failed pre-dispatch capture cannot send data.
+        if(recordEvidence){
+          const capturedRun=Object.fromEntries(['schemaVersion','runId','workflowRunUid','requestKey','workspaceId','taskId',
+            'nodeId','source','evidenceKind','inputSchemaVersion','inputSnapshot','inputSha256','nativeCandidate','status','createdAt'].map(field=>[field,run[field]]))
+          await recordEvidence(freezeV340({kind:'request',run:structuredClone(capturedRun),system,requestText:text}))
+        }
+        const {diagnostic,...response}=await adapter.generate({runId:run.runId,sessionId:receipt.sessionId,route:receipt.route,
+          instruction:{version:'V3.4.0',body:system},requestText:text,signal:input.signal,assertCurrent})
+        if(recordEvidence){
+          try{
+            if(captureDiagnostics&&diagnostic)await recordEvidence(freezeV340({kind:'diagnostic',runId:run.runId,
+              requestKeySHA256:v340Hash(run.requestKey),diagnostic}))
+            await recordEvidence(freezeV340({kind:'response',runId:run.runId,status:response.status,
+              ...(response.status==='completed'?{body:response.body}:{}),
+              ...(['INVALID_INPUT','MODEL_UNAVAILABLE','MODEL_LIMITED','INVALID_OUTPUT','GENERATION_FAILED','ABORTED','TIMED_OUT'].includes(response.code)?{code:response.code}:{}),
+              executionSummary:normalizeLocalExecutionSummary(response.executionSummary)}))
+          }catch{return{status:'unknown',code:'EXECUTION_UNCONFIRMED'}}
+        }
         if(response.status!=='completed')return response
         const executionSummary=normalizeLocalExecutionSummary(response.executionSummary)
         let value
@@ -170,9 +189,9 @@ export function createV340NativeCandidate(options){return createNativeCandidate(
 export function createM06BusinessNativeCandidate({ctx,native,timeoutMs=120000}){
   return createNativeCandidate({nodeId:'Flow-2-6',ctx,native,timeoutMs,business:true})
 }
-export function createM06BusinessNativeCandidate013({ ctx, native, timeoutMs = 120000, getLocalSkillSuite }) {
+export function createM06BusinessNativeCandidate013({ ctx, native, timeoutMs = 120000, getLocalSkillSuite, recordEvidence, captureDiagnostics = false }) {
   const options = { nodeId: 'Flow-2-6', ctx, native, timeoutMs }
-  const oasis = createNativeCandidate({ ...options, business: '0.1.3' })
+  const oasis = createNativeCandidate({ ...options, business: '0.1.3', recordEvidence, captureDiagnostics })
   if (!getLocalSkillSuite) return oasis
   let external, patentDisclosureCandidate
   try {

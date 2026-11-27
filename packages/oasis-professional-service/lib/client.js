@@ -11617,6 +11617,21 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		};
 		//#endregion
 		//#region src/client/project-resolution.js
+		function resolveMainViewSessionId(snapshot) {
+			const byId = snapshot?.byId;
+			if (byId === null || typeof byId !== "object" || Array.isArray(byId)) return void 0;
+			let currentSessionId = null;
+			for (const [id, row] of Object.entries(byId)) {
+				if (id.length === 0 || row?.id !== id) return void 0;
+				const retainedBy = row.retainedBy;
+				if (retainedBy === null || typeof retainedBy !== "object" || Array.isArray(retainedBy)) return void 0;
+				if (Object.values(retainedBy).some((count) => !Number.isSafeInteger(count) || count < 0)) return void 0;
+				if ((retainedBy.mainView ?? 0) === 0) continue;
+				if (currentSessionId !== null) return void 0;
+				currentSessionId = id;
+			}
+			return currentSessionId;
+		}
 		function resolveWorkspaceId(currentSessionId, workspaceItems) {
 			if (typeof currentSessionId !== "string" || currentSessionId.length === 0) return null;
 			if (!Array.isArray(workspaceItems)) return null;
@@ -11626,7 +11641,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		//#endregion
 		//#region src/client/OasisPanelHost.js
 		function OasisPanelHost({ store, focusTargets, layoutAdapter, useSessions, useWorkspaces }) {
-			const currentSessionId = useSessions((snapshot) => snapshot.current);
+			const currentSessionId = useSessions(resolveMainViewSessionId);
 			const workspaceItems = useWorkspaces((snapshot) => snapshot.items);
 			const workspaceId = resolveWorkspaceId(currentSessionId, workspaceItems);
 			return (0, react.createElement)(OasisWorkbenchSurface, {
@@ -11669,21 +11684,6 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				currentSessionId: null,
 				workspaceItems: Object.freeze([])
 			});
-		}
-		function resolveMainViewSessionId(snapshot) {
-			const byId = snapshot?.byId;
-			if (byId === null || typeof byId !== "object" || Array.isArray(byId)) return void 0;
-			let currentSessionId = null;
-			for (const [id, row] of Object.entries(byId)) {
-				if (id.length === 0 || row?.id !== id) return void 0;
-				const retainedBy = row.retainedBy;
-				if (retainedBy === null || typeof retainedBy !== "object" || Array.isArray(retainedBy)) return void 0;
-				if (Object.values(retainedBy).some((count) => !Number.isSafeInteger(count) || count < 0)) return void 0;
-				if ((retainedBy.mainView ?? 0) === 0) continue;
-				if (currentSessionId !== null) return void 0;
-				currentSessionId = id;
-			}
-			return currentSessionId;
 		}
 		function createWorkspaceContextSnapshot({ currentSessionId, workspaceItems, generation }) {
 			if (!Number.isSafeInteger(generation) || generation < 0) return blockedWorkspaceContext(0);
@@ -15225,9 +15225,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					}));
 				} catch {}
 				try {
-					coordinator.expectBetterSidebar();
 					betterSidebarFiber = ctx.inject(["betterSidebar"], (injectedCtx) => {
 						const betterSidebar = injectedCtx.get?.("betterSidebar") ?? injectedCtx.betterSidebar;
+						coordinator.expectBetterSidebar();
 						return coordinator.attachBetterSidebar(betterSidebar, betterSidebarDescriptor, injectedCtx);
 					});
 					if (typeof betterSidebarFiber?.dispose !== "function") coordinator.block("better-sidebar-injection-disposer-invalid");

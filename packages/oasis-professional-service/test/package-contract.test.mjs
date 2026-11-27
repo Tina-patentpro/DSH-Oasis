@@ -55,7 +55,7 @@ test('declares direct Host peers for settings, credentials, and their schema run
 })
 
 test('keeps the distribution whitelist free of tests and local state', () => {
-  assert.deepEqual(manifest.files, ['src', 'lib', 'docs/api/oasis-professional-service-baseline.json', 'cordis.patch.yml'])
+  assert.deepEqual(manifest.files, ['src', 'lib', 'docs/api/oasis-professional-service-baseline.json', 'cordis.patch.yml', 'THIRD-PARTY-NOTICES.md', 'licenses'])
   assert.equal(manifest.files.some((entry) => /test|node_modules|\.dsh-test|pnpm-lock/.test(entry)), false)
 })
 

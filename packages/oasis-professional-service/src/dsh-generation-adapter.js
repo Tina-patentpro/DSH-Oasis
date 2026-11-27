@@ -2,6 +2,7 @@ import { validateWorkflowForm } from './workflow-catalog.js'
 import { claimsUpstreamSnapshotSchema } from './generation-contract.js'
 import { normalizeLocalExecutionSummary } from './local-run-summary.js'
 import { V340_NODE_IDS } from './v340-runtime-contract.js'
+import {createM06ExecutionDiagnostic,ownDiagnosticValue} from './m06-execution-diagnostic.js'
 
 const MAX_TEXT = 100000
 const MAX_BLOCKS = 1024
@@ -23,7 +24,7 @@ class AdapterFailure extends Error {
 function invalid(code, uncertain = false) { throw new AdapterFailure(code, uncertain) }
 function providerCode(error) {
   try {
-    const code = error?.code
+    const code = ownDiagnosticValue(error,'code')
     if (['NO_ADAPTER', 'MISSING_CREDENTIAL', 'INVALID_CREDENTIAL', 'AUTH'].includes(code)) return 'MODEL_UNAVAILABLE'
     if (['RATE_LIMIT', 'QUOTA_EXCEEDED', 'CONTEXT_WINDOW_EXCEEDED'].includes(code)) return 'MODEL_LIMITED'
     if (code === 'ABORTED') return 'ABORTED'
@@ -80,7 +81,7 @@ function freezeTree(value) {
 }
 
 // Guard the native assembler's tolerant defaults; never buffer reasoning or replay data.
-function textConsumer(BlockAssembler, summary, maxText=MAX_TEXT, maxBytes=Infinity) {
+function textConsumer(BlockAssembler, summary, maxText=MAX_TEXT, maxBytes=Infinity,diagnostic) {
   const assembler = new BlockAssembler()
   const blocks = new Map()
   let size = 0
@@ -96,7 +97,7 @@ function textConsumer(BlockAssembler, summary, maxText=MAX_TEXT, maxBytes=Infini
         const kind = chunk.reason?.kind
         terminal = ['stop', 'max-tokens', 'tool-calls'].includes(kind)
         Object.assign(summary, normalizeLocalExecutionSummary({ finishKind: kind }))
-        if (kind === 'error') invalid(providerCode(chunk.reason.failure))
+        if (kind === 'error') {diagnostic?.callee(chunk.reason.failure);invalid(providerCode(chunk.reason.failure))}
         if (kind === 'aborted') invalid('ABORTED')
         if (kind !== 'stop') invalid('INVALID_OUTPUT')
         assembler.push({ type: 'finish', reason: { kind: 'stop' } })
@@ -150,11 +151,11 @@ function textConsumer(BlockAssembler, summary, maxText=MAX_TEXT, maxBytes=Infini
 }
 
 // Internal Host seam only. The caller owns authorization, durable admission and Workspace identity.
-function createTextAdapter({ llm, BlockAssembler, createUserMessage, timeoutMs = 120000 },capture=snapshot,maxText=MAX_TEXT,maxBytes=Infinity) {
+function createTextAdapter({ llm, BlockAssembler, createUserMessage, timeoutMs = 120000,captureDiagnostics=false },capture=snapshot,maxText=MAX_TEXT,maxBytes=Infinity) {
   return { async generate(input) {
     let request
     try {
-      if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0 || timeoutMs > 2147483647) invalid('INVALID_INPUT')
+      if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0 || timeoutMs > 2147483647||typeof captureDiagnostics!=='boolean') invalid('INVALID_INPUT')
       request = capture(input)
     } catch { return failure('INVALID_INPUT') }
     if (request.signal.aborted) return failure('ABORTED')
@@ -167,10 +168,14 @@ function createTextAdapter({ llm, BlockAssembler, createUserMessage, timeoutMs =
     const summary = {}
     let failureStage = 'preparation'
     let consumer
+    const diagnostic=captureDiagnostics?createM06ExecutionDiagnostic(input.runId,timeoutMs):undefined
+    const settle=(result,cause)=>diagnostic?{...result,diagnostic:diagnostic.finish(cause,
+      {streamEntered:dispatched,terminalSeen:consumer?.hasTerminal()===true,summary})}:result
     const controller = new AbortController()
     const stopPromise = new Promise((_, reject) => { rejectStop = reject })
     stopPromise.catch(() => {})
     const stop = code => {
+      diagnostic?.stop(code)
       if (stopped) return
       stopped = code
       controller.abort()
@@ -187,34 +192,42 @@ function createTextAdapter({ llm, BlockAssembler, createUserMessage, timeoutMs =
     }
     const wait = action => Promise.race([stopPromise, Promise.resolve().then(() => { check(); return action() })])
     try {
-      consumer = textConsumer(BlockAssembler, summary,maxText,maxBytes)
+      consumer = textConsumer(BlockAssembler, summary,maxText,maxBytes,diagnostic)
       const message = freezeTree(createUserMessage({ content: [{ type: 'text', text: request.text }] }))
       const prepared = await wait(() => {
+        diagnostic?.mark('prepare-call')
         started = true
         return llm.prepareCall(request.route, controller.signal)
       })
       check()
+      diagnostic?.mark('route-validation')
       const config = routeSnapshot(prepared.config)
       if (config.provider !== request.route.provider || config.model !== request.route.model) invalid('GENERATION_FAILED')
       if(request.strictRoute&&Object.keys(request.route).some(k=>request.route[k]!==config[k]))invalid('GENERATION_FAILED')
-      if(request.assertCurrent)await wait(()=>request.assertCurrent())
+      if(request.assertCurrent){diagnostic?.mark('admission-recheck');await wait(()=>request.assertCurrent())}
       const options = Object.freeze({ ...config, system: request.system, sessionId: request.sessionId,
         messages: Object.freeze([message]), signal: controller.signal })
       failureStage = 'stream'
       dispatched = true
+      diagnostic?.mark('stream-enter')
       iterator = prepared.stream(options)[Symbol.asyncIterator]()
       while (true) {
+        diagnostic?.mark('stream-next')
         const item = await wait(() => iterator.next())
         check()
         if (item.done === true) { exhausted = true; break }
         if (item.done !== false && item.done !== undefined) invalid('INVALID_OUTPUT')
+        diagnostic?.chunk(item.value)
+        diagnostic?.mark('consume')
         consumer.push(item.value)
       }
+      diagnostic?.mark('assemble')
       const body = consumer.result()
       check()
-      return { status: 'completed', body, model: { provider: config.provider, model: config.model },
-        executionSummary: normalizeLocalExecutionSummary(summary) }
+      return settle({ status: 'completed', body, model: { provider: config.provider, model: config.model },
+        executionSummary: normalizeLocalExecutionSummary(summary) },'completed')
     } catch (error) {
+      diagnostic?.callee(error)
       let code = stopped ?? 'GENERATION_FAILED'
       let truncated = false
       try {
@@ -227,7 +240,10 @@ function createTextAdapter({ llm, BlockAssembler, createUserMessage, timeoutMs =
       // Explicit rejection/terminal format failures keep their known-failure classification.
       const uncertain = dispatched && (code === 'GENERATION_FAILED' || truncated
         || code === 'INVALID_OUTPUT' && !consumer.hasTerminal())
-      return { ...failure(code, started, uncertain), executionSummary: normalizeLocalExecutionSummary({ ...summary, failureStage }) }
+      const cause=stopped==='TIMED_OUT'?'local-deadline':stopped==='ABORTED'?'local-abort'
+        :diagnostic?.calleeTimeoutObserved?'callee-timeout':code==='INVALID_OUTPUT'?'output-contract'
+        :code==='GENERATION_FAILED'?'unattributed':'adapter-failure'
+      return settle({ ...failure(code, started, uncertain), executionSummary: normalizeLocalExecutionSummary({ ...summary, failureStage }) },cause)
     } finally {
       clearTimeout(timer)
       request.signal.removeEventListener('abort', onAbort)

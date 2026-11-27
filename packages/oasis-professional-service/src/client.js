@@ -106,9 +106,9 @@ export function apply(ctx, { markdownRenderer } = {}) {
       // Configuration is optional; local workflows remain available.
     }
     try {
-      coordinator.expectBetterSidebar()
       betterSidebarFiber = ctx.inject(['betterSidebar'], (injectedCtx) => {
         const betterSidebar = injectedCtx.get?.('betterSidebar') ?? injectedCtx.betterSidebar
+        coordinator.expectBetterSidebar()
         return coordinator.attachBetterSidebar(betterSidebar, betterSidebarDescriptor, injectedCtx)
       })
       if (typeof betterSidebarFiber?.dispose !== 'function') {

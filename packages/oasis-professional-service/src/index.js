@@ -70,13 +70,13 @@ function registerStatusTool(ctx) {
 
 export async function apply(ctx, config) { return applyWorkbench(ctx,config,false) }
 // Selected only by the explicit subpath entry, never by user/RPC configuration.
-export async function applyM06ControlledCandidate013(ctx, config) { return applyWorkbench(ctx,config,true) }
+export async function applyM06ControlledCandidate013(ctx, config, {recordEvidence,timeoutMs=120000,captureDiagnostics=false}={}) { return applyWorkbench(ctx,config,true,false,false,{recordEvidence,timeoutMs,captureDiagnostics}) }
 export async function applyM06NativeBusinessRecovery(ctx, config) { return applyWorkbench(ctx,config,true,false,true) }
 // Explicit trusted composition for actual local M06 plus native website association.
 // Existing controlled/no-account candidates and all remote generation gates remain intact.
 export async function applyM06WorkareaCandidate013(ctx, config) { return applyWorkbench(ctx,config,true,true) }
 
-async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false, recoveryEntry = false) {
+async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false, recoveryEntry = false, controlledEvidence = {}) {
   const recoveryScope=recoveryEntry?await loadNativeBusinessRecoveryScope():null
   if(!recoveryEntry&&process.env.OASIS_NATIVE_BUSINESS_RECOVERY!==undefined)throw Error('Recovery mode requires its dedicated trusted entry')
   const nativeZeroGeneration=process.env.OASIS_NATIVE_ZERO_GENERATION==='1'
@@ -110,7 +110,7 @@ async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false
       installedSkillPreference = await openInstalledSkillPreference(ctx.storageDomain, settingsNamespace,
         getLocalSkillSuite() ?? DEFAULT_LOCAL_SKILL_SUITE)
     }
-    if(controlledM06&&!recoveryEntry)v340Executor=createM06BusinessNativeCandidate013({ctx,native:await import('@deepseek-ai/dsh-llm'),getLocalSkillSuite})
+    if(controlledM06&&!recoveryEntry)v340Executor=createM06BusinessNativeCandidate013({ctx,native:await import('@deepseek-ai/dsh-llm'),getLocalSkillSuite,...controlledEvidence})
     const modelEnabled = !fixtureEnabled && normalizeProductRuntimeConfig(settingsScope.get()).localModelEnabled
     localGeneration = controlledM06 ? null : nativeOffline ? createNativeOfflineRuntime(ctx, await import('@deepseek-ai/dsh-llm'))
       : modelEnabled ? bindNativeModelRuntime(ctx, await import('@deepseek-ai/dsh-llm'), true) : null
