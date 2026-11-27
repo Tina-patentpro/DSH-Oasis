@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "packageVersion": "0.1.0-rc.5",
+  "resourceVersion": "0.1.3-public.1",
+  "originalInternalArchiveSHA256": "5160c4e910018e71cdd3f46452a2cc80b1cab6aab810bd4ae23dc5b5a7a89785",
+  "adoptedScopeSHA256": "5e067f4344211995803e7154fbde312b31319311e5b1ca157c6abb6f8cd29ab8",
+  "adoptedLicenseSHA256": "5127ea772ba201b71404949456ebf43a193f79d1b0161f8e65172873d6ffc1f4",
+  "derivedSources": [
+    {
+      "path": "src/v340-native-model.js",
+      "originalSHA256": "5a18ed7d8248f49762ed36f62ea7ffcbfbe042c0c86f18c244b8d2b78c35e917",
+      "derivedSHA256": "3484a24dad5e6f97f5f4defd52d24d62874ae35107c8feb493a80e27583e1519",
+      "change": "explicit public-resource import only; historical loader/pins unchanged"
+    },
+    {
+      "path": "src/m06-api-contract-adapter.js",
+      "originalSHA256": "a573330085904be3b95af5b4115a348587999830c09c659812c24d3ee6953abc",
+      "derivedSHA256": "0f1220c5dcde93d8077744da47eff381f625d0b6a7a49518bd660b1e00d7f6d4",
+      "change": "explicit public-resource import only; historical loader/pins unchanged"
+    },
+    {
+      "path": "src/client/PanelPages.js",
+      "originalSHA256": "303b1b0fe99e94e0bc5ce11539fb9c2f13c2e8ebdee08c186d1f9b9ebea86c3c",
+      "derivedSHA256": "7eacb7333c730322782dc9e54962f571ac438e6f7dc5c9a607eee6ffd79d3649",
+      "change": "UI-RC2-01 approved V0.1 recovery restrictions, existing FunctionCenter/creation callback only"
+    },
+    {
+      "path": "src/client/PanelChrome.js",
+      "originalSHA256": "035d65201db34e6e6479059c46f2bf71c59d9a1e67daaab2580dcc5629b19859",
+      "derivedSHA256": "a77991264c0f272d4d6538f21b4d0efbf9737facb27313d516829337b557c9d6",
+      "change": "UI-RC2-01 approved V0.1 recovery restrictions, existing FunctionCenter/creation callback only"
+    },
+    {
+      "path": "src/v340-native-model.js",
+      "originalSHA256": "3484a24dad5e6f97f5f4defd52d24d62874ae35107c8feb493a80e27583e1519",
+      "derivedSHA256": "eb776c20343bfa480a2573bb27b882db382f03a081a92fc6ef187b5f7fe61d0a",
+      "change": "optional sanitized execution metadata; no raw output, prompt, retry or acceptance change"
+    },
+    {
+      "path": "src/v340-runtime-contract.js",
+      "originalSHA256": "1c5d65694d617d4d68f8d97914dc960bdd35ab6d63c739e0774c89eaa7830c47",
+      "derivedSHA256": "8342c470b800d5887c385f0cb512df42e37d8decb4797ff319d794d02474e76c",
+      "change": "optional sanitized execution metadata; no raw output, prompt, retry or acceptance change"
+    },
+    {
+      "path": "src/v340-runtime-service.js",
+      "originalSHA256": "5b54455ed7d781bb175474b2b8c0ba826502a6c0806390788659072d394ed387",
+      "derivedSHA256": "27a87af99f0834ebf057c2641319561fef721f56a6358b60a4d3446ce547b589",
+      "change": "optional sanitized execution metadata; no raw output, prompt, retry or acceptance change"
+    },
+    {
+      "path": "src/local-run-summary.js",
+      "originalSHA256": "23e4e8f71638a3793c4c97fbd224fba764106fc0c3ea4cae38eba23ce48340c4",
+      "derivedSHA256": "76ae7704f8a3346c59782a3038973346eeeff672ad4fe69c9fefa4316061a2c3",
+      "change": "R7-01 fixed safe result-json/result-schema/result-assembly substage, old result-contract accepted; no raw output/prompt/retry change"
+    },
+    {
+      "path": "src/v340-native-model.js",
+      "originalSHA256": "eb776c20343bfa480a2573bb27b882db382f03a081a92fc6ef187b5f7fe61d0a",
+      "derivedSHA256": "d09f9eed1809e6fbe507d1f8e43ba7de28414dd831bcefd73f1d9fa3975c96e8",
+      "change": "R7-01 fixed safe result-json/result-schema/result-assembly substage, old result-contract accepted; no raw output/prompt/retry change"
+    },
+    {
+      "path": "src/v340-runtime-service.js",
+      "originalSHA256": "27a87af99f0834ebf057c2641319561fef721f56a6358b60a4d3446ce547b589",
+      "derivedSHA256": "36c3773a6aa0f64586a99e793fe39b59816454119ff928faa01baa4b9ed3835b",
+      "change": "R7-01 fixed safe result-json/result-schema/result-assembly substage, old result-contract accepted; no raw output/prompt/retry change"
+    }
+  ],
+  "sourceSelectionCount": 111,
+  "resourceManifestSHA256": "254a685fe95c9063be7232cb8dcb25333c1864ed9a5e670c0f62a04af3f3ccd4",
+  "resourceContainerSHA256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d",
+  "publicationAuthorized": false,
+  "nativeAcceptance": false,
+  "realGenerationVerified": false,
+  "excludedCompatibilityResources": true,
+  "workflowsSelected": [],
+  "limit": "M06 controlled composition only; excluded legacy resources are unavailable, no fallback or inherited acceptance",
+  "sourceSelectionCountMeaning": "Historical original formal-scope selection count; not the current archive member count",
+  "candidateMemberCount": 125,
+  "candidateSourceMemberCount": 115,
+  "candidateDerivation": {
+    "basePackageVersion": "0.1.0-rc.3",
+    "baseArchiveSHA256": "b54454a5de8d18851288e73aae7d186c5e4562f029674f0f7ef615f430fa60b6",
+    "fix": "preserve existing safe finishKind/failureStage/usage through native candidate/runtime; old records unchanged",
+    "nativeAcceptance": false,
+    "realGenerationVerified": false,
+    "publicationAuthorized": false
+  },
+  "diagnosticContinuation": {
+    "previousArchiveSHA256": "1f992c4273de2feee4f49fb928935c0f069a051f3d2f80c2c84c1f77fdf9f802",
+    "reason": "safe result-contract substage distinction only",
+    "newRealCalls": 0
+  }
+}

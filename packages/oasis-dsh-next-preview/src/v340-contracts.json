@@ -1,0 +1,1086 @@
+{
+  "businessVersion": "V3.4.0",
+  "sourceSHA256": "a0de1ecd22a74b72c236bc9dc73b71f0e48b2c88fdda0eef35b3b231bd6d10d6",
+  "common": "## 一、V3.4.0修订目标\n\n1. 每个节点只生成一份带生成时间和运行唯一编号的主Markdown；\n2. 以单一前序累计文件取代多条历史文件依赖，人工修改后的实际传入文件即为本次权威基线；\n3. 除`user_input`外，明确区分前序文件、用户文件和用户文本三类内容来源；\n4. 每个输入ID只对应一项内容，文件和文本使用不同ID；\n5. 采用运行状态和交付状态双状态，任何风险只产生警示，不中止文件生成；\n6. 允许模型补齐缺失章节，但必须完整登记依据、假设、置信度、影响范围和人工确认状态；\n7. 所有开放警示随累计快照向后传递，人工决定是否回到前序节点修订；\n8. 工作流只提供最接近现有技术候选建议，最终判断由用户、专利专业人员或审查员作出；\n9. 聚焦申请文件技术实体内容，不处理权属、优先权、首次公开等程序性事项。\n\n---\n\n## 二、全链通用合同\n\n### 2.1 唯一主Markdown与动态文件名\n\n| 节点 | 目录 | 主Markdown文件名模式 |\n|---|---|---|\n| 1-1 | `Flow-1-1-技术背景研究` | `tech_landscape_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 1-2 | `Flow-1-2-TRIZ问题分析` | `triz_analysis_report_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 1-3 | `Flow-1-3-概要专利检索` | `prior_art_set_basic_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 1-4 | `Flow-1-4-技术方案筛选` | `list_patent_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 1-5 | `Flow-1-5-技术交底书` | `disclosure_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 2-6 | `Flow-2-6-权利要求初稿` | `claims_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 2-7 | `Flow-2-7-说明书初稿` | `specification_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 3-8 | `Flow-3-8-全文深度复检` | `prior_art_set_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 3-9 | `Flow-3-9-专利撰写计划` | `patent_plan_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 3-10 | `Flow-3-10-发明人沟通确认` | `decision_notes_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 4-11 | `Flow-4-11-权利要求正式稿` | `claims_final_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 4-12 | `Flow-4-12-说明书正式稿` | `spec_final_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 5-13 | `Flow-5-13-申请文件终检` | `patent_report_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n| 6-14 | `Flow-6-14-审查意见答复` | `response_draft_<YYYYMMDDHHMMSS>_<run_uid8>.md` |\n\n命名规则：\n\n- `YYYYMMDDHHMMSS`使用Asia/Shanghai时区并精确到秒；\n- `workflow_run_uid`为每次运行新生成的完整UUID；\n- `run_uid8`为该UUID去除连字符后的前8位小写十六进制字符，用于同秒并发区分；\n- 文件名时间必须与文档内`generated_at`一致；\n- 每次运行保留独立文件，不覆盖既有输出；\n- 下游必须由调用方精确传入文件，不得扫描目录并自行选择时间最新文件。\n\n每份主Markdown固定包含以下五个二级标题，标题文字不得变更：\n\n1. `## 文档信息`\n2. `## 核心结论`\n3. `## 核心结果`\n4. `## 下游读取区`\n5. `## 风险与待确认事项`\n\n`## 文档信息`至少记录：节点编号、业务版本、`workflow_run_uid`、`run_uid8`、`generated_at`、实际文件名、`upstream_run_uid`、`upstream_filename`、`upstream_file_sha256`、全部实际输入ID、文件名或“文本输入”、内容来源、输入哈希、`workflow_status`和`deliverable_status`。Flow-1-1的三个上游字段填写`none`。\n\n`## 核心结论`用简明文字说明本节点完成了什么、当前最重要的技术判断、模型补齐范围、开放警示及是否建议直接用于下一节点或正式申请。`## 风险与待确认事项`必须逐条使用全链警示字段，不得只写“请人工复核”等泛化语句。\n\n### 2.2 双状态与持续输出\n\n`workflow_status`仅允许：\n\n| 值 | 含义 |\n|---|---|\n| `completed` | 节点按合同完成且没有开放警示 |\n| `completed_with_warnings` | 节点完成并生成文件，但存在信息缺口、冲突、推导内容或人工待确认事项 |\n\n`deliverable_status`仅允许：\n\n| 值 | 含义 |\n|---|---|\n| `ready` | 可作为下一节点的正常技术基线 |\n| `ready_with_warnings` | 可继续下游使用，但必须携带开放警示 |\n| `model_completed_pending_confirmation` | 关键章节含模型补齐内容，需人工确认 |\n| `not_recommended_for_filing` | 可继续流转和修订，但当前不建议直接作为正式提交文件 |\n\n所有节点均生成主Markdown。状态只描述风险和可用程度，不触发自动停止、自动回流或自动重跑。\n\n### 2.3 输入通道和单项输入规则\n\n业务内容来源只有以下三类：\n\n1. `upstream_md_file`：前一工作流实际传入的一份固定格式累计主Markdown；\n2. `xxx_file`：用户上传的一个文件；\n3. `xxx_text`：用户输入的一段文本内容。\n\n`user_input`是独立的用户手动文本指令，只表达本次运行的增删改、替换、范围、优先级或偏好，不作为文件通道，也不得由模型自动生成。配置值使用独立配置ID。\n\n单项输入硬规则：\n\n- 一个输入ID只能承载一项内容；\n- 同一语义材料的文件和文本必须拆成`xxx_file`与`xxx_text`；\n- 一个`*_file`只能接收一个文件；多页PDF、单一DOCX或一个压缩包仍视为一个文件；\n- 多份真实专利或对比文献必须使用编号ID分别接收，不得塞入一个不透明多文件输入；\n- 每个输入标记`accepted`、`warning`或`not_provided`；后两者不影响主文件生成。\n\n### 2.4 单一前序累计文件\n\n严格线性链如下：\n\n```text\n1-1 → 1-2 → 1-3 → 1-4 → 1-5 → 2-6 → 2-7\n    → 3-8 → 3-9 → 3-10 → 4-11 → 4-12 → 5-13 → 6-14\n```\n\n- Flow-1-2至Flow-6-14每个节点有且只有一个`upstream_md_file`；\n- 当前实际传入文件是本次运行的唯一前序权威基线，即使它已被人工增删或修改；\n- 下游不得读取、拼接或比对更早节点文件，也不得从存档目录补取历史内容；\n- `upstream_run_uid`必须等于前序文件内的`workflow_run_uid`；\n- 上游文件缺失、损坏或结构不完整时，节点仍输出结果并在风险章节说明可用边界；\n- 人工修改是否已声明由`manual_edit_manifest`记录；未声明时只记录收到文件的实际哈希，不推测修改原因。\n\n### 2.5 合并优先级和冲突处理\n\n1. 先把`upstream_md_file`的累计快照作为基线；\n2. 用户文件提供对应语义内容的主体补充；\n3. 用户文本补充、解释或纠正同语义文件；\n4. 只有`user_input`明确要求替换、删除或指定优先级时，才执行对应覆盖；\n5. 没有明确替换指令时，不静默删除上游内容；\n6. 文件、文本和上游冲突且无法按明确指令解决时，保留各版本、标记冲突并进入风险章节；\n7. 模型只补齐仍缺失的章节或技术链，不得冒充用户事实；\n8. 每项合并结果记录`content_origin`、来源定位、输入ID和变更理由。\n\n### 2.6 内容来源、模型补齐和稳定ID\n\n技术内容可信状态：\n\n| 状态 | 使用规则 |\n|---|---|\n| `source_fact` | 用户材料、附图、正式申请文件或文献直接记载 |\n| `confirmed_fact` | 用户对具体技术事实作出明确确认 |\n| `reasoned_inference` | 可由既有事实解释推导，但不是直接记载 |\n| `hypothesis_to_verify` | 方案设想或待实验验证内容 |\n| `excluded_from_formal_text` | 无依据、相互矛盾或不适合进入正式文本的内容 |\n\n`content_origin`至少区分：`upstream_snapshot`、`user_file`、`user_text`、`workflow_analysis`、`model_completed`和`human_confirmed`。\n\n每项模型补齐内容必须同时记录：\n\n- `content_origin=model_completed`；\n- `completion_basis`；\n- `assumptions`；\n- `confidence`；\n- `affected_section`；\n- `human_confirmation_status`。\n\n模型补齐内容可以进入后续分析和草稿，但在人工确认前不得变为`confirmed_fact`。`tp_id`、`solution_id`、`macro_id`、`feature_id`和`te_id`等稳定ID不得静默改变；确需修改时记录旧值、新值、修改原因、修改节点和影响范围。\n\n### 2.7 下游读取区的累计快照\n\n每份主Markdown的`## 下游读取区`不是本节点摘要，而是截至本节点的完整当前状态，至少包含：\n\n1. 快照元数据：当前节点、运行UID、上游UID、输入哈希和生成时间；\n2. `application_type`和术语表；\n3. 截至当前已生成的T1至T6，未到生产节点的表明确标记`not_yet_generated`；\n4. 当前有效的技术交底、权利要求、说明书、摘要、附图映射、检索证据、撰写计划、确认结果、终检或答复内容；\n5. 来源登记、模型补齐登记、稳定ID修订记录和`manual_edit_manifest`；\n6. 全部开放警示及其继承来源、影响和人工处理建议。\n\n新节点只替换已明确更新的当前内容，其余有效内容必须原样继承。不得因格式化、摘要化或上下文压缩而丢失技术关系、来源、警示或人工修改。\n\n### 2.8 绿洲技术要素链\n\n```text\n技术问题 TP\n  ↓\n技术方案 TS\n  ├─ 宏特征\n  └─ 元特征\n       ├─ 元实体\n       ├─ 元关系\n       ├─ 元手段\n       ├─ 元功能\n       └─ 元效果\n  ↓\n整体技术效果 TE\n```\n\n- 技术问题包含技术对象或场景、现有缺陷、原因或机理、改进目标；\n- 元特征是语义完整且可用于独立或从属权利要求的最小技术特征单元；\n- 元关系包括连接、位置、依赖、交互、时序、因果、转换和协同关系；\n- 技术效果记录关联特征、作用机理、成立条件、指标或测量方法及证据状态。\n\n### 2.9 六张稳定技术合同表\n\n六张表均位于累计快照中，不另建文件。\n\n#### T1 技术问题表\n\n| 必备列 | 内容要求 |\n|---|---|\n| `tp_id` | 技术问题稳定编号 |\n| 技术对象/场景 | 问题出现的对象、过程和条件 |\n| 现有缺陷 | 可观察的技术不足 |\n| 原因或机理 | 直接记载、合理推导或待验证假设 |\n| 改进目标 | 拟达到的技术状态 |\n| 指标/测量方法 | 指标、单位、测量或判断方式 |\n| 来源状态 | 输入ID、定位、可信状态和内容来源 |\n\n#### T2 完整技术要素表\n\n| 必备列 | 内容要求 |\n|---|---|\n| `solution_id`、`macro_id`、`feature_id` | 方案、宏特征、元特征稳定编号 |\n| 关联`tp_id` | 所解决的技术问题 |\n| 元实体 | 对象、部件、材料、数据或步骤载体 |\n| 元关系 | 连接、位置、依赖、交互、时序、因果、转换或协同关系 |\n| 元手段 | 结构、步骤、算法、工艺或控制方式 |\n| 元功能 | 元手段直接实现的技术作用 |\n| 元效果 | 元特征产生的局部结果 |\n| 必要性 | 独权必要、从权优选、可替代或仅实施例 |\n| 来源状态 | 输入ID、定位、可信状态和内容来源 |\n\n#### T3 技术效果及证据表\n\n| 必备列 | 内容要求 |\n|---|---|\n| `te_id` | 整体技术效果稳定编号 |\n| 关联`tp_id` | 所解决的技术问题 |\n| 关联特征或组合 | 产生效果的`feature_id` |\n| 作用机理 | 特征如何产生效果 |\n| 成立条件和边界 | 参数、环境、对象、组合或操作条件 |\n| 指标/测量方法 | 实验、仿真、计算或可验证观察 |\n| 证据状态 | 已验证、直接记载、合理推导或待验证 |\n\n#### T4 权利要求—说明书支持表\n\n| 必备列 | 内容要求 |\n|---|---|\n| 权利要求号/特征序号 | 被检查的权项内容 |\n| `feature_id` | 对应技术要素 |\n| 说明书支持 | 段落、实施例、附图或表格定位 |\n| 技术作用 | 对应技术问题、功能和效果 |\n| 概括层级 | 具体方式、并列选择或上位概括 |\n| 支持结论 | 充分、部分、缺失或建议限缩 |\n\n#### T5 创造性论证表\n\n| 必备列 | 内容要求 |\n|---|---|\n| 权利要求 | 被评价权项 |\n| 最接近现有技术候选 | 工作流建议、接近理由、证据、置信度和人工判断状态 |\n| 区别特征或组合 | 相互作用的特征不得任意拆散 |\n| 区别特征产生的效果 | 应能从申请文件技术内容获知 |\n| 实际解决的技术问题 | 不含区别特征或对区别特征的暗示 |\n| 技术启示分析 | 结合动机、实现路径、成功预期和技术障碍 |\n| 结论强度 | 强、中、弱或证据不足，并说明原因 |\n\n#### T6 修改依据表\n\n| 必备列 | 内容要求 |\n|---|---|\n| 修改对象 | 权利要求、说明书或答复论点 |\n| 修改前/修改后 | 精确文字或范围变化 |\n| 原申请依据 | 原始权项、说明书段落、实施例或附图定位 |\n| 技术理由 | 对应技术问题、技术手段和技术效果 |\n| 超范围检查 | 直接记载或可直接、无疑义确定 |\n| 处理建议 | 可采用、需人工确认或不建议采用 |\n\n### 2.10 全链警示规则\n\n以下情况必须写入`## 风险与待确认事项`，但不得停止主Markdown生成：\n\n1. 独权候选所需关键元实体、元关系或元手段缺失；\n2. 技术效果缺少关联特征、作用机理、成立条件或可说明依据；\n3. 不能形成至少一条可实施的完整技术方案路径；\n4. 概括范围包含不能解决相同问题或不能取得相同效果的方案；\n5. 拟新增变体、参数、步骤、关系、机理或效果没有技术来源；\n6. 实际技术问题包含区别特征本身或给出区别特征暗示；\n7. 全文或关键证据缺失但需要输出技术覆盖或创造性分析；\n8. 文件版本、人工修改或输入冲突无法确认；\n9. 关键章节由模型补齐且尚未人工确认；\n10. 最接近现有技术尚未由用户、专利专业人员或审查员最终判断。\n\n每条警示至少记录：`warning_id`、首次产生节点、继承来源、问题、受影响内容、当前处理、模型补齐情况、对交付的影响、建议人工动作和`open|confirmed|resolved|accepted`状态。开放警示必须向后继承；关闭时保留原警示和关闭依据。\n\n### 2.11 人工返工规则\n\n工作流不建立自动修复循环。需要回到前序时，仅输出：\n\n- `recommended_rework_flow`；\n- `affected_content`；\n- `reason`；\n- `recommended_action`；\n- `expected_improvement`。\n\n由人工选择节点、准备输入并重新运行。新运行使用新UUID和新文件，不覆盖原结果。\n\n### 2.12 人机责任边界\n\n- Code节点负责解析、哈希、编号、字段校验、映射、去重、格式化和状态汇总；\n- LLM节点负责技术语义分析、方案表达、撰写、比较、论证、模型补齐和专业风险识别；\n- 用户或专利专业人员负责关键技术事实确认、保护范围选择、前序返工、正式修改和提交文本确认；\n- 工作流提供最接近现有技术候选建议；用户、专利专业人员或审查员作最终判断；\n- Code不得替代LLM或人工进行新颖性、创造性、支持性、必要技术特征和最终交付判断。\n\n### 2.13 实体内容法律依据\n\n本合同按以下现行官方规范设计，只提取与申请文件技术实体内容直接有关的要求：\n\n1. [《中华人民共和国专利法（2020年修正）》](https://www.cnipa.gov.cn/art/2020/11/23/art_97_155167.html)：第二条技术方案，第二十二条新颖性、创造性和实用性，第二十六条第三款公开充分和第四款权利要求支持、清楚、简要，第三十一条单一性，第三十三条修改不得超出原说明书和权利要求书记载范围；\n2. [《中华人民共和国专利法实施细则（2023年修订）》](https://www.cnipa.gov.cn/art/2023/12/21/art_3317_189352.html)：说明书中的技术问题、技术方案、有益效果和具体实施方式，权利要求的技术特征、必要技术特征及引用关系，总的发明构思以及针对审查意见缺陷进行修改；\n3. [《专利审查指南（2023）》](https://www.cnipa.gov.cn/art/2023/12/21/art_526_189193.html)及[2025年修改决定](https://www.cnipa.gov.cn/art/2025/11/14/art_99_202568.html)：说明书可实施性、权利要求概括和支持、最接近现有技术、区别特征、技术效果、实际技术问题和技术启示等审查标准。\n\n---",
+  "tables": "## 五、生产者—消费者合同\n\n| 数据合同 | 首次生产节点 | 主要更新节点 | 下游消费方式 |\n|---|---|---|---|\n| T1技术问题表 | 1-1 | 1-2、1-4、1-5、3-9、4-12 | 仅从前一节点累计快照读取当前版 |\n| T2完整技术要素表 | 1-2 | 1-4、1-5、2-6、2-7、4-11、4-12 | 仅从前一节点累计快照读取当前版 |\n| T3技术效果及证据表 | 1-2 | 1-5、2-7、3-10、4-12、5-13 | 仅从前一节点累计快照读取当前版 |\n| T4权利要求—说明书支持表 | 2-6 | 2-7、4-11、4-12、5-13 | 仅从前一节点累计快照读取当前版 |\n| T5创造性论证表 | 3-9 | 3-10、5-13、6-14 | 仅从前一节点累计快照读取当前版 |\n| T6修改依据表 | 4-11 | 4-12、5-13、6-14 | 仅从前一节点累计快照读取当前版 |\n\n所有直接被下游读取的表、状态、警示和关键列，在实际YML中必须满足以下二选一：被结构化输出合同标记为必需；或下游只读取一个保证完整的必需累计快照字段。仅声明在Schema的`properties`中但不列入`required`，不能视为合同已实现。\n\n### 5.1 来源追踪最小合同\n\n| 字段 | 用途 |\n|---|---|\n| `content_id` | 内容稳定编号 |\n| `content_origin` | 上游、用户文件、用户文本、工作流分析、模型补齐或人工确认 |\n| `source_input_id` | 对应唯一输入ID |\n| `source_locator` | 文件名、页码、段落、权项、图号或文本块定位 |\n| `source_hash` | 输入文件或文本哈希 |\n| `trust_status` | 事实、确认、推导、假设或不进入正式文本 |\n| `last_updated_flow` | 最后更新节点 |\n| `revision_reason` | 更新或替换理由 |\n\n### 5.2 警示继承最小合同\n\n下游必须复制全部开放警示，更新本节点影响和处理，不得因已经生成新草稿而删除警示。人工确认、材料补充或技术方案修订能够关闭警示时，记录关闭节点、依据、受影响内容和新状态。\n\n---",
+  "nodes": [
+    {
+      "nodeId": "Flow-1-1",
+      "title": "技术背景研究",
+      "upstreamNodeId": null,
+      "filenamePrefix": "tech_landscape",
+      "inputs": [
+        {
+          "id": "research_request_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "一个研究请求或技术背景文件",
+          "handling": "提取技术对象、场景、目标、现有方式和限制；记录文件名、哈希及可定位来源"
+        },
+        {
+          "id": "research_request_text",
+          "channel": "用户文本",
+          "importance": "expected",
+          "boundary": "一段研究请求或技术背景文本",
+          "handling": "作为独立技术内容验收；与文件并存时用于补充、纠正或缩小范围"
+        },
+        {
+          "id": "research_scope_config",
+          "channel": "配置",
+          "importance": "optional",
+          "boundary": "一个检索地域、语言、时间或深度配置对象",
+          "handling": "缺失时使用项目默认范围并写入文档信息"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.1 Flow-1-1 技术背景研究\n\n        ### 目标与边界\n\n        形成技术对象、应用场景、主流技术路径和技术问题候选，为后续TRIZ分析建立事实背景。本节点不把行业趋势直接等同于申请方案，也不虚构用户未给出的具体结构、参数或效果。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `research_request_file` | 用户文件 | expected | 一个研究请求或技术背景文件 | 提取技术对象、场景、目标、现有方式和限制；记录文件名、哈希及可定位来源 |\n| `research_request_text` | 用户文本 | expected | 一段研究请求或技术背景文本 | 作为独立技术内容验收；与文件并存时用于补充、纠正或缩小范围 |\n| `research_scope_config` | 配置 | optional | 一个检索地域、语言、时间或深度配置对象 | 缺失时使用项目默认范围并写入文档信息 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`tech_landscape_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 技术对象、应用场景、研究边界和已知约束；\n2. 主流技术路径、基本工作机理及其可观察不足；\n3. 技术问题候选、原因假设、改进目标和可用评价指标；\n4. 术语表`terms_master`、来源登记和信息冲突；\n5. 无法由材料直接确认而由模型补齐的背景内容及其依据、假设和置信度。\n\n        `## 下游读取区`必须包含：T1技术问题表初版、主流技术路径表、检索来源表、术语表、来源登记表、模型补齐登记表。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 分别验收文件、文本、配置和`user_input`，记录每个输入ID的实际内容边界；\n2. 将技术对象、场景、现有方式、限制和目标拆分为可检索的研究问题；\n3. 归纳主流结构、步骤、材料、控制方式及其工作机理；\n4. 区分可观察缺陷、材料明示原因、合理推导原因和待验证假设；\n5. 建立T1初版，给出改进目标、指标或测量方法；\n6. 统一同义词、上下位词和中英文术语；\n7. 生成累计快照并记录全部警示。\n\n        ### 警示条件与处理\n\n        1. 研究对象或场景不清时，在现有材料范围内形成最小可用边界，并提示用户确认；\n2. 来源不足、信息冲突或指标缺失时，不输出确定性事实，必要章节可由模型基于可说明依据补齐并登记；\n3. 没有任何可用技术内容时，仍生成结构完整的结果，明确`not_recommended_for_filing`及所需材料。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-1-2",
+      "title": "TRIZ问题分析",
+      "upstreamNodeId": "Flow-1-1",
+      "filenamePrefix": "triz_analysis_report",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-1-1生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "technical_analysis_material_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个补充技术分析、实验或设计文件",
+          "handling": "用于修正问题、根因、约束或候选方向；保留来源定位"
+        },
+        {
+          "id": "technical_analysis_material_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段补充技术分析、实验或设计文本",
+          "handling": "与文件并存时作为补充或纠正，不无提示覆盖上游事实"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.2 Flow-1-2 TRIZ问题分析\n\n        ### 目标与边界\n\n        把技术背景转化为结构化技术问题、矛盾、资源和候选解决方案。TRIZ候选是研发假设；未获材料支持或人工确认时不得静默升级为申请文件事实。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-1-1生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `technical_analysis_material_file` | 用户文件 | optional | 一个补充技术分析、实验或设计文件 | 用于修正问题、根因、约束或候选方向；保留来源定位 |\n| `technical_analysis_material_text` | 用户文本 | optional | 一段补充技术分析、实验或设计文本 | 与文件并存时作为补充或纠正，不无提示覆盖上游事实 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`triz_analysis_report_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 经校订的技术问题、根因链、技术矛盾和物理矛盾；\n2. 候选解决方案卡`solution_cards`及其适用条件；\n3. 每个候选方案的宏特征、元实体、元关系、元手段、元功能和元效果；\n4. 问题—手段—功能—效果因果链及验证需求；\n5. 面向概要检索的技术对象、检索特征组合和术语。\n\n        `## 下游读取区`必须包含：更新后的T1、候选方案级T2初版、T3初版、TRIZ矛盾表、候选方案表、检索提示表及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 锁定技术对象、场景、约束和T1问题边界；\n2. 分析技术矛盾、物理矛盾、可用资源和根因；\n3. 把TRIZ原理转化为可操作的结构、关系、步骤、算法、工艺或控制方案；\n4. 按宏特征—元特征—五类元要素拆解每个候选方案；\n5. 建立技术手段到元功能、元效果和整体技术效果的因果链；\n6. 标记事实、推导和待验证假设，列出实现条件、关键参数与验证方法；\n7. 形成覆盖技术问题、实体关系、手段、功能和效果的检索上下文；\n8. 更新累计快照。\n\n        ### 警示条件与处理\n\n        1. 候选方案只有抽象原理而没有可操作技术手段时，保留候选但标记不可直接用于撰写；\n2. 效果缺少机理或验证依据时，可由模型给出带假设的补齐内容，不得标记为已确认；\n3. 候选方案不能形成完整技术路径时，提示人工补充或回到Flow-1-1修订。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-1-3",
+      "title": "概要专利检索",
+      "upstreamNodeId": "Flow-1-2",
+      "filenamePrefix": "prior_art_set_basic",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-1-2生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "search_target_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个补充检索目标、术语或已知文献文件",
+          "handling": "用于扩展或限定检索；单独记录用户提供文献和工作流检得文献"
+        },
+        {
+          "id": "search_target_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段补充检索目标、术语、排除项或已知文献文本",
+          "handling": "与文件并存时补充或纠正，不覆盖未明确替换的上游候选"
+        },
+        {
+          "id": "max_fetch",
+          "channel": "配置",
+          "importance": "optional",
+          "boundary": "一个正整数候选数量上限",
+          "handling": "缺失时使用项目默认值并记录"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.3 Flow-1-3 概要专利检索\n\n        ### 目标与边界\n\n        围绕候选方案进行概要级检索，形成候选现有技术池和初步技术重合风险。本节点不以题名、摘要或代表性附图代替全文分析，也不作最接近现有技术最终判断。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-1-2生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `search_target_file` | 用户文件 | optional | 一个补充检索目标、术语或已知文献文件 | 用于扩展或限定检索；单独记录用户提供文献和工作流检得文献 |\n| `search_target_text` | 用户文本 | optional | 一段补充检索目标、术语、排除项或已知文献文本 | 与文件并存时补充或纠正，不覆盖未明确替换的上游候选 |\n| `max_fetch` | 配置 | optional | 一个正整数候选数量上限 | 缺失时使用项目默认值并记录 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`prior_art_set_basic_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 检索目标、检索策略、检索式和检索边界；\n2. 概要候选列表及题名、摘要、代表性附图中的技术内容；\n3. 候选方案与现有技术在问题、实体、关系、手段、功能和效果上的概要映射；\n4. 高、中、低概要重合风险及证据强度；\n5. 建议获取全文的候选、理由和证据缺口。\n\n        `## 下游读取区`必须包含：概要候选表、概要技术要素映射表、概要风险表、全文获取建议表、更新后的T1/T2/T3及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 从累计快照读取`solution_id`、`tp_id`、`feature_id`和效果检索词；\n2. 按技术问题、技术对象、实体关系、技术手段、功能和效果组合检索式；\n3. 基于题名、摘要和代表性附图进行初筛、去重和技术对象归类；\n4. 提取部件、连接、位置、动作、步骤和结果，不把文字相似直接当作技术相同；\n5. 建立概要要素映射和重合风险；\n6. 给出需要获取全文的文献清单和理由；\n7. 形成累计快照，保留检索范围与证据限制。\n\n        ### 警示条件与处理\n\n        1. 只有摘要或机器翻译时，相关结论均限定为概要建议；\n2. 关键关系、参数或实施方式未披露时，不据此否定候选方案；\n3. 最接近现有技术只可列候选建议，最终判断由用户、专利专业人员或审查员作出。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-1-4",
+      "title": "技术方案筛选",
+      "upstreamNodeId": "Flow-1-3",
+      "filenamePrefix": "list_patent",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-1-3生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "solution_selection_basis_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个选型依据、研发约束或验证结果文件",
+          "handling": "用于调整方案优先级、可实施性和证据状态"
+        },
+        {
+          "id": "solution_selection_basis_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段选型依据、研发约束或验证结果文本",
+          "handling": "作为文件补充或独立修正意见"
+        },
+        {
+          "id": "application_type",
+          "channel": "配置",
+          "importance": "expected",
+          "boundary": "一个值：`invention`、`utility_model`或`undetermined`",
+          "handling": "写入累计快照并下游继承；实用新型仅保留适于产品形状、构造或其结合的技术方案"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.4 Flow-1-4 技术方案筛选\n\n        ### 目标与边界\n\n        综合技术价值、可实施性、概要现有技术风险和申请类型，选择进入交底书的主方案与备选方案。本节点形成选择建议，不作可授权性保证。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-1-3生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `solution_selection_basis_file` | 用户文件 | optional | 一个选型依据、研发约束或验证结果文件 | 用于调整方案优先级、可实施性和证据状态 |\n| `solution_selection_basis_text` | 用户文本 | optional | 一段选型依据、研发约束或验证结果文本 | 作为文件补充或独立修正意见 |\n| `application_type` | 配置 | expected | 一个值：`invention`、`utility_model`或`undetermined` | 写入累计快照并下游继承；实用新型仅保留适于产品形状、构造或其结合的技术方案 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`list_patent_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 申请类型及其对技术方案表达的约束；\n2. 主方案、备选方案和淘汰方案清单；\n3. 每个方案的完整TP—TS—TE链、可实施性和证据成熟度；\n4. 概要重合风险、差异潜力和待全文复检事项；\n5. 主方案与备选方案的选择理由及人工确认点。\n\n        `## 下游读取区`必须包含：方案筛选矩阵、冻结候选T1/T2/T3、申请类型、方案选择理由、待验证清单及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 校验每个候选方案是否具有明确技术问题、完整技术手段和可说明效果；\n2. 检查实体、关系、步骤、控制和参数是否足以形成可实施路径；\n3. 结合概要检索评价技术重合风险和差异潜力；\n4. 按申请类型排除明显不适配的方案表达；\n5. 区分独权必要特征、从权优选特征、可替代特征和仅实施例内容；\n6. 选择主方案和备选回退方案，并保留淘汰理由；\n7. 更新稳定ID和累计快照。\n\n        ### 警示条件与处理\n\n        1. 申请类型未确定时使用`undetermined`并说明对权利要求类型和保护对象的影响；\n2. 方案只有目标或效果而无具体技术手段时，不建议直接进入正式撰写；\n3. 基于概要信息的重合风险不升级为新颖性或创造性最终结论。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-1-5",
+      "title": "技术交底书与要素建模",
+      "upstreamNodeId": "Flow-1-4",
+      "filenamePrefix": "disclosure",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-1-4生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "technical_disclosure_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个技术交底或研发说明文件",
+          "handling": "作为用户技术事实来源；逐段定位并与上游方案合并"
+        },
+        {
+          "id": "technical_disclosure_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段技术交底或研发说明文本",
+          "handling": "与文件并存时作为补充、纠正或明确替换内容"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个附图文件或包含一组附图的单一文档",
+          "handling": "提取图号、标记、结构和关系；不从不可辨识图形臆造技术特征"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图说明、图中关系或操作过程文本",
+          "handling": "用于解释附图，不替代实际不存在的技术结构证据"
+        },
+        {
+          "id": "supplemental_data_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个实验、仿真、计算或参数数据文件",
+          "handling": "记录条件、单位、方法和数据范围"
+        },
+        {
+          "id": "supplemental_data_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段补充数据、条件或结果文本",
+          "handling": "与数据文件并存时作为解释或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.5 Flow-1-5 技术交底书与要素建模\n\n        ### 目标与边界\n\n        把选定方案整理为可供权利要求和说明书撰写使用的完整技术交底内容，并冻结第一版T1/T2/T3。缺失章节可由模型基于现有材料补齐，但必须标记来源、假设和待确认状态。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-1-4生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `technical_disclosure_file` | 用户文件 | optional | 一个技术交底或研发说明文件 | 作为用户技术事实来源；逐段定位并与上游方案合并 |\n| `technical_disclosure_text` | 用户文本 | optional | 一段技术交底或研发说明文本 | 与文件并存时作为补充、纠正或明确替换内容 |\n| `drawings_file` | 用户文件 | optional | 一个附图文件或包含一组附图的单一文档 | 提取图号、标记、结构和关系；不从不可辨识图形臆造技术特征 |\n| `drawings_text` | 用户文本 | optional | 一段附图说明、图中关系或操作过程文本 | 用于解释附图，不替代实际不存在的技术结构证据 |\n| `supplemental_data_file` | 用户文件 | optional | 一个实验、仿真、计算或参数数据文件 | 记录条件、单位、方法和数据范围 |\n| `supplemental_data_text` | 用户文本 | optional | 一段补充数据、条件或结果文本 | 与数据文件并存时作为解释或纠正 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`disclosure_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 技术领域、背景、技术问题、完整技术方案和有益效果；\n2. 主方案及备选方案的宏特征、元实体、元关系、元手段、元功能和元效果；\n3. 至少一条可实施路径、关键参数、材料、步骤、控制条件和失败边界；\n4. 附图计划、图号、标记及图文对应关系；\n5. 冻结版T1/T2/T3、术语表、来源表和模型补齐登记。\n\n        `## 下游读取区`必须包含：完整交底书、冻结版T1/T2/T3、方案/要素/效果矩阵、实施路径、图文映射、来源登记、模型补齐登记及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 以累计快照中的主方案和申请类型为基线合并用户交底、附图和数据；\n2. 逐项建立技术问题、必要技术特征、元关系和整体效果的闭环；\n3. 说明各技术手段的作用机理、成立条件和可验证方式；\n4. 构造至少一条本领域技术人员可执行的完整实施路径；\n5. 整理关键参数、范围、材料、顺序、控制逻辑和替代方式；\n6. 建立附图标记与技术要素映射；\n7. 对缺失章节进行受控模型补齐并登记六项元数据；\n8. 冻结稳定ID；后续修改只通过修订记录变更，不静默改号；\n9. 更新累计快照。\n\n        ### 警示条件与处理\n\n        1. 独权候选所需实体、关系或手段缺失时，列出模型补齐和人工确认需求；\n2. 技术效果缺少关联特征、机理、条件或证据时，标记为推导或待验证；\n3. 附图与文字冲突、参数单位异常或方案不能完整实施时，明确不建议直接用于正式申请。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-2-6",
+      "title": "权利要求初稿",
+      "upstreamNodeId": "Flow-1-5",
+      "filenamePrefix": "claims",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-1-5生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "disclosure_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个用户修订或替换的技术交底文件",
+          "handling": "按明确指令更新累计交底；无替换指令时作为补充并保留差异"
+        },
+        {
+          "id": "disclosure_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段用户修订或补充的技术交底文本",
+          "handling": "与文件并存时用于补充或纠正"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个用户修订附图文件或单一附图文档",
+          "handling": "用于核对结构、关系、标记和支持"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图关系或修改说明文本",
+          "handling": "用于解释图示和更正图文关系"
+        },
+        {
+          "id": "claim_requirements_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个权利要求范围、层级或表达要求文件",
+          "handling": "不得覆盖技术来源和申请类型限制"
+        },
+        {
+          "id": "claim_requirements_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段权利要求范围、层级或表达要求文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.6 Flow-2-6 权利要求初稿\n\n        ### 目标与边界\n\n        基于累计交底内容形成权利要求初稿、特征矩阵和回退层级。权利要求应以说明书可支持的技术内容为依据，清楚、简要地限定保护范围。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-1-5生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `disclosure_file` | 用户文件 | optional | 一个用户修订或替换的技术交底文件 | 按明确指令更新累计交底；无替换指令时作为补充并保留差异 |\n| `disclosure_text` | 用户文本 | optional | 一段用户修订或补充的技术交底文本 | 与文件并存时用于补充或纠正 |\n| `drawings_file` | 用户文件 | optional | 一个用户修订附图文件或单一附图文档 | 用于核对结构、关系、标记和支持 |\n| `drawings_text` | 用户文本 | optional | 一段附图关系或修改说明文本 | 用于解释图示和更正图文关系 |\n| `claim_requirements_file` | 用户文件 | optional | 一个权利要求范围、层级或表达要求文件 | 不得覆盖技术来源和申请类型限制 |\n| `claim_requirements_text` | 用户文本 | optional | 一段权利要求范围、层级或表达要求文本 | 与文件并存时作为补充或纠正 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`claims_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 权利要求书初稿全文；\n2. 每项独权对应的主技术问题、必要技术特征组合和技术效果；\n3. 从属权利要求的附加特征、技术贡献和回退目的；\n4. 权项特征矩阵和T4权项侧初版；\n5. 支持性、清楚性、简要性、单一性和申请类型适配初检。\n\n        `## 下游读取区`必须包含：权利要求初稿全文、权项特征矩阵、T4权项侧初版、范围层级、回退链、来源检查和更新后的T1/T2/T3及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 读取累计交底、申请类型、稳定ID和开放警示；\n2. 确定每项独权解决的主技术问题及不可缺少的技术特征；\n3. 把元实体、元关系、元手段和必要步骤组织为完整技术方案；\n4. 根据真实附加技术贡献设计从属权利要求和回退层级；\n5. 逐特征关联`feature_id`、来源、技术作用和预期说明书支持；\n6. 检查上位概括、并列选择、功能性限定和参数范围；\n7. 检查术语、引用关系、权项类别、清楚性、简要性和单一性；\n8. 更新T4初版和累计快照。\n\n        ### 警示条件与处理\n\n        1. 必要技术特征或关键元关系不完整时，可形成带警示初稿，但不得把推测写成已确认事实；\n2. 概括范围包含不能解决同一问题或不能取得同一效果的方案时，建议限缩或补充说明书依据；\n3. 实用新型出现方法步骤、算法流程等不适格保护对象时，提示调整权项类型或申请类型。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-2-7",
+      "title": "说明书初稿",
+      "upstreamNodeId": "Flow-2-6",
+      "filenamePrefix": "specification",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-2-6生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个用户修订权利要求书文件",
+          "handling": "作为权利要求内容主体；无明确替换指令时与累计权项保留差异"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段用户修订权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "disclosure_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个技术交底书文件",
+          "handling": "作为交底内容主体并逐项定位来源"
+        },
+        {
+          "id": "disclosure_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段技术交底文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个附图文件或单一附图文档",
+          "handling": "用于附图说明、标记和图文一致性"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图说明或图中技术关系文本",
+          "handling": "用于解释或纠正附图内容"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.7 Flow-2-7 说明书初稿\n\n        ### 目标与边界\n\n        基于Flow-2-6累计主Markdown形成支持权利要求、公开充分且技术链闭合的说明书初稿。来自前序的全部内容只通过一个`upstream_md_file`传递；用户可分别以文件或文本补充权利要求、技术交底和附图。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-2-6生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `claims_file` | 用户文件 | optional | 一个用户修订权利要求书文件 | 作为权利要求内容主体；无明确替换指令时与累计权项保留差异 |\n| `claims_text` | 用户文本 | optional | 一段用户修订权利要求书文本 | 与文件并存时作为补充或纠正 |\n| `disclosure_file` | 用户文件 | optional | 一个技术交底书文件 | 作为交底内容主体并逐项定位来源 |\n| `disclosure_text` | 用户文本 | optional | 一段技术交底文本 | 与文件并存时作为补充或纠正 |\n| `drawings_file` | 用户文件 | optional | 一个附图文件或单一附图文档 | 用于附图说明、标记和图文一致性 |\n| `drawings_text` | 用户文本 | optional | 一段附图说明或图中技术关系文本 | 用于解释或纠正附图内容 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`specification_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 说明书初稿全文和摘要初稿；\n2. 技术领域、背景技术、发明内容、附图说明和具体实施方式；\n3. 技术问题—技术方案—有益效果逐项对应关系；\n4. 至少一条完整实施路径、关键关系、参数、步骤、材料和控制条件；\n5. T4完整初版、可实施性矩阵、概括范围测试和技术效果证据矩阵；\n6. 附图计划、图文标记映射及无来源内容检查。\n\n        `## 下游读取区`必须包含：权利要求书当前版、说明书和摘要初稿、T1/T2/T3/T4、可实施性矩阵、概括范围测试、效果证据矩阵、图文映射、来源与模型补齐登记及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 以Flow-2-6实际传入文件为累计基线，分别验收权利要求、交底和附图的文件/文本补充；\n2. 按权利要求逐项组织技术领域、背景技术、技术问题、技术方案和有益效果；\n3. 完整说明元实体、元关系、元手段、作用机理、步骤顺序和控制条件；\n4. 给出至少一条可执行实施路径及必要参数、材料、边界和替代方式；\n5. 逐权项建立说明书支持定位和T4；\n6. 测试概括范围内的方案是否解决相同问题并取得相同效果；\n7. 生成摘要、附图说明和图文映射；\n8. 记录人工修订差异、模型补齐和开放警示；\n9. 更新累计快照。\n\n        ### 警示条件与处理\n\n        1. 权利要求、交底和附图相互冲突时保留冲突，不自行选择有利版本；\n2. 实施方式、参数或技术效果缺失时，模型可基于累计材料补齐并逐项标注，不得冒充用户事实；\n3. 权项缺少说明书支持或公开不足时，仍输出初稿并明确受影响权项和人工处理建议。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-3-8",
+      "title": "全文深度复检",
+      "upstreamNodeId": "Flow-2-7",
+      "filenamePrefix": "prior_art_set",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-2-7生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前权利要求书文件",
+          "handling": "用于修正累计权项并保留版本差异"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "specification_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前说明书文件",
+          "handling": "用于修正累计说明书并保留来源"
+        },
+        {
+          "id": "specification_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前说明书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "search_material_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个检索报告、文献清单或检索说明文件",
+          "handling": "补充检索策略和候选范围"
+        },
+        {
+          "id": "search_material_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段检索报告、文献清单或检索说明文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_1_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第1份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_1_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第1份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_1_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_2_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第2份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_2_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第2份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_2_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_3_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第3份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_3_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第3份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_3_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_4_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第4份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_4_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第4份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_4_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_5_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第5份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_5_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第5份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_5_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.8 Flow-3-8 全文深度复检\n\n        ### 目标与边界\n\n        基于全文对候选现有技术进行问题—关系—手段—机理—效果深度比较，形成证据化技术比对和最接近现有技术候选建议。本节点不替代用户、专利专业人员或审查员作最终判断。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-2-7生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `claims_file` | 用户文件 | optional | 一个当前权利要求书文件 | 用于修正累计权项并保留版本差异 |\n| `claims_text` | 用户文本 | optional | 一段当前权利要求书文本 | 与文件并存时作为补充或纠正 |\n| `specification_file` | 用户文件 | optional | 一个当前说明书文件 | 用于修正累计说明书并保留来源 |\n| `specification_text` | 用户文本 | optional | 一段当前说明书文本 | 与文件并存时作为补充或纠正 |\n| `search_material_file` | 用户文件 | optional | 一个检索报告、文献清单或检索说明文件 | 补充检索策略和候选范围 |\n| `search_material_text` | 用户文本 | optional | 一段检索报告、文献清单或检索说明文本 | 与文件并存时作为补充或纠正 |\n| `comparison_doc_1_file` | 用户文件 | optional | 第1份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_1_text` | 用户文本 | optional | 第1份独立对比文件的一段技术内容文本 | 与`comparison_doc_1_file`并存时作为补充或纠正 |\n| `comparison_doc_2_file` | 用户文件 | optional | 第2份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_2_text` | 用户文本 | optional | 第2份独立对比文件的一段技术内容文本 | 与`comparison_doc_2_file`并存时作为补充或纠正 |\n| `comparison_doc_3_file` | 用户文件 | optional | 第3份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_3_text` | 用户文本 | optional | 第3份独立对比文件的一段技术内容文本 | 与`comparison_doc_3_file`并存时作为补充或纠正 |\n| `comparison_doc_4_file` | 用户文件 | optional | 第4份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_4_text` | 用户文本 | optional | 第4份独立对比文件的一段技术内容文本 | 与`comparison_doc_4_file`并存时作为补充或纠正 |\n| `comparison_doc_5_file` | 用户文件 | optional | 第5份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_5_text` | 用户文本 | optional | 第5份独立对比文件的一段技术内容文本 | 与`comparison_doc_5_file`并存时作为补充或纠正 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`prior_art_set_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 全文检索范围、文献集合和证据定位；\n2. 逐权项、逐特征及特征组合的全文技术比对；\n3. 技术问题、元关系、技术手段、作用机理和技术效果差异；\n4. 新颖性风险、组合分析线索和证据缺口；\n5. `closest_prior_art_suggestions`：候选、排序、接近理由、证据和置信度；\n6. 建议补检方向和进入创造性分析的事实基线。\n\n        `## 下游读取区`必须包含：全文文献表、逐权项证据矩阵、区别特征组合表、技术效果对照表、最接近现有技术候选建议、检索缺口、更新后的T1/T2/T3/T4及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 确认每份对比文件是完整全文还是片段，并建立段落、权项、附图和实施例定位；\n2. 逐权项拆解技术特征，同时保持具有相互作用的特征组合；\n3. 比较技术对象、问题、实体、关系、手段、功能、机理、条件和效果；\n4. 区分直接明确公开、可直接无疑义确定和未公开内容；\n5. 分析单篇文献的新颖性覆盖风险及证据强度；\n6. 形成最接近现有技术候选建议，说明与权项技术问题、整体方案和效果的接近程度；\n7. 列出可能组合文献、结合障碍和需要进一步核实的技术启示；\n8. 更新累计快照。\n\n        ### 警示条件与处理\n\n        1. 关键全文、附图或翻译缺失时，结论降为受限建议并列明缺口；\n2. 不得以特征名称相似代替结构、关系、功能和效果的实质比较；\n3. 最接近现有技术最终判断由用户、专利专业人员或审查员作出，工作流仅提供候选建议。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-3-9",
+      "title": "专利撰写计划",
+      "upstreamNodeId": "Flow-3-8",
+      "filenamePrefix": "patent_plan",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-3-8生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前权利要求书文件",
+          "handling": "用于计划基线更新并记录差异"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "specification_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前说明书文件",
+          "handling": "用于支持性和实施方式计划"
+        },
+        {
+          "id": "specification_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前说明书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_1_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第1份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_1_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第1份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_1_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_2_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第2份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_2_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第2份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_2_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_3_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第3份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_3_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第3份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_3_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_4_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第4份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_4_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第4份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_4_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_5_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "第5份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_5_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第5份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_5_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "strategy_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个保护范围、研发重点或论证策略文件",
+          "handling": "作为人工策略输入，不改变技术事实来源"
+        },
+        {
+          "id": "strategy_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段保护范围、研发重点或论证策略文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.9 Flow-3-9 专利撰写计划\n\n        ### 目标与边界\n\n        在全文复检基础上形成权利要求范围、创造性论证主线、说明书加强重点和回退路径。工作流提供技术建议，保护范围和最接近现有技术由人工最终决定。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-3-8生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `claims_file` | 用户文件 | optional | 一个当前权利要求书文件 | 用于计划基线更新并记录差异 |\n| `claims_text` | 用户文本 | optional | 一段当前权利要求书文本 | 与文件并存时作为补充或纠正 |\n| `specification_file` | 用户文件 | optional | 一个当前说明书文件 | 用于支持性和实施方式计划 |\n| `specification_text` | 用户文本 | optional | 一段当前说明书文本 | 与文件并存时作为补充或纠正 |\n| `comparison_doc_1_file` | 用户文件 | optional | 第1份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_1_text` | 用户文本 | optional | 第1份独立对比文件的一段技术内容文本 | 与`comparison_doc_1_file`并存时作为补充或纠正 |\n| `comparison_doc_2_file` | 用户文件 | optional | 第2份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_2_text` | 用户文本 | optional | 第2份独立对比文件的一段技术内容文本 | 与`comparison_doc_2_file`并存时作为补充或纠正 |\n| `comparison_doc_3_file` | 用户文件 | optional | 第3份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_3_text` | 用户文本 | optional | 第3份独立对比文件的一段技术内容文本 | 与`comparison_doc_3_file`并存时作为补充或纠正 |\n| `comparison_doc_4_file` | 用户文件 | optional | 第4份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_4_text` | 用户文本 | optional | 第4份独立对比文件的一段技术内容文本 | 与`comparison_doc_4_file`并存时作为补充或纠正 |\n| `comparison_doc_5_file` | 用户文件 | optional | 第5份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_5_text` | 用户文本 | optional | 第5份独立对比文件的一段技术内容文本 | 与`comparison_doc_5_file`并存时作为补充或纠正 |\n| `strategy_file` | 用户文件 | optional | 一个保护范围、研发重点或论证策略文件 | 作为人工策略输入，不改变技术事实来源 |\n| `strategy_text` | 用户文本 | optional | 一段保护范围、研发重点或论证策略文本 | 与文件并存时作为补充或纠正 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`patent_plan_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 拟保留的独立权利要求主题、必要特征组合和范围层级；\n2. 最接近现有技术候选建议及人工最终判断栏；\n3. 区别特征或组合、对应效果、实际解决的技术问题和技术启示分析；\n4. T5创造性论证表和结论强度；\n5. 宽、中、窄权项及从属回退链；\n6. 说明书加强重点、支持性检查和Flow-3-10确认清单。\n\n        `## 下游读取区`必须包含：范围计划、T5、回退链、说明书加强计划、人工判断栏、确认清单、更新后的T1/T2/T3/T4及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 按独权候选确定技术问题、完整技术方案和技术效果；\n2. 复核最接近现有技术候选建议并保留人工最终判断状态；\n3. 识别区别特征及不可任意拆分的相互作用组合；\n4. 确定区别特征产生的技术效果及其申请文件依据；\n5. 客观表述实际解决的技术问题，不包含区别特征或对区别特征的暗示；\n6. 分析现有技术是否给出结合动机、实现路径和合理效果预期；\n7. 形成T5并设计宽、中、窄权项和从属回退层级；\n8. 逐项检查计划修改的说明书支持；\n9. 生成Flow-3-10需确认的事实、数据、机理和范围选择；\n10. 更新累计快照。\n\n        ### 警示条件与处理\n\n        1. 最接近现有技术尚未人工确定时，保留多候选T5，不强行唯一化；\n2. 技术效果不能从现有申请内容获知时，不把该效果用作确定性创造性依据；\n3. 回退路径缺少说明书支持时，提示限缩计划或补充确认，不自动补写无来源内容。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-3-10",
+      "title": "技术内容沟通确认",
+      "upstreamNodeId": "Flow-3-9",
+      "filenamePrefix": "decision_notes",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-3-9生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "technical_feedback_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "一个技术反馈或确认文件",
+          "handling": "逐项映射问题、特征、关系、机理、效果和范围；未覆盖项保持待确认"
+        },
+        {
+          "id": "technical_feedback_text",
+          "channel": "用户文本",
+          "importance": "expected",
+          "boundary": "一段技术反馈或确认文本",
+          "handling": "与文件并存时作为补充、纠正或明确确认"
+        },
+        {
+          "id": "supplemental_data_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个实验、仿真、计算或参数补充文件",
+          "handling": "记录条件、方法、单位和与技术效果的对应"
+        },
+        {
+          "id": "supplemental_data_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段补充数据、条件或结果文本",
+          "handling": "与文件并存时作为解释或纠正"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个补充或修订附图文件",
+          "handling": "用于确认结构、关系、标记和实施方式"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图说明或图中关系确认文本",
+          "handling": "用于解释或纠正附图"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.10 Flow-3-10 技术内容沟通确认\n\n        ### 目标与边界\n\n        对正式撰写所依赖的技术事实、作用机理、技术效果、参数边界、替代方案和保护范围逐项确认。目录名称保持Flow-3-10-发明人沟通确认，但业务合同只聚焦技术实体内容。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-3-9生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `technical_feedback_file` | 用户文件 | expected | 一个技术反馈或确认文件 | 逐项映射问题、特征、关系、机理、效果和范围；未覆盖项保持待确认 |\n| `technical_feedback_text` | 用户文本 | expected | 一段技术反馈或确认文本 | 与文件并存时作为补充、纠正或明确确认 |\n| `supplemental_data_file` | 用户文件 | optional | 一个实验、仿真、计算或参数补充文件 | 记录条件、方法、单位和与技术效果的对应 |\n| `supplemental_data_text` | 用户文本 | optional | 一段补充数据、条件或结果文本 | 与文件并存时作为解释或纠正 |\n| `drawings_file` | 用户文件 | optional | 一个补充或修订附图文件 | 用于确认结构、关系、标记和实施方式 |\n| `drawings_text` | 用户文本 | optional | 一段附图说明或图中关系确认文本 | 用于解释或纠正附图 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`decision_notes_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. `technical_confirmation_matrix`：技术问题、必要特征、元关系、手段和机理确认；\n2. `effect_evidence_confirmation`：技术效果、成立条件、指标和证据确认；\n3. `confirmed_change_instructions`：面向正式稿的逐项技术修改指令；\n4. `technical_evidence_gaps`和不得作为确认事实使用的内容；\n5. 保护范围、回退路径和最接近现有技术的人工判断状态；\n6. 未完成确认项的模型补齐状态和风险影响。\n\n        `## 下游读取区`必须包含：技术确认矩阵、效果证据确认表、正式修改指令、不采用内容表、未关闭事项、人工判断状态、更新后的T1至T5及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 按`tp_id`确认技术问题、原因、目标和指标；\n2. 按`feature_id`确认实体、关系、手段、功能和元效果；\n3. 确认区别特征组合的作用机理、整体技术效果和成立条件；\n4. 确认关键参数、材料、步骤顺序、控制逻辑和替代方式；\n5. 对补充材料建立来源定位，不接受只有结论没有技术依据的确认；\n6. 把明确确认内容更新为`confirmed_fact`并保留原来源；\n7. 对无法确认或相互矛盾的内容保留警示，不静默删除；\n8. 记录范围选择、回退路径和最接近现有技术的人工判断；\n9. 生成正式稿修改指令并更新累计快照。\n\n        ### 警示条件与处理\n\n        1. 独权相关事实、关键关系、机理或效果未确认时，允许继续形成正式稿建议，但必须逐项标记影响；\n2. 用户反馈只有结论而没有技术依据时，不升级为`confirmed_fact`；\n3. 修订需要回到前序时输出人工返工建议，由人工选择节点并重新运行。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-4-11",
+      "title": "权利要求正式稿",
+      "upstreamNodeId": "Flow-3-10",
+      "filenamePrefix": "claims_final",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-3-10生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个用户修订权利要求书文件",
+          "handling": "作为当前权项内容补充或明确替换版本"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段用户修订权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "specification_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前说明书文件",
+          "handling": "用于支持性和术语核对"
+        },
+        {
+          "id": "specification_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前说明书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "confirmation_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个技术确认或范围确认文件",
+          "handling": "更新确认矩阵并保留来源"
+        },
+        {
+          "id": "confirmation_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段技术确认或范围确认文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.11 Flow-4-11 权利要求正式稿\n\n        ### 目标与边界\n\n        依据累计快照中的技术事实、说明书支持、创造性策略和确认状态形成权利要求正式稿。不得为了扩大范围无依据增加等同替换、变体、功能或效果。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-3-10生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `claims_file` | 用户文件 | optional | 一个用户修订权利要求书文件 | 作为当前权项内容补充或明确替换版本 |\n| `claims_text` | 用户文本 | optional | 一段用户修订权利要求书文本 | 与文件并存时作为补充或纠正 |\n| `specification_file` | 用户文件 | optional | 一个当前说明书文件 | 用于支持性和术语核对 |\n| `specification_text` | 用户文本 | optional | 一段当前说明书文本 | 与文件并存时作为补充或纠正 |\n| `confirmation_file` | 用户文件 | optional | 一个技术确认或范围确认文件 | 更新确认矩阵并保留来源 |\n| `confirmation_text` | 用户文本 | optional | 一段技术确认或范围确认文本 | 与文件并存时作为补充或纠正 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`claims_final_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 权利要求正式稿全文；\n2. 每项独权的主TP、必要技术特征组合、技术作用和技术效果；\n3. 每项从权的附加特征、技术贡献和回退目的；\n4. 最终权项特征矩阵和T4权项侧更新；\n5. 修改前后对照、修改理由、来源和T6初版；\n6. 保护范围、支持性、清楚性、简要性、单一性和申请类型检查。\n\n        `## 下游读取区`必须包含：权利要求正式稿、最终权项特征矩阵、T4权项侧、T6权项修改依据、回退链、质量检查、更新后的T1至T5及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 以Flow-3-10累计快照为唯一前序基线并合并用户补充；\n2. 按T5、确认状态和范围选择确定独立权利要求；\n3. 检查每项独权是否记载解决主TP所需的全部必要技术特征；\n4. 检查实体、连接、位置、交互、时序和步骤关系是否清楚；\n5. 根据已确认或有来源的元特征形成从属回退层级；\n6. 逐特征核对说明书支持、技术作用和来源；\n7. 检查上位概括、并列选择、功能性限定和参数范围；\n8. 生成修改对照、T6初版和累计快照。\n\n        ### 警示条件与处理\n\n        1. 任何新增文字缺少来源时，模型只能给出标记明确的建议文本，不得登记为确认事实；\n2. 权项支持不足或范围过宽时，提供限缩、补充确认或人工返工建议；\n3. 存在影响提交使用的重大技术风险时，使用`deliverable_status=not_recommended_for_filing`并完整列因。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-4-12",
+      "title": "说明书正式稿",
+      "upstreamNodeId": "Flow-4-11",
+      "filenamePrefix": "spec_final",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-4-11生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个当前正式权利要求书文件",
+          "handling": "用于更新累计权项并核对支持"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段当前正式权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "specification_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个用户修订说明书文件",
+          "handling": "作为说明书内容主体补充或明确替换版本"
+        },
+        {
+          "id": "specification_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段用户修订说明书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "disclosure_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个技术交底书文件",
+          "handling": "用于事实、实施方式和来源核对"
+        },
+        {
+          "id": "disclosure_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段技术交底文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个附图文件或单一附图文档",
+          "handling": "用于图号、标记、附图说明和支持"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图说明或图中关系文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "supplemental_data_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个实验、仿真、计算或参数数据文件",
+          "handling": "用于效果、条件和实施证据"
+        },
+        {
+          "id": "supplemental_data_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段补充数据、条件或结果文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.12 Flow-4-12 说明书正式稿\n\n        ### 目标与边界\n\n        形成与正式权利要求一致、公开充分、支持范围合理的说明书正式稿和摘要。模型可以补齐表达，但参数、工艺、控制、实施例、变体和技术效果必须保留来源与假设状态。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-4-11生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `claims_file` | 用户文件 | optional | 一个当前正式权利要求书文件 | 用于更新累计权项并核对支持 |\n| `claims_text` | 用户文本 | optional | 一段当前正式权利要求书文本 | 与文件并存时作为补充或纠正 |\n| `specification_file` | 用户文件 | optional | 一个用户修订说明书文件 | 作为说明书内容主体补充或明确替换版本 |\n| `specification_text` | 用户文本 | optional | 一段用户修订说明书文本 | 与文件并存时作为补充或纠正 |\n| `disclosure_file` | 用户文件 | optional | 一个技术交底书文件 | 用于事实、实施方式和来源核对 |\n| `disclosure_text` | 用户文本 | optional | 一段技术交底文本 | 与文件并存时作为补充或纠正 |\n| `drawings_file` | 用户文件 | optional | 一个附图文件或单一附图文档 | 用于图号、标记、附图说明和支持 |\n| `drawings_text` | 用户文本 | optional | 一段附图说明或图中关系文本 | 与文件并存时作为补充或纠正 |\n| `supplemental_data_file` | 用户文件 | optional | 一个实验、仿真、计算或参数数据文件 | 用于效果、条件和实施证据 |\n| `supplemental_data_text` | 用户文本 | optional | 一段补充数据、条件或结果文本 | 与文件并存时作为补充或纠正 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`spec_final_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 说明书正式稿全文和摘要；\n2. 最终T1/T2/T3和完整T4；\n3. 可实施性矩阵、概括范围测试和技术效果证据矩阵；\n4. 附图计划、附图说明和图文标记映射；\n5. 修改前后对照、修改理由、来源和T6说明书侧更新；\n6. 模型补齐、无来源风险和剩余技术缺口清单。\n\n        `## 下游读取区`必须包含：权利要求正式稿、说明书正式稿、摘要、最终T1/T2/T3/T4、T6说明书侧、可实施性矩阵、概括范围测试、图文映射、质量检查及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 以Flow-4-11累计快照中的正式权项和全部前序内容为唯一前序基线；\n2. 按正式权项逐项核对说明书支持；\n3. 完善技术领域、背景技术、发明内容、附图说明和具体实施方式；\n4. 明确技术问题、技术方案和有益效果的对应关系；\n5. 说明关键元关系、作用机理、步骤顺序、参数、材料和控制条件；\n6. 基于有来源内容展开实施例、替代方式和参数范围；\n7. 检查每项效果的关联特征、机理、条件、指标和证据；\n8. 检查概括范围内方案是否能够解决相同问题并取得相同效果；\n9. 生成摘要、图文映射、最终T1至T4、T6更新和累计快照。\n\n        ### 警示条件与处理\n\n        1. 正式权项缺少说明书支持时，提出权项限缩、说明书基于原有内容完善或人工返工建议；\n2. 至少一条完整实施路径不足时，模型可补齐解释性内容，但新增技术事实保持待确认；\n3. 无来源变体、参数、步骤、关系、机理或效果不得静默写成确认内容。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-5-13",
+      "title": "申请文件终检",
+      "upstreamNodeId": "Flow-4-12",
+      "filenamePrefix": "patent_report",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-4-12生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "claims_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个待终检权利要求书文件",
+          "handling": "作为当前权项版本补充或明确替换内容"
+        },
+        {
+          "id": "claims_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段待终检权利要求书文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "specification_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个待终检说明书和摘要文件",
+          "handling": "作为当前说明书版本补充或明确替换内容"
+        },
+        {
+          "id": "specification_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段待终检说明书或摘要文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "drawings_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个待终检附图文件或单一附图文档",
+          "handling": "用于图文一致性和实施支持检查"
+        },
+        {
+          "id": "drawings_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段附图说明或图中关系文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "check_requirements_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个终检重点、风险偏好或专业检查要求文件",
+          "handling": "不缩减默认完整实体检查范围，除非`user_input`明确限定"
+        },
+        {
+          "id": "check_requirements_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段终检重点、风险偏好或专业检查要求文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.13 Flow-5-13 申请文件终检\n\n        ### 目标与边界\n\n        对正式权利要求、说明书、摘要和附图进行技术实体内容终检，并模拟可能的审查质疑。终检结论必须基于逐项证据，不以报告生成代替风险披露。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-4-12生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `claims_file` | 用户文件 | optional | 一个待终检权利要求书文件 | 作为当前权项版本补充或明确替换内容 |\n| `claims_text` | 用户文本 | optional | 一段待终检权利要求书文本 | 与文件并存时作为补充或纠正 |\n| `specification_file` | 用户文件 | optional | 一个待终检说明书和摘要文件 | 作为当前说明书版本补充或明确替换内容 |\n| `specification_text` | 用户文本 | optional | 一段待终检说明书或摘要文本 | 与文件并存时作为补充或纠正 |\n| `drawings_file` | 用户文件 | optional | 一个待终检附图文件或单一附图文档 | 用于图文一致性和实施支持检查 |\n| `drawings_text` | 用户文本 | optional | 一段附图说明或图中关系文本 | 与文件并存时作为补充或纠正 |\n| `check_requirements_file` | 用户文件 | optional | 一个终检重点、风险偏好或专业检查要求文件 | 不缩减默认完整实体检查范围，除非`user_input`明确限定 |\n| `check_requirements_text` | 用户文本 | optional | 一段终检重点、风险偏好或专业检查要求文本 | 与文件并存时作为补充或纠正 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`patent_report_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 每项独权的TP—必要特征—TE闭环检查；\n2. 说明书公开充分、可实施性和权利要求支持检查；\n3. 清楚性、简要性、概括范围、技术效果证据和单一性检查；\n4. 术语、附图、技术要素和来源一致性检查；\n5. 每项独权的T5创造性预演及最接近现有技术候选建议；\n6. 无来源新增内容检查、模拟审查质疑、纠正建议和提交使用建议。\n\n        `## 下游读取区`必须包含：T1至T6最终审计结果、逐独权问题清单、模拟审查质疑、纠正建议、警示闭环表、提交使用建议、正式文件全文及全部继承内容。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 锁定Flow-4-12实际传入累计文件及用户补充后的当前正式文本；\n2. 逐独权检查是否构成解决技术问题的完整技术方案；\n3. 逐特征核对说明书支持、实施方式、附图和来源；\n4. 检查本领域技术人员能否实现方案并取得预期技术效果；\n5. 检查效果与区别特征、机理、条件、指标和证据是否闭合；\n6. 检查上位概括、并列选择、功能性限定和参数范围的支持边界；\n7. 检查从属权项是否具有真实附加技术贡献；\n8. 检查多项独权是否由相同或相应的特定技术特征联系；\n9. 基于T5预演新颖性和创造性技术论证；\n10. 对每个问题给出证据、影响、纠正动作、确认状态和提交使用建议；\n11. 更新累计快照。\n\n        ### 警示条件与处理\n\n        1. 影响公开充分、权项支持、必要特征、技术效果或修改依据的重大问题必须进入风险章节；\n2. 存在重大技术问题时仍输出完整终检报告，但使用`not_recommended_for_filing`；\n3. 需要修订时列出人工返工节点、受影响内容、理由、动作和预期改善，不自动回流。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    },
+    {
+      "nodeId": "Flow-6-14",
+      "title": "审查意见答复",
+      "upstreamNodeId": "Flow-5-13",
+      "filenamePrefix": "response_draft",
+      "inputs": [
+        {
+          "id": "upstream_md_file",
+          "channel": "前一工作流文件",
+          "importance": "expected",
+          "boundary": "一个由Flow-5-13生成并实际传入的累计主Markdown",
+          "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件"
+        },
+        {
+          "id": "oa_notice_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "一个审查意见通知书及其合并附件文件",
+          "handling": "拆分审查理由、涉及权项和引用文献；记录版本与页码"
+        },
+        {
+          "id": "oa_notice_text",
+          "channel": "用户文本",
+          "importance": "expected",
+          "boundary": "一段审查意见通知书技术内容文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "original_application_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "一个包含原始权利要求书、说明书、摘要和附图的单一申请文件包",
+          "handling": "作为修改依据和原始公开范围的最高优先级来源"
+        },
+        {
+          "id": "original_application_text",
+          "channel": "用户文本",
+          "importance": "expected",
+          "boundary": "一段原始申请文件技术内容文本",
+          "handling": "与文件并存时作为补充；不能证明的原始依据保持待核验"
+        },
+        {
+          "id": "current_application_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "一个包含当前有效权利要求书和说明书的单一文件包",
+          "handling": "与原始提交版本明确区分，用于确定当前答复对象"
+        },
+        {
+          "id": "current_application_text",
+          "channel": "用户文本",
+          "importance": "expected",
+          "boundary": "一段当前有效申请文件技术内容文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_1_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "第1份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_1_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第1份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_1_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_2_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "第2份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_2_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第2份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_2_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_3_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "第3份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_3_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第3份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_3_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_4_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "第4份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_4_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第4份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_4_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "comparison_doc_5_file",
+          "channel": "用户文件",
+          "importance": "expected",
+          "boundary": "第5份独立真实专利或技术文献全文文件",
+          "handling": "单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID"
+        },
+        {
+          "id": "comparison_doc_5_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "第5份独立对比文件的一段技术内容文本",
+          "handling": "与`comparison_doc_5_file`并存时作为补充或纠正"
+        },
+        {
+          "id": "response_requirements_file",
+          "channel": "用户文件",
+          "importance": "optional",
+          "boundary": "一个答复技术重点、范围底线或方案偏好文件",
+          "handling": "作为策略输入，不改变原申请依据边界"
+        },
+        {
+          "id": "response_requirements_text",
+          "channel": "用户文本",
+          "importance": "optional",
+          "boundary": "一段答复技术重点、范围底线或方案偏好文本",
+          "handling": "与文件并存时作为补充或纠正"
+        },
+        {
+          "id": "user_input",
+          "channel": "用户手动文本",
+          "importance": "optional",
+          "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+          "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理"
+        }
+      ],
+      "instruction": "## 4.14 Flow-6-14 审查意见答复\n\n        ### 目标与边界\n\n        针对审查意见形成逐项技术答复和修改方案。原始提交申请文件、当前有效申请文件、审查意见及引用文献是答复阶段的直接权威材料；累计主Markdown提供工作流历史技术基线，但不得凌驾于这些直接材料。\n\n        ### 输入\n\n        | 输入ID | 通道/类型 | 重要性 | 一项内容的边界 | 验收与合并处理 |\n|---|---|---|---|---|\n| `upstream_md_file` | 前一工作流文件 | expected | 一个由Flow-5-13生成并实际传入的累计主Markdown | 以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件 |\n| `oa_notice_file` | 用户文件 | expected | 一个审查意见通知书及其合并附件文件 | 拆分审查理由、涉及权项和引用文献；记录版本与页码 |\n| `oa_notice_text` | 用户文本 | expected | 一段审查意见通知书技术内容文本 | 与文件并存时作为补充或纠正 |\n| `original_application_file` | 用户文件 | expected | 一个包含原始权利要求书、说明书、摘要和附图的单一申请文件包 | 作为修改依据和原始公开范围的最高优先级来源 |\n| `original_application_text` | 用户文本 | expected | 一段原始申请文件技术内容文本 | 与文件并存时作为补充；不能证明的原始依据保持待核验 |\n| `current_application_file` | 用户文件 | expected | 一个包含当前有效权利要求书和说明书的单一文件包 | 与原始提交版本明确区分，用于确定当前答复对象 |\n| `current_application_text` | 用户文本 | expected | 一段当前有效申请文件技术内容文本 | 与文件并存时作为补充或纠正 |\n| `comparison_doc_1_file` | 用户文件 | expected | 第1份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_1_text` | 用户文本 | optional | 第1份独立对比文件的一段技术内容文本 | 与`comparison_doc_1_file`并存时作为补充或纠正 |\n| `comparison_doc_2_file` | 用户文件 | expected | 第2份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_2_text` | 用户文本 | optional | 第2份独立对比文件的一段技术内容文本 | 与`comparison_doc_2_file`并存时作为补充或纠正 |\n| `comparison_doc_3_file` | 用户文件 | expected | 第3份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_3_text` | 用户文本 | optional | 第3份独立对比文件的一段技术内容文本 | 与`comparison_doc_3_file`并存时作为补充或纠正 |\n| `comparison_doc_4_file` | 用户文件 | expected | 第4份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_4_text` | 用户文本 | optional | 第4份独立对比文件的一段技术内容文本 | 与`comparison_doc_4_file`并存时作为补充或纠正 |\n| `comparison_doc_5_file` | 用户文件 | expected | 第5份独立真实专利或技术文献全文文件 | 单独建立权项、段落、附图和实施例证据定位；不得与其他文献合并到本ID |\n| `comparison_doc_5_text` | 用户文本 | optional | 第5份独立对比文件的一段技术内容文本 | 与`comparison_doc_5_file`并存时作为补充或纠正 |\n| `response_requirements_file` | 用户文件 | optional | 一个答复技术重点、范围底线或方案偏好文件 | 作为策略输入，不改变原申请依据边界 |\n| `response_requirements_text` | 用户文本 | optional | 一段答复技术重点、范围底线或方案偏好文本 | 与文件并存时作为补充或纠正 |\n| `user_input` | 用户手动文本 | optional | 一段运行指令，只表达增删改、优先级、范围或偏好 | 不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理 |\n\n        除配置值外，每个输入ID只接收一项内容。`*_file`只接收一个文件，`*_text`只接收一个文本块，`user_input`只接收一段用户手动输入的运行指令。未提供的输入显式记为`not_provided`，不得把多个文件或多段互相独立的内容暗中合并到一个输入ID。\n\n        ### 输出\n\n        唯一主Markdown：`response_draft_<YYYYMMDDHHMMSS>_<run_uid8>.md`\n\n        `## 核心结果`必须包含：\n\n        1. 审查意见—权利要求—对比文件证据逐项矩阵；\n2. 审查员技术认定与申请文件实际技术内容的争议点；\n3. 区别特征或组合、对应技术效果和实际解决的技术问题；\n4. 更新后的T5及最接近现有技术候选建议与人工/审查判断状态；\n5. 不修改争辩、适度限缩和备用限缩等多套答复路径；\n6. 每套修改后的完整权利要求文本、T6和意见陈述书结构化草案；\n7. 补充实验材料的使用边界、保护范围变化、风险和人工最终选择事项。\n\n        `## 下游读取区`必须包含：OA问题矩阵、更新T5、T6、各套修改权项全文、意见陈述书草案、风险对比、最终人工选择表、来源与模型补齐登记及完整答复基线。本节点应将上游累计快照、用户补充、模型新增分析、本节点结果、开放警示和来源登记合并为新的完整累计快照，使下一节点只读取本文件即可获得截至本节点的全部有效技术内容。\n\n        ### 核心工作内容\n\n        1. 锁定通知书、原始提交文本、当前有效文本和每份对比文件的实际版本；原始提交文件用于确定修改依据，当前有效文件用于确定答复对象，通知书和对比文件用于确定审查争议，累计快照只作辅助技术基线；\n2. 按权项和审查理由拆分每项技术争议；\n3. 复核审查员对技术特征、关系、手段、功能和效果的对应；\n4. 识别真正区别特征及具有相互作用的特征组合；\n5. 依据原申请能够获知的技术效果确定实际解决的技术问题；\n6. 分析现有技术是否给出结合动机、实现路径和合理效果预期；\n7. 生成不修改争辩、适度限缩和备用限缩路径；\n8. 对每项新增限定定位原始权项、说明书段落、实施例或附图依据；\n9. 检查拟修改内容能否从原申请直接、无疑义地确定；\n10. 限定补充实验数据只用于印证原申请能够获知的效果；\n11. 生成完整修改权项、T6、意见陈述书草案和范围影响对比；\n12. 记录人工最终选择事项并输出累计答复基线。\n\n        ### 警示条件与处理\n\n        1. 通知书、原始申请、当前申请或关键对比文件不完整时，输出受限答复草案并逐项列出缺失影响；\n2. 无原申请依据的特征、新效果或新机理不得进入推荐修改方案，可作为不采用建议记录；\n3. 工作流不自动决定最终答复口径和提交文本；最终选择由用户或专利专业人员作出，审查员在审查程序中依法判断。\n\n        无论是否出现警示，本节点均生成主Markdown。存在警示时使用`workflow_status=completed_with_warnings`，并按影响选择`deliverable_status`；需要回到前序修订时只输出人工返工建议，不自动调用、跳转或重跑任何节点。\n\n        ---"
+    }
+  ]
+}
