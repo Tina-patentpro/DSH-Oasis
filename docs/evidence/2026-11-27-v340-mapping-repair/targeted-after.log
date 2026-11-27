@@ -1,0 +1,544 @@
+TAP version 13
+# Subtest: create transport keeps six exact output strings and provider receipt alongside legacy projection
+ok 1 - create transport keeps six exact output strings and provider receipt alongside legacy projection
+  ---
+  duration_ms: 21.7925
+  type: 'test'
+  ...
+# Subtest: received error-only enhanced response is not erased into an unresolved legacy receipt
+ok 2 - received error-only enhanced response is not erased into an unresolved legacy receipt
+  ---
+  duration_ms: 0.711334
+  type: 'test'
+  ...
+# Subtest: mutually present fragments are rejected instead of silently choosing one
+ok 3 - mutually present fragments are rejected instead of silently choosing one
+  ---
+  duration_ms: 0.254334
+  type: 'test'
+  ...
+# Subtest: existing completed progress transport forwards the same fragment without inventing a recovery endpoint
+ok 4 - existing completed progress transport forwards the same fragment without inventing a recovery endpoint
+  ---
+  duration_ms: 0.179
+  type: 'test'
+  ...
+# Subtest: old responses keep the same normalized interface and do not gain synthesized enhancement
+ok 5 - old responses keep the same normalized interface and do not gain synthesized enhancement
+  ---
+  duration_ms: 0.2905
+  type: 'test'
+  ...
+# Subtest: F3 validates every raw ledger item before projection rather than coercing or dropping malformed data
+ok 6 - F3 validates every raw ledger item before projection rather than coercing or dropping malformed data
+  ---
+  duration_ms: 1.916625
+  type: 'test'
+  ...
+# Subtest: F1 rejects credential-bearing file URLs at upload and result boundaries without echoing them
+ok 7 - F1 rejects credential-bearing file URLs at upload and result boundaries without echoing them
+  ---
+  duration_ms: 6.88325
+  type: 'test'
+  ...
+# Subtest: ships the user-validated legacy API baseline with exact provenance and nine bounded endpoints
+ok 8 - ships the user-validated legacy API baseline with exact provenance and nine bounded endpoints
+  ---
+  duration_ms: 0.379334
+  type: 'test'
+  ...
+# Subtest: normalizes dynamic category ids, endpoints, and process strings without hardcoding services
+ok 9 - normalizes dynamic category ids, endpoints, and process strings without hardcoding services
+  ---
+  duration_ms: 0.12625
+  type: 'test'
+  ...
+# Subtest: accepts only synchronous Workflow details and maps documented dynamic fields
+ok 10 - accepts only synchronous Workflow details and maps documented dynamic fields
+  ---
+  duration_ms: 0.314709
+  type: 'test'
+  ...
+# Subtest: rejects missing, non-numeric, negative, and non-finite service prices
+ok 11 - rejects missing, non-numeric, negative, and non-finite service prices
+  ---
+  duration_ms: 0.135542
+  type: 'test'
+  ...
+# Subtest: builds the exact five-field create body and omits absent file inputs
+ok 12 - builds the exact five-field create body and omits absent file inputs
+  ---
+  duration_ms: 0.073208
+  type: 'test'
+  ...
+# Subtest: normalizes both folder-list wrappers, workflow output variants, and running-water wrappers
+ok 13 - normalizes both folder-list wrappers, workflow output variants, and running-water wrappers
+  ---
+  duration_ms: 0.20375
+  type: 'test'
+  ...
+# Subtest: rejects exact forbidden property names without scanning ordinary user text
+ok 14 - rejects exact forbidden property names without scanning ordinary user text
+  ---
+  duration_ms: 0.255917
+  type: 'test'
+  ...
+# Subtest: rejects bounded credential field variants across common naming conventions
+ok 15 - rejects bounded credential field variants across common naming conventions
+  ---
+  duration_ms: 0.180583
+  type: 'test'
+  ...
+# Subtest: uses Bearer auth and documented paths through injected fake fetch without retries
+ok 16 - uses Bearer auth and documented paths through injected fake fetch without retries
+  ---
+  duration_ms: 0.570709
+  type: 'test'
+  ...
+# Subtest: rejects transport redirects before forwarding a workflow request body to another origin
+ok 17 - rejects transport redirects before forwarding a workflow request body to another origin
+  ---
+  duration_ms: 31.579125
+  type: 'test'
+  ...
+# Subtest: rejects create and query responses whose task key differs from the original request key
+ok 18 - rejects create and query responses whose task key differs from the original request key
+  ---
+  duration_ms: 0.622959
+  type: 'test'
+  ...
+# Subtest: dispatches every bounded professional-service endpoint with fixed methods and bodies
+ok 19 - dispatches every bounded professional-service endpoint with fixed methods and bodies
+  ---
+  duration_ms: 1.264
+  type: 'test'
+  ...
+# Subtest: rejects upload and result URLs outside the configured non-production origins
+ok 20 - rejects upload and result URLs outside the configured non-production origins
+  ---
+  duration_ms: 0.402583
+  type: 'test'
+  ...
+# Subtest: rejects a direct API client configured for the normalized production host
+ok 21 - rejects a direct API client configured for the normalized production host
+  ---
+  duration_ms: 0.104458
+  type: 'test'
+  ...
+# Subtest: rejects endpoint option overrides before resolving credentials or calling fetch
+ok 22 - rejects endpoint option overrides before resolving credentials or calling fetch
+  ---
+  duration_ms: 0.13175
+  type: 'test'
+  ...
+# Subtest: unchanged pinned paths remain readable and every opened handle closes
+ok 23 - unchanged pinned paths remain readable and every opened handle closes
+  ---
+  duration_ms: 92.532625
+  type: 'test'
+  ...
+# Subtest: read admission rejects resource-parent-link without reading redirected bytes
+ok 24 - read admission rejects resource-parent-link without reading redirected bytes
+  ---
+  duration_ms: 57.537291
+  type: 'test'
+  ...
+# Subtest: read admission rejects manifest-parent-link without reading redirected bytes
+ok 25 - read admission rejects manifest-parent-link without reading redirected bytes
+  ---
+  duration_ms: 39.348666
+  type: 'test'
+  ...
+# Subtest: read admission rejects resource-parent-aba without reading redirected bytes
+ok 26 - read admission rejects resource-parent-aba without reading redirected bytes
+  ---
+  duration_ms: 43.482
+  type: 'test'
+  ...
+# Subtest: read admission rejects manifest-parent-aba without reading redirected bytes
+ok 27 - read admission rejects manifest-parent-aba without reading redirected bytes
+  ---
+  duration_ms: 37.732291
+  type: 'test'
+  ...
+# Subtest: read admission rejects resource-file-copy without reading redirected bytes
+ok 28 - read admission rejects resource-file-copy without reading redirected bytes
+  ---
+  duration_ms: 41.998708
+  type: 'test'
+  ...
+# Subtest: read admission rejects resource-directory-copy without reading redirected bytes
+ok 29 - read admission rejects resource-directory-copy without reading redirected bytes
+  ---
+  duration_ms: 43.740875
+  type: 'test'
+  ...
+# Subtest: read admission rejects after-open-parent-link without reading redirected bytes
+ok 30 - read admission rejects after-open-parent-link without reading redirected bytes
+  ---
+  duration_ms: 41.460875
+  type: 'test'
+  ...
+# Subtest: read admission rejects after-open-file-copy without reading redirected bytes
+ok 31 - read admission rejects after-open-file-copy without reading redirected bytes
+  ---
+  duration_ms: 43.216459
+  type: 'test'
+  ...
+# Subtest: read admission rejects resource-final-link without reading redirected bytes
+ok 32 - read admission rejects resource-final-link without reading redirected bytes
+  ---
+  duration_ms: 40.211125
+  type: 'test'
+  ...
+# Subtest: all original 46 mapping regressions run in a copy without a pre-existing .local directory
+ok 33 - all original 46 mapping regressions run in a copy without a pre-existing .local directory
+  ---
+  duration_ms: 359.295917
+  type: 'test'
+  ...
+# Subtest: a file growing after stat is rejected without an unbounded content read
+ok 34 - a file growing after stat is rejected without an unbounded content read
+  ---
+  duration_ms: 39.207166
+  type: 'test'
+  ...
+# Subtest: an unsupported secure-read platform fails closed instead of using a path-only fallback
+ok 35 - an unsupported secure-read platform fails closed instead of using a path-only fallback
+  ---
+  duration_ms: 33.102958
+  type: 'test'
+  ...
+# Subtest: historical mapping and current API review are reported separately without rewriting the frozen manifest
+ok 36 - historical mapping and current API review are reported separately without rewriting the frozen manifest
+  ---
+  duration_ms: 35.951166
+  type: 'test'
+  ...
+# Subtest: versioned mapping refuses tampered historical bytes
+ok 37 - versioned mapping refuses tampered historical bytes
+  ---
+  duration_ms: 14.470083
+  type: 'test'
+  ...
+# Subtest: versioned mapping refuses current bytes substituted for history
+ok 38 - versioned mapping refuses current bytes substituted for history
+  ---
+  duration_ms: 20.000875
+  type: 'test'
+  ...
+# Subtest: versioned mapping refuses unreviewed current revision
+ok 39 - versioned mapping refuses unreviewed current revision
+  ---
+  duration_ms: 20.431709
+  type: 'test'
+  ...
+# Subtest: versioned mapping refuses runtime silently rolled back to old contract
+ok 40 - versioned mapping refuses runtime silently rolled back to old contract
+  ---
+  duration_ms: 24.579208
+  type: 'test'
+  ...
+# Subtest: versioned mapping refuses a symlink at docs/business-baseline/v340-source-mapping-20261023/oasis-api-contract.js.txt
+ok 41 - versioned mapping refuses a symlink at docs/business-baseline/v340-source-mapping-20261023/oasis-api-contract.js.txt
+  ---
+  duration_ms: 13.815958
+  type: 'test'
+  ...
+# Subtest: versioned mapping refuses a symlink at packages/oasis-professional-service/src/oasis-api-contract.js
+ok 42 - versioned mapping refuses a symlink at packages/oasis-professional-service/src/oasis-api-contract.js
+  ---
+  duration_ms: 10.373416
+  type: 'test'
+  ...
+# Subtest: new review cannot replace the historical evidence pin or date in the manifest
+ok 43 - new review cannot replace the historical evidence pin or date in the manifest
+  ---
+  duration_ms: 13.299833
+  type: 'test'
+  ...
+# Subtest: offline mapping verification is available without enabling a source
+ok 44 - offline mapping verification is available without enabling a source
+  ---
+  duration_ms: 20.756209
+  type: 'test'
+  ...
+# Subtest: mapping refuses missing node
+ok 45 - mapping refuses missing node
+  ---
+  duration_ms: 18.589333
+  type: 'test'
+  ...
+# Subtest: mapping refuses duplicate node
+ok 46 - mapping refuses duplicate node
+  ---
+  duration_ms: 16.224125
+  type: 'test'
+  ...
+# Subtest: mapping refuses wrong business version
+ok 47 - mapping refuses wrong business version
+  ---
+  duration_ms: 18.370542
+  type: 'test'
+  ...
+# Subtest: mapping refuses wrong business original hash
+ok 48 - mapping refuses wrong business original hash
+  ---
+  duration_ms: 15.52825
+  type: 'test'
+  ...
+# Subtest: mapping refuses replaced pack pin
+ok 49 - mapping refuses replaced pack pin
+  ---
+  duration_ms: 21.6745
+  type: 'test'
+  ...
+# Subtest: mapping refuses resource order changed
+ok 50 - mapping refuses resource order changed
+  ---
+  duration_ms: 14.372084
+  type: 'test'
+  ...
+# Subtest: mapping refuses resource hash changed
+ok 51 - mapping refuses resource hash changed
+  ---
+  duration_ms: 9.684625
+  type: 'test'
+  ...
+# Subtest: mapping refuses another node instruction substituted
+ok 52 - mapping refuses another node instruction substituted
+  ---
+  duration_ms: 8.073916
+  type: 'test'
+  ...
+# Subtest: mapping refuses legacy resource masquerades as V340
+ok 53 - mapping refuses legacy resource masquerades as V340
+  ---
+  duration_ms: 7.92675
+  type: 'test'
+  ...
+# Subtest: mapping refuses wrong assembly hash
+ok 54 - mapping refuses wrong assembly hash
+  ---
+  duration_ms: 6.159209
+  type: 'test'
+  ...
+# Subtest: mapping refuses duplicate input
+ok 55 - mapping refuses duplicate input
+  ---
+  duration_ms: 5.117833
+  type: 'test'
+  ...
+# Subtest: mapping refuses user input treated as a material file
+ok 56 - mapping refuses user input treated as a material file
+  ---
+  duration_ms: 5.248083
+  type: 'test'
+  ...
+# Subtest: mapping refuses single document boundary lost
+ok 57 - mapping refuses single document boundary lost
+  ---
+  duration_ms: 6.289791
+  type: 'test'
+  ...
+# Subtest: mapping refuses API input omitted
+ok 58 - mapping refuses API input omitted
+  ---
+  duration_ms: 5.914209
+  type: 'test'
+  ...
+# Subtest: mapping refuses API required field added
+ok 59 - mapping refuses API required field added
+  ---
+  duration_ms: 5.511625
+  type: 'test'
+  ...
+# Subtest: mapping refuses API requiredness claimed without schema
+ok 60 - mapping refuses API requiredness claimed without schema
+  ---
+  duration_ms: 5.224292
+  type: 'test'
+  ...
+# Subtest: mapping refuses API schema fingerprint claimed
+ok 61 - mapping refuses API schema fingerprint claimed
+  ---
+  duration_ms: 4.831458
+  type: 'test'
+  ...
+# Subtest: mapping refuses URL-only result called a delivered body
+ok 62 - mapping refuses URL-only result called a delivered body
+  ---
+  duration_ms: 5.273084
+  type: 'test'
+  ...
+# Subtest: mapping refuses service ID guessed from node name
+ok 63 - mapping refuses service ID guessed from node name
+  ---
+  duration_ms: 5.86325
+  type: 'test'
+  ...
+# Subtest: mapping refuses legacy create endpoint treated as deployed binding
+ok 64 - mapping refuses legacy create endpoint treated as deployed binding
+  ---
+  duration_ms: 5.360959
+  type: 'test'
+  ...
+# Subtest: mapping refuses ready without project ownership
+ok 65 - mapping refuses ready without project ownership
+  ---
+  duration_ms: 5.167666
+  type: 'test'
+  ...
+# Subtest: mapping refuses synthetic account used as project evidence
+ok 66 - mapping refuses synthetic account used as project evidence
+  ---
+  duration_ms: 6.1375
+  type: 'test'
+  ...
+# Subtest: mapping refuses root dispatch enabled
+ok 67 - mapping refuses root dispatch enabled
+  ---
+  duration_ms: 6.096958
+  type: 'test'
+  ...
+# Subtest: mapping refuses root real call claimed
+ok 68 - mapping refuses root real call claimed
+  ---
+  duration_ms: 4.600083
+  type: 'test'
+  ...
+# Subtest: mapping refuses local enabled
+ok 69 - mapping refuses local enabled
+  ---
+  duration_ms: 5.120917
+  type: 'test'
+  ...
+# Subtest: mapping refuses API enabled
+ok 70 - mapping refuses API enabled
+  ---
+  duration_ms: 5.342667
+  type: 'test'
+  ...
+# Subtest: mapping refuses local real call claimed
+ok 71 - mapping refuses local real call claimed
+  ---
+  duration_ms: 5.130459
+  type: 'test'
+  ...
+# Subtest: mapping refuses API real call claimed
+ok 72 - mapping refuses API real call claimed
+  ---
+  duration_ms: 5.463083
+  type: 'test'
+  ...
+# Subtest: mapping refuses legacy version reassigned
+ok 73 - mapping refuses legacy version reassigned
+  ---
+  duration_ms: 5.971458
+  type: 'test'
+  ...
+# Subtest: mapping refuses missing gap hides unresolved API schema
+ok 74 - mapping refuses missing gap hides unresolved API schema
+  ---
+  duration_ms: 4.615209
+  type: 'test'
+  ...
+# Subtest: mapping refuses historical evidence described as actual deployment
+ok 75 - mapping refuses historical evidence described as actual deployment
+  ---
+  duration_ms: 5.542292
+  type: 'test'
+  ...
+# Subtest: mapping refuses extra unchecked readiness property
+ok 76 - mapping refuses extra unchecked readiness property
+  ---
+  duration_ms: 5.26725
+  type: 'test'
+  ...
+# Subtest: mapping refuses evidence path escape
+ok 77 - mapping refuses evidence path escape
+  ---
+  duration_ms: 4.611583
+  type: 'test'
+  ...
+# Subtest: mapping refuses resource points to credential path
+ok 78 - mapping refuses resource points to credential path
+  ---
+  duration_ms: 5.817833
+  type: 'test'
+  ...
+# Subtest: offline checker accepts JSON object key reordering without hiding any gaps
+ok 79 - offline checker accepts JSON object key reordering without hiding any gaps
+  ---
+  duration_ms: 5.880958
+  type: 'test'
+  ...
+# Subtest: mapping refuses actual disk drift in pinned pack
+ok 80 - mapping refuses actual disk drift in pinned pack
+  ---
+  duration_ms: 6.438416
+  type: 'test'
+  ...
+# Subtest: mapping refuses actual disk drift in catalog assembly and disabled routing
+ok 81 - mapping refuses actual disk drift in catalog assembly and disabled routing
+  ---
+  duration_ms: 7.039625
+  type: 'test'
+  ...
+# Subtest: mapping refuses actual disk drift in legacy API authority
+ok 82 - mapping refuses actual disk drift in legacy API authority
+  ---
+  duration_ms: 7.006958
+  type: 'test'
+  ...
+# Subtest: mapping refuses actual disk drift in old Skill resource
+ok 83 - mapping refuses actual disk drift in old Skill resource
+  ---
+  duration_ms: 7.304875
+  type: 'test'
+  ...
+# Subtest: mapping refuses an explicit manifest outside the repository
+ok 84 - mapping refuses an explicit manifest outside the repository
+  ---
+  duration_ms: 0.260167
+  type: 'test'
+  ...
+# Subtest: mapping refuses non-manifest repository files even if they contain matching JSON
+ok 85 - mapping refuses non-manifest repository files even if they contain matching JSON
+  ---
+  duration_ms: 1.781875
+  type: 'test'
+  ...
+# Subtest: mapping refuses a symlink manifest even when it targets an allowed repository file
+ok 86 - mapping refuses a symlink manifest even when it targets an allowed repository file
+  ---
+  duration_ms: 1.066542
+  type: 'test'
+  ...
+# Subtest: mapping refuses a symlinked parent of a fixed resource before following it
+ok 87 - mapping refuses a symlinked parent of a fixed resource before following it
+  ---
+  duration_ms: 6.732375
+  type: 'test'
+  ...
+# Subtest: mapping refuses a symlinked fixed resource even when its bytes match
+ok 88 - mapping refuses a symlinked fixed resource even when its bytes match
+  ---
+  duration_ms: 6.062916
+  type: 'test'
+  ...
+# Subtest: mapping CLI emits only a bounded summary and fails closed without echoing input
+ok 89 - mapping CLI emits only a bounded summary and fails closed without echoing input
+  ---
+  duration_ms: 72.23625
+  type: 'test'
+  ...
+1..89
+# tests 89
+# suites 0
+# pass 89
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 977.719542

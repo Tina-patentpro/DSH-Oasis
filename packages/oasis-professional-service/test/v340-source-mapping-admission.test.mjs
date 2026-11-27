@@ -14,6 +14,7 @@ async function fixture(t) {
   t.after(() => rm(dir, { recursive: true, force: true }))
   const root = resolve(dir, 'repo')
   const paths = [...frozen.evidence.map(e => e.path), ...frozen.legacyReference.resources.map(e => e.path), manifestPath,
+    'docs/business-baseline/v340-source-mapping-20261023/oasis-api-contract.js.txt',
     'scripts/check-v340-source-mapping.mjs', 'packages/oasis-professional-service/test/v340-source-mapping.test.mjs']
   for (const path of paths) {
     await mkdir(dirname(resolve(root, path)), { recursive: true })

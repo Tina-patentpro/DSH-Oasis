@@ -1,0 +1,46 @@
+diff --git a/packages/oasis-professional-service/src/oasis-api-contract.js b/packages/oasis-professional-service/src/oasis-api-contract.js
+index b706977..88fa90d 100644
+--- a/packages/oasis-professional-service/src/oasis-api-contract.js
++++ b/packages/oasis-professional-service/src/oasis-api-contract.js
+@@ -222,12 +222,16 @@ export function normalizeWorkflowCreateResult(response) {
+   }
+   const data = record(unwrapData(response, 'workflow-create response'), 'workflow-create data')
+   assertNoForbiddenCredentialFields(data)
++  const enhancedKeys = ['structured_result', 'structured_result_error'].filter(key => Object.hasOwn(data, key))
++  if (enhancedKeys.length > 1) fail('INVALID_RESPONSE', 'Workflow response contains conflicting enhanced fragments')
++  const enhancedFragment = enhancedKeys.length
++    ? { [enhancedKeys[0]]: structuredClone(data[enhancedKeys[0]]) } : undefined
+   const answerText = typeof data.answer_text === 'string' ? data.answer_text : ''
+   let fileUrls
+   if (typeof data.file_url === 'string') fileUrls = data.file_url.length > 0 ? [data.file_url] : []
+   else if (Array.isArray(data.file_url)) fileUrls = data.file_url.filter((value) => typeof value === 'string' && value.length > 0)
+   else fileUrls = []
+-  if (answerText.trim().length === 0 && fileUrls.length === 0) {
++  if (answerText.trim().length === 0 && fileUrls.length === 0 && enhancedFragment === undefined) {
+     fail('UNRESOLVED_RESPONSE', 'Workflow response contains no usable result')
+   }
+   return {
+@@ -235,6 +239,7 @@ export function normalizeWorkflowCreateResult(response) {
+     ...(typeof data.key === 'string' ? { key: data.key } : {}),
+     answerText,
+     fileUrls,
++    ...(enhancedFragment === undefined ? {} : { enhancedFragment }),
+     raw: structuredClone(data),
+   }
+ }
+@@ -269,6 +274,7 @@ export function normalizeWorkflowProgress(response, taskKey) {
+       ...(typeof normalized.key === 'string' ? { key: normalized.key } : { key }),
+       answerText: normalized.answerText,
+       fileUrls: normalized.fileUrls,
++      ...(normalized.enhancedFragment === undefined ? {} : { enhancedFragment: normalized.enhancedFragment }),
+     },
+   }
+ }
+@@ -438,6 +444,7 @@ export function createOasisApiClient({
+             key,
+             answerText: result.answerText,
+             fileUrls: normalizeResultUrls(result.fileUrls, assertAllowedUrl),
++            ...(result.enhancedFragment === undefined ? {} : { enhancedFragment: result.enhancedFragment }),
+           },
+         }
+       } catch (error) {

@@ -1,0 +1,214 @@
+{
+  "at": "2026-11-27T14:06:06.805374+08:00",
+  "executor": "Codex",
+  "scope": "offline historical mapping verification and current API normalization review",
+  "baseCommit": "e372c4ded266b13b0b8ee4aae2178ae06438e46b",
+  "originalMappingFailures": 47,
+  "before": {
+    "command": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/node --test test/v340-source-mapping.test.mjs test/v340-source-mapping-admission.test.mjs",
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service",
+    "exitCode": 1,
+    "tests": 59,
+    "pass": 12,
+    "fail": 47,
+    "log": "targeted-before.log"
+  },
+  "versioningRED": {
+    "exitCode": 1,
+    "tests": 8,
+    "pass": 4,
+    "fail": 4,
+    "log": "versioning-red.log"
+  },
+  "targeted": {
+    "command": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/node --test --test-reporter=tap test/v340-source-mapping.test.mjs test/v340-source-mapping-admission.test.mjs test/v340-source-mapping-versioning.test.mjs test/oasis-api-contract.test.mjs test/m06-fast39-transport.test.mjs",
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service",
+    "exitCode": 0,
+    "tests": 89,
+    "pass": 89,
+    "fail": 0,
+    "log": "targeted-after.log"
+  },
+  "full": {
+    "command": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/node --test --test-reporter=tap test/*.test.mjs",
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service",
+    "exitCode": 0,
+    "tests": 1695,
+    "pass": 1691,
+    "fail": 0,
+    "skipped": 4,
+    "skipReason": "Historical fixed DSH Desktop SDK provider unavailable; no alternate Host substituted",
+    "log": "full-tests.log"
+  },
+  "build": {
+    "command": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/node node_modules/tsdown/dist/run.mjs",
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service",
+    "exitCode": 0,
+    "log": "build.log",
+    "warning": "Existing tsdown deps.onlyBundle hint for zod; build successful"
+  },
+  "pack": {
+    "command": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/npm pack --dry-run --json --offline --ignore-scripts --cache /Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/build-cache/npm",
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service",
+    "exitCode": 0,
+    "files": 153,
+    "excluded": [],
+    "log": "pack.json"
+  },
+  "historicalManifest": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-source-mapping.json",
+    "sha256": "1b084249ab889083287ec0050e232b7a5f372581efba8e300d9da2d1efe65245",
+    "preserved": true
+  },
+  "historicalApi": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-source-mapping-20261023/oasis-api-contract.js.txt",
+    "sha256": "8b56d9374c508304bef84d6f2bf5b7257b633230af5a118532e8e031653f785f",
+    "gitCommit": "035fe82b3f97b983bb561fbefff9ae1ea9d42862",
+    "gitBlob": "b706977a37bd5ae7d4bf766370f3ab1fc7a337b9",
+    "originalBytesVerified": true
+  },
+  "currentApi": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-api-contract.js",
+    "sha256": "16e993ef1dbd7d3ee1152a89a18bce4e47ac0bccc292735940f539ffb6bcabe7",
+    "runtimeSourceUnchanged": true,
+    "review": "api-contract-comparison.md"
+  },
+  "governanceRecheckBeforeStatePrefix": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "sha256": "5da00f111b7d1632ea0f7d59c4d45790743988c1a8ba5f84ac895258b3ca7559"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "sha256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "sha256": "f2e51a7dcdc2f894f5ae748400356119759febb2ddee5dda21e5320f24ed79fd"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "sha256": "cb0a126a8e7300c35b3fd74ed8d1ce6ed09b5737dfab4b71006fa91edc941035"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "sha256": "ae7d0f769fa448c9d4314afbf1df5ec30d31778cb7d95fef1e193dbd43453a30"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "sha256": "cd23de2f47d963b0c641d3e55a8f579010ac057a2910000da021d09b69e7c5ef"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "sha256": "a3a154ab8cb91cc36cee1464e7e185f0ca82f125a48905b6f6fb9baf50b99627"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "sha256": "1345afaa880a719c9e9780049148dffb1e406fa13fbc63b2c985e3a29ccbc3d1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-API.md",
+      "sha256": "365d82a7141379d23ec6db4355cd0901cc0a57f981bf144f40ba2d8b0fa0f4a0"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-11-11-interface-standards-post-r03-plan.md",
+      "sha256": "8c64d3ee0bae1d2971c3ec52ce1d6859ab7498092861c8070e54b9e772e6977f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "sha256": "182a0f22fd0ab28d0abb66fa0f6f010b29961500bdb62184b505dc642141a51d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "sha256": "ebdcef28e95fa0de355e49055a54235ca4f5ce0e6d47f3c35892934172a48307"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-source-mapping.json",
+      "sha256": "1b084249ab889083287ec0050e232b7a5f372581efba8e300d9da2d1efe65245"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-api-contract.js",
+      "sha256": "16e993ef1dbd7d3ee1152a89a18bce4e47ac0bccc292735940f539ffb6bcabe7"
+    }
+  ],
+  "currentStateHistory": {
+    "oldSHA256": "182a0f22fd0ab28d0abb66fa0f6f010b29961500bdb62184b505dc642141a51d",
+    "preservedAsExactSuffix": true,
+    "newSHA256": "6c51ef0a602261afe52d490cd96e1956cfe9968edcd25a38d9c5d7f411d3c62c"
+  },
+  "unchangedBoundaries": {
+    "historicalGaps": 114,
+    "dispatchEnabled": false,
+    "realCallVerified": false,
+    "hostStarted": false,
+    "credentialsRead": false,
+    "modelCalls": 0,
+    "professionalApiCalls": 0,
+    "feeCNY": "0.00",
+    "installed": false,
+    "publishedPackage": false,
+    "newBranches": 0
+  },
+  "logs": {
+    "targeted-before.log": "ea4d1e7500874c172a030905dd7bbaeae1beac02024686dadad36df19af81b29",
+    "versioning-red.log": "999e9be5f4410410dc6f48abbb41c0624373c737685a0b47d77ebe95d0e8a16d",
+    "targeted-after.log": "0684e55fd6045d9f63d2e7524f34c228d19cbe59dc22825ab0cf7ad5a578e34c",
+    "build.log": "3e4dce578f526bcfd85d262685a15a547b2ba822b72fa38ba66d1e1037720e9f",
+    "full-tests.log": "15af58891c469a8b3a8239f247e6d39e1f7677c7603a521e95ee868dab5ebbe7",
+    "pack.json": "24879e38f1a5dbda1b79ec4adfc8da20975fa2c2d62680f573071e8445629552",
+    "pack.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "resolvedFailures": {
+    "path": "resolved-47.json",
+    "sha256": "a70874276ba569eb869a2ab7f2407657012e7daf6c90cb72045d20da4c0a40df",
+    "beforeFAIL": 47,
+    "afterPASS": 47
+  },
+  "implementation": [
+    {
+      "path": "scripts/check-v340-source-mapping.mjs",
+      "sha256": "5be54640de21e8024137315a0d1255b2a01aeda06daab49fa6a6cdc016e18bcd"
+    },
+    {
+      "path": "packages/oasis-professional-service/test/v340-source-mapping.test.mjs",
+      "sha256": "03202019b677ac3836d99cef3cdae7bfdfadc9c355eb53b48c54886ad3381f3e"
+    },
+    {
+      "path": "packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs",
+      "sha256": "9810607126b064be8bd175a66d5decfd1cf84298353cfb23c7fa5151dd8c92f9"
+    },
+    {
+      "path": "packages/oasis-professional-service/test/v340-source-mapping-versioning.test.mjs",
+      "sha256": "6af00f99191f2d3fd868b0a2d8b4d5a4218794337a68c7d028fcddf66817028b"
+    }
+  ],
+  "submissionScan": {
+    "files": 19,
+    "findings": [],
+    "scope": "known private-key/token patterns; explicit source/log/evidence paths only"
+  },
+  "diffCheck": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      ".",
+      ":(exclude)**/*.log",
+      ":(exclude)**/*.diff"
+    ],
+    "exitCode": 0,
+    "rawLogsAndDiffPreserved": true,
+    "allFilesCheckExitCode": 2,
+    "rawWhitespaceWarnings": "Original build/test logs retain runner-emitted trailing spaces; raw patch context retained. No whitespace cleanup of evidence."
+  }
+}

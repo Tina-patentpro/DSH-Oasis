@@ -22,7 +22,8 @@ async function variant(t, mutate = () => {}, isolated = false) {
   mutate(value)
   const root = isolated ? dir : repoRoot
   if (isolated) {
-    for (const path of [...frozen.evidence.map(e => e.path), ...frozen.legacyReference.resources.map(e => e.path)]) {
+    for (const path of [...frozen.evidence.map(e => e.path), ...frozen.legacyReference.resources.map(e => e.path),
+      'docs/business-baseline/v340-source-mapping-20261023/oasis-api-contract.js.txt']) {
       await mkdir(dirname(resolve(root, path)), { recursive: true })
       await copyFile(resolve(repoRoot, path), resolve(root, path))
     }

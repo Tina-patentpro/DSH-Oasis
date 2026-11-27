@@ -1,0 +1,331 @@
+[
+  {
+    "test": "unchanged pinned paths remain readable and every opened handle closes",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "read admission rejects resource-parent-link without reading redirected bytes",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "read admission rejects resource-parent-aba without reading redirected bytes",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "read admission rejects resource-file-copy without reading redirected bytes",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "read admission rejects resource-directory-copy without reading redirected bytes",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "read admission rejects after-open-parent-link without reading redirected bytes",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "read admission rejects after-open-file-copy without reading redirected bytes",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "read admission rejects resource-final-link without reading redirected bytes",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "all original 46 mapping regressions run in a copy without a pre-existing .local directory",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "a file growing after stat is rejected without an unbounded content read",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "offline mapping verification is available without enabling a source",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses missing node",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses duplicate node",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses wrong business version",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses wrong business original hash",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses replaced pack pin",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses resource order changed",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses resource hash changed",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses another node instruction substituted",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses legacy resource masquerades as V340",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses wrong assembly hash",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses duplicate input",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses user input treated as a material file",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses single document boundary lost",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses API input omitted",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses API required field added",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses API requiredness claimed without schema",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses API schema fingerprint claimed",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses URL-only result called a delivered body",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses service ID guessed from node name",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses legacy create endpoint treated as deployed binding",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses ready without project ownership",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses synthetic account used as project evidence",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses root dispatch enabled",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses root real call claimed",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses local enabled",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses API enabled",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses local real call claimed",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses API real call claimed",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses legacy version reassigned",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses missing gap hides unresolved API schema",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses historical evidence described as actual deployment",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses extra unchecked readiness property",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses evidence path escape",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping refuses resource points to credential path",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "offline checker accepts JSON object key reordering without hiding any gaps",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  },
+  {
+    "test": "mapping CLI emits only a bounded summary and fails closed without echoing input",
+    "before": "FAIL",
+    "after": "PASS",
+    "rootCause": "historical API evidence pin read from current source path before intended assertion",
+    "evidence": "targeted-before.log / targeted-after.log"
+  }
+]

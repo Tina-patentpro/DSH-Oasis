@@ -1,3 +1,9 @@
+## 2026-11-27 主工程 47 项映射校验遗留失败修复
+
+已核对旧快照与当前 API 归一化合同的增强片段差异：原冻结清单及哈希保持，另存原字节历史 API 快照，并独立绑定本次已审当前 API 源码；两者任一漂移仍拒绝。新增 8 项版本正反例，89 项定向验证通过；主工程完整离线验证 1,691 通过、0 失败、4 原固定历史 SDK 缺失跳过，构建及 153 文件离线打包检查通过。修复按授权在现有唯一 mac/continuity-v2 分支提交并推送；最终提交及推送状态以 GitHub 分支回读和会话收尾为准。新增模型/API 调用 0，费用 0 元，原 114 缺口、真实业务/专业/用户接受及 FAIL/UNKNOWN 保留。 [差异核对](evidence/2026-11-27-v340-mapping-repair/api-contract-comparison.md) · [修复回执](evidence/2026-11-27-v340-mapping-repair/execution-return.md) · [核验](evidence/2026-11-27-v340-mapping-repair/verification.json)。以下历史字节保持。
+
+---
+
 ## 2026-11-27 本地与 GitHub 仅保留一个分支
 
 按用户最新决定，已核对所有提交归并关系，删除其余 8 个本地分支及 2 个 GitHub 预览分支，只保留 mac/continuity-v2。旧归档 origin 的活动引用已移除，附加工作树转为原提交 detached HEAD，文件保留。首页预览链接已改固定提交；原历史、业务状态及测试限制不改写。 [清理回执](evidence/2026-11-27-single-branch/execution-return.md) · [核验](evidence/2026-11-27-single-branch/verification.json)。以下历史字节保持。

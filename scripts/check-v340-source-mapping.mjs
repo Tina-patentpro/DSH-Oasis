@@ -5,7 +5,7 @@ import { resolve, relative, isAbsolute, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { isDeepStrictEqual } from 'node:util'
 
-// One frozen B-batch evidence snapshot, not a production router or a generic schema registry.
+// One frozen B-batch snapshot plus a bounded current API source review, not a production router.
 // Only built-ins are imported; resource files and their instructions are never executed.
 const ROOT = fileURLToPath(new URL('../', import.meta.url))
 const P = 'packages/oasis-professional-service/'
@@ -22,6 +22,17 @@ const EVIDENCE = [
   ['api-contract', P + 'src/oasis-api-contract.js', '8b56d9374c508304bef84d6f2bf5b7257b633230af5a118532e8e031653f785f', 'static-code', 'legacy-normalization-not-deployment'],
   ['workspace-binding', P + 'src/oasis-workspace-binding.js', '1c848580a357c6e705fb5746d7898c85459cbba4fc97e9077c1709957ae506bf', 'static-code', 'binding-requirements-not-actual-account'],
 ].map(([id, path, sha256, evidenceKind, scope]) => ({ id, path, sha256, checkedAt: DATE, evidenceKind, scope }))
+// Preserve the old evidence record, including its original source path/date/hash. Its bytes
+// now live in an explicit historical copy recovered from Git, never in the active runtime.
+// Separately pin the reviewed current source: a snapshot must not hide subsequent code drift.
+const API_CONTRACT_SNAPSHOT = 'docs/business-baseline/v340-source-mapping-20261023/oasis-api-contract.js.txt'
+const CURRENT_API_CONTRACT = {
+  path: P + 'src/oasis-api-contract.js',
+  sha256: '16e993ef1dbd7d3ee1152a89a18bce4e47ac0bccc292735940f539ffb6bcabe7',
+  reviewedAt: '2026-11-27',
+  reviewPath: 'docs/evidence/2026-11-27-v340-mapping-repair/api-contract-comparison.md',
+  scope: 'static-normalization-review-only',
+}
 const LOCAL_GAPS = ['LOCAL_ADAPTER_UNWIRED', 'LOCAL_REAL_CALL_UNVERIFIED']
 const API_GAPS = ['API_SERVICE_COORDINATES_MISSING', 'API_SCHEMA_MISSING', 'API_INPUT_MAPPING_UNVERIFIED',
   'API_RESULT_BODY_UNVERIFIED', 'API_PROJECT_ACCOUNT_BINDING_MISSING', 'API_REAL_CALL_UNVERIFIED']
@@ -129,9 +140,13 @@ export async function verifyV340SourceMapping({ manifestPath, repoRoot = ROOT } 
     const files = new Map()
     // Manifest-supplied resource paths are never read. Only these fixed evidence paths are.
     for (const e of EVIDENCE) {
-      const bytes = await readInside(root, e.path, rootIdentity)
+      const readPath = e.id === 'api-contract' ? API_CONTRACT_SNAPSHOT : e.path
+      const bytes = await readInside(root, readPath, rootIdentity)
       if (hash(bytes) !== e.sha256) fail('MAPPING_RESOURCE_DRIFT')
       files.set(e.id, bytes)
+    }
+    if (hash(await readInside(root, CURRENT_API_CONTRACT.path, rootIdentity)) !== CURRENT_API_CONTRACT.sha256) {
+      fail('MAPPING_RESOURCE_DRIFT')
     }
     const pack = parse(files.get('pack'))
     const old = parse(files.get('legacy-manifest'))
@@ -176,7 +191,13 @@ export async function verifyV340SourceMapping({ manifestPath, repoRoot = ROOT } 
       ...GLOBAL_GAPS.map(code => ({ nodeId: null, sourceId: null, code })),
       ...nodes.flatMap(n => ['local', 'api'].flatMap(s => n[s].gaps.map(code => ({ nodeId: n.nodeId, sourceId: n[s].sourceId, code })))),
     ]
-    return { businessVersion: pack.businessVersion, nodeCount: nodes.length, sourceCellCount: nodes.length * 2,
+    const historicalApi = EVIDENCE.find(e => e.id === 'api-contract')
+    return { verificationScope: 'historical-mapping-and-reviewed-current-api-source',
+      apiContractEvidence: {
+        historical: { path: historicalApi.path, readPath: API_CONTRACT_SNAPSHOT, sha256: historicalApi.sha256, checkedAt: DATE },
+        current: { ...CURRENT_API_CONTRACT },
+      },
+      businessVersion: pack.businessVersion, nodeCount: nodes.length, sourceCellCount: nodes.length * 2,
       gaps, dispatchEnabled: false, realCallVerified: false }
   } catch (error) {
     if (READ_ERRORS.includes(error.code)) throw error

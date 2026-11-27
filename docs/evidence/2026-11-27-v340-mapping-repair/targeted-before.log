@@ -1,0 +1,2582 @@
+✖ unchanged pinned paths remain readable and every opened handle closes (50.845458ms)
+✖ read admission rejects resource-parent-link without reading redirected bytes (41.449875ms)
+✔ read admission rejects manifest-parent-link without reading redirected bytes (38.756875ms)
+✖ read admission rejects resource-parent-aba without reading redirected bytes (42.158875ms)
+✔ read admission rejects manifest-parent-aba without reading redirected bytes (38.10875ms)
+✖ read admission rejects resource-file-copy without reading redirected bytes (37.257291ms)
+✖ read admission rejects resource-directory-copy without reading redirected bytes (38.382667ms)
+✖ read admission rejects after-open-parent-link without reading redirected bytes (37.527041ms)
+✖ read admission rejects after-open-file-copy without reading redirected bytes (36.309666ms)
+✖ read admission rejects resource-final-link without reading redirected bytes (37.3415ms)
+✖ all original 46 mapping regressions run in a copy without a pre-existing .local directory (244.452792ms)
+✖ a file growing after stat is rejected without an unbounded content read (36.639375ms)
+✔ an unsupported secure-read platform fails closed instead of using a path-only fallback (33.56425ms)
+✖ offline mapping verification is available without enabling a source (5.444708ms)
+✖ mapping refuses missing node (5.497917ms)
+✖ mapping refuses duplicate node (6.648458ms)
+✖ mapping refuses wrong business version (5.737083ms)
+✖ mapping refuses wrong business original hash (3.091666ms)
+✖ mapping refuses replaced pack pin (5.06425ms)
+✖ mapping refuses resource order changed (5.477666ms)
+✖ mapping refuses resource hash changed (5.931125ms)
+✖ mapping refuses another node instruction substituted (3.240625ms)
+✖ mapping refuses legacy resource masquerades as V340 (3.084208ms)
+✖ mapping refuses wrong assembly hash (3.443375ms)
+✖ mapping refuses duplicate input (3.195375ms)
+✖ mapping refuses user input treated as a material file (3.20375ms)
+✖ mapping refuses single document boundary lost (3.302667ms)
+✖ mapping refuses API input omitted (2.661208ms)
+✖ mapping refuses API required field added (3.1295ms)
+✖ mapping refuses API requiredness claimed without schema (3.154958ms)
+✖ mapping refuses API schema fingerprint claimed (2.890458ms)
+✖ mapping refuses URL-only result called a delivered body (4.000666ms)
+✖ mapping refuses service ID guessed from node name (3.682667ms)
+✖ mapping refuses legacy create endpoint treated as deployed binding (2.836ms)
+✖ mapping refuses ready without project ownership (3.055459ms)
+✖ mapping refuses synthetic account used as project evidence (2.581ms)
+✖ mapping refuses root dispatch enabled (2.995958ms)
+✖ mapping refuses root real call claimed (3.148042ms)
+✖ mapping refuses local enabled (2.733417ms)
+✖ mapping refuses API enabled (3.491208ms)
+✖ mapping refuses local real call claimed (2.75075ms)
+✖ mapping refuses API real call claimed (3.056375ms)
+✖ mapping refuses legacy version reassigned (2.971417ms)
+✖ mapping refuses missing gap hides unresolved API schema (2.873041ms)
+✖ mapping refuses historical evidence described as actual deployment (3.536416ms)
+✖ mapping refuses extra unchecked readiness property (3.460958ms)
+✖ mapping refuses evidence path escape (2.670167ms)
+✖ mapping refuses resource points to credential path (2.967708ms)
+✖ offline checker accepts JSON object key reordering without hiding any gaps (2.947083ms)
+✔ mapping refuses actual disk drift in pinned pack (7.2475ms)
+✔ mapping refuses actual disk drift in catalog assembly and disabled routing (6.124709ms)
+✔ mapping refuses actual disk drift in legacy API authority (6.542291ms)
+✔ mapping refuses actual disk drift in old Skill resource (7.498167ms)
+✔ mapping refuses an explicit manifest outside the repository (0.313291ms)
+✔ mapping refuses non-manifest repository files even if they contain matching JSON (1.452292ms)
+✔ mapping refuses a symlink manifest even when it targets an allowed repository file (1.2975ms)
+✔ mapping refuses a symlinked parent of a fixed resource before following it (6.419958ms)
+✔ mapping refuses a symlinked fixed resource even when its bytes match (5.419833ms)
+✖ mapping CLI emits only a bounded summary and fails closed without echoing input (32.302375ms)
+ℹ tests 59
+ℹ suites 0
+ℹ pass 12
+ℹ fail 47
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 758.379625
+
+✖ failing tests:
+
+test at test/v340-source-mapping-admission.test.mjs:32:1
+✖ unchanged pinned paths remain readable and every opened handle closes (50.845458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs:34:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping-admission.test.mjs:44:3
+✖ read admission rejects resource-parent-link without reading redirected bytes (41.449875ms)
+  AssertionError [ERR_ASSERTION]: the real filesystem replacement must occur
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs:46:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping-admission.test.mjs:44:3
+✖ read admission rejects resource-parent-aba without reading redirected bytes (42.158875ms)
+  AssertionError [ERR_ASSERTION]: the real filesystem replacement must occur
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs:46:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping-admission.test.mjs:44:3
+✖ read admission rejects resource-file-copy without reading redirected bytes (37.257291ms)
+  AssertionError [ERR_ASSERTION]: the real filesystem replacement must occur
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs:46:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping-admission.test.mjs:44:3
+✖ read admission rejects resource-directory-copy without reading redirected bytes (38.382667ms)
+  AssertionError [ERR_ASSERTION]: the real filesystem replacement must occur
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs:46:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping-admission.test.mjs:44:3
+✖ read admission rejects after-open-parent-link without reading redirected bytes (37.527041ms)
+  AssertionError [ERR_ASSERTION]: the real filesystem replacement must occur
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs:46:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping-admission.test.mjs:44:3
+✖ read admission rejects after-open-file-copy without reading redirected bytes (36.309666ms)
+  AssertionError [ERR_ASSERTION]: the real filesystem replacement must occur
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs:46:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping-admission.test.mjs:44:3
+✖ read admission rejects resource-final-link without reading redirected bytes (37.3415ms)
+  AssertionError [ERR_ASSERTION]: the real filesystem replacement must occur
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs:46:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping-admission.test.mjs:55:1
+✖ all original 46 mapping regressions run in a copy without a pre-existing .local directory (244.452792ms)
+  AssertionError [ERR_ASSERTION]: TAP version 13
+  # Subtest: offline mapping verification is available without enabling a source
+  not ok 1 - offline mapping verification is available without enabling a source
+    ---
+    duration_ms: 5.582916
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:39:1'
+    failureType: 'testCodeFailure'
+    error: 'MAPPING_RESOURCE_DRIFT'
+    code: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async TestContext.<anonymous> (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:41:18)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+    ...
+  # Subtest: mapping refuses missing node
+  not ok 2 - mapping refuses missing node
+    ---
+    duration_ms: 5.280958
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses duplicate node
+  not ok 3 - mapping refuses duplicate node
+    ---
+    duration_ms: 3.135625
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses wrong business version
+  not ok 4 - mapping refuses wrong business version
+    ---
+    duration_ms: 3.308833
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses wrong business original hash
+  not ok 5 - mapping refuses wrong business original hash
+    ---
+    duration_ms: 2.891083
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses replaced pack pin
+  not ok 6 - mapping refuses replaced pack pin
+    ---
+    duration_ms: 3.091542
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses resource order changed
+  not ok 7 - mapping refuses resource order changed
+    ---
+    duration_ms: 3.398
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses resource hash changed
+  not ok 8 - mapping refuses resource hash changed
+    ---
+    duration_ms: 4.051667
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses another node instruction substituted
+  not ok 9 - mapping refuses another node instruction substituted
+    ---
+    duration_ms: 3.039667
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses legacy resource masquerades as V340
+  not ok 10 - mapping refuses legacy resource masquerades as V340
+    ---
+    duration_ms: 2.906125
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses wrong assembly hash
+  not ok 11 - mapping refuses wrong assembly hash
+    ---
+    duration_ms: 3.415917
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses duplicate input
+  not ok 12 - mapping refuses duplicate input
+    ---
+    duration_ms: 2.738875
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses user input treated as a material file
+  not ok 13 - mapping refuses user input treated as a material file
+    ---
+    duration_ms: 2.735791
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses single document boundary lost
+  not ok 14 - mapping refuses single document boundary lost
+    ---
+    duration_ms: 3.068958
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses API input omitted
+  not ok 15 - mapping refuses API input omitted
+    ---
+    duration_ms: 3.182666
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses API required field added
+  not ok 16 - mapping refuses API required field added
+    ---
+    duration_ms: 3.237583
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses API requiredness claimed without schema
+  not ok 17 - mapping refuses API requiredness claimed without schema
+    ---
+    duration_ms: 2.766792
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses API schema fingerprint claimed
+  not ok 18 - mapping refuses API schema fingerprint claimed
+    ---
+    duration_ms: 2.931083
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses URL-only result called a delivered body
+  not ok 19 - mapping refuses URL-only result called a delivered body
+    ---
+    duration_ms: 3.232958
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses service ID guessed from node name
+  not ok 20 - mapping refuses service ID guessed from node name
+    ---
+    duration_ms: 3.001416
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses legacy create endpoint treated as deployed binding
+  not ok 21 - mapping refuses legacy create endpoint treated as deployed binding
+    ---
+    duration_ms: 2.573541
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses ready without project ownership
+  not ok 22 - mapping refuses ready without project ownership
+    ---
+    duration_ms: 3.104792
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses synthetic account used as project evidence
+  not ok 23 - mapping refuses synthetic account used as project evidence
+    ---
+    duration_ms: 2.408209
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses root dispatch enabled
+  not ok 24 - mapping refuses root dispatch enabled
+    ---
+    duration_ms: 2.851875
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses root real call claimed
+  not ok 25 - mapping refuses root real call claimed
+    ---
+    duration_ms: 2.477333
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses local enabled
+  not ok 26 - mapping refuses local enabled
+    ---
+    duration_ms: 2.78875
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses API enabled
+  not ok 27 - mapping refuses API enabled
+    ---
+    duration_ms: 3.085792
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses local real call claimed
+  not ok 28 - mapping refuses local real call claimed
+    ---
+    duration_ms: 2.765959
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses API real call claimed
+  not ok 29 - mapping refuses API real call claimed
+    ---
+    duration_ms: 3.151041
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses legacy version reassigned
+  not ok 30 - mapping refuses legacy version reassigned
+    ---
+    duration_ms: 2.485333
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses missing gap hides unresolved API schema
+  not ok 31 - mapping refuses missing gap hides unresolved API schema
+    ---
+    duration_ms: 2.519541
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses historical evidence described as actual deployment
+  not ok 32 - mapping refuses historical evidence described as actual deployment
+    ---
+    duration_ms: 2.824625
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses extra unchecked readiness property
+  not ok 33 - mapping refuses extra unchecked readiness property
+    ---
+    duration_ms: 2.34025
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses evidence path escape
+  not ok 34 - mapping refuses evidence path escape
+    ---
+    duration_ms: 2.940333
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses resource points to credential path
+  not ok 35 - mapping refuses resource points to credential path
+    ---
+    duration_ms: 2.93925
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:101:41'
+    failureType: 'testCodeFailure'
+    error: |-
+      Expected values to be strictly deep-equal:
+      + actual - expected
+      
+        Comparison {
+      +   code: 'MAPPING_RESOURCE_DRIFT'
+      -   code: 'MAPPING_INVALID'
+        }
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected:
+      code: 'MAPPING_INVALID'
+    actual:
+    error: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async waitForActual (node:assert:646:5)
+      async strict.rejects (node:assert:769:25)
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    operator: 'rejects'
+    stack: |-
+      async rejectVariant (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: offline checker accepts JSON object key reordering without hiding any gaps
+  not ok 36 - offline checker accepts JSON object key reordering without hiding any gaps
+    ---
+    duration_ms: 2.533417
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:103:1'
+    failureType: 'testCodeFailure'
+    error: 'MAPPING_RESOURCE_DRIFT'
+    code: 'MAPPING_RESOURCE_DRIFT'
+    stack: |-
+      fail (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:30:43)
+      Module.verifyV340SourceMapping (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/scripts/check-v340-source-mapping.mjs:133:37)
+      async TestContext.<anonymous> (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:106:18)
+      async Test.run (node:internal/test_runner/test:1409:7)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  # Subtest: mapping refuses actual disk drift in pinned pack
+  ok 37 - mapping refuses actual disk drift in pinned pack
+    ---
+    duration_ms: 5.612709
+    type: 'test'
+    ...
+  # Subtest: mapping refuses actual disk drift in catalog assembly and disabled routing
+  ok 38 - mapping refuses actual disk drift in catalog assembly and disabled routing
+    ---
+    duration_ms: 5.174625
+    type: 'test'
+    ...
+  # Subtest: mapping refuses actual disk drift in legacy API authority
+  ok 39 - mapping refuses actual disk drift in legacy API authority
+    ---
+    duration_ms: 5.956292
+    type: 'test'
+    ...
+  # Subtest: mapping refuses actual disk drift in old Skill resource
+  ok 40 - mapping refuses actual disk drift in old Skill resource
+    ---
+    duration_ms: 6.290792
+    type: 'test'
+    ...
+  # Subtest: mapping refuses an explicit manifest outside the repository
+  ok 41 - mapping refuses an explicit manifest outside the repository
+    ---
+    duration_ms: 0.221542
+    type: 'test'
+    ...
+  # Subtest: mapping refuses non-manifest repository files even if they contain matching JSON
+  ok 42 - mapping refuses non-manifest repository files even if they contain matching JSON
+    ---
+    duration_ms: 1.075709
+    type: 'test'
+    ...
+  # Subtest: mapping refuses a symlink manifest even when it targets an allowed repository file
+  ok 43 - mapping refuses a symlink manifest even when it targets an allowed repository file
+    ---
+    duration_ms: 0.998333
+    type: 'test'
+    ...
+  # Subtest: mapping refuses a symlinked parent of a fixed resource before following it
+  ok 44 - mapping refuses a symlinked parent of a fixed resource before following it
+    ---
+    duration_ms: 5.366375
+    type: 'test'
+    ...
+  # Subtest: mapping refuses a symlinked fixed resource even when its bytes match
+  ok 45 - mapping refuses a symlinked fixed resource even when its bytes match
+    ---
+    duration_ms: 5.189084
+    type: 'test'
+    ...
+  # Subtest: mapping CLI emits only a bounded summary and fails closed without echoing input
+  not ok 46 - mapping CLI emits only a bounded summary and fails closed without echoing input
+    ---
+    duration_ms: 30.601459
+    type: 'test'
+    location: '/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:150:1'
+    failureType: 'testCodeFailure'
+    error: |-
+      MAPPING_RESOURCE_DRIFT
+      
+      
+      1 !== 0
+      
+    code: 'ERR_ASSERTION'
+    name: 'AssertionError'
+    expected: 0
+    actual: 1
+    operator: 'strictEqual'
+    stack: |-
+      TestContext.<anonymous> (file:///private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/v340-read-admission-UvtO7M/repo/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:152:10)
+      Test.runInAsyncScope (node:async_hooks:227:14)
+      Test.run (node:internal/test_runner/test:1402:25)
+      Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      Test.postRun (node:internal/test_runner/test:1542:19)
+      Test.run (node:internal/test_runner/test:1467:12)
+      async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+    ...
+  1..46
+  # tests 46
+  # suites 0
+  # pass 9
+  # fail 37
+  # cancelled 0
+  # skipped 0
+  # todo 0
+  # duration_ms 214.447875
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs:62:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping-admission.test.mjs:68:1
+✖ a file growing after stat is rejected without an unbounded content read (36.639375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs:70:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:39:1
+✖ offline mapping verification is available without enabling a source (5.444708ms)
+  Error: MAPPING_RESOURCE_DRIFT
+      at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+      at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:41:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'MAPPING_RESOURCE_DRIFT'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses missing node (5.497917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses duplicate node (6.648458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses wrong business version (5.737083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses wrong business original hash (3.091666ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses replaced pack pin (5.06425ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses resource order changed (5.477666ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses resource hash changed (5.931125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses another node instruction substituted (3.240625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses legacy resource masquerades as V340 (3.084208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses wrong assembly hash (3.443375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses duplicate input (3.195375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses user input treated as a material file (3.20375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses single document boundary lost (3.302667ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses API input omitted (2.661208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses API required field added (3.1295ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses API requiredness claimed without schema (3.154958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses API schema fingerprint claimed (2.890458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses URL-only result called a delivered body (4.000666ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses service ID guessed from node name (3.682667ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses legacy create endpoint treated as deployed binding (2.836ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses ready without project ownership (3.055459ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses synthetic account used as project evidence (2.581ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses root dispatch enabled (2.995958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses root real call claimed (3.148042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses local enabled (2.733417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses API enabled (3.491208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses local real call claimed (2.75075ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses API real call claimed (3.056375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses legacy version reassigned (2.971417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses missing gap hides unresolved API schema (2.873041ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses historical evidence described as actual deployment (3.536416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses extra unchecked readiness property (3.460958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses evidence path escape (2.670167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:101:41
+✖ mapping refuses resource points to credential path (2.967708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MAPPING_RESOURCE_DRIFT'
+  -   code: 'MAPPING_INVALID'
+    }
+  
+      at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: MAPPING_RESOURCE_DRIFT
+        at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+        at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async rejectVariant (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:36:3)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: { code: 'MAPPING_INVALID' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at test/v340-source-mapping.test.mjs:103:1
+✖ offline checker accepts JSON object key reordering without hiding any gaps (2.947083ms)
+  Error: MAPPING_RESOURCE_DRIFT
+      at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:30:43)
+      at Module.verifyV340SourceMapping (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/check-v340-source-mapping.mjs:133:37)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:106:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'MAPPING_RESOURCE_DRIFT'
+  }
+
+test at test/v340-source-mapping.test.mjs:150:1
+✖ mapping CLI emits only a bounded summary and fails closed without echoing input (32.302375ms)
+  AssertionError [ERR_ASSERTION]: MAPPING_RESOURCE_DRIFT
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs:152:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
