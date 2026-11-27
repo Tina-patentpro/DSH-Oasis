@@ -38,7 +38,7 @@
 
 两套 Skill 已使用同一份公开校准材料分别完成一次真实生成，并保存了各自的初稿和运行记录。离线联调使用合成数据验证了生成、保存和预览。两份产物属于待专业审核的初稿。
 
-[双 Skill 源码预览](https://github.com/Tina-patentpro/DSH-Oasis/tree/codex/dsh-next-dual-skills) · [版本与归档校验清单](https://github.com/Tina-patentpro/DSH-Oasis/blob/04c2f07ecf8a3b3166784e4106550ecd06d45d83/SOURCE-PREVIEW.json)
+[双 Skill 源码预览（固定提交）](https://github.com/Tina-patentpro/DSH-Oasis/tree/04c2f07ecf8a3b3166784e4106550ecd06d45d83) · [版本与归档校验清单](https://github.com/Tina-patentpro/DSH-Oasis/blob/04c2f07ecf8a3b3166784e4106550ecd06d45d83/SOURCE-PREVIEW.json)
 
 当前开发根目录是 `/Users/tinadong7036/Documents/开发项目/DSH-Oasis`，Git 分支为 `mac/continuity-v2`。2026-10-24按用户指示由 `dsh-lab` 更名，旧目录保留为兼容符号链接；提交历史和既有未提交内容保留。
 

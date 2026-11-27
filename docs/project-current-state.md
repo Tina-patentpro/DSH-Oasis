@@ -1,3 +1,9 @@
+## 2026-11-27 本地与 GitHub 仅保留一个分支
+
+按用户最新决定，已核对所有提交归并关系，删除其余 8 个本地分支及 2 个 GitHub 预览分支，只保留 mac/continuity-v2。旧归档 origin 的活动引用已移除，附加工作树转为原提交 detached HEAD，文件保留。首页预览链接已改固定提交；原历史、业务状态及测试限制不改写。 [清理回执](evidence/2026-11-27-single-branch/execution-return.md) · [核验](evidence/2026-11-27-single-branch/verification.json)。以下历史字节保持。
+
+---
+
 ## 2026-11-27 Git 全量提交与分支归并
 
 三个工作树的应入库改动已提交，9 个本地分支及本次可见远端分支均已归并到 mac/continuity-v2。集成提交 `bfb5851dde25e4358469906fbd0eba65b54721c7`；NEXT 独立根包以 139 文件原字节迁入 packages/oasis-dsh-next-preview，源分支和原 stash 保留。主包最终测试 1,636 通过、47 遗留冻结映射失败、4 固定 SDK 环境缺失跳过；预览包 13/13 通过，两包离线构建通过。未推送、安装或发布，新增业务调用/费用为 0，原业务接受和 FAIL/UNKNOWN 不变。 [合并回执](evidence/2026-11-27-git-consolidation/execution-return.md) · [核验](evidence/2026-11-27-git-consolidation/verification.json)。以下历史字节保持。
