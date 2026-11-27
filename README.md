@@ -24,6 +24,22 @@
 当前执行状态读取 `docs/project-current-state.md` 及其明确引用的证据；下文阶段0说明是历史迁移范围，不能替代当前阶段与本次用户授权，也不能据旧记录宣称当前Desktop或双来源已通过。
 
 
+## 合并后的源码布局
+
+主开发插件保留在 `packages/oasis-professional-service`。DSH NEXT 独立预览包位于 `packages/oasis-dsh-next-preview`，两者分别保留依赖和验证范围。最近 M02 隔离修订的源码差异与回执见 `docs/evidence/2026-11-27-m02-content-review-r4`。本地分支合并不表示已安装、发布或扩大原验收范围。
+
+## 2026-11-11 · DSH NEXT 双 Skill 更新
+
+插件版本为 `0.1.0-rc.5.next.6`。已验证的组合为 DSH NEXT `2.0.22-next`、DeepSeek Harness `0.2.2-rc.1` 和 Better Sidebar `0.30.1`。
+
+1. 打开 DSH NEXT 的 **设置 → 绿洲工作台 → 本地 Skills 套件**。
+2. 选择 **绿洲慧写**或**中国专利 Skill（第三方）**。默认使用绿洲慧写，选择对后续本地生成生效。
+3. 在工作台打开「权利要求初稿」，选择「本地 Skills」，核对模型与材料后确认生成。真实生成使用当前 DSH 会话所选的模型，可能产生费用。
+
+两套 Skill 已使用同一份公开校准材料分别完成一次真实生成，并保存了各自的初稿和运行记录。离线联调使用合成数据验证了生成、保存和预览。两份产物属于待专业审核的初稿。
+
+[双 Skill 源码预览](https://github.com/Tina-patentpro/DSH-Oasis/tree/codex/dsh-next-dual-skills) · [版本与归档校验清单](https://github.com/Tina-patentpro/DSH-Oasis/blob/04c2f07ecf8a3b3166784e4106550ecd06d45d83/SOURCE-PREVIEW.json)
+
 当前开发根目录是 `/Users/tinadong7036/Documents/开发项目/DSH-Oasis`，Git 分支为 `mac/continuity-v2`。2026-10-24按用户指示由 `dsh-lab` 更名，旧目录保留为兼容符号链接；提交历史和既有未提交内容保留。
 
 **项目定位（2026-10-24原基线，执行者按2026-11-05 BM1-R1接续）：** DSH-Oasis是两个用户前端中的主要作业入口，提供Skills与来自Dify服务器的专业服务；远程专业服务经 `绿洲慧写-后台4.0` 的API接入。`workarea` 同时提供远程专业服务，并承载全部用户账户管理和财务服务。DSH所需Skills由 `专利知识库/patent-distillery` 负责蒸馏制作（执行者Codex）；Dify工作流在Skills基础上制作。`测试集库` 为两类执行提供测试基础和可复用规则。完整协作约定见[开发项目目录约定](../AGENTS.md)。这些是职责基线，实际完成状态仍以各项目证据为准。
