@@ -20,7 +20,8 @@ export function GenerationSourceSwitch({ value, disabled = false, onChange }) {
       event.currentTarget.parentElement?.children[target]?.focus()
     },
     style: { border: 0, borderRadius: 8, padding: '8px 10px', cursor: disabled ? 'not-allowed' : 'pointer', font: 'inherit', fontSize: 12,
-      color: value === source ? '#137259' : 'var(--dsw-alias-text-secondary, #66706b)',
+      opacity: disabled ? 0.55 : 1,
+      color: value === source ? 'var(--dsw-alias-text-primary, #137259)' : 'var(--dsw-alias-text-secondary, #66706b)',
       background: value === source ? 'var(--dsw-alias-bg-base, #fff)' : 'transparent' },
   }, label)))
 }

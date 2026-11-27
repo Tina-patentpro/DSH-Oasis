@@ -88,7 +88,7 @@ export function WorkbenchEntry({
       border: '1px solid var(--dsw-alias-border-l2, #d9d9dc)',
       borderRadius: 8,
       background: 'var(--dsw-alias-bg-base, #fff)',
-      color: 'var(--dsw-alias-text-primary, #202123)',
+      color: 'var(--dsw-alias-label-primary, #202123)',
       padding: '5px 9px',
       fontSize: 12,
       cursor: disabled ? 'not-allowed' : 'pointer',

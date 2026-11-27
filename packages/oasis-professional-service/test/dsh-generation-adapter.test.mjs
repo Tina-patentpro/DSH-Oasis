@@ -196,14 +196,18 @@ test('error codes are allowlisted for throws and finish chunks, including hostil
 
 test('a provider error that changes prototype inspection cannot escape the safe result boundary', async () => {
   let probes = 0
-  const hostile = new Proxy({ code: 'AUTH' }, { getPrototypeOf() {
+  let descriptorTraps = 0
+  const hostile = new Proxy({ code: 'AUTH' }, { getOwnPropertyDescriptor(target,key) {
+    descriptorTraps++;return Object.getOwnPropertyDescriptor(target,key)
+  },getPrototypeOf() {
     if (++probes > 1) throw Error(CANARY)
     return Object.prototype
   } })
   const { adapter } = harness({ stream: () => ({ [Symbol.asyncIterator]() { return this }, next() { throw hostile } }) })
   const result = await adapter.generate(input())
-  assert.equal(result.status, 'failed')
-  assert.equal(result.code, 'MODEL_UNAVAILABLE')
+  assert.equal(result.status, 'unknown')
+  assert.equal(result.code, 'GENERATION_FAILED')
+  assert.equal(descriptorTraps, 0)
   assert.doesNotMatch(JSON.stringify(result), /PUBLIC_TEST_INSTRUCTION/)
 })
 

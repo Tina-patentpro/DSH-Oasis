@@ -6,6 +6,53 @@ import {recordToWorkspaceState} from '../src/client/workbench-model.js'
 import {createElement} from 'react'
 import {renderToStaticMarkup} from 'react-dom/server'
 import {PanelPages} from '../src/client/PanelPages.js'
+import {V340GenerationPage} from '../src/client/V340GenerationPage.js'
+
+test('M06 R1 limitation is visible with missing catalog, old versions and editing',async t=>{
+ const h=await resultFixture(t,'local-skill',{nodeId:'Flow-2-6'}),state=recordToWorkspaceState(h.record()),page=state.pages[0]
+ const before=JSON.stringify(h.record()),node=h.service.getV340Catalog().nodes.find(n=>n.nodeId==='Flow-2-6')
+ const notice='本版本不自动删除结构记录或撤回技术事实；正文修改后，相关表格和依据仍需核对。'
+ for(const currentNode of [node,undefined]){
+  const html=renderToStaticMarkup(createElement(V340GenerationPage,{page,state:{...state,syncStatus:'ready'},node:currentNode}))
+  assert.ok(html.includes(notice))
+  assert.match(html,/生成（暂不可用）/)
+ }
+ const run=h.run(),key=JSON.stringify([run.runId,run.runId])
+ const html=renderToStaticMarkup(createElement(V340GenerationPage,{page,state:{...state,syncStatus:'ready'},node,
+  operation:{v340Edits:{[key]:{body:'本地尚未保存的正文修订'}}}}))
+ assert.ok(html.includes(notice));assert.match(html,/修订结果/)
+ const historic=structuredClone(page)
+ historic.v340.runs[run.runId].result.snapshot.warnings=[]
+ for(const v of historic.v340.runs[run.runId].resultVersions??[])v.result.snapshot.warnings=[]
+ const historicalBody=historic.v340.runs[run.runId].result.body
+ const oldHtml=renderToStaticMarkup(createElement(V340GenerationPage,{page:historic,state:{...state,syncStatus:'ready'},node}))
+ assert.ok(oldHtml.includes(notice));assert.equal(historic.v340.runs[run.runId].result.body,historicalBody)
+ assert.equal(JSON.stringify(h.record()),before)
+ assert.equal(h.generationCalls,1)
+})
+
+test('M06 R1 parent and child selections retain limitation with inherited edits',async t=>{
+ const h=await resultFixture(t,'local-skill',{nodeId:'Flow-2-6'}),runId=h.run().runId,initial=h.run().result.sha256
+ await h.service.saveV340ResultDraft(h.command({runId,baseSha256:initial,body:'父版核心修订',format:'core-markdown'}))
+ await h.service.editV340Result(h.command({runId,versionId:runId,baseSha256:initial,draftSha256:(await import('node:crypto')).createHash('sha256').update('父版核心修订').digest('hex'),requestKey:'m06-ui-edit'}))
+ const state=recordToWorkspaceState(h.record()),page=state.pages[0],node=h.service.getV340Catalog().nodes.find(n=>n.nodeId==='Flow-2-6')
+ const child=h.run().resultVersions.at(-1)
+ for(const versionId of [runId,child.versionId]){
+  const html=renderToStaticMarkup(createElement(V340GenerationPage,{page,state:{...state,syncStatus:'ready'},node,
+   operation:{v340Selection:{runId,versionId}}}))
+  assert.ok(html.includes('本版本不自动删除结构记录或撤回技术事实'))
+ }
+ // A later generated version can inherit edit history without being edited itself.
+ // The persistent notice must not infer a current edit from that history.
+ const inherited=structuredClone(page)
+ const inheritedRun=inherited.v340.runs[runId]
+ for(const v of inheritedRun.resultVersions)v.result.snapshot.manual_edit_manifest=structuredClone(child.result.snapshot.manual_edit_manifest)
+ const before=JSON.stringify(inherited)
+ const html=renderToStaticMarkup(createElement(V340GenerationPage,{page:inherited,state:{...state,syncStatus:'ready'},node:undefined,
+  operation:{v340Selection:{runId,versionId:runId}}}))
+ assert.ok(html.includes('本版本不自动删除结构记录或撤回技术事实'))
+ assert.equal(JSON.stringify(inherited),before)
+})
 
 test('client retains v340 projection and loads its catalog without pretending sources are executable',async t=>{
  const h=await resultFixture(t)

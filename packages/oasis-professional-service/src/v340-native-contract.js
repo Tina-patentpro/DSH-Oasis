@@ -15,4 +15,8 @@ export const v340NativeCandidateSchema=z.discriminatedUnion('version',[
   legacyCandidateSchema,
   legacyCandidateSchema.extend({version:z.literal('v340-native-candidate-2'),nodeId:label,
     workspaceRoot:z.string().min(1).max(4096).refine(v=>!v.includes('\0')),contextSHA256:sha}).strict(),
+  legacyCandidateSchema.extend({version:z.literal('v340-native-candidate-3'),nodeId:z.literal('Flow-2-6'),
+    workspaceRoot:z.string().min(1).max(4096).refine(v=>!v.includes('\0')),contextSHA256:sha,
+    businessSkillId:z.literal('m06-claims-draft'),businessSkillVersion:z.enum(['0.1.2','0.1.3']),
+    businessManifestSHA256:sha,businessResourceSHA256:sha}).strict(),
 ])

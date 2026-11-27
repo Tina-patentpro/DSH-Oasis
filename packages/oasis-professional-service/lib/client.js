@@ -436,7 +436,7 @@ window.__ModuleLoader__.load({
 			});
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js
 		var _a$1;
 		function $constructor(name, initializer, params) {
 			function init(inst, def) {
@@ -495,7 +495,7 @@ window.__ModuleLoader__.load({
 			return globalConfig;
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js
 		function getEnumValues(entries) {
 			const numericValues = Object.values(entries).filter((v) => typeof v === "number");
 			return Object.entries(entries).filter(([k, _]) => numericValues.indexOf(+k) === -1).map(([_, v]) => v);
@@ -809,7 +809,7 @@ window.__ModuleLoader__.load({
 			return { ...iss };
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/errors.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/errors.js
 		const initializer$1 = (inst, def) => {
 			inst.name = "$ZodError";
 			Object.defineProperty(inst, "_zod", {
@@ -869,7 +869,7 @@ window.__ModuleLoader__.load({
 			return fieldErrors;
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/parse.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/parse.js
 		const _parse = (_Err) => (schema, value, _ctx, _params) => {
 			const ctx = _ctx ? {
 				..._ctx,
@@ -983,7 +983,7 @@ window.__ModuleLoader__.load({
 			return _safeParseAsync(_Err)(schema, value, _ctx);
 		};
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/regexes.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/regexes.js
 		/**
 		* @deprecated CUID v1 is deprecated by its authors due to information leakage
 		* (timestamps embedded in the id). Use {@link cuid2} instead.
@@ -1048,7 +1048,7 @@ window.__ModuleLoader__.load({
 		const lowercase = /^[^A-Z]*$/;
 		const uppercase = /^[^a-z]*$/;
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js
 		const $ZodCheck = /*@__PURE__*/ $constructor("$ZodCheck", (inst, def) => {
 			var _a;
 			inst._zod ?? (inst._zod = {});
@@ -1410,7 +1410,7 @@ window.__ModuleLoader__.load({
 			};
 		});
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/doc.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/doc.js
 		var Doc = class {
 			constructor(args = []) {
 				this.content = [];
@@ -1441,14 +1441,14 @@ window.__ModuleLoader__.load({
 			}
 		};
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/versions.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/versions.js
 		const version = {
 			major: 4,
 			minor: 4,
 			patch: 3
 		};
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js
 		const $ZodType = /*@__PURE__*/ $constructor("$ZodType", (inst, def) => {
 			var _a;
 			inst ?? (inst = {});
@@ -2750,7 +2750,7 @@ window.__ModuleLoader__.load({
 			}
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/registries.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/registries.js
 		var _a;
 		var $ZodRegistry = class {
 			constructor() {
@@ -2797,7 +2797,7 @@ window.__ModuleLoader__.load({
 		(_a = globalThis).__zod_globalRegistry ?? (_a.__zod_globalRegistry = registry());
 		const globalRegistry = globalThis.__zod_globalRegistry;
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/api.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/api.js
 		// @__NO_SIDE_EFFECTS__
 		function _string(Class, params) {
 			return new Class({
@@ -3309,7 +3309,7 @@ window.__ModuleLoader__.load({
 			return ch;
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/to-json-schema.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/to-json-schema.js
 		function initializeContext(params) {
 			let target = params?.target ?? "draft-2020-12";
 			if (target === "draft-4") target = "draft-04";
@@ -3604,7 +3604,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return finalize(ctx, schema);
 		};
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/json-schema-processors.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/json-schema-processors.js
 		const formatMap = {
 			guid: "uuid",
 			url: "uri",
@@ -3876,7 +3876,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			seen.ref = def.innerType;
 		};
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/iso.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/iso.js
 		const ZodISODateTime = /*@__PURE__*/ $constructor("ZodISODateTime", (inst, def) => {
 			$ZodISODateTime.init(inst, def);
 			ZodStringFormat.init(inst, def);
@@ -3906,7 +3906,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return /* @__PURE__ */ _isoDuration(ZodISODuration, params);
 		}
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/errors.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/errors.js
 		const initializer = (inst, issues) => {
 			$ZodError.init(inst, issues);
 			inst.name = "ZodError";
@@ -3928,7 +3928,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		};
 		const ZodRealError = /*@__PURE__*/ $constructor("ZodError", initializer, { Parent: Error });
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/parse.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/parse.js
 		const parse = /* @__PURE__ */ _parse(ZodRealError);
 		const parseAsync = /* @__PURE__ */ _parseAsync(ZodRealError);
 		const safeParse = /* @__PURE__ */ _safeParse(ZodRealError);
@@ -3942,7 +3942,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		const safeEncodeAsync = /* @__PURE__ */ _safeEncodeAsync(ZodRealError);
 		const safeDecodeAsync = /* @__PURE__ */ _safeDecodeAsync(ZodRealError);
 		//#endregion
-		//#region node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js
+		//#region ../../../../packages/oasis-professional-service/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js
 		const _installedGroups = /* @__PURE__ */ new WeakMap();
 		function _installLazyMethods(inst, group, methods) {
 			const proto = Object.getPrototypeOf(inst);
@@ -4757,6 +4757,47 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return /* @__PURE__ */ _superRefine(fn, params);
 		}
 		//#endregion
+		//#region src/v340-native-contract.js
+		const sha$2 = string().regex(/^[a-f0-9]{64}$/);
+		const label$2 = string().trim().min(1).max(256);
+		const v340NativeRouteSchema = object({
+			provider: label$2,
+			model: label$2,
+			reasoningEffort: string().trim().min(1).max(64).optional()
+		}).strict();
+		const v340CandidateConfirmationSchema = object({
+			sessionId: label$2,
+			confirmed: literal(true),
+			sha256: sha$2
+		}).strict();
+		const legacyCandidateSchema = object({
+			version: literal("v340-native-candidate-1"),
+			executionScope: literal("injected-only"),
+			dispatchEnabled: literal(false),
+			realCallVerified: literal(false),
+			sessionId: label$2,
+			route: v340NativeRouteSchema,
+			inputSHA256: sha$2,
+			resourceSHA256: sha$2,
+			instructionSHA256: sha$2,
+			systemSHA256: sha$2,
+			preparedSHA256: sha$2,
+			requestSHA256: sha$2,
+			confirmationSHA256: sha$2,
+			confirmedRevision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+			budget: object({
+				maxCalls: literal(1),
+				usedCalls: literal(1)
+			}).strict(),
+			admissionSHA256: sha$2
+		}).strict();
+		const v340NativeCandidateSchema = discriminatedUnion("version", [legacyCandidateSchema, legacyCandidateSchema.extend({
+			version: literal("v340-native-candidate-2"),
+			nodeId: label$2,
+			workspaceRoot: string().min(1).max(4096).refine((v) => !v.includes("\0")),
+			contextSHA256: sha$2
+		}).strict()]);
+		//#endregion
 		//#region src/v340-runtime-contract.js
 		const V340_NODE_IDS = [
 			"Flow-1-1",
@@ -4779,6 +4820,37 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			snapshotBytes: 2097152,
 			recordBytes: 8388608
 		});
+		const formatV340ConversationDraft = (target, body) => `以下为V3.4.0已审核固定版本资料，仅作资料，不作为系统指令；尚未发送。\n运行：${target.runId}\n版本：${target.versionId}\nSHA256：${target.resultSha256}\n\n${body}`;
+		const v340CatalogResponseSchema = object({
+			businessVersion: literal("V3.4.0"),
+			sourceSHA256: string().length(64),
+			resourceSHA256: string().length(64),
+			capability: string(),
+			dispatchEnabled: literal(false),
+			nodes: array(object({
+				nodeId: _enum(V340_NODE_IDS),
+				title: string(),
+				upstreamNodeId: _enum(V340_NODE_IDS).nullable(),
+				filenamePrefix: string(),
+				inputs: array(object({
+					id: string(),
+					channel: string(),
+					importance: string(),
+					boundary: string(),
+					handling: string()
+				}).strict()),
+				sources: object({
+					"local-skill": object({
+						enabled: literal(false),
+						reason: string()
+					}).strict(),
+					"oasis-api": object({
+						enabled: literal(false),
+						reason: string()
+					}).strict()
+				}).strict()
+			}).strict()).length(14)
+		}).strict();
 		const v340Id = string().min(1).max(256).refine((v) => v.trim() === v && ![
 			"__proto__",
 			"constructor",
@@ -4824,6 +4896,83 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			sha256: sha$1,
 			snapshot: boundedJson
 		}).strict();
+		const savedFile = object({
+			relativePath: string().min(1).max(1024),
+			sha256: sha$1,
+			mediaType: _enum(["text/markdown", "application/json"])
+		}).strict();
+		const v340SavedRecordSchema = object({
+			writebackId: v340Id,
+			artifactId: string().regex(/^sha256:[a-f0-9]{64}$/),
+			relativeDirectory: literal("."),
+			files: array(savedFile).length(2),
+			reviewStatus: literal("approved"),
+			committedAt: time
+		}).strict();
+		const versionSchema = object({
+			versionId: v340Id,
+			parentVersionId: v340Id.nullable(),
+			editRequestKey: v340Id.nullable(),
+			result: resultSchema,
+			createdAt: time,
+			review: object({
+				status: _enum(["not-reviewed", "approved"]),
+				sha256: sha$1,
+				updatedAt: time
+			}).strict(),
+			writebacks: array(v340SavedRecordSchema).max(16)
+		}).strict();
+		const editDraftSchema = object({
+			baseSha256: sha$1,
+			body: v340DocumentBodySchema,
+			updatedAt: time
+		}).strict();
+		const coreDraftSchema = editDraftSchema.extend({
+			format: literal("core-markdown"),
+			body: v340DocumentBodySchema.refine((v) => !v.includes("\0"))
+		});
+		function getV340Versions(run) {
+			return run.resultVersions ?? (run.result ? [{
+				versionId: run.runId,
+				parentVersionId: null,
+				editRequestKey: null,
+				result: run.result,
+				createdAt: run.completedAt,
+				review: {
+					status: "not-reviewed",
+					sha256: run.result.sha256,
+					updatedAt: run.completedAt
+				},
+				writebacks: []
+			}] : []);
+		}
+		function getV340ResultDrafts(run) {
+			const drafts = { ...run.resultDrafts };
+			if (run.resultDraft) {
+				const version = getV340Versions(run).find((v) => v.result.sha256 === run.resultDraft.baseSha256);
+				if (version) drafts[version.versionId] = run.resultDraft;
+			}
+			return {
+				...drafts,
+				...run.coreResultDrafts
+			};
+		}
+		function getV340LegacyResultDrafts(run) {
+			const entries = Object.entries(run.resultDrafts ?? {}).map(([versionId, draft]) => ({
+				key: `versions/${versionId}`,
+				versionId,
+				draft
+			}));
+			if (run.resultDraft) {
+				const version = getV340Versions(run).find((v) => v.result.sha256 === run.resultDraft.baseSha256);
+				if (version) entries.push({
+					key: "original",
+					versionId: version.versionId,
+					draft: run.resultDraft
+				});
+			}
+			return entries;
+		}
 		const inputSchema = object({
 			workspaceId: v340Id,
 			taskId: v340Id,
@@ -4835,7 +4984,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			source: _enum(["local-skill", "oasis-api"]),
 			resourceSHA256: sha$1,
 			draft: v340DraftSchema,
-			prepared: boundedJson
+			prepared: boundedJson,
+			preparedEncoding: literal("values-v1").optional()
 		}).strict().refine((v) => bytes(v) <= V340_LIMITS.snapshotBytes, "V340 snapshot exceeds byte limit");
 		const v340RunSchema = object({
 			schemaVersion: literal(1),
@@ -4846,7 +4996,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			taskId: v340Id,
 			nodeId: _enum(V340_NODE_IDS),
 			source: _enum(["local-skill", "oasis-api"]),
-			evidenceKind: literal("synthetic"),
+			evidenceKind: _enum(["synthetic", "native-model-candidate"]),
+			nativeCandidate: v340NativeCandidateSchema.optional(),
 			inputSchemaVersion: literal("v340-1"),
 			inputSnapshot: inputSchema,
 			inputSha256: sha$1,
@@ -4864,15 +5015,19 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				"EXECUTION_FAILED"
 			]).nullable(),
 			result: resultSchema.nullable(),
-			resultDraft: object({
-				baseSha256: sha$1,
-				body: v340DocumentBodySchema,
-				updatedAt: time
-			}).strict().nullable(),
+			resultDraft: editDraftSchema.nullable(),
+			resultDrafts: record(v340Id, editDraftSchema).optional(),
+			coreResultDrafts: record(v340Id, coreDraftSchema).optional(),
+			resultVersions: array(versionSchema).min(1).max(8).optional(),
+			activeVersionId: v340Id.optional(),
 			reviewStatus: literal("not-reviewed"),
 			createdAt: time,
 			completedAt: time.nullable()
 		}).strict().superRefine((run, ctx) => {
+			if (run.evidenceKind === "native-model-candidate" !== Object.hasOwn(run, "nativeCandidate") || run.evidenceKind === "native-model-candidate" && (run.source !== "local-skill" || run.nativeCandidate?.version === "v340-native-candidate-1" && run.nodeId !== "Flow-2-6" || run.nativeCandidate?.version === "v340-native-candidate-2" && run.nativeCandidate.nodeId !== run.nodeId)) ctx.addIssue({
+				code: "custom",
+				message: "V340 candidate identity mismatch"
+			});
 			if (run.status === "completed" ? !run.result || !run.completedAt || run.failureCode !== null : run.result !== null || run.resultDraft !== null) ctx.addIssue({
 				code: "custom",
 				message: "V340 result/status mismatch"
@@ -4885,9 +5040,30 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				code: "custom",
 				message: "V340 failure code required"
 			});
-			if (run.resultDraft && run.resultDraft.baseSha256 !== run.result?.sha256) ctx.addIssue({
+			const versions = getV340Versions(run), ids = /* @__PURE__ */ new Set(), requests = /* @__PURE__ */ new Set();
+			if (run.resultVersions && (run.status !== "completed" || versions[0].versionId !== run.runId || versions[0].result.sha256 !== run.result?.sha256)) ctx.addIssue({
+				code: "custom",
+				message: "V340 original version mismatch"
+			});
+			for (const version of versions) {
+				if (ids.has(version.versionId) || version.parentVersionId !== null && !ids.has(version.parentVersionId) || version.review.sha256 !== version.result.sha256 || version.editRequestKey !== null && requests.has(version.editRequestKey)) ctx.addIssue({
+					code: "custom",
+					message: "V340 version identity mismatch"
+				});
+				ids.add(version.versionId);
+				if (version.editRequestKey !== null) requests.add(version.editRequestKey);
+			}
+			if (run.activeVersionId && !ids.has(run.activeVersionId)) ctx.addIssue({
+				code: "custom",
+				message: "V340 active version mismatch"
+			});
+			if (run.resultDraft && !versions.some((v) => v.result.sha256 === run.resultDraft.baseSha256)) ctx.addIssue({
 				code: "custom",
 				message: "V340 edited draft base mismatch"
+			});
+			for (const [versionId, draft] of [...Object.entries(run.resultDrafts ?? {}), ...Object.entries(run.coreResultDrafts ?? {})]) if (!versions.some((v) => v.versionId === versionId && v.result.sha256 === draft.baseSha256)) ctx.addIssue({
+				code: "custom",
+				message: "V340 version draft base mismatch"
 			});
 		});
 		const v340TaskStateSchema = object({
@@ -4918,7 +5094,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			taskId: v340Id,
 			expectedRevision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER)
 		};
-		Object.freeze({
+		const v340Commands = Object.freeze({
 			"task/create": object({
 				...command,
 				nodeId: _enum(V340_NODE_IDS),
@@ -4941,11 +5117,48 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				...command,
 				runId: v340Id,
 				baseSha256: sha$1,
-				body: v340DocumentBodySchema.nullable()
-			}).strict(),
+				body: v340DocumentBodySchema.nullable(),
+				format: literal("core-markdown").optional()
+			}).strict().refine((c) => c.format !== "core-markdown" || c.body === null || !c.body.includes("\0")),
 			"run/create": object({
 				...command,
+				requestKey: v340Id,
+				candidate: v340CandidateConfirmationSchema.optional()
+			}).strict(),
+			"result/edit": object({
+				...command,
+				runId: v340Id,
+				versionId: v340Id,
+				baseSha256: sha$1,
+				draftSha256: sha$1,
 				requestKey: v340Id
+			}).strict(),
+			"result/review": object({
+				...command,
+				runId: v340Id,
+				versionId: v340Id,
+				resultSha256: sha$1,
+				confirmed: literal(true)
+			}).strict(),
+			"result/prepare-save": object({
+				...command,
+				runId: v340Id,
+				versionId: v340Id,
+				resultSha256: sha$1
+			}).strict(),
+			"result/commit-save": object({ confirmationToken: string().min(1).max(512) }).strict(),
+			"result/conversation-draft": object({
+				...command,
+				runId: v340Id,
+				versionId: v340Id,
+				resultSha256: sha$1
+			}).strict(),
+			"result/saved-file": object({
+				...command,
+				runId: v340Id,
+				versionId: v340Id,
+				resultSha256: sha$1,
+				writebackId: v340Id
 			}).strict()
 		});
 		//#endregion
@@ -5128,9 +5341,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		//#endregion
 		//#region src/oasis-workspace-binding.js
 		const id$2 = number().int().nonnegative().max(Number.MAX_SAFE_INTEGER);
-		const label = string().min(1).max(256).refine((value) => value.trim() === value);
+		const label$1 = string().min(1).max(256).refine((value) => value.trim() === value);
 		const workspaceApiBindingFields = {
-			workspaceId: label,
+			workspaceId: label$1,
 			workspacePath: string().min(1).max(4096),
 			environmentKind: _enum(["non-production", "production"]),
 			apiBaseOrigin: string().min(1).max(2048),
@@ -5138,7 +5351,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			folderId: id$2,
 			apiId: id$2,
 			catalogEntryId: id$2.optional(),
-			apiEndpoint: label,
+			apiEndpoint: label$1,
 			apiProcess: string().max(4e3),
 			schemaHash: string().regex(/^[a-f0-9]{64}$/)
 		};
@@ -6026,6 +6239,17 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			absolutePath: writebackAbsolutePathSchema,
 			kind: literal("current-file")
 		}).strict();
+		const v340SelectionResponse = {
+			versionId: identifierSchema,
+			resultSha256: sha256Schema,
+			expectedRevision: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER)
+		};
+		const v340ConversationDraftResponseSchema = conversationDraftResponseSchema.extend(v340SelectionResponse).strict();
+		const v340SavedFileResponseSchema = savedFileResponseSchema.extend({
+			...v340SelectionResponse,
+			matchesReviewed: boolean(),
+			currentSha256: sha256Schema
+		}).strict().refine((v) => v.matchesReviewed === (v.currentSha256 === v.resultSha256), "Current file review status mismatch");
 		const professionalDraftSchema = object({
 			selectedApiEndpoint: identifierSchema,
 			selectedApiId: number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
@@ -7311,7 +7535,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}
 		//#endregion
 		//#region src/client/SafeMarkdownPreview.js
-		const labels = Object.freeze({
+		const labels$1 = Object.freeze({
 			code: Object.freeze({
 				copyLabel: "复制",
 				copiedLabel: "已复制"
@@ -7330,7 +7554,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				"data-oasis-preview": capable ? "native-safe" : "plain-text"
 			}, capable ? (0, react.createElement)(Renderer, {
 				text,
-				labels,
+				labels: labels$1,
 				streaming: false,
 				allowRemoteImages: false
 			}) : (0, react.createElement)("pre", { style: {
@@ -7720,7 +7944,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}
 		//#endregion
 		//#region src/client/UnifiedResultPanel.js
-		const button$2 = {
+		const button$3 = {
 			border: "1px solid var(--dsw-alias-border-l2, #d7d9d8)",
 			borderRadius: 7,
 			padding: "7px 10px",
@@ -7861,23 +8085,23 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				gap: 6
 			} }, (0, react.createElement)("button", {
 				type: "button",
-				style: button$2,
+				style: button$3,
 				disabled: disabled || !onUpdateResultEditDraft || !onDiscardResultEditDraft,
 				onClick: () => action(() => editing ? onDiscardResultEditDraft(page.pageId, run.runId) : onUpdateResultEditDraft(page.pageId, run.runId, run.result.artifact.body))
 			}, editing ? "放弃编辑" : "编辑结果"), editing ? (0, react.createElement)("button", {
 				type: "button",
-				style: button$2,
+				style: button$3,
 				disabled: disabled || staleDraft || !body.trim() || body === run.result.artifact.body,
 				onClick: () => action(() => onEditResult(page.pageId, run.runId, body))
 			}, "保存为新版本") : null, (0, react.createElement)("button", {
 				ref: reviewEntry,
 				type: "button",
-				style: button$2,
+				style: button$3,
 				disabled: disabled || editing || run.review.status === "approved",
 				onClick: openReview
 			}, "审核此版本"), (0, react.createElement)("button", {
 				type: "button",
-				style: button$2,
+				style: button$3,
 				title: conversationUnavailableReason ?? void 0,
 				disabled: readOnlyDisabled || editing || run.review.status !== "approved" || conversationUnavailableReason !== null,
 				onClick: () => action(() => onUseInConversation(page.pageId, run.runId))
@@ -7892,12 +8116,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				}
 			}, (0, react.createElement)("p", null, `当前固定版本${page.runOrder.indexOf(run.runId) + 1} · ${run.source === "local-skill" ? "本地 Skills" : "专业 API"} · 哈希 ${(run.result.artifact.sha256 ?? run.result.artifact.artifactId ?? "未记录").replace("sha256:", "").slice(0, 12)}`), (0, react.createElement)("p", null, "风险未评估 · 待确认问题未评估。确认仅登记此固定版本的人工审核结论。"), (0, react.createElement)("button", {
 				type: "button",
-				style: button$2,
+				style: button$3,
 				disabled: disabled || editing,
 				onClick: confirmReview
 			}, `确认审核版本${page.runOrder.indexOf(run.runId) + 1}`), (0, react.createElement)("button", {
 				type: "button",
-				style: button$2,
+				style: button$3,
 				onClick: cancelReview
 			}, "取消审核")) : null, error || operation.error ? (0, react.createElement)("div", { role: "alert" }, error ?? `操作未完成（${operation.errorCode ?? "连接失败"}）`) : null, operation.feedback === "conversation-draft-ready" ? (0, react.createElement)("div", { role: "status" }, "已放入对话草稿，尚未发送。") : null, run.writebacks.length ? (0, react.createElement)("section", {
 				"aria-label": "已保存文件",
@@ -7918,7 +8142,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				overflowWrap: "anywhere"
 			} }, record.files.find((file) => file.mediaType === "text/markdown")?.relativePath), (0, react.createElement)("button", {
 				type: "button",
-				style: button$2,
+				style: button$3,
 				title: savedFileUnavailableReason ?? void 0,
 				disabled: readOnlyDisabled || editing || run.review.status !== "approved" || savedFileUnavailableReason !== null,
 				onClick: () => action(() => onOpenSavedFile(page.pageId, run.runId, record.writebackId))
@@ -7945,7 +8169,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, ...page.runOrder.map((id, index) => (0, react.createElement)("button", {
 				key: id,
 				type: "button",
-				style: button$2,
+				style: button$3,
 				disabled: props.readOnlyDisabled ?? props.disabled,
 				"aria-current": id === page.activeRunId ? "true" : void 0,
 				onClick: () => onActivateRun(page.pageId, id)
@@ -8226,7 +8450,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				icon: "◉"
 			}
 		]);
-		const button$1 = {
+		const button$2 = {
 			border: "1px solid var(--dsw-alias-border-l2, #dce4df)",
 			borderRadius: 10,
 			padding: 12,
@@ -8235,7 +8459,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			cursor: "pointer",
 			font: "inherit"
 		};
-		function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = () => false, onSelect = () => {}, onImport }) {
+		function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = () => false, onSelect = () => {}, onSelectV340, onResumeV340, onRetryV340Catalog, onImport }) {
 			const [category, setCategory] = (0, react.useState)("patent");
 			const [notice, setNotice] = (0, react.useState)(null);
 			const ready = state.catalogStatus === "ready";
@@ -8277,7 +8501,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			} }, "BETTER SIDEBAR × OASIS")), onImport ? (0, react.createElement)("button", {
 				type: "button",
 				onClick: onImport,
-				style: button$1
+				style: button$2
 			}, "从网站导入") : null, (0, react.createElement)("div", { style: {
 				display: "grid",
 				gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
@@ -8285,7 +8509,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			} }, ...NATIVE_TOOLS.map((tool) => (0, react.createElement)("button", {
 				key: tool.id,
 				type: "button",
-				style: button$1,
+				style: button$2,
 				disabled: nativeAvailability[tool.id] !== true,
 				title: nativeAvailability[tool.id] === true ? void 0 : "原生功能不可用或已在侧边卡片设置中关闭",
 				onClick: () => {
@@ -8316,10 +8540,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				"aria-pressed": category === id,
 				onClick: () => setCategory(id),
 				style: {
-					...button$1,
+					...button$2,
 					borderRadius: 18,
 					padding: "7px 12px",
-					background: category === id ? "#90bfff" : button$1.background,
+					background: category === id ? "#90bfff" : button$2.background,
 					color: category === id ? "#fff" : "inherit"
 				}
 			}, label))), (0, react.createElement)("div", { style: {
@@ -8334,14 +8558,418 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					"data-testid": supported ? `oasis-workflow-${task.id}` : void 0,
 					onClick: () => onSelect(task.id),
 					style: {
-						...button$1,
+						...button$2,
 						display: "flex",
 						justifyContent: "space-between",
 						textAlign: "left",
 						opacity: supported ? 1 : .55
 					}
 				}, task.title, (0, react.createElement)("small", null, supported ? "打开 →" : "待接入"));
-			})), !ready ? (0, react.createElement)("div", { role: state.catalogStatus === "error" ? "alert" : "status" }, state.catalogStatus === "error" ? "工作流目录读取失败" : "正在读取工作流目录…") : null, tasks.length === 0 ? (0, react.createElement)("small", null, "暂无已接入任务") : null, notice ? (0, react.createElement)("div", { role: "status" }, notice) : null);
+			})), onSelectV340 && state.v340Catalog ? (0, react.createElement)("section", {
+				"aria-label": "专利工作流",
+				style: {
+					display: "grid",
+					gap: 8
+				}
+			}, ...state.v340Catalog.nodes.filter((node) => category === "rd" ? node.nodeId.startsWith("Flow-1-") : category === "patent" ? !node.nodeId.startsWith("Flow-1-") : false).map((node) => (0, react.createElement)("button", {
+				key: node.nodeId,
+				type: "button",
+				disabled: state.v340Creating === true,
+				style: {
+					...button$2,
+					textAlign: "left"
+				},
+				onClick: () => onSelectV340(node.nodeId)
+			}, node.title, (0, react.createElement)("small", { style: {
+				display: "block",
+				marginTop: 4
+			} }, "输入与结果 · 生成待接入")))) : null, state.v340CreateError ? (0, react.createElement)("p", { role: "alert" }, state.v340CreateError) : null, state.v340CatalogStatus === "error" ? (0, react.createElement)("section", { role: "alert" }, (0, react.createElement)("p", null, state.v340CatalogError), (0, react.createElement)("button", {
+				type: "button",
+				style: button$2,
+				disabled: !onRetryV340Catalog,
+				onClick: () => {
+					onRetryV340Catalog?.().catch(() => {});
+				}
+			}, "重试新版目录")) : null, onResumeV340 && state.closedV340Tabs?.length ? (0, react.createElement)("section", { "aria-label": "已保留任务" }, (0, react.createElement)("small", null, "已关闭的任务页，记录仍保留"), ...state.pages.filter((p) => state.closedV340Tabs.includes(p.pageId)).map((p) => (0, react.createElement)("button", {
+				key: p.pageId,
+				type: "button",
+				style: button$2,
+				onClick: () => onResumeV340(p.pageId)
+			}, `重新打开 ${p.title}`))) : null, !ready ? (0, react.createElement)("div", { role: state.catalogStatus === "error" ? "alert" : "status" }, state.catalogStatus === "error" ? "工作流目录读取失败" : "正在读取工作流目录…") : null, tasks.length === 0 ? (0, react.createElement)("small", null, "暂无已接入任务") : null, notice ? (0, react.createElement)("div", { role: "status" }, notice) : null);
+		}
+		//#endregion
+		//#region src/client/V340GenerationPage.js
+		const button$1 = {
+			border: "1px solid var(--dsw-alias-border-l2,#dce4df)",
+			borderRadius: 8,
+			padding: "8px 11px",
+			background: "var(--dsw-alias-bg-base,#fff)",
+			color: "inherit"
+		};
+		const m06LimitationNotice = "本版本不自动删除结构记录或撤回技术事实；正文修改后，相关表格和依据仍需核对。";
+		const labels = {
+			upstream_md: "前序累计文稿",
+			research_request: "研究请求",
+			research_scope_config: "研究范围配置",
+			user_input: "用户指令",
+			application_type: "申请类型",
+			max_fetch: "候选数量上限",
+			claims: "权利要求书",
+			specification: "说明书",
+			disclosure: "技术交底",
+			technical_disclosure: "技术交底",
+			drawings: "附图说明",
+			claim_requirements: "权利要求撰写要求",
+			check_requirements: "终检要求",
+			confirmation: "沟通确认",
+			current_application: "当前申请文件",
+			original_application: "原始申请文件",
+			oa_notice: "审查意见通知书",
+			response_requirements: "答复要求",
+			search_material: "检索材料",
+			search_target: "检索目标",
+			solution_selection_basis: "方案筛选依据",
+			strategy: "撰写策略",
+			supplemental_data: "补充数据",
+			technical_analysis_material: "技术分析材料",
+			technical_feedback: "技术反馈"
+		};
+		function label(field) {
+			const base = field.id.replace(/_(?:file|text)$/, "");
+			return labels[base] ?? (/^comparison_doc_/.test(base) ? `对比文件${base.split("_").at(-1)}` : field.boundary);
+		}
+		function V340GenerationPage({ page, state, node, operation = {}, actions = {}, markdownRenderer, savedFileUnavailableReason = "安全文件预览不可用" }) {
+			const draft = operation.v340InputDraft ?? page.v340.draft;
+			const picked = operation.v340Selection ?? {
+				runId: page.v340.activeRunId,
+				versionId: null
+			};
+			const run = page.v340.runs[picked.runId], versions = run ? getV340Versions(run) : [];
+			const version = versions.find((v) => v.versionId === (picked.versionId ?? run?.activeVersionId ?? run?.runId)) ?? versions.at(-1);
+			const target = version ? {
+				runId: run.runId,
+				versionId: version.versionId,
+				resultSha256: version.result.sha256
+			} : null;
+			const referenceTooLarge = !!target && formatV340ConversationDraft(target, version.result.body).length > 15e4;
+			const referenceReason = referenceTooLarge ? "固定版本全文超过对话草稿上限；请复制完整正文或导出Markdown并打开，正文未截断。" : state.conversationUnavailableReason === void 0 ? "当前对话输入接口不可用" : state.conversationUnavailableReason;
+			const editTarget = target ? {
+				runId: run.runId,
+				versionId: version.versionId,
+				baseSha256: version.result.sha256
+			} : null;
+			const key = target ? JSON.stringify([target.runId, target.versionId]) : "";
+			const local = operation.v340Edits?.[key], persisted = run && version ? run.coreResultDrafts?.[version.versionId] : null;
+			const legacy = run && version ? getV340LegacyResultDrafts(run).filter((d) => d.versionId === version.versionId) : [];
+			const editing = !!persisted || local?.body != null, editBody = local?.body ?? persisted?.body ?? version?.result.snapshot.current_result.core_result_markdown ?? "";
+			const pending = state.pages.some(hasPendingUnifiedRun), disabled = state.syncStatus !== "ready" || pending;
+			const working = operation.activeOperation != null;
+			const [tab, setTab] = (0, react.useState)("input"), [error, setError] = (0, react.useState)(null), [confirmation, setConfirmation] = (0, react.useState)(null);
+			const live = (0, react.useRef)(true), inFlight = (0, react.useRef)(false), entry = (0, react.useRef)(null);
+			const identity = JSON.stringify([
+				state.workspaceId,
+				state.revision,
+				page.pageId,
+				target,
+				editing,
+				disabled
+			]);
+			const current = (0, react.useRef)(identity);
+			current.current = identity;
+			(0, react.useEffect)(() => {
+				live.current = true;
+				return () => {
+					live.current = false;
+				};
+			}, []);
+			(0, react.useEffect)(() => {
+				setConfirmation(null);
+			}, [identity]);
+			async function action(fn) {
+				setError(null);
+				try {
+					await fn?.();
+				} catch {
+					if (live.current) setError("操作未完成，草稿与原版本仍保留。请核对当前项目和版本后重试。");
+				}
+			}
+			function update(channel, id, value) {
+				const next = structuredClone(draft);
+				if (value === "") delete next[channel][id];
+				else next[channel][id] = value;
+				action(() => actions.saveDraft?.(page.pageId, next));
+			}
+			async function approve() {
+				if (!live.current || !confirmation || confirmation.identity !== current.current || inFlight.current || disabled || editing) return;
+				inFlight.current = true;
+				setConfirmation(null);
+				try {
+					await action(() => actions.review?.(page.pageId, target, {
+						workspaceId: state.workspaceId,
+						revision: state.revision,
+						...target
+					}));
+				} finally {
+					inFlight.current = false;
+				}
+			}
+			const plan = operation.v340SavePlan, planMatches = plan && target && JSON.stringify(plan.target) === JSON.stringify(target) && plan.revision === state.revision && !editing;
+			return (0, react.createElement)("section", {
+				"aria-label": "共同输入与结果",
+				"className": "oasis-v340",
+				style: {
+					container: "oasis-v340 / inline-size",
+					minWidth: 0,
+					padding: 16
+				}
+			}, (0, react.createElement)("style", null, `.oasis-v340 *{box-sizing:border-box}.oasis-v340 .v340-panes{display:grid;grid-template-columns:minmax(0,1fr);gap:16}.oasis-v340 .v340-pane[data-visible=false]{display:none}.oasis-v340 input,.oasis-v340 textarea,.oasis-v340 select{max-width:100%;width:100%;border:1px solid #dce4df;border-radius:7px;padding:9px;color:inherit;background:var(--dsw-alias-bg-base,#fff)}@container oasis-v340 (min-width:680px){.oasis-v340 .v340-panes{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.oasis-v340 .v340-pane[data-visible=false]{display:block}.oasis-v340 .v340-tabs{display:none}}`), (0, react.createElement)("header", { style: {
+				display: "flex",
+				flexWrap: "wrap",
+				gap: 12,
+				justifyContent: "space-between",
+				alignItems: "center",
+				marginBottom: 14
+			} }, (0, react.createElement)("strong", null, page.title), (0, react.createElement)(GenerationSourceSwitch, {
+				value: draft.source,
+				disabled: disabled || !node,
+				onChange: (source) => {
+					action(() => actions.saveDraft?.(page.pageId, {
+						...draft,
+						source
+					}));
+				}
+			})), page.v340.nodeId === "Flow-2-6" ? (0, react.createElement)("p", {
+				role: "note",
+				"aria-label": "当前能力限制"
+			}, m06LimitationNotice) : null, (0, react.createElement)("nav", {
+				className: "v340-tabs",
+				"aria-label": "输入与结果",
+				style: {
+					display: "flex",
+					gap: 8,
+					marginBottom: 12
+				}
+			}, ...["input", "result"].map((id) => (0, react.createElement)("button", {
+				key: id,
+				type: "button",
+				style: button$1,
+				"aria-pressed": tab === id,
+				onClick: () => setTab(id)
+			}, id === "input" ? "输入材料" : "查看结果"))), (0, react.createElement)("div", { className: "v340-panes" }, (0, react.createElement)("section", {
+				className: "v340-pane",
+				"data-visible": tab === "input",
+				style: {
+					display: void 0,
+					minWidth: 0
+				}
+			}, (0, react.createElement)("h3", null, node?.title ?? "当前任务"), !node ? (0, react.createElement)("section", { role: "alert" }, (0, react.createElement)("p", null, state.v340CatalogError ?? "新版目录尚不可用，输入草稿仍保留。"), (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: !actions.retryCatalog || state.v340CatalogStatus === "loading",
+				onClick: () => action(() => actions.retryCatalog?.())
+			}, "重试新版目录")) : null, ...(node?.inputs ?? []).map((field) => {
+				const file = field.id.endsWith("_file"), config = field.channel === "配置", channel = file ? "filePaths" : config ? "configuration" : "textInputs";
+				const value = draft[channel][field.id] ?? "", name = `${label(field)}${file ? "文件" : field.id.endsWith("_text") ? "文本" : ""}`;
+				return (0, react.createElement)("label", {
+					key: field.id,
+					style: {
+						display: "grid",
+						gap: 5,
+						marginBottom: 12,
+						fontSize: 13
+					}
+				}, name, field.id === "application_type" ? (0, react.createElement)("select", {
+					"aria-label": name,
+					value,
+					disabled,
+					onChange: (e) => update(channel, field.id, e.target.value)
+				}, (0, react.createElement)("option", { value: "" }, "未指定"), ...[
+					["invention", "发明"],
+					["utility_model", "实用新型"],
+					["undetermined", "待确定"]
+				].map(([id, title]) => (0, react.createElement)("option", {
+					key: id,
+					value: id
+				}, title))) : config ? (0, react.createElement)("input", {
+					"aria-label": name,
+					defaultValue: typeof value === "object" ? JSON.stringify(value) : value,
+					key: `${page.pageId}-${field.id}`,
+					disabled,
+					onBlur: (e) => {
+						try {
+							update(channel, field.id, e.target.value === "" ? "" : JSON.parse(e.target.value));
+						} catch {
+							setError("配置格式不正确，输入保留；请修正后保存。");
+						}
+					}
+				}) : (0, react.createElement)(file ? "input" : "textarea", {
+					"aria-label": name,
+					value,
+					disabled,
+					maxLength: file ? 1024 : 3e5,
+					rows: file ? void 0 : 4,
+					placeholder: file ? "当前项目内的相对路径（.md / .txt）" : void 0,
+					onChange: (e) => update(channel, field.id, e.target.value)
+				}), (0, react.createElement)("small", { style: { color: "#66706b" } }, field.id === "user_input" ? "仅填写本次增删改、范围或偏好。" : file ? "一次选择一个当前项目文件；运行前按明确路径读取正文。" : field.importance === "expected" ? "建议提供，缺失将产生警示。" : "可选补充"));
+			}), node ? (0, react.createElement)("p", { role: "status" }, operation.v340InputDraft ? "输入正在保存；失败时保留本地草稿。" : "输入已保存") : null, operation.v340InputDraft ? (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: working,
+				onClick: () => action(() => actions.saveDraft?.(page.pageId, operation.v340InputDraft))
+			}, "重试保存输入") : null, (0, react.createElement)("button", {
+				type: "button",
+				disabled: true,
+				style: {
+					...button$1,
+					width: "100%"
+				}
+			}, "生成（暂不可用）"), (0, react.createElement)("p", {
+				role: "status",
+				style: { fontSize: 12 }
+			}, node?.sources[draft.source].reason ?? "新版来源尚未就绪")), (0, react.createElement)("section", {
+				className: "v340-pane",
+				"data-visible": tab === "result",
+				style: { minWidth: 0 }
+			}, (0, react.createElement)("h3", null, "生成结果"), (0, react.createElement)("nav", {
+				"aria-label": "结果版本",
+				style: {
+					display: "flex",
+					flexWrap: "wrap",
+					gap: 6
+				}
+			}, ...page.v340.runOrder.flatMap((id) => getV340Versions(page.v340.runs[id]).map((v, index) => (0, react.createElement)("button", {
+				key: `${id}/${v.versionId}`,
+				type: "button",
+				style: button$1,
+				"aria-current": target?.versionId === v.versionId ? "true" : void 0,
+				onClick: () => actions.selectVersion?.(page.pageId, id, v.versionId)
+			}, `${page.v340.runOrder.length > 1 ? `运行${page.v340.runOrder.indexOf(id) + 1} · ` : ""}版本 ${index + 1}`)))), !version ? (0, react.createElement)("p", { role: "status" }, run?.status === "unknown" ? "运行状态未确认；不会自动重发。" : run?.status === "prepared" ? "原运行尚未完成。" : "暂无生成结果") : (0, react.createElement)("article", { style: {
+				display: "grid",
+				gap: 12,
+				marginTop: 12
+			} }, (0, react.createElement)("small", null, `${run.source === "local-skill" ? "本地 Skills" : "专业 API"} · 合成验收 · ${version.review.status === "approved" ? "已审核" : "待审核"}`), ...legacy.map(({ key, draft }) => (0, react.createElement)("section", {
+				key,
+				"aria-label": "旧草稿恢复"
+			}, (0, react.createElement)("p", null, "旧草稿格式未确认，可能包含整份累计文稿。请先复制保留；原草稿保持，可另起核心正文编辑。"), (0, react.createElement)("textarea", {
+				"aria-label": "旧草稿原文",
+				readOnly: true,
+				rows: 8,
+				value: draft.body
+			}), (0, react.createElement)("small", null, "“编辑结果”从原版本核心正文开始；不会自动抽取、转换或删除旧草稿。"))), editing ? (0, react.createElement)("textarea", {
+				"aria-label": "修订结果",
+				rows: 12,
+				value: editBody,
+				disabled,
+				maxLength: 1048576,
+				onChange: (e) => {
+					action(() => actions.saveEditDraft?.(page.pageId, editTarget, e.target.value));
+				}
+			}) : (0, react.createElement)(SafeMarkdownPreview, {
+				markdownRenderer,
+				text: version.result.snapshot.current_result.core_result_markdown
+			}), (0, react.createElement)("p", { style: { fontSize: 12 } }, "风险与待确认事项仍需核对；人工审核不代表专业或法律结论。"), (0, react.createElement)("details", null, (0, react.createElement)("summary", null, "累计文稿与警示"), (0, react.createElement)(SafeMarkdownPreview, {
+				markdownRenderer,
+				text: version.result.body
+			})), editing ? (0, react.createElement)("p", { role: "status" }, local ? "有未保存编辑，原版本保持；可等待保存或重试。" : "结果编辑草稿已保存；切换版本会保留。") : null, local ? (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: working,
+				onClick: () => action(() => actions.saveEditDraft?.(page.pageId, editTarget, local.body))
+			}, "重试保存编辑") : null, (0, react.createElement)("div", { style: {
+				display: "flex",
+				gap: 6,
+				flexWrap: "wrap"
+			} }, (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: disabled || working,
+				onClick: () => action(() => actions.saveEditDraft?.(page.pageId, editTarget, editing ? null : version.result.snapshot.current_result.core_result_markdown))
+			}, editing ? "放弃编辑" : "编辑结果"), editing ? (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: disabled || working || !editBody.trim() || !!local || editBody === version.result.snapshot.current_result.core_result_markdown,
+				onClick: () => action(() => actions.edit?.(page.pageId, editTarget))
+			}, "保存为新版本") : null, (0, react.createElement)("button", {
+				ref: entry,
+				type: "button",
+				style: button$1,
+				disabled: disabled || working || editing || legacy.length > 0 || version.review.status === "approved",
+				onClick: () => setConfirmation({ identity: current.current })
+			}, "审核此版本")), confirmation ? (0, react.createElement)("section", {
+				"aria-label": "审核确认",
+				role: "group",
+				onKeyDown: (e) => {
+					if (e.key === "Escape") {
+						setConfirmation(null);
+						entry.current?.focus();
+					}
+				}
+			}, (0, react.createElement)("p", null, `当前固定版本 · 哈希 ${version.result.sha256.slice(0, 12)}；请核对正文和全部警示。`), (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: disabled || working || editing,
+				onClick: approve
+			}, "确认审核此版本"), (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				onClick: () => {
+					setConfirmation(null);
+					entry.current?.focus();
+				}
+			}, "取消审核")) : null, version.review.status === "approved" && !editing && !legacy.length ? (0, react.createElement)("section", { "aria-label": "项目回写" }, (0, react.createElement)("p", null, "Markdown导出沿用当前固定版本的项目保存与确认；不会覆盖既有文件。"), (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: disabled || working || !!referenceReason || !actions.useReference,
+				title: referenceReason ?? void 0,
+				onClick: () => action(() => actions.useReference?.(page.pageId, target))
+			}, "使用固定审核版本"), referenceReason ? (0, react.createElement)("p", { role: "status" }, referenceReason) : null, page.v340.nodeId === "Flow-2-6" ? (0, react.createElement)("p", {
+				role: "note",
+				"aria-label": "复制与保存的当前能力限制",
+				style: { fontSize: 12 }
+			}, m06LimitationNotice) : null, referenceTooLarge ? (0, react.createElement)("details", null, (0, react.createElement)("summary", null, "固定审核版本全文（可复制）"), (0, react.createElement)("textarea", {
+				"aria-label": "固定审核版本全文（可复制）",
+				readOnly: true,
+				rows: 10,
+				value: version.result.body
+			})) : null, (0, react.createElement)("p", null, "保存到当前项目目录；同名文件不会覆盖，专业 API 文件名以 _OIW 结尾。"), (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: disabled || working,
+				onClick: () => action(() => actions.prepareSave?.(page.pageId, target))
+			}, "准备保存当前版本"), planMatches ? (0, react.createElement)("div", null, ...plan.manifest.files.map((f) => (0, react.createElement)("p", {
+				key: f.relativePath,
+				style: { overflowWrap: "anywhere" }
+			}, f.relativePath)), (0, react.createElement)("label", null, (0, react.createElement)("input", {
+				type: "checkbox",
+				style: { width: "auto" },
+				checked: operation.v340SaveConfirmed === true,
+				disabled: disabled || working,
+				onChange: (e) => actions.confirmSave?.(page.pageId, e.target.checked)
+			}), "我已核对当前项目、固定版本和文件名"), (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: disabled || working || !operation.v340SaveConfirmed,
+				onClick: () => action(() => actions.commitSave?.(page.pageId))
+			}, "确认保存文件")) : null) : null, ...version.writebacks.map((saved) => (0, react.createElement)("section", {
+				key: saved.writebackId,
+				style: { overflowWrap: "anywhere" }
+			}, (0, react.createElement)("p", { role: "status" }, `已保存：${saved.files.find((f) => f.mediaType === "text/markdown")?.relativePath}`), (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: disabled || working || editing || legacy.length > 0 || version.review.status !== "approved" || !!savedFileUnavailableReason || !actions.openSaved,
+				title: savedFileUnavailableReason ?? void 0,
+				onClick: () => action(() => actions.openSaved?.(page.pageId, target, saved.writebackId))
+			}, "打开当前文件"), (0, react.createElement)("small", null, "打开的是当前文件；固定审核结论仅绑定所选版本，文件变化需重新核对。")))), run && ["prepared", "unknown"].includes(run.status) ? (0, react.createElement)("div", null, (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: working,
+				onClick: () => action(() => actions.observe?.(page.pageId, run.runId))
+			}, "查看原运行"), (0, react.createElement)("button", {
+				type: "button",
+				style: button$1,
+				disabled: working || run.status !== "prepared",
+				onClick: () => action(() => actions.stop?.(page.pageId, run.runId))
+			}, "停止等待")) : null)), error || operation.error ? (0, react.createElement)("p", { role: "alert" }, error ?? "操作未完成，草稿和原记录已保留。") : null, operation.feedback ? (0, react.createElement)("p", { role: "status" }, operation.feedback) : null, operation.indexWarningManifest ? (0, react.createElement)("section", { role: "alert" }, (0, react.createElement)("p", null, "文件可能已经发布，但保存索引尚未完成。请保留恢复清单，不要覆盖或重复保存。"), (0, react.createElement)("pre", { style: { whiteSpace: "pre-wrap" } }, JSON.stringify(operation.indexWarningManifest, null, 2))) : null);
 		}
 		//#endregion
 		//#region src/client/PanelPages.js
@@ -8374,7 +9002,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				}
 			}, label);
 		}
-		function SyncRecoveryNotice({ state, onReload, onDiscardResultEditDraft }) {
+		function SyncRecoveryNotice({ state, onReload, onDiscardResultEditDraft, onDiscardV340Drafts }) {
 			const [error, setError] = (0, react.useState)(null);
 			const drafts = state.pages.flatMap((page) => Object.entries(state.pageOperations?.[page.pageId]?.resultEditDrafts ?? {}).filter(([, draft]) => draft.dirty).map(([runId, draft]) => ({
 				page,
@@ -8382,6 +9010,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				draft
 			})));
 			const conflict = state.syncStatus === "conflict";
+			const v340Drafts = state.pages.map((page) => ({
+				page,
+				op: state.pageOperations?.[page.pageId] ?? {}
+			})).filter(({ op }) => op.v340InputDraft || Object.keys(op.v340Edits ?? {}).length);
 			async function action(fn) {
 				setError(null);
 				try {
@@ -8418,14 +9050,33 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				onClick: () => {
 					action(() => onDiscardResultEditDraft(page.pageId, runId, draft));
 				}
-			}, "放弃此结果编辑")))) : null, error ? (0, react.createElement)("p", { role: "status" }, error) : null, reloadButton(() => {
+			}, "放弃此结果编辑")))) : null, ...v340Drafts.map(({ page, op }) => (0, react.createElement)("section", {
+				key: page.pageId,
+				"aria-label": "新版未保存草稿"
+			}, (0, react.createElement)("p", null, `${page.title}：请先复制保留草稿，再明确放弃本地未保存部分；Host已保存的记录不会被删除。`), (0, react.createElement)("textarea", {
+				readOnly: true,
+				rows: 8,
+				"aria-label": `新版未保存草稿：${page.title}`,
+				value: JSON.stringify({
+					input: op.v340InputDraft,
+					edits: op.v340Edits
+				}, null, 2),
+				style: { width: "100%" }
+			}), (0, react.createElement)("button", {
+				type: "button",
+				disabled: !onDiscardV340Drafts || op.activeOperation != null,
+				onClick: () => action(() => onDiscardV340Drafts(page.pageId, {
+					input: op.v340InputDraft,
+					edits: op.v340Edits
+				}))
+			}, "放弃此新版本地草稿"))), error ? (0, react.createElement)("p", { role: "status" }, error) : null, reloadButton(() => {
 				action(onReload);
-			}, "重新载入服务端版本（舍弃本地输入草稿）", drafts.length > 0 || !onReload));
+			}, "重新载入服务端版本（舍弃本地输入草稿）", drafts.length > 0 || v340Drafts.length > 0 || !onReload));
 		}
 		function activeRun(page) {
 			return page.activeRunId === null ? null : page.runs[page.activeRunId];
 		}
-		function PanelPages({ state, markdownRenderer, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, onImport, effectiveMode = "normal", onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {}, onUpdateResultEditDraft, onDiscardResultEditDraft, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {}, onObserveRunningWater = () => {} }) {
+		function PanelPages({ state, markdownRenderer, savedFileUnavailableReason = "安全文件预览不可用", onOpenSavedFile = () => {}, showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, onImport, effectiveMode = "normal", v340Actions = {}, onSelectWorkflow, onRenamePage, onReload, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, onEditResult = () => {}, onUseInConversation = () => {}, onUpdateResultEditDraft, onDiscardResultEditDraft, onMaterialDraft = () => {}, onAddMaterial = () => {}, onRefreshMaterial = () => {}, onRemoveMaterial = () => {}, onGenerate = () => {}, onActivateRun = () => {}, onReviewNote = () => {}, onReview = () => {}, onWritebackDraft = () => {}, onPrepareWriteback = () => {}, onWritebackConfirm = () => {}, onCommitWriteback = () => {}, onSelectProfessionalService = () => {}, onUpdateProfessionalField = () => {}, onSelectProfessionalFolder = () => {}, onProfessionalConfirm = () => {}, onStartProfessional = () => {}, onContinueProfessional = () => {}, onStopProfessional = () => {}, onObserveRunningWater = () => {} }) {
 			if (state.syncStatus === "idle" || state.syncStatus === "loading") return (0, react.createElement)("div", {
 				role: "status",
 				"aria-live": "polite",
@@ -8434,9 +9085,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			if (state.syncStatus === "conflict" || state.syncStatus === "error") return (0, react.createElement)(SyncRecoveryNotice, {
 				state,
 				onReload,
-				onDiscardResultEditDraft
+				onDiscardResultEditDraft,
+				onDiscardV340Drafts: v340Actions.discardLocal
 			});
 			const page = state.pages.find((item) => item.pageId === state.activePageId);
+			if (!page && showFunctionCenter) return (0, react.createElement)(FunctionCenter, {
+				state,
+				onSelectV340: v340Actions.create,
+				onResumeV340: v340Actions.resume,
+				onRetryV340Catalog: v340Actions.retryCatalog,
+				onSelect: (id) => onSelectWorkflow(null, id),
+				nativeAvailability,
+				onOpenNative,
+				onImport
+			});
 			if (!page) return (0, react.createElement)("div", { style: {
 				padding: 20,
 				color: "#66706b"
@@ -8485,7 +9147,20 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				state,
 				nativeAvailability,
 				onOpenNative,
-				onSelect: (workflowId) => onSelectWorkflow(page.pageId, workflowId)
+				onSelect: (workflowId) => onSelectWorkflow(page.pageId, workflowId),
+				onSelectV340: (nodeId) => v340Actions.create?.(nodeId),
+				onResumeV340: v340Actions.resume,
+				onRetryV340Catalog: v340Actions.retryCatalog
+			});
+			else if (page.v340) content = (0, react.createElement)(V340GenerationPage, {
+				key: `${state.workspaceId}/${page.pageId}`,
+				page,
+				state,
+				node: state.v340Catalog?.nodes.find((n) => n.nodeId === page.v340.nodeId),
+				operation: state.pageOperations[page.pageId] ?? {},
+				actions: v340Actions,
+				markdownRenderer,
+				savedFileUnavailableReason
 			});
 			else {
 				const workflow = state.workflows.find((item) => item.workflowId === page.workflowId && item.workflowVersion === page.workflowVersion);
@@ -8631,7 +9306,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					overflow: "auto",
 					background: "var(--dsw-alias-bg-subtle, #f5f7f5)"
 				}
-			}, page.generation || page.view === "chooser" || showFunctionCenter ? null : titleEditor, content);
+			}, page.generation || page.v340 || page.view === "chooser" || showFunctionCenter ? null : titleEditor, content);
 		}
 		//#endregion
 		//#region src/client/OasisAccountSettings.js
@@ -9573,6 +10248,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				hostMode,
 				state: {
 					...state,
+					pages: state.pages.filter((page) => !state.closedV340Tabs?.includes(page.pageId)),
 					effectiveMode,
 					layoutStatus: hostMode === "embedded" ? "better-sidebar-owned" : layout.status
 				},
@@ -9597,6 +10273,29 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (hostMode === "standalone") store.setPanelMode(workspaceId, state.panelMode === "expanded" ? "normal" : "expanded");
 				}
 			}), (0, react.createElement)(PanelPages, {
+				v340Actions: {
+					retryCatalog: () => store.loadV340Catalog(workspaceId),
+					create: (nodeId) => {
+						store.createV340Task(workspaceId, nodeId).then(() => setCenter(false)).catch(() => {});
+					},
+					resume: (pageId) => {
+						store.activatePage(workspaceId, pageId);
+						setCenter(false);
+					},
+					discardLocal: (pageId, expected) => store.discardV340LocalDrafts(workspaceId, pageId, expected),
+					saveDraft: (pageId, draft) => store.saveV340Draft(workspaceId, pageId, draft),
+					saveEditDraft: (pageId, target, body) => store.saveV340ResultDraft(workspaceId, pageId, target, body),
+					edit: (pageId, target) => store.editV340Result(workspaceId, pageId, target),
+					review: (pageId, target, confirmation) => store.reviewV340Result(workspaceId, pageId, target, confirmation),
+					selectVersion: (pageId, runId, versionId) => store.selectV340Version(workspaceId, pageId, runId, versionId),
+					prepareSave: (pageId, target) => store.prepareV340Save(workspaceId, pageId, target),
+					confirmSave: (pageId, value) => store.setV340SaveConfirmation(workspaceId, pageId, value),
+					commitSave: (pageId) => store.commitV340Save(workspaceId, pageId),
+					useReference: (pageId, target) => store.useV340InConversation(workspaceId, pageId, target),
+					openSaved: (pageId, target, writebackId) => store.openV340SavedFile(workspaceId, pageId, target, writebackId),
+					observe: (pageId, runId) => store.v340Action(workspaceId, pageId, "run/observe", { runId }),
+					stop: (pageId, runId) => store.v340Action(workspaceId, pageId, "run/stop", { runId })
+				},
 				onImport: store.websiteImportRemote && store.connectionSettings ? () => setImportWorkspace(workspaceId) : void 0,
 				markdownRenderer,
 				savedFileUnavailableReason: coordinator?.captureSavedFileTarget(workspaceId) ? null : "安全文件预览不可用",
@@ -9611,7 +10310,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				},
 				effectiveMode,
 				onSelectWorkflow: (pageId, workflowId) => {
-					if (store.getWorkspaceState(workspaceId).pages.find((page) => page.pageId === pageId)?.workflowId) {
+					if (!pageId || store.getWorkspaceState(workspaceId).pages.find((page) => page.pageId === pageId)?.workflowId) {
 						store.createPage(workspaceId);
 						pageId = store.getWorkspaceState(workspaceId).activePageId;
 					}
@@ -10407,6 +11106,29 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return connection.rpc.call("/api", `oasis-workbench/${endpoint}`, payload, signal);
 			};
 			return Object.freeze({
+				async getV340Catalog(signal) {
+					return unwrap(await call(CHANNEL, "workflow/v340/catalog", {}, signal), v340CatalogResponseSchema);
+				},
+				async v340(action, payload, signal, expectedWorkspaceId) {
+					if (!Object.hasOwn(v340Commands, action) || action === "run/create") throw new WorkbenchRemoteError("V340_OPERATION_DISABLED", "新版操作不可用");
+					const input = v340Commands[action].parse(payload);
+					const workspaceId = input.workspaceId ?? expectedWorkspaceId;
+					if (!workspaceId) throw new WorkbenchRemoteError("V340_INVALID_INPUT", "缺少当前项目身份");
+					const readSchema = action === "result/conversation-draft" ? v340ConversationDraftResponseSchema : action === "result/saved-file" ? v340SavedFileResponseSchema : null;
+					const schema = readSchema ?? (action === "result/prepare-save" ? writebackPrepareResponseSchema : workbenchReplaceResponseSchema);
+					const result = unwrap(await call(CHANNEL, `workflow/v340/${action}`, input, signal), schema);
+					if (result.current && result.current.workspaceId !== workspaceId || result.manifest && result.manifest.workspaceId !== workspaceId) throw new WorkbenchRemoteError("malformed-response", "新版项目身份不一致", {});
+					if (readSchema && ([
+						"workspaceId",
+						"taskId",
+						"runId",
+						"versionId",
+						"resultSha256",
+						"expectedRevision",
+						...action === "result/saved-file" ? ["writebackId"] : []
+					].some((k) => result[k] !== input[k]) || result.artifactId !== `sha256:${input.resultSha256}`)) throw new WorkbenchRemoteError("malformed-response", "新版固定版本身份不一致", {});
+					return result;
+				},
 				async websiteImport(action, payload) {
 					if (!Object.hasOwn(importCommands, action)) throw new WorkbenchRemoteError("IMPORT_INVALID_INPUT", "导入动作无效");
 					const input = importCommands[action].parse(payload);
@@ -10612,6 +11334,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				formValues: detached(task.formValues),
 				professionalDraft: detached(task.professionalDraft),
 				generation: detached(task.generation ?? null),
+				...task.v340 ? { v340: detached(task.v340) } : {},
 				activeRunId: task.activeRunId,
 				runOrder: detached(task.runOrder),
 				runs: detached(task.runs),
@@ -10650,6 +11373,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				catalogStatus: "idle",
 				catalogError: null,
 				workflows: [],
+				v340Catalog: null,
+				v340CatalogStatus: "idle",
+				v340CatalogError: null,
+				v340Creating: false,
+				v340CreateError: null,
 				professionalStatus: "idle",
 				professionalError: null,
 				professionalBootstrap: null,
@@ -10932,7 +11660,97 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const runtimes = /* @__PURE__ */ new Map();
 			const listeners = /* @__PURE__ */ new Set();
 			const controller = new AbortController();
+			const handoffController = new AbortController();
 			const pendingObservations = /* @__PURE__ */ new Map();
+			const v340Queue = /* @__PURE__ */ new Map();
+			function assertV340Handoff(workspaceId, pageId, target) {
+				assertKnown(workspaceId);
+				const current = getCurrent(workspaceId), page = pageFor(workspaceId, pageId), op = operationFor(current, pageId);
+				const selected = op.v340Selection ?? { runId: page.v340?.activeRunId }, run = page.v340?.runs[selected.runId];
+				const versionId = selected.versionId ?? run?.activeVersionId ?? run?.runId;
+				const version = run && getV340Versions(run).find((v) => v.versionId === versionId);
+				if (current.syncStatus !== "ready" || current.activePageId !== pageId || selected.runId !== target.runId || versionId !== target.versionId || version?.result.sha256 !== target.resultSha256 || version.review.status !== "approved" || current.pages.some(hasPendingUnifiedRun) || op.v340Edits?.[JSON.stringify([target.runId, target.versionId])] || getV340ResultDrafts(run)[target.versionId]) throw Error("当前任务、审核版本或未保存编辑已变化");
+				return {
+					current,
+					selection: op.v340Selection
+				};
+			}
+			async function performV340Handoff(workspaceId, pageId, target, action, extra, effect) {
+				const signal = handoffController.signal;
+				let onAbort;
+				const interrupted = new Promise((resolve) => {
+					onAbort = () => resolve(false);
+					signal.addEventListener("abort", onAbort, { once: true });
+					if (signal.aborted) onAbort();
+				});
+				try {
+					const job = queueV340(workspaceId, async (context) => {
+						if (signal.aborted) return false;
+						let started = false;
+						try {
+							await Promise.race([flushWorkspace(workspaceId, context), interrupted]);
+							if (closing || disposed || signal.aborted) return false;
+							const captured = assertV340Handoff(workspaceId, pageId, target);
+							updatePageOperation(workspaceId, pageId, {
+								activeOperation: "v340-handoff",
+								error: null
+							});
+							started = true;
+							if (!knownWorkspaceIds.has(workspaceId)) return false;
+							const result = await Promise.race([callV340(action, {
+								workspaceId,
+								taskId: pageId,
+								expectedRevision: captured.current.revision,
+								...target,
+								...extra
+							}, signal), interrupted]);
+							if (closing || disposed || signal.aborted) return false;
+							const latest = assertV340Handoff(workspaceId, pageId, target);
+							if (latest.current.revision !== captured.current.revision || latest.selection !== captured.selection) throw Error("当前任务或版本已变化，请重新操作");
+							if (effect(result) === false) throw Error("原生接口或项目已变化，请重新操作");
+							updatePageOperation(workspaceId, pageId, { feedback: action === "result/conversation-draft" ? "固定审核版本已放入对话草稿，尚未发送。" : result.matchesReviewed ? "已打开当前文件；读取时与固定审核版本一致。" : "已打开当前文件；文件内容已变化，原审核结论不适用于当前文件。" });
+							return true;
+						} catch (error) {
+							if (closing || disposed || signal.aborted) return false;
+							updatePageOperation(workspaceId, pageId, {
+								error: error.message,
+								errorCode: error.code ?? null
+							});
+							throw error;
+						} finally {
+							if (started && !closing && !disposed) updatePageOperation(workspaceId, pageId, { activeOperation: null });
+						}
+					});
+					return await Promise.race([job, interrupted]);
+				} finally {
+					signal.removeEventListener("abort", onAbort);
+				}
+			}
+			function queueV340(workspaceId, work) {
+				assertOpen();
+				assertKnown(workspaceId);
+				const job = (v340Queue.get(workspaceId) ?? Promise.resolve()).catch(() => {}).then(async () => {
+					assertOpen();
+					const runtime = runtimeFor(workspaceId), context = { edits: [] };
+					runtime.v340Work = context;
+					try {
+						return await work(context);
+					} finally {
+						runtime.v340Work = null;
+						if (!closing && !disposed && !controller.signal.aborted) await flushWorkspaceInternal(workspaceId);
+					}
+				});
+				v340Queue.set(workspaceId, job);
+				job.finally(() => {
+					if (v340Queue.get(workspaceId) === job) v340Queue.delete(workspaceId);
+				}).catch(() => {});
+				return job;
+			}
+			function callV340(...args) {
+				assertOpen();
+				args[2]?.throwIfAborted();
+				return remote.v340(...args);
+			}
 			const reducerEnvironment = {
 				createId,
 				now: clock
@@ -10950,6 +11768,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			function assertKnown(workspaceId) {
 				if (typeof workspaceId !== "string" || !knownWorkspaceIds.has(workspaceId)) throw new Error("action requires a known Workspace");
 			}
+			function assertRetained(workspaceId) {
+				if (!states.has(workspaceId)) throw new Error("action requires a known Workspace");
+			}
 			function runtimeFor(workspaceId) {
 				let runtime = runtimes.get(workspaceId);
 				if (!runtime) {
@@ -10963,7 +11784,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						pendingDraft: null,
 						saveTimer: null,
 						saveGeneration: 0,
-						editGeneration: 0
+						editGeneration: 0,
+						v340Work: null
 					};
 					runtimes.set(workspaceId, runtime);
 				}
@@ -11010,6 +11832,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					catalogStatus: current.catalogStatus,
 					catalogError: current.catalogError,
 					workflows: current.workflows,
+					v340Catalog: current.v340Catalog ?? null,
+					v340CatalogStatus: current.v340CatalogStatus ?? "idle",
+					v340CatalogError: current.v340CatalogError ?? null,
+					v340Creating: current.v340Creating ?? false,
+					v340CreateError: current.v340CreateError ?? null,
+					closedV340Tabs: current.closedV340Tabs ?? [],
+					...current.closedV340Tabs?.includes(recordState.activePageId) ? { activePageId: recordState.pages.find((p) => !current.closedV340Tabs.includes(p.pageId))?.pageId ?? null } : {},
 					unifiedFixtureEnabled: current.unifiedFixtureEnabled === true,
 					apiExecutionAvailable: current.apiExecutionAvailable === true,
 					localGenerationEnabled: current.localGenerationEnabled === true,
@@ -11051,6 +11880,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return drafts && Object.hasOwn(drafts, runId) ? drafts[runId] : void 0;
 			}
 			function assertNoDirtyResult(workspaceId, pageId, runId) {
+				const op = operationFor(getCurrent(workspaceId), pageId);
+				if (op.v340InputDraft || Object.keys(op.v340Edits ?? {}).length) throw Error("新版未保存草稿仍保留，请先保存或复制处理后重新载入。");
 				const drafts = operationFor(getCurrent(workspaceId), pageId).resultEditDrafts ?? {};
 				if (runId === void 0 ? Object.values(drafts).some((draft) => draft.dirty) : resultDraft(workspaceId, pageId, runId)?.dirty) throw new Error("存在未保存的结果编辑，请先保存为新版本或明确放弃编辑。");
 			}
@@ -11061,7 +11892,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}
 			function updatePageOperation(workspaceId, pageId, changes) {
 				assertOpen();
-				assertKnown(workspaceId);
+				assertRetained(workspaceId);
 				pageFor(workspaceId, pageId);
 				const current = getCurrent(workspaceId);
 				const operation = Object.freeze({
@@ -11171,6 +12002,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				const runtime = runtimeFor(workspaceId);
 				runtime.pendingDraft = draft;
 				clearScheduledSave(runtime);
+				if (runtime.v340Work) return;
 				const generation = runtime.saveGeneration;
 				const startDrain = () => {
 					if (disposed || generation !== runtime.saveGeneration) return;
@@ -11181,7 +12013,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				else runtime.saveTimer = scheduler.setTimeout(startDrain, saveDelayMs);
 			}
 			async function flushWorkspaceInternal(workspaceId) {
-				assertKnown(workspaceId);
+				assertRetained(workspaceId);
 				const runtime = runtimeFor(workspaceId);
 				clearScheduledSave(runtime);
 				while (runtime.hydrationPromise) await runtime.hydrationPromise;
@@ -11189,16 +12021,24 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				while (runtime.drainPromise) await runtime.drainPromise;
 				return getCurrent(workspaceId);
 			}
-			async function flushWorkspace(workspaceId) {
+			async function flushWorkspace(workspaceId, owner = null) {
 				assertOpen();
+				const active = runtimes.get(workspaceId)?.v340Work;
+				if (v340Queue.has(workspaceId) && (!owner || active !== owner)) throw new Error("项目正在保存，请稍后重试");
 				return flushWorkspaceInternal(workspaceId);
 			}
-			function applyAuthoritativeReplacement(workspaceId, result) {
+			function runV340PageOperation(context, workspaceId, pageId, name, operation, onSuccess) {
+				return runPageOperation(workspaceId, pageId, name, operation, onSuccess, context);
+			}
+			function applyAuthoritativeReplacement(workspaceId, result, edits = []) {
 				if (result?.committed === true) {
 					const current = getCurrent(workspaceId);
-					const authoritative = preserveClientState(ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current)), current);
+					let authoritative = preserveClientState(ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current)), current);
 					if (current.syncStatus === "conflict" || current.revision > authoritative.revision) preserveDraftConflict(workspaceId, authoritative);
+					for (const { actions, environment } of edits) for (const action of actions) authoritative = reduceWorkspaceState(authoritative, action, environment);
+					if (edits.length) authoritative = stateWith(authoritative, { syncStatus: "saving" });
 					setState(workspaceId, authoritative);
+					if (edits.length) scheduleWorkspaceSave(workspaceId, workspaceStateToDraft(getCurrent(workspaceId)));
 					return authoritative;
 				}
 				if (result?.committed === false && result.reason === "revision-conflict") {
@@ -11228,9 +12068,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				error.code = "revision-conflict";
 				throw error;
 			}
-			async function runPageOperation(workspaceId, pageId, operationName, operation, onSuccess) {
+			async function runPageOperation(workspaceId, pageId, operationName, operation, onSuccess, context = null) {
 				assertOpen();
-				assertKnown(workspaceId);
+				assertRetained(workspaceId);
 				pageFor(workspaceId, pageId);
 				if (remote === null || typeof operation !== "function") throw new Error(`${operationName} requires the Oasis Host`);
 				if (operationFor(getCurrent(workspaceId), pageId).activeOperation !== null) throw new Error("another page operation is already in progress");
@@ -11242,14 +12082,17 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					indexWarningManifest: null
 				});
 				try {
-					await flushWorkspace(workspaceId);
+					await flushWorkspace(workspaceId, context);
 					const current = getCurrent(workspaceId);
 					if (current.syncStatus !== "ready") throw new Error(`Workspace is not ready for ${operationName}`);
 					const editGeneration = runtimeFor(workspaceId).editGeneration;
+					const editIndex = context?.edits.length ?? 0;
 					const result = await operation(current);
 					if (closing || disposed || controller.signal.aborted) return getCurrent(workspaceId);
-					if (runtimeFor(workspaceId).editGeneration !== editGeneration && result?.current) preserveDraftConflict(workspaceId, ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current)));
-					const applied = applyAuthoritativeReplacement(workspaceId, result);
+					if (runtimeFor(workspaceId).editGeneration !== editGeneration && result?.current) {
+						if (!context || context.edits.length - editIndex !== runtimeFor(workspaceId).editGeneration - editGeneration) preserveDraftConflict(workspaceId, ensureRecordIdentity(workspaceId, recordToWorkspaceState(result.current)));
+					}
+					const applied = applyAuthoritativeReplacement(workspaceId, result, context?.edits.slice(editIndex));
 					updatePageOperation(workspaceId, pageId, {
 						activeOperation: null,
 						error: null,
@@ -11278,16 +12121,32 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			function persistReadyAction(workspaceId, action) {
 				assertOpen();
 				const current = getCurrent(workspaceId);
-				const next = reduceWorkspaceState(current, action, reducerEnvironment);
+				const runtime = runtimeFor(workspaceId), captured = structuredClone(action);
+				let pageId, timestamp;
+				const environment = runtime.v340Work ? {
+					createId: () => pageId ?? (pageId = createId()),
+					now: () => timestamp ?? (timestamp = clock())
+				} : reducerEnvironment;
+				const next = reduceWorkspaceState(current, captured, environment);
 				if (next === current) return current;
-				runtimeFor(workspaceId).editGeneration += 1;
+				runtime.editGeneration += 1;
+				if (runtime.v340Work) {
+					const actions = captured.type === "open-panel" ? [...pageCreatedBy(captured, current, next) ? [{ type: "create-page" }] : [], {
+						type: "set-panel-mode",
+						panelMode: "normal"
+					}] : [captured];
+					runtime.v340Work.edits.push({
+						actions,
+						environment
+					});
+				}
 				const saving = stateWith(next, {
 					syncStatus: remote === null ? "ready" : "saving",
 					syncError: null,
 					conflictCurrent: null
 				});
 				setState(workspaceId, saving);
-				if (remote !== null) scheduleWorkspaceSave(workspaceId, workspaceStateToDraft(saving));
+				if (remote !== null) scheduleWorkspaceSave(workspaceId, workspaceStateToDraft(getCurrent(workspaceId)));
 				return saving;
 			}
 			async function hydrateWorkspace(workspaceId, { force = false } = {}) {
@@ -11320,7 +12179,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						}
 						const saving = stateWith(hydrated, { syncStatus: "saving" });
 						setState(workspaceId, saving);
-						const draft = workspaceStateToDraft(saving);
+						const draft = workspaceStateToDraft(getCurrent(workspaceId));
 						if (closing) runtime.pendingDraft = draft;
 						else scheduleWorkspaceSave(workspaceId, draft);
 						return saving;
@@ -11340,7 +12199,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}
 			function dispatch(workspaceId, action) {
 				assertOpen();
-				assertKnown(workspaceId);
+				assertRetained(workspaceId);
 				const current = getCurrent(workspaceId);
 				if (remote === null || ["ready", "saving"].includes(current.syncStatus)) return persistReadyAction(workspaceId, action);
 				if (["idle", "loading"].includes(current.syncStatus)) {
@@ -11403,7 +12262,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					for (const entry of pendingObservations.values()) if (!nextIds.has(entry.workspaceId)) invalidateObservation(entry);
 				},
 				subscribe(listener) {
-					if (closing || disposed) return () => {};
+					if (disposePromise || closing || disposed) return () => {};
 					listeners.add(listener);
 					return () => listeners.delete(listener);
 				},
@@ -11415,11 +12274,53 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					return getCurrent(workspaceId);
 				},
 				hydrateWorkspace,
+				async loadV340Catalog(workspaceId) {
+					assertOpen();
+					assertKnown(workspaceId);
+					if (getCurrent(workspaceId).v340CatalogStatus === "ready") return getCurrent(workspaceId).v340Catalog;
+					if (typeof remote?.getV340Catalog !== "function") {
+						setState(workspaceId, stateWith(getCurrent(workspaceId), {
+							v340CatalogStatus: "unavailable",
+							v340CatalogError: null
+						}));
+						return null;
+					}
+					const runtime = runtimeFor(workspaceId);
+					if (runtime.v340CatalogPromise) return runtime.v340CatalogPromise;
+					setState(workspaceId, stateWith(getCurrent(workspaceId), {
+						v340CatalogStatus: "loading",
+						v340CatalogError: null
+					}));
+					runtime.v340CatalogPromise = (async () => {
+						try {
+							const catalog = await remote.getV340Catalog(controller.signal);
+							if (!closing && !disposed) setState(workspaceId, stateWith(getCurrent(workspaceId), {
+								v340Catalog: catalog,
+								v340CatalogStatus: "ready",
+								v340CatalogError: null
+							}));
+							return catalog;
+						} catch (error) {
+							if (!closing && !disposed) setState(workspaceId, stateWith(getCurrent(workspaceId), {
+								v340Catalog: null,
+								v340CatalogStatus: "error",
+								v340CatalogError: "新版目录读取失败，请重试。"
+							}));
+							throw error;
+						} finally {
+							runtime.v340CatalogPromise = null;
+						}
+					})();
+					return runtime.v340CatalogPromise;
+				},
 				async loadWorkflowCatalog(workspaceId) {
 					assertOpen();
 					assertKnown(workspaceId);
 					const current = getCurrent(workspaceId);
-					if (current.catalogStatus === "ready") return current.workflows;
+					if (current.catalogStatus === "ready") {
+						await store.loadV340Catalog(workspaceId).catch(() => null);
+						return getCurrent(workspaceId).workflows;
+					}
 					if (remote === null || typeof remote.getWorkflowCatalog !== "function") throw new Error("workflow catalog is unavailable");
 					const runtime = runtimeFor(workspaceId);
 					if (runtime.catalogPromise) return runtime.catalogPromise;
@@ -11430,6 +12331,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					runtime.catalogPromise = (async () => {
 						try {
 							const response = await remote.getWorkflowCatalog(void 0, controller.signal);
+							await store.loadV340Catalog(workspaceId).catch(() => null);
 							if (closing || disposed) return [];
 							const workflows = Array.isArray(response?.workflows) ? response.workflows : null;
 							if (workflows === null) throw new Error("Malformed workflow catalog response");
@@ -11516,9 +12418,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					assertKnown(workspaceId);
 					const runtime = runtimeFor(workspaceId);
 					while (runtime.hydrationPromise) await runtime.hydrationPromise;
+					while (v340Queue.has(workspaceId)) await v340Queue.get(workspaceId);
 					return flushWorkspace(workspaceId);
 				},
-				flushWorkspace,
+				async flushWorkspace(workspaceId) {
+					while (v340Queue.has(workspaceId)) await v340Queue.get(workspaceId);
+					return flushWorkspace(workspaceId);
+				},
 				setPanelMode(workspaceId, panelMode) {
 					return dispatch(workspaceId, {
 						type: "set-panel-mode",
@@ -11540,6 +12446,217 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					const before = getCurrent(workspaceId);
 					const action = { type: "create-page" };
 					return pageCreatedBy(action, before, dispatch(workspaceId, action));
+				},
+				v340Action(workspaceId, pageId, action, payload = {}) {
+					return queueV340(workspaceId, (context) => runV340PageOperation(context, workspaceId, pageId, `v340-${action}`, (current) => callV340(action, {
+						workspaceId,
+						taskId: pageId,
+						expectedRevision: current.revision,
+						...payload
+					}, controller.signal)));
+				},
+				saveV340Draft(workspaceId, pageId, draft) {
+					if (hasPendingUnifiedRun(pageFor(workspaceId, pageId))) throw Error("未决运行锁定输入与来源");
+					const captured = structuredClone(draft);
+					const job = queueV340(workspaceId, (context) => runV340PageOperation(context, workspaceId, pageId, "v340-input", (current) => callV340("task/draft", {
+						workspaceId,
+						taskId: pageId,
+						expectedRevision: current.revision,
+						draft: captured
+					}, controller.signal), () => JSON.stringify(operationFor(getCurrent(workspaceId), pageId).v340InputDraft) === JSON.stringify(captured) ? {
+						v340InputDraft: null,
+						feedback: "输入已保存"
+					} : {}));
+					updatePageOperation(workspaceId, pageId, {
+						v340InputDraft: captured,
+						v340SavePlan: null,
+						v340SaveConfirmed: false
+					});
+					return job;
+				},
+				saveV340ResultDraft(workspaceId, pageId, target, body) {
+					const key = JSON.stringify([target.runId, target.versionId]);
+					const op = operationFor(getCurrent(workspaceId), pageId), edit = {
+						...target,
+						body
+					};
+					const job = queueV340(workspaceId, (context) => runV340PageOperation(context, workspaceId, pageId, "v340-edit-draft", (current) => callV340("result/draft", {
+						workspaceId,
+						taskId: pageId,
+						expectedRevision: current.revision,
+						runId: target.runId,
+						baseSha256: target.baseSha256,
+						body,
+						format: "core-markdown"
+					}, controller.signal), () => {
+						const edits = { ...operationFor(getCurrent(workspaceId), pageId).v340Edits };
+						if (edits[key] === edit) delete edits[key];
+						return { v340Edits: edits };
+					}));
+					updatePageOperation(workspaceId, pageId, {
+						v340Edits: {
+							...op.v340Edits,
+							[key]: edit
+						},
+						v340SavePlan: null,
+						v340SaveConfirmed: false
+					});
+					return job;
+				},
+				editV340Result(workspaceId, pageId, target) {
+					return queueV340(workspaceId, (context) => runV340PageOperation(context, workspaceId, pageId, "v340-edit", async (current) => {
+						if (operationFor(current, pageId).v340Edits?.[JSON.stringify([target.runId, target.versionId])]) throw Error("请先保存当前本地编辑草稿");
+						const run = pageFor(workspaceId, pageId).v340.runs[target.runId], draft = getV340ResultDrafts(run)[target.versionId];
+						if (!draft) throw Error("请先保存结果编辑草稿");
+						const digest = await globalThis.crypto.subtle.digest("SHA-256", new TextEncoder().encode(draft.body));
+						const draftSha256 = [...new Uint8Array(digest)].map((n) => n.toString(16).padStart(2, "0")).join("");
+						return callV340("result/edit", {
+							workspaceId,
+							taskId: pageId,
+							expectedRevision: current.revision,
+							...target,
+							draftSha256,
+							requestKey: createRequestKey()
+						}, controller.signal);
+					}, () => ({
+						v340SavePlan: null,
+						v340SaveConfirmed: false
+					})));
+				},
+				reviewV340Result(workspaceId, pageId, target, confirmation) {
+					return queueV340(workspaceId, (context) => runV340PageOperation(context, workspaceId, pageId, "v340-review", (current) => {
+						const op = operationFor(current, pageId), selection = op.v340Selection;
+						if (current.activePageId !== pageId || op.v340Edits?.[JSON.stringify([target.runId, target.versionId])] || selection && (selection.runId !== target.runId || selection.versionId !== target.versionId)) throw Error("当前任务或未保存编辑已变化");
+						if (!confirmation || confirmation.workspaceId !== workspaceId || confirmation.revision !== current.revision || [
+							"runId",
+							"versionId",
+							"resultSha256"
+						].some((k) => confirmation[k] !== target[k])) throw Error("审核确认已失效");
+						return callV340("result/review", {
+							workspaceId,
+							taskId: pageId,
+							expectedRevision: current.revision,
+							...target,
+							confirmed: true
+						}, controller.signal);
+					}));
+				},
+				prepareV340Save(workspaceId, pageId, target) {
+					return queueV340(workspaceId, async (context) => {
+						await flushWorkspace(workspaceId, context);
+						const current = getCurrent(workspaceId);
+						if (current.syncStatus !== "ready") throw Error("请先处理项目保存冲突");
+						if (operationFor(current, pageId).v340Edits?.[JSON.stringify([target.runId, target.versionId])]) throw Error("请先保存当前本地编辑草稿");
+						const plan = await callV340("result/prepare-save", {
+							workspaceId,
+							taskId: pageId,
+							expectedRevision: current.revision,
+							...target
+						}, controller.signal);
+						if (getCurrent(workspaceId).revision !== current.revision) throw Error("保存确认已失效");
+						updatePageOperation(workspaceId, pageId, {
+							v340SavePlan: {
+								...plan,
+								target,
+								revision: current.revision
+							},
+							v340SaveConfirmed: false
+						});
+						return plan;
+					});
+				},
+				setV340SaveConfirmation(workspaceId, pageId, confirmed) {
+					updatePageOperation(workspaceId, pageId, { v340SaveConfirmed: confirmed === true });
+				},
+				commitV340Save(workspaceId, pageId) {
+					return queueV340(workspaceId, (context) => {
+						const op = operationFor(getCurrent(workspaceId), pageId);
+						if (!op.v340SavePlan || !op.v340SaveConfirmed) throw Error("请明确确认当前固定版本的文件保存");
+						const plan = op.v340SavePlan;
+						return runV340PageOperation(context, workspaceId, pageId, "writeback-commit", (current) => {
+							if (current.revision !== plan.revision) throw Error("保存确认已失效");
+							return callV340("result/commit-save", { confirmationToken: plan.confirmationToken }, controller.signal, workspaceId);
+						}, () => ({
+							v340SavePlan: null,
+							v340SaveConfirmed: false,
+							feedback: "固定版本已保存"
+						}));
+					});
+				},
+				createV340Task(workspaceId, nodeId) {
+					assertOpen();
+					assertKnown(workspaceId);
+					const node = getCurrent(workspaceId).v340Catalog?.nodes.find((n) => n.nodeId === nodeId);
+					if (!node) throw Error("新版节点目录不可用");
+					if (getCurrent(workspaceId).v340Creating) return Promise.reject(Error("新版任务正在创建"));
+					const taskId = createId();
+					const job = queueV340(workspaceId, async (context) => {
+						try {
+							await flushWorkspace(workspaceId, context);
+							const current = getCurrent(workspaceId);
+							if (current.syncStatus !== "ready" || typeof remote?.v340 !== "function") throw Error("项目尚未就绪");
+							const generation = runtimeFor(workspaceId).editGeneration;
+							const editIndex = context.edits.length;
+							const result = await callV340("task/create", {
+								workspaceId,
+								taskId,
+								expectedRevision: current.revision,
+								nodeId,
+								title: node.title
+							}, controller.signal);
+							if (closing || disposed) return getCurrent(workspaceId);
+							if (runtimeFor(workspaceId).editGeneration !== generation && result?.current && (!context || context.edits.length - editIndex !== runtimeFor(workspaceId).editGeneration - generation)) preserveDraftConflict(workspaceId, recordToWorkspaceState(result.current));
+							applyAuthoritativeReplacement(workspaceId, result, context?.edits.slice(editIndex));
+							store.activatePage(workspaceId, taskId);
+							await flushWorkspace(workspaceId, context);
+							return getCurrent(workspaceId);
+						} catch (error) {
+							if (!closing && !disposed) setState(workspaceId, stateWith(getCurrent(workspaceId), { v340CreateError: "新版任务创建未完成，请核对项目后重试。" }));
+							throw error;
+						} finally {
+							if (!closing && !disposed) setState(workspaceId, stateWith(getCurrent(workspaceId), { v340Creating: false }));
+						}
+					});
+					setState(workspaceId, stateWith(getCurrent(workspaceId), {
+						v340Creating: true,
+						v340CreateError: null
+					}));
+					return job;
+				},
+				selectV340Version(workspaceId, pageId, runId, versionId) {
+					const page = pageFor(workspaceId, pageId);
+					if (!page.v340?.runs[runId] || !getV340Versions(page.v340.runs[runId]).some((v) => v.versionId === versionId)) throw Error("版本不属于当前任务");
+					updatePageOperation(workspaceId, pageId, {
+						v340Selection: {
+							runId,
+							versionId
+						},
+						v340SavePlan: null,
+						v340SaveConfirmed: false
+					});
+				},
+				async useV340InConversation(workspaceId, pageId, target) {
+					if (!conversationDrafts) throw Error("当前对话输入接口不可用");
+					const destination = conversationDrafts.capture(workspaceId);
+					return performV340Handoff(workspaceId, pageId, target, "result/conversation-draft", {}, (result) => conversationDrafts.insert(destination, result));
+				},
+				async openV340SavedFile(workspaceId, pageId, target, writebackId) {
+					const destination = nativeFiles?.captureSavedFileTarget(workspaceId);
+					if (!destination) throw Error("安全文件预览不可用");
+					return performV340Handoff(workspaceId, pageId, target, "result/saved-file", { writebackId }, (result) => nativeFiles.openSavedFile(destination, result));
+				},
+				discardV340LocalDrafts(workspaceId, pageId, expected) {
+					const op = operationFor(getCurrent(workspaceId), pageId);
+					if (v340Queue.has(workspaceId) || JSON.stringify({
+						input: op.v340InputDraft,
+						edits: op.v340Edits
+					}) !== JSON.stringify(expected)) throw Error("草稿或保存状态已变化，未放弃");
+					updatePageOperation(workspaceId, pageId, {
+						v340InputDraft: null,
+						v340Edits: {},
+						error: null,
+						errorCode: null
+					});
 				},
 				selectWorkflow(workspaceId, pageId, workflowId) {
 					assertKnown(workspaceId);
@@ -12314,6 +13431,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					});
 				},
 				activatePage(workspaceId, pageId) {
+					const current = getCurrent(workspaceId);
+					if (current.closedV340Tabs?.includes(pageId)) setState(workspaceId, stateWith(current, { closedV340Tabs: current.closedV340Tabs.filter((id) => id !== pageId) }));
 					return dispatch(workspaceId, {
 						type: "activate-page",
 						pageId
@@ -12328,6 +13447,14 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				},
 				closePage(workspaceId, pageId) {
 					assertNoDirtyResult(workspaceId, pageId);
+					if (pageFor(workspaceId, pageId).v340) {
+						if (hasPendingUnifiedRun(pageFor(workspaceId, pageId))) throw Error("未决运行任务保持打开");
+						const current = getCurrent(workspaceId), closed = [.../* @__PURE__ */ new Set([...current.closedV340Tabs ?? [], pageId])];
+						return setState(workspaceId, stateWith(current, {
+							closedV340Tabs: closed,
+							activePageId: current.activePageId === pageId ? current.pages.find((p) => !closed.includes(p.pageId))?.pageId ?? null : current.activePageId
+						}));
+					}
 					if (pageFor(workspaceId, pageId).generation) assertInputEditable(workspaceId, pageId);
 					return dispatch(workspaceId, {
 						type: "close-page",
@@ -12336,17 +13463,28 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				},
 				dispose() {
 					if (disposePromise) return disposePromise;
-					closing = true;
-					for (const entry of pendingObservations.values()) invalidateObservation(entry);
-					const bestEffortDrains = Promise.all([...knownWorkspaceIds].map((workspaceId) => flushWorkspaceInternal(workspaceId))).catch(() => void 0);
+					const queuedDrains = [.../* @__PURE__ */ new Set([
+						...knownWorkspaceIds,
+						...runtimes.keys(),
+						...v340Queue.keys()
+					])].map((workspaceId) => ({
+						workspaceId,
+						queue: v340Queue.get(workspaceId) ?? Promise.resolve()
+					}));
 					let deadlineTimer = null;
 					const deadline = new Promise((resolveDeadline) => {
 						deadlineTimer = scheduler.setTimeout(resolveDeadline, disposeDrainMs);
 					});
 					disposePromise = (async () => {
 						try {
-							await Promise.race([bestEffortDrains, deadline]);
+							const drains = Promise.allSettled(queuedDrains.map(async ({ workspaceId, queue }) => {
+								await queue.catch(() => void 0);
+								if (closing || disposed || controller.signal.aborted) return;
+								await flushWorkspaceInternal(workspaceId);
+							}));
+							await Promise.race([drains, deadline]);
 						} finally {
+							closing = true;
 							if (deadlineTimer !== null) scheduler.clearTimeout(deadlineTimer);
 							deadlineTimer = null;
 							controller.abort();
@@ -12366,10 +13504,32 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							listeners.clear();
 						}
 					})();
+					handoffController.abort();
+					for (const entry of pendingObservations.values()) invalidateObservation(entry);
 					return disposePromise;
 				}
 			};
-			return Object.freeze(store);
+			const reads = /* @__PURE__ */ new Set([
+				"dispose",
+				"subscribe",
+				"getWorkspaceState",
+				"peekWorkspaceState"
+			]);
+			const publicStore = Object.fromEntries(Object.entries(store).map(([name, action]) => {
+				if (typeof action !== "function" || reads.has(name)) return [name, action];
+				const asynchronous = action.constructor.name === "AsyncFunction";
+				const invoke = (...args) => {
+					const unavailable = disposePromise ? /* @__PURE__ */ new Error(disposed ? "workbench store is disposed" : "workbench store is closing") : typeof args[0] === "string" && !knownWorkspaceIds.has(args[0]) ? /* @__PURE__ */ new Error("action requires a known Workspace") : null;
+					if (unavailable) {
+						const error = unavailable;
+						if (asynchronous) return Promise.reject(error);
+						throw error;
+					}
+					return action(...args);
+				};
+				return [name, invoke];
+			}));
+			return Object.freeze(publicStore);
 		}
 		//#endregion
 		//#region src/client/product-settings.js

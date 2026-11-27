@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { v340Commands,getV340Versions } from './v340-runtime-contract.js'
+import { v340Commands,getV340Versions,m06CandidateCapabilitySchema,v340CandidatePreviewSchema } from './v340-runtime-contract.js'
 import { v340InputHash, validateV340Draft } from './v340-runtime-integrity.js'
 import { getV340Node, getV340Catalog } from './v340-catalog.js'
 import { assembleV340Document } from './v340-document.js'
@@ -39,6 +39,23 @@ export function createV340RuntimeService({repository,preparation,executor,clock=
     fail('V340_PUBLICATION_CONFLICT','新版运行状态尚未写入；请观察原运行，不会重新派发。')
   }
   return Object.freeze({
+    async prepareV340CandidateConfirmation(input){
+      const {workspaceId,taskId,expectedRevision,sessionId}=parse('candidate/prepare',input)
+      if(!enabled()||!candidate||!m06CandidateCapabilitySchema.safeParse(executor.m06Candidate).success
+        ||typeof executor.prepareConfirmation!=='function')fail('V340_EXECUTION_DISABLED','当前Host没有受控M06候选入口。')
+      return workspaceOperations.run(workspaceId,async()=>{
+        const current=repository.get(workspaceId),task=taskFor(current,taskId)
+        if(current.revision!==expectedRevision)fail('REVISION_CONFLICT','任务已变化，请重新核对材料。')
+        if(task.v340.nodeId!=='Flow-2-6'||task.v340.draft.source!=='local-skill')fail('V340_EXECUTION_DISABLED','仅当前本地M06候选可核对。')
+        if(busy(current))fail('WORKSPACE_GENERATION_ACTIVE','当前项目有未决运行，请观察原运行。')
+        const draft=task.v340.draft
+        const {prepared}=await preparation.prepareV340({workspaceId,nodeId:'Flow-2-6',confirmed:true,
+          textInputs:draft.textInputs,filePaths:draft.filePaths,configuration:draft.configuration})
+        const preview=await executor.prepareConfirmation({workspaceId,taskId,sessionId,expectedRevision,prepared})
+        if(repository.get(workspaceId).revision!==expectedRevision)fail('REVISION_CONFLICT','任务已变化，请重新核对材料。')
+        return v340CandidatePreviewSchema.parse({...preview,workspaceId,taskId,sessionId,expectedRevision})
+      })
+    },
     async createV340Task(input){
       const {workspaceId,taskId,expectedRevision,nodeId,title}=parse('task/create',input)
       return repository.mutate(workspaceId,expectedRevision,record=>{

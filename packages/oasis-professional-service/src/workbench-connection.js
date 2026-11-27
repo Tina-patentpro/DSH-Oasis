@@ -15,13 +15,14 @@ const endpoints = Object.freeze([
   'artifact/conversation-draft','artifact/saved-file','artifact/prepare-writeback','artifact/commit-writeback',
 ])
 
-export function registerWorkbenchRoutes(connection, handler) {
+export function registerWorkbenchRoutes(connection, handler, {m06Candidate013=false}={}) {
   if (typeof connection?.fetch?.register !== 'function' || typeof handler !== 'function') {
     throw new TypeError('DSH exact Fetch registration and business handler are required')
   }
   const disposers = []
   try {
-    for (const endpoint of endpoints) {
+    const selected=m06Candidate013===true?[...endpoints,'workflow/v340/candidate/prepare','workflow/v340/candidate/run']:endpoints
+    for (const endpoint of selected) {
       const method = 'oasis-workbench/' + endpoint
       const path = '/api/' + method
       const dispose = connection.fetch.register({

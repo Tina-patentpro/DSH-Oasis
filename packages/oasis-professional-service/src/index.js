@@ -23,6 +23,7 @@ import { createWebsiteImportService } from './website-import-service.js'
 import { hasPendingUnifiedRun } from './generation-contract.js'
 import { isOasisRemoteExecutionUnresolved } from './workbench-contract.js'
 import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
+import { createM06BusinessNativeCandidate013 } from './v340-native-model.js'
 
 export const name = 'oasis-professional-service'
 export const Config = OASIS_SETTINGS_SCHEMA.volatile()
@@ -64,22 +65,33 @@ function registerStatusTool(ctx) {
   }))
 }
 
-export async function apply(ctx, config) {
+export async function apply(ctx, config) { return applyWorkbench(ctx,config,false) }
+// Selected only by the explicit subpath entry, never by user/RPC configuration.
+export async function applyM06ControlledCandidate013(ctx, config, {recordEvidence,timeoutMs=120000,captureDiagnostics=false}={}) { return applyWorkbench(ctx,config,true,recordEvidence,{timeoutMs,captureDiagnostics}) }
+
+async function applyWorkbench(ctx, config, controlledM06, recordEvidence,controlledOptions={}) {
+  if(controlledM06&&(process.env.OASIS_UNIFIED_FIXTURE==='1'||process.env.OASIS_NATIVE_OFFLINE==='1'
+    ||typeof ctx?.llm?.prepareCall!=='function'||typeof ctx?.sessions?.get!=='function'
+    ||typeof ctx?.sessionProjections?.stateOf!=='function'||typeof ctx?.agentDefaultModel?.currentSelection!=='function')){
+    throw new Error('M06受控入口需要当前DSH原生模型上下文，且不能混用旧合成模式。')
+  }
   const settingsScope = registerOasisSettings(ctx, config)
   const repository = await openOasisWorkbenchRepository(ctx.storageDomain)
   const materialManager = createWorkspaceMaterialManager({ workspaceRegistry: ctx.workspaceRegistry })
   const nativeOffline = isNativeOfflineEnvironment()
   const fixtureEnabled = isUnifiedFixtureEnvironment() && !nativeOffline
-  const accountService = createOasisAccountService({ credentials: ctx.credentials, enabled: !fixtureEnabled && !nativeOffline })
+  const accountService = createOasisAccountService({ credentials: ctx.credentials, enabled: !fixtureEnabled && !nativeOffline && !controlledM06 })
   const workspaceOperations = createWorkspaceOperationGuard()
   const importService = createWebsiteImportService({ workspaceRegistry: ctx.workspaceRegistry, accountService, settings: ctx.settings, workspaceOperations,
     isWorkspaceBusy: workspaceId => Object.values(repository.get(workspaceId).tasks).some(task => hasPendingUnifiedRun(task)
       || Object.values(task.remoteExecutions).some(isOasisRemoteExecutionUnresolved)),
   })
   let localGeneration
+  let v340Executor
   try {
+    if(controlledM06)v340Executor=createM06BusinessNativeCandidate013({ctx,native:await import('@deepseek-ai/dsh-llm'),recordEvidence,...controlledOptions})
     const modelEnabled = !fixtureEnabled && normalizeProductRuntimeConfig(settingsScope.get()).localModelEnabled
-    localGeneration = nativeOffline ? createNativeOfflineRuntime(ctx, await import('@deepseek-ai/dsh-llm'))
+    localGeneration = controlledM06 ? null : nativeOffline ? createNativeOfflineRuntime(ctx, await import('@deepseek-ai/dsh-llm'))
       : modelEnabled ? bindNativeModelRuntime(ctx, await import('@deepseek-ai/dsh-llm'), true) : null
   } catch (error) {
     await repository.close()
@@ -92,6 +104,7 @@ export async function apply(ctx, config) {
     workspaceRegistry: ctx.workspaceRegistry,
     unifiedFixtureEnabled: fixtureEnabled,
     localGeneration,
+    v340Executor,
   })
   const professionalService = createOasisRemoteService({
     resolveConfig: normalizeProductRuntimeConfig,
@@ -103,7 +116,7 @@ export async function apply(ctx, config) {
     executionIdFactory: randomUUID,
     runIdFactory: randomUUID,
     async getRuntime() {
-      if (fixtureEnabled || nativeOffline) return { enabled: false, environmentKind: 'non-production', apiBaseOrigin: null, credentialConfigured: false, client: null }
+      if (fixtureEnabled || nativeOffline || controlledM06) return { enabled: false, environmentKind: 'non-production', apiBaseOrigin: null, credentialConfigured: false, client: null }
       let credentialConfigured = true
       let resolveToken, accountIdentity
       try {
@@ -138,7 +151,8 @@ export async function apply(ctx, config) {
     disposeTool = registerStatusTool(ctx)
     disposeRpc = registerWorkbenchRoutes(
       ctx.connection,
-      createWorkbenchRpcHandler(service, professionalService, accountService, importService),
+      createWorkbenchRpcHandler(service, professionalService, accountService, importService,{m06Candidate013:controlledM06}),
+      {m06Candidate013:controlledM06},
     )
   } catch (error) {
     try {

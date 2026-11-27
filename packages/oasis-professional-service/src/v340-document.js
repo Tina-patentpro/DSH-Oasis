@@ -155,11 +155,51 @@ function render(snapshot, summary, core) {
   return `# V3.4.0累计文稿\n\n## 文档信息\n\n- business_version: V3.4.0\n${metadata}\n\n## 核心结论\n\n${summary}\n\n## 核心结果\n\n${fence(core)}\n\n## 下游读取区\n\n\`\`\`oasis-v340\n${JSON.stringify(snapshot,null,2)}\n\`\`\`\n\n## 风险与待确认事项\n\n${fence(JSON.stringify(snapshot.warnings,null,2))}\n`
 }
 
+const m06WarningPrefix = 'host-Flow-2-6-m06-limited-'
+
+// This projection classifies exact source identities only; it never certifies facts
+// or rewrites an upstream snapshot. It is internal to the Host document boundary.
+export function collectM06InstructionSources(prepared) {
+  const providedMaterialInputIds = getV340Node('Flow-2-6').inputs
+    .filter(input => input.id !== 'user_input' && prepared.receipts[input.id]?.status !== 'not_provided'
+      && Object.hasOwn(prepared.values, input.id)).map(input => input.id)
+  const upstreamClassification = !prepared.upstream ? 'absent' : prepared.upstream.snapshot ? 'parsed' : 'unparsed'
+  const contents = prepared.upstream?.snapshot?.contents ?? []
+  const instructionIds = new Set(contents.filter(entry => entry.source_input_id === 'user_input').map(entry => entry.content_id))
+  const materialIds = new Set(providedMaterialInputIds), seen = new Set(), ambiguous = new Set()
+  for (const entry of contents) {
+    if (instructionIds.has(entry.content_id) && (seen.has(entry.content_id) || materialIds.has(entry.content_id))) ambiguous.add(entry.content_id)
+    seen.add(entry.content_id)
+  }
+  const uniqueIds = [...new Set(contents.map(entry => entry.content_id))]
+  return { providedMaterialInputIds,
+    instructionAuditContentIds: uniqueIds.filter(value => instructionIds.has(value) && !ambiguous.has(value)),
+    otherUpstreamContentIds: uniqueIds.filter(value => !instructionIds.has(value) && !ambiguous.has(value)),
+    ambiguousReferenceIds: [...ambiguous], upstreamClassification }
+}
+
+function assertM06ModelSourcePolicy({ prepared, updates, warnings }) {
+  const sources = collectM06InstructionSources(prepared)
+  const forbidden = new Set(['user_input', ...sources.instructionAuditContentIds, ...sources.ambiguousReferenceIds])
+  if (updates.some(entry => forbidden.has(entry.source_input_id))
+    || warnings.some(entry => entry.warning_id.startsWith(m06WarningPrefix))) fail()
+}
+
+function makeM06LimitedWarning({ workflowRunUid, inheritedWarnings }) {
+  const warningId = m06WarningPrefix + workflowRunUid
+  if (inheritedWarnings.some(entry => entry.warning_id === warningId)) fail()
+  return warningSchema.parse({ warning_id: warningId, first_flow: 'Flow-2-6', inherited_from: 'none', status: 'open',
+    problem: '本版本仅核对已识别的指令来源；正文与表格、依据的一致性尚未核对，未执行结构删除。',
+    affected_content: '本节点正文、结构表和来源', current_handling: '保留原输入、结构记录和历史，仅形成受限稿', model_completion: '未评估',
+    deliverable_impact: '不能据此认定完整同步、结构删除或专业审阅已完成', recommended_action: '核对当前正文、相关表格与依据；完整变更另行处理' })
+}
+
 // Human edits change the core prose, never the inherited evidence or structured technical tables.
 export function reviseV340Document(parent,{workflowRunUid,generatedAt,body}){
   const core=v340DocumentBodySchema.refine(v=>v.trim().length>0).parse(body)
   const uid=z.string().uuid().parse(workflowRunUid).toLowerCase(),snapshot=snapshotSchema.parse(copy(parent.snapshot))
   const local=stamp(generatedAt),node=getV340Node(snapshot.node_id)
+  const limitedWarning=node.nodeId==='Flow-2-6'?makeM06LimitedWarning({workflowRunUid:uid,inheritedWarnings:snapshot.warnings}):null
   const oldUid=snapshot.workflow_run_uid
   snapshot.workflow_run_uid=uid;snapshot.generated_at=`${local}+08:00`
   snapshot.filename=`${node.filenamePrefix}_${local.replace(/[-T:]/g,'')}_${uid.replaceAll('-','').slice(0,8)}.md`
@@ -170,6 +210,7 @@ export function reviseV340Document(parent,{workflowRunUid,generatedAt,body}){
     source_input_id:'manual_edit',source_locator:'人工修订核心正文',source_hash:v340Hash(core),trust_status:'hypothesis_to_verify',
     last_updated_flow:node.nodeId,revision_reason:'保留原正文和人工修订；不自动确认技术事实'})
   snapshot.warnings.push({...warning(node.nodeId,`manual-${uid}`,'核心正文经人工修改；累计表、来源和技术语义需要重新核对。'),inherited_from:oldUid})
+  if(limitedWarning)snapshot.warnings.push(limitedWarning)
   snapshot.workflow_status='completed_with_warnings';snapshot.deliverable_status='not_recommended_for_filing'
   const validated=snapshotSchema.parse(snapshot),document=render(validated,validated.current_result.summary,core)
   v340DocumentBodySchema.parse(document)
@@ -182,7 +223,9 @@ export function assembleV340Document({ nodeId, workflowRunUid, generatedAt, prep
   if (prepared.nodeId !== nodeId || prepared.inputHash !== input.inputHash) fail()
   const uid = z.string().uuid().parse(workflowRunUid).toLowerCase(), local = stamp(generatedAt)
   const model = outputSchema.parse(output)
+  if (nodeId === 'Flow-2-6') assertM06ModelSourcePolicy({ prepared: input, updates: model.updates, warnings: model.warnings })
   const previous = input.upstream?.snapshot
+  const limitedWarning = nodeId === 'Flow-2-6' ? makeM06LimitedWarning({ workflowRunUid: uid, inheritedWarnings: previous?.warnings ?? [] }) : null
   if (previous && previous.input_history.some(entry => entry.workflow_run_uid === uid)) fail()
   const snapshot = previous ? copy(previous) : { application_type: 'undetermined', terms_master: [],
     tables: Object.fromEntries(tableNames.map(t => [t,{ status: 'not_yet_generated', rows: [] }])),
@@ -241,6 +284,7 @@ export function assembleV340Document({ nodeId, workflowRunUid, generatedAt, prep
   for (const term of model.terms_master) if (!snapshot.terms_master.some(old => JSON.stringify(old) === JSON.stringify(term))) snapshot.terms_master.push(copy(term))
   const warningIds = new Set(snapshot.warnings.map(x => x.warning_id))
   const hostWarnings = [...input.warnings, warning(nodeId,'professional-review','仅核对结构、来源和累计传递；技术语义及专业质量尚待人工审核。')]
+  if (limitedWarning) hostWarnings.push(limitedWarning)
   const index = getV340Catalog().nodes.findIndex(n => n.nodeId === nodeId)
   for (const [i,t] of tableNames.entries()) if (index >= [0,1,1,5,8,10][i] && !snapshot.tables[t].rows.length) {
     snapshot.tables[t].status = 'missing'
@@ -254,10 +298,11 @@ export function assembleV340Document({ nodeId, workflowRunUid, generatedAt, prep
   // Downstream cannot lose them by returning an empty update list.
   const retain = (contentId, body, origin, sourceInput, sourceHash, sourceLocator) => {
     if (!body.trim()) return
+    const instruction = nodeId === 'Flow-2-6' && sourceInput === 'user_input'
     snapshot.contents.push({ content_id:contentId, content_markdown:body, content_origin:origin,
       source_input_id:sourceInput,source_locator:sourceLocator,source_hash:sourceHash,
-      trust_status:origin === 'user_file' || origin === 'user_text' ? 'source_fact' : 'reasoned_inference',
-      last_updated_flow:nodeId,revision_reason:'Host逐字保留实际输入/节点正文；技术语义未自动确认' })
+      trust_status:instruction ? 'excluded_from_formal_text' : origin === 'user_file' || origin === 'user_text' ? 'source_fact' : 'reasoned_inference',
+      last_updated_flow:nodeId,revision_reason:instruction ? '运行指令，仅审计；不作为技术事实依据' : 'Host逐字保留实际输入/节点正文；技术语义未自动确认' })
   }
   for (const [key,value] of Object.entries(input.values)) if (key !== 'upstream_md_file') {
     const receipt = input.receipts[key]

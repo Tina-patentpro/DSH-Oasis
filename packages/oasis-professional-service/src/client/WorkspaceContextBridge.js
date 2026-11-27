@@ -8,7 +8,8 @@ import {
 
 import { OasisPanelPortal } from './OasisPanelPortal.js'
 import { ensureEmbeddedWorkspaceHidden } from './OasisWorkbenchSurface.js'
-import { resolveWorkspaceId } from './project-resolution.js'
+import { resolveWorkspaceId, resolveMainViewSessionId } from './project-resolution.js'
+export { resolveMainViewSessionId } from './project-resolution.js'
 
 function blockedWorkspaceContext(generation) {
   return Object.freeze({
@@ -18,24 +19,6 @@ function blockedWorkspaceContext(generation) {
     currentSessionId: null,
     workspaceItems: Object.freeze([]),
   })
-}
-
-// DSH 0.2 publishes main-view ownership in the public Session catalog,
-// not the former list.current field. Ambiguity is not a selection rule.
-export function resolveMainViewSessionId(snapshot) {
-  const byId = snapshot?.byId
-  if (byId === null || typeof byId !== 'object' || Array.isArray(byId)) return undefined
-  let currentSessionId = null
-  for (const [id, row] of Object.entries(byId)) {
-    if (id.length === 0 || row?.id !== id) return undefined
-    const retainedBy = row.retainedBy
-    if (retainedBy === null || typeof retainedBy !== 'object' || Array.isArray(retainedBy)) return undefined
-    if (Object.values(retainedBy).some((count) => !Number.isSafeInteger(count) || count < 0)) return undefined
-    if ((retainedBy.mainView ?? 0) === 0) continue
-    if (currentSessionId !== null) return undefined
-    currentSessionId = id
-  }
-  return currentSessionId
 }
 
 export function createWorkspaceContextSnapshot({
