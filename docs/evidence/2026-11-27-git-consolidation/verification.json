@@ -1,0 +1,80 @@
+{
+  "at": "2026-11-27T13:34:30.131127+08:00",
+  "authorization": "提交所有的变更，合并所有的分支",
+  "targetBranch": "mac/continuity-v2",
+  "verifiedMergeHead": "bfb5851dde25e4358469906fbd0eba65b54721c7",
+  "localBranchCount": 9,
+  "allVisibleBranchRefsMerged": true,
+  "refCountIncludingRemoteHeadAliases": 17,
+  "worktreeCommits": [
+    {
+      "worktree": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis",
+      "branch": "codex/pdf-m06-minimal-20261029",
+      "commit": "9d3bee244ad1f7e6475b3263728fdc618a2b4d0d",
+      "files": 2364
+    },
+    {
+      "worktree": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.worktrees/pd-m06-action-note-20261026",
+      "branch": "codex/pd-m06-action-note-20261026",
+      "commit": "252f0689c44d03844eb1de96000decf9fe6b5f51",
+      "files": 85
+    },
+    {
+      "worktree": "/Users/tinadong7036/Documents/Codex/2026-11-11/https-github-com-handsomestwei-patent-disclosure/work/dsh-next-github",
+      "branch": "codex/v340-node-professional-api",
+      "commit": "f1668d79ef9cf19cc0b707e592bbd42e3c340a22",
+      "files": 24
+    }
+  ],
+  "threeWorktreesCleanBeforeAuditCommit": true,
+  "mainTests": {
+    "tests": 1687,
+    "pass": 1636,
+    "fail": 47,
+    "skipped": 4
+  },
+  "previewTests": {
+    "tests": 13,
+    "pass": 13,
+    "fail": 0,
+    "skipped": 0
+  },
+  "baselineSubset": {
+    "tests": 65,
+    "pass": 17,
+    "fail": 48,
+    "skipped": 0
+  },
+  "knownFailures": "47 legacy resource-mapping tests reject pre-existing api-contract hash drift; expected snapshot retained",
+  "skips": "4 historical SDK/provider tests require the absent fixed DSH Desktop; no replacement Host used",
+  "mainBuildExitCode": 0,
+  "previewBuildExitCode": 0,
+  "npmPackDryRunExitCode": 0,
+  "coordinationStructureStatus": "PASS",
+  "scopeOfCoordinationCheck": "structure only",
+  "previewSubtree": {
+    "sourceBranch": "codex/v340-node-professional-api",
+    "sourceCommit": "f1668d79ef9cf19cc0b707e592bbd42e3c340a22",
+    "prefix": "packages/oasis-dsh-next-preview/",
+    "filesCompared": 139,
+    "byteMatches": true
+  },
+  "originalStashPreserved": true,
+  "remotePushes": 0,
+  "modelOrProfessionalApiCalls": 0,
+  "newFeesCny": 0,
+  "excludedLocalFiles": [
+    "dependencies",
+    "credentials and Profiles",
+    "archives",
+    "runtime storage",
+    ".DS_Store",
+    "pre-existing .pd-old-head-v340-document.mjs comparison scratch file"
+  ],
+  "candidateTreatment": "Recent M02 isolated repair source patches and all named evidence are versioned; ignored private clones are not installed or force-added",
+  "backupGitBundle": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/git-consolidation-20261127/refs-before.bundle",
+    "sha256": "be680ef558a82388e701a0a46b78fe8e8c30f630e564b6d06f6201ea456a018e",
+    "verified": true
+  }
+}

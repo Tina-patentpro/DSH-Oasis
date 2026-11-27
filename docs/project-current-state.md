@@ -1,3 +1,9 @@
+## 2026-11-27 Git 全量提交与分支归并
+
+三个工作树的应入库改动已提交，9 个本地分支及本次可见远端分支均已归并到 mac/continuity-v2。集成提交 `bfb5851dde25e4358469906fbd0eba65b54721c7`；NEXT 独立根包以 139 文件原字节迁入 packages/oasis-dsh-next-preview，源分支和原 stash 保留。主包最终测试 1,636 通过、47 遗留冻结映射失败、4 固定 SDK 环境缺失跳过；预览包 13/13 通过，两包离线构建通过。未推送、安装或发布，新增业务调用/费用为 0，原业务接受和 FAIL/UNKNOWN 不变。 [合并回执](evidence/2026-11-27-git-consolidation/execution-return.md) · [核验](evidence/2026-11-27-git-consolidation/verification.json)。以下历史字节保持。
+
+---
+
 ## 2026-11-27 M02 R4 技术内容审核与零费用保存恢复
 
 已对保存的 R3 稿完成 Codex 内容审核与条件性再审，8 项问题更正，T1/T2/T3 共 10 个原行与正文同步修订。新版本 `revision-3e7693ba-ee06-444e-8292-0f645d2fb4c0`，SHA256 `74495c5e3f5bd1637854c8cf20388c0e5ed75372dd2f0d07303e1d9330662d82`，隔离 Host 草稿恢复、工程再审、排他保存及冷启动回读通过。结论限公开合成案例的条件性概念分析，真实根因/性能、独立人类专业签认及用户接受分别保持未完成。本轮新增模型/API 请求 0、费用 0 元，旧 R2/R3 稿和原收据保留。 [本轮回执](evidence/2026-11-27-m02-content-review-r4/execution-return.md) · [核验](evidence/2026-11-27-m02-content-review-r4/verification.json)。以下历史字节保持。
