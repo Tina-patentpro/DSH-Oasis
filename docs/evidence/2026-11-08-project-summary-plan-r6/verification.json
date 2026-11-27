@@ -1,0 +1,49 @@
+{
+  "status": "PASS_DOCUMENTATION_ONLY",
+  "recorded_at": "2026-11-08T19:52:06.837956+08:00",
+  "project_id": "dsh-oasis",
+  "plan": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-08-project-summary-and-next-plan-r6.md",
+  "plan_sha256": "b09f8f21fdee0b96e79fb00470b27185da3ae10c0e2abb7d0ae95c9ce3aef6bb",
+  "document_check": {
+    "command": "python3 heredoc read-only document/input/history/protection checks; captured document-verification.json",
+    "exit_code": 0,
+    "details": "document-verification.json"
+  },
+  "coordination_structure_check": {
+    "command": [
+      "python3",
+      "-B",
+      "/Users/tinadong7036/Documents/开发项目/docs/coordination/check.py"
+    ],
+    "exit_code": 0
+  },
+  "coordination_scope": "coordination_structure_only",
+  "checks": {
+    "input_records": 25,
+    "local_links": 19,
+    "protected_files_unchanged": 388,
+    "all_three_previous_navigation_files_retained_exactly": true,
+    "P1108_unchanged": true,
+    "revision15_current_business_hash_matched": true
+  },
+  "new_business_completion_or_authorization": false,
+  "app_starts_business_tests_builds_installs_real_calls_source_transactions_deliveries_commits_pushes_publications": 0,
+  "independent_review": false,
+  "read_scope": "inputs.json; source-state history and draft interfaces not fully reaudited",
+  "git": {
+    "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+    "branch": "codex/pdf-m06-minimal-20261029"
+  },
+  "artifacts": {
+    "before/docs/evidence/2026-10-23-stage5-progress-and-remaining.md": "2331d93b87cb4706c0360f5d857dc2f4d54474cdd686a7bac12f2a67185db742",
+    "before/docs/plans/2026-10-25-dsh-oasis-master-plan.md": "c0dab8f0a171c458fece62b9a4d21e9b7b844ea62dd921bef3a9e86016f5457c",
+    "before/docs/project-current-state.md": "a074d4e167b559009af51d6b99357703c8e7e1ca84cb25b53d31f874154684cb",
+    "coordination-check-command.json": "8a9e4855ca801bddadd2a9f033c111f6bd9008f903aa2f2bb70c22eba8f155ab",
+    "coordination-check.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "coordination-check.stdout.json": "ed7d0dc283598850828e2d2f532c9e18c7412807bd2ccdaa5fa86451971ed869",
+    "document-verification.json": "0b3451d77f66bd6e1ed89694f9cb6ba4466cd603f218a28a27322d3e423be886",
+    "git-status.after.bin": "29b12b6c6d37e7fb3562a5c04f96ddba05fe193c05a3cb74ec16ed7130093b82",
+    "git-status.before.bin": "61592939ea508104f526dfc1dd03e2c0976211a81abc09f5fae6f1530316509a",
+    "inputs.json": "e067f57e13b6b53fb81d9381973806d83fd872d917bf357b1ce240e046aac9b5"
+  }
+}

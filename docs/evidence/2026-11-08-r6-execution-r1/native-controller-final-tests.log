@@ -1,0 +1,83 @@
+✔ runtime projection excludes old daily-App dependency links and preserves original bytes (9.67475ms)
+✔ runtime projection refuses unbound local dependencies and external resource links before creating output (4.784834ms)
+✔ bundle builder requires an explicit reviewed source2 release and never selects latest by name (4.164334ms)
+✔ installed Sidebar binds its explicit payload entry without duplicating Desktop-owned conversation (0.592792ms)
+✔ handoff preserves receipt and business bytes, records originals, and releases ownership (309.513834ms)
+✔ refuses mismatched expectedOldControllerSHA256 before mutation (92.197291ms)
+✔ refuses mismatched expectedNewControllerSHA256 before mutation (77.132041ms)
+✔ refuses mismatched expectedBundleSHA256 before mutation (74.639791ms)
+✔ refuses mismatched expectedCurrent before mutation (76.518458ms)
+✔ existing installed writer prevents handoff without mutation (83.138333ms)
+✔ state write failure restores exact original control and installation bytes (96.7465ms)
+✔ preexisting recovery marker is never removed (66.607375ms)
+✔ rollback failure retains recovery marker and releases the installed lease (95.164375ms)
+✔ snapshot read failure releases JSON ownership before propagating the error (95.449875ms)
+✔ recovery launch spec carries exclusive zero-real policy and does not launch App (184.127708ms)
+✔ recovery installation rejects budget (39.658583ms)
+✔ recovery installation rejects guard drift (40.881541ms)
+✔ recovery installation rejects mixed mode (35.51975ms)
+✔ recovery installation rejects foreign root (38.954083ms)
+✔ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (209.103916ms)
+✔ native M06 preparation rejects second model request (38.982417ms)
+✔ native M06 preparation rejects API budget (39.082291ms)
+✔ native M06 preparation rejects foreign root (87.645875ms)
+✔ native M06 preparation rejects foreign endpoint (29.415708ms)
+✔ native M06 preparation rejects provider retries (20.344375ms)
+✔ native M06 preparation rejects output above scope (20.603209ms)
+✔ native M06 preparation rejects another model provider (27.112875ms)
+✔ native M06 preparation rejects mixed recovery (22.33625ms)
+✔ native M06 preparation rejects guard drift (20.091083ms)
+{"root":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-QLjh7K/installed","current":"380cab8062da9b23f3117bd384124289d6e9d5ae179823d0da73ef09d427c8e7","pid":1791,"prefix":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-QLjh7K/installed/data/evidence/installed-launch-43b9a862-9465-4b7e-a4de-ff25804e8c32"}
+✔ installed zero spec uses sealed prepared Profile and live writer without spawning App (246.664709ms)
+✔ installed zero policy rejects nonzero budgets and incorrect guard bindings before creating root (40.95725ms)
+✔ installed zero policy rejects rehashed wrong guard before creating root (36.062833ms)
+✔ Desktop preparation failure leaves recovery refusal and releases maintenance lease (66.515958ms)
+{"root":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-rvhQjl/installed","current":"8fb5e8ee13c6eb6c02d476a387724a7b6ff6ddecf080451b6575302ec4dab7ab","pid":1792,"prefix":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-rvhQjl/installed/data/evidence/installed-launch-22a73216-f39f-4c7d-8b4a-0522bcba9d28"}
+✔ fresh installation verifies signatures, materializes only at final paths and carries standalone control (124.818834ms)
+✔ Desktop resolves client modules from the installed release rather than the data-only directory (107.209291ms)
+✔ installed same-root upgrade then explicit rollback preserve later public edits and UNKNOWN (228.380333ms)
+✔ four installed writers and maintenance refuse busy before callbacks; old current is not guessed (91.190209ms)
+✔ package drift refuses before installation and pnpm failure restores the existing current (87.573916ms)
+✔ installation data aliases and controller drift fail closed before callbacks (57.1095ms)
+✔ a correctly rehashed bundle still cannot enable model plugins or bind a component outside its payload (21.964083ms)
+✖ failure after active Profile replacement restores old bytes; failed restore leaves explicit recovery refusal (154.591375ms)
+✔ installed provider rejects missing/foreign/expired lease before constructing any backend (25.204167ms)
+✔ installed lease excludes four roles and refuses stale ownership without auto-stealing (32.679125ms)
+✔ installed provider rejects root links and descendant aliases without reading public data (12.842375ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 43
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1143.261916
+
+✖ failing tests:
+
+test at scripts/tests/f-installed-runtime.test.mjs:108:1
+✖ failure after active Profile replacement restores old bytes; failed restore leaves explicit recovery refusal (154.591375ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /recovery incomplete/. Input:
+  
+  'Error: PUBLIC PNPM MATERIALIZATION FAILURE'
+  
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-runtime.test.mjs:114:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: PUBLIC PNPM MATERIALIZATION FAILURE
+        at Object.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-runtime.test.mjs:40:124)
+        at Object.apply (node:internal/test_runner/mock/mock:805:20)
+        at materialize (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:152:63)
+        at activate (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:172:2)
+        at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:282:51
+        at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:271:20
+        at async withInstalledWriter (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:227:51)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-runtime.test.mjs:114:2),
+    expected: /recovery incomplete/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

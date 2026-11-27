@@ -1,0 +1,90 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
+import { createV340RuntimeService } from '../src/v340-runtime-service.js'
+import { createM06BusinessNativeCandidate013, assertV340NativeCandidate } from '../src/v340-native-model.js'
+import { Assembler, NOW, setupNative } from './helpers/v340-native-harness.mjs'
+import { v340Hash } from '../src/v340-catalog.js'
+import { parseStoredWorkbenchRecord } from '../src/workbench-domain.js'
+
+const material='P1：调整状态允许滑块移动。\n保持状态限制滑块移动。预期效果未实测。'
+const output=()=>({summary:'公开合成 TRIZ 分析',core_result_markdown:'P1 对应调整与保持两种状态。效果为定性预期，待验证。',
+ updates:[{content_id:'source-p1',content_markdown:material,content_origin:'user_text',
+ source_input_id:'technical_analysis_material_text',source_locator:material,source_hash:v340Hash(material),
+ trust_status:'source_fact',last_updated_flow:'Flow-1-2',revision_reason:'摘录冻结原文'}],
+ tables:{T1:[{row_id:'P1',data:{问题:'调整与保持需要不同约束'}}],T2:[],T3:[{row_id:'E1',data:{target_problems:['P1'],expected_effect:'调整允许移动，保持限制移动',status:'未实测'}}]},
+ terms_master:[],warnings:[],model_completions:[]})
+async function execute(t, value) {
+ const h=await setupNative(t,{nodeId:'Flow-1-2',draft:{source:'local-skill',
+  textInputs:{technical_analysis_material_text:material},filePaths:{},configuration:{}},output:value})
+ await h.service.closeV340Runtime()
+ Object.assign(h.route,{provider:'deepseek-official',model:'deepseek-flash',reasoningEffort:'low'})
+ const prepare=h.ctx.llm.prepareCall
+ h.ctx.llm.prepareCall=async(...args)=>({...await prepare(...args),retryPolicy:{mode:'normal',maxRetries:0}})
+ const executor=createM06BusinessNativeCandidate013({ctx:h.ctx,native:{BlockAssembler:Assembler,createUserMessage:v=>({role:'user',...v})},
+  getLocalSkillSuite:()=> 'oasis',textBatch:true})
+ const service=createV340RuntimeService({repository:h.repository,preparation:h.preparation,executor,clock:()=>NOW})
+ t.after(()=>service.closeV340Runtime())
+ const confirmation=await service.prepareV340CandidateConfirmation(h.command({sessionId:'s',confirmed:true}))
+ await service.createV340Run(h.command({requestKey:'locator-r1',candidate:{sessionId:'s',confirmed:true,sha256:confirmation.sha256}}))
+ const run=await h.settle()
+ return {h,run,service}
+}
+for(const [name,locator] of [
+ ['full original',material],['contiguous excerpt','保持状态限制滑块移动。'],['original newline','移动。\n保持状态'],
+]) test('M02 accepts '+name+' and emits v8 with precise source instructions',async t=>{
+ const value=output();value.updates[0].source_locator=locator
+ const {h,run}=await execute(t,value)
+ assert.equal(run.status,'completed')
+ assert.equal(run.nativeCandidate.version,'v340-native-candidate-8')
+ assert.match(h.seen.options.system,/逐字连续原文/)
+ assert.match(h.seen.options.system,/不添加引号/)
+ assert.match(h.seen.options.system,/receipts\[source_input_id\]\.sha256/)
+ assert.equal(run.result.snapshot.contents[0].source_locator,locator)
+ assertV340NativeCandidate(run)
+ parseStoredWorkbenchRecord('w',h.repository.get('w'))
+})
+for(const [name,change,path,code] of [
+ ['field name',v=>v.updates[0].source_locator='technical_analysis_material_text',['updates',0,'source_locator'],'source-locator-mismatch'],
+ ['paraphrase',v=>v.updates[0].source_locator='调整和保持之间存在物理矛盾',['updates',0,'source_locator'],'source-locator-mismatch'],
+ ['quoted text',v=>v.updates[0].source_locator='“保持状态限制滑块移动。”',['updates',0,'source_locator'],'source-locator-mismatch'],
+ ['ellipsis',v=>v.updates[0].source_locator='P1：调整状态…预期效果未实测。',['updates',0,'source_locator'],'source-locator-mismatch'],
+ ['normalized newline',v=>v.updates[0].source_locator=material.replace('\n',' '),['updates',0,'source_locator'],'source-locator-mismatch'],
+ ['wrong hash',v=>v.updates[0].source_hash='f'.repeat(64),['updates',0,'source_hash'],'source-hash-mismatch'],
+ ['wrong input',v=>v.updates[0].source_input_id='missing_input',['updates',0,'source_input_id'],'source-not-found'],
+ ['inference as fact',v=>{v.updates[0].content_origin='workflow_analysis'},['updates',0,'trust_status'],'unsupported-source-fact'],
+]) test('M02 still rejects '+name+' without a second dispatch',async t=>{
+ const value=output();change(value)
+ const {h,run,service}=await execute(t,value)
+ assert.equal(run.status,'failed')
+ assert.equal(run.failureCode,'INVALID_OUTPUT')
+ assert.deepEqual(run.executionSummary.fieldIssue,{code,path})
+ assert.equal(h.seen.stream,1)
+ assert.equal(run.result,null)
+})
+test('M02 can retain unlocatable analysis in core while Host retains actual input sources',async t=>{
+ const value=output();value.updates=[]
+ const {h,run}=await execute(t,value)
+ assert.equal(run.status,'completed')
+ assert.equal(run.nativeCandidate.version,'v340-native-candidate-8')
+ assert.equal(run.result.snapshot.current_result.core_result_markdown,value.core_result_markdown)
+ const retained=run.result.snapshot.contents.find(c=>c.content_id.startsWith('host/')&&c.source_input_id==='technical_analysis_material_text')
+ assert(retained)
+ assert.equal(retained.source_hash,v340Hash(material))
+})
+function findRun(value,key) {
+ if(value&&typeof value==='object'){
+  if(value.requestKey===key&&value.inputSnapshot)return value
+  for(const child of Object.values(value)){const run=findRun(child,key);if(run)return run}
+ }
+ return null
+}
+test('new M02 instructions preserve historical v5 receipts and their system fingerprints',async()=>{
+ const file='.local/dsh-next-field-diagnostics-20261112/m02-single-20261127/live/dsh-home/storages/oasis_workbench.json'
+ const disk=JSON.parse(await readFile(file,'utf8'))
+ const run=findRun(disk,'f708cee5-c27a-4a40-bffc-2ee2cfb5f1b1')
+ const before=JSON.stringify(run)
+ assert.equal(assertV340NativeCandidate(run).version,'v340-native-candidate-5')
+ assert.equal(run.nativeCandidate.systemSHA256,'7e41d6d356ab218d85dc87f1ff67911cd9bb0fc5778d4f2b21e4cc14b4954009')
+ assert.equal(JSON.stringify(run),before)
+})

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "tools/bin/node",
+    "--test",
+    "tests/macos-native-zero-generation.test.mjs",
+    "tests/macos-development-launch.test.mjs",
+    "packages/oasis-professional-service/test/m06-native-zero-generation.test.mjs",
+    "packages/oasis-professional-service/test/m06-controlled-host.test.mjs",
+    "packages/oasis-professional-service/test/m06-workarea-host.test.mjs"
+  ],
+  "exit_code": 0,
+  "scope": "30 affected launcher/controlled/workarea Host tests; zero-mode subset observes no calls; original normal regression uses synthetic model adapter only",
+  "env_added": {
+    "OASIS_TEST_ZERO_OBSERVATION": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-generation-r1/source-host-observation-v2.json"
+  }
+}

@@ -1,0 +1,534 @@
+{
+  "at": "2026-11-12T10:43:32.542965+08:00",
+  "candidatePatchSha256": "b34935e135e88f2f8cd18e1b5a0bd59aeeb2fe9cb49c4139b29f082cd3779fa7",
+  "candidateClientSha256": "2dc6837e3cccbf348382fc4a6a662af6df38265fe01244b2eca5f96876c54c7f",
+  "candidateFiles": {
+    "src/client/V340GenerationPage.js": {
+      "before": "f777d8513c8362d80d8fc3e0e264fbd518bb377a22cb35e36c25731530a39e2a",
+      "after": "2ddb7d9b84fa4e20aeeec8af8c6d5d3b9b94d82975a623604449e44cc666331f"
+    },
+    "src/local-run-summary.js": {
+      "before": "0684cdf2186305d5934a46e934b20d2364ec1e5362ba6bb0a74caa4eb4fda17c",
+      "after": "4709e0c9e39f4a5c5b89c18f76882d96508a6c170b6ee0411ec3d872ae402c44"
+    },
+    "src/v340-document.js": {
+      "before": "c40d0612300373801a3e565d0401afe88d67878f78df82c5663ffcbb52f4779a",
+      "after": "33b93356f601dbbcc619a1b0061012501bfe4a1fd5ff05b014f4e30fee39be76"
+    },
+    "src/v340-native-model.js": {
+      "before": "577aea2a71866a6a949795e107a83ffea70a598986057a6985e6c3a858f421f3",
+      "after": "e44d4bf24098b1693cc5fdaade6f689ce2c66989a991c85b4fae85879ebd4e42"
+    },
+    "src/v340-runtime-service.js": {
+      "before": "94239bf98e97222b7e08f8c0c16b39e9fb9d6cc97bbf0efc18f373977c78af2e",
+      "after": "16cdff87870405097df508a1c78960e9210624857e198fe52ab27de40c94ead3"
+    },
+    "test/oasis-first-batch.test.mjs": {
+      "before": "b7075f0b9974384fb956aba56cf3187c8505abb28975e302d75054c9d45e665e",
+      "after": "c8f7d392bec62df037373aa58426000fdbd03a8558b35bce9724e3c1829dceae"
+    },
+    "test/v340-native-dsh-contract.test.mjs": {
+      "before": "e62691ff53d2639852f9a5f4043060e53187ba148a8ee02697bc20b009f2078e",
+      "after": "921ece613da5ea45cf2bcb6cfd851bb85d64426ff03d9d131626f7f356991fbf"
+    }
+  },
+  "regression": {
+    "passed": 80,
+    "failed": 0
+  },
+  "offlineRuns": [
+    {
+      "id": "M05",
+      "workspaceId": "f64e66b5-aca4-4e16-ab08-c51b65f919ca",
+      "sessionId": "session-d043fe85-3cf4-4aed-80ce-69543655edb8",
+      "taskId": "diagnostics-M05",
+      "requestKey": "fd4a36fe-325e-45c7-a581-77c8cdb74e42",
+      "skillId": "patent-technical-disclosure",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "e0a38c5a124ca9d176a9b340a46639009c37a200c81321b3ea530238c3f7a918",
+      "runId": "v340-4eded9fb-c790-40ba-a555-c6e98b42a309",
+      "status": "completed",
+      "failureCode": null,
+      "summary": {
+        "finishKind": "stop",
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-6",
+      "inputSha256": "92e0e6b4eca09924916218170a0aa4da31038491c8ef6172f9a99a675ab46be6",
+      "disclosureTableRows": {
+        "T1": 1,
+        "T2": 4,
+        "T3": 1
+      },
+      "resultSha256": "d051a40c7d690d3b3434af57eb917d798d86e701828e19e584638447ce89a179",
+      "resultBytes": 11881,
+      "writebackId": "writeback-a5f8478b-4d84-41e3-a8cc-18279a8b361b",
+      "reviewedAndSaved": true,
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M01",
+      "workspaceId": "5de7ba8c-dad5-4ebc-a529-8ebede1febb1",
+      "sessionId": "session-35045c6a-6dc2-432a-9c24-70841070a961",
+      "taskId": "diagnostics-M01",
+      "requestKey": "1fbffc8c-ddea-485b-8513-590722ff9e91",
+      "skillId": "patent-background-research",
+      "skillVersion": "0.3.0-rc.5",
+      "resourceSha256": "f774c3aaa9ff8cfe977b8f12b4f0cad5588bb6130e48a28214576ccd817850d0",
+      "runId": "v340-bce1c22f-c918-4ab0-99bb-25410335428c",
+      "status": "completed",
+      "failureCode": null,
+      "summary": {
+        "finishKind": "stop",
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-5",
+      "inputSha256": "1ef0be939a2e3a92f63f025c3f01f070478dde5c69b773c8d22e38cb35c56acf",
+      "resultSha256": "16a160429570e1772d886be9e45336b1c14c2eed908dfb94cc8f3f41cf309af0",
+      "resultBytes": 9156,
+      "writebackId": "writeback-df22239e-6488-4cf9-9322-4e639f329a4e",
+      "reviewedAndSaved": true,
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M02",
+      "workspaceId": "f1fd606a-59bf-448a-a057-a456382f9d44",
+      "sessionId": "session-298929f3-c07e-4b4e-aedc-fa2cb73053ed",
+      "taskId": "diagnostics-M02",
+      "requestKey": "55d1b56f-9f50-41e0-b8a6-c7fda06cce8d",
+      "skillId": "patent-triz-analysis",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+      "runId": "v340-9f004743-db74-4d17-84df-ba49770ea450",
+      "status": "completed",
+      "failureCode": null,
+      "summary": {
+        "finishKind": "stop",
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-5",
+      "inputSha256": "5a82f124892f8a5f34f91a46f3f7629e5a6556dd019b3d2048d8232050e440bf",
+      "resultSha256": "1e82f0d79396e33160eaadfa91c5f584e21d92c21c48edfcdc4c31c15208a010",
+      "resultBytes": 11251,
+      "writebackId": "writeback-b153cd50-7d52-4e0f-a899-8ce4f05b0934",
+      "reviewedAndSaved": true,
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M01-reject",
+      "workspaceId": "872e97a1-da3f-4799-be5c-60103c199aff",
+      "sessionId": "session-55d9ac43-0b57-41ff-a24f-2d6f927f6929",
+      "taskId": "diagnostics-M01-reject",
+      "requestKey": "8dd5b96d-f656-4d2b-b5be-01d33449df75",
+      "skillId": "patent-background-research",
+      "skillVersion": "0.3.0-rc.5",
+      "resourceSha256": "f774c3aaa9ff8cfe977b8f12b4f0cad5588bb6130e48a28214576ccd817850d0",
+      "runId": "v340-b13bf2ca-1ddb-497e-a771-e2c1ae96facf",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-assembly",
+        "finishKind": "stop",
+        "assemblyIssue": {
+          "code": "source-receipt-mismatch",
+          "field": "updates",
+          "index": 0
+        },
+        "fieldIssue": {
+          "code": "source-hash-mismatch",
+          "path": [
+            "updates",
+            0,
+            "source_hash"
+          ]
+        },
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-5",
+      "inputSha256": "b21ac9ddfef130bca7d23f3e69a39a406cbd0a385c644e209f3980e9e22a97c5",
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M01-locator",
+      "workspaceId": "0992a76f-2cd8-45e0-bf1e-3007317ed2d0",
+      "sessionId": "session-ce5cd6b5-0cf9-4c9d-a0cf-fea94c991902",
+      "taskId": "diagnostics-M01-locator",
+      "requestKey": "4de423ed-e9e6-49fe-9b8f-6df47356e5e6",
+      "skillId": "patent-background-research",
+      "skillVersion": "0.3.0-rc.5",
+      "resourceSha256": "f774c3aaa9ff8cfe977b8f12b4f0cad5588bb6130e48a28214576ccd817850d0",
+      "runId": "v340-5f0735f2-4ae0-47d6-b116-2fd518c4f8f4",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-assembly",
+        "finishKind": "stop",
+        "assemblyIssue": {
+          "code": "source-receipt-mismatch",
+          "field": "updates",
+          "index": 0
+        },
+        "fieldIssue": {
+          "code": "source-locator-mismatch",
+          "path": [
+            "updates",
+            0,
+            "source_locator"
+          ]
+        },
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-5",
+      "inputSha256": "a390e4b3430fb642e6bbbd2f2eb62b2d8ff8c6e32b6031fa10ad1c7b1df6d79c",
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M02-reject",
+      "workspaceId": "d0df4f57-2ae6-49b0-94c2-b0db5575a5a2",
+      "sessionId": "session-80e8d2e1-558d-4830-963b-a619c03cc3b9",
+      "taskId": "diagnostics-M02-reject",
+      "requestKey": "5f3288ae-d615-4213-90f9-aa63d96cb1a5",
+      "skillId": "patent-triz-analysis",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+      "runId": "v340-2fb9dc91-3108-4587-89d4-1773e52dd12f",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-assembly",
+        "finishKind": "stop",
+        "assemblyIssue": {
+          "code": "duplicate-table-row",
+          "field": "tables.T1",
+          "index": 1
+        },
+        "fieldIssue": {
+          "code": "duplicate-table-row",
+          "path": [
+            "tables",
+            "T1",
+            1,
+            "row_id"
+          ]
+        },
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-5",
+      "inputSha256": "f2962428f2edd5fd0cc74d9309181a734adee422f8f4cea5ce2d855addaf1193",
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M02-type",
+      "workspaceId": "0ca3934d-2d2b-4ff2-8e10-a32c82963aab",
+      "sessionId": "session-369f5df8-1d3f-4292-a9bd-167161c31afc",
+      "taskId": "diagnostics-M02-type",
+      "requestKey": "aac06ba6-0cb2-4c89-8c22-ba0b06bf0c81",
+      "skillId": "patent-triz-analysis",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+      "runId": "v340-58f1cb89-31de-4516-abfa-78bb01db0885",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-schema",
+        "finishKind": "stop",
+        "fieldIssue": {
+          "code": "invalid-type",
+          "path": [
+            "tables",
+            "T1",
+            0,
+            "row_id"
+          ]
+        },
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-5",
+      "inputSha256": "61adb694cdddb27a3c3bc967ec0fa061b5f3daf89e0a1375adc6185595a7bfbe",
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M05-missing",
+      "workspaceId": "22f8d52a-bfce-473f-8a92-e6ef8d55a2e6",
+      "sessionId": "session-f9a43fa1-7e43-480e-a179-0264e54bed26",
+      "taskId": "diagnostics-M05-missing",
+      "requestKey": "de412799-4044-4531-b2b2-9e3a953109fb",
+      "skillId": "patent-technical-disclosure",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "e0a38c5a124ca9d176a9b340a46639009c37a200c81321b3ea530238c3f7a918",
+      "runId": "v340-7695db3e-b5af-4ba6-b89c-a1c881d51c68",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-schema",
+        "finishKind": "stop",
+        "fieldIssue": {
+          "code": "missing-field",
+          "path": [
+            "core_result_markdown"
+          ]
+        },
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-6",
+      "inputSha256": "3fd97a941cd96bae33ad244157f0c32ee54bcb8147f73e693a614ea1f25e345d",
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M05-extra",
+      "workspaceId": "49bd90d3-df3a-4d60-9962-40f135169030",
+      "sessionId": "session-18f97923-46b2-45f9-856c-29cbdf19a7a7",
+      "taskId": "diagnostics-M05-extra",
+      "requestKey": "50e063c6-4b4c-4d7a-9b5d-1ad350972d50",
+      "skillId": "patent-technical-disclosure",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "e0a38c5a124ca9d176a9b340a46639009c37a200c81321b3ea530238c3f7a918",
+      "runId": "v340-5d6af8bd-dd0b-49d5-af81-f2884b1c011b",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-schema",
+        "finishKind": "stop",
+        "fieldIssue": {
+          "code": "unexpected-field",
+          "path": [
+            "warnings",
+            0
+          ]
+        },
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-6",
+      "inputSha256": "46333b204b13c3e6874d971914090ab7b6a4db4562b43e3b80f72e4295d629f3",
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M05-json",
+      "workspaceId": "5a49d794-70a4-430a-bd10-1ad2d8a39d18",
+      "sessionId": "session-bf4192d5-882f-417a-aeb7-301c0cc99c8f",
+      "taskId": "diagnostics-M05-json",
+      "requestKey": "724d2ffa-69c6-43ec-a746-c92e3d8837a2",
+      "skillId": "patent-technical-disclosure",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "e0a38c5a124ca9d176a9b340a46639009c37a200c81321b3ea530238c3f7a918",
+      "runId": "v340-b2c56d86-ecf1-4ddd-82d8-009c4c955192",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-json",
+        "finishKind": "stop",
+        "fieldIssue": {
+          "code": "invalid-json",
+          "path": []
+        },
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-6",
+      "inputSha256": "1d9815773cf5d16fde1f8754236005ba007d9685d426a1ed2dc4557b53c3827d",
+      "wireTerminal": true,
+      "livePostAttempt": false
+    }
+  ],
+  "recovery": [
+    {
+      "id": "M05",
+      "runId": "v340-4eded9fb-c790-40ba-a555-c6e98b42a309",
+      "recovered": true
+    },
+    {
+      "id": "M01",
+      "runId": "v340-bce1c22f-c918-4ab0-99bb-25410335428c",
+      "recovered": true
+    },
+    {
+      "id": "M02",
+      "runId": "v340-9f004743-db74-4d17-84df-ba49770ea450",
+      "recovered": true
+    },
+    {
+      "id": "M01-reject",
+      "runId": "v340-b13bf2ca-1ddb-497e-a771-e2c1ae96facf",
+      "recovered": true,
+      "status": "failed",
+      "fieldIssue": {
+        "code": "source-hash-mismatch",
+        "path": [
+          "updates",
+          0,
+          "source_hash"
+        ]
+      }
+    },
+    {
+      "id": "M01-locator",
+      "runId": "v340-5f0735f2-4ae0-47d6-b116-2fd518c4f8f4",
+      "recovered": true,
+      "status": "failed",
+      "fieldIssue": {
+        "code": "source-locator-mismatch",
+        "path": [
+          "updates",
+          0,
+          "source_locator"
+        ]
+      }
+    },
+    {
+      "id": "M02-reject",
+      "runId": "v340-2fb9dc91-3108-4587-89d4-1773e52dd12f",
+      "recovered": true,
+      "status": "failed",
+      "fieldIssue": {
+        "code": "duplicate-table-row",
+        "path": [
+          "tables",
+          "T1",
+          1,
+          "row_id"
+        ]
+      }
+    },
+    {
+      "id": "M02-type",
+      "runId": "v340-58f1cb89-31de-4516-abfa-78bb01db0885",
+      "recovered": true,
+      "status": "failed",
+      "fieldIssue": {
+        "code": "invalid-type",
+        "path": [
+          "tables",
+          "T1",
+          0,
+          "row_id"
+        ]
+      }
+    },
+    {
+      "id": "M05-missing",
+      "runId": "v340-7695db3e-b5af-4ba6-b89c-a1c881d51c68",
+      "recovered": true,
+      "status": "failed",
+      "fieldIssue": {
+        "code": "missing-field",
+        "path": [
+          "core_result_markdown"
+        ]
+      }
+    },
+    {
+      "id": "M05-extra",
+      "runId": "v340-5d6af8bd-dd0b-49d5-af81-f2884b1c011b",
+      "recovered": true,
+      "status": "failed",
+      "fieldIssue": {
+        "code": "unexpected-field",
+        "path": [
+          "warnings",
+          0
+        ]
+      }
+    },
+    {
+      "id": "M05-json",
+      "runId": "v340-b2c56d86-ecf1-4ddd-82d8-009c4c955192",
+      "recovered": true,
+      "status": "failed",
+      "fieldIssue": {
+        "code": "invalid-json",
+        "path": []
+      }
+    }
+  ],
+  "m05Wire": {
+    "nodeId": "Flow-1-5",
+    "requestKey": "fd4a36fe-325e-45c7-a581-77c8cdb74e42",
+    "runId": "v340-4eded9fb-c790-40ba-a555-c6e98b42a309",
+    "model": "deepseek-flash",
+    "effort": "low",
+    "maxOutputTokens": 16384,
+    "serializedBytes": 27396,
+    "systemSha256": "2974a937ee0aba3ed54e0fc2133e4e53df47acf28dd9a2001f3d6091b28e972b",
+    "inputContentSha256": "45ce7a038c9db00ef053102badc34a584aff96be4275b495ba8513b08eb17062",
+    "tools": 0,
+    "at": "2026-11-12T02:40:42.031Z",
+    "mode": "offline",
+    "promptTokens": 6394,
+    "fullWireTokens": 6879,
+    "inputTokenBudget": 32000,
+    "protocolReserveTokens": 2000,
+    "conservativeInputTokens": 8879
+  },
+  "realRequests": 0,
+  "newCostCny": "0.00",
+  "m06": {
+    "beforeRevision": 90,
+    "afterRevision": 94,
+    "otherWorkspacesAndRunsIdentical": true,
+    "originalResultIdentical": true,
+    "backup": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/m06-business-before.json",
+    "backupSha256": "aaebeba9fcefc9c630457e6c21d442b0f4ea50ad3ba906347830a2f48727ac3c",
+    "savedFiles": [
+      {
+        "relativePath": "claims_20261110114450_89dd69c1.md",
+        "sha256": "76edc895aa38614942860c5cf8fda861a542e3cb377f462b06dcbde206a00442",
+        "mediaType": "text/markdown"
+      },
+      {
+        "relativePath": "claims_20261110114450_89dd69c1.oasis.json",
+        "sha256": "0b421621ebbd51abcb23026b5f6d93f8c31cee4fd29a558070e880b49db20861",
+        "mediaType": "application/json"
+      }
+    ],
+    "installedWriterChecked": true,
+    "separateColdProcess": true
+  }
+}

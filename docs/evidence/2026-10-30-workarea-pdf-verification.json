@@ -1,0 +1,363 @@
+{
+  "id": "WORKAREA-PDF-VERIFY-20261030",
+  "at": "2026-10-29T23:26:58.755Z",
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "sources": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/pdf-extraction-process.js",
+      "sha256": "a4e2231b5cc61bed8f8e68f476af874f673c3ac7cdc4cee10cb49cc94b3c8f75"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/pdf-extraction-process.test.mjs",
+      "sha256": "49e61e419bd949f3460be8ccf7e7c85b33ed27f1e1d6a4e574c54f7854037cfe"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/pdf-text-worker.py",
+      "sha256": "50b9e939092b77b7c865563de6549cda68853c12fc7a8309ca7a33d733aa61e5"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-flow26-workarea-consumer-mapping-r1.json",
+      "sha256": "b88951d3a21b1c5d903777e03419cf9cae0a75de15ce1ea17b7e5a1223ddd832"
+    }
+  ],
+  "tests": {
+    "command": "tools/bin/node --test packages/oasis-professional-service/test/pdf-extraction-process.test.mjs packages/oasis-professional-service/test/oasis-api-contract.test.mjs packages/oasis-professional-service/test/oasis-workspace-binding.test.mjs packages/oasis-professional-service/test/v340-preparation.test.mjs",
+    "exitCode": 0,
+    "tests": 46,
+    "pass": 46,
+    "fail": 0,
+    "newProcessUnitTests": 9,
+    "scope": "EventEmitter/stdio and virtual-clock process unit verification plus existing API/binding/preparation; no container/Host/PDF activation acceptance",
+    "log": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-pdf-integration-20261030/targeted-final.log",
+      "sha256": "8f126e7f7b6819af467f19afffcdffd7ede429c37eadf54697a41855612c5525"
+    },
+    "redEvidence": [
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-pdf-integration-20261030/pdf-process-red.log",
+        "sha256": "2320da064c47a6b0e3f91c604b64a0a142471c87b66843d7d0aaa5bdf1fca6de"
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-pdf-integration-20261030/pdf-process-review-red.log",
+        "sha256": "550813212b250c8c8bd9c1bdd2254ce059249eba22cb43a38de4e1410efabd5d"
+      }
+    ]
+  },
+  "preserved": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-pdf-integration-compatibility-r1.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-recovery-interruption-diagnosis.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-controlled-profile-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-g0-admission.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-installed-admission-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-live-service-metadata-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-remote-contract-request-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-admin-access-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-admin-access.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-execution-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-intake-and-interruption-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-intake-delta.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-workarea-method-binding.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-api-minimal-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-api-minimal-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-api-minimal-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-minimal-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-minimal-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-spike-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-two-cases.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-and-flow26-g0-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-execution-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-provider-readiness.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-m06-implementation-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-m06-implementation-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-m06-implementation-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-selected-parser-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-worker-isolation-verification-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-worker-isolation-verification-r3.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-worker-isolation-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-inputs.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-workarea-api-only-continuation.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-workarea-api-only-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-29-project-summary-and-next-development-plan.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-api-contract-adapter.js",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-api-contract-adapter.test.mjs",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/pdf-text-worker.py",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/test_pdf_distribution.py",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/test_pdf_text_worker.py",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/verify-pdf-distribution.py",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "same": false,
+      "prefixOnly": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+      "same": false,
+      "prefixOnly": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "same": false,
+      "prefixOnly": true
+    }
+  ],
+  "whitespace": [
+    {
+      "path": "packages/oasis-professional-service/src/pdf-extraction-process.js",
+      "exitCode": 1
+    },
+    {
+      "path": "packages/oasis-professional-service/test/pdf-extraction-process.test.mjs",
+      "exitCode": 1
+    }
+  ],
+  "globalDiffCheck": {
+    "exitCode": 2,
+    "output": "docs/plans/2026-10-25-dsh-oasis-master-plan.md:276: new blank line at EOF.\n",
+    "classification": "pre-existing master-plan trailing-blank-line warning; preserved unchanged"
+  },
+  "liveAPI": {
+    "route": "workarea browser only",
+    "selectedObservations": [
+      "GET catalog HTTP200",
+      "POST Fast39 detail HTTP200",
+      "POST Basic46 detail HTTP200"
+    ],
+    "credentialExported": false,
+    "adminOrDifyAccess": false,
+    "generationCreate": 0,
+    "fileUpload": 0,
+    "newSpend": 0
+  },
+  "historicalWorkerHashMatchesR3": true,
+  "vmStarted": false,
+  "sourceEnabled": false,
+  "U1Passed": false,
+  "D1Integrated": false,
+  "G0Passed": false,
+  "professionalOrUserAcceptance": false,
+  "profileOrFixedDependencyChanges": false,
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "screenshot": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-pdf-integration-20261030/workarea-logged-in.jpg",
+    "sha256": "2b55dafe669a8ffd85993df215beaad2cc3a341289d78226d14630828534aed6"
+  },
+  "review": "Single-agent author self-review; two findings fixed with RED/GREEN regressions, no independent acceptance"
+}

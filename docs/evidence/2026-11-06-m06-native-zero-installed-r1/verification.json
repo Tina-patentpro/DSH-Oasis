@@ -1,0 +1,248 @@
+{
+  "scope": "BOUNDED_OFFLINE_INSTALLED_LAYOUT_AND_COOPERATIVE_WRITER_ZERO_SPEC",
+  "time": "2026-11-06T13:40:43.063315+08:00",
+  "executor": "Codex single-agent implementation and self-review; not independent acceptance",
+  "status": "PASS_BOUNDED_INSTALLED_ZERO_SPEC_NO_APP_START",
+  "checks": [
+    {
+      "name": "installation exit0",
+      "passed": true,
+      "details": {
+        "argv": [
+          "tools/bin/node",
+          "docs/evidence/2026-11-06-m06-native-zero-installed-r1/install-candidate.mjs"
+        ],
+        "started_at": "2026-11-06T13:34:17.170748+08:00",
+        "ended_at": "2026-11-06T13:34:36.472408+08:00",
+        "exit_code": 0
+      }
+    },
+    {
+      "name": "check-installed exit0",
+      "passed": true,
+      "details": {
+        "argv": [
+          "tools/bin/node",
+          "docs/evidence/2026-11-06-m06-native-zero-installed-r1/check-installed.mjs"
+        ],
+        "exit_code": 0,
+        "time": "2026-11-06T13:36:41.050661+08:00"
+      }
+    },
+    {
+      "name": "controller-check exit0",
+      "passed": true,
+      "details": {
+        "argv": [
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-installed-20261106-r1/control/node",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-installed-20261106-r1/control/scripts/f-installed-runtime.mjs",
+          "--check",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-installed-20261106-r1"
+        ],
+        "exit_code": 0,
+        "time": "2026-11-06T13:38:49.176897+08:00"
+      }
+    },
+    {
+      "name": "tests-final exit0",
+      "passed": true,
+      "details": {
+        "argv": [
+          "tools/bin/node",
+          "--test",
+          "scripts/tests/f-installed-native-zero.test.mjs",
+          "scripts/tests/f-installed-runtime.test.mjs",
+          "scripts/tests/installed-writer-lease.test.mjs",
+          "scripts/tests/f-installed-bundle.test.mjs"
+        ],
+        "environment_overrides": {},
+        "exit_code": 0,
+        "time": "2026-11-06T13:37:03.013983+08:00"
+      }
+    },
+    {
+      "name": "installed-guard-tests exit0",
+      "passed": true,
+      "details": {
+        "argv": [
+          "tools/bin/node",
+          "--test",
+          "packages/oasis-professional-service/test/m06-native-zero-generation.test.mjs"
+        ],
+        "environment_overrides": {
+          "OASIS_TEST_ZERO_ARCHIVE_ENTRY": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-installed-20261106-r1/releases/db673f66ad8a0a84b93f421faf923dce4d0fbfa823d5317e2d8c51691c2989d3/components/c3/src/m06-controlled-host-013.js",
+          "OASIS_TEST_ZERO_OBSERVATION": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-installed-r1/installed-guard-observation.json"
+        },
+        "exit_code": 0,
+        "time": "2026-11-06T13:37:03.300886+08:00"
+      }
+    },
+    {
+      "name": "RED observed missing preparation and accepted invalid policy",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tests-final count",
+      "passed": true,
+      "details": 19
+    },
+    {
+      "name": "installed-guard-tests count",
+      "passed": true,
+      "details": 3
+    },
+    {
+      "name": "new bundle manifest pin",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "same c07f archive",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "134 installed archive members unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "all admission pins match",
+      "passed": true,
+      "details": 21
+    },
+    {
+      "name": "604 internal links",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "actual unique host and paired client",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "actual Desktop config",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "second process writer rejected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "second process storage owner rejected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "release reacquire and expired lease refusal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "dual locks absent",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no app launch files",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "52 endpoint guard and counters",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "data only owner metadata",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no credential or session migration",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "technical readiness is not launch acceptance",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "2026-11-06-m06-native-zero-generation-r1 old unready retained",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "2026-11-06-m06-native-zero-assembly-r1 old unready retained",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "protected original files preserved",
+      "passed": true,
+      "details": {
+        "protected": 3212,
+        "expected_existing_edits": [
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/f-installed-runtime.mjs"
+        ],
+        "unexpected": []
+      }
+    },
+    {
+      "name": "docs/project-current-state.md old byte suffix retained",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "docs/evidence/2026-10-23-stage5-progress-and-remaining.md old byte suffix retained",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "original retained release bytes and links preserved",
+      "passed": true,
+      "details": {
+        "files": 27191,
+        "links": 637,
+        "changed": [],
+        "changed_links": []
+      }
+    },
+    {
+      "name": "fixed App source/new bundle/installed bytes paired",
+      "passed": true,
+      "details": 26160
+    },
+    {
+      "name": "governance and contract inputs did not drift",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "HEAD unchanged",
+      "passed": true,
+      "details": "7972fea810436c0a62e2a5192d60808d1292eb5a"
+    },
+    {
+      "name": "controller diff whitespace",
+      "passed": true,
+      "details": ""
+    }
+  ],
+  "test_count": 22,
+  "real_app_started": false,
+  "real_calls_authorized": false,
+  "release_authorized": false,
+  "limitations": [
+    "No Host/UI/lifecycle acceptance",
+    "cooperative writer only, no arbitrary writer/OS network enforcement",
+    "professional/user and final release/license gates open"
+  ]
+}

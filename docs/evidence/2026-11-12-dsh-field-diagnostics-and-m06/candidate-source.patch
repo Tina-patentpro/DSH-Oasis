@@ -1,0 +1,332 @@
+--- a/src/client/V340GenerationPage.js
++++ b/src/client/V340GenerationPage.js
+@@ -1,6 +1,7 @@
+ import {createElement as h,useEffect,useRef,useState} from 'react'
+ import {getV340Versions,getV340LegacyResultDrafts,V340_CONVERSATION_TEXT_LIMIT,formatV340ConversationDraft} from '../v340-runtime-contract.js'
+ import {hasPendingUnifiedRun} from '../generation-contract.js'
++import {formatV340FieldPath} from '../local-run-summary.js'
+ import { claimsCandidateFor, localSkillUnavailableReason, PATENT_DISCLOSURE_CLAIMS_ID } from '../local-skill-suites.js'
+ import {GenerationSourceSwitch} from './GenerationSourceSwitch.js'
+ import {SafeMarkdownPreview} from './SafeMarkdownPreview.js'
+@@ -142,7 +143,11 @@
+     h('nav',{'aria-label':'结果版本',style:{display:'flex',flexWrap:'wrap',gap:6}},
+      ...page.v340.runOrder.flatMap(id=>getV340Versions(page.v340.runs[id]).map((v,index)=>h('button',{key:`${id}/${v.versionId}`,type:'button',style:button,
+       'aria-current':target?.versionId===v.versionId?'true':undefined,onClick:()=>actions.selectVersion?.(page.pageId,id,v.versionId)},`${page.v340.runOrder.length>1?`运行${page.v340.runOrder.indexOf(id)+1} · `:''}版本 ${index+1}`)))),
+-    !version?h('p',{role:'status'},run?.status==='unknown'?'运行状态未确认；不会自动重发。':run?.status==='prepared'?'原运行尚未完成。':run?.status==='failed'?`本次生成失败（${run.failureCode}）；未取得正文，不会自动重试。`:'暂无生成结果'):h('article',{style:{display:'grid',gap:12,marginTop:12}},
++    !version?h('div',null,
++      h('p',{role:'status'},run?.status==='unknown'?'运行状态未确认；不会自动重发。':run?.status==='prepared'?'原运行尚未完成。':run?.status==='failed'?`本次生成失败（${run.failureCode}）；未取得正文，不会自动重试。`:'暂无生成结果'),
++      run?.status==='failed'&&run.executionSummary?.fieldIssue
++        ?h('p',null,`拒绝字段 ${formatV340FieldPath(run.executionSummary.fieldIssue.path)}（${run.executionSummary.fieldIssue.code}）`):null
++    ):h('article',{style:{display:'grid',gap:12,marginTop:12}},
+      h('small',null,`${run.source==='local-skill'?'本地 Skills':'专业 API'} · ${run.evidenceKind==='native-model-candidate'?'受控候选':'合成验收'} · ${version.review.status==='approved'?'已审核':'待审核'}`),
+      run.nativeCandidate?.businessSkillId===PATENT_DISCLOSURE_CLAIMS_ID?h('small',null,
+        '中国专利 Skill · GitHub 版本 '+run.nativeCandidate.businessSkillVersion.slice(0,7)):null,
+--- a/src/local-run-summary.js
++++ b/src/local-run-summary.js
+@@ -4,10 +4,23 @@
+ const failureStages = ['preparation', 'stream', 'result-contract', 'result-json', 'result-schema', 'result-assembly']
+ const tokenFields = ['inputTokens', 'outputTokens', 'totalTokens', 'cacheReadTokens', 'reasoningTokens']
+ const count = z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER)
++const assemblyCodes = ['duplicate-completion', 'orphan-completion', 'duplicate-update', 'invalid-update-identity',
++    'missing-completion', 'source-receipt-mismatch', 'unsupported-source-fact', 'duplicate-table-row',
++    'invalid-warning', 'snapshot-contract', 'document-size', 'unauthorized-replacement']
++const pathKeys = ['summary', 'core_result_markdown', 'updates', 'tables', 'T1', 'T2', 'T3', 'T4', 'T5', 'T6',
++  'terms_master', 'warnings', 'model_completions', 'snapshot', 'document',
++  'content_id', 'content_markdown', 'content_origin', 'source_input_id', 'source_locator', 'source_hash',
++  'trust_status', 'last_updated_flow', 'revision_reason', 'row_id', 'data', 'warning_id', 'first_flow',
++  'inherited_from', 'problem', 'affected_content', 'current_handling', 'model_completion', 'deliverable_impact',
++  'recommended_action', 'status', 'completion_basis', 'assumptions', 'confidence', 'affected_section',
++  'human_confirmation_status']
++const fieldSegment = z.union([z.enum(pathKeys), z.number().int().min(0).max(499)])
++const fieldCodes = [...assemblyCodes, 'invalid-json', 'missing-field', 'unexpected-field', 'invalid-type',
++  'invalid-value', 'too-small', 'too-large', 'schema-mismatch', 'source-not-found', 'source-origin-mismatch',
++  'source-hash-mismatch', 'source-locator-mismatch']
++export const fieldIssueSchema = z.object({ code: z.enum(fieldCodes), path: z.array(fieldSegment).max(5) }).strict()
+ export const assemblyIssueSchema = z.object({
+-  code: z.enum(['duplicate-completion', 'orphan-completion', 'duplicate-update', 'invalid-update-identity',
+-    'missing-completion', 'source-receipt-mismatch', 'unsupported-source-fact', 'duplicate-table-row',
+-    'invalid-warning', 'snapshot-contract', 'document-size']),
++  code: z.enum(assemblyCodes),
+   field: z.enum(['updates', 'model_completions', 'warnings', 'tables.T1', 'tables.T2', 'tables.T3',
+     'tables.T4', 'tables.T5', 'tables.T6', 'snapshot', 'document']),
+   index: z.number().int().min(0).max(499).optional(),
+@@ -16,12 +29,34 @@
+   failureStage: z.enum(failureStages).optional(),
+   finishKind: z.enum(finishKinds).optional(),
+   assemblyIssue: assemblyIssueSchema.optional(),
++  fieldIssue: fieldIssueSchema.optional(),
+   usage: z.object(Object.fromEntries(tokenFields.map(key => [key, count.optional()]))).strict().optional(),
+ }).strict()
+ 
+ function ownValue(object, key) {
+   try { return Object.getOwnPropertyDescriptor(object, key)?.value }
+   catch { return undefined }
++}
++
++export function v340SchemaFieldIssue(error, payload) {
++  const issue = error?.issues?.[0]
++  if (!issue) return { code: 'schema-mismatch', path: [] }
++  const path = []
++  let value = payload
++  for (const part of issue.path ?? []) {
++    if (path.length === 5 || !fieldSegment.safeParse(part).success) break
++    path.push(part)
++    value = ownValue(value, part)
++    if (part === 'data' || path[0] === 'terms_master' && path.length === 2) break
++  }
++  const codes = { invalid_type: value === undefined ? 'missing-field' : 'invalid-type', unrecognized_keys: 'unexpected-field',
++    invalid_value: 'invalid-value', invalid_format: 'invalid-value', invalid_union: 'invalid-value',
++    too_small: 'too-small', too_big: 'too-large', custom: 'invalid-value' }
++  return { code: Object.hasOwn(codes, issue.code) ? codes[issue.code] : 'schema-mismatch', path }
++}
++
++export function formatV340FieldPath(path) {
++  return path.reduce((text, part) => typeof part === 'number' ? text + '[' + part + ']' : text + '.' + part, '$')
+ }
+ 
+ // Copy only fixed enums and safe counters; never evaluate metadata getters or retain raw payloads.
+@@ -31,6 +66,13 @@
+   const failureStage = ownValue(value, 'failureStage')
+   if (finishKinds.includes(finishKind)) summary.finishKind = finishKind
+   if (failureStages.includes(failureStage)) summary.failureStage = failureStage
++  const issue = ownValue(value, 'fieldIssue')
++  const path = ownValue(issue, 'path')
++  if (Array.isArray(path) && path.length <= 5) {
++    const checked = fieldIssueSchema.safeParse({ code: ownValue(issue, 'code'),
++      path: Array.from({ length: path.length }, (_, index) => ownValue(path, index)) })
++    if (checked.success) summary.fieldIssue = checked.data
++  }
+   const usage = ownValue(value, 'usage')
+   const counters = {}
+   for (const key of tokenFields) {
+--- a/src/v340-document.js
++++ b/src/v340-document.js
+@@ -46,12 +46,14 @@
+ }).strict()
+ const fail = () => { throw new Error('V340_INVALID_DOCUMENT') }
+ export class V340AssemblyIssue extends Error {
+-  constructor(code, field, index) {
++  constructor(code, field, index, property, reason = code) {
+     super('V340_INVALID_DOCUMENT')
+     this.issue = { code, field, ...(index === undefined ? {} : { index }) }
+-  }
+-}
+-const rejectOutput = (code, field, index) => { throw new V340AssemblyIssue(code, field, index) }
++    this.fieldIssue = { code: reason, path: [...field.split('.'),
++      ...(index === undefined ? [] : [index]), ...(property ? [property] : [])] }
++  }
++}
++const rejectOutput = (code, field, index, property, reason) => { throw new V340AssemblyIssue(code, field, index, property, reason) }
+ const copy = value => structuredClone(value)
+ const stamp = time => {
+   if (typeof time !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?(?:Z|[+-]\d{2}:\d{2})$/.test(time)) fail()
+@@ -278,37 +280,40 @@
+   }
+   if (input.values.application_type) snapshot.application_type = input.values.application_type
+   const directives = new Set((input.values.user_input ?? '').split(/\r?\n/).map(v => v.trim()))
+-  const replace = (list, item, key, prefix = '') => {
++  const replace = (list, item, key, field, index, prefix = '') => {
+     const at = list.findIndex(old => old[key] === item[key])
+     if (at < 0) { list.push(copy(item)); return }
+     if (JSON.stringify(list[at]) === JSON.stringify(item)) return
+-    if (!directives.has(`替换：${prefix}${item[key]}`)) fail()
++    if (!directives.has(`替换：${prefix}${item[key]}`)) rejectOutput('unauthorized-replacement', field, index, key)
+     snapshot.revisions.push({ node_id: nodeId, content_id: `${prefix}${item[key]}`, before: copy(list[at]), after: copy(item), reason: '用户明确替换指令；未自动确认技术事实' })
+     list[at] = copy(item)
+   }
+   const completionIds = new Set()
+   for (const [index, entry] of model.model_completions.entries()) {
+-    if (completionIds.has(entry.content_id)) rejectOutput('duplicate-completion', 'model_completions', index)
++    if (completionIds.has(entry.content_id)) rejectOutput('duplicate-completion', 'model_completions', index, 'content_id')
+     if (!model.updates.some(x => x.content_id === entry.content_id && x.content_origin === 'model_completed'))
+-      rejectOutput('orphan-completion', 'model_completions', index)
++      rejectOutput('orphan-completion', 'model_completions', index, 'content_id')
+     completionIds.add(entry.content_id)
+   }
+   const newIds = new Set()
+   for (const [index, entry] of model.updates.entries()) {
+-    if (newIds.has(entry.content_id)) rejectOutput('duplicate-update', 'updates', index)
+-    if (entry.content_id.startsWith('host/') || entry.last_updated_flow !== nodeId
+-      || ['human_confirmed','upstream_snapshot'].includes(entry.content_origin) || entry.trust_status === 'confirmed_fact')
+-      rejectOutput('invalid-update-identity', 'updates', index)
++    if (newIds.has(entry.content_id)) rejectOutput('duplicate-update', 'updates', index, 'content_id')
++    if (entry.content_id.startsWith('host/')) rejectOutput('invalid-update-identity', 'updates', index, 'content_id')
++    if (entry.last_updated_flow !== nodeId) rejectOutput('invalid-update-identity', 'updates', index, 'last_updated_flow')
++    if (['human_confirmed','upstream_snapshot'].includes(entry.content_origin)) rejectOutput('invalid-update-identity', 'updates', index, 'content_origin')
++    if (entry.trust_status === 'confirmed_fact') rejectOutput('invalid-update-identity', 'updates', index, 'trust_status')
+     newIds.add(entry.content_id)
+     if (entry.content_origin === 'model_completed' && !completionIds.has(entry.content_id))
+-      rejectOutput('missing-completion', 'updates', index)
++      rejectOutput('missing-completion', 'updates', index, 'content_id')
+     if (['user_file','user_text'].includes(entry.content_origin)) {
+       const source = input.values[entry.source_input_id], receipt = input.receipts[entry.source_input_id]
+       const body = typeof source === 'string' ? source : source?.body
+-      if (!body || !receipt || receipt.content_origin !== entry.content_origin || receipt.sha256 !== entry.source_hash || !body.includes(entry.source_locator))
+-        rejectOutput('source-receipt-mismatch', 'updates', index)
+-    } else if (entry.trust_status === 'source_fact') rejectOutput('unsupported-source-fact', 'updates', index)
+-    replace(snapshot.contents, entry, 'content_id')
++      if (!body || !receipt) rejectOutput('source-receipt-mismatch', 'updates', index, 'source_input_id', 'source-not-found')
++      if (receipt.content_origin !== entry.content_origin) rejectOutput('source-receipt-mismatch', 'updates', index, 'content_origin', 'source-origin-mismatch')
++      if (receipt.sha256 !== entry.source_hash) rejectOutput('source-receipt-mismatch', 'updates', index, 'source_hash', 'source-hash-mismatch')
++      if (!body.includes(entry.source_locator)) rejectOutput('source-receipt-mismatch', 'updates', index, 'source_locator', 'source-locator-mismatch')
++    } else if (entry.trust_status === 'source_fact') rejectOutput('unsupported-source-fact', 'updates', index, 'trust_status')
++    replace(snapshot.contents, entry, 'content_id', 'updates', index)
+   }
+   for (const completion of model.model_completions) {
+     // Each generation retains its completion assessment, including older assessments.
+@@ -317,8 +322,8 @@
+   for (const t of tableNames) if (model.tables[t]) {
+     const seen = new Set()
+     for (const [index, row] of model.tables[t].entries()) {
+-      if (seen.has(row.row_id)) rejectOutput('duplicate-table-row', `tables.${t}`, index)
+-      seen.add(row.row_id); replace(snapshot.tables[t].rows, row, 'row_id', `${t}/`)
++      if (seen.has(row.row_id)) rejectOutput('duplicate-table-row', `tables.${t}`, index, 'row_id')
++      seen.add(row.row_id); replace(snapshot.tables[t].rows, row, 'row_id', `tables.${t}`, index, `${t}/`)
+     }
+     if (snapshot.tables[t].rows.length) snapshot.tables[t].status = 'generated'
+   }
+@@ -335,8 +340,10 @@
+     snapshot.warnings.push(copy(entry)); warningIds.add(entry.warning_id)
+   }
+   for (const [index, entry] of model.warnings.entries()) {
+-    if (entry.status !== 'open' || entry.first_flow !== nodeId || entry.inherited_from !== 'none' || warningIds.has(entry.warning_id))
+-      rejectOutput('invalid-warning', 'warnings', index)
++    if (entry.status !== 'open') rejectOutput('invalid-warning', 'warnings', index, 'status')
++    if (entry.first_flow !== nodeId) rejectOutput('invalid-warning', 'warnings', index, 'first_flow')
++    if (entry.inherited_from !== 'none') rejectOutput('invalid-warning', 'warnings', index, 'inherited_from')
++    if (warningIds.has(entry.warning_id)) rejectOutput('invalid-warning', 'warnings', index, 'warning_id')
+     snapshot.warnings.push(copy(entry)); warningIds.add(entry.warning_id)
+   }
+   // Retain actual inputs and every node's complete prose independently of model-proposed updates.
+--- a/src/v340-native-model.js
++++ b/src/v340-native-model.js
+@@ -9,7 +9,7 @@
+ import { loadM06BusinessInstruction } from './m06-business-resources.js'
+ import { loadM06PublicInstruction as loadM06BusinessInstruction013 } from './m06-public-resources-r1.js'
+ import { WorkspaceMaterialError } from './workspace-materials.js'
+-import { normalizeLocalExecutionSummary } from './local-run-summary.js'
++import { normalizeLocalExecutionSummary, v340SchemaFieldIssue } from './local-run-summary.js'
+ import { PATENT_DISCLOSURE_SUITE } from './local-skill-suites.js'
+ import { loadPatentDisclosureClaimsInstruction } from './patent-disclosure-claims.js'
+ import { OASIS_TEXT_BATCH, SECOND_TEXT_BATCH_BINDINGS, TEXT_BATCH_BINDINGS, TEXT_BATCH_MAX_OUTPUT } from './oasis-text-skill-bindings.js'
+@@ -185,9 +185,11 @@
+         const executionSummary=normalizeLocalExecutionSummary(response.executionSummary)
+         let value
+         try{value=JSON.parse(response.body)}
+-        catch{return{status:'failed',code:'INVALID_OUTPUT',executionSummary:{...executionSummary,failureStage:'result-json'}}}
++        catch{return{status:'failed',code:'INVALID_OUTPUT',executionSummary:{...executionSummary,failureStage:'result-json',
++          fieldIssue:{code:'invalid-json',path:[]}}}}
+         try{return{status:'completed',output:parseV340ModelOutput(value),executionSummary}}
+-        catch{return{status:'failed',code:'INVALID_OUTPUT',executionSummary:{...executionSummary,failureStage:'result-schema'}}}
++        catch(error){return{status:'failed',code:'INVALID_OUTPUT',executionSummary:{...executionSummary,failureStage:'result-schema',
++          fieldIssue:v340SchemaFieldIssue(error,value)}}}
+       }catch(error){return{status:'failed',code:error instanceof WorkspaceMaterialError&&error.code==='MODEL_UNAVAILABLE'?'MODEL_UNAVAILABLE':'INVALID_INPUT'}}
+     },
+   })
+--- a/src/v340-runtime-service.js
++++ b/src/v340-runtime-service.js
+@@ -9,7 +9,7 @@
+ import { WorkspaceMaterialError } from './workspace-materials.js'
+ import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
+ import { captureV340InputSnapshot,restoreV340Prepared } from './v340-input-snapshot.js'
+-import { assemblyIssueSchema, normalizeLocalExecutionSummary } from './local-run-summary.js'
++import { assemblyIssueSchema, fieldIssueSchema, normalizeLocalExecutionSummary } from './local-run-summary.js'
+ 
+ const fail=(code,message)=>{throw new WorkspaceMaterialError(code,message)}
+ const parse=(name,input)=>{const result=v340Commands[name].safeParse(input);if(!result.success)fail('V340_INVALID_INPUT','新版任务输入无效。');return result.data}
+@@ -133,11 +133,14 @@
+             const executionSummary=normalizeLocalExecutionSummary(response?.executionSummary)
+             if(response?.status==='completed'){
+               delete executionSummary.failureStage
++              delete executionSummary.fieldIssue
+               try{change={status:'completed',failureCode:null,result:assembleV340Document({nodeId:admitted.nodeId,workflowRunUid:admitted.workflowRunUid,generatedAt:admitted.createdAt,prepared,output:response.output}),executionSummary}}
+               catch(error){
+                 const issue=error instanceof V340AssemblyIssue?assemblyIssueSchema.safeParse(error.issue):null
++                const field=error instanceof V340AssemblyIssue?fieldIssueSchema.safeParse(error.fieldIssue):null
+                 change={status:'failed',failureCode:'INVALID_OUTPUT',result:null,executionSummary:{...executionSummary,
+-                  failureStage:'result-assembly',...(issue?.success?{assemblyIssue:issue.data}:{})}}
++                  failureStage:'result-assembly',...(issue?.success?{assemblyIssue:issue.data}:{}),
++                  ...(field?.success?{fieldIssue:field.data}:{})}}
+               }
+             }else change={status:response?.status==='failed'?'failed':'unknown',failureCode:response?.code==='ABORTED'?'ABORTED':response?.code==='INVALID_OUTPUT'?'INVALID_OUTPUT':response?.status==='failed'&&['MODEL_UNAVAILABLE','MODEL_LIMITED'].includes(response?.code)?response.code:response?.status==='failed'?'EXECUTION_FAILED':'EXECUTION_UNCONFIRMED',result:null,executionSummary}
+           }catch{change={status:'unknown',failureCode:'EXECUTION_UNCONFIRMED',result:null}}
+--- a/test/oasis-first-batch.test.mjs
++++ b/test/oasis-first-batch.test.mjs
+@@ -27,7 +27,10 @@
+ 
+ async function textCandidate(t, nodeId, field, output) {
+     const draft = { source: 'local-skill', textInputs: { [field]: material }, filePaths: {}, configuration: {} }
+-    const h = await setupNative(t, { nodeId, draft, output })
++    const h = await setupNative(t, { nodeId, draft, output, ...(typeof output === 'string' ? { async *stream() {
++      yield { type: 'text-delta', index: 0, text: output }
++      yield { type: 'finish', reason: { kind: 'stop' } }
++    } } : {}) })
+     await h.service.closeV340Runtime()
+     Object.assign(h.route, { provider: 'deepseek-official', model: 'deepseek-flash', reasoningEffort: 'low' })
+     const prepare = h.ctx.llm.prepareCall
+@@ -73,17 +76,34 @@
+   })
+ }
+ 
+-for (const { nodeId, field, badOutput, expected } of [
++for (const { nodeId, field, badOutput, expected, fieldIssue, stage = 'result-assembly' } of [
+   { nodeId: 'Flow-1-1', field: 'research_request_text',
+-    badOutput(output) { output.updates[0].source_hash = '0'.repeat(64) },
+-    expected: { code: 'source-receipt-mismatch', field: 'updates', index: 0 } },
++    badOutput(output) { output.updates[0].source_hash = '0'.repeat(64); return output },
++    expected: { code: 'source-receipt-mismatch', field: 'updates', index: 0 },
++    fieldIssue: { code: 'source-hash-mismatch', path: ['updates', 0, 'source_hash'] } },
++  { nodeId: 'Flow-1-1', field: 'research_request_text',
++    badOutput(output) { output.updates[0].source_locator = '敏感值不进入诊断'; return output },
++    expected: { code: 'source-receipt-mismatch', field: 'updates', index: 0 },
++    fieldIssue: { code: 'source-locator-mismatch', path: ['updates', 0, 'source_locator'] } },
+   { nodeId: 'Flow-1-2', field: 'technical_analysis_material_text',
+-    badOutput(output) { output.tables.T1.push({ row_id: 'P1', data: { question: '敏感值不进入诊断' } }) },
+-    expected: { code: 'duplicate-table-row', field: 'tables.T1', index: 1 } },
++    badOutput(output) { output.tables.T1.push({ row_id: 'P1', data: { question: '敏感值不进入诊断' } }); return output },
++    expected: { code: 'duplicate-table-row', field: 'tables.T1', index: 1 },
++    fieldIssue: { code: 'duplicate-table-row', path: ['tables', 'T1', 1, 'row_id'] } },
++  { nodeId: 'Flow-1-2', field: 'technical_analysis_material_text', stage: 'result-schema',
++    badOutput(output) { output.tables.T1[0].row_id = 5; return output },
++    fieldIssue: { code: 'invalid-type', path: ['tables', 'T1', 0, 'row_id'] } },
++  { nodeId: 'Flow-1-5', field: 'technical_disclosure_text', stage: 'result-schema',
++    badOutput(output) { delete output.core_result_markdown; return output },
++    fieldIssue: { code: 'missing-field', path: ['core_result_markdown'] } },
++  { nodeId: 'Flow-1-5', field: 'technical_disclosure_text', stage: 'result-schema',
++    badOutput(output) { output.warnings[0]['敏感值不进入诊断'] = '敏感值不进入诊断'; return output },
++    fieldIssue: { code: 'unexpected-field', path: ['warnings', 0] } },
++  { nodeId: 'Flow-1-5', field: 'technical_disclosure_text', stage: 'result-json',
++    badOutput() { return '{"summary":敏感值不进入诊断' },
++    fieldIssue: { code: 'invalid-json', path: [] } },
+ ]) {
+-  test(`${nodeId} retains only the rejection location and does not dispatch again`, async t => {
+-    const output = structuredOutput(nodeId, field)
+-    badOutput(output)
++  test(`${nodeId} records ${fieldIssue.code} at ${fieldIssue.path.join('.')} without retaining raw values`, async t => {
++    const output = badOutput(structuredOutput(nodeId, field))
+     const { h, service } = await textCandidate(t, nodeId, field, output)
+     const confirmation = await service.prepareV340CandidateConfirmation(h.command({ sessionId: 's', confirmed: true }))
+     const command = () => h.command({ requestKey: 'offline-reject', candidate: { sessionId: 's', confirmed: true, sha256: confirmation.sha256 } })
+@@ -91,7 +111,9 @@
+     const result = await h.settle()
+     assert.equal(result.failureCode, 'INVALID_OUTPUT')
+     assert.equal(result.result, null)
++    assert.equal(result.executionSummary.failureStage, stage)
+     assert.deepEqual(result.executionSummary.assemblyIssue, expected)
++    assert.deepEqual(result.executionSummary.fieldIssue, fieldIssue)
+     assert.doesNotMatch(JSON.stringify(result.executionSummary), /敏感值/)
+     await service.createV340Run(command())
+     assert.equal(h.seen.stream, 1)
+--- a/test/v340-native-dsh-contract.test.mjs
++++ b/test/v340-native-dsh-contract.test.mjs
+@@ -44,8 +44,8 @@
+  trust_status:'reasoned_inference',last_updated_flow:'Flow-2-6',revision_reason:'公开合成负例',
+ }]}
+ for(const [name,body,reason,expected]of[
+- ['JSON syntax','SYNTHETIC_RAW_CANARY','stop',{failureStage:'result-json',finishKind:'stop'}],
+- ['output schema',JSON.stringify({raw:'SYNTHETIC_RAW_CANARY'}),'stop',{failureStage:'result-schema',finishKind:'stop'}],
++ ['JSON syntax','SYNTHETIC_RAW_CANARY','stop',{failureStage:'result-json',finishKind:'stop',fieldIssue:{code:'invalid-json',path:[]}}],
++ ['output schema',JSON.stringify({raw:'SYNTHETIC_RAW_CANARY'}),'stop',{failureStage:'result-schema',finishKind:'stop',fieldIssue:{code:'missing-field',path:['summary']}}],
+  ['document assembly',JSON.stringify(invalidProvenance),'stop',{failureStage:'result-assembly',finishKind:'stop'}],
+  ['token limit','SYNTHETIC_RAW_CANARY','max-tokens',{failureStage:'stream',finishKind:'max-tokens'}],
+  ['valid output',JSON.stringify(MODEL_OUTPUT),'stop',{finishKind:'stop'}],

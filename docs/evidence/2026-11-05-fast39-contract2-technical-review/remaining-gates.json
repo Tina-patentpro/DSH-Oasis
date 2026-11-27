@@ -1,0 +1,57 @@
+{
+  "status": "NOT_READY_FOR_BUSINESS_IMPLEMENTATION",
+  "gates": [
+    {
+      "id": "C2-CONTRACT",
+      "blocks": "business implementation against current C2-R1",
+      "requires": [
+        "TR01-TR03 document fixes in another immutable revision",
+        "TR04-TR06 verification/identity/capacity specifications",
+        "fresh scoped re-review"
+      ]
+    },
+    {
+      "id": "RULE-SKILL-USE",
+      "blocks": "engineering/Dify production use of selected rule/Skill subset",
+      "requires": [
+        "exact selected V019 clause/M06 0.1.3 resource identity, production visibility and permitted use mapping under current S1",
+        "specific trial-scope/exception conflict disposition if any; no repeated generic permission for already-authorized document reference",
+        "operator-only and evaluation_only exclusions, no silent V012 adoption"
+      ]
+    },
+    {
+      "id": "SOURCE-DESIGN",
+      "blocks": "actual source workflow production",
+      "requires": [
+        "source Batch/target/prior exit or bounded exception",
+        "owned transaction with approved_records",
+        "controlled candidate designation when produced"
+      ]
+    },
+    {
+      "id": "DELIVERY-BINDING",
+      "blocks": "service activation/integration",
+      "requires": [
+        "actual candidate DSL/node ID/hash map after production",
+        "backend/client source manifests, result schema/capacity/compatibility tests",
+        "explicit delivery fingerprint algorithm and actual service/version/ownership binding"
+      ]
+    },
+    {
+      "id": "RUNTIME-ACCEPTANCE-RELEASE",
+      "blocks": "real generation/deployment/product acceptance/release respectively",
+      "requires": [
+        "separate current explicit authorization and same-version evidence",
+        "unknown-no-retry preserved",
+        "professional and user acceptance; original G0/formal API gates remain"
+      ]
+    }
+  ],
+  "not_a_gate": [
+    "old historical app adoption receipt need not be invented",
+    "static candidate need not pass its own future real run before it can be produced",
+    "unrelated project completion is not a blanket prerequisite"
+  ],
+  "calls_authorized_by_this_task": 0,
+  "current_supplement": "TEST-ASSETS-20261105-BM1-R1-S1"
+}

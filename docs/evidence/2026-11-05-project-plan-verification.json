@@ -1,0 +1,68 @@
+{
+  "scope": "planning_document_and_preservation_only",
+  "time": "2026-11-05T08:09:26.102354+08:00",
+  "status": "PASS",
+  "planning_inputs_record": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-project-plan-inputs.json",
+  "planning_inputs_record_sha256": "956713577267a1e52c4905c7fe1ffead150f3fbef7d794fe77dfd33c7c4c09ab",
+  "plan": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-05-project-progress-and-next-plan.md",
+    "revision": "R1",
+    "sha256": "2474f23631de10b91095d2ac19bbc7080e6249ddc12221b880164ac74b8a22f4"
+  },
+  "master": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+    "before_sha256": "c0657d2dcf3c55b6decdbce6790750b21e738be82dce8f393a5f312a8b4a573e",
+    "after_sha256": "29d7aba8f354585a5616ca69697a220ab8fab9932ae7c9bbf45c47149e274436",
+    "original_bytes_preserved_as_prefix": true,
+    "before_image": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/planning-20261105/before/2026-10-25-dsh-oasis-master-plan.md"
+  },
+  "preexisting_files_count": 128,
+  "allowed_changed_preexisting_file": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+  "unexpected_changed_preexisting_files": [],
+  "input_drift_excluding_authorized_master_append": [],
+  "local_links_checked": 13,
+  "missing_links": [],
+  "new_plan_trailing_whitespace_lines": [],
+  "saved_artifact_checks": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/claims_20261031132202_9a439835.md",
+      "expected_sha256": "e0fb29d388c9bae19be253e7bd048c31ed8ba40987adf3cdddc8d1bd354ff815",
+      "actual_sha256": "e0fb29d388c9bae19be253e7bd048c31ed8ba40987adf3cdddc8d1bd354ff815",
+      "matches_report": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/claims_20261031132202_9a439835.oasis.json",
+      "expected_sha256": "8c6c8a3006f79f1a769bda75abe722fa4c41d2014f501ee510e3a259bf3fe89e",
+      "actual_sha256": "8c6c8a3006f79f1a769bda75abe722fa4c41d2014f501ee510e3a259bf3fe89e",
+      "matches_report": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/claims_fast39_calibration_20261031143607_OIW.md",
+      "expected_sha256": "81a7ca8eeb01c0156e66b9cc64f17bfa24c5200c5596dfd5f6959f7cae6fe06f",
+      "actual_sha256": "81a7ca8eeb01c0156e66b9cc64f17bfa24c5200c5596dfd5f6959f7cae6fe06f",
+      "matches_report": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/claims_fast39_r2_calibration_20261031210121_OIW.md",
+      "expected_sha256": "48f619c5b6de781235b9b24a31dbafe0e8f2903864807b6152be89d625105b55",
+      "actual_sha256": "48f619c5b6de781235b9b24a31dbafe0e8f2903864807b6152be89d625105b55",
+      "matches_report": true
+    }
+  ],
+  "coordination_check": {
+    "command": "python3 -B /Users/tinadong7036/Documents/开发项目/docs/coordination/check.py",
+    "observed_status": "PASS",
+    "scope": "coordination_structure_only",
+    "errors": []
+  },
+  "business_tests_or_builds_run": false,
+  "runtime_or_fee_actions": false,
+  "independent_review": false,
+  "self_review": [
+    "目标与原DS-01—05、P30和两项current_entry相符",
+    "旧任务1不再安排重复生成，R2实测FAIL优先于离线约束绿色",
+    "缺专业/用户、PDF资格、完整F/发行不被文档检查关闭",
+    "未假定根因或编造修复签名；先诊断再冻结受影响实施",
+    "无新授权、无其他项目整体完成前置、无已消费预算复用"
+  ]
+}

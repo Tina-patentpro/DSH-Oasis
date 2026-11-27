@@ -1,0 +1,38 @@
+✔ handoff preserves receipt and business bytes, records originals, and releases ownership (226.108291ms)
+✔ refuses mismatched expectedOldControllerSHA256 before mutation (87.576416ms)
+✔ refuses mismatched expectedNewControllerSHA256 before mutation (74.468375ms)
+✔ refuses mismatched expectedBundleSHA256 before mutation (66.890916ms)
+✔ refuses mismatched expectedCurrent before mutation (64.627042ms)
+✔ existing installed writer prevents handoff without mutation (63.405625ms)
+✔ state write failure restores exact original control and installation bytes (74.571167ms)
+✔ preexisting recovery marker is never removed (43.141167ms)
+✔ rollback failure retains recovery marker and releases the installed lease (64.974083ms)
+✔ snapshot read failure releases JSON ownership before propagating the error (73.477375ms)
+✔ recovery launch spec carries exclusive zero-real policy and does not launch App (151.17325ms)
+✔ recovery installation rejects budget (30.751167ms)
+✔ recovery installation rejects guard drift (34.328666ms)
+✔ recovery installation rejects mixed mode (32.2615ms)
+✔ recovery installation rejects foreign root (34.375292ms)
+✔ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (168.399333ms)
+✔ native M06 preparation rejects second model request (29.902833ms)
+✔ native M06 preparation rejects API budget (34.348792ms)
+✔ native M06 preparation rejects foreign root (65.143334ms)
+✔ native M06 preparation rejects foreign endpoint (29.522125ms)
+✔ native M06 preparation rejects provider retries (33.401417ms)
+✔ native M06 preparation rejects output above scope (20.208708ms)
+✔ native M06 preparation rejects another model provider (21.70575ms)
+✔ native M06 preparation rejects mixed recovery (21.202583ms)
+✔ native M06 preparation rejects guard drift (20.388833ms)
+{"root":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-LJ1eAr/installed","current":"3b38446f66d7204ed7eac08fc05de63d7fe5e7d9cb76057dd33cf33727e772e9","pid":952,"prefix":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-LJ1eAr/installed/data/evidence/installed-launch-9db0a5a1-be85-4e2f-9e28-3e387e8c9f0c"}
+✔ installed zero spec uses sealed prepared Profile and live writer without spawning App (205.254625ms)
+✔ installed zero policy rejects nonzero budgets and incorrect guard bindings before creating root (32.685292ms)
+✔ installed zero policy rejects rehashed wrong guard before creating root (30.795209ms)
+✔ Desktop preparation failure leaves recovery refusal and releases maintenance lease (59.956375ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 913.094792

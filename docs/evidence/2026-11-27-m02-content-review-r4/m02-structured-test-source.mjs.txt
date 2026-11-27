@@ -1,0 +1,46 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import * as doc from '../src/v340-document.js'
+import {v340Commands} from '../src/v340-runtime-contract.js'
+import {v340Hash as hash} from '../src/v340-catalog.js'
+import {resultFixture} from './v340-result-fixture.mjs'
+const text='P1：调整允许移动，保持限制移动。预期未实测。'
+const output={summary:'合成测试',core_result_markdown:'待核原稿',updates:[],terms_master:[],warnings:[],model_completions:[],tables:{T1:[{row_id:'p1',data:{review:'old'}}],T2:[{row_id:'s2',data:{review:'old'}}],T3:[{row_id:'e2',data:{review:'old'}}]}}
+const setup=()=>{const prepared=doc.prepareV340Inputs('Flow-1-2',{technical_analysis_material_text:text});return {prepared,parent:doc.assembleV340Document({nodeId:'Flow-1-2',workflowRunUid:'12345678-1234-4234-8234-123456789abc',generatedAt:'2026-11-27T05:00:00.000Z',prepared,output})}}
+const patch=parent=>({schemaVersion:1,reason:'专业内容审核R4：根因降级、S2机制分开',replacements:['T1','T2','T3'].map(table=>({table,rowId:parent.snapshot.tables[table].rows[0].row_id,beforeSha256:hash(JSON.stringify(parent.snapshot.tables[table].rows[0])),data:{review:'concept_reviewed_unverified',evidence:'需求直接记载；机理假设待验证'},sources:[{inputId:'technical_analysis_material_text',sourceSha256:hash(text),quote:text,start:0,end:text.length}]}))})
+const revise=(f,p)=>doc.reviseV340Document(f.parent,{workflowRunUid:'87654321-1234-4234-8234-123456789abc',generatedAt:'2026-11-27T05:01:00.000Z',body:'R4条件性分析',m02Structure:p,prepared:f.prepared})
+test('M02 explicit original-row edits preserve before/after, facts, warnings and source history',()=>{
+ const f=setup(),before=structuredClone(f.parent),p=patch(f.parent),next=revise(f,p)
+ for(const t of ['T1','T2','T3'])assert.equal(next.snapshot.tables[t].rows[0].data.review,'concept_reviewed_unverified')
+ assert.deepEqual(f.parent,before);assert.deepEqual(next.snapshot.input_history,before.snapshot.input_history);assert.deepEqual(next.snapshot.model_completions,[])
+ assert.equal(next.snapshot.revisions.length,3);assert.equal(next.snapshot.manual_edit_manifest.at(-1).m02_structured_edit_sha256,doc.m02StructuredEditHash(p));assert.equal(next.snapshot.deliverable_status,'not_recommended_for_filing')
+ assert.equal(doc.inspectV340Document({filename:next.fileName,body:next.body,sha256:next.sha256},'Flow-1-2').status,'accepted')
+})
+for(const [label,mutate] of [
+ ['wrong original row hash',p=>p.replacements[0].beforeSha256='f'.repeat(64)],
+ ['new row',p=>p.replacements[0].rowId='invented'],
+ ['duplicate row',p=>p.replacements.push(structuredClone(p.replacements[0]))],
+ ['other table',p=>p.replacements[0].table='T4'],
+ ['instruction as source',p=>p.replacements[0].sources[0].inputId='user_input'],
+ ['wrong source hash',p=>p.replacements[0].sources[0].sourceSha256='f'.repeat(64)],
+ ['wrong quote',p=>p.replacements[0].sources[0].quote='非原文'],
+ ['wrong quote offset',p=>p.replacements[0].sources[0].start=1],
+ ['missing table',p=>p.replacements.pop()],
+])test('M02 rejects '+label+' without changing parent',()=>{const f=setup(),before=JSON.stringify(f.parent),p=patch(f.parent);mutate(p);assert.throws(()=>revise(f,p));assert.equal(JSON.stringify(f.parent),before)})
+test('M02 edit is restricted to M02 and cannot mix M06 edit intent',()=>{
+ const f=setup(),p=patch(f.parent);f.parent=structuredClone(f.parent);f.parent.snapshot.node_id='Flow-1-1';assert.throws(()=>revise(f,p))
+ assert.equal(v340Commands['result/edit'].safeParse({workspaceId:'a',taskId:'t',runId:'run',versionId:'run',expectedRevision:0,baseSha256:'a'.repeat(64),draftSha256:'b'.repeat(64),requestKey:'mix',m02Structure:p,m06Structure:{}}).success,false)
+})
+test('public result edit binds M02 row patch to idempotency and requires new review',async t=>{
+ const h=await resultFixture(t,'local-skill',{nodeId:'Flow-1-2',textInputs:{technical_analysis_material_text:text},output}),runId=h.run().runId,parent=structuredClone(h.run().result)
+ await h.service.reviewV340Result(h.command({runId,versionId:runId,resultSha256:parent.sha256,confirmed:true}))
+ await h.service.saveV340ResultDraft(h.command({runId,baseSha256:parent.sha256,body:'R4条件性分析',format:'core-markdown'}))
+ const p=patch(parent),request={runId,versionId:runId,baseSha256:parent.sha256,draftSha256:hash('R4条件性分析'),requestKey:'m02-r4',m02Structure:p}
+ const bad=structuredClone(request);bad.m02Structure.replacements[0].sources[0].quote='不存在';const before=JSON.stringify(h.record());assert.equal((await h.handler('workflow/v340/result/edit',h.command(bad))).ok,false);assert.equal(JSON.stringify(h.record()),before)
+ assert.equal((await h.handler('workflow/v340/result/edit',h.command(request))).ok,true)
+ const v=h.run().resultVersions.at(-1);assert.equal(v.review.status,'not-reviewed');assert.equal(v.result.snapshot.tables.T2.rows[0].data.review,'concept_reviewed_unverified')
+ await assert.rejects(()=>h.service.prepareV340Save(h.command({runId,versionId:v.versionId,resultSha256:v.result.sha256})),e=>e.code==='V340_REVIEW_REQUIRED')
+ const committed=JSON.stringify(h.run());assert.equal((await h.handler('workflow/v340/result/edit',h.command(request))).ok,true);assert.equal(JSON.stringify(h.run()),committed)
+ const changed=structuredClone(request);changed.m02Structure.reason='同请求其他内容';assert.equal((await h.handler('workflow/v340/result/edit',h.command(changed))).error.code,'V340_EDIT_CONFLICT')
+ assert.deepEqual(h.run().result,parent);assert.equal(h.generationCalls,1)
+})

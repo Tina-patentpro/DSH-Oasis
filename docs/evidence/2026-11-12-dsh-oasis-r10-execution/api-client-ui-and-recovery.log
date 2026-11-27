@@ -1,0 +1,78 @@
+✔ late conversation preparation cannot insert after the selected version changes (70.110125ms)
+✔ a generation response preserves an unsaved sibling draft instead of replacing it (8.742833ms)
+✔ fixture capability is off by default and real generation is never a fallback (0.373083ms)
+✔ two synthetic sources retain independent evidence but share review, edit and content-addressed artifacts (13.886458ms)
+✔ prepared run is durable and locks input, stops without rerunning and ignores late results (7.587542ms)
+✔ both sources use existing no-overwrite Markdown publication with synthetic provenance (42.936ms)
+✔ store to RPC to Host closes the two-source synthetic loop and prepares native input without sending (45.243333ms)
+✔ native handoff local-skill: exact reviewed version RPC draft and saved Markdown are read-only across reopen (125.438ms)
+✔ native handoff oasis-api: exact reviewed version RPC draft and saved Markdown are read-only across reopen (70.872416ms)
+✔ current file edits do not acquire reviewed status; fixed draft still contains the immutable reviewed body (48.982041ms)
+✔ handoffs reject stale, unreviewed, foreign, edited and unresolved selections without changing disk (43.636792ms)
+✔ client projects native open and inserts a fixed version once without submit or overwriting composer (44.873625ms)
+✔ reviewed result page exposes fixed draft, current file opening and the existing Markdown export confirmation (42.93575ms)
+✔ long reviewed versions refuse inline overflow and expose the entire immutable copy/export fallback (119.605791ms)
+✔ saved-file resolution refuses a foreign receipt and redirected Markdown without modifying disk (49.34525ms)
+✔ late fixed reference session cannot change composer (21.617ms)
+✔ late fixed reference composer cannot change composer (27.853125ms)
+✔ late fixed reference version-away-back cannot change composer (24.376ms)
+✔ late fixed reference dirty cannot change composer (27.603125ms)
+✔ late fixed reference disposed cannot change composer (27.13425ms)
+✔ late native open after a version selection change does not call the native file interface (43.466917ms)
+✔ RPC rejects rebound identity and contradictory current-file review status (47.755375ms)
+✔ Workspace root rebinding during file verification cannot return the previous project path (36.949458ms)
+✔ fixed draft preserves exactly 150000 characters and rejects one character more without truncation (839.392792ms)
+✔ P2-E local-skill: saved 817KB upstream remains accepted and passes adjacent handoff without a whole-file copy (426.232042ms)
+✔ P2-E oasis-api: saved 817KB upstream remains accepted and passes adjacent handoff without a whole-file copy (340.520041ms)
+✔ P2-E only the exact canonical filename and one uppercase _OIW suffix are accepted (14.068583ms)
+✔ P2-C untagged whole-document draft is recovery-only; explicit core edit preserves it and original evidence across reopen (59.370958ms)
+✔ P2-C old per-version drafts are never overwritten or discarded by explicit new-core draft operations (38.087625ms)
+✔ P2-C a valid core draft cannot hide a corrupted legacy draft base for the same version (31.233792ms)
+✔ P2-B 310000-character core draft publishes within 1MiB; oversized final candidate keeps draft and original (293.845458ms)
+✔ P2-B new human drafts enforce UTF-8 bytes and NUL safety without loosening model output limits (33.466875ms)
+✔ P2-A empty Workspace creates and activates the first V340 task without a chooser; errors are visible and retryable (15.462708ms)
+✔ P2-D transient V340 catalog failure is visible, leaves legacy catalog and local drafts intact, and retries successfully (15.928833ms)
+✔ accepted debounced ordinary draft closes to disk removed=false (69.613541ms)
+ℹ {"removed":false,"calls":["a"],"title":"accepted ordinary title","timers":[]}
+✔ accepted debounced ordinary draft closes to disk removed=true (34.677875ms)
+ℹ {"removed":true,"calls":["a"],"title":"accepted ordinary title","timers":[]}
+✔ accepted in-flight ordinary save retains its drain deadline removed=false (37.596375ms)
+ℹ {"removed":false,"aborted":false,"timers":[10],"disposed":false}
+✔ accepted in-flight ordinary save retains its drain deadline removed=true (32.704084ms)
+ℹ {"removed":true,"aborted":false,"timers":[10],"disposed":false}
+✔ accepted queued V340 draft is not silently discarded after a prior response removed=false (34.870958ms)
+ℹ {"removed":false,"calls":[{"action":"task/draft","body":"first accepted draft"},{"action":"task/draft","body":"second accepted draft"}],"errors":[null,null],"disk":"second accepted draft"}
+✔ accepted queued V340 draft is not silently discarded after a prior response removed=true (23.281167ms)
+ℹ {"removed":true,"calls":[{"action":"task/draft","body":"first accepted draft"},{"action":"task/draft","body":"second accepted draft"}],"errors":[null,null],"disk":"second accepted draft"}
+✔ removed and re-added Workspace still drains ordinary draft with exact revision (25.473542ms)
+✔ same-Workspace accepted rename after an in-flight V340 write stays recoverable close=false (25.437041ms)
+ℹ {"close":false,"calls":["task/draft","replace"],"status":"ready","clientTitle":"concurrent accepted title","diskTitle":"concurrent accepted title"}
+✔ same-Workspace accepted rename after an in-flight V340 write stays recoverable close=true (20.310625ms)
+ℹ {"close":true,"calls":["task/draft","replace"],"status":"idle","diskTitle":"concurrent accepted title"}
+✔ independent accepted V340 write drains before another Workspace deadline (31.418417ms)
+✔ independent hydration and accepted ordinary actions respect close deadline late=false (23.9905ms)
+✔ independent hydration and accepted ordinary actions respect close deadline late=true (22.979583ms)
+✔ an edit accepted synchronously while replayed state publishes is saved after the replayed edit (21.70375ms)
+✔ a V340 failure does not replace a later synchronous ordinary edit with its earlier snapshot (21.152625ms)
+✔ removed Workspace cannot accept new public actions while its old input and result draft writes drain (27.9345ms)
+✔ removed ordinary in-flight save shares the deadline and a late abort cannot revive state (16.183459ms)
+✔ removed hydration still flushes ordinary actions accepted before removal (22.091791ms)
+✔ ordinary creation and renames replay once between two V340 writes without changing frozen result evidence (30.33775ms)
+✔ accepted V340 task creation survives removal and ordinary replay keeps the new Host task (29.326333ms)
+✔ external revision changes still refuse an ordinary replay without overwriting another writer (21.39775ms)
+✔ deadline during a V340 response prevents all late replay and subsequent accepted RPC dispatch (19.006416ms)
+✔ retaining accepted writes cannot dispatch reference after synchronous Workspace removal (37.166208ms)
+✔ retaining accepted writes cannot dispatch open after synchronous Workspace removal (37.466625ms)
+✔ explicit public flush cannot send an ordinary snapshot ahead of an in-flight V340 response (19.393333ms)
+✔ hydration publishes the latest accepted synchronous ordinary edit before closing removed=false (18.572292ms)
+✔ hydration publishes the latest accepted synchronous ordinary edit before closing removed=true (18.096375ms)
+✔ legacy page mutation reports busy without bypassing an in-flight V340 write and can retry afterward (30.048459ms)
+✔ legacy mutation cannot enter during the same-tick queued V340 ownership gap (28.518167ms)
+ℹ tests 62
+ℹ suites 0
+ℹ pass 62
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1875.484917

@@ -1,0 +1,90 @@
+✖ actual backend handler prefixed legacy body and six outputs survive DSH transport, persistence and cold reopen (77.032708ms)
+✖ legacy body and C4 rendering retain independent integrity checks after backend pairing (54.711958ms)
+✖ actual backend known provider failure preserves original queue fact and DSH bounded error receipt without completed artifact (53.144708ms)
+✖ actual backend pending provider preserves original queue fact and DSH bounded error receipt without completed artifact (54.230542ms)
+✖ actual backend conflicting run ID preserves original queue fact and DSH bounded error receipt without completed artifact (53.839333ms)
+✖ actual backend invalid sixth output preserves original queue fact and DSH bounded error receipt without completed artifact (52.057959ms)
+✖ actual backend zero claims preserves original queue fact and DSH bounded error receipt without completed artifact (53.171625ms)
+✖ actual backend UTF16 overflow preserves original queue fact and DSH bounded error receipt without completed artifact (55.147208ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 622.314875
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:42:1
+✖ actual backend handler prefixed legacy body and six outputs survive DSH transport, persistence and cold reopen (77.032708ms)
+  SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at paired (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:24:24)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:43:34)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:61:1
+✖ legacy body and C4 rendering retain independent integrity checks after backend pairing (54.711958ms)
+  SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at paired (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:24:24)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:62:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:79:4
+✖ actual backend known provider failure preserves original queue fact and DSH bounded error receipt without completed artifact (53.144708ms)
+  SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at paired (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:24:24)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:80:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:79:4
+✖ actual backend pending provider preserves original queue fact and DSH bounded error receipt without completed artifact (54.230542ms)
+  SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at paired (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:24:24)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:80:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:79:4
+✖ actual backend conflicting run ID preserves original queue fact and DSH bounded error receipt without completed artifact (53.839333ms)
+  SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at paired (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:24:24)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:80:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:79:4
+✖ actual backend invalid sixth output preserves original queue fact and DSH bounded error receipt without completed artifact (52.057959ms)
+  SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at paired (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:24:24)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:80:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:79:4
+✖ actual backend zero claims preserves original queue fact and DSH bounded error receipt without completed artifact (53.171625ms)
+  SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at paired (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:24:24)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:80:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:79:4
+✖ actual backend UTF16 overflow preserves original queue fact and DSH bounded error receipt without completed artifact (55.147208ms)
+  SyntaxError: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at paired (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:24:24)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:80:25)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

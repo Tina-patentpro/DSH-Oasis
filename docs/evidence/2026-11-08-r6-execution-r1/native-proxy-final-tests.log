@@ -1,0 +1,47 @@
+✔ handoff preserves receipt and business bytes, records originals, and releases ownership (310.930292ms)
+✔ refuses mismatched expectedOldControllerSHA256 before mutation (134.510708ms)
+✔ refuses mismatched expectedNewControllerSHA256 before mutation (95.070709ms)
+✔ refuses mismatched expectedBundleSHA256 before mutation (80.046875ms)
+✔ refuses mismatched expectedCurrent before mutation (81.124125ms)
+✔ existing installed writer prevents handoff without mutation (87.497ms)
+✔ state write failure restores exact original control and installation bytes (96.966667ms)
+✔ preexisting recovery marker is never removed (71.082583ms)
+✔ rollback failure retains recovery marker and releases the installed lease (77.481333ms)
+✔ snapshot read failure releases JSON ownership before propagating the error (73.992292ms)
+✔ recovery launch spec carries exclusive zero-real policy and does not launch App (192.57625ms)
+✔ recovery installation rejects budget (41.51775ms)
+✔ recovery installation rejects guard drift (53.281917ms)
+✔ recovery installation rejects mixed mode (50.544166ms)
+✔ recovery installation rejects foreign root (42.068291ms)
+✔ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (234.807125ms)
+✔ native M06 preparation rejects second model request (51.229917ms)
+✔ native M06 preparation rejects API budget (46.754458ms)
+✔ native M06 preparation rejects foreign root (95.06125ms)
+✔ native M06 preparation rejects foreign endpoint (36.603208ms)
+✔ native M06 preparation rejects provider retries (25.295708ms)
+✔ native M06 preparation rejects output above scope (22.00525ms)
+✔ native M06 preparation rejects another model provider (28.787125ms)
+✔ native M06 preparation rejects mixed recovery (24.347292ms)
+✔ native M06 preparation rejects guard drift (23.163417ms)
+{"root":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-BKNirm/installed","current":"3d1dfcd2b422e4f8650159ee485a203d672c6614cfc0d7ff7290a46f9f09b7ec","pid":4164,"prefix":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-BKNirm/installed/data/evidence/installed-launch-a6335711-65d5-4e4e-bbe3-c2991d5eec17"}
+✔ installed zero spec uses sealed prepared Profile and live writer without spawning App (281.231ms)
+✔ installed zero policy rejects nonzero budgets and incorrect guard bindings before creating root (46.369917ms)
+✔ installed zero policy rejects rehashed wrong guard before creating root (40.693208ms)
+✔ Desktop preparation failure leaves recovery refusal and releases maintenance lease (86.119ms)
+{"root":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-OKrSqJ/installed","current":"735340085962fcde432776500a6aa581e0b5fb4d50fb741650e03ae762c82364","pid":4165,"prefix":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-OKrSqJ/installed/data/evidence/installed-launch-1cef18d0-7b02-44d1-89a0-f8f7c4da764e"}
+✔ fresh installation verifies signatures, materializes only at final paths and carries standalone control (127.433041ms)
+✔ Desktop resolves client modules from the installed release rather than the data-only directory (135.7615ms)
+✔ installed same-root upgrade then explicit rollback preserve later public edits and UNKNOWN (261.77075ms)
+✔ four installed writers and maintenance refuse busy before callbacks; old current is not guessed (103.734625ms)
+✔ package drift refuses before installation and pnpm failure restores the existing current (91.795667ms)
+✔ installation data aliases and controller drift fail closed before callbacks (61.388875ms)
+✔ a correctly rehashed bundle still cannot enable model plugins or bind a component outside its payload (21.915292ms)
+✔ failure after active Profile replacement restores old bytes; failed restore leaves explicit recovery refusal (160.206167ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1173.090875

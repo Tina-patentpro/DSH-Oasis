@@ -1,0 +1,164 @@
+{
+  "at": "2026-11-06T11:25:53.354395+08:00",
+  "executor": "Codex single agent",
+  "result": "PASS",
+  "command": "python3 via zsh: protected raw hashes, old-prefix/suffix, local links, bounded plan assertions, archive/metadata identity and git; coordination check.py -B",
+  "scope": "planning documents and identity preservation only; no product tests/build/install/startup, real calls, source governance execution, legal/professional/user or publication acceptance",
+  "inputs": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-project-summary-next-plan-r2/inputs.json",
+  "checks": [
+    {
+      "check": "1012 protected prior files unchanged",
+      "passed": true,
+      "detail": {
+        "count": 1012,
+        "drift": []
+      }
+    },
+    {
+      "check": "complete old-byte preservation: docs/project-current-state.md",
+      "passed": true,
+      "detail": {
+        "mode": "prefix",
+        "old_sha256": "cb31302c3343ef7c54ef09eff4186570724434ed7768b85989b96bcd0b693e5e",
+        "new_sha256": "a361b67ab41a691803a5294dc29b525c2d8fdadeffb7197c7a4d89e373a848f1",
+        "old_bytes": 323326
+      }
+    },
+    {
+      "check": "complete old-byte preservation: docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "passed": true,
+      "detail": {
+        "mode": "prefix",
+        "old_sha256": "e55d3028c2ea3538ae5003a6c1d14a54bafbd4489640c38e853fb3e9b67f03b7",
+        "new_sha256": "f9a8b74f9ba28415407271d73762019da0c72c00fb194bb63d07f5abfa893962",
+        "old_bytes": 113946
+      }
+    },
+    {
+      "check": "complete old-byte preservation: docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "passed": true,
+      "detail": {
+        "mode": "append",
+        "old_sha256": "861a5b49c2dc524df90fe1bb9e169ff61080a56f5424c0f5927a474c98d39788",
+        "new_sha256": "491bf078a9a722930e7b180beb128ab16d1306e666a9af9dd70f09923a755506",
+        "old_bytes": 47960
+      }
+    },
+    {
+      "check": "new document local links resolve",
+      "passed": true,
+      "detail": {
+        "count": 20,
+        "missing": []
+      }
+    },
+    {
+      "check": "plan has goal architecture stack spec constraints and review focus",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "six bounded next work sections with explicit exits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "preserves plan-only and no-real-call-publication scope",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "corrects existing controlled Profile rather than repairing it again",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "native zero-generation mode does not reuse realAcceptance",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "license direction draft only formal adoption separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "PREP2 source stages and remote defects remain separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "structured revision and professional user acceptance remain separate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "Skills-first avoids all-target and format waiting",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "current local archive identity matches cited bound version",
+      "passed": true,
+      "detail": "c476b1f091b483d4ca2342f68cccb350d4af217f6d916cd8e59866f1084690c5"
+    },
+    {
+      "check": "current local archive has 134 regular members",
+      "passed": true,
+      "detail": 134
+    },
+    {
+      "check": "package remains private 0.0.1 with no active license field",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "git HEAD unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "git branch unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no pre-existing git status entry removed",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "only own new git paths",
+      "passed": true,
+      "detail": [
+        "?? docs/plans/2026-11-06-project-summary-and-next-plan-r2.md"
+      ]
+    },
+    {
+      "check": "coordination structure only",
+      "passed": true,
+      "detail": {
+        "exit_code": 0,
+        "scope": "coordination_structure_only"
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-06-project-summary-and-next-plan-r2.md",
+      "bytes": 18951,
+      "sha256": "38ea73e8f23300679b09e73afe74830576254e370937d45df6c13815f6c46694"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-project-summary-next-plan-r2/record.md",
+      "bytes": 3805,
+      "sha256": "a25a1e59a794aacf0adde26bd3ace82fda95829a04f8eeb424ba5464d93c2279"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-project-summary-next-plan-r2/inputs.json",
+      "bytes": 33219,
+      "sha256": "79267773728679caa72cb614397daefe008c66ed7400040877bc32e88307ba87"
+    }
+  ],
+  "failed": []
+}

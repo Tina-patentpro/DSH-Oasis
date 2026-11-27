@@ -1,0 +1,96 @@
+{
+  "version": "C3-R1",
+  "mandatory_after_schema": true,
+  "checks": [
+    {
+      "id": "X01",
+      "finding": "TR01",
+      "owner": "registry",
+      "assertion": "all8 original receipts exact; none normalized separately; status/role/body hash mapping",
+      "failure_code": "FAST39_INPUT_RECEIPT_INVALID"
+    },
+    {
+      "id": "X02",
+      "finding": "TR02",
+      "owner": "draft stages",
+      "assertion": "all plans/features exactly once; no extra fields; omit/emit constraints; process by anchor order",
+      "failure_code": "FAST39_RESULT_FIELDS_INVALID"
+    },
+    {
+      "id": "X03",
+      "finding": "TR02",
+      "owner": "normalizer/formatter",
+      "assertion": "normalizer_count == tree_count == final numbering == nonnull maps == segments; map role and graph valid",
+      "failure_code": "FAST39_RESULT_FIELDS_INVALID"
+    },
+    {
+      "id": "X04",
+      "finding": "TR02",
+      "owner": "final locators",
+      "assertion": "unique exact quote in final claim body and UTF16 boundary; else unverified, never fake first match",
+      "failure_code": "FAST39_RESULT_FIELDS_INVALID"
+    },
+    {
+      "id": "X05",
+      "finding": "TR03",
+      "owner": "workflow formatter",
+      "assertion": "expected anchor exclusively same-run branch; anchor unchanged and exact core/parallel target union",
+      "failure_code": "FAST39_RESULT_FIELDS_INVALID"
+    },
+    {
+      "id": "X06",
+      "finding": "TR03",
+      "owner": "DSH",
+      "assertion": "reported anchor hash/self-consistency and local registry match; no independent original Outline acceptance",
+      "failure_code": "FAST39_BINDING_MISMATCH"
+    },
+    {
+      "id": "X07",
+      "finding": "TR04",
+      "owner": "formatter/DSH",
+      "assertion": "all warning categories render exactly; reconstruct pending/output; fenced headings distinguished",
+      "failure_code": "FAST39_RESULT_FIELDS_INVALID"
+    },
+    {
+      "id": "X08",
+      "finding": "TR05",
+      "owner": "backend byte boundary",
+      "assertion": "sha256 exact response.content and byte_length before parse, project same object; original queue facts preserved",
+      "failure_code": "FAST39_RESULT_FIELDS_INVALID"
+    },
+    {
+      "id": "X09",
+      "finding": "TR05",
+      "owner": "backend/DSH",
+      "assertion": "fragment one receipt owner; same requestKey/run ownership/binding; provider digest differs in meaning from client API responseSha",
+      "failure_code": "FAST39_BINDING_MISMATCH"
+    },
+    {
+      "id": "X10",
+      "finding": "TR06",
+      "owner": "source locators",
+      "assertion": "0<=start<end<=actual original UTF16<=1048576; source hash/role/exact quote and scalar boundaries",
+      "failure_code": "FAST39_RESULT_FIELDS_INVALID"
+    },
+    {
+      "id": "X11",
+      "finding": "TR06",
+      "owner": "capacity owners",
+      "assertion": "each output UTF16/UTF8, evidence512KiB, effective legacy1MiB and whole8MiB; no truncation",
+      "failure_code": "FAST39_RESULT_TOO_LARGE"
+    },
+    {
+      "id": "X12",
+      "finding": "F06",
+      "owner": "normal output admission",
+      "assertion": "at least one supported emitted feature/claim; otherwise no completed artifact",
+      "failure_code": "FAST39_NO_SUPPORTED_CLAIM"
+    }
+  ],
+  "never_claimed": [
+    "source semantic sufficiency from quote hash",
+    "client independently verified original Outline",
+    "provider bytes retained just because SHA exists",
+    "schema passing means business/runtime accepted"
+  ]
+}

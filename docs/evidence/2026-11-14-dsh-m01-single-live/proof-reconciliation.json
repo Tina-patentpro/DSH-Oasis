@@ -1,0 +1,37 @@
+{
+  "initialLauncherExit": 1,
+  "reason": "复核误把包含 Workspace、task、run 和 capturedAt 的 Host 快照 SHA-256 当成跨运行材料指纹。",
+  "syntheticHostStatus": "completed",
+  "syntheticRunId": "v340-02e54534-62d4-4e97-9958-9f0b5a85dd45",
+  "oldHostInputSha256": "1ef0be939a2e3a92f63f025c3f01f070478dde5c69b773c8d22e38cb35c56acf",
+  "syntheticHostInputSha256": "392c60aa1e5592a4ab693747cc823d1142e7230cb555b6564dbe118b3d0a8596",
+  "preparedSha256": "e0542de702953aae9b1492b4831361a9f67520b2e26861c4d742b2f612b63fa5",
+  "exactEqualSnapshotFields": [
+    "nodeId",
+    "source",
+    "resourceSHA256",
+    "draft",
+    "prepared"
+  ],
+  "wire": {
+    "nodeId": "Flow-1-1",
+    "requestKey": "d2f78e4e-e2ad-4e37-bad5-a8ad746d2124",
+    "runId": "v340-02e54534-62d4-4e97-9958-9f0b5a85dd45",
+    "model": "deepseek-flash",
+    "effort": "low",
+    "maxOutputTokens": 16384,
+    "serializedBytes": 27207,
+    "systemSha256": "997a8e1fe68a5f6d398a23cb03a73fdcd605a494ebecac2f88272bb2409f6123",
+    "inputContentSha256": "9c3dbf1b59a52c8aa9d48d6fd714e9e0dc66769067a476c73097ae80357b3bf5",
+    "tools": 0,
+    "at": "2026-11-14T00:16:13.297Z",
+    "mode": "proof",
+    "promptTokens": 6357,
+    "fullWireTokens": 7185,
+    "inputTokenBudget": 32000,
+    "protocolReserveTokens": 2000,
+    "conservativeInputTokens": 9185
+  },
+  "externalPosts": 0,
+  "verification": "保存启动退出证据，核 Host 落盘，按材料投影和独立 wire 指纹验收。"
+}

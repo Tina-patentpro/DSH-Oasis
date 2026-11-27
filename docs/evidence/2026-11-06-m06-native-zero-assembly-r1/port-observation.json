@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-06T12:09:49.326704+08:00",
+  "command": [
+    "/usr/sbin/lsof",
+    "-nP",
+    "-iTCP:57619",
+    "-sTCP:LISTEN"
+  ],
+  "exit_code": 1,
+  "no_listener_observed": true,
+  "reservation": false,
+  "actual_listen_test": false,
+  "scope": "read-only instantaneous listener observation; must recheck before actual startup"
+}

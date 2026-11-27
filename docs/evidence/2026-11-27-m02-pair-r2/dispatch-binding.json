@@ -1,0 +1,170 @@
+{
+  "at": "2026-11-27T12:43:35.303043+08:00",
+  "newRequestKey": "eb6bee3f-e23c-4333-b51f-554ebe6f94a7",
+  "modelRequests": 1,
+  "feeLimitCny": null,
+  "retries": 0,
+  "tools": 0,
+  "batchSha256": "c775b5df0964edf074fe964a4b469cfc59ca08200e4cbaf358ac51a9ebe245b7",
+  "systemSha256": "8949dce7026b04d7ecc363caca54782e02d65be3093af1a8a6697964b7edad36",
+  "inputContentSha256": "dcf6813e946c304228f4d4a9265826424bc51d663c4a5f016a16e0f329c4b019",
+  "launcherSha256": "4d20ca9d8382e564343759442a8432db6f3b38711777071373cfc2a10830f918",
+  "guardSha256": "4539bcbfd87a3dbebb56b63fff1c8b12ec2d765cf53e031c77b6b272170d88ae",
+  "sourceHashes": {
+    "src/v340-native-contract.js": "06f68f36552d7f97d3709c6ea422301efd16cfb52c2ddb787c13f2f6e8fe1fbd",
+    "src/v340-native-model.js": "a0ca233b83f645871c8976d1e316cab12782c107416b5357853f9c148a2855eb",
+    "lib/client.js": "6677750c3da8b5b963954df931e4140e7e2ec445822edca95d9748137b55e273",
+    "lib/client.js.map": "9fa0c5926b2c639f54d2dea06f8cb814d91f5d2291d6a3960f8da0a968afcf76"
+  },
+  "positive": {
+    "id": "M02",
+    "workspaceId": "75699906-c639-4f20-a040-6f93f95c8373",
+    "sessionId": "session-529cead3-b1df-4d42-808f-4a3d8a020588",
+    "taskId": "m02-pair-r2-88a51aca",
+    "requestKey": "88a51aca-cc38-4c63-a34c-b16b21f5d01b",
+    "skillId": "patent-triz-analysis",
+    "skillVersion": "0.3.0-rc.4",
+    "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+    "runId": "v340-6bf1f707-3e86-4e48-8a39-6515724d3152",
+    "status": "completed",
+    "failureCode": null,
+    "summary": {
+      "finishKind": "stop",
+      "usage": {
+        "inputTokens": 512,
+        "outputTokens": 63,
+        "totalTokens": 575
+      }
+    },
+    "candidateReceiptVersion": "v340-native-candidate-9",
+    "receiptSystemSha256": "8949dce7026b04d7ecc363caca54782e02d65be3093af1a8a6697964b7edad36",
+    "inputSha256": "38bf3792a1dd179b1a6721207973870545ed1851ddd40244e9e779016ef5b043",
+    "preparedSha256": "33b47e2135ef748d93d50f2ce9ae4c6e429da077e8e4e75abcae3b73c25b9e1c",
+    "resultSha256": "a694a4fde7e4ccf4a25ee303ce356cc30f9c740a120e82e160fa04223e925f2c",
+    "resultBytes": 10879,
+    "resultFile": "M02-raw-result.md",
+    "coreSha256": "ccdf95445c8510d30312f2b2316eeff9a7affc63dbb07708e50dfdd450d07259",
+    "coreLength": 28,
+    "tables": {
+      "T1": 1,
+      "T2": 0,
+      "T3": 1,
+      "T4": 0,
+      "T5": 0,
+      "T6": 0
+    },
+    "writebackId": "writeback-7c82740f-cefb-4f40-9e76-41dca507dca1",
+    "reviewedAndSaved": true,
+    "wireTerminal": true,
+    "livePostAttempt": false
+  },
+  "orphanNegative": {
+    "id": "M02",
+    "workspaceId": "2967ae82-7115-49f8-b4c1-6e2b9130388f",
+    "sessionId": "session-8c08583c-466b-4a42-8586-a2ae230408e2",
+    "taskId": "m02-pair-r2-c9ef6548",
+    "requestKey": "c9ef6548-f418-4bfd-8123-e19c9b54bbd5",
+    "skillId": "patent-triz-analysis",
+    "skillVersion": "0.3.0-rc.4",
+    "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+    "runId": "v340-b5733998-a65f-4a47-86c2-f756336f357b",
+    "status": "failed",
+    "failureCode": "INVALID_OUTPUT",
+    "summary": {
+      "failureStage": "result-assembly",
+      "finishKind": "stop",
+      "assemblyIssue": {
+        "code": "orphan-completion",
+        "field": "model_completions",
+        "index": 0
+      },
+      "fieldIssue": {
+        "code": "orphan-completion",
+        "path": [
+          "model_completions",
+          0,
+          "content_id"
+        ]
+      },
+      "usage": {
+        "inputTokens": 512,
+        "outputTokens": 63,
+        "totalTokens": 575
+      }
+    },
+    "candidateReceiptVersion": "v340-native-candidate-9",
+    "receiptSystemSha256": "8949dce7026b04d7ecc363caca54782e02d65be3093af1a8a6697964b7edad36",
+    "inputSha256": "c73167930dfa280c6ae89dba8c6c686a40ec3d05fe95b6da8d4e7b7ad941297a",
+    "preparedSha256": "33b47e2135ef748d93d50f2ce9ae4c6e429da077e8e4e75abcae3b73c25b9e1c",
+    "wireTerminal": true,
+    "livePostAttempt": false
+  },
+  "missingNegative": {
+    "id": "M02",
+    "workspaceId": "06ba4714-d9d3-4210-84a0-2249f9bb8a87",
+    "sessionId": "session-c5ca987d-f9fa-4336-bbfe-bee925361654",
+    "taskId": "m02-pair-r2-919a3319",
+    "requestKey": "919a3319-776b-4910-ad59-3feddc8744a3",
+    "skillId": "patent-triz-analysis",
+    "skillVersion": "0.3.0-rc.4",
+    "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+    "runId": "v340-1ad3ddcc-efb5-44ff-af69-bd667b04d264",
+    "status": "failed",
+    "failureCode": "INVALID_OUTPUT",
+    "summary": {
+      "failureStage": "result-assembly",
+      "finishKind": "stop",
+      "assemblyIssue": {
+        "code": "missing-completion",
+        "field": "updates",
+        "index": 1
+      },
+      "fieldIssue": {
+        "code": "missing-completion",
+        "path": [
+          "updates",
+          1,
+          "content_id"
+        ]
+      },
+      "usage": {
+        "inputTokens": 512,
+        "outputTokens": 63,
+        "totalTokens": 575
+      }
+    },
+    "candidateReceiptVersion": "v340-native-candidate-9",
+    "receiptSystemSha256": "8949dce7026b04d7ecc363caca54782e02d65be3093af1a8a6697964b7edad36",
+    "inputSha256": "17ea2dff936703dece679e1fbc15a0c6319238ee89a1fa5ba9729f7102e466c8",
+    "preparedSha256": "33b47e2135ef748d93d50f2ce9ae4c6e429da077e8e4e75abcae3b73c25b9e1c",
+    "wireTerminal": true,
+    "livePostAttempt": false
+  },
+  "recovery": {
+    "id": "M02",
+    "runId": "v340-6bf1f707-3e86-4e48-8a39-6515724d3152",
+    "resultSha256": "a694a4fde7e4ccf4a25ee303ce356cc30f9c740a120e82e160fa04223e925f2c",
+    "recovered": true,
+    "previewMatches": true
+  },
+  "pricingUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "priceCheckedAt": "2026-11-27T12:41:49.260118+08:00",
+  "priceCnyPerMillion": {
+    "peak": {
+      "input": 2,
+      "cacheRead": 0.04,
+      "output": 8
+    },
+    "offpeak": {
+      "input": 1,
+      "cacheRead": 0.02,
+      "output": 4
+    }
+  },
+  "baselineBeforeRunSha256": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/m02-single-20261127/live/dsh-home/storages/oasis_workbench.json": "27e4cadaf314f2d56f39d731a4d3f1ac45f754433343b7fff60fe4489a9ddd83",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/live/dsh-home/storages/oasis_workbench.json": "640be2b5cd1f50dffb5a9aeead3b92f6f8d6c0f3defa7583a83b777387c233c9",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-27-m01-t1-m02-live/verification.json": "029d9f7e908ccdb70f5027d116d6a4c51dbb1d0bc2fd5017eea985149312cf54",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-27-m01-t1-m02-live/M01-T1修订累计稿.md": "bb0bd38cdc7862261101dd9013d1b362c42f4a57154fb8b25477338d5479eb7c"
+  }
+}

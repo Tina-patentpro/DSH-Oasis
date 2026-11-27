@@ -4803,6 +4803,34 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			return jsonSchema;
 		}
 		//#endregion
+		//#region src/local-skill-suites.js
+		const DEFAULT_LOCAL_SKILL_SUITE = "oasis";
+		const OASIS_PLUGIN_NAMESPACE_PATTERN = /^oasis-professional-service(?:-[a-z0-9-]+)?$/;
+		const PATENT_DISCLOSURE_SUITE = "patent-disclosure";
+		const PATENT_DISCLOSURE_CLAIMS_ID = "patent-disclosure-claims";
+		const PATENT_DISCLOSURE_CLAIMS_VERSION = "b4bbec6f0a1c3c32a904faabeb249639c0b30d98";
+		const LOCAL_SKILL_SUITES = Object.freeze({
+			oasis: Object.freeze({
+				label: "绿洲慧写",
+				repository: "https://github.com/Tina-patentpro/oasis-patent-skills"
+			}),
+			[PATENT_DISCLOSURE_SUITE]: Object.freeze({
+				label: "中国专利 Skill（第三方）",
+				repository: "https://github.com/handsomestWei/patent-disclosure-skill"
+			})
+		});
+		const LOCAL_SKILL_SUITE_UNAVAILABLE_REASON = "当前任务尚未适配「中国专利 Skill」。可在 DSH 设置 → 绿洲工作台切回「绿洲慧写」。";
+		function localSkillUnavailableReason(suite = DEFAULT_LOCAL_SKILL_SUITE, supportsPatentDisclosure = false) {
+			return suite === "oasis" || suite === "patent-disclosure" && supportsPatentDisclosure ? null : LOCAL_SKILL_SUITE_UNAVAILABLE_REASON;
+		}
+		function claimsCandidateFor(node, suite = DEFAULT_LOCAL_SKILL_SUITE) {
+			if (suite === "oasis") return node?.m06Candidate;
+			if (suite === "patent-disclosure") return node?.patentDisclosureCandidate;
+		}
+		function isCurrentClaimsCandidate(receipt) {
+			return receipt?.version === "v340-native-candidate-4" || receipt?.version === "v340-native-candidate-3" && receipt.businessSkillVersion === "0.1.3";
+		}
+		//#endregion
 		//#region src/v340-native-contract.js
 		const sha$2 = string().regex(/^[a-f0-9]{64}$/);
 		const label$2 = string().trim().min(1).max(256);
@@ -4837,6 +4865,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}).strict(),
 			admissionSHA256: sha$2
 		}).strict();
+		const businessCandidateFields = {
+			nodeId: literal("Flow-2-6"),
+			workspaceRoot: string().min(1).max(4096).refine((v) => !v.includes("\0")),
+			contextSHA256: sha$2,
+			businessManifestSHA256: sha$2,
+			businessResourceSHA256: sha$2
+		};
 		const v340NativeCandidateSchema = discriminatedUnion("version", [
 			legacyCandidateSchema,
 			legacyCandidateSchema.extend({
@@ -4846,14 +4881,16 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				contextSHA256: sha$2
 			}).strict(),
 			legacyCandidateSchema.extend({
+				...businessCandidateFields,
 				version: literal("v340-native-candidate-3"),
-				nodeId: literal("Flow-2-6"),
-				workspaceRoot: string().min(1).max(4096).refine((v) => !v.includes("\0")),
-				contextSHA256: sha$2,
 				businessSkillId: literal("m06-claims-draft"),
-				businessSkillVersion: _enum(["0.1.2", "0.1.3"]),
-				businessManifestSHA256: sha$2,
-				businessResourceSHA256: sha$2
+				businessSkillVersion: _enum(["0.1.2", "0.1.3"])
+			}).strict(),
+			legacyCandidateSchema.extend({
+				...businessCandidateFields,
+				version: literal("v340-native-candidate-4"),
+				businessSkillId: literal(PATENT_DISCLOSURE_CLAIMS_ID),
+				businessSkillVersion: literal(PATENT_DISCLOSURE_CLAIMS_VERSION)
 			}).strict()
 		]);
 		//#endregion
@@ -4917,6 +4954,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			businessResourceSHA256: string().regex(/^[a-f0-9]{64}$/),
 			requiresConfirmation: literal(true)
 		}).strict();
+		const patentDisclosureCandidateCapabilitySchema = m06CandidateCapabilitySchema.extend({
+			skillId: literal(PATENT_DISCLOSURE_CLAIMS_ID),
+			skillVersion: literal(PATENT_DISCLOSURE_CLAIMS_VERSION)
+		});
 		const v340CatalogResponseSchema = object({
 			businessVersion: literal("V3.4.0"),
 			sourceSHA256: string().length(64),
@@ -4926,6 +4967,8 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				schemaVersion: literal(1),
 				policy: literal("m06-native-business-recovery-v1")
 			}).strict().optional(),
+			settingsNamespace: string().max(128).regex(OASIS_PLUGIN_NAMESPACE_PATTERN).optional(),
+			managedSkillSuite: literal(true).optional(),
 			capability: string(),
 			dispatchEnabled: literal(false),
 			nodes: array(object({
@@ -4950,8 +4993,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						reason: string()
 					}).strict()
 				}).strict(),
-				m06Candidate: m06CandidateCapabilitySchema.optional()
-			}).strict().refine((n) => !n.m06Candidate || n.nodeId === "Flow-2-6")).length(14)
+				m06Candidate: m06CandidateCapabilitySchema.optional(),
+				patentDisclosureCandidate: patentDisclosureCandidateCapabilitySchema.optional()
+			}).strict().refine((n) => !n.m06Candidate && !n.patentDisclosureCandidate || n.nodeId === "Flow-2-6")).length(14)
 		}).strict();
 		const v340Id = string().min(1).max(256).refine((v) => v.trim() === v && ![
 			"__proto__",
@@ -4959,7 +5003,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			"prototype"
 		].includes(v));
 		const sha$1 = string().regex(/^[a-f0-9]{64}$/);
-		const v340CandidatePreviewSchema = object({
+		const oasisCandidatePreviewSchema = object({
 			workspaceId: v340Id,
 			taskId: v340Id,
 			sessionId: v340Id,
@@ -4977,6 +5021,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			dispatchEnabled: literal(false),
 			realCallVerified: literal(false)
 		}).strict();
+		const v340CandidatePreviewSchema = discriminatedUnion("businessSkillId", [oasisCandidatePreviewSchema, oasisCandidatePreviewSchema.extend({
+			businessSkillId: literal(PATENT_DISCLOSURE_CLAIMS_ID),
+			businessSkillVersion: literal(PATENT_DISCLOSURE_CLAIMS_VERSION)
+		})]);
 		const time = string().refine((v) => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(v) && Number.isFinite(Date.parse(v)) && new Date(v).toISOString() === v);
 		const bytes = (value) => new TextEncoder().encode(JSON.stringify(value)).length;
 		const v340DocumentBodySchema = string().min(1).max(V340_LIMITS.documentBytes).refine((body) => new TextEncoder().encode(body).length <= V340_LIMITS.documentBytes, "V340 document exceeds UTF-8 byte limit");
@@ -5193,7 +5241,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			completedAt: time.nullable(),
 			executionSummary: localExecutionSummarySchema.optional()
 		}).strict().superRefine((run, ctx) => {
-			if (run.evidenceKind === "native-model-candidate" !== Object.hasOwn(run, "nativeCandidate") || run.evidenceKind === "native-model-candidate" && (run.source !== "local-skill" || run.nativeCandidate?.version === "v340-native-candidate-1" && run.nodeId !== "Flow-2-6" || ["v340-native-candidate-2", "v340-native-candidate-3"].includes(run.nativeCandidate?.version) && run.nativeCandidate.nodeId !== run.nodeId)) ctx.addIssue({
+			if (run.evidenceKind === "native-model-candidate" !== Object.hasOwn(run, "nativeCandidate") || run.evidenceKind === "native-model-candidate" && (run.source !== "local-skill" || run.nativeCandidate?.version === "v340-native-candidate-1" && run.nodeId !== "Flow-2-6" || run.nativeCandidate?.version !== "v340-native-candidate-1" && run.nativeCandidate?.nodeId !== run.nodeId)) ctx.addIssue({
 				code: "custom",
 				message: "V340 candidate identity mismatch"
 			});
@@ -6758,6 +6806,27 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				message: "unified API result provenance mismatch"
 			});
 		});
+		const oasisClaimsSkillVersion = _enum([
+			"public-4e2-1",
+			"0.2.0",
+			"0.2.1",
+			"0.2.2"
+		]);
+		const localClaimsIdentitySchema = discriminatedUnion("skillId", [object({
+			skillId: literal("flow-2-6"),
+			skillVersion: oasisClaimsSkillVersion
+		}).strict(), object({
+			skillId: literal(PATENT_DISCLOSURE_CLAIMS_ID),
+			skillVersion: literal(PATENT_DISCLOSURE_CLAIMS_VERSION)
+		}).strict()]);
+		const localClaimsProvenanceFields = {
+			inputSchemaVersion: literal("claims-disclosure-2"),
+			outputSchemaVersion: literal("claims-cumulative-2"),
+			executionContractVersion: literal("single-call-cumulative-1"),
+			manifestSha256: sha256Schema,
+			assemblySha256: sha256Schema
+		};
+		const localClaimsProvenanceSchema = discriminatedUnion("skillId", localClaimsIdentitySchema.options.map((schema) => schema.extend(localClaimsProvenanceFields)));
 		const dshLocalRunSnapshotSchema = unifiedRunSnapshotSchema.safeExtend({
 			mode: literal("dsh-local"),
 			source: literal("local-skill"),
@@ -6790,27 +6859,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				}).strict(),
 				instructionVersion: identifierSchema,
 				instructionSha256: sha256Schema,
-				skillProvenance: object({
-					skillId: literal("flow-2-6"),
-					skillVersion: _enum([
-						"public-4e2-1",
-						"0.2.0",
-						"0.2.1",
-						"0.2.2"
-					]),
-					inputSchemaVersion: literal("claims-disclosure-2"),
-					outputSchemaVersion: literal("claims-cumulative-2"),
-					executionContractVersion: literal("single-call-cumulative-1"),
-					manifestSha256: sha256Schema,
-					assemblySha256: sha256Schema
-				}).strict().optional()
+				skillProvenance: localClaimsProvenanceSchema.optional()
 			}).strict()
 		}).superRefine((run, ctx) => {
-			if (run.evidenceKind === "native-model" && (run.workflowVersion !== "2" || run.compositionVersion !== "2" || ![
-				"0.2.0",
-				"0.2.1",
-				"0.2.2"
-			].includes(run.contextSnapshot.skillProvenance?.skillVersion))) ctx.addIssue({
+			if (run.evidenceKind === "native-model" && (run.workflowVersion !== "2" || run.compositionVersion !== "2" || !run.contextSnapshot.skillProvenance || run.contextSnapshot.skillProvenance.skillVersion === "public-4e2-1")) ctx.addIssue({
 				code: "custom",
 				message: "real model requires formal contract 2 resources"
 			});
@@ -6840,15 +6892,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}).strict(),
 			upstreamIncluded: boolean(),
 			characterCount: number().int().nonnegative(),
-			skill: object({
+			skill: discriminatedUnion("id", [object({
 				id: literal("flow-2-6"),
-				version: _enum([
-					"public-4e2-1",
-					"0.2.0",
-					"0.2.1",
-					"0.2.2"
-				])
-			}).strict().nullable()
+				version: oasisClaimsSkillVersion
+			}).strict(), object({
+				id: literal(PATENT_DISCLOSURE_CLAIMS_ID),
+				version: literal(PATENT_DISCLOSURE_CLAIMS_VERSION)
+			}).strict()]).nullable()
 		}).strict();
 		const conversationDraftResponseSchema = object({
 			workspaceId: identifierSchema,
@@ -8817,6 +8867,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		//#region src/client/UnifiedGenerationPage.js
 		function generationErrorMessage(code) {
 			return {
+				["LOCAL_SKILL_SUITE_UNAVAILABLE"]: "当前任务尚未适配「中国专利 Skill」。可在 DSH 设置 → 绿洲工作台切回「绿洲慧写」。",
 				WORKSPACE_OPERATION_BUSY: "当前项目正在导入、解除关联或准备生成，请等待原操作结束后重新确认；不会自动重试。",
 				AUTH_REQUIRED: "请在 DSH 设置 → 绿洲工作台登录账户；如已提交生成，请先查看原运行，不要重复提交。",
 				REMOTE_ACCOUNT_UNVERIFIED: "账户身份未能核实，已阻止提交；请检查登录状态并提供此错误码，不要清空任务或重复生成。",
@@ -8857,13 +8908,15 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   .oasis-unified .generation-result { border-left: 1px solid var(--dsw-alias-border-l2, #dfe6e2); }
 }
 `;
-		function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus, operation, fixtureEnabled = false, apiExecutionAvailable = false, apiConfigurationReady = true, localGenerationEnabled = false, localGenerationKind = null, markdownRenderer, onRenamePage = () => {}, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onGenerate = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, ...resultActions }) {
+		function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus, operation, fixtureEnabled = false, apiExecutionAvailable = false, apiConfigurationReady = true, localGenerationEnabled = false, localGenerationKind = null, localSkillSuite, markdownRenderer, onRenamePage = () => {}, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onGenerate = () => {}, onSelectClaimsUpstream = () => {}, onObserveUnified = () => {}, onStopUnified = () => {}, ...resultActions }) {
 			const [activeFieldId, setActiveFieldId] = (0, react.useState)(workflow.form.fields[0]?.fieldId);
 			const [view, setView] = (0, react.useState)("input");
 			const [preview, setPreview] = (0, react.useState)(false);
 			const [upstreamPath, setUpstreamPath] = (0, react.useState)(page.generation.upstream?.relativePath ?? "");
 			const source = page.generation.source;
-			const local = localGenerationEnabled && source === "local-skill";
+			const supportsPatentDisclosure = page.workflowVersion === "2" && localGenerationKind === "native-model";
+			const skillUnavailable = source === "local-skill" ? localSkillUnavailableReason(localSkillSuite, supportsPatentDisclosure) : null;
+			const local = localGenerationEnabled && source === "local-skill" && !skillUnavailable;
 			const real = local && localGenerationKind === "native-model";
 			const api = source === "oasis-api" && apiExecutionAvailable && !fixtureEnabled;
 			const confirmation = api ? operation.apiPreview : operation.localModelPreview;
@@ -8873,14 +8926,15 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, [
 				confirmation?.sha256,
 				confirmation?.confirmationToken,
-				source
+				source,
+				localSkillSuite
 			]);
 			const locked = !["ready", "saving"].includes(syncStatus) || operation.activeOperation !== null || operation.generationUncertain || hasPendingUnifiedRun(page) || page.remoteExecutionOrder.some((id) => isOasisRemoteExecutionUnresolved(page.remoteExecutions[id]));
 			const readOnlyDisabled = syncStatus !== "ready" || operation.activeOperation !== null || operation.generationUncertain === true;
 			const validation = validateWorkflowFormValues(workflow, page.formValues);
 			const pendingApi = Object.values(page.remoteExecutions).find((e) => e.unifiedClaims && isOasisRemoteExecutionUnresolved(e));
 			const latestApi = [...page.remoteExecutionOrder].reverse().map((id) => page.remoteExecutions[id]).find((e) => e.unifiedClaims);
-			const reason = (real || api) && page.workflowVersion !== "2" ? "请新建权利要求任务，历史任务仅供查看" : api && !apiConfigurationReady ? "请先在 DSH 设置 → 绿洲工作台登录账户" : api && (page.generation.upstream || page.inputRefs.length) ? "当前 API 映射不支持上游/文件引用；请先取消选择，不会静默忽略材料" : !fixtureEnabled && !local && !api ? generationUnavailableReason(source) : operation.generationUncertain ? "结果未确认，请查看原运行" : hasPendingUnifiedRun(page) || pendingApi ? "原运行未决，请查看状态；不会自动重发" : !validation.valid ? "请填写必填材料" : null;
+			const reason = skillUnavailable ?? ((real || api) && page.workflowVersion !== "2" ? "请新建权利要求任务，历史任务仅供查看" : api && !apiConfigurationReady ? "请先在 DSH 设置 → 绿洲工作台登录账户" : api && (page.generation.upstream || page.inputRefs.length) ? "当前 API 映射不支持上游/文件引用；请先取消选择，不会静默忽略材料" : !fixtureEnabled && !local && !api ? generationUnavailableReason(source) : operation.generationUncertain ? "结果未确认，请查看原运行" : hasPendingUnifiedRun(page) || pendingApi ? "原运行未决，请查看状态；不会自动重发" : !validation.valid ? "请填写必填材料" : null);
 			const pending = Object.values(page.runs).find((run) => hasPendingUnifiedRun({ runs: { run } }));
 			(0, react.useEffect)(() => {
 				if (pending?.mode !== "dsh-local" || pending.status !== "prepared" || operation.activeOperation !== null || operation.error || syncStatus !== "ready") return;
@@ -8924,7 +8978,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}), (0, react.createElement)("div", {
 				className: "generation-notice",
 				role: "status"
-			}, real ? "本地 Skills · 使用 DSH 模型" : local ? "原生离线验收 · 无真实调用" : fixtureEnabled ? "合成验收 · 无真实调用" : api ? "专业 API · 逐次确认上传与费用" : source === "local-skill" ? "本地 Skills · 模型服务暂不可用" : "专业 API · 待绑定"), (0, react.createElement)("div", {
+			}, skillUnavailable ? "本地 Skills · 所选套件暂不可用" : real ? "本地 Skills · 使用 DSH 模型" : local ? "原生离线验收 · 无真实调用" : fixtureEnabled ? "合成验收 · 无真实调用" : api ? "专业 API · 逐次确认上传与费用" : source === "local-skill" ? "本地 Skills · 模型服务暂不可用" : "专业 API · 待绑定"), (0, react.createElement)("div", {
 				className: "generation-views",
 				"aria-label": "输入与结果视图"
 			}, ...[["input", "输入"], ["result", "结果"]].map(([id, label]) => (0, react.createElement)("button", {
@@ -9004,7 +9058,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					marginBottom: 8,
 					overflowWrap: "anywhere"
 				}
-			}, (0, react.createElement)("div", null, `模型：${confirmation.route.provider} / ${confirmation.route.model}${confirmation.route.reasoningEffort ? ` / ${confirmation.route.reasoningEffort}` : ""}`), (0, react.createElement)("div", null, `发送四选项卡文本${confirmation.upstreamIncluded ? "及已选择的上游全文" : "（未选上游文稿）"}，共 ${confirmation.characterCount} 字符${confirmation.skill ? `，另含内置 Skill ${confirmation.skill.id}/${confirmation.skill.version}` : ""}。`), (0, react.createElement)("label", null, (0, react.createElement)("input", {
+			}, (0, react.createElement)("div", null, `模型：${confirmation.route.provider} / ${confirmation.route.model}${confirmation.route.reasoningEffort ? ` / ${confirmation.route.reasoningEffort}` : ""}`), (0, react.createElement)("div", null, `发送四选项卡文本${confirmation.upstreamIncluded ? "及已选择的上游全文" : "（未选上游文稿）"}，共 ${confirmation.characterCount} 字符${confirmation.skill ? `，另含 ${confirmation.skill.id === "patent-disclosure-claims" ? "中国专利 Skill" : "内置 Skill"} ${confirmation.skill.id}/${confirmation.skill.version}` : ""}。`), (0, react.createElement)("label", null, (0, react.createElement)("input", {
 				type: "checkbox",
 				checked: confirmed,
 				disabled: locked,
@@ -9398,8 +9452,12 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				}
 			}
 			const plan = operation.v340SavePlan, planMatches = plan && target && JSON.stringify(plan.target) === JSON.stringify(target) && plan.revision === state.revision && !editing;
-			const candidate = !recovery && node?.m06Candidate?.skillVersion === "0.1.3" && page.v340.nodeId === "Flow-2-6" && draft.source === "local-skill";
-			const candidatePreview = operation.v340CandidatePreview;
+			const capability = claimsCandidateFor(node, state.localSkillSuite);
+			const skillUnavailable = draft.source === "local-skill" ? localSkillUnavailableReason(state.localSkillSuite, Boolean(capability)) : null;
+			const candidate = !recovery && capability?.requiresConfirmation === true && page.v340.nodeId === "Flow-2-6" && draft.source === "local-skill";
+			const external = capability?.skillId === PATENT_DISCLOSURE_CLAIMS_ID;
+			const pendingPreview = operation.v340CandidatePreview;
+			const candidatePreview = pendingPreview?.businessSkillId === capability?.skillId ? pendingPreview : null;
 			return (0, react.createElement)("section", {
 				"aria-label": "共同输入与结果",
 				"className": "oasis-v340",
@@ -9465,7 +9523,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				style: button$1,
 				disabled: working,
 				onClick: () => action(() => actions.saveDraft?.(page.pageId, operation.v340InputDraft))
-			}, "重试保存输入") : null, candidate ? (0, react.createElement)("section", { "aria-label": "M06受控候选" }, (0, react.createElement)("p", null, "M06 0.1.3 受控候选；尚未取得专业与用户接受。"), (0, react.createElement)("button", {
+			}, "重试保存输入") : null, candidate ? (0, react.createElement)("section", { "aria-label": "M06受控候选" }, (0, react.createElement)("p", null, external ? "中国专利 Skill · 权利要求初稿" : "M06 0.1.3 受控候选；尚未取得专业与用户接受。"), (0, react.createElement)("button", {
 				type: "button",
 				style: {
 					...button$1,
@@ -9498,7 +9556,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, "核对原请求状态")) : null, !candidate ? (0, react.createElement)("p", {
 				role: "status",
 				style: { fontSize: 12 }
-			}, node?.sources[draft.source].reason ?? "新版来源尚未就绪") : null), (0, react.createElement)("section", {
+			}, skillUnavailable ?? node?.sources[draft.source].reason ?? "新版来源尚未就绪") : null), (0, react.createElement)("section", {
 				className: "v340-pane",
 				"data-visible": tab === "result",
 				style: { minWidth: 0 }
@@ -9519,7 +9577,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				display: "grid",
 				gap: 12,
 				marginTop: 12
-			} }, (0, react.createElement)("small", null, `${run.source === "local-skill" ? "本地 Skills" : "专业 API"} · ${run.evidenceKind === "native-model-candidate" ? "受控候选" : "合成验收"} · ${version.review.status === "approved" ? "已审核" : "待审核"}`), ...legacy.map(({ key, draft }) => (0, react.createElement)("section", {
+			} }, (0, react.createElement)("small", null, `${run.source === "local-skill" ? "本地 Skills" : "专业 API"} · ${run.evidenceKind === "native-model-candidate" ? "受控候选" : "合成验收"} · ${version.review.status === "approved" ? "已审核" : "待审核"}`), run.nativeCandidate?.businessSkillId === "patent-disclosure-claims" ? (0, react.createElement)("small", null, "中国专利 Skill · GitHub 版本 " + run.nativeCandidate.businessSkillVersion.slice(0, 7)) : null, ...legacy.map(({ key, draft }) => (0, react.createElement)("section", {
 				key,
 				"aria-label": "旧草稿恢复"
 			}, (0, react.createElement)("p", null, "旧草稿格式未确认，可能包含整份累计文稿。请先复制保留；原草稿保持，可另起核心正文编辑。"), (0, react.createElement)("textarea", {
@@ -10055,6 +10113,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						apiConfigurationReady: state.professionalConfigurationBlocked !== true,
 						localGenerationEnabled: state.localGenerationEnabled === true,
 						localGenerationKind: state.localGenerationKind,
+						localSkillSuite: state.localSkillSuite,
 						conversationUnavailableReason: state.conversationUnavailableReason === void 0 ? "当前对话输入接口不可用" : state.conversationUnavailableReason,
 						onGenerate,
 						onObserveUnified,
@@ -11184,6 +11243,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				onOpenNative: (type) => coordinator?.openNativeTool(workspaceId, type) === true,
 				state: {
 					...state,
+					localSkillSuite: configuration.localSkillSuite,
 					professionalConfigurationBlocked: !configuration.canSubmit,
 					conversationUnavailableReason
 				},
@@ -11966,6 +12026,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			retryAfterSeconds: number().int().nonnegative()
 		}).strict();
 		//#endregion
+		//#region src/local-skill-preference-contract.js
+		const localSkillPreferenceSchema = object({ suite: _enum([DEFAULT_LOCAL_SKILL_SUITE, PATENT_DISCLOSURE_SUITE]) }).strict();
+		//#endregion
 		//#region src/client/workbench-remote.js
 		const CHANNEL = "/oasis-workbench";
 		var WorkbenchRemoteError = class extends Error {
@@ -11992,6 +12055,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				return connection.rpc.call("/api", `oasis-workbench/${endpoint}`, payload, signal);
 			};
 			return Object.freeze({
+				async getLocalSkillSuite() {
+					return unwrap(await call(CHANNEL, "skill-suite/get", {}), localSkillPreferenceSchema);
+				},
+				async setLocalSkillSuite(suite) {
+					const value = localSkillPreferenceSchema.parse({ suite });
+					return unwrap(await call(CHANNEL, "skill-suite/set", value), localSkillPreferenceSchema);
+				},
 				async getV340Catalog(signal) {
 					return unwrap(await call(CHANNEL, "workflow/v340/catalog", {}, signal), v340CatalogResponseSchema);
 				},
@@ -12018,7 +12088,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (result.current.workspaceId !== input.workspaceId) throw new WorkbenchRemoteError("malformed-response", "候选项目身份不一致", {});
 					if (result.committed) {
 						const run = Object.values(result.current.tasks[input.taskId]?.v340?.runs ?? {}).find((r) => r.requestKey === input.requestKey);
-						if (!run || run.nodeId !== "Flow-2-6" || run.source !== "local-skill" || run.nativeCandidate?.businessSkillVersion !== "0.1.3" || run.nativeCandidate.sessionId !== input.candidate.sessionId || run.nativeCandidate.confirmationSHA256 !== input.candidate.sha256) throw new WorkbenchRemoteError("malformed-response", "候选运行身份不一致，请核对原请求", {});
+						if (!run || run.nodeId !== "Flow-2-6" || run.source !== "local-skill" || !isCurrentClaimsCandidate(run.nativeCandidate) || run.nativeCandidate.sessionId !== input.candidate.sessionId || run.nativeCandidate.confirmationSHA256 !== input.candidate.sha256) throw new WorkbenchRemoteError("malformed-response", "候选运行身份不一致，请核对原请求", {});
 					}
 					return result;
 				},
@@ -12669,8 +12739,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				assertRetained(workspaceId);
 				if (getCurrent(workspaceId).v340Catalog?.nativeBusinessRecovery) throw Error("本次仅允许本地业务恢复");
 				const current = getCurrent(workspaceId), page = pageFor(workspaceId, pageId), op = operationFor(current, pageId);
-				const capability = current.v340Catalog?.nodes.find((n) => n.nodeId === "Flow-2-6")?.m06Candidate;
-				if (current.syncStatus !== "ready" || current.activePageId !== pageId || page.v340?.nodeId !== "Flow-2-6" || page.v340.draft.source !== "local-skill" || capability?.skillVersion !== "0.1.3" || !capability.requiresConfirmation) throw Error("当前页面不是可核对的受控M06候选");
+				const node = current.v340Catalog?.nodes.find((n) => n.nodeId === "Flow-2-6");
+				const capability = claimsCandidateFor(node, connectionSettings?.getSnapshot()?.localSkillSuite);
+				if (current.syncStatus !== "ready" || current.activePageId !== pageId || page.v340?.nodeId !== "Flow-2-6" || page.v340.draft.source !== "local-skill" || capability?.requiresConfirmation !== true) throw Error("当前页面不是可核对的受控M06候选");
 				if (current.pages.some(hasPendingUnifiedRun) || op.v340CandidateUnconfirmed) throw Error("原请求尚未确认，请先查看原运行；不会重新生成");
 				if (op.v340InputDraft) throw Error("请先保存当前输入，再核对模型与材料");
 				const sessionId = getGenerationSession?.(workspaceId);
@@ -12688,7 +12759,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}
 			function assertM06Preview(workspaceId, pageId, preview, scope) {
 				const next = m06CandidateView(workspaceId, pageId);
-				if (!preview || !scope || preview.workspaceId !== workspaceId || preview.taskId !== pageId || preview.sessionId !== next.sessionId || preview.expectedRevision !== next.current.revision || scope.draftKey !== next.draftKey || scope.editGeneration !== next.editGeneration || scope.configurationGeneration !== next.configurationGeneration || scope.epoch !== next.op.v340CandidateEpoch || preview.businessManifestSHA256 !== next.capability.businessManifestSHA256 || preview.businessResourceSHA256 !== next.capability.businessResourceSHA256) throw Error("材料、会话或版本已变化，请重新核对");
+				if (!preview || !scope || preview.workspaceId !== workspaceId || preview.taskId !== pageId || preview.sessionId !== next.sessionId || preview.expectedRevision !== next.current.revision || scope.draftKey !== next.draftKey || scope.editGeneration !== next.editGeneration || scope.configurationGeneration !== next.configurationGeneration || scope.epoch !== next.op.v340CandidateEpoch || preview.businessSkillId !== next.capability.skillId || preview.businessSkillVersion !== next.capability.skillVersion || preview.businessManifestSHA256 !== next.capability.businessManifestSHA256 || preview.businessResourceSHA256 !== next.capability.businessResourceSHA256) throw Error("材料、会话或版本已变化，请重新核对");
 				return next;
 			}
 			const reducerEnvironment = {
@@ -13566,7 +13637,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 							current: await remote.get(workspaceId, controller.signal)
 						};
 					}, () => {
-						const page = pageFor(workspaceId, pageId), run = Object.values(page.v340.runs).find((r) => r.requestKey === key && r.nativeCandidate?.businessSkillVersion === "0.1.3");
+						const page = pageFor(workspaceId, pageId), run = Object.values(page.v340.runs).find((r) => r.requestKey === key && isCurrentClaimsCandidate(r.nativeCandidate));
 						return {
 							v340CandidateUnconfirmed: !run,
 							feedback: run ? "已找到原请求，请查看原运行" : "尚未找到原请求，继续保留未确认状态；不会重新生成"
@@ -14684,6 +14755,10 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			downloadOrigins: [],
 			defaultGenerationSource: "local-skill",
 			outputDirectoryPrefix: "",
+			localSkillSuite: DEFAULT_LOCAL_SKILL_SUITE,
+			managedSkillSuite: false,
+			savingLocalSkillSuite: false,
+			localSkillSuiteError: null,
 			credentialStatus: "unavailable",
 			credentialStored: false,
 			credentialConfigured: false,
@@ -14704,6 +14779,18 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			const listeners = /* @__PURE__ */ new Set();
 			let scope, generation = 0, readId = 0, disposed = false, pending = false;
 			let detach = () => {};
+			let detachScope = () => {}, configForms, scopeNamespace;
+			function watchScope(next, namespace) {
+				if (scope === next && scopeNamespace === namespace) return;
+				detachScope();
+				scope = next;
+				scopeNamespace = namespace;
+				detachScope = scope.subscribe(() => {
+					readSettings();
+					invalidate();
+				});
+				readSettings();
+			}
 			const invalidate = () => {
 				try {
 					Promise.resolve(onInvalidated({ reload: false })).catch(() => {});
@@ -14720,12 +14807,16 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 				for (const listener of listeners) listener();
 			}
 			function readSettings() {
+				if (snapshot.managedSkillSuite) return;
 				try {
 					const view = scope?.getSnapshot();
 					if (view?.status !== "ready" || view.mode !== "host") throw Error();
+					const localSkillSuite = view.value?.localSkillSuite ?? "oasis";
+					if (!Object.hasOwn(LOCAL_SKILL_SUITES, localSkillSuite)) throw Error();
 					publish({
 						settingsStatus: "ready",
-						settingsWritable: snapshot.connected && view.writable === true
+						settingsWritable: snapshot.connected && view.writable === true,
+						localSkillSuite
 					});
 				} catch {
 					publish({
@@ -14755,6 +14846,21 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					if (typeof remote.getV340Catalog === "function") {
 						const catalog = await remote.getV340Catalog();
 						if (disposed || current !== generation || id !== readId) return false;
+						if (catalog.managedSkillSuite === true) {
+							publish({
+								managedSkillSuite: true,
+								settingsWritable: false
+							});
+							const { suite } = await remote.getLocalSkillSuite();
+							if (disposed || current !== generation || id !== readId) return false;
+							publish({
+								settingsStatus: "ready",
+								settingsWritable: true,
+								localSkillSuite: suite
+							});
+						}
+						const namespace = catalog.settingsNamespace;
+						if (configForms && typeof namespace === "string" && OASIS_PLUGIN_NAMESPACE_PATTERN.test(namespace) && namespace !== scopeNamespace) watchScope(configForms.get(namespace), namespace);
 						if (catalog.nativeZeroGeneration === true || catalog.nativeBusinessRecovery) {
 							publish({
 								nativeZeroGeneration: catalog.nativeZeroGeneration === true,
@@ -14826,7 +14932,11 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 						generation++;
 						readId++;
 						for (const fn of disposers) fn();
+						detachScope();
+						detachScope = () => {};
 						scope = null;
+						scopeNamespace = null;
+						configForms = null;
 						publish({
 							...initial(),
 							busy: pending,
@@ -14837,7 +14947,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					try {
 						const connection = services.connection;
 						if (!connection?.isLoopback || !services.remote?.$host?.isLoopback) throw Error();
-						scope = typeof services.configForms?.get === "function" ? services.configForms.get("oasis-professional-service") : services.settingsScope.bind({ namespace: "oasis-professional-service" });
+						configForms = typeof services.configForms?.get === "function" ? services.configForms : null;
+						const namespace = "oasis-professional-service";
+						watchScope(configForms ? configForms.get(namespace) : services.settingsScope.bind({ namespace }), namespace);
 						const onHost = () => {
 							generation++;
 							readId++;
@@ -14846,15 +14958,15 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 								credentialConfigured: false,
 								credentialWritable: false,
 								nativeZeroGeneration: false,
-								nativeBusinessRecovery: false
+								nativeBusinessRecovery: false,
+								managedSkillSuite: false,
+								savingLocalSkillSuite: false,
+								localSkillSuiteError: null
 							});
 							invalidate();
 							refresh();
 						};
-						disposers.push(scope.subscribe(() => {
-							readSettings();
-							invalidate();
-						}), connection.generation.subscribe(onHost));
+						disposers.push(connection.generation.subscribe(onHost));
 						if (services.remote.$on) disposers.push(services.remote.$on("credentials/record-updated", (key) => {
 							if (key === "oasis-professional-service/website-account") {
 								invalidate();
@@ -14868,6 +14980,36 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 					return detach;
 				},
 				refresh,
+				async saveLocalSkillSuite(suite) {
+					if (!Object.hasOwn(LOCAL_SKILL_SUITES, suite) || !snapshot.settingsWritable || snapshot.savingLocalSkillSuite || snapshot.nativeZeroGeneration || snapshot.nativeBusinessRecovery || !snapshot.managedSkillSuite && typeof scope?.set !== "function") return false;
+					if (suite === snapshot.localSkillSuite) return true;
+					const activeScope = scope, current = generation, managed = snapshot.managedSkillSuite;
+					publish({
+						savingLocalSkillSuite: true,
+						localSkillSuiteError: null
+					});
+					try {
+						if (managed) {
+							const saved = await remote.setLocalSkillSuite(suite);
+							if (disposed || generation !== current) return false;
+							if (saved.suite !== suite) throw Error();
+							++readId;
+							publish({ localSkillSuite: suite });
+							invalidate();
+							return true;
+						}
+						const accepted = await activeScope.set("localSkillSuite", suite);
+						if (disposed || generation !== current || scope !== activeScope) return false;
+						readSettings();
+						if (!accepted || snapshot.localSkillSuite !== suite) throw Error();
+						return true;
+					} catch {
+						if (!disposed && generation === current) publish({ localSkillSuiteError: "未能保存 Skills 套件，请重新选择。" });
+						return false;
+					} finally {
+						if (!disposed && generation === current) publish({ savingLocalSkillSuite: false });
+					}
+				},
 				login: (payload) => action("accountLogin", payload),
 				sendSms: (payload) => action("accountSms", payload),
 				logout: () => action("accountLogout", { confirmed: true }),
@@ -14880,6 +15022,32 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 		}
 		//#endregion
 		//#region src/client/OasisSettingsSection.js
+		function SkillSuiteSettings({ controller }) {
+			const snapshot = (0, react.useSyncExternalStore)(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
+			const id = (0, react.useId)();
+			const suite = snapshot.localSkillSuite ?? "oasis";
+			const disabled = !snapshot.settingsWritable || snapshot.savingLocalSkillSuite || snapshot.nativeZeroGeneration || snapshot.nativeBusinessRecovery;
+			return (0, react.createElement)("div", { style: {
+				display: "grid",
+				gap: 6,
+				justifyItems: "start"
+			} }, (0, react.createElement)("label", { htmlFor: id }, "本地 Skills 套件"), (0, react.createElement)("select", {
+				id,
+				value: suite,
+				disabled,
+				"aria-describedby": id + "-help",
+				onChange: (event) => {
+					controller.saveLocalSkillSuite(event.currentTarget.value);
+				}
+			}, ...Object.entries(LOCAL_SKILL_SUITES).map(([value, item]) => (0, react.createElement)("option", {
+				key: value,
+				value
+			}, item.label))), (0, react.createElement)("small", { id: id + "-help" }, suite === "oasis" ? "适用于此 DSH 配置下后续发起的本地生成。" : "支持权利要求初稿。请在任务中选择本地 Skills，再核对模型与材料。"), (0, react.createElement)("a", {
+				href: LOCAL_SKILL_SUITES[suite].repository,
+				target: "_blank",
+				rel: "noopener noreferrer"
+			}, "查看 GitHub 仓库"), snapshot.savingLocalSkillSuite ? (0, react.createElement)("small", { role: "status" }, "正在保存…") : null, snapshot.localSkillSuiteError ? (0, react.createElement)("small", { role: "alert" }, snapshot.localSkillSuiteError) : null);
+		}
 		function GenerationGuidance() {
 			return (0, react.createElement)("div", { style: {
 				display: "grid",
@@ -14898,7 +15066,7 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			}, (0, react.createElement)("h2", { style: {
 				margin: 0,
 				fontSize: 18
-			} }, "绿洲工作台"), (0, react.createElement)(GenerationGuidance), controller ? (0, react.createElement)(OasisAccountSettings, { controller }) : null);
+			} }, "绿洲工作台"), controller ? (0, react.createElement)(SkillSuiteSettings, { controller }) : null, (0, react.createElement)(GenerationGuidance), controller ? (0, react.createElement)(OasisAccountSettings, { controller }) : null);
 		}
 		//#endregion
 		//#region src/client/conversation-draft-bridge.js

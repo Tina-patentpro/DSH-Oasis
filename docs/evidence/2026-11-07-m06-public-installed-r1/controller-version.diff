@@ -1,0 +1,11 @@
+--- frozen-0.0.1-controller
++++ new-rc1-controller
+@@ -12,7 +12,7 @@
+ export const installationControlFiles=['scripts/f-installed-runtime.mjs','patches/storage-json-single-owner/installed-lease.mjs','patches/storage-json-single-owner/ownership.mjs']
+ export const installedProviderIndexSHA256='88c6bc7569efab14771daeb6a3e1a084a1c26ecef577db66f8505f2d9d9df56e'
+ const disabledPlugins=['desktop-updates','session-telemetry-otel','llm-pi-ai','llm-deepseek','llm-deepseek-account','session-title-llm','goal-round-driver','deepseek-account','web-search-deepseek','account-controller','oasis-professional-service']
+-const componentVersions=checkpoint=>({'@deepseek-ai/dsh-client-ui-primitives':'0.2.0-rc.2.oasis-mac.1','@deepseek-ai/dsh-web-frontend':'0.2.0-rc.2.oasis-mac.1','dsh-better-sidebar':'0.24.1','oasis-professional-service':'0.0.1','dsh-desktop-host-file-path-bridge':'0.0.1','dsh-storage-json-single-owner':'0.0.1.oasis-installed.1','@deepseek-ai/dsh-client-ui-conversation':'0.2.0-rc.2.oasis-draft.'+checkpoint})
++const componentVersions=checkpoint=>({'@deepseek-ai/dsh-client-ui-primitives':'0.2.0-rc.2.oasis-mac.1','@deepseek-ai/dsh-web-frontend':'0.2.0-rc.2.oasis-mac.1','dsh-better-sidebar':'0.24.1','oasis-professional-service':'0.1.0-rc.1','dsh-desktop-host-file-path-bridge':'0.0.1','dsh-storage-json-single-owner':'0.0.1.oasis-installed.1','@deepseek-ai/dsh-client-ui-conversation':'0.2.0-rc.2.oasis-draft.'+checkpoint})
+ const metadata=['pnpm-lock.yaml','node_modules/.modules.yaml','node_modules/.package-map.json','node_modules/.pnpm-workspace-state-v1.json']
+ const read=p=>JSON.parse(fs.readFileSync(p,'utf8'))
+ export const installationFileHash=p=>createHash('sha256').update(fs.readFileSync(p)).digest('hex')

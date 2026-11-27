@@ -1,0 +1,413 @@
+{
+  "record_id": "INTERFACE-R2-AR7-HOST-FOLLOWUP-20261111",
+  "recorded_at": "2026-11-11T12:35:54.054132+08:00",
+  "timezone": "Asia/Shanghai",
+  "executor": "DSH-Oasis 项目 Codex",
+  "thread_id": "01a177c0-e0a2-7841-ab7b-634f0bacc752",
+  "turn_id": "01a1c8e2-12e9-77b1-980d-f1d3f68b8cc4",
+  "turn_source": "本地Codex应用 read_thread 当前轮含接收事件",
+  "authority": {
+    "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-11-11-interface-r2-ar7-host-followup/dispatch-preflight.json",
+    "sha256": "248bedfb78adc4bdc21c3b4454b15658e6296eb75ca807178a7961ef78e9fa08",
+    "bytes": 22057,
+    "scope": "dsh-oasis／ARTIFACT-7／R2首项接续，DS-02/04/05 AR7-P 与 DS-03/04/05 AR7-C，原R7-03原B用途。发送一次现有Codex聊天的取证请求及核收。"
+  },
+  "rule": "EXEC-R2／协同1.2.2",
+  "entries": {
+    "overall": {
+      "id": "PLAN-PROGRESS-REFRESH-20261110-P1110",
+      "revision": "P1110",
+      "date": "2026-11-10",
+      "path": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "anchor": "oasis-plan-progress-p1110",
+      "source_report": "docs/coordination/daily/2026-11-09-230826-scheduled-progress.md",
+      "record": "docs/coordination/execution/2026-11-10-plan-progress-refresh-p1110/修订说明.md",
+      "read_baseline": "docs/coordination/execution/2026-11-10-plan-progress-refresh-p1110/baseline.json",
+      "verification": "docs/coordination/execution/2026-11-10-plan-progress-refresh-p1110/verification.json",
+      "affected_projects": [
+        "dsh-oasis",
+        "test-library",
+        "workbuddy-bridge",
+        "patent-distillery",
+        "dify-design",
+        "dify"
+      ],
+      "affected_workstreams": [
+        "landing-page",
+        "wechat-official-account",
+        "github-operations"
+      ],
+      "previous_followup_id": "PLAN-PROGRESS-REFRESH-20261108-P1108",
+      "scope": "overall planning refresh; original project/workstream plans and local followups retained as references; changed starting points governed by P1110 and later named receipts",
+      "business_execution_started": false,
+      "tests_resumed": false,
+      "progress_authority": "registered current_entry and exact receipts",
+      "supersedes": "only obsolete starting points stated in P1110; BM1-R1/S1/S2-R1/G1/GH1 and original gates preserved"
+    },
+    "interface": {
+      "id": "INTERFACE-STANDARDS-FOLLOWUP-20261111-R2",
+      "date": "2026-11-11",
+      "revision": "R2",
+      "role": "planning_reference",
+      "status": "planning_only",
+      "path": "docs/superpowers/plans/2026-11-11-interface-standards-post-r03-plan.md",
+      "anchor": "oasis-interface-standards-followup-r2",
+      "sha256": "8c64d3ee0bae1d2971c3ec52ce1d6859ab7498092861c8070e54b9e772e6977f",
+      "read_baseline": "docs/coordination/plans/2026-11-11-interface-standards-post-r03-baseline.json",
+      "based_on_overall_followup_id": "PLAN-PROGRESS-REFRESH-20261110-P1110",
+      "scope": "Post-R03 AR7 readiness and bounded R04–R06; independent AR3, BRIDGE-1, LIVE1, M05 and design preparation",
+      "previous_followup": {
+        "id": "INTERFACE-STANDARDS-FOLLOWUP-20261110-R1",
+        "date": "2026-11-10",
+        "revision": "R1",
+        "role": "planning_reference",
+        "status": "planning_only",
+        "path": "docs/superpowers/plans/2026-11-10-interface-standards-followup-plan.md",
+        "anchor": "oasis-interface-standards-followup-p1110",
+        "sha256": "7b0f93b72537d9bb8f53bf17972f7faff5fa95e865fdc99f2a9fc8c587dec954",
+        "read_baseline": "docs/coordination/plans/2026-11-10-interface-standards-followup-baseline.json",
+        "based_on_overall_followup_id": "PLAN-PROGRESS-REFRESH-20261110-P1110",
+        "scope": "R02–R06 continuation; prioritized uses, readiness and evidence layers"
+      }
+    },
+    "local": {
+      "id": "PLAN-PROGRESS-REFRESH-20261108-P1108",
+      "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "anchor": "oasis-plan-progress-p1108",
+      "revision": "P1108",
+      "previous_followup_id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "addendum_anchor": "oasis-plan-progress-p1108",
+      "source_report": "docs/coordination/daily/2026-11-07-231113-scheduled-progress.md",
+      "record": "docs/coordination/execution/2026-11-08-plan-progress-refresh-p1108/修订说明.md",
+      "status": "planning_only",
+      "supersedes_only": "obsolete local next-actions within P1108; original work packages, contracts, gates, evidence and role references retained"
+    },
+    "standard": {
+      "path": "docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+      "version": "V0.3-draft",
+      "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+      "examples_path": "docs/coordination/interfaces/examples/IC-ARTIFACT/repair-trials-v0.3.md",
+      "examples_sha256": "720b56b8068c7557215748982582cb985767616150f4794c8cdeebcd3f36f0a5"
+    },
+    "bm1": {
+      "id": "BUSINESS-MODE-20261105-BM1",
+      "revision": "BM1-R1",
+      "date": "2026-11-05",
+      "path": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "anchor": "oasis-business-mode-bm1",
+      "planning_status": "documentation_only_no_business_execution",
+      "entrypoint_target": [
+        "DSH plugin",
+        "WorkBuddy user plugin (native local Skill preparation bound to dsh-oasis; not installed or runtime accepted)"
+      ],
+      "legacy_billing": "retain maintenance, not priority",
+      "transitional_backend": "existing third-party development version on Aliyun Qingdao; actual production capabilities separately verified",
+      "time_basis": null,
+      "professional_paid_capabilities_window_months": [
+        1,
+        2
+      ],
+      "self_built_open_source_backend_replacement_window_months": [
+        2,
+        3
+      ],
+      "bridge_dual_role": [
+        "internal_efficiency",
+        "independent_open_source_expertise_GitHub_reach_and_consulting"
+      ],
+      "open_source_license": "UNDECIDED_PER_RELEASE_SCOPE",
+      "monetization": [
+        "patent-enterprise AI transformation consulting",
+        "private deployment for patent firms and large enterprises",
+        "professional paid capabilities; exact delivery and pricing undecided"
+      ],
+      "roles_id": "BUSINESS-ROLES-20261105-BM1-R1",
+      "roles_anchor": "bm1-roles-r1",
+      "brief_plan": "docs/coordination/plans/2026-11-05-overall-plan-brief-bm1-r1.md",
+      "execution_roles": {
+        "development": "Codex",
+        "skill_creation": "Codex",
+        "workflow_creation": "Codex",
+        "information_collection": "WorkBuddy",
+        "article_writing_and_publishing": "WorkBuddy",
+        "github_explanatory_writing": "WorkBuddy"
+      },
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    "current_entries": [
+      {
+        "path": "DSH-Oasis/docs/project-current-state.md",
+        "role": "current_entry"
+      },
+      {
+        "path": "DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+        "role": "current_entry"
+      }
+    ]
+  },
+  "git": {
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis",
+    "head": "30031b589d4ff7108ed5df16b698351ad4a45f37",
+    "role": "源码当前头，仅文档源身份；未用未提交源码替代已装字节"
+  },
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-11-interface-r2-ar7-g02-g03/execution-preflight.json",
+      "sha256": "e1584d2ab28518214b7294710ce5281be4ed0a2c21f52f8955b16dc5f8a8eea4",
+      "bytes": 73889,
+      "dispatch_sha256": "e1584d2ab28518214b7294710ce5281be4ed0a2c21f52f8955b16dc5f8a8eea4",
+      "version": "R2 首项",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-11-interface-r2-ar7-g02-g03/adoption-record.md",
+      "sha256": "0791100d4bd612c2abb900791b8306c9390f0c8cc51c01a4a33c02f7ffbd2f0c",
+      "bytes": 5183,
+      "dispatch_sha256": "0791100d4bd612c2abb900791b8306c9390f0c8cc51c01a4a33c02f7ffbd2f0c",
+      "version": "R2 首项",
+      "read_scope": "全文，前轮范围和缺件"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "sha256": "58e5c4fe993b78db3e9785e4d3089385ba0d15b144cb23fd96f003bc99e596cf",
+      "bytes": 49030,
+      "dispatch_sha256": "58e5c4fe993b78db3e9785e4d3089385ba0d15b144cb23fd96f003bc99e596cf",
+      "version": "协同1.2.2",
+      "read_scope": "双登记接口、整体、BM1及DSH入口解析"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "sha256": "7129f27102a7a9b644e03dd08d32b9325cc963b25cd71c2f22b43e9155eab8f5",
+      "bytes": 125034,
+      "dispatch_sha256": "7129f27102a7a9b644e03dd08d32b9325cc963b25cd71c2f22b43e9155eab8f5",
+      "version": "协同1.2.2",
+      "read_scope": "整体和适用接口草案唯一解析、DSH局部P1108"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "sha256": "5da00f111b7d1632ea0f7d59c4d45790743988c1a8ba5f84ac895258b3ca7559",
+      "bytes": 38728,
+      "dispatch_sha256": "5da00f111b7d1632ea0f7d59c4d45790743988c1a8ba5f84ac895258b3ca7559",
+      "version": "EXEC-R2",
+      "read_scope": "根规则全文；项目适用条款见当前指引及本项目§7/8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "sha256": "f2e51a7dcdc2f894f5ae748400356119759febb2ddee5dda21e5320f24ed79fd",
+      "bytes": 29795,
+      "dispatch_sha256": "f2e51a7dcdc2f894f5ae748400356119759febb2ddee5dda21e5320f24ed79fd",
+      "version": "1.2.2",
+      "read_scope": "统一协同约定及R2材料状态"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "sha256": "80975717d3e73a966833a37abef3a8ac0fba3b3dabdc252937d94816829368fb",
+      "bytes": 66893,
+      "dispatch_sha256": "80975717d3e73a966833a37abef3a8ac0fba3b3dabdc252937d94816829368fb",
+      "version": "1.3.1／NS1-R1／P1110",
+      "read_scope": "P1110、接口纳管与NS1适用部分"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "bytes": 38734,
+      "dispatch_sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "version": "原矩阵",
+      "read_scope": "IC-ARTIFACT对应范围"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "bytes": 21718,
+      "dispatch_sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "version": "原合同",
+      "read_scope": "§3、4本地和分层条款"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "sha256": "20661be6bfb34dbb73b6250786bb1c57b09ae83158ad1b2a56e883974e612409",
+      "bytes": 42690,
+      "dispatch_sha256": "20661be6bfb34dbb73b6250786bb1c57b09ae83158ad1b2a56e883974e612409",
+      "version": "BM1-R1／S1",
+      "read_scope": "BM1-R1/S1适用条款，S2渠道不进入本用途"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-10-25-research-rules-and-migration-addendum.md",
+      "sha256": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "bytes": 6688,
+      "dispatch_sha256": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "version": "历史适用部分",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利业务Skills清单.md",
+      "sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "bytes": 6157,
+      "dispatch_sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "version": "G1",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "sha256": "566f665829e04c675c7bb4334d0ea0e1b52f92231009de88b51631e8fb5a560d",
+      "bytes": 71214,
+      "dispatch_sha256": "566f665829e04c675c7bb4334d0ea0e1b52f92231009de88b51631e8fb5a560d",
+      "version": "P1108",
+      "read_scope": "DS-02—05、P1108及R7接续"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-08-project-summary-and-next-plan-r7.md",
+      "sha256": "107a0ab769751fce16c0d5412fd0c9740190ff78f1b477e6b13e8ee7721db368",
+      "bytes": 19396,
+      "dispatch_sha256": "107a0ab769751fce16c0d5412fd0c9740190ff78f1b477e6b13e8ee7721db368",
+      "version": "R7",
+      "read_scope": "R7-03"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "sha256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "bytes": 35618,
+      "dispatch_sha256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "version": "DSH AGENTS",
+      "read_scope": "根规则全文；项目适用条款见当前指引及本项目§7/8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-11-11-interface-r03-ar7-review/closeout.md",
+      "sha256": "ea3d94d8b205a9c884edf7dc26264c9b1b04a0069a2854882123177c8299d2b6",
+      "bytes": 3483,
+      "dispatch_sha256": "ea3d94d8b205a9c884edf7dc26264c9b1b04a0069a2854882123177c8299d2b6",
+      "version": "R03",
+      "read_scope": "R03限定核收与缺件"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-10-r7-02-live-16384-r1/verification.json",
+      "sha256": "919919f13b75b79c2dd697e5c866bc5535e5a890a74d359afaa2b189356af901",
+      "bytes": 3603,
+      "dispatch_sha256": "919919f13b75b79c2dd697e5c866bc5535e5a890a74d359afaa2b189356af901",
+      "version": "R7-02",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-10-28-is03-is06-repair-verification.json",
+      "sha256": "6c3a84796d590c3c16d1d0d26162dcef0122247d4abd3c03e04e9b2b88173334",
+      "bytes": 24783,
+      "dispatch_sha256": "6c3a84796d590c3c16d1d0d26162dcef0122247d4abd3c03e04e9b2b88173334",
+      "version": "历史",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "sha256": "6bf99848509ed6f4fa06e4d74cec0a167562484399b4c563e5b5a1f2b85ca478",
+      "bytes": 384984,
+      "dispatch_sha256": "6bf99848509ed6f4fa06e4d74cec0a167562484399b4c563e5b5a1f2b85ca478",
+      "version": "DSH当前入口",
+      "read_scope": "当前R7-04/02、R7-03入口"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "sha256": "ebdcef28e95fa0de355e49055a54235ca4f5ce0e6d47f3c35892934172a48307",
+      "bytes": 167918,
+      "dispatch_sha256": "ebdcef28e95fa0de355e49055a54235ca4f5ce0e6d47f3c35892934172a48307",
+      "version": "DSH当前入口",
+      "read_scope": "开头当前R7-04/02"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-11-11-interface-standards-post-r03-plan.md",
+      "sha256": "8c64d3ee0bae1d2971c3ec52ce1d6859ab7498092861c8070e54b9e772e6977f",
+      "bytes": 11064,
+      "dispatch_sha256": "8c64d3ee0bae1d2971c3ec52ce1d6859ab7498092861c8070e54b9e772e6977f",
+      "version": "R2",
+      "read_scope": "全文，R2首项"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+      "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+      "bytes": 18060,
+      "dispatch_sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+      "version": "V0.3-draft",
+      "read_scope": "§3/4/7及AR-REQ05—10适用判据"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-trials-v0.3.md",
+      "sha256": "720b56b8068c7557215748982582cb985767616150f4794c8cdeebcd3f36f0a5",
+      "bytes": 5764,
+      "dispatch_sha256": "720b56b8068c7557215748982582cb985767616150f4794c8cdeebcd3f36f0a5",
+      "version": "V0.3试填",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-11-11-interface-r03-ar7-review/review-collection.json",
+      "sha256": "6ca06d232e1c7b62f1069473aedc84ebf3d1b54eb1c28b72d447700bcdc24e99",
+      "bytes": 12735,
+      "dispatch_sha256": "6ca06d232e1c7b62f1069473aedc84ebf3d1b54eb1c28b72d447700bcdc24e99",
+      "version": "R03",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-11-11-interface-r03-ar7-review/dispatch-record.json",
+      "sha256": "4055f06f73334351ea59f3cead9daa43e57e106182c4419c058fe27246a44277",
+      "bytes": 1383,
+      "dispatch_sha256": "4055f06f73334351ea59f3cead9daa43e57e106182c4419c058fe27246a44277",
+      "version": "R03",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/Codex/operation-records/2026-10-30-interface-stage1-closeout-r1/final-seal.json",
+      "sha256": "84b40d6b79f1e17f6922a40f53fd87e250e7e12f86f4af6dda467b1596567a9e",
+      "bytes": 38828,
+      "dispatch_sha256": "84b40d6b79f1e17f6922a40f53fd87e250e7e12f86f4af6dda467b1596567a9e",
+      "version": "R01",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/Codex/operation-records/2026-10-30-interface-stage1-closeout-r1/collection-check-attempt-01.json",
+      "sha256": "cc348c047ad38dcf8652e592986b54d7ecc90607e5276ae7c81a47a19d702901",
+      "bytes": 5926,
+      "dispatch_sha256": "cc348c047ad38dcf8652e592986b54d7ecc90607e5276ae7c81a47a19d702901",
+      "version": "R01",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/Codex/operation-records/2026-10-30-interface-stage1-closeout-r1/collection-check.json",
+      "sha256": "d667bd7156839491636461885395e76f1667e0f4a912f911dfacad2b12a64c65",
+      "bytes": 7280,
+      "dispatch_sha256": "d667bd7156839491636461885395e76f1667e0f4a912f911dfacad2b12a64c65",
+      "version": "R01",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/installation.json",
+      "sha256": "9a7085ec31ebdc08fe066a4ace4da848519505c80f1848b8cf8893abf282deab",
+      "bytes": 2225,
+      "dispatch_sha256": "9a7085ec31ebdc08fe066a4ace4da848519505c80f1848b8cf8893abf282deab",
+      "version": "当次磁盘",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/storages/oasis_workbench.json",
+      "sha256": "aaebeba9fcefc9c630457e6c21d442b0f4ea50ad3ba906347830a2f48727ac3c",
+      "bytes": 585444,
+      "dispatch_sha256": "aaebeba9fcefc9c630457e6c21d442b0f4ea50ad3ba906347830a2f48727ac3c",
+      "version": "当次磁盘",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/receipt.json",
+      "sha256": "f931563d873baf8b63407912baf3f04e187c1f18e2fc569093a0af63939a4466",
+      "bytes": 6863203,
+      "dispatch_sha256": "f931563d873baf8b63407912baf3f04e187c1f18e2fc569093a0af63939a4466",
+      "version": "当前开发安装",
+      "read_scope": "本轮先核原字节身份；实际本地观察另表"
+    }
+  ],
+  "drift_at_intake": [],
+  "prior_to_current": [
+    "整体P1110与本项目P1108继续；专项R1→R2且R03限定文档意见已核收，开始同用途G02/G03只读取证。",
+    "历史生成a25f1a19→交接指针2339cca5，同标签非同bundle；仅按现有收据与静态实际字节核对。",
+    "已选用原B历史正文和本地保存用途；BM1 Skills优先、Codex职责及S1隔离适用，旧快照/远端/发布无关。"
+  ],
+  "disposition": "可进行本轮原件只读取证及新增回执。运行中的活动不介入，未取证项保持UNBOUND。"
+}

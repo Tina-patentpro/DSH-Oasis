@@ -1,0 +1,10 @@
+{
+  "command": [
+    "tools/bin/node",
+    "--test",
+    "tests/macos-native-zero-generation.test.mjs",
+    "packages/oasis-professional-service/test/m06-native-zero-generation.test.mjs"
+  ],
+  "exit_code": 1,
+  "expected": "new mode/guard assertions fail before implementation; no real operations"
+}

@@ -1,0 +1,127 @@
+{
+  "at": "2026-11-27T12:28:11.239574+08:00",
+  "newRequestKey": "8c8f27a1-8adc-43b8-ae19-b2b0d82584fe",
+  "modelRequests": 1,
+  "feeLimitCny": null,
+  "retries": 0,
+  "tools": 0,
+  "batchSha256": "4b6748d2a2efb01e41448fdcf65bcc50564a716c20145a8f17e24535fa2ce82b",
+  "systemSha256": "cfc18fba2d049a39dd6d669263d0a51b5875443f3494bd0a98fb62b6224a6802",
+  "inputContentSha256": "dcf6813e946c304228f4d4a9265826424bc51d663c4a5f016a16e0f329c4b019",
+  "launcherSha256": "cdd647e9004903c2adbca8d1ac5b2f04fa871899b2261ac34ff32a4df7b08aae",
+  "guardSha256": "38c1ad5dc5f128f2f7b74f0d2e58db98c8f6742d8218b13e29471e7d1ba35c93",
+  "clientSha256": "acc839fb4ae86c75e0bb3293094380fbe4d180cdb12aab52b7a0d592b609c5a3",
+  "sourceHashes": {
+    "src/v340-native-contract.js": "acdf9d7238a417fa43f491e5c279a23abb2378945be5d3a4953e4a3d7d10a553",
+    "src/v340-native-model.js": "5d248dd90ed900021da69dc4416fa87ab15d3bd283176733bfc120b008051fe3"
+  },
+  "positive": {
+    "id": "M02",
+    "workspaceId": "38b23826-dd94-43b3-8fa3-952ee30c57bf",
+    "sessionId": "session-2e621c26-ad02-4cba-81ac-0a22fb804462",
+    "taskId": "m02-locator-r1-c0ec84b0",
+    "requestKey": "c0ec84b0-acbb-45d0-a38b-2f988f5d2023",
+    "skillId": "patent-triz-analysis",
+    "skillVersion": "0.3.0-rc.4",
+    "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+    "runId": "v340-b67856a2-03e1-49c1-b83b-81a031049730",
+    "status": "completed",
+    "failureCode": null,
+    "summary": {
+      "finishKind": "stop",
+      "usage": {
+        "inputTokens": 512,
+        "outputTokens": 63,
+        "totalTokens": 575
+      }
+    },
+    "candidateReceiptVersion": "v340-native-candidate-8",
+    "receiptSystemSha256": "cfc18fba2d049a39dd6d669263d0a51b5875443f3494bd0a98fb62b6224a6802",
+    "inputSha256": "d746263f2a0523a2f2f17b0f3794e12c76a0239a90f54b06c60bb33bec3b201a",
+    "preparedSha256": "33b47e2135ef748d93d50f2ce9ae4c6e429da077e8e4e75abcae3b73c25b9e1c",
+    "resultSha256": "c8b6899a9cdbc7c4c5958f8fa6f91e69a19bb5caada580024af932ce923c7b07",
+    "resultBytes": 10120,
+    "resultFile": "M02-raw-result.md",
+    "coreSha256": "ccdf95445c8510d30312f2b2316eeff9a7affc63dbb07708e50dfdd450d07259",
+    "coreLength": 28,
+    "tables": {
+      "T1": 1,
+      "T2": 0,
+      "T3": 1,
+      "T4": 0,
+      "T5": 0,
+      "T6": 0
+    },
+    "writebackId": "writeback-45889e97-4ae2-49ed-bf75-0abf8a4256e8",
+    "reviewedAndSaved": true,
+    "wireTerminal": true,
+    "livePostAttempt": false
+  },
+  "negative": {
+    "id": "M02",
+    "workspaceId": "9d091220-b15e-4b00-b470-5e717d099861",
+    "sessionId": "session-94fb235b-fd05-422c-84b0-6e7e4a05a0e7",
+    "taskId": "m02-locator-r1-195916af",
+    "requestKey": "195916af-34b8-4520-b028-d2ba0552789f",
+    "skillId": "patent-triz-analysis",
+    "skillVersion": "0.3.0-rc.4",
+    "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+    "runId": "v340-45c7d206-186b-4d07-9614-5845c29d6a75",
+    "status": "failed",
+    "failureCode": "INVALID_OUTPUT",
+    "summary": {
+      "failureStage": "result-assembly",
+      "finishKind": "stop",
+      "assemblyIssue": {
+        "code": "source-receipt-mismatch",
+        "field": "updates",
+        "index": 0
+      },
+      "fieldIssue": {
+        "code": "source-locator-mismatch",
+        "path": [
+          "updates",
+          0,
+          "source_locator"
+        ]
+      },
+      "usage": {
+        "inputTokens": 512,
+        "outputTokens": 63,
+        "totalTokens": 575
+      }
+    },
+    "candidateReceiptVersion": "v340-native-candidate-8",
+    "receiptSystemSha256": "cfc18fba2d049a39dd6d669263d0a51b5875443f3494bd0a98fb62b6224a6802",
+    "inputSha256": "83d3b1f58bca79dbd76045c358f5799c1a14972ca9fa7f0225bc5418f96a211e",
+    "preparedSha256": "33b47e2135ef748d93d50f2ce9ae4c6e429da077e8e4e75abcae3b73c25b9e1c",
+    "wireTerminal": true,
+    "livePostAttempt": false
+  },
+  "recovery": {
+    "id": "M02",
+    "runId": "v340-b67856a2-03e1-49c1-b83b-81a031049730",
+    "resultSha256": "c8b6899a9cdbc7c4c5958f8fa6f91e69a19bb5caada580024af932ce923c7b07",
+    "recovered": true,
+    "previewMatches": true
+  },
+  "pricingUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "priceCheckedAt": "2026-11-27T12:28:11.239704+08:00",
+  "priceCnyPerMillion": {
+    "peak": {
+      "input": 2,
+      "cacheRead": 0.04,
+      "output": 8
+    },
+    "offpeak": {
+      "input": 1,
+      "cacheRead": 0.02,
+      "output": 4
+    }
+  },
+  "baselineBeforeRunSha256": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/m02-single-20261127/live/dsh-home/storages/oasis_workbench.json": "27e4cadaf314f2d56f39d731a4d3f1ac45f754433343b7fff60fe4489a9ddd83",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-27-m01-t1-m02-live/verification.json": "029d9f7e908ccdb70f5027d116d6a4c51dbb1d0bc2fd5017eea985149312cf54",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-27-m01-t1-m02-live/M01-T1修订累计稿.md": "bb0bd38cdc7862261101dd9013d1b362c42f4a57154fb8b25477338d5479eb7c"
+  }
+}

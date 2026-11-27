@@ -1,0 +1,265 @@
+{
+  "at": "2026-11-06T11:14:20.663057+08:00",
+  "result": "PASS",
+  "command": "python3 via zsh: frozen-pnpm chain, exact604 links, real-boot binding receipt, archive/source/profile preservation and local links",
+  "scope": "fresh isolated dependency links and actual boot/include configuration resolution only; not running Host/Desktop or installer/UI/quality acceptance",
+  "preserved_warnings": [
+    [
+      "patch: entry %C not found",
+      "desktop-shell"
+    ],
+    [
+      "patch: entry %C not found",
+      "desktop-updates"
+    ]
+  ],
+  "checks": [
+    {
+      "check": "four pinned pnpm processes exit0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all pnpm commands offline ignore scripts no auto manager",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "lock-only then frozen phase installation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen current lock kept installation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "lock-only then frozen phase profile",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frozen current lock kept profile",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "real boot include binding process exit0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source final profile was already controlled",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "one business Host original ID preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no skipped bundle and old warnings preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "actual 604 link targets freshly match",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "only two scopes change Oasis logical target",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "manifest fields and dependency names preserved installation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "manifest fields and dependency names preserved profile",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "patch only existing controlled name and unrelated entries kept",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "controlled Host and client both actual archive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unsupported id-name rename rejected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no app plugin activation credentials generation fetch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "same single prior archive reused",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "134 archive extraction bytes retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "955 protected old files unchanged",
+      "passed": true,
+      "detail": {
+        "count": 955,
+        "drift": []
+      }
+    },
+    {
+      "check": "exact old status suffix kept docs/project-current-state.md",
+      "passed": true,
+      "detail": {
+        "before_bytes": 321672,
+        "sha256": "ca5bc9981c68b7561b88d61962c9d9dc6626e2bd2bf513129fefbef7d941b54e"
+      }
+    },
+    {
+      "check": "exact old status suffix kept docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "passed": true,
+      "detail": {
+        "before_bytes": 112907,
+        "sha256": "0eb95d87b44efb6db87a00feb81fe3d4d17ba028cec00faf6eea889dcf64a985"
+      }
+    },
+    {
+      "check": "original profile core metadata unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "isolated fresh directories ignored",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "git HEAD and branch unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "local report links resolve",
+      "passed": true,
+      "detail": {
+        "count": 11,
+        "missing": []
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/binding-command.json",
+      "bytes": 469,
+      "sha256": "85c96dac437f589a5cbaf284f74d13dd059d5defce34a41a505216db406a4025"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/binding-return.md",
+      "bytes": 7766,
+      "sha256": "6767a479440cec2f33f1a6b74e7692d627abb3164a89cfd949ee2917b8904664"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/binding.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/binding.stdout.txt",
+      "bytes": 483,
+      "sha256": "517976562fc4c7496d031a5e9c87d0ada917ea0934413050b8dfd99033913667"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/candidate-manifest-diff.json",
+      "bytes": 1943,
+      "sha256": "e1ef90ee37452b4180441da7b0dd4d3f503b1db1b0ea6d997148fb0717a071ff"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/check-profile-binding.mjs",
+      "bytes": 9162,
+      "sha256": "ef72e3f0728f9b0626d7335c90e43fde9000cced40247dd927ec638b922bcfbc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/installation-frozen-links.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/installation-frozen-links.stdout.txt",
+      "bytes": 159845,
+      "sha256": "1c53881500c05a5c9185e1df67647c39f8f4149519305d82bc929f5681c7b8a2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/installation-lock-only.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/installation-lock-only.stdout.txt",
+      "bytes": 34,
+      "sha256": "526bd7b911364f0756ea9233cdee17453efdc3dcef2903c7f9f77569aa994a32"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/original-link-targets.json",
+      "bytes": 346987,
+      "sha256": "aca820087361645e37a8981bab58a5a4cf6eaa00f4903e6a936d31a961320f57"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/pnpm-commands.json",
+      "bytes": 5018,
+      "sha256": "fdb13338e0076fa4dacbffcc7b0817dfb8e9e00dc54f52ec509a5db4b2a17d00"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/preflight.json",
+      "bytes": 28351,
+      "sha256": "3442387746fe6313f3631171ab498a4ed841e40588e73312723784df70f62d3a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/profile-binding-result.json",
+      "bytes": 246879,
+      "sha256": "746a16362661c8bb9e7d29dec3fe8acb8ca5b1b9b937a49d38aa3d171b5a4d87"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/profile-frozen-links.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/profile-frozen-links.stdout.txt",
+      "bytes": 1659,
+      "sha256": "6133bb06fa3381c71a2620ea420ff5bcdefddbb746d9e128c14fe61f53cea85f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/profile-lock-only.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/profile-lock-only.stdout.txt",
+      "bytes": 34,
+      "sha256": "201beb6fafbe6c899ec6f27661c58b9afa88514bca3f4dba30fd70735b11ae41"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/protected-baseline.json",
+      "bytes": 291303,
+      "sha256": "f7087ed12cf2b878d4463e8b355ec56209e98a381618f3867fc8abd7d4992211"
+    }
+  ],
+  "real_business_calls": 0,
+  "actual_app_start": false,
+  "published": false
+}

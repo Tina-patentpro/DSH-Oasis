@@ -1,0 +1,85 @@
+{
+  "kind": "PROPOSED_DELIVERY_BINDING_NOT_RUNTIME_CONFIG",
+  "candidate": "fast39-result-contract-candidate-3/C3-R1",
+  "activation": "disabled",
+  "reason": "Static C3 revision only, exact adoption and source Batch/candidate binding plus implementation/acceptance remain pending",
+  "before": {
+    "app_id": "b1af2fc9-817e-5247-aeed-dd16abad8337",
+    "workflow_id": "57bfe3ab-ff48-410b-b140-c20c1da828a9",
+    "workflow_version": "2026-11-04 13:48:13.209846",
+    "dsl_sha256": "3a249d33f9d3bb8e359c191134732d8f836e3ae506df8cc395151d1fbd91bd66",
+    "graph_semantic_sha256": "2be2019b05560cc3a7d0be3b296c0175b83fb4f49a0699326e57c53495631b75",
+    "service_id": 39,
+    "service_safe_detail_sha256": "472f7981e4218d6a04b8dcb1f058b51fb678fef3a552dfef3719598436a75872",
+    "backend_source_files": [
+      {
+        "relative_path": "app/api/api_v1.py",
+        "sha256": "643218f31d01b11e4841c7c145e295a07932e78cd949b9ce4bd13d178c6ba6e5"
+      },
+      {
+        "relative_path": "app/api/v1/__init__.py",
+        "sha256": "a6d0d75c351c39cdd4422d043b44fcf6600f69ad685b17c5629a2ed454388fe7"
+      },
+      {
+        "relative_path": "app/api/v1/apiconfig.py",
+        "sha256": "34bb91b8f6b821f36d177ddd9f33fb6c533347949b27371a7ca39c983ec831b2"
+      },
+      {
+        "relative_path": "app/schemas/api.py",
+        "sha256": "22408b9b73681cd3c57881d72659d87a4702ca37eb305657cfda46879452a34f"
+      },
+      {
+        "relative_path": "app/services/apiconfig_services.py",
+        "sha256": "2a3ce49be3c67e5eed94280abb352b193b1f93dbd298a52298d184cad9931d5b"
+      },
+      {
+        "relative_path": "app/services/workflow_service.py",
+        "sha256": "3afbe8df5543c5b1d112bd3309e80351e284fc1d294b6a8fbc00f33f8ae428a3"
+      },
+      {
+        "relative_path": "main.py",
+        "sha256": "2d85b9fd7aae0043f4312bb4be695e1a64b3f903e806024d3a351c4289628c79"
+      }
+    ]
+  },
+  "after": {
+    "dsl_sha256": null,
+    "published_workflow_id": null,
+    "workflow_version": null,
+    "backend_changed_source_manifest_sha256": null,
+    "client_source_manifest_sha256": null,
+    "service_delivery_fingerprint": null,
+    "professional_acceptance": null,
+    "consumer_acceptance": null
+  },
+  "proposed_versions": [
+    "flow26-source-trace-3",
+    "flow26-quality-3",
+    "flow26-fast-result-3",
+    "flow26-fast-evidence-3"
+  ],
+  "required_runtime_ownership": [
+    "origin",
+    "account_id",
+    "workspace_id",
+    "folder_id",
+    "service_id",
+    "catalog_entry_id",
+    "schema_and_contract",
+    "frozen_delivery_hash"
+  ],
+  "account_and_folder": {
+    "status": "not globally embedded; bind actual task at future invocation",
+    "prior_retest_only": {
+      "account_id": 33,
+      "folder_id": 302,
+      "catalog_entry_id": 214
+    }
+  },
+  "backend_isolated_source": "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source",
+  "backend_reserved_test_path": "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py",
+  "no_credentials": true,
+  "parent_freeze_sha256": "24d09287321b85944d20e4223c3df535c22a58ba4b47a15f400b34c84c616063",
+  "before_observation": "Task0 frozen readonly capture only; not a new live observation in this task",
+  "parent_candidate2_freeze_sha256": "8c4ea72c51cd380815682292e3c8cd9473224fccf423dbe6b4d812b6214e643d"
+}

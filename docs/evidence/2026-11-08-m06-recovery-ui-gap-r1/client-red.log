@@ -1,0 +1,77 @@
+✔ recovery client resumes through narrow selection and cannot schedule broad saves or new runs (60.880792ms)
+✔ recovery UI exposes retained tasks but freezes input and candidate generation (20.34025ms)
+✔ recovery settings detect mode before reading account state or credentials (0.45175ms)
+✖ closing the last recovery task routes the empty view to retained tasks with import and creation disabled (13.257958ms)
+✖ recovery task-strip creation is disabled and has no handler even when a caller supplies one (0.352625ms)
+✖ ordinary task creation stays usable while missing handler and old zero-preview mode stay disabled (0.395666ms)
+✔ recovery task selection, close and function-center navigation remain available (14.580584ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 4
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 283.899167
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs:68:1
+✖ closing the last recovery task routes the empty view to retained tasks with import and creation disabled (13.257958ms)
+  AssertionError [ERR_ASSERTION]: recovery empty view must expose existing retained-task entry
+  + actual - expected
+  
+  + 'div'
+  - [Function: FunctionCenter]
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs:73:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'div',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs:80:1
+✖ recovery task-strip creation is disabled and has no handler even when a caller supplies one (0.352625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs:84:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs:88:1
+✖ ordinary task creation stays usable while missing handler and old zero-preview mode stay disabled (0.395666ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs:94:37)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

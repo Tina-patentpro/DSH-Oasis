@@ -1,0 +1,23 @@
+{
+  "syntheticExamples": true,
+  "actualFailedContentRecovered": false,
+  "pairedPositiveAccepted": true,
+  "orphanRejected": {
+    "code": "orphan-completion",
+    "path": [
+      "model_completions",
+      0,
+      "content_id"
+    ]
+  },
+  "missingRejected": {
+    "code": "missing-completion",
+    "path": [
+      "updates",
+      0,
+      "content_id"
+    ]
+  },
+  "modelRequests": 0,
+  "order": "组装器先检查 model_completions 与 updates 的配对，再进入 updates 的原文定位校验。本次真实 orphan-completion 未验证到 source_locator 阶段。"
+}

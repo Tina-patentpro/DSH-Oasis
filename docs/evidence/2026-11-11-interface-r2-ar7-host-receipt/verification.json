@@ -1,0 +1,39 @@
+{
+  "record_id": "INTERFACE-R2-AR7-HOST-FOLLOWUP-20261111",
+  "recorded_at": "2026-11-11T12:41:37.907393+08:00",
+  "turn_id": "01a1c8e2-12e9-77b1-980d-f1d3f68b8cc4",
+  "status": "PASS_READ_ONLY_EVIDENCE_INTEGRITY_ONLY",
+  "G02": "UNBOUND",
+  "G03": "UNBOUND",
+  "original_sources_rechecked": 63,
+  "outputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-11-interface-r2-ar7-host-receipt/host-return.md",
+      "sha256": "fa1e11f812e06789a5c7f1485085b13257c35c4f922a864a097df5d7c6823a9a",
+      "bytes": 9983
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-11-interface-r2-ar7-host-receipt/host-observation.json",
+      "sha256": "6dc4a7a7d6f37654a62ec3d05ad0a4dda435e6a3ebbe9f36d12f9968d849f224",
+      "bytes": 8361
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-11-interface-r2-ar7-host-receipt/installation-observation.json",
+      "sha256": "18ae01ce6d05c3be3ba1d49716fe16f795e30b22771aca07d036b30872c911cd",
+      "bytes": 15202
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-11-interface-r2-ar7-host-receipt/execution-preflight.json",
+      "sha256": "0ed31344bb479f7843a595dd11adea3139fb899a7b9bf542530e53c36d36ad88",
+      "bytes": 21642
+    }
+  ],
+  "checks": [
+    "requested original run separated from persisted active pointer",
+    "installation receipt/program/Profile equality as observed",
+    "current persisted source/body/inputs and canonical workspace root",
+    "both disk candidates still absent at verification",
+    "raw identities and links verified"
+  ],
+  "scope": "No proof of runtime adoption, review, save confirmation or professional acceptance."
+}

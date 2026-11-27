@@ -1,0 +1,3103 @@
+{
+  "at": "2026-11-06T08:43:57.858395+08:00",
+  "status": "LOCAL_REVIEW_MANIFEST_NOT_RELEASE_BUNDLE",
+  "release_approved": false,
+  "license_adopted": false,
+  "release_version": null,
+  "target": "M06/Flow-2-6/m06-claims-draft0.1.3",
+  "metadata": {
+    "name": "oasis-professional-service",
+    "version": "0.0.1",
+    "private": true,
+    "license": null,
+    "files": [
+      "src",
+      "lib",
+      "docs/api/oasis-professional-service-baseline.json",
+      "cordis.patch.yml"
+    ],
+    "exports": {
+      ".": "./src/index.js",
+      "./m06-controlled-host-013": "./src/m06-controlled-host-013.js",
+      "./m06-workarea-host-013": "./src/m06-workarea-host-013.js",
+      "./client": "./lib/client.js",
+      "./package.json": "./package.json"
+    }
+  },
+  "census_method": "Existing literal package.files trees + present conventional root docs + package.json; NOT npm pack output or minimal runnable closure",
+  "missing_declared_paths": [],
+  "files": [
+    {
+      "path": "cordis.patch.yml",
+      "bytes": 229,
+      "sha256": "ddd8f6b2ea4c114fc532da926d8b6d8162bb2a908fed0ee051808adc5c71949d",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "docs/api/oasis-professional-service-baseline.json",
+      "bytes": 1608,
+      "sha256": "01051469cfb66bf829e4fb18ac71a80f7401444ec89b5fbfe1c92b366fa0b6a8",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "lib/client.js",
+      "bytes": 579043,
+      "sha256": "1313a03e656cb74fcb32435a313968abc6b16f755d3f14c5c6af0219aa2b797f",
+      "role": "existing_browser_build_with_third_party",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "lib/client.js.map",
+      "bytes": 1068448,
+      "sha256": "5581abe5e3af54d37802bd4f63bf59aef9a249eee56d7e22f99a239c9f12641c",
+      "role": "existing_browser_build_with_third_party",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "package.json",
+      "bytes": 2994,
+      "sha256": "f54a459b6863ed997b46c078b36761eb7e241779eba60613745f9900a5a7f873",
+      "role": "private_package_metadata_no_license",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skill-loader.js",
+      "bytes": 5143,
+      "sha256": "f60f09dc80c54b52f1178ffa117e9493dd20c1414acbbac5b530bb248aa9e94e",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.0/SKILL.md",
+      "bytes": 10614,
+      "sha256": "b90559a1f00f13ffe0f0bd0e8862568846f723019349dd39d2e40254b31a4ec4",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.0/assets/claims-output-template.md",
+      "bytes": 9297,
+      "sha256": "d70e7fe249bdbc7e3d420e60ba53a2c14bee2933603275ac6f1ef3735de09d61",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.0/manifest.json",
+      "bytes": 928,
+      "sha256": "63254666e5e1af582b2251423a003686cc2f112f655b35ed088900fbb5cdaaa1",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.0/references/drafting-rules.md",
+      "bytes": 32408,
+      "sha256": "1f724b4490db3e32db8a79ebd83cfc739b645f52ef772c7bcdfd307280c1e9b3",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.0/references/special-domain-boundary.md",
+      "bytes": 5802,
+      "sha256": "ee2cccad227a1e2be2694633517f340b63b3fefe88102995f78b53ba06b046b6",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.1/SKILL.md",
+      "bytes": 10602,
+      "sha256": "87bce634fe9042c692cf19e48fe76923c57c788390491ff26ea49c351a342886",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.1/assets/claims-output-template.md",
+      "bytes": 9269,
+      "sha256": "1c89945da2aa213885e33054f055d3f115a18da26a5a773c5f1db7153a4b5723",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.1/manifest.json",
+      "bytes": 928,
+      "sha256": "d472b4b7a7b74d5223e95513dd1175927e8b9766e392d47a4910c8ce4f0c8dbf",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.1/references/drafting-rules.md",
+      "bytes": 32408,
+      "sha256": "d53870bd2ba5b0a1a9c3ae0c894ae8a4548affc1c2f07503360b703e619011b1",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.1/references/special-domain-boundary.md",
+      "bytes": 5802,
+      "sha256": "ee2cccad227a1e2be2694633517f340b63b3fefe88102995f78b53ba06b046b6",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.2/SKILL.md",
+      "bytes": 10602,
+      "sha256": "f9f26a3d473418e40e7461047877cdcf0f7e7be0f20cf9dd15739930fd1af830",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.2/assets/claims-output-template.md",
+      "bytes": 14926,
+      "sha256": "2bb1d0df7a5a6210e3979b69e6c198a88126b9bd8a2d6d93e4e333f0ac55c1de",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.2/manifest.json",
+      "bytes": 928,
+      "sha256": "f81d427db60ab671dcd552a24794f68c1a323d2dd1b440510bb26f9bfe23d706",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.2/references/drafting-rules.md",
+      "bytes": 32408,
+      "sha256": "cf95acbe249a2419e230348c09ef7a3e2be56c87680ab6adb87816e29048052a",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/builtin-skills/flow-2-6/0.2.2/references/special-domain-boundary.md",
+      "bytes": 5802,
+      "sha256": "ee2cccad227a1e2be2694633517f340b63b3fefe88102995f78b53ba06b046b6",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/claims-api-document.js",
+      "bytes": 2567,
+      "sha256": "1bd53ba9334c7e1803029a6adb251989aaa47f40c5f30b0c4674294e9fa8185a",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/claims-api-execution-contract.js",
+      "bytes": 2634,
+      "sha256": "20418bf686e2f56d69f97aa7c7e30f480ea0dd338a1eb7a5968b6d7765b7fff1",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/claims-skill-pin.js",
+      "bytes": 647,
+      "sha256": "16a03ce5b1c69c93e493b9fc81c3c79403a8bc49bcaced4cddc176a6ad93be50",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/claims-upstream.js",
+      "bytes": 4858,
+      "sha256": "58f5d7090f397c5cd87758f5f1b02dff6b1f04430967d493ddea61383a2c5c2d",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/claims-v2-result.js",
+      "bytes": 13553,
+      "sha256": "211072334798c7ffbd5686cf5f18a157a47cc49b4108d959d3714b20c08d375e",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/ConversationInputRegistration.js",
+      "bytes": 842,
+      "sha256": "f8de5656123a29498011df5b4fd1c3ceb44fafd6c1c72f9217f74726807fc0eb",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/FunctionCenter.js",
+      "bytes": 5305,
+      "sha256": "29fe7adebc357a5846e8e0023362cdca630b9a749d0c5e8064076ce20a48f8a4",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/GenerationSourceSwitch.js",
+      "bytes": 1550,
+      "sha256": "b46fc722520b1e801155528e9a660acab23b063037f69a1ab9291c2875dd7553",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/MaterialReferences.js",
+      "bytes": 5018,
+      "sha256": "1f9c59ba66195edc1bc1a3ab4814995e7a000b0a76e0c49ece02ac4fa976eb86",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/OasisAccountSettings.js",
+      "bytes": 3742,
+      "sha256": "fbc326ef9aafbe48e773453fa271760eaed410e7ed0c08b55b84b334662b2622",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/OasisBetterSidebarTab.js",
+      "bytes": 2869,
+      "sha256": "100247afe401ca91186aa4d1a5a5b3d2e4910e74985abb62f4516da2d9f5a7d5",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/OasisConnectionSettings.js",
+      "bytes": 6513,
+      "sha256": "c8d9aef9cdb8af6b80d3fd3360f0105aa27ffee498cf0a8b0ab154009921a606",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/OasisPanelBoundary.js",
+      "bytes": 465,
+      "sha256": "837bccd061c8e4da4029c1a7f1153c7af08de25ac80dd709aecfff1d80242686",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/OasisPanelHost.js",
+      "bytes": 748,
+      "sha256": "2b5727d836f7c3b2164bb63ddf267a4222b4d3ef57bc8c74f1b6ffeb8b0c9ebe",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/OasisPanelPortal.js",
+      "bytes": 905,
+      "sha256": "fc12af328bea234653d1c0aa54c7ad2361681be20e6fe1fd5da5a34b56e10424",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/OasisSettingsSection.js",
+      "bytes": 1236,
+      "sha256": "0fa1dbb541686845ce9f9fa8b5dbe1de30eb488ef71166b8b604597ba53659fc",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/OasisWorkbenchSurface.js",
+      "bytes": 16893,
+      "sha256": "631500960b75d5f18260620168bac702e4f13ba002251cc5fe519a8d0651b5e5",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/PanelChrome.js",
+      "bytes": 8058,
+      "sha256": "12215f859319b4cfa2c5fbc88c2d2ba1b4c01ec15a189d8e2b869a513c2e2f87",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/PanelPages.js",
+      "bytes": 14474,
+      "sha256": "bfbff1a83e6e2592fa22f4ae0c4bd16b7cc5e87b273fbc764fb9464b622945b0",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/ProfessionalServicePanel.js",
+      "bytes": 10919,
+      "sha256": "b59b561850e5d59062b56a723d845324d08e7bc45a95c813e947d185b7085f3a",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/RunPreview.js",
+      "bytes": 10295,
+      "sha256": "4614a6fc55124711237bb2bf9fea03a5151c3657ac048751e94002debebbef51",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/SafeMarkdownPreview.js",
+      "bytes": 679,
+      "sha256": "2e00633f89f52d62d1d8e7325fb59ddb8ba4036e57eab40b489c42ea319522aa",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/UnifiedGenerationPage.js",
+      "bytes": 16936,
+      "sha256": "462fe271c67f146179d563850abb8f71df601e6a97302b32a0dca7b0055d77fa",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/UnifiedResultPanel.js",
+      "bytes": 11960,
+      "sha256": "53c08f55058e29071b34af3b6bb9af832173214f75e5e08ae7b58c985448ef59",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/V340GenerationPage.js",
+      "bytes": 18352,
+      "sha256": "0a9b8f36d1728fecc09f4a68b01873e7f0ad3480c9c4f8032bd155006296267d",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/WebsiteImportDialog.js",
+      "bytes": 10198,
+      "sha256": "e3cc43f7ae214f0c300b12bc3e7c432012696a08f8f1820a8c439c164338f47e",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/WorkbenchEntry.js",
+      "bytes": 3794,
+      "sha256": "e8ff0c69166bd8060bb095ae5be9c67a3d04698c25aa8f6d586a7e64855fca4e",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/WorkflowForm.js",
+      "bytes": 8880,
+      "sha256": "b1621ff528e442e0e0c0c036aec53be98c260b376e07996771377b2a2d25eb68",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/WorkspaceApiBindingSettings.js",
+      "bytes": 3954,
+      "sha256": "0a81c54607b48afed2b5bc8e195422ac3c0c79521fccf28458c3dc5ed64176d9",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/WorkspaceContextBridge.js",
+      "bytes": 6147,
+      "sha256": "adb6d1d63974e1f5911c5bf3e9e8ad2e4dd1ea9f86cb57a5e4a481dda64b99e4",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/WritebackPanel.js",
+      "bytes": 3842,
+      "sha256": "72d0590ba418ddd4af10113bcfc6a8730bc359a3f641c3a4a0144b310fec3808",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/codex-icons.js",
+      "bytes": 4750,
+      "sha256": "a3fbb63d856b49e88bf545fb2700a0de6f1af5673d596a1719c5a9e43bca2aa9",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/conversation-draft-bridge.js",
+      "bytes": 2519,
+      "sha256": "96c47b678ae610226502aa51bd38e1f45da294ef36cf5e6ddc0d9bd14b48e801",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/layout-adapter.js",
+      "bytes": 15114,
+      "sha256": "6a59cfa9f8c8d21622ddaf2a3c0183d1988e14e7a2bd7119000b619e1bcc61ed",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/native-composer-input.js",
+      "bytes": 485,
+      "sha256": "0dbbcc9f35cb232f79f4909df16710fd77caaaa6ef2cdad5aa8d83093878fd2c",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/oasis-connection-settings.js",
+      "bytes": 12779,
+      "sha256": "2f3cb471bdf91aafde3d8ae4afe7848791eedc617a52de8326cfa12d6253b31e",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/panel-geometry.js",
+      "bytes": 1284,
+      "sha256": "d48f866809f115aff2ce9b4290e115594f05fadbe384e2a9b1fe4b2a3e6f8e28",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/panel-host-coordinator.js",
+      "bytes": 9679,
+      "sha256": "2e7605c5f2df7653fc9e286723107d3aae58b7ae833c669e2c297e87f4ffc46e",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/product-settings.js",
+      "bytes": 5535,
+      "sha256": "d680d297292a2e93627804e02e1b5d856a5587061cf43c66ccd947cfc4735a6e",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/project-resolution.js",
+      "bytes": 483,
+      "sha256": "c4224b4e5b303fbb4870558c2de7251c79fce93e3ea111b34f2a9f7bb59a036c",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/website-import-controller.js",
+      "bytes": 9959,
+      "sha256": "f6fe7a60c285c4a59b2b6f840aa3b4217c574c1a826e2f1969abfa8bd3a32d41",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/workbench-model.js",
+      "bytes": 11793,
+      "sha256": "d6776726fdcd760f6f39ae6aae683b33ef15ccc1dbfb7902eddb968f6a6c42bf",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/workbench-remote.js",
+      "bytes": 14850,
+      "sha256": "2f6f4e7b045c55751c644c61d7e29bf8e356cbe05ab95a798add4c299d6c81ab",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/workbench-store.js",
+      "bytes": 96168,
+      "sha256": "ac069e7ed76e7d461aa7b3ae46d229baa0f53de60fdae6cc60924332876f76cf",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client/workspace-api-binding-controller.js",
+      "bytes": 4159,
+      "sha256": "988d70d3ad2598aa3739c2c942472f836887c47f744a8833587ac1530f113217",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client-entry.js",
+      "bytes": 360,
+      "sha256": "b24bdfe1ce55d8a691f2379ced3e81b12456fbb60cee3c95b5221d8c8f5099a5",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/client.js",
+      "bytes": 5402,
+      "sha256": "9e82df2f7d9be8dbf3a298960c7da54229dd194d9435280e1e240527d1e67a5a",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/dsh-generation-adapter.js",
+      "bytes": 13161,
+      "sha256": "58abef1b5b9da5bac9c4d81449da6ac7dd9a440fda7518d5973366b41a95e8a6",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/dsh-generation-context.js",
+      "bytes": 2549,
+      "sha256": "58a6335d3b7aab24ef048aba9f5a7ad7bddf78e9f4ee8b209aa7596009ced291",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/generation-contract.js",
+      "bytes": 3493,
+      "sha256": "6abda67a52f72402940cd290889867c12c2ccb56cd9e3dee19ad15f4a12ef762",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/generation-preferences.js",
+      "bytes": 691,
+      "sha256": "a35c4f89f1d51a73b8a6bace3c20884409707e04d434dbb46c46b57ec874cc2f",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/index.js",
+      "bytes": 8501,
+      "sha256": "c3b542c77108147187925b0d7a152c081e85cd7e9fe91d4361a19663ececa588",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/local-generation-service.js",
+      "bytes": 12483,
+      "sha256": "f2f575c588df0f974601b80b0aa8a34725c01e76562ac0d953c36ab81ff83907",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/local-mock-runner.js",
+      "bytes": 14549,
+      "sha256": "7567bd3b97110b7f08e6efc348e703526193baa8b2c967b8ad42054ee61ac62c",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/local-run-summary.js",
+      "bytes": 1486,
+      "sha256": "23e4e8f71638a3793c4c97fbd224fba764106fc0c3ea4cae38eba23ce48340c4",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/m06-api-contract-adapter.js",
+      "bytes": 5492,
+      "sha256": "a573330085904be3b95af5b4115a348587999830c09c659812c24d3ee6953abc",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/m06-business-candidate-0.1.2.json",
+      "bytes": 155946,
+      "sha256": "ef01f5cb9b6f99b9b6ee39b8619fe0a56d1accc6b0a0d099e4d15bcdc4b5b7e7",
+      "role": "older_m06_candidate_not_current_013",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/m06-business-candidate-0.1.3.json",
+      "bytes": 179486,
+      "sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+      "role": "current_013_mixed_8_payload_2_operator",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/m06-business-resources-0.1.3.js",
+      "bytes": 3660,
+      "sha256": "38bf2c0bf2e97b14f7f98045f48d70b1a0736c7ec9adc9027bf3f741c2e377b1",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/m06-business-resources.js",
+      "bytes": 2895,
+      "sha256": "335b81faf9ce815a27dd559e95b283916bf84a5d482c5c1c61ef5d2fe5ad84e3",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/m06-controlled-host-013.js",
+      "bytes": 284,
+      "sha256": "45baef11f2765d7400df5b85b9e036be2fc0a4949758c7f67560f1e18f74bfd0",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/m06-workarea-host-013.js",
+      "bytes": 285,
+      "sha256": "9561a304fc30c08235857a24b3bbd816939062ebf77e9689e68f3c7d12dfc8a1",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/m06-workarea-material-packet.js",
+      "bytes": 8487,
+      "sha256": "300866f6032531be5a4d23213a40dd6ff39458d5f58d32ecab27aead623ecd96",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/native-model-runtime.js",
+      "bytes": 2056,
+      "sha256": "2bb0cc95b7ee6599739e092c617bfd32262859bfda1291a45232c5fd3b1bae24",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/native-offline-runtime.js",
+      "bytes": 3621,
+      "sha256": "9ab31191a483162f215c05b7802f276607ce4fe38ddf1121d0c6bbcb5ebf9d53",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/oasis-account-contract.js",
+      "bytes": 1080,
+      "sha256": "04ee956a1dffe3ebb1e7bb89be7a58a1ffc760289f83c58bccedae610ef306ad",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/oasis-account.js",
+      "bytes": 6017,
+      "sha256": "820d4e71422a72e59054f1522e19d617d37723bf1dc355033237f3544cb443de",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/oasis-api-contract.js",
+      "bytes": 19821,
+      "sha256": "8b56d9374c508304bef84d6f2bf5b7257b633230af5a118532e8e031653f785f",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/oasis-fast-contract.js",
+      "bytes": 1181,
+      "sha256": "aff47700170418b181eae5659a25a2782dd82f9f324a26bd7af69ee51913615c",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/oasis-origin-policy.js",
+      "bytes": 2817,
+      "sha256": "2816d7985b4c481b21c52b1a6c9d1e6da60320b146bee8e8d64758e0828db454",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/oasis-remote-service.js",
+      "bytes": 67933,
+      "sha256": "167fd06af0e0c317de9eca6f008ae2616b9188c69b986440b6ebc261bd161710",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/oasis-runtime-config.js",
+      "bytes": 6765,
+      "sha256": "298a6b84d16de157bf12e3645f98a78b9353785a3c3104fb2e8d69c72c06b3ac",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/oasis-workspace-binding.js",
+      "bytes": 1585,
+      "sha256": "1c848580a357c6e705fb5746d7898c85459cbba4fc97e9077c1709957ae506bf",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/pdf-extraction-process.js",
+      "bytes": 7426,
+      "sha256": "a4e2231b5cc61bed8f8e68f476af874f673c3ac7cdc4cee10cb49cc94b3c8f75",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/project-output-name.js",
+      "bytes": 688,
+      "sha256": "e5a17e4102b394bb57030095709e4aa97252ec5062352c67097c6e641c79e164",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/public-claims-v2/SKILL.md",
+      "bytes": 261,
+      "sha256": "c4d09a9e317520ffc426aaeeedc25615d348a5013b6fa691910cb01d85102d37",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/public-claims-v2/assets/claims-output-template.md",
+      "bytes": 291,
+      "sha256": "a5a2bd77e4595d74a6a16a353d367d0c3d861930e229e6924a6b0b1f8547370b",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/public-claims-v2/manifest.json",
+      "bytes": 935,
+      "sha256": "f26448b70bfebe82528d6c207f69881e9a49366270c332ef5f2ed31f4903c9db",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/public-claims-v2/references/drafting-rules.md",
+      "bytes": 118,
+      "sha256": "02581473118ff7b5b959dd2b65ad41862139976a8bb44ae3585fa6dbe8d218e4",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/public-claims-v2/references/special-domain-boundary.md",
+      "bytes": 104,
+      "sha256": "ffec9b43eb31ed9a803f0c174d7de9ffd776f77d567f2e02712cfd0ae458dc95",
+      "role": "compatibility_or_historical_skill_requires_scope_review",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/public-claims-v2-pin.js",
+      "bytes": 620,
+      "sha256": "3a72b141a6e727321dad04b955a586243f6ccb102c92f76ec2983062b75d66a2",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/status.js",
+      "bytes": 406,
+      "sha256": "a729c0f3f7cb8208002ab8751ad324df24aedffe504be832f444219f9ad97349",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/unified-fixture-environment.js",
+      "bytes": 1426,
+      "sha256": "ea7434b5b814aba57c7a24755617345c94a048365817e100d3aeeddf9120d74f",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/unified-fixture.js",
+      "bytes": 3391,
+      "sha256": "5d498ceaa7eece5379b0daba2b2bd06fe3f68b783d683dc65591f3c682828545",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/unified-generation-service.js",
+      "bytes": 8451,
+      "sha256": "5e8d8a48ed373ded7ca6d22fad940fc81534061bca7ad79c669db89333ccbf9c",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-catalog.js",
+      "bytes": 1851,
+      "sha256": "e8d45a8984b1909b303fce0ef9c2bb879744dd2de56710c8f46cb708435217cb",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-contracts.json",
+      "bytes": 133269,
+      "sha256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+      "role": "14_node_catalogue_not_14_runtime_acceptances",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-document.js",
+      "bytes": 23860,
+      "sha256": "276b6a79152a34f8e022e133b6f0ee3ad80b3ba3d1a49d5c5bf167219c45236f",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-input-snapshot.js",
+      "bytes": 1560,
+      "sha256": "a7dcf327b85173368685ab05d497f93e42110f63a249c0e361cccda418aca923",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-native-contract.js",
+      "bytes": 1698,
+      "sha256": "0ce4bee1b1dbaca0dfd48ec6aad5b43ee2fa0a2f29b04d891e7b34a2f884e1ac",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-native-model.js",
+      "bytes": 13097,
+      "sha256": "5a18ed7d8248f49762ed36f62ea7ffcbfbe042c0c86f18c244b8d2b78c35e917",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-preparation.js",
+      "bytes": 2927,
+      "sha256": "fafb6cd0842f578246842828e57ee3fb3ee7a2906055fccf1dda5868ef865572",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-result-service.js",
+      "bytes": 8836,
+      "sha256": "7cf8dcb61ed219e8642642cc8231630b06eef6b0e416ec7223f6b7f3d8a23939",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-runtime-contract.js",
+      "bytes": 12875,
+      "sha256": "366e32c633e243637589fc22ffd8e0e5a4f0799781d7e70e8c87e22724a2169b",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-runtime-integrity.js",
+      "bytes": 4568,
+      "sha256": "ec78363b8851f10b2c74c90e22ffd79ba7ceb6639e210a90c69a31d5d86d0236",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/v340-runtime-service.js",
+      "bytes": 14877,
+      "sha256": "5b54455ed7d781bb175474b2b8c0ba826502a6c0806390788659072d394ed387",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/website-import-client.js",
+      "bytes": 11796,
+      "sha256": "9cd3b9408ac5d25057d472ecece3abffd740661d5c358c1a6b4a5796b25fe8e7",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/website-import-contract.js",
+      "bytes": 4907,
+      "sha256": "21246a6ecf93fcaa873424f7844b3b214bab0a55608f1a4a4cda0dc2960a8edc",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/website-import-service.js",
+      "bytes": 16455,
+      "sha256": "55800d533050417405ae6432d278f4b1a9d38a9aa0a3defb7b1132c37b01976a",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/website-record-files.js",
+      "bytes": 10504,
+      "sha256": "d9e2cf9e2cb23b0e05ab4d63a5d53af3f03d544b5a47e031b1c1faaf1d99d716",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/workbench-connection.js",
+      "bytes": 3460,
+      "sha256": "0b2c1ab47f14ae9bef233144f722b34ef26058427cc964a80047b9f2842f7a9e",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/workbench-contract.js",
+      "bytes": 52686,
+      "sha256": "9759eb457dc7d289b807c9600218803d22f118dccbbf2935d53f444f7497d383",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/workbench-domain.js",
+      "bytes": 9334,
+      "sha256": "8dea28170ba1dea9e2a143108e88a234df1a40a6eec510d94ad6be8cb7f80331",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/workbench-repository.js",
+      "bytes": 7750,
+      "sha256": "dd70348151a5dd0ad7997521e834d79b79df02245314928e798a0aba98dc867f",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/workbench-rpc.js",
+      "bytes": 19540,
+      "sha256": "f2672ba0ac2d72b922433076034d34431918786e821950d73d93b61ae2b3d5e2",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/workbench-service.js",
+      "bytes": 20319,
+      "sha256": "8d84093b50cd47536ddee2c350d5a3dbaccea680626fb43ec1bef2b5afa6f2fd",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/workflow-catalog.js",
+      "bytes": 7124,
+      "sha256": "b1bf770bec21e53610acc280c5effb8d5b7013c2a82de135fd9e75df0f6c0c72",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/workspace-materials.js",
+      "bytes": 13970,
+      "sha256": "b38fa2ea095054b2d59ef78e8e4870eb9be47d48e3661b599463c89a15ad2778",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/workspace-operation-guard.js",
+      "bytes": 789,
+      "sha256": "04be0cd5349305836f70ada86623e7c65bb4d2ecdad4302da152e5696ec93a3a",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    },
+    {
+      "path": "src/writeback-service.js",
+      "bytes": 28477,
+      "sha256": "c9ca00cc93cfc2b58acb9552b64c574ca191bdbf0b0f0d724c294a22e84e23c8",
+      "role": "host_or_client_source",
+      "license_status": "NOT_ADOPTED_PENDING_OWNERSHIP_AND_THIRD_PARTY_SCOPE",
+      "release_action": "REVIEW_DECLARATION_NOT_PUBLICATION_APPROVAL"
+    }
+  ],
+  "static_reference_scope": {
+    "method": "Literal specifier scan only, not JS parser or execution",
+    "entries": [
+      "src/m06-controlled-host-013.js",
+      "src/client-entry.js"
+    ],
+    "modules": [
+      "src/builtin-skill-loader.js",
+      "src/claims-api-document.js",
+      "src/claims-api-execution-contract.js",
+      "src/claims-skill-pin.js",
+      "src/claims-upstream.js",
+      "src/claims-v2-result.js",
+      "src/client-entry.js",
+      "src/client.js",
+      "src/client/ConversationInputRegistration.js",
+      "src/client/FunctionCenter.js",
+      "src/client/GenerationSourceSwitch.js",
+      "src/client/MaterialReferences.js",
+      "src/client/OasisAccountSettings.js",
+      "src/client/OasisBetterSidebarTab.js",
+      "src/client/OasisPanelBoundary.js",
+      "src/client/OasisPanelHost.js",
+      "src/client/OasisPanelPortal.js",
+      "src/client/OasisSettingsSection.js",
+      "src/client/OasisWorkbenchSurface.js",
+      "src/client/PanelChrome.js",
+      "src/client/PanelPages.js",
+      "src/client/ProfessionalServicePanel.js",
+      "src/client/RunPreview.js",
+      "src/client/SafeMarkdownPreview.js",
+      "src/client/UnifiedGenerationPage.js",
+      "src/client/UnifiedResultPanel.js",
+      "src/client/V340GenerationPage.js",
+      "src/client/WebsiteImportDialog.js",
+      "src/client/WorkbenchEntry.js",
+      "src/client/WorkflowForm.js",
+      "src/client/WorkspaceContextBridge.js",
+      "src/client/WritebackPanel.js",
+      "src/client/codex-icons.js",
+      "src/client/conversation-draft-bridge.js",
+      "src/client/layout-adapter.js",
+      "src/client/native-composer-input.js",
+      "src/client/panel-host-coordinator.js",
+      "src/client/product-settings.js",
+      "src/client/project-resolution.js",
+      "src/client/website-import-controller.js",
+      "src/client/workbench-model.js",
+      "src/client/workbench-remote.js",
+      "src/client/workbench-store.js",
+      "src/dsh-generation-adapter.js",
+      "src/dsh-generation-context.js",
+      "src/generation-contract.js",
+      "src/generation-preferences.js",
+      "src/index.js",
+      "src/local-generation-service.js",
+      "src/local-mock-runner.js",
+      "src/local-run-summary.js",
+      "src/m06-business-resources-0.1.3.js",
+      "src/m06-business-resources.js",
+      "src/m06-controlled-host-013.js",
+      "src/native-model-runtime.js",
+      "src/native-offline-runtime.js",
+      "src/oasis-account-contract.js",
+      "src/oasis-account.js",
+      "src/oasis-api-contract.js",
+      "src/oasis-fast-contract.js",
+      "src/oasis-origin-policy.js",
+      "src/oasis-remote-service.js",
+      "src/oasis-runtime-config.js",
+      "src/oasis-workspace-binding.js",
+      "src/project-output-name.js",
+      "src/status.js",
+      "src/unified-fixture-environment.js",
+      "src/unified-fixture.js",
+      "src/unified-generation-service.js",
+      "src/v340-catalog.js",
+      "src/v340-document.js",
+      "src/v340-input-snapshot.js",
+      "src/v340-native-contract.js",
+      "src/v340-native-model.js",
+      "src/v340-preparation.js",
+      "src/v340-result-service.js",
+      "src/v340-runtime-contract.js",
+      "src/v340-runtime-integrity.js",
+      "src/v340-runtime-service.js",
+      "src/website-import-client.js",
+      "src/website-import-contract.js",
+      "src/website-import-service.js",
+      "src/website-record-files.js",
+      "src/workbench-connection.js",
+      "src/workbench-contract.js",
+      "src/workbench-domain.js",
+      "src/workbench-repository.js",
+      "src/workbench-rpc.js",
+      "src/workbench-service.js",
+      "src/workflow-catalog.js",
+      "src/workspace-materials.js",
+      "src/workspace-operation-guard.js",
+      "src/writeback-service.js"
+    ],
+    "edges": [
+      {
+        "source": "src/client-entry.js",
+        "specifier": "./client.js",
+        "target": "src/client.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client-entry.js",
+        "specifier": "./client.js",
+        "target": "src/client.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/layout-adapter.js",
+        "target": "src/client/layout-adapter.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/OasisBetterSidebarTab.js",
+        "target": "src/client/OasisBetterSidebarTab.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/panel-host-coordinator.js",
+        "target": "src/client/panel-host-coordinator.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/WorkbenchEntry.js",
+        "target": "src/client/WorkbenchEntry.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/WorkspaceContextBridge.js",
+        "target": "src/client/WorkspaceContextBridge.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/workbench-remote.js",
+        "target": "src/client/workbench-remote.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/workbench-store.js",
+        "target": "src/client/workbench-store.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/product-settings.js",
+        "target": "src/client/product-settings.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/OasisSettingsSection.js",
+        "target": "src/client/OasisSettingsSection.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/conversation-draft-bridge.js",
+        "target": "src/client/conversation-draft-bridge.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/project-resolution.js",
+        "target": "src/client/project-resolution.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client.js",
+        "specifier": "./client/conversation-draft-bridge.js",
+        "target": "src/client/conversation-draft-bridge.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/conversation-draft-bridge.js",
+        "specifier": "./project-resolution.js",
+        "target": "src/client/project-resolution.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisSettingsSection.js",
+        "specifier": "./OasisAccountSettings.js",
+        "target": "src/client/OasisAccountSettings.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/product-settings.js",
+        "specifier": "../oasis-account-contract.js",
+        "target": "src/oasis-account-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-account-contract.js",
+        "specifier": "./oasis-origin-policy.js",
+        "target": "src/oasis-origin-policy.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-store.js",
+        "specifier": "./workbench-model.js",
+        "target": "src/client/workbench-model.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-store.js",
+        "specifier": "../workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-store.js",
+        "specifier": "../generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-store.js",
+        "specifier": "../v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-contract.js",
+        "specifier": "./v340-native-contract.js",
+        "target": "src/v340-native-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/generation-contract.js",
+        "specifier": "./v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-contract.js",
+        "specifier": "./claims-api-execution-contract.js",
+        "target": "src/claims-api-execution-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-contract.js",
+        "specifier": "./local-run-summary.js",
+        "target": "src/local-run-summary.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-contract.js",
+        "specifier": "./v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-contract.js",
+        "specifier": "./oasis-origin-policy.js",
+        "target": "src/oasis-origin-policy.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-contract.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/claims-api-execution-contract.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/claims-api-execution-contract.js",
+        "specifier": "./oasis-workspace-binding.js",
+        "target": "src/oasis-workspace-binding.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-workspace-binding.js",
+        "specifier": "./oasis-origin-policy.js",
+        "target": "src/oasis-origin-policy.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-model.js",
+        "specifier": "../workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-model.js",
+        "specifier": "../generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-remote.js",
+        "specifier": "../website-import-contract.js",
+        "target": "src/website-import-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-remote.js",
+        "specifier": "../workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-remote.js",
+        "specifier": "../claims-api-execution-contract.js",
+        "target": "src/claims-api-execution-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-remote.js",
+        "specifier": "../oasis-account-contract.js",
+        "target": "src/oasis-account-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/workbench-remote.js",
+        "specifier": "../v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/WorkspaceContextBridge.js",
+        "specifier": "./OasisPanelPortal.js",
+        "target": "src/client/OasisPanelPortal.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/WorkspaceContextBridge.js",
+        "specifier": "./OasisWorkbenchSurface.js",
+        "target": "src/client/OasisWorkbenchSurface.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/WorkspaceContextBridge.js",
+        "specifier": "./project-resolution.js",
+        "target": "src/client/project-resolution.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisWorkbenchSurface.js",
+        "specifier": "../workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisWorkbenchSurface.js",
+        "specifier": "../generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisWorkbenchSurface.js",
+        "specifier": "./PanelChrome.js",
+        "target": "src/client/PanelChrome.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisWorkbenchSurface.js",
+        "specifier": "./PanelPages.js",
+        "target": "src/client/PanelPages.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisWorkbenchSurface.js",
+        "specifier": "./WebsiteImportDialog.js",
+        "target": "src/client/WebsiteImportDialog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/WebsiteImportDialog.js",
+        "specifier": "./OasisAccountSettings.js",
+        "target": "src/client/OasisAccountSettings.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/WebsiteImportDialog.js",
+        "specifier": "./website-import-controller.js",
+        "target": "src/client/website-import-controller.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/website-import-controller.js",
+        "specifier": "../website-import-contract.js",
+        "target": "src/website-import-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelPages.js",
+        "specifier": "./MaterialReferences.js",
+        "target": "src/client/MaterialReferences.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelPages.js",
+        "specifier": "./ProfessionalServicePanel.js",
+        "target": "src/client/ProfessionalServicePanel.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelPages.js",
+        "specifier": "./RunPreview.js",
+        "target": "src/client/RunPreview.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelPages.js",
+        "specifier": "./WorkflowForm.js",
+        "target": "src/client/WorkflowForm.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelPages.js",
+        "specifier": "./WritebackPanel.js",
+        "target": "src/client/WritebackPanel.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelPages.js",
+        "specifier": "./UnifiedGenerationPage.js",
+        "target": "src/client/UnifiedGenerationPage.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelPages.js",
+        "specifier": "./FunctionCenter.js",
+        "target": "src/client/FunctionCenter.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelPages.js",
+        "specifier": "./V340GenerationPage.js",
+        "target": "src/client/V340GenerationPage.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/V340GenerationPage.js",
+        "specifier": "../v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/V340GenerationPage.js",
+        "specifier": "../generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/V340GenerationPage.js",
+        "specifier": "./GenerationSourceSwitch.js",
+        "target": "src/client/GenerationSourceSwitch.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/V340GenerationPage.js",
+        "specifier": "./SafeMarkdownPreview.js",
+        "target": "src/client/SafeMarkdownPreview.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/UnifiedGenerationPage.js",
+        "specifier": "../generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/UnifiedGenerationPage.js",
+        "specifier": "../workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/UnifiedGenerationPage.js",
+        "specifier": "./GenerationSourceSwitch.js",
+        "target": "src/client/GenerationSourceSwitch.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/UnifiedGenerationPage.js",
+        "specifier": "./WorkflowForm.js",
+        "target": "src/client/WorkflowForm.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/UnifiedGenerationPage.js",
+        "specifier": "./UnifiedResultPanel.js",
+        "target": "src/client/UnifiedResultPanel.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/UnifiedResultPanel.js",
+        "specifier": "./WritebackPanel.js",
+        "target": "src/client/WritebackPanel.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/UnifiedResultPanel.js",
+        "specifier": "./SafeMarkdownPreview.js",
+        "target": "src/client/SafeMarkdownPreview.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/WorkflowForm.js",
+        "specifier": "./SafeMarkdownPreview.js",
+        "target": "src/client/SafeMarkdownPreview.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelChrome.js",
+        "specifier": "../workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelChrome.js",
+        "specifier": "../generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/PanelChrome.js",
+        "specifier": "./codex-icons.js",
+        "target": "src/client/codex-icons.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisPanelPortal.js",
+        "specifier": "./OasisPanelBoundary.js",
+        "target": "src/client/OasisPanelBoundary.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisPanelPortal.js",
+        "specifier": "./OasisPanelHost.js",
+        "target": "src/client/OasisPanelHost.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisPanelHost.js",
+        "specifier": "./OasisWorkbenchSurface.js",
+        "target": "src/client/OasisWorkbenchSurface.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisPanelHost.js",
+        "specifier": "./project-resolution.js",
+        "target": "src/client/project-resolution.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisPanelHost.js",
+        "specifier": "./OasisWorkbenchSurface.js",
+        "target": "src/client/OasisWorkbenchSurface.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/WorkbenchEntry.js",
+        "specifier": "./project-resolution.js",
+        "target": "src/client/project-resolution.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/WorkbenchEntry.js",
+        "specifier": "./ConversationInputRegistration.js",
+        "target": "src/client/ConversationInputRegistration.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/ConversationInputRegistration.js",
+        "specifier": "./native-composer-input.js",
+        "target": "src/client/native-composer-input.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisBetterSidebarTab.js",
+        "specifier": "./OasisWorkbenchSurface.js",
+        "target": "src/client/OasisWorkbenchSurface.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisBetterSidebarTab.js",
+        "specifier": "./panel-host-coordinator.js",
+        "target": "src/client/panel-host-coordinator.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/client/OasisBetterSidebarTab.js",
+        "specifier": "./WorkspaceContextBridge.js",
+        "target": "src/client/WorkspaceContextBridge.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/m06-controlled-host-013.js",
+        "specifier": "./index.js",
+        "target": "src/index.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/m06-controlled-host-013.js",
+        "specifier": "./index.js",
+        "target": "src/index.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./unified-fixture-environment.js",
+        "target": "src/unified-fixture-environment.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./native-offline-runtime.js",
+        "target": "src/native-offline-runtime.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./native-model-runtime.js",
+        "target": "src/native-model-runtime.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./unified-fixture-environment.js",
+        "target": "src/unified-fixture-environment.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./oasis-api-contract.js",
+        "target": "src/oasis-api-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./oasis-account.js",
+        "target": "src/oasis-account.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./oasis-remote-service.js",
+        "target": "src/oasis-remote-service.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./status.js",
+        "target": "src/status.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./oasis-runtime-config.js",
+        "target": "src/oasis-runtime-config.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./workbench-repository.js",
+        "target": "src/workbench-repository.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./workbench-rpc.js",
+        "target": "src/workbench-rpc.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./workbench-connection.js",
+        "target": "src/workbench-connection.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./workbench-service.js",
+        "target": "src/workbench-service.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./website-import-service.js",
+        "target": "src/website-import-service.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./workspace-operation-guard.js",
+        "target": "src/workspace-operation-guard.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/index.js",
+        "specifier": "./v340-native-model.js",
+        "target": "src/v340-native-model.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-native-model.js",
+        "specifier": "./v340-catalog.js",
+        "target": "src/v340-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-native-model.js",
+        "specifier": "./v340-document.js",
+        "target": "src/v340-document.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-native-model.js",
+        "specifier": "./v340-input-snapshot.js",
+        "target": "src/v340-input-snapshot.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-native-model.js",
+        "specifier": "./local-mock-runner.js",
+        "target": "src/local-mock-runner.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-native-model.js",
+        "specifier": "./dsh-generation-context.js",
+        "target": "src/dsh-generation-context.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-native-model.js",
+        "specifier": "./dsh-generation-adapter.js",
+        "target": "src/dsh-generation-adapter.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-native-model.js",
+        "specifier": "./v340-native-contract.js",
+        "target": "src/v340-native-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-native-model.js",
+        "specifier": "./m06-business-resources.js",
+        "target": "src/m06-business-resources.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-native-model.js",
+        "specifier": "./m06-business-resources-0.1.3.js",
+        "target": "src/m06-business-resources-0.1.3.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-native-model.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/m06-business-resources-0.1.3.js",
+        "specifier": "./v340-catalog.js",
+        "target": "src/v340-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/m06-business-resources.js",
+        "specifier": "./v340-catalog.js",
+        "target": "src/v340-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/dsh-generation-adapter.js",
+        "specifier": "./workflow-catalog.js",
+        "target": "src/workflow-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/dsh-generation-adapter.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/dsh-generation-adapter.js",
+        "specifier": "./local-run-summary.js",
+        "target": "src/local-run-summary.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/dsh-generation-adapter.js",
+        "specifier": "./v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workflow-catalog.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workflow-catalog.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/dsh-generation-context.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-input-snapshot.js",
+        "specifier": "./v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-input-snapshot.js",
+        "specifier": "./v340-document.js",
+        "target": "src/v340-document.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-input-snapshot.js",
+        "specifier": "./local-mock-runner.js",
+        "target": "src/local-mock-runner.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-input-snapshot.js",
+        "specifier": "./v340-catalog.js",
+        "target": "src/v340-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-document.js",
+        "specifier": "./v340-catalog.js",
+        "target": "src/v340-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-document.js",
+        "specifier": "./v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workspace-operation-guard.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-import-service.js",
+        "specifier": "./oasis-account-contract.js",
+        "target": "src/oasis-account-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-import-service.js",
+        "specifier": "./website-import-contract.js",
+        "target": "src/website-import-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-import-service.js",
+        "specifier": "./website-import-client.js",
+        "target": "src/website-import-client.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-import-service.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-import-service.js",
+        "specifier": "./workspace-operation-guard.js",
+        "target": "src/workspace-operation-guard.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-import-client.js",
+        "specifier": "./oasis-account-contract.js",
+        "target": "src/oasis-account-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-import-client.js",
+        "specifier": "./website-import-contract.js",
+        "target": "src/website-import-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-import-client.js",
+        "specifier": "./website-record-files.js",
+        "target": "src/website-record-files.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-record-files.js",
+        "specifier": "./oasis-account-contract.js",
+        "target": "src/oasis-account-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-record-files.js",
+        "specifier": "./website-import-contract.js",
+        "target": "src/website-import-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/website-record-files.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./local-mock-runner.js",
+        "target": "src/local-mock-runner.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./workflow-catalog.js",
+        "target": "src/workflow-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./writeback-service.js",
+        "target": "src/writeback-service.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./unified-generation-service.js",
+        "target": "src/unified-generation-service.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./local-generation-service.js",
+        "target": "src/local-generation-service.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./claims-upstream.js",
+        "target": "src/claims-upstream.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./workspace-operation-guard.js",
+        "target": "src/workspace-operation-guard.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./v340-preparation.js",
+        "target": "src/v340-preparation.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./v340-runtime-service.js",
+        "target": "src/v340-runtime-service.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./v340-result-service.js",
+        "target": "src/v340-result-service.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-service.js",
+        "specifier": "./project-output-name.js",
+        "target": "src/project-output-name.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-result-service.js",
+        "specifier": "./v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-result-service.js",
+        "specifier": "./v340-document.js",
+        "target": "src/v340-document.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-result-service.js",
+        "specifier": "./v340-catalog.js",
+        "target": "src/v340-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-result-service.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-result-service.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-result-service.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-service.js",
+        "specifier": "./v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-service.js",
+        "specifier": "./v340-runtime-integrity.js",
+        "target": "src/v340-runtime-integrity.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-service.js",
+        "specifier": "./v340-catalog.js",
+        "target": "src/v340-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-service.js",
+        "specifier": "./v340-document.js",
+        "target": "src/v340-document.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-service.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-service.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-service.js",
+        "specifier": "./local-mock-runner.js",
+        "target": "src/local-mock-runner.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-service.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-service.js",
+        "specifier": "./workspace-operation-guard.js",
+        "target": "src/workspace-operation-guard.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-service.js",
+        "specifier": "./v340-input-snapshot.js",
+        "target": "src/v340-input-snapshot.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-integrity.js",
+        "specifier": "./local-mock-runner.js",
+        "target": "src/local-mock-runner.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-integrity.js",
+        "specifier": "./v340-catalog.js",
+        "target": "src/v340-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-integrity.js",
+        "specifier": "./v340-document.js",
+        "target": "src/v340-document.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-integrity.js",
+        "specifier": "./v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-integrity.js",
+        "specifier": "./v340-input-snapshot.js",
+        "target": "src/v340-input-snapshot.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-runtime-integrity.js",
+        "specifier": "./v340-native-model.js",
+        "target": "src/v340-native-model.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-preparation.js",
+        "specifier": "./v340-catalog.js",
+        "target": "src/v340-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-preparation.js",
+        "specifier": "./v340-document.js",
+        "target": "src/v340-document.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/v340-preparation.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/claims-upstream.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/claims-upstream.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/claims-upstream.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/local-generation-service.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/local-generation-service.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/local-generation-service.js",
+        "specifier": "./workflow-catalog.js",
+        "target": "src/workflow-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/local-generation-service.js",
+        "specifier": "./unified-fixture.js",
+        "target": "src/unified-fixture.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/local-generation-service.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/local-generation-service.js",
+        "specifier": "./claims-v2-result.js",
+        "target": "src/claims-v2-result.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/local-generation-service.js",
+        "specifier": "./local-run-summary.js",
+        "target": "src/local-run-summary.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/local-generation-service.js",
+        "specifier": "./workspace-operation-guard.js",
+        "target": "src/workspace-operation-guard.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/claims-v2-result.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/unified-fixture.js",
+        "specifier": "./local-mock-runner.js",
+        "target": "src/local-mock-runner.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/unified-fixture.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/unified-fixture.js",
+        "specifier": "./claims-v2-result.js",
+        "target": "src/claims-v2-result.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/unified-generation-service.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/unified-generation-service.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/unified-generation-service.js",
+        "specifier": "./workflow-catalog.js",
+        "target": "src/workflow-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/unified-generation-service.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/unified-generation-service.js",
+        "specifier": "./unified-fixture.js",
+        "target": "src/unified-fixture.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/unified-generation-service.js",
+        "specifier": "./claims-v2-result.js",
+        "target": "src/claims-v2-result.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/unified-generation-service.js",
+        "specifier": "./workspace-operation-guard.js",
+        "target": "src/workspace-operation-guard.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/writeback-service.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/writeback-service.js",
+        "specifier": "./oasis-origin-policy.js",
+        "target": "src/oasis-origin-policy.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-rpc.js",
+        "specifier": "./workbench-domain.js",
+        "target": "src/workbench-domain.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-rpc.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-rpc.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-rpc.js",
+        "specifier": "./oasis-workspace-binding.js",
+        "target": "src/oasis-workspace-binding.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-rpc.js",
+        "specifier": "./oasis-account-contract.js",
+        "target": "src/oasis-account-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-rpc.js",
+        "specifier": "./oasis-account.js",
+        "target": "src/oasis-account.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-rpc.js",
+        "specifier": "./website-import-contract.js",
+        "target": "src/website-import-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-rpc.js",
+        "specifier": "./website-import-client.js",
+        "target": "src/website-import-client.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-rpc.js",
+        "specifier": "./v340-preparation.js",
+        "target": "src/v340-preparation.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-rpc.js",
+        "specifier": "./v340-runtime-contract.js",
+        "target": "src/v340-runtime-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-account.js",
+        "specifier": "./oasis-account-contract.js",
+        "target": "src/oasis-account-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-account.js",
+        "specifier": "./oasis-account-contract.js",
+        "target": "src/oasis-account-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-domain.js",
+        "specifier": "./unified-fixture.js",
+        "target": "src/unified-fixture.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-domain.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-domain.js",
+        "specifier": "./v340-runtime-integrity.js",
+        "target": "src/v340-runtime-integrity.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-domain.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-domain.js",
+        "specifier": "./local-mock-runner.js",
+        "target": "src/local-mock-runner.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-domain.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-repository.js",
+        "specifier": "./workbench-domain.js",
+        "target": "src/workbench-domain.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-repository.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-repository.js",
+        "specifier": "./local-mock-runner.js",
+        "target": "src/local-mock-runner.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/workbench-repository.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-runtime-config.js",
+        "specifier": "./oasis-origin-policy.js",
+        "target": "src/oasis-origin-policy.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-runtime-config.js",
+        "specifier": "./generation-preferences.js",
+        "target": "src/generation-preferences.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-runtime-config.js",
+        "specifier": "./oasis-workspace-binding.js",
+        "target": "src/oasis-workspace-binding.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-runtime-config.js",
+        "specifier": "./oasis-account-contract.js",
+        "target": "src/oasis-account-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-runtime-config.js",
+        "specifier": "./website-import-contract.js",
+        "target": "src/website-import-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/generation-preferences.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/generation-preferences.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./workspace-operation-guard.js",
+        "target": "src/workspace-operation-guard.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./oasis-runtime-config.js",
+        "target": "src/oasis-runtime-config.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./oasis-workspace-binding.js",
+        "target": "src/oasis-workspace-binding.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./website-import-contract.js",
+        "target": "src/website-import-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./oasis-account-contract.js",
+        "target": "src/oasis-account-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./oasis-fast-contract.js",
+        "target": "src/oasis-fast-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./claims-api-document.js",
+        "target": "src/claims-api-document.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./claims-api-execution-contract.js",
+        "target": "src/claims-api-execution-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./unified-fixture.js",
+        "target": "src/unified-fixture.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./local-mock-runner.js",
+        "target": "src/local-mock-runner.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./workbench-domain.js",
+        "target": "src/workbench-domain.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./workflow-catalog.js",
+        "target": "src/workflow-catalog.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-remote-service.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/claims-api-document.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/claims-api-document.js",
+        "specifier": "./oasis-origin-policy.js",
+        "target": "src/oasis-origin-policy.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-fast-contract.js",
+        "specifier": "./local-mock-runner.js",
+        "target": "src/local-mock-runner.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-api-contract.js",
+        "specifier": "./oasis-origin-policy.js",
+        "target": "src/oasis-origin-policy.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/oasis-api-contract.js",
+        "specifier": "./workbench-contract.js",
+        "target": "src/workbench-contract.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/native-model-runtime.js",
+        "specifier": "./dsh-generation-adapter.js",
+        "target": "src/dsh-generation-adapter.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/native-model-runtime.js",
+        "specifier": "./dsh-generation-context.js",
+        "target": "src/dsh-generation-context.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/native-model-runtime.js",
+        "specifier": "./claims-skill-pin.js",
+        "target": "src/claims-skill-pin.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/claims-skill-pin.js",
+        "specifier": "./builtin-skill-loader.js",
+        "target": "src/builtin-skill-loader.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/native-offline-runtime.js",
+        "specifier": "./dsh-generation-adapter.js",
+        "target": "src/dsh-generation-adapter.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/native-offline-runtime.js",
+        "specifier": "./dsh-generation-context.js",
+        "target": "src/dsh-generation-context.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/native-offline-runtime.js",
+        "specifier": "./workspace-materials.js",
+        "target": "src/workspace-materials.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/native-offline-runtime.js",
+        "specifier": "./claims-skill-pin.js",
+        "target": "src/claims-skill-pin.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/native-offline-runtime.js",
+        "specifier": "./claims-v2-result.js",
+        "target": "src/claims-v2-result.js",
+        "exists": true,
+        "inside_package": true
+      },
+      {
+        "source": "src/native-offline-runtime.js",
+        "specifier": "./generation-contract.js",
+        "target": "src/generation-contract.js",
+        "exists": true,
+        "inside_package": true
+      }
+    ],
+    "external_specifiers": [
+      "@deepseek-ai/dsh-client-connection",
+      "@deepseek-ai/dsh-client-ui-primitives",
+      "@deepseek-ai/dsh-credentials",
+      "@deepseek-ai/dsh-llm",
+      "@deepseek-ai/dsh-storage-domain",
+      "@deepseek-ai/dsh-tools",
+      "@deepseek-ai/schemastery",
+      "node:crypto",
+      "node:fs",
+      "node:fs/promises",
+      "node:path",
+      "node:url",
+      "react",
+      "react-dom",
+      "zod"
+    ],
+    "literal_file_urls": [
+      {
+        "source": "src/claims-skill-pin.js",
+        "specifier": "./builtin-skills/flow-2-6/0.2.2/",
+        "target": "src/builtin-skills/flow-2-6/0.2.2",
+        "inside_package": true,
+        "disposition": "RESOURCE_SCOPE_REVIEW"
+      },
+      {
+        "source": "src/m06-business-resources-0.1.3.js",
+        "specifier": "./m06-business-candidate-0.1.3.json",
+        "target": "src/m06-business-candidate-0.1.3.json",
+        "inside_package": true,
+        "disposition": "RESOURCE_SCOPE_REVIEW"
+      },
+      {
+        "source": "src/m06-business-resources.js",
+        "specifier": "./m06-business-candidate-0.1.2.json",
+        "target": "src/m06-business-candidate-0.1.2.json",
+        "inside_package": true,
+        "disposition": "RESOURCE_SCOPE_REVIEW"
+      },
+      {
+        "source": "src/unified-fixture-environment.js",
+        "specifier": "../../../.dsh-test/mac-dev/home",
+        "target": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/mac-dev/home",
+        "inside_package": false,
+        "disposition": "EXCLUDED_EXTERNAL_FIXTURE_REFERENCE_NOT_READ_OR_COPIED"
+      },
+      {
+        "source": "src/v340-catalog.js",
+        "specifier": "./v340-contracts.json",
+        "target": "src/v340-contracts.json",
+        "inside_package": true,
+        "disposition": "RESOURCE_SCOPE_REVIEW"
+      }
+    ],
+    "not_proven": [
+      "computed imports and dynamic resources",
+      "tree shaking",
+      "minimum distribution closure",
+      "runtime compatibility"
+    ]
+  },
+  "separate_scope": {
+    "host_binaries": "NOT_SELECTED",
+    "workflow_dsl": "NONE_SELECTED",
+    "private_or_evaluation_materials": "EXCLUDED",
+    "other_projects": "NOT_RELICENSED"
+  },
+  "attempt01": {
+    "result": "INSPECTION_SCRIPT_ERROR",
+    "error": "ValueError: external fixture .dsh-test/mac-dev/home is not in package subtree",
+    "cause": "One-off scanner assumed every literal file URL was package-internal",
+    "action": "Classify external reference without reading or copying its contents; no product source change"
+  }
+}

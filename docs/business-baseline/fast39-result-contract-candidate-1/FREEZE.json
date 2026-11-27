@@ -1,0 +1,70 @@
+{
+  "package_uid": "82ba3897-56d7-445b-b398-b536491f2a76",
+  "candidate_id": "fast39-result-contract-candidate-1",
+  "revision": "R1",
+  "at": "2026-11-05T12:39:04.327162+08:00",
+  "status": "FROZEN_STATIC_CANDIDATE_FOR_REVIEW",
+  "technical_acceptance": "NOT_GRANTED",
+  "business_rule_adoption": "UNPROVEN_FOR_CURRENT_DIFY_APP",
+  "activation": "disabled",
+  "files": [
+    {
+      "path": "CONTRACT.md",
+      "bytes": 17504,
+      "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+    },
+    {
+      "path": "delivery-binding.candidate.json",
+      "bytes": 3027,
+      "sha256": "1f5a4c0aa6e96bc08f4a8ef6cd4fd4e40ba69802ed925d50b5cb2576d2bf5f50"
+    },
+    {
+      "path": "schemas.json",
+      "bytes": 19403,
+      "sha256": "5c5bec6db36e18f3477089ff8a6bcc73cbda253b9196527b498b045fe0b9731c"
+    },
+    {
+      "path": "synthetic-example.json",
+      "bytes": 3964,
+      "sha256": "d03d9c9961a0a1a374a9cc215d7bc91d2bc90c8bf005a1e592c954e90c22531f"
+    },
+    {
+      "path": "validation-cases.json",
+      "bytes": 2857,
+      "sha256": "be31427f1cc5a7d33cd24c3fcb0bc4c468d219f253ae1d8b5510b1693d397513"
+    }
+  ],
+  "parent_plan": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-05-fast39-minimal-repair-plan.md",
+    "sha256": "8459d4af1a0bb9c7e1e602f4dcfe86a181b6b6624cd5a91a1766ecec31701f57"
+  },
+  "self_hash_policy": "FREEZE.json excluded from own members; external verification records raw manifest SHA256",
+  "document_checks": {
+    "json_duplicate_key_and_syntax": true,
+    "local_schema_refs_resolve": 6,
+    "schema_required_keys_declared": true,
+    "schema_object_unknown_fields_rejected": true,
+    "synthetic_fieldsets_exact": true,
+    "six_outputs_strings": true,
+    "raw_and_parsed_report_equal": true,
+    "quality_partial_unassessed_preserved": true,
+    "utf16_positive_nonbmp_and_crlf": true,
+    "surrogate_split_negative": true,
+    "newline_hash_negative": true,
+    "delivery_disabled_future_hashes_null": true,
+    "producer_manifest_members_unchanged": 30,
+    "source_inputs_unchanged": 16,
+    "backend_source_bytes_unchanged": 7,
+    "reserved_test_is_not_claimed_existing": true,
+    "full_json_schema_engine_run": false,
+    "business_tests_run": false
+  },
+  "not_executed": [
+    "full JSON Schema validator engine (not installed; no installation)",
+    "F1/F2/B1/S1 implementation or offline business tests",
+    "Dify generation / upload / payment / deployment",
+    "professional-user acceptance"
+  ],
+  "new_generation_calls": 0,
+  "paid_calls": 0
+}

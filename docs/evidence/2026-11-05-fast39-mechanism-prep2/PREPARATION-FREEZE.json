@@ -1,0 +1,80 @@
+{
+  "at": "2026-11-05T23:19:54.140644+08:00",
+  "id": "FAST39-RESTORE-MECHANISM-PREP-2",
+  "status": "ISOLATED_REPAIR_VERIFIED_SOURCE_GATES_OPEN",
+  "phase": "P0.2 only; NOT F0 or source grant",
+  "files": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/restore_once.py",
+      "sha256": "62ade9db0000f9faa35736b5f0ac0d07557d8fc6d13d88db1b0987f8994070d4",
+      "bytes": 22629
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/intent-template.json",
+      "sha256": "776abc0ab21bbb7854f922344e164627be4ae6346cda836c87d4878550717c21",
+      "bytes": 3288
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py",
+      "sha256": "16d909e1f1c4304615d2bbdb89f052e12095ceccb93ff992cc5273ad12fb9914",
+      "bytes": 7941
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/invocation-binding-final.json",
+      "sha256": "4e4ccfd98a1ad4562e3a477770ce80f85bd9ac96e8efe0017df9cbc6bb7a8a46",
+      "bytes": 5810
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/test-results-final.json",
+      "sha256": "a970b9bc6da5c40fa858ae15049c4c7ae0cb569c69c78b1046a39da92283b702",
+      "bytes": 5983
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/mechanism-final.diff",
+      "sha256": "f432e91d303e4d7962e41e6fda2c5823acc2378d4132f41fdb28d21fef463f2a",
+      "bytes": 9682
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/修订与隔离验证.md",
+      "sha256": "9e1d02d10ca5845ed57d2d56df97f2510d8defa029b7d61b5eb919efc4a402c5",
+      "bytes": 8196
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/tests-red-core.log",
+      "sha256": "a5db1288c92813b4b93c0472d067dc1cdb42c2e84dea04e94d51d341e9c3a23b",
+      "bytes": 5470
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/tests-red-regressions.log",
+      "sha256": "a46679077329f3e2f7c03542e5ffbc5f5f1174fe98b50e8520f89a566157a6ec",
+      "bytes": 13796
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/tests-red-postwrite-digest.log",
+      "sha256": "e15c9bbed598feb5feb03295d8de19e60e4f7e90843b557ce6fe88b8a7c202fa",
+      "bytes": 3666
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/tests-green-final.log",
+      "sha256": "31ab4dc41f8d950c99040cb839a20eec8e1e8ad2b44a6ca4c2ea6bc58f53d638",
+      "bytes": 4096
+    }
+  ],
+  "replaces_only": "future mechanism candidate choice; PREP1 original and old failure results preserved",
+  "PREP1_freeze": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/PREPARATION-FREEZE.json",
+    "sha256": "a363705bb08dd5f3f2808ab0618ca047fcf68626e9f1e6fc93a564362573e7ce",
+    "bytes": 1668
+  },
+  "R3_freeze_sha256": "e67f4b318209d23af0eab22f46b8c0d9b6c6d8fc744cfad218af4b695e3ea1a4",
+  "isolated_tests_final": 34,
+  "MR01_MR04": "CLOSED_AT_ISOLATED_MECHANISM_LEVEL",
+  "source_mode_executed": false,
+  "actual_live_F0_setup_F1_or_stage_grants_created": false,
+  "B_SETUP": false,
+  "B_COMMIT": false,
+  "CI_write_authority": false,
+  "independent_acceptance": false,
+  "source_readiness_or_production_acceptance": false,
+  "self_hash": "verification.json binds actual manifest raw bytes externally"
+}

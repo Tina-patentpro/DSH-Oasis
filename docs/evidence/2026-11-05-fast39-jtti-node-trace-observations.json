@@ -1,0 +1,106 @@
+{
+  "at": "2026-11-05T03:28:31.696841+00:00",
+  "source": "Authenticated JTTI browser normal log UI and observed node-executions response; direct read findings and short excerpts. Not a full raw node archive.",
+  "appId": "b1af2fc9-817e-5247-aeed-dd16abad8337",
+  "appTitle": "Flow-2-6-权利要求书生成-Fast-1.2.1",
+  "runId": "5e374a6f-5a89-4472-aa82-dfc768b9b6c4",
+  "workflowId": "57bfe3ab-ff48-410b-b140-c20c1da828a9",
+  "backendRecordId": 5343,
+  "serverKey": "6d83593b-b62a-4e6b-b389-e6b6f821c19b",
+  "allNodes": 36,
+  "allNodeStatuses": {
+    "succeeded": 36
+  },
+  "llmNodesObserved": 9,
+  "totalTokens": 85934,
+  "elapsedSeconds": 71.39757707004901,
+  "nodeResponseCanonicalSHA256": "12614c1d2cd11a91045d6020b62798837f18fe0214c0fc61a16210f0b9d02049",
+  "responseObservedChars": 803201,
+  "fileExtraction": {
+    "nodeId": "1770000100002",
+    "title": "2-6-2技术交底书文档提取",
+    "utf16CodeUnits": 4985,
+    "utf8Bytes": 6675,
+    "textSHA256": "ea2f8c0c03a4ca7cde4760906dd6bf0a736b6a5f1b15774f41bb3c8130251a79",
+    "matchesLocalPacketAndUploadReadback": true,
+    "localExactTextPath": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-fast39-semantics-20261031/m06-materials-r2.txt"
+  },
+  "User_input": {
+    "sha256": "5c50b4ea779ef5f7a36e299f01b6b27587d3e8eb08dd9127314f1a96708a0333",
+    "matchesFrozenRequest": true,
+    "presentInOutlineActualUserPrompt": true
+  },
+  "keyNodePrompts": [
+    {
+      "nodeId": "1770000100005",
+      "title": "2-6-4技术交底书语义抽取",
+      "modelRecorded": "gpt-6.1-terra",
+      "recordedPromptsCanonicalSHA256": "71dab4df1a0118417daca791c18dfa31255d05ff15dfa3a93d3a2ae070512a83",
+      "systemPromptFull": "你负责对技术交底书进行语义抽取与结构化补齐。你会收到原始全文和标题抽取结果。你的职责是为 6 个结构字段输出语义候选值，供后续 code 节点做 deterministic merge。不得编造输入中不存在的技术事实；标题抽取已经明确命中的内容应尽量与其保持一致；无法确定时输出空字符串。只输出 schema，不输出解释，不输出 markdown，不输出 fallback。",
+      "userPromptChars": 5073,
+      "rawTextOutputSHA256": "8c6adaba9a12aae81cc92a67ee0f8cd9cf4709df1ce313fc55d6bf894148f55e",
+      "observedOriginalInputIdsInPrompt": true,
+      "outputContract": "six legacy semantic text fields only; original input ids/roles/receipts/source quotes are not separate outputs"
+    },
+    {
+      "nodeId": "1764588108416",
+      "title": "2-6-Outline",
+      "modelRecorded": "gpt-6.1-terra",
+      "recordedPromptsCanonicalSHA256": "30f469a3a30983a8124205a23c73f2da14bc5997a5a5d1500d6bf2296166dfdd",
+      "userPromptChars": 4667,
+      "rawTextOutputSHA256": "c6802539bfe14484a44bb0d9c4ae00abc380448781e8ecaa85152a4938bc368c",
+      "structuredOutputCanonicalSHA256": "9b2df8d5ef7390ed4e7ae0cf2f647c00493384c4f692aa938ab4b264dec6039d",
+      "actualUserPromptObserved": "contains complete frozen User_input followed by six merged fields; no disclosure_file or claim_requirements_file ids in any recorded prompt",
+      "outputQuality": "partial",
+      "outputWarningExcerpt": "输入未提供特征来源ID；现以交底书字段名称回溯，来源声明仍须人工逐项核实。",
+      "formatConflictObserved": "Outline requires structured_output only; caller R2 three-section Markdown preference is present but final workflow format is fixed elsewhere"
+    },
+    {
+      "nodeId": "1728183992412",
+      "title": "2-6-7权利要求书终版生成",
+      "modelRecorded": "gpt-6.1-terra",
+      "recordedPromptsCanonicalSHA256": "be432b851cf13202dae7b452b0b900d7334bdb4a8a6e46470247d937d4dd6170",
+      "systemPromptExcerpt": "若无法在输入资料中找到足够支撑，则删除或收窄该功能/效果片段，而不是原样保留；",
+      "userPromptChars": 7555,
+      "rawTextOutputSHA256": "4ed4e6b65e9c67e5b22cfff7aa0816252d723add1c611df236f8effb336c19ec",
+      "observedTransformation": "core independent draft and integrated claims retain 底座上设有锁止件; final raw output deletes the lock member; later normalizer keeps same remaining features"
+    }
+  ],
+  "mergeNode": {
+    "nodeId": "1770000100003",
+    "outputFields": [
+      "background_art_TD",
+      "beneficial_effects_TD",
+      "drawings_explain_TD",
+      "embodiments_TD",
+      "technical_field",
+      "technical_solutions"
+    ],
+    "observedPreservedFacts": [
+      "base / guide slot / slider",
+      "lock member installed on base, two states",
+      "missing lock structure, material, size, drive, state transition detail, load/experiments",
+      "only text drawings, no image and no cross-section/connection details"
+    ],
+    "observedMissingMetadata": [
+      "original material input IDs",
+      "roles",
+      "receipts and original source hashes",
+      "per-feature source quotes"
+    ]
+  },
+  "rootCauseScope": {
+    "currentSourceTraceLoss": "Observed at six-field semantic/merge boundary before Outline",
+    "currentLockRemoval": "Observed in final generation node; prompts explicitly prioritize functional/effect removal or narrowing under insufficient support",
+    "currentProjection": "Dify returns output, claims_text, dependency_tree, pending_confirmation, quality_report, quality_status; backend detail still declares output only; current combined output contains warnings and partial status",
+    "oldR1R2": "New workflow/run cannot prove historical node-level cause for old workflow; prior FAILs remain"
+  },
+  "archiveLimitation": {
+    "fullNodeArchiveSaved": false,
+    "keyPromptCompleteBundleSaved": false,
+    "downloadRejected": true,
+    "reason": "Browser could not establish origin/authority for in-memory evidence download; no bypass attempted",
+    "retained": "Observed hashes, material exact-byte identity, short prompt/output excerpts and diagnostic summary; backend semantic response separately verified by canonical hash"
+  },
+  "newModelOrGenerationFromBrowser": 0
+}

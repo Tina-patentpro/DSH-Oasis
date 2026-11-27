@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/node",
+    "--input-type=module",
+    "-e",
+    "import {verifyFBundle} from './.local/m06-public-installed-20261107-r1/bundle/payload/controller/scripts/f-installed-runtime.mjs';try{verifyFBundle(process.argv[1],process.argv[2]);console.log('verified')}catch(e){console.error(e.message);process.exitCode=1}",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-installed-20261107-r1/bundle",
+    "33cd199bff874a3e2bdc0fe303a96219b72c7c7e3d4e5b72730f57198473457b"
+  ],
+  "exitCode": 1,
+  "expected": "installed component version policy mismatch"
+}

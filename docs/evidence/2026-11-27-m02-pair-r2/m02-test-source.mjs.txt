@@ -1,0 +1,98 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import {readFile} from 'node:fs/promises'
+import {createV340RuntimeService} from '../src/v340-runtime-service.js'
+import {createM06BusinessNativeCandidate013,assertV340NativeCandidate} from '../src/v340-native-model.js'
+import {Assembler,NOW,setupNative} from './helpers/v340-native-harness.mjs'
+import {v340Hash} from '../src/v340-catalog.js'
+import {parseStoredWorkbenchRecord} from '../src/workbench-domain.js'
+
+const material='P1：调整允许移动，保持限制移动。定性预期未实测。'
+function output(count=1) {
+ const updates=[{content_id:'source-p1',content_markdown:material,content_origin:'user_text',
+  source_input_id:'technical_analysis_material_text',source_locator:material,source_hash:v340Hash(material),
+  trust_status:'source_fact',last_updated_flow:'Flow-1-2',revision_reason:'冻结原文摘录'}]
+ const model_completions=[]
+ for(let i=0;i<count;i++){
+  const id='supplement-'+(i+1)
+  updates.push({content_id:id,content_markdown:'候选实现仅为待验证假设 '+(i+1),content_origin:'model_completed',
+   source_input_id:'none',source_locator:'本节点假设',source_hash:'none',trust_status:'hypothesis_to_verify',
+   last_updated_flow:'Flow-1-2',revision_reason:'单独登记的未确认补齐'})
+  model_completions.push({content_id:id,content_origin:'model_completed',completion_basis:'公开合成 P1',
+   assumptions:'结构与数据未确认',confidence:'待验证',affected_section:'候选方向',human_confirmation_status:'pending'})
+ }
+ return {summary:'公开合成配对验证',core_result_markdown:'P1 两种状态的约束要求不同。定性预期未实测。',
+  updates,model_completions,terms_master:[],warnings:[],
+  tables:{T1:[{row_id:'P1',data:{problem:'调整与保持对位移的约束'}}],T3:[{row_id:'E1',data:{target_problems:['P1'],evidence:'未实测'}}]}}
+}
+async function execute(t,value) {
+ const h=await setupNative(t,{nodeId:'Flow-1-2',draft:{source:'local-skill',textInputs:{technical_analysis_material_text:material},filePaths:{},configuration:{}},output:value})
+ await h.service.closeV340Runtime()
+ Object.assign(h.route,{provider:'deepseek-official',model:'deepseek-flash',reasoningEffort:'low'})
+ const prepare=h.ctx.llm.prepareCall
+ h.ctx.llm.prepareCall=async(...args)=>({...await prepare(...args),retryPolicy:{mode:'normal',maxRetries:0}})
+ const executor=createM06BusinessNativeCandidate013({ctx:h.ctx,native:{BlockAssembler:Assembler,createUserMessage:v=>({role:'user',...v})},
+  getLocalSkillSuite:()=> 'oasis',textBatch:true})
+ const service=createV340RuntimeService({repository:h.repository,preparation:h.preparation,executor,clock:()=>NOW})
+ t.after(()=>service.closeV340Runtime())
+ const confirmation=await service.prepareV340CandidateConfirmation(h.command({sessionId:'s',confirmed:true}))
+ const request=()=>h.command({requestKey:'pair-r2',candidate:{sessionId:'s',confirmed:true,sha256:confirmation.sha256}})
+ await service.createV340Run(request())
+ const run=await h.settle()
+ await service.createV340Run(request())
+ assert.equal(h.seen.stream,1)
+ return {h,run}
+}
+for(const count of [0,1,2])test('M02 R2 accepts '+count+' matched pairs with unique v9 identity',async t=>{
+ const value=output(count)
+ value.model_completions.reverse()
+ const {h,run}=await execute(t,value)
+ assert.equal(run.status,'completed')
+ assert.equal(run.nativeCandidate.version,'v340-native-candidate-9')
+ assert.match(h.seen.options.system,/双向一一对应/)
+ assert.match(h.seen.options.system,/集合必须完全相同/)
+ assert.match(h.seen.options.system,/human_confirmation_status.*pending/)
+ assert.match(h.seen.options.system,/逐字连续原文/)
+ assert.equal(run.result.snapshot.model_completions.length,count)
+ for(const row of run.result.snapshot.model_completions)assert.equal(row.human_confirmation_status,'pending')
+ parseStoredWorkbenchRecord('w',h.repository.get('w'))
+ assertV340NativeCandidate(run)
+})
+for(const [name,change,code,path] of [
+ ['orphan registration',v=>v.updates.pop(),'orphan-completion',['model_completions',0,'content_id']],
+ ['missing registration',v=>v.model_completions=[],'missing-completion',['updates',1,'content_id']],
+ ['different IDs',v=>v.model_completions[0].content_id='another-id','orphan-completion',['model_completions',0,'content_id']],
+ ['analysis is not a matching supplement',v=>v.updates[1].content_origin='workflow_analysis','orphan-completion',['model_completions',0,'content_id']],
+ ['duplicate registrations',v=>v.model_completions.push(structuredClone(v.model_completions[0])),'duplicate-completion',['model_completions',1,'content_id']],
+ ['duplicate updates',v=>v.updates.push(structuredClone(v.updates[1])),'duplicate-update',['updates',2,'content_id']],
+ ['case mismatch',v=>v.model_completions[0].content_id='Supplement-1','orphan-completion',['model_completions',0,'content_id']],
+])test('M02 R2 still rejects '+name+' at the correct field',async t=>{
+ const value=output();change(value)
+ const {h,run}=await execute(t,value)
+ assert.equal(run.status,'failed')
+ assert.equal(run.failureCode,'INVALID_OUTPUT')
+ assert.equal(run.result,null)
+ assert.deepEqual(run.executionSummary.fieldIssue,{code,path})
+ assert.equal(h.seen.stream,1)
+})
+function findRun(data,key){
+ if(data&&typeof data==='object'){
+  if(data.requestKey===key&&data.inputSnapshot)return data
+  for(const value of Object.values(data)){const run=findRun(value,key);if(run)return run}
+ }
+ return null
+}
+test('M02 R2 preserves original v5 and v8 system fingerprints',async()=>{
+ for(const [file,key,version,hash] of [
+  ['.local/dsh-next-field-diagnostics-20261112/m02-single-20261127/live/dsh-home/storages/oasis_workbench.json',
+   'f708cee5-c27a-4a40-bffc-2ee2cfb5f1b1','v340-native-candidate-5','7e41d6d356ab218d85dc87f1ff67911cd9bb0fc5778d4f2b21e4cc14b4954009'],
+  ['.local/dsh-m02-locator-r1-20261127/live/dsh-home/storages/oasis_workbench.json',
+   '8c8f27a1-8adc-43b8-ae19-b2b0d82584fe','v340-native-candidate-8','cfc18fba2d049a39dd6d669263d0a51b5875443f3494bd0a98fb62b6224a6802'],
+ ]){
+  const run=findRun(JSON.parse(await readFile(file,'utf8')),key)
+  const original=JSON.stringify(run)
+  assert.equal(assertV340NativeCandidate(run).version,version)
+  assert.equal(run.nativeCandidate.systemSHA256,hash)
+  assert.equal(JSON.stringify(run),original)
+ }
+})

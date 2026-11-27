@@ -1,0 +1,704 @@
+{
+  "at": "2026-11-05T15:37:20.379538+08:00",
+  "subject": "C3-R1",
+  "scope": "document/Schema comparison and existing synthetic reference controls only",
+  "reviewer": "Codex author re-review, not independent",
+  "cases": [
+    {
+      "id": "C3TR-01",
+      "case": "exclusive prose block fields conflict with required schema field",
+      "evidence": {
+        "contract_line": 37,
+        "prose_exclusive_fields": [
+          "claim_body",
+          "decision",
+          "dispositions",
+          "planned_claim_id"
+        ],
+        "schema_required_fields": [
+          "claim_body",
+          "decision",
+          "decision_reason",
+          "dispositions",
+          "planned_claim_id"
+        ],
+        "required_but_forbidden": [
+          "decision_reason"
+        ],
+        "actual_example_schema_accepts": true,
+        "actual_example_matches_prose_exclusive_set": false
+      },
+      "judgment": "CONTRACT_CONTRADICTION_TR02"
+    },
+    {
+      "id": "C3TR-02",
+      "case": "removing decision_reason follows exclusive prose but fails schema",
+      "evidence": {
+        "prose_accepts_field_set": true,
+        "schema_accepts": false,
+        "normalizer_uses_block_decision_reason": true
+      },
+      "judgment": "CONTRACT_CONTRADICTION_TR02"
+    },
+    {
+      "id": "C3TR-03",
+      "case": "receipt capture and complete wrapper construction require two stages",
+      "evidence": {
+        "contract_line": 71,
+        "contract_says_before_response_json": true,
+        "wrapper_fields": {
+          "legacy_result": "unchanged response.json object on ordinary successful parsing",
+          "provider_response_receipt": "object provider_response_receipt for 2xx enhanced response"
+        },
+        "capture_point": "same response.content bytes after await post, before json decode or old >=400 branch escapes",
+        "proposed_clarification": "capture immutable byte receipt before parse; after successful legacy parsing assemble immutable wrapper. No duplicate request or parse required.",
+        "byte_receipt_basis_is_already_clear": true
+      },
+      "judgment": "P2_WORDING_ORDER_CLARIFICATION_TR05"
+    },
+    {
+      "id": "C3TR-04",
+      "case": "original and normalized missing receipt retain different representations",
+      "evidence": {
+        "original_sha": "none",
+        "normalized_sha": null,
+        "registry_reference_accepts": true
+      },
+      "judgment": "TR01_POLICY_CLOSED_LIMITED_PROFILE"
+    },
+    {
+      "id": "C3TR-05",
+      "case": "C3 complete ABI resolves and retains warning/count ports",
+      "evidence": {
+        "abi_check": true,
+        "normalizer_ports": [
+          "clean_text",
+          "claim_count",
+          "marker_warnings",
+          "claim_id_map_json",
+          "feature_dispositions_json",
+          "claim_segments_json"
+        ]
+      },
+      "judgment": "TR02_ABI_TECHNICAL_DESIGN_FIXED_EXCEPT_PROSE_FIELD_CONFLICT"
+    },
+    {
+      "id": "C3TR-06",
+      "case": "client assurance explicitly excludes original Outline independent proof",
+      "evidence": {
+        "self_consistent": true,
+        "original_outline_independently_verified": false
+      },
+      "judgment": "TR03_SCOPE_CLOSED_NO_RUNTIME_CLAIM"
+    },
+    {
+      "id": "C3TR-07",
+      "case": "all original warning display reconstruction positive",
+      "evidence": {
+        "reference_accepts": true,
+        "case_categories": [
+          "TR04"
+        ]
+      },
+      "judgment": "TR04_POLICY_CLOSED"
+    },
+    {
+      "id": "C3TR-08",
+      "case": "provider receipt corresponds to exact same synthetic raw bytes",
+      "evidence": {
+        "same_body_reference_accepts": true,
+        "sha256": "72023ba6f5556ed5ef4511e61c349f064d66415cc67a11566e1776dbca512af3",
+        "stored_sha256": "72023ba6f5556ed5ef4511e61c349f064d66415cc67a11566e1776dbca512af3",
+        "single_owner_no_top_raw_hash": true
+      },
+      "judgment": "TR05_BYTE_IDENTITY_MAIN_POLICY_CLOSED"
+    },
+    {
+      "id": "C3TR-09",
+      "case": "source and final locator owners are different and explicit",
+      "evidence": {
+        "source_start_max": 1048576,
+        "source_end_max": 1048576,
+        "final_output_start_max": 100000,
+        "capacity_policy": {
+          "source_start_end_utf16_inclusive_maximum": 1048576,
+          "actual_original_length_and_scalar_boundary_required": true,
+          "packet_utf8_bytes": 1048576,
+          "ordinary_text_or_file_utf16": 300000,
+          "upstream_document_body_utf8_bytes": 1048576,
+          "claims_output_coordinate_utf16_maximum": 100000,
+          "wrapper_overhead_counts": true
+        }
+      },
+      "judgment": "TR06_POLICY_CLOSED_WITH_EXISTING_OWNER_LIMITS"
+    },
+    {
+      "id": "C3TR-10",
+      "case": "unchanged graph consumers retain all referenced output root ports",
+      "evidence": {
+        "examined_reference_count": 62,
+        "consumer_count": 9,
+        "broken": [],
+        "references": [
+          {
+            "consumer": "1727495950805",
+            "selector": [
+              "1769301001101",
+              "output"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1727495950805",
+            "selector": [
+              "1769301001101",
+              "claims_text"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1727495950805",
+            "selector": [
+              "1769301001101",
+              "dependency_tree"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1727495950805",
+            "selector": [
+              "1769301001101",
+              "pending_confirmation"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1727495950805",
+            "selector": [
+              "1769301001101",
+              "quality_report"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1727495950805",
+            "selector": [
+              "1769301001101",
+              "quality_status"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852685877",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "core_independent_claim"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852685877",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "elementary_features"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852685877",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "tech_element_table"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852685877",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "technical_problems"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852685877",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "macro_features"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "technical_problems"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "elementary_features"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "tech_element_table"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "entity_hierarchy_nodes"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "entity_relations"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "core_independent_claim"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "parallel_independent_claims"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "sub_claim_clusters"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "implementation_elements"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "preferred_ranges"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1729852722624",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "variations"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1730359104417",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "core_independent_claim"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1730359104417",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "parallel_independent_claims"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1730359104417",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "sub_claim_clusters"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1730359104417",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "technical_problems"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1730359104417",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "tech_element_table"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1730359104417",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "elementary_features"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1730359104417",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "implementation_elements"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1730359104417",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "entity_hierarchy_nodes"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1730359104417",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "entity_relations"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1730359104417",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "tp_ts_mapping"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733540678041",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "core_independent_claim"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733540678041",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "parallel_independent_claims"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733540678041",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "elementary_features"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733540678041",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "tech_element_table"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733540678041",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "sub_claim_clusters"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733540678041",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "implementation_elements"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733540678041",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "preferred_ranges"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733540678041",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "variations"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733563019836",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "elementary_features"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733563019836",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "implementation_elements"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733563019836",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "tech_element_table"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733563019836",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "sub_claim_clusters"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733563019836",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "preferred_ranges"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1733563019836",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "variations"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741410582291",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "core_independent_claim"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741410582291",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "elementary_features"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741410582291",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "tech_element_table"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741410582291",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "entity_hierarchy_nodes"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741410582291",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "entity_relations"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741410582291",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "technical_problems"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741410582291",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "macro_features"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741428101401",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "parallel_independent_claims"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741428101401",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "core_independent_claim"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741428101401",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "elementary_features"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741428101401",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "tech_element_table"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741428101401",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "entity_hierarchy_nodes"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741428101401",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "technical_problems"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1741428101401",
+            "selector": [
+              "1764588108416",
+              "structured_output",
+              "macro_features"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1769151900001",
+            "selector": [
+              "1769301001100",
+              "clean_text"
+            ],
+            "root_port_retained": true
+          },
+          {
+            "consumer": "1769151900001",
+            "selector": [
+              "1769301001009",
+              "clean_text"
+            ],
+            "root_port_retained": true
+          }
+        ],
+        "note": "Static selector comparison only; no candidate DSL imported/executed."
+      },
+      "judgment": "STATIC_NO_NEW_PORT_BREAK_FOUND"
+    }
+  ],
+  "network_attempts": [],
+  "loaded_probe_sha256": "3a91debbb209e53e44cfed87adb49b6b638741d33a95360c2153d98cacdc619a",
+  "new_generation_calls": 0,
+  "paid_calls": 0,
+  "candidate_modified": false
+}

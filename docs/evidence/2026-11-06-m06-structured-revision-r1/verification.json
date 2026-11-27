@@ -1,0 +1,264 @@
+{
+  "status": "PASS_BOUNDED_P3_CODE_AND_OFFLINE_RPC_REVISION",
+  "time": "2026-11-06T14:07:13.797382+08:00",
+  "executor": "Codex single agent self-review; not independent professional acceptance",
+  "checks": [
+    {
+      "name": "tests-final-r2 exit0",
+      "passed": true,
+      "details": {
+        "argv": [
+          "tools/bin/node",
+          "--test",
+          "packages/oasis-professional-service/test/m06-structured-revision.test.mjs",
+          "packages/oasis-professional-service/test/v340-workflow.test.mjs",
+          "packages/oasis-professional-service/test/v340-results.test.mjs",
+          "packages/oasis-professional-service/test/v340-snapshot-admission.test.mjs",
+          "packages/oasis-professional-service/test/workbench-rpc.test.mjs",
+          "packages/oasis-professional-service/test/m06-native-zero-generation.test.mjs"
+        ],
+        "environment_overrides": {},
+        "exit_code": 0
+      }
+    },
+    {
+      "name": "pack-r2 exit0",
+      "passed": true,
+      "details": {
+        "argv": [
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/npm",
+          "pack",
+          "--offline",
+          "--ignore-scripts",
+          "--audit=false",
+          "--fund=false",
+          "--update-notifier=false",
+          "--json",
+          "--pack-destination",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2",
+          "--cache",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2/npm-cache",
+          "--userconfig",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2/empty-user.npmrc",
+          "--globalconfig",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2/empty-global.npmrc"
+        ],
+        "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service",
+        "environment": {
+          "HOME": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2/home",
+          "PATH": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin:/usr/bin:/bin",
+          "COREPACK_ENABLE_NETWORK": "0",
+          "npm_config_manage_package_manager_versions": "false",
+          "CI": "true"
+        },
+        "exit_code": 0
+      }
+    },
+    {
+      "name": "archive-r2-public-revision exit0",
+      "passed": true,
+      "details": {
+        "argv": [
+          "tools/bin/node",
+          "docs/evidence/2026-11-06-m06-structured-revision-r1/exercise-public-revision.mjs"
+        ],
+        "environment_overrides": {
+          "OASIS_REVISION_PACKAGE": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/structured-revision-review-20261106-r2/package",
+          "OASIS_REVISION_RUN_SUFFIX": "archive-r2"
+        },
+        "exit_code": 0
+      }
+    },
+    {
+      "name": "archive-r2-guard-tests exit0",
+      "passed": true,
+      "details": {
+        "argv": [
+          "tools/bin/node",
+          "--test",
+          "packages/oasis-professional-service/test/m06-native-zero-generation.test.mjs"
+        ],
+        "environment_overrides": {
+          "OASIS_TEST_ZERO_ARCHIVE_ENTRY": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/structured-revision-review-20261106-r2/package/src/m06-controlled-host-013.js",
+          "OASIS_TEST_ZERO_OBSERVATION": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-structured-revision-r1/archive-r2-guard-observation.json"
+        },
+        "exit_code": 0
+      }
+    },
+    {
+      "name": "70 source tests",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "3 archive guard tests",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tests-red observed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "duplicate-row-red observed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "quote-boundary-red observed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "final archive hash",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "134 actual members match source",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "only three source members changed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "package/client/resource policy retained",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "eight public RPC outcomes",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no dispatch or App",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "source business record untouched",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "parent version and original result unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "frozen input preserved",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "all twelve warnings retained open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "four other tables retained",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "four row histories with unconfirmed assessment",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "exact saved revision body",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "review binds current hash without filing acceptance",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "reopen and prior file preserved",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "professional/user remain pending",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "52 zero guard endpoints unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "old installed pins retained",
+      "passed": true,
+      "details": 21
+    },
+    {
+      "name": "protected originals retained",
+      "passed": true,
+      "details": {
+        "count": 3269,
+        "expected_edits": [
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-document.js",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-result-service.js",
+          "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-runtime-contract.js"
+        ],
+        "unexpected": []
+      }
+    },
+    {
+      "name": "project-current-state.md old full suffix retained",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "2026-10-23-stage5-progress-and-remaining.md old full suffix retained",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "governance inputs stable",
+      "passed": true,
+      "details": []
+    },
+    {
+      "name": "HEAD unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "diff whitespace",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "user commercial contact recorded without rights inference",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "full goal remains active/incomplete",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "source_tests": 70,
+  "archive_guard_tests": 3,
+  "full_goal_complete": false,
+  "application_started": false,
+  "limitations": [
+    "No App/Host/UI or native lifecycle evidence",
+    "final archive not yet installed",
+    "professional and user acceptance pending",
+    "release rights/UNKNOWN update pairing and remote/source work incomplete"
+  ]
+}

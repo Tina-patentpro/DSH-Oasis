@@ -1,0 +1,12 @@
+file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs:95
+ if(manifest.schemaVersion!==1||manifest.kind!=='OASIS_F_OFFLINE_BUNDLE'||manifest.realCallBudget!==0||!isDeepStrictEqual(manifest.versions,installationVersions)||![3,4].includes(manifest.checkpoint))throw Error('unsupported fixed installation bundle')
+                                                                                                                                                                                                              ^
+
+Error: unsupported fixed installation bundle
+    at verifyFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs:95:207)
+    at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs:251:15
+    at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs:241:20
+    at async withInstalledWriter (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs:197:51)
+    at async file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/docs/evidence/2026-11-08-r6-execution-r1/upgrade-native-generation.mjs:22:16
+
+Node.js v24.21.0

@@ -1,0 +1,782 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:oasis:fast39:contract:candidate-1",
+  "title": "Fast39 result contract candidate 1 — STATIC DOCUMENT ONLY",
+  "$comment": "Not deployed. JSON Schema string lengths are Unicode code points; normative UTF16 and byte/aggregate/semantic checks in CONTRACT.md are additionally required. Do not fetch remote schema refs.",
+  "$defs": {
+    "outline_source_item": {
+      "type": "object",
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "feature_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "input_id": {
+          "type": "string",
+          "enum": [
+            "upstream_md_file",
+            "disclosure_file",
+            "disclosure_text",
+            "drawings_file",
+            "drawings_text",
+            "claim_requirements_file",
+            "claim_requirements_text",
+            "user_input"
+          ]
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "start_utf16": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "end_utf16": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "claim_id",
+        "feature_id",
+        "input_id",
+        "source_sha256",
+        "start_utf16",
+        "end_utf16",
+        "quote"
+      ],
+      "additionalProperties": false
+    },
+    "final_source_item": {
+      "type": "object",
+      "properties": {
+        "claim_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,3}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "input_id": {
+          "type": "string",
+          "enum": [
+            "upstream_md_file",
+            "disclosure_file",
+            "disclosure_text",
+            "drawings_file",
+            "drawings_text",
+            "claim_requirements_file",
+            "claim_requirements_text",
+            "user_input"
+          ]
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "start_utf16": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "end_utf16": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "planned_claim_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "claim_id",
+        "feature_id",
+        "input_id",
+        "source_sha256",
+        "start_utf16",
+        "end_utf16",
+        "quote",
+        "planned_claim_id"
+      ],
+      "additionalProperties": false
+    },
+    "feature_disposition": {
+      "type": "object",
+      "properties": {
+        "planned_claim_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "claim_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[1-9][0-9]{0,3}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "kept",
+            "rephrased",
+            "blocked_missing_support"
+          ]
+        },
+        "output_quote": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 4096
+        },
+        "output_start_utf16": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "output_end_utf16": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "planned_claim_id",
+        "claim_id",
+        "feature_id",
+        "action",
+        "output_quote",
+        "output_start_utf16",
+        "output_end_utf16",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "const": "blocked_missing_support"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          },
+          "then": {
+            "properties": {
+              "output_quote": {
+                "const": ""
+              },
+              "output_start_utf16": {
+                "type": "null"
+              },
+              "output_end_utf16": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "claim_id": {
+                "type": "string",
+                "pattern": "^[1-9][0-9]{0,3}$"
+              },
+              "output_quote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "output_start_utf16": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000
+              },
+              "output_end_utf16": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1000000
+              }
+            }
+          }
+        }
+      ]
+    },
+    "source_registry_internal": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "flow26-source-trace-1"
+        },
+        "source_mode": {
+          "type": "string",
+          "enum": [
+            "packet2",
+            "legacy_unmapped"
+          ]
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "input_id": {
+                "type": "string",
+                "enum": [
+                  "upstream_md_file",
+                  "disclosure_file",
+                  "disclosure_text",
+                  "drawings_file",
+                  "drawings_text",
+                  "claim_requirements_file",
+                  "claim_requirements_text",
+                  "user_input"
+                ]
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "technical_material",
+                  "output_requirement",
+                  "manual_instruction"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "provided",
+                  "not_provided",
+                  "unverified"
+                ]
+              },
+              "text": {
+                "type": "string",
+                "minLength": 0,
+                "maxLength": 1000000
+              },
+              "source_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "receipt_sha256": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "input_id",
+              "role",
+              "status",
+              "text",
+              "source_sha256",
+              "receipt_sha256"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 8
+        },
+        "packet_text_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "original_input_hash_claim": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_user_input_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "version",
+        "source_mode",
+        "entries",
+        "packet_text_sha256",
+        "original_input_hash_claim",
+        "actual_user_input_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "quality_report": {
+      "type": "object",
+      "properties": {
+        "outline_quality": {
+          "type": "object",
+          "properties": {
+            "fallback_hint": {
+              "type": "string",
+              "minLength": 0,
+              "maxLength": 8000
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "ok",
+                "partial",
+                "insufficient"
+              ]
+            },
+            "warnings": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "maxItems": 256
+            }
+          },
+          "required": [
+            "fallback_hint",
+            "status",
+            "warnings"
+          ],
+          "additionalProperties": false
+        },
+        "outline_error": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 8000
+        },
+        "marker_warnings": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 8000
+          },
+          "maxItems": 256
+        },
+        "dependency_warnings": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 8000
+          },
+          "maxItems": 256
+        },
+        "dependency_parse_status": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "dependency_edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "maxProperties": 256,
+            "description": "Existing legacy edge object retained; no new semantic interpretation. Generic JSON depth/array/string limits also apply."
+          },
+          "maxItems": 1024
+        },
+        "claim_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9999
+        },
+        "quality_status": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "partial",
+            "insufficient"
+          ]
+        },
+        "acceptance": {
+          "const": "draft_requires_review_not_professional_acceptance"
+        },
+        "contract_version": {
+          "const": "flow26-quality-1"
+        },
+        "source_trace_version": {
+          "const": "flow26-source-trace-1"
+        },
+        "source_status": {
+          "type": "string",
+          "enum": [
+            "mapped",
+            "legacy_unmapped",
+            "unverified"
+          ]
+        },
+        "source_map": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/final_source_item"
+          },
+          "maxItems": 1024
+        },
+        "critical_feature_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "maxItems": 256,
+          "uniqueItems": true
+        },
+        "critical_feature_targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "planned_claim_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "feature_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            },
+            "required": [
+              "planned_claim_id",
+              "feature_id"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 512,
+          "uniqueItems": true
+        },
+        "claim_id_map": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "planned_claim_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "final_claim_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]{0,3}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2000
+              }
+            },
+            "required": [
+              "planned_claim_id",
+              "final_claim_id",
+              "reason"
+            ],
+            "additionalProperties": false
+          },
+          "maxItems": 128
+        },
+        "feature_dispositions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/feature_disposition"
+          },
+          "maxItems": 1024
+        },
+        "feature_coverage": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "complete",
+                "incomplete",
+                "unverified"
+              ]
+            },
+            "missing_core_feature_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "maxItems": 256,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "status",
+            "missing_core_feature_ids"
+          ],
+          "additionalProperties": false
+        },
+        "support_review_status": {
+          "const": "not_assessed"
+        }
+      },
+      "required": [
+        "outline_quality",
+        "outline_error",
+        "marker_warnings",
+        "dependency_warnings",
+        "dependency_parse_status",
+        "dependency_edges",
+        "claim_count",
+        "quality_status",
+        "acceptance",
+        "contract_version",
+        "source_trace_version",
+        "source_status",
+        "source_map",
+        "critical_feature_ids",
+        "critical_feature_targets",
+        "claim_id_map",
+        "feature_dispositions",
+        "feature_coverage",
+        "support_review_status"
+      ],
+      "additionalProperties": false
+    },
+    "outputs": {
+      "type": "object",
+      "properties": {
+        "output": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "claims_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "dependency_tree": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "pending_confirmation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "quality_report": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100000
+        },
+        "quality_status": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "partial",
+            "insufficient"
+          ]
+        }
+      },
+      "required": [
+        "output",
+        "claims_text",
+        "dependency_tree",
+        "pending_confirmation",
+        "quality_report",
+        "quality_status"
+      ],
+      "additionalProperties": false
+    },
+    "structured_result": {
+      "type": "object",
+      "properties": {
+        "contract_version": {
+          "const": "flow26-fast-result-1"
+        },
+        "request_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "workflow_run_id": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+        },
+        "outputs": {
+          "$ref": "#/$defs/outputs"
+        }
+      },
+      "required": [
+        "contract_version",
+        "request_key",
+        "workflow_run_id",
+        "outputs"
+      ],
+      "additionalProperties": false
+    },
+    "structured_result_error": {
+      "type": "object",
+      "properties": {
+        "contract_version": {
+          "const": "flow26-fast-result-1"
+        },
+        "code": {
+          "type": "string",
+          "enum": [
+            "FAST39_RESULT_FIELDS_INVALID",
+            "FAST39_RUN_ID_MISSING",
+            "FAST39_RESULT_TOO_LARGE",
+            "FAST39_BINDING_MISMATCH"
+          ]
+        },
+        "request_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "workflow_run_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "phase": {
+          "const": "content"
+        },
+        "execution_status": {
+          "const": "response_returned_no_retry"
+        }
+      },
+      "required": [
+        "contract_version",
+        "code",
+        "request_key",
+        "workflow_run_id",
+        "phase",
+        "execution_status"
+      ],
+      "additionalProperties": false
+    },
+    "enhanced_fragment": {
+      "type": "object",
+      "properties": {
+        "structured_result": {
+          "$ref": "#/$defs/structured_result"
+        },
+        "structured_result_error": {
+          "$ref": "#/$defs/structured_result_error"
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "structured_result"
+          ],
+          "not": {
+            "required": [
+              "structured_result_error"
+            ]
+          }
+        },
+        {
+          "required": [
+            "structured_result_error"
+          ],
+          "not": {
+            "required": [
+              "structured_result"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "$ref": "#/$defs/structured_result"
+}

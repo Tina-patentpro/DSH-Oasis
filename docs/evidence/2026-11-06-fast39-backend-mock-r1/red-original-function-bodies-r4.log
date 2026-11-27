@@ -1,0 +1,220 @@
+test_all_blocked_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_async_queue_branch_unchanged_no_provider_no_fragment (test_fast39_result_contract.Fast39Contract) ... ok
+test_binding_mismatch_before_dispatch_no_queue (test_fast39_result_contract.Fast39Contract) ... FAIL
+test_content_invalid_sixth_field_preserves_old_queue_and_success_fact (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_correlations_take_priority_even_provider_failed (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_http_parse_and_network_failures_no_fabricated_fragment_or_queue (test_fast39_result_contract.Fast39Contract) ... ok
+test_legacy_file_type_and_save_string_preserved (test_fast39_result_contract.Fast39Contract) ... ok
+test_output_size_unicode_and_null_rejected_without_truncation (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_queue_failure_keeps_unknown_enqueuing_no_retry (test_fast39_result_contract.Fast39Contract) ... ok
+test_receipt_exact_bytes_before_one_parse_same_original_object (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_report_duplicate_keys_float_and_depth_rejected (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_six_outputs_preserved_without_legacy_projection_or_queue_change (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) ... test_top_or_nested_id_alone_accepted_but_uppercase_missing_or_conflict_rejected (test_fast39_result_contract.Fast39Contract) ... FAIL
+test_unbound_and_non_enhanced_service_keep_original_interface (test_fast39_result_contract.Fast39Contract) ... ok
+test_zero_claim_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract) ... ERROR
+
+======================================================================
+ERROR: test_all_blocked_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 253, in test_all_blocked_does_not_become_normal_fragment
+    self.assertEqual(result['structured_result_error']['code'], 'FAST39_NO_SUPPORTED_CLAIM')
+KeyError: 'structured_result_error'
+
+======================================================================
+ERROR: test_content_invalid_sixth_field_preserves_old_queue_and_success_fact (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 237, in test_content_invalid_sixth_field_preserves_old_queue_and_success_fact
+    error = result['structured_result_error']
+KeyError: 'structured_result_error'
+
+======================================================================
+ERROR: test_correlations_take_priority_even_provider_failed (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 204, in test_correlations_take_priority_even_provider_failed
+    error = result['structured_result_error']
+KeyError: 'structured_result_error'
+
+======================================================================
+ERROR: test_output_size_unicode_and_null_rejected_without_truncation (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 261, in test_output_size_unicode_and_null_rejected_without_truncation
+    self.assertEqual(result['structured_result_error']['code'], 'FAST39_RESULT_' + code)
+KeyError: 'structured_result_error'
+
+======================================================================
+ERROR: test_receipt_exact_bytes_before_one_parse_same_original_object (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 162, in test_receipt_exact_bytes_before_one_parse_same_original_object
+    result = await self.workflow.run_dify_workflow(self.api, {}, '101', '', 'k', capture_response_receipt=True)
+TypeError: run_dify_workflow() got an unexpected keyword argument 'capture_response_receipt'
+
+======================================================================
+ERROR: test_report_duplicate_keys_float_and_depth_rejected (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 270, in test_report_duplicate_keys_float_and_depth_rejected
+    self.assertEqual(result['structured_result_error']['code'], 'FAST39_RESULT_FIELDS_INVALID')
+KeyError: 'structured_result_error'
+
+======================================================================
+ERROR: test_six_outputs_preserved_without_legacy_projection_or_queue_change (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 175, in test_six_outputs_preserved_without_legacy_projection_or_queue_change
+    self.assertEqual(result['structured_result']['outputs'], self.response.result['data']['outputs'])
+KeyError: 'structured_result'
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) (status='failed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 215, in test_status_matrix_preserves_queue_facts
+    error = result['structured_result_error']
+KeyError: 'structured_result_error'
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) (status='stopped')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 215, in test_status_matrix_preserves_queue_facts
+    error = result['structured_result_error']
+KeyError: 'structured_result_error'
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) (status='running')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 215, in test_status_matrix_preserves_queue_facts
+    error = result['structured_result_error']
+KeyError: 'structured_result_error'
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) (status='unexpected')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 215, in test_status_matrix_preserves_queue_facts
+    error = result['structured_result_error']
+KeyError: 'structured_result_error'
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) (status=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 215, in test_status_matrix_preserves_queue_facts
+    error = result['structured_result_error']
+KeyError: 'structured_result_error'
+
+======================================================================
+ERROR: test_zero_claim_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 245, in test_zero_claim_does_not_become_normal_fragment
+    self.assertEqual(result['structured_result_error']['code'], 'FAST39_NO_SUPPORTED_CLAIM')
+KeyError: 'structured_result_error'
+
+======================================================================
+FAIL: test_binding_mismatch_before_dispatch_no_queue (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 274, in test_binding_mismatch_before_dispatch_no_queue
+    with self.assertRaises(HandlerError) as caught: await self.call()
+AssertionError: HandlerError not raised
+
+======================================================================
+FAIL: test_top_or_nested_id_alone_accepted_but_uppercase_missing_or_conflict_rejected (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 232, in test_top_or_nested_id_alone_accepted_but_uppercase_missing_or_conflict_rejected
+    self.assertEqual('structured_result' in result, accepted)
+AssertionError: False != True
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.092s
+
+FAILED (failures=2, errors=13)

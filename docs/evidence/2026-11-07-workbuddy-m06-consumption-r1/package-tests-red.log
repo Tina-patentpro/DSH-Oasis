@@ -1,0 +1,45 @@
+test_archive_preserves_eight_payloads_and_excludes_operator (test_private_package.PrivatePackageTest) ... FAIL
+test_changed_source_is_refused_before_creating_archive (test_private_package.PrivatePackageTest) ... FAIL
+test_existing_output_remains_unchanged (test_private_package.PrivatePackageTest) ... FAIL
+test_identical_inputs_produce_identical_archive_bytes (test_private_package.PrivatePackageTest) ... FAIL
+
+======================================================================
+FAIL: test_archive_preserves_eight_payloads_and_excludes_operator (test_private_package.PrivatePackageTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/test/test_private_package.py", line 28, in test_archive_preserves_eight_payloads_and_excludes_operator
+    self.assertEqual(result.returncode, 0, result.stderr.decode())
+AssertionError: 2 != 0 : /Library/Developer/CommandLineTools/usr/bin/python3: can't open file '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/build_private_package.py': [Errno 2] No such file or directory
+
+
+======================================================================
+FAIL: test_changed_source_is_refused_before_creating_archive (test_private_package.PrivatePackageTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/test/test_private_package.py", line 61, in test_changed_source_is_refused_before_creating_archive
+    self.assertEqual(result.returncode, 1, result.stderr.decode())
+AssertionError: 2 != 1 : /Library/Developer/CommandLineTools/usr/bin/python3: can't open file '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/build_private_package.py': [Errno 2] No such file or directory
+
+
+======================================================================
+FAIL: test_existing_output_remains_unchanged (test_private_package.PrivatePackageTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/test/test_private_package.py", line 70, in test_existing_output_remains_unchanged
+    self.assertEqual(result.returncode, 1, result.stderr.decode())
+AssertionError: 2 != 1 : /Library/Developer/CommandLineTools/usr/bin/python3: can't open file '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/build_private_package.py': [Errno 2] No such file or directory
+
+
+======================================================================
+FAIL: test_identical_inputs_produce_identical_archive_bytes (test_private_package.PrivatePackageTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/test/test_private_package.py", line 80, in test_identical_inputs_produce_identical_archive_bytes
+    self.assertEqual(result.returncode, 0, result.stderr.decode())
+AssertionError: 2 != 0 : /Library/Developer/CommandLineTools/usr/bin/python3: can't open file '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/build_private_package.py': [Errno 2] No such file or directory
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.046s
+
+FAILED (failures=4)

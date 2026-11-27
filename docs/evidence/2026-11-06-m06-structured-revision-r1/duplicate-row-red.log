@@ -1,0 +1,27 @@
+✖ ambiguous duplicate inherited row identity refuses replacement (7.370583ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 151.927458
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-structured-revision.test.mjs:78:1
+✖ ambiguous duplicate inherited row identity refuses replacement (7.370583ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-structured-revision.test.mjs:81:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

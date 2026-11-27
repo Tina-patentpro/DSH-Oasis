@@ -183,7 +183,7 @@ export function PanelPages({
             apiExecutionAvailable: state.apiExecutionAvailable === true,
             apiConfigurationReady: state.professionalConfigurationBlocked !== true,
             localGenerationEnabled: state.localGenerationEnabled === true,
-            localGenerationKind: state.localGenerationKind,
+            localGenerationKind: state.localGenerationKind, localSkillSuite: state.localSkillSuite,
             conversationUnavailableReason: state.conversationUnavailableReason === undefined ? '当前对话输入接口不可用' : state.conversationUnavailableReason,
             onGenerate, onObserveUnified, onStopUnified, onEditResult, onUseInConversation,
             onUpdateResultEditDraft, onDiscardResultEditDraft,

@@ -1,0 +1,26 @@
+✔ owned routes preserve RPC correlation and handler validation boundary without intercepting other services (9.074375ms)
+✔ invalid transport envelopes never dispatch the business handler (1.021666ms)
+✔ partial route registration is rolled back (0.175541ms)
+✔ business failure results are not retried or converted into success (0.2785ms)
+✔ S6 binding routes validate displayed identity and confirmation before reaching Host (1.486417ms)
+✔ dispatches state endpoints with a schema-v3 editable replacement (0.990416ms)
+✔ returns revision conflict as a successful business payload (0.148708ms)
+✔ rejects unknown endpoints, extra root fields, identity injection, and Host evidence (0.271458ms)
+✔ does not disguise repository infrastructure failures (0.174667ms)
+✔ rejects over-budget editable drafts before calling the repository (0.653167ms)
+✔ dispatches a strictly validated workflow catalog endpoint (0.18ms)
+✔ dispatches strictly validated material commands without accepting Host evidence (0.378417ms)
+✔ serializes known material failures but still propagates infrastructure failures (0.139959ms)
+✔ dispatches strict task create and review commands without accepting Client evidence (0.451208ms)
+✔ serializes known run-domain failures and propagates runner infrastructure faults (0.138375ms)
+✔ dispatches strict two-phase writeback commands and commit accepts only a token (0.375292ms)
+✔ serializes committed-index failure with only a relative recovery manifest (0.536041ms)
+✔ dispatches strict professional-service commands only through the Host service (0.504959ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 94.406

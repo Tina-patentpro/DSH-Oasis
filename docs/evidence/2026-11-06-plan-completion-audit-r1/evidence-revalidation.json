@@ -1,0 +1,44 @@
+{
+  "time": "2026-11-06T16:31:38.529770+08:00",
+  "observations": [
+    {
+      "requirement": "R2P3 exact review artifact",
+      "paths": [
+        "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2/workspace/claims_20261106140131_02fe3575.md",
+        "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2/workspace/claims_20261106140131_02fe3575.oasis.json"
+      ],
+      "sha256": [
+        "18250e4cd496d52f0f0459782ca2305dd2fdcaf646794ecdfbbbbf63c814237c",
+        "686f706b493a2373f1867c031825e163b9878632afeebaa2d84e731ab68c9cc8"
+      ],
+      "engineering_review": "approved",
+      "professional": "PENDING",
+      "user": "PENDING"
+    },
+    {
+      "requirement": "R1task2 PREP2 identity",
+      "freeze_sha256": "9e64932fd76e4b1d454753bd468d75f362b25cd8977297fe335937c43c826340",
+      "matching_members": 11,
+      "mechanism_review_only": true,
+      "source_execution": false
+    },
+    {
+      "requirement": "R2P1/P2 preparation/P4 UNKNOWN retention",
+      "command": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-plan-completion-audit-r1/installed-readonly-check-command.json",
+      "actual_exit_code": 0,
+      "business_and_note_hashes_preserved": true,
+      "app_or_host_started": false
+    },
+    {
+      "requirement": "R1task4/R2P5 actual bounded two-layer pairing",
+      "archive_sha256": "d2b9a4b76ba69b5b799c13265de3735d981c575adbfdc0dae7b75dbdacc30457",
+      "members": 138,
+      "same_actual_handler_output_stored": true,
+      "source_archive_pairing_identical": true,
+      "workflow_candidate": false,
+      "installed": false
+    }
+  ],
+  "production_calls": 0,
+  "scope": "fresh identity/content/installed-readonly checks, not rerun of prior business tests or manual acceptance"
+}

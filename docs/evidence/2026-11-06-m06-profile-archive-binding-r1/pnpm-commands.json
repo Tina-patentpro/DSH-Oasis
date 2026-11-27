@@ -1,0 +1,98 @@
+[
+  {
+    "scope": "installation",
+    "phase": "lock-only",
+    "command": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/pnpm",
+      "install",
+      "--offline",
+      "--ignore-scripts",
+      "--store-dir",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1/pnpm-store",
+      "--config.manage-package-manager-versions=false",
+      "--config.auto-install-peers=false",
+      "--config.node-linker=isolated",
+      "--config.enable-global-virtual-store=false",
+      "--lockfile-only"
+    ],
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1/installation-view",
+    "exit_code": 0,
+    "duration_seconds": 0.508501708,
+    "lock_before": null,
+    "lock_after": "d52b5d047035e489b9138b5a6be69cf5640b36a5c06dc1108a588aee6656505e",
+    "stdout_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/installation-lock-only.stdout.txt",
+    "stderr_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/installation-lock-only.stderr.txt"
+  },
+  {
+    "scope": "installation",
+    "phase": "frozen-links",
+    "command": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/pnpm",
+      "install",
+      "--offline",
+      "--ignore-scripts",
+      "--store-dir",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1/pnpm-store",
+      "--config.manage-package-manager-versions=false",
+      "--config.auto-install-peers=false",
+      "--config.node-linker=isolated",
+      "--config.enable-global-virtual-store=false",
+      "--frozen-lockfile"
+    ],
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1/installation-view",
+    "exit_code": 0,
+    "duration_seconds": 0.4757419999999999,
+    "lock_before": "d52b5d047035e489b9138b5a6be69cf5640b36a5c06dc1108a588aee6656505e",
+    "lock_after": "d52b5d047035e489b9138b5a6be69cf5640b36a5c06dc1108a588aee6656505e",
+    "stdout_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/installation-frozen-links.stdout.txt",
+    "stderr_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/installation-frozen-links.stderr.txt"
+  },
+  {
+    "scope": "profile",
+    "phase": "lock-only",
+    "command": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/pnpm",
+      "install",
+      "--offline",
+      "--ignore-scripts",
+      "--store-dir",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1/pnpm-store",
+      "--config.manage-package-manager-versions=false",
+      "--config.auto-install-peers=false",
+      "--config.node-linker=isolated",
+      "--config.enable-global-virtual-store=false",
+      "--lockfile-only"
+    ],
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1/installation-view/profiles/desktop",
+    "exit_code": 0,
+    "duration_seconds": 0.1933410830000002,
+    "lock_before": null,
+    "lock_after": "29509ce3f3d6d790cb030efc86feb9e0940b96068b692cdeb014404d6d36565f",
+    "stdout_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/profile-lock-only.stdout.txt",
+    "stderr_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/profile-lock-only.stderr.txt"
+  },
+  {
+    "scope": "profile",
+    "phase": "frozen-links",
+    "command": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/pnpm",
+      "install",
+      "--offline",
+      "--ignore-scripts",
+      "--store-dir",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1/pnpm-store",
+      "--config.manage-package-manager-versions=false",
+      "--config.auto-install-peers=false",
+      "--config.node-linker=isolated",
+      "--config.enable-global-virtual-store=false",
+      "--frozen-lockfile"
+    ],
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1/installation-view/profiles/desktop",
+    "exit_code": 0,
+    "duration_seconds": 0.2154894169999999,
+    "lock_before": "29509ce3f3d6d790cb030efc86feb9e0940b96068b692cdeb014404d6d36565f",
+    "lock_after": "29509ce3f3d6d790cb030efc86feb9e0940b96068b692cdeb014404d6d36565f",
+    "stdout_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/profile-frozen-links.stdout.txt",
+    "stderr_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/profile-frozen-links.stderr.txt"
+  }
+]

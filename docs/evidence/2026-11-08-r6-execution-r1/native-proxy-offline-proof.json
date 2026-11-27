@@ -1,0 +1,30 @@
+{
+  "status": "FIXED_VENDOR_PROXY_ROUTE_OFFLINE_PASS",
+  "release": "a470a67ac44e78513ef95b1cbc7f11c7bd60163888b24a918333ed77ef3ae516",
+  "results": [
+    {
+      "name": "before",
+      "overlay": {
+        "no_proxy": "localhost,127.0.0.1,::1,.local",
+        "http_proxy": "http://127.0.0.1:9",
+        "https_proxy": "http://127.0.0.1:9"
+      },
+      "providerProxied": true,
+      "unrelatedProxied": true
+    },
+    {
+      "name": "after",
+      "overlay": {
+        "no_proxy": "localhost,127.0.0.1,::1,api.deepseek.com,.local",
+        "http_proxy": "http://127.0.0.1:9",
+        "https_proxy": "http://127.0.0.1:9"
+      },
+      "providerProxied": false,
+      "unrelatedProxied": true
+    }
+  ],
+  "networkRequests": 0,
+  "credentialsRead": 0,
+  "AppStarted": false,
+  "originalRunStillUnknown": true
+}

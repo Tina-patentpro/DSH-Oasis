@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { PATENT_DISCLOSURE_CLAIMS_ID, PATENT_DISCLOSURE_CLAIMS_VERSION } from './local-skill-suites.js'
 
 const sha=z.string().regex(/^[a-f0-9]{64}$/)
 const label=z.string().trim().min(1).max(256)
@@ -11,12 +12,18 @@ const legacyCandidateSchema=z.object({version:z.literal('v340-native-candidate-1
   confirmationSHA256:sha,confirmedRevision:z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
   budget:z.object({maxCalls:z.literal(1),usedCalls:z.literal(1)}).strict(),admissionSHA256:sha,
 }).strict()
+const businessCandidateFields = {
+  nodeId: z.literal('Flow-2-6'),
+  workspaceRoot: z.string().min(1).max(4096).refine(v => !v.includes('\0')), contextSHA256: sha,
+  businessManifestSHA256: sha, businessResourceSHA256: sha,
+}
 export const v340NativeCandidateSchema=z.discriminatedUnion('version',[
   legacyCandidateSchema,
   legacyCandidateSchema.extend({version:z.literal('v340-native-candidate-2'),nodeId:label,
     workspaceRoot:z.string().min(1).max(4096).refine(v=>!v.includes('\0')),contextSHA256:sha}).strict(),
-  legacyCandidateSchema.extend({version:z.literal('v340-native-candidate-3'),nodeId:z.literal('Flow-2-6'),
-    workspaceRoot:z.string().min(1).max(4096).refine(v=>!v.includes('\0')),contextSHA256:sha,
-    businessSkillId:z.literal('m06-claims-draft'),businessSkillVersion:z.enum(['0.1.2','0.1.3']),
-    businessManifestSHA256:sha,businessResourceSHA256:sha}).strict(),
+  legacyCandidateSchema.extend({ ...businessCandidateFields, version: z.literal('v340-native-candidate-3'),
+    businessSkillId: z.literal('m06-claims-draft'), businessSkillVersion: z.enum(['0.1.2', '0.1.3']) }).strict(),
+  legacyCandidateSchema.extend({ ...businessCandidateFields, version: z.literal('v340-native-candidate-4'),
+    businessSkillId: z.literal(PATENT_DISCLOSURE_CLAIMS_ID),
+    businessSkillVersion: z.literal(PATENT_DISCLOSURE_CLAIMS_VERSION) }).strict(),
 ])

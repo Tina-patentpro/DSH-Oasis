@@ -1,0 +1,397 @@
+{
+  "at": "2026-11-05T12:13:48.621313+08:00",
+  "status": "SOURCE_IDENTITY_FIXED; FULL_TASK0_PARTIAL",
+  "scope": "Task0 read-only source fixation, no implementation",
+  "dify": {
+    "observation_type": "Safe metadata transcribed from authenticated browser observed GET responses; not a raw HTTP archive",
+    "origin": "https://177.3.43.153",
+    "app_id": "b1af2fc9-817e-5247-aeed-dd16abad8337",
+    "app_name": "Flow-2-6-权利要求书生成-Fast-1.2.1",
+    "published": {
+      "workflow_id": "57bfe3ab-ff48-410b-b140-c20c1da828a9",
+      "version": "2026-11-04 13:48:13.209846",
+      "version_number": 3,
+      "created_at": 1793800093,
+      "updated_at": 1793800093,
+      "graph_semantic_sha256": "2be2019b05560cc3a7d0be3b296c0175b83fb4f49a0699326e57c53495631b75"
+    },
+    "draft": {
+      "workflow_id": "bf01ec43-8701-4f60-bb96-204495ccdbc4",
+      "version": "draft",
+      "created_at": 1793496621,
+      "updated_at": 1793800093,
+      "draft_hash": "56ebeca84d4cb1f3618cd8de7f822902e7f3050ec32a10e78d6c494482aa7cfe",
+      "graph_semantic_sha256": "2be2019b05560cc3a7d0be3b296c0175b83fb4f49a0699326e57c53495631b75"
+    },
+    "existing_run": {
+      "run_id": "5e374a6f-5a89-4472-aa82-dfc768b9b6c4",
+      "workflow_id": "57bfe3ab-ff48-410b-b140-c20c1da828a9",
+      "version": "2026-11-04 13:48:13.209846",
+      "graph_semantic_sha256": "2be2019b05560cc3a7d0be3b296c0175b83fb4f49a0699326e57c53495631b75",
+      "executed_nodes": 36,
+      "executed_llm_nodes": 9
+    },
+    "graph_node_count": 38,
+    "defined_llm_count": 10,
+    "code_nodes_match_existing_run_observation": 14,
+    "workflow_features_sha256": "ce5128f8b1fabb5a946d2451c74a27a4c8a49cff24ee8f52240d5dce078fed85",
+    "empty_variable_arrays": [
+      "environment_variables",
+      "conversation_variables",
+      "rag_pipeline_variables"
+    ],
+    "editor_request_audit": {
+      "has_more": false,
+      "truncated": false,
+      "non_get_requests": [],
+      "scope": "captured editor observation interval only"
+    },
+    "final_ui": "logs page, existing Nov5 run visible; backend edit dialog canceled, no save",
+    "normal_export_request": "GET /console/api/apps/b1af2fc9-817e-5247-aeed-dd16abad8337/export?include_secret=false",
+    "export_response_bytes": 116333,
+    "export_response_sha256_matches_native_download": true,
+    "raw_dsl": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/current-saved-app.yaml",
+      "sha256": "3a249d33f9d3bb8e359c191134732d8f836e3ae506df8cc395151d1fbd91bd66"
+    },
+    "package_sha256": "da029add82ac188ea918f71b42bc99f62f112051be10238494b4132a5175c030",
+    "code_nodes": [
+      {
+        "node_id": "1769151800001",
+        "title": "2-6-8权利要求依赖树生成",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769151800001.py",
+        "sha256": "7ddbcc9c94a9602fecdd72a80e5b7d7c56cebddeaa815234f4a59e3bc776f901",
+        "bytes": 6974
+      },
+      {
+        "node_id": "1769301001001",
+        "title": "2-6-1S核心独立权利要求净化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001001.py",
+        "sha256": "b2e6445abd91960181abd0246df52eaf0b9198b6e94098df1a67c69549a42212",
+        "bytes": 1959
+      },
+      {
+        "node_id": "1769301001002",
+        "title": "2-6-2S核心独立权利要求完善净化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001002.py",
+        "sha256": "b2e6445abd91960181abd0246df52eaf0b9198b6e94098df1a67c69549a42212",
+        "bytes": 1959
+      },
+      {
+        "node_id": "1769301001003",
+        "title": "2-6-3S并列独立权利要求净化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001003.py",
+        "sha256": "b2e6445abd91960181abd0246df52eaf0b9198b6e94098df1a67c69549a42212",
+        "bytes": 1959
+      },
+      {
+        "node_id": "1769301001004",
+        "title": "2-6-4S从属权利要求净化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001004.py",
+        "sha256": "b2e6445abd91960181abd0246df52eaf0b9198b6e94098df1a67c69549a42212",
+        "bytes": 1959
+      },
+      {
+        "node_id": "1769301001005",
+        "title": "2-6-5S整合权利要求书净化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001005.py",
+        "sha256": "b2e6445abd91960181abd0246df52eaf0b9198b6e94098df1a67c69549a42212",
+        "bytes": 1959
+      },
+      {
+        "node_id": "1769301001006",
+        "title": "2-6-6.1S功能性和效果性描述净化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001006.py",
+        "sha256": "b2e6445abd91960181abd0246df52eaf0b9198b6e94098df1a67c69549a42212",
+        "bytes": 1959
+      },
+      {
+        "node_id": "1769301001007",
+        "title": "2-6-6.2S权利要求书反思净化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001007.py",
+        "sha256": "82a0ebf4333a1ead4c5f7e7945362b43a0fefd67c883901cd7e77fec3e0307a7",
+        "bytes": 6831
+      },
+      {
+        "node_id": "1769301001008",
+        "title": "2-6-7S权利要求书终版净化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001008.py",
+        "sha256": "b2e6445abd91960181abd0246df52eaf0b9198b6e94098df1a67c69549a42212",
+        "bytes": 1959
+      },
+      {
+        "node_id": "1769301001009",
+        "title": "2-6-8S依赖树净化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001009.py",
+        "sha256": "b2e6445abd91960181abd0246df52eaf0b9198b6e94098df1a67c69549a42212",
+        "bytes": 1959
+      },
+      {
+        "node_id": "1769301001100",
+        "title": "2-6-7.5S权利要求正文规范化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001100.py",
+        "sha256": "d3c619d3e9c2967723328812369ff59e3b92e0701e2d6176697f9bd4a797671b",
+        "bytes": 4828
+      },
+      {
+        "node_id": "1769301001101",
+        "title": "2-6-10最终显示格式化",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001101.py",
+        "sha256": "63f5de193b62f3211117e3722e97a2fbd451e7f26648b42b43272fb24a13257d",
+        "bytes": 3477
+      },
+      {
+        "node_id": "1770000100003",
+        "title": "2-6-5技术交底书解析与合并",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1770000100003.py",
+        "sha256": "bea44b28b1c7f16fe1a85d5ea34d16cc82a57837ba8acf17b4fb623fdfc801fe",
+        "bytes": 2216
+      },
+      {
+        "node_id": "1770000100004",
+        "title": "2-6-3技术交底书标题抽取",
+        "language": "python3",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1770000100004.py",
+        "sha256": "5a567e82f36c03556f3a4b63d8f2200869c40fd1eccf5df70378bcec129817fd",
+        "bytes": 3346
+      }
+    ],
+    "llm_node_files": [
+      {
+        "node_id": "1728183992412",
+        "title": "2-6-7权利要求书终版生成",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/llm-nodes/1728183992412.json",
+        "sha256": "a061f902bdfcfe110cb4677d4d25f1b937cafb245362b5938b317e6dfd1ee2c4"
+      },
+      {
+        "node_id": "1729852685877",
+        "title": "2-6-1核心独立权利要求",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/llm-nodes/1729852685877.json",
+        "sha256": "26b775e8982dd730b037f318cfcccc9e2e7cf5980c676b7192d3991aff04c88d"
+      },
+      {
+        "node_id": "1729852722624",
+        "title": "2-6-4从属权利要求",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/llm-nodes/1729852722624.json",
+        "sha256": "0aabfe848a6fe3d2feac1e1751d7c26c7d733ead85f98243be42436a46ccf6f5"
+      },
+      {
+        "node_id": "1730359104417",
+        "title": "2-6-5整合权利要求书",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/llm-nodes/1730359104417.json",
+        "sha256": "d36e49530d9cbc8f945ec809e3f34d606d29e0c5dcd55117214299a7d9174abe"
+      },
+      {
+        "node_id": "1733540678041",
+        "title": "2-6-6.2权利要求书的反思",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/llm-nodes/1733540678041.json",
+        "sha256": "ccea5480b83c94b1994db16829f8f3c5274c46b07773a45bb2b1e3e091c379f7"
+      },
+      {
+        "node_id": "1733563019836",
+        "title": "2-6-6.1功能性和效果性描述",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/llm-nodes/1733563019836.json",
+        "sha256": "c9fc377f9d4b57a5419fa641c49907b31e5e31925aad7c14868fac486d5cf02a"
+      },
+      {
+        "node_id": "1741410582291",
+        "title": "2-6-2核心独立权利要求的完善",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/llm-nodes/1741410582291.json",
+        "sha256": "1c8aca457acd2cf0fd4a4c56af16fc4ab935a4a4f4f2648cfc896240e76da3de"
+      },
+      {
+        "node_id": "1741428101401",
+        "title": "2-6-3并列独立权利要求",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/llm-nodes/1741428101401.json",
+        "sha256": "07d9de2a28f0acb54f42506654f92617d16f6b484ef338a8dac1f3977beb9d3c"
+      },
+      {
+        "node_id": "1764588108416",
+        "title": "2-6-Outline",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/llm-nodes/1764588108416.json",
+        "sha256": "6a37bf417651b89da612851a8a96a5c5dc6127dc8d4a9ffb7c00d2d46380d9fd"
+      },
+      {
+        "node_id": "1770000100005",
+        "title": "2-6-4技术交底书语义抽取",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/llm-nodes/1770000100005.json",
+        "sha256": "bc2ccffda7651b397c096c3325ee695b21dae46a3a2dfa848bbea4e7a0b9935d"
+      }
+    ],
+    "canonical_definition": "nodes sorted id; data excludes selected/_runningStatus; edges select source,target,sourceHandle,targetHandle sorted canonical JSON; integral floats normalized",
+    "credential_scan": {
+      "include_secret": false,
+      "literal_credential_patterns_found": 0,
+      "six_http_authorization_values": "template references, not resolved secrets",
+      "environment_declarations": 0,
+      "limitation": "bounded pattern scan and exported configuration; no credential resolution or runtime environment proof"
+    }
+  },
+  "service39": {
+    "canonical_safe_detail_sha256": "472f7981e4218d6a04b8dcb1f058b51fb678fef3a552dfef3719598436a75872",
+    "safe_binding_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/service39-safe-binding.json",
+    "id": 39,
+    "updated_at": "2026-11-05T10:22:48",
+    "input_count": 8,
+    "output_schema": [
+      {
+        "type": "paragraph",
+        "cn_name": "生成内容",
+        "content": "",
+        "en_name": "output"
+      }
+    ]
+  },
+  "backend": {
+    "source_root": "/www/wwwroot/lzpy",
+    "git_commit": null,
+    "reason": "No .git in deployed source root",
+    "files": [
+      {
+        "relative_path": "app/api/api_v1.py",
+        "local_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/backend-source/app/api/api_v1.py",
+        "remote_path": "/www/wwwroot/lzpy/app/api/api_v1.py",
+        "bytes": 498,
+        "sha256": "643218f31d01b11e4841c7c145e295a07932e78cd949b9ce4bd13d178c6ba6e5",
+        "mode": "0o400",
+        "oct17_snapshot_match": true
+      },
+      {
+        "relative_path": "app/api/v1/__init__.py",
+        "local_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/backend-source/app/api/v1/__init__.py",
+        "remote_path": "/www/wwwroot/lzpy/app/api/v1/__init__.py",
+        "bytes": 544,
+        "sha256": "a6d0d75c351c39cdd4422d043b44fcf6600f69ad685b17c5629a2ed454388fe7",
+        "mode": "0o400",
+        "oct17_snapshot_match": true
+      },
+      {
+        "relative_path": "app/api/v1/apiconfig.py",
+        "local_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/backend-source/app/api/v1/apiconfig.py",
+        "remote_path": "/www/wwwroot/lzpy/app/api/v1/apiconfig.py",
+        "bytes": 20746,
+        "sha256": "34bb91b8f6b821f36d177ddd9f33fb6c533347949b27371a7ca39c983ec831b2",
+        "mode": "0o400",
+        "oct17_snapshot_match": true
+      },
+      {
+        "relative_path": "app/schemas/api.py",
+        "local_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/backend-source/app/schemas/api.py",
+        "remote_path": "/www/wwwroot/lzpy/app/schemas/api.py",
+        "bytes": 2989,
+        "sha256": "22408b9b73681cd3c57881d72659d87a4702ca37eb305657cfda46879452a34f",
+        "mode": "0o400",
+        "oct17_snapshot_match": true
+      },
+      {
+        "relative_path": "app/services/apiconfig_services.py",
+        "local_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/backend-source/app/services/apiconfig_services.py",
+        "remote_path": "/www/wwwroot/lzpy/app/services/apiconfig_services.py",
+        "bytes": 4256,
+        "sha256": "2a3ce49be3c67e5eed94280abb352b193b1f93dbd298a52298d184cad9931d5b",
+        "mode": "0o400",
+        "oct17_snapshot_match": true
+      },
+      {
+        "relative_path": "app/services/workflow_service.py",
+        "local_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/backend-source/app/services/workflow_service.py",
+        "remote_path": "/www/wwwroot/lzpy/app/services/workflow_service.py",
+        "bytes": 17448,
+        "sha256": "3afbe8df5543c5b1d112bd3309e80351e284fc1d294b6a8fbc00f33f8ae428a3",
+        "mode": "0o400",
+        "oct17_snapshot_match": true
+      },
+      {
+        "relative_path": "main.py",
+        "local_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/backend-source/main.py",
+        "remote_path": "/www/wwwroot/lzpy/main.py",
+        "bytes": 1990,
+        "sha256": "2d85b9fd7aae0043f4312bb4be695e1a64b3f903e806024d3a351c4289628c79",
+        "mode": "0o400",
+        "oct17_snapshot_match": true
+      }
+    ],
+    "route_chain": "lzhxpy.oasisintwrite.com -> nginx active include/proxy -> 127.0.0.1:8000 -> python PID2206 cwd /www/wwwroot/lzpy -> main.py /api -> app.api.api_v1 -> v1.api_router -> apiconfig.router /apicategories",
+    "entry_functions": {
+      "create_category": "app/api/v1/apiconfig.py:85-169",
+      "run_dify_workflow": "app/services/workflow_service.py:7-62"
+    },
+    "runtime": "Python 3.10.20",
+    "evidence_scope": "selected files + process and routing observation; not whole deploy, loaded-memory attestation or approved writable work copy",
+    "development_copy": null,
+    "backend_test_absolute_path": null
+  },
+  "proposed_contract_freeze": {
+    "status": "PROPOSED / NOT IMPLEMENTED / NOT TECHNICALLY ACCEPTED",
+    "parent_plan": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-05-fast39-minimal-repair-plan.md",
+    "parent_plan_sha256": "8459d4af1a0bb9c7e1e602f4dcfe86a181b6b6624cd5a91a1766ecec31701f57",
+    "verbatim_excerpt": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/proposed-contract-plan-excerpt.md",
+    "excerpt_sha256": "7906252989ad6cc50b2edbfadb0e310ba89ce8c3d4ac358dd83a27f91784eb8a",
+    "versions": [
+      "flow26-source-trace-1",
+      "flow26-quality-1",
+      "flow26-fast-result-1"
+    ],
+    "external_output_count_stays": 6
+  },
+  "rule_adoption": {
+    "status": "UNRESOLVED",
+    "source_lookups": [
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/AGENTS.md",
+        "sha256": "ba51fd2e3bc9b6e3ffc61b80cdb67665c730316042b96de8858b15111411eb94",
+        "scope": "read-only source routing; no design mutation"
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/README.md",
+        "sha256": "51f176fdab90014f59a9cb07f9124c98bdc4aa18720d1c5e1d38d4f61b2f5ef8",
+        "scope": "registry revision481, authority table, Flow2-6 current row and exact app-name/id search; no archive traversal"
+      }
+    ],
+    "local_design_current_candidate": "undesignated",
+    "current_row_state": "legacy_assets_present / gap_confirmed / backlog / STATIC_ONLY",
+    "instance_description": "Tokyo copy source provenance only; not IC-DESIGN/SKILL/RULES adoption receipt",
+    "app_specific_adoption_mapping_found_in_lookup": false,
+    "archive_scanned": false,
+    "bounded_followup": {
+      "at": "2026-11-05T12:16:25.046654+08:00",
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/README.md",
+      "previous_sha256": "51f176fdab90014f59a9cb07f9124c98bdc4aa18720d1c5e1d38d4f61b2f5ef8",
+      "current_sha256": "c0f74fcca76ced2e57436ff325904ba42087a938a39d4eda117b8a41f3485d62",
+      "current_revision": 482,
+      "new_event": "REG-TXN-coord-bm1-roles-20261105-start",
+      "declared_scope": "BM1-R1 documentation and own registration only",
+      "target_rows": [
+        "| 2-6 | `Flow-2-6-权利要求初稿` | 1-5 | `claims_<YYYYMMDDHHMMSS>_<run_uid8>.md` |",
+        "| 2-6 | 5 | 0 | 10157 | `legacy_assets_present` | `undesignated` | `gap_confirmed` | `backlog` | `STATIC_ONLY` | `REG-20260829094157-README-748f0d16` | 依据 V3.4.0 重构，创建新版本化候选并完成静态审计 |"
+      ],
+      "app_specific_tokens_present": false,
+      "conclusion": "Observed Flow2-6 rows unchanged and app adoption still absent; no design mutation or transaction in this task",
+      "limitation": "Whole before README bytes not separately archived; event declaration and scoped re-read do not prove full-file unrelated-diff classification"
+    }
+  },
+  "remaining_task0": [
+    "Bind approved writable backend working copy and exact offline test path before code changes; historical and Task0 snapshots stay immutable",
+    "Provide exact IC-DESIGN/SKILL/RULES producer versions/hash and node adoption mapping; current runtime graph is fixed but normative adoption is not established",
+    "Review and accept the proposed versioned result contract in its bounded scope before implementation; no service release or DSH dispatch gate opened"
+  ],
+  "new_generation_calls": 0,
+  "paid_calls": 0,
+  "code_changes": 0,
+  "deployments": 0,
+  "git_commits": 0,
+  "git_pushes": 0
+}

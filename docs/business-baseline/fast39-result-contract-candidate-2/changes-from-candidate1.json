@@ -1,0 +1,49 @@
+{
+  "version": "C2-R1",
+  "parent_sha256": "24d09287321b85944d20e4223c3df535c22a58ba4b47a15f400b34c84c616063",
+  "review": "P0 author self-review, not independent",
+  "items": [
+    {
+      "id": "F01",
+      "disposition": "DOCUMENT_REVISED_RUNTIME_UNVERIFIED",
+      "change": "packet2 + six exact empty; mixed/direct/legacy excluded",
+      "evidence": "CONTRACT.md §1; eligibility_request"
+    },
+    {
+      "id": "F02",
+      "disposition": "DOCUMENT_REVISED_RUNTIME_UNVERIFIED",
+      "change": "execution/correlation/content matrix; original enqueue fact preserved",
+      "evidence": "CONTRACT.md §3; transition-table.json"
+    },
+    {
+      "id": "F03",
+      "disposition": "DOCUMENT_REVISED_RUNTIME_UNVERIFIED",
+      "change": "logical ABI, immutable anchor, roles, original warnings, normalization/duplicates policy",
+      "evidence": "CONTRACT.md §2; code-abi.json"
+    },
+    {
+      "id": "F04",
+      "disposition": "DOCUMENT_REVISED_RUNTIME_UNVERIFIED",
+      "change": "retain original R2 three sections and literal missing lines",
+      "evidence": "CONTRACT.md §4; renderer probes"
+    },
+    {
+      "id": "F05",
+      "disposition": "DOCUMENT_REVISED_RUNTIME_UNVERIFIED",
+      "change": "explicit new limits; execution owner; full record headroom; no false raw retention",
+      "evidence": "CONTRACT.md §5; capacity-policy.json"
+    },
+    {
+      "id": "F06",
+      "disposition": "DOCUMENT_REVISED_RUNTIME_UNVERIFIED",
+      "change": "zero-supported claims => content error without normal artifact",
+      "evidence": "CONTRACT.md §6; error schema"
+    }
+  ],
+  "preserved": [
+    "candidate1 full original bytes/modes",
+    "P0 review and all prior FAIL/UNKNOWN",
+    "current business sources/Skills/DSL/registries",
+    "all versioned and preexisting untracked user changes"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "command": "python3 - (inline final material/history/link/identity check)",
+  "initialExitCode": 1,
+  "initialToolChunk": "0a8a4c",
+  "initialReason": "Link validator assumed URI schemes contain only letters; oiw-source is a portable locator, not a relative file. No reviewed content defect found.",
+  "correction": "Use URI scheme pattern [a-z][a-z0-9+.-]*; preserve candidate, inventory, ZIP and projected content unchanged.",
+  "finalExitCode": 0,
+  "execution": "actual inline tool command; no product tests or runtime invocation"
+}

@@ -1,0 +1,391 @@
+{
+  "scope": "M06 raw identity and exact textual preservation; semantic decisions are in m06-content-review.md",
+  "checks": {
+    "original_hash_matches_receipt": true,
+    "revision_hash_matches_receipt": true,
+    "snapshot_hash_matches_receipt": true,
+    "snapshot_artifact_matches_revision": true,
+    "claims_unchanged_from_original": true,
+    "tables_unchanged_from_original": true,
+    "original_core_preserved_as_suffix": true,
+    "all_original_warnings_retained": true,
+    "all_warnings_still_open": true,
+    "all_7_inputs_preserved": true,
+    "all_3_input_files_match": true,
+    "all_30_producer_members_match": true,
+    "all_8_payloads_match": true,
+    "bundle_matches_recorded_identity": true,
+    "qualifications_remain_operator_only": true
+  },
+  "verdict": "PASS_IDENTITY_AND_PRESERVATION",
+  "subject": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/generated-v1.md",
+      "sha256": "2b9a1183e04c16a9737a181f10ed30774a8f9494d509d0273f493f1d489ab9a1",
+      "bytes": 57069
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/claims_20261031132202_9a439835.md",
+      "sha256": "e0fb29d388c9bae19be253e7bd048c31ed8ba40987adf3cdddc8d1bd354ff815",
+      "bytes": 69523
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/claims_20261031132202_9a439835.oasis.json",
+      "sha256": "8c6c8a3006f79f1a769bda75abe722fa4c41d2014f501ee510e3a259bf3fe89e",
+      "bytes": 1048
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input-r2.json",
+      "sha256": "a2ae924ef88cab1514144e04b23d978d8612b421a0e8ade274ba5490cebaac7d",
+      "bytes": 7450
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-candidate-0.1.3.json",
+      "sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+      "bytes": 179486
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/MANIFEST.sha256.json",
+      "sha256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9",
+      "bytes": 7543
+    }
+  ],
+  "input_files": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-f-interruption-20261029/next-independent-public-calibration-r2/public-disclosure.md",
+      "sha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+      "bytes": 406,
+      "input_id": "disclosure_file",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-f-interruption-20261029/next-independent-public-calibration-r2/public-drawing-description.md",
+      "sha256": "ab849c6061d733042d52bcd392a622ebea896b1310d8055b13b85dbb23453805",
+      "bytes": 229,
+      "input_id": "drawings_file",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-f-interruption-20261029/next-independent-public-calibration-r2/public-requirements.md",
+      "sha256": "513c5e1910dabfb610f5eac9ccef02b90a07a66872f94add48bb4127ebb3daa2",
+      "bytes": 193,
+      "input_id": "claim_requirements_file",
+      "matches": true
+    }
+  ],
+  "input_preservation": [
+    {
+      "input_id": "disclosure_file",
+      "matches_original_text": true,
+      "matches_hash": true
+    },
+    {
+      "input_id": "disclosure_text",
+      "matches_original_text": true,
+      "matches_hash": true
+    },
+    {
+      "input_id": "drawings_file",
+      "matches_original_text": true,
+      "matches_hash": true
+    },
+    {
+      "input_id": "drawings_text",
+      "matches_original_text": true,
+      "matches_hash": true
+    },
+    {
+      "input_id": "claim_requirements_file",
+      "matches_original_text": true,
+      "matches_hash": true
+    },
+    {
+      "input_id": "claim_requirements_text",
+      "matches_original_text": true,
+      "matches_hash": true
+    },
+    {
+      "input_id": "user_input",
+      "matches_original_text": true,
+      "matches_hash": true
+    }
+  ],
+  "producer_members": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/actual-execution-record.json",
+      "sha256": "4fd44ca4f645944dca544d92bc1fd09c80104443e88b087c003e6328b4a88c55",
+      "bytes": 15028,
+      "role": "metadata",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/SKILL.md",
+      "sha256": "ad3d7c00243d70d2368f281c6834a5fb6381558df8989e33bdae3a42f3aa75b5",
+      "bytes": 49106,
+      "role": "payload",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/THIRD-PARTY-NOTICE.md",
+      "sha256": "4006dd520582d4c70b4ed616083265ad0d1c10811807539b1baac7d75ad98764",
+      "bytes": 6972,
+      "role": "payload",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/01-official-basis.md",
+      "sha256": "f68c7976880494d1ce94c5017af72c07fedc006b64eab441671eb29919759319",
+      "bytes": 19703,
+      "role": "payload",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/02-n01-feature-and-independent-claim.md",
+      "sha256": "c2ca0d0e43b3987b2f1919988757f511b4ed2fd41e9a049f75d77a3506c012ea",
+      "bytes": 14244,
+      "role": "payload",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/03-n02-claim-graph-and-fallback.md",
+      "sha256": "57f8764d627d19a0c5248bae14952331df27e034a23873df5da7cdf3248d8919",
+      "bytes": 11334,
+      "role": "payload",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/04-n03-support-terms-parameters.md",
+      "sha256": "5ff11fbab081577d7bc96b1ce267d010eb54f493e95ecb90a6290ffee3e98040",
+      "bytes": 17527,
+      "role": "payload",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/05-source-and-output-contract.md",
+      "sha256": "eb3efa3fb2e28415ee8ae49859e83909c1eb89b94648062b226dd3590de58fd9",
+      "bytes": 28729,
+      "role": "payload",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/output-schema.json",
+      "sha256": "8eeb5986504e353293ded5ed582cd516b2b731f0ba2eeb7be664d226eb3c9975",
+      "bytes": 13594,
+      "role": "payload",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/candidate-manifest.json",
+      "sha256": "d8cacd96d294754b70becd375641c2cab67781bef0ff8078010682790122f381",
+      "bytes": 9721,
+      "role": "metadata",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/authoring/derive_metadata_14h.py",
+      "sha256": "9465f0349b08656dc8d425a9c8ced7a0c6e9fd24b3ce1965372b58fded50b6e5",
+      "bytes": 40250,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/01/check_m06_013.py",
+      "sha256": "596c0267ffa99314a7e6ca54670dd2afff078f9b335f55eea6d5fd2a03bde4a4",
+      "bytes": 18589,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/01/command.txt",
+      "sha256": "50240708a4f62130d610486998ad4318f0e377d6295f04f4ab176cd71cda2ec9",
+      "bytes": 303,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/01/exit-code.txt",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/01/result.json",
+      "sha256": "a80fe4981b5b5def88c7da16c58ecd0bfc89a315645d924e2969c743edb00ff0",
+      "bytes": 4833,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/01/stdout.txt",
+      "sha256": "7ec6773128be4f88addead382aaf13651e896ade541aa84fcf58f224b5954343",
+      "bytes": 2089,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/02/check_m06_013.py",
+      "sha256": "d34c19924505051d94e59505a8c185ac2bb04200ba1aed272b6ca3dbd826806b",
+      "bytes": 19650,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/02/command.txt",
+      "sha256": "0b10b561e2eed1bf0fd0b685e0d44b5718bcfc5c4349e4f0f70d4bf771de6dc0",
+      "bytes": 313,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/02/exit-code.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/02/result.json",
+      "sha256": "c851a9f60991f458439f33bff1650d8e9f284f149e12fc27aedff32da3ced61f",
+      "bytes": 4757,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/02/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/check-runs/02/stdout.txt",
+      "sha256": "f2c46d2ce9c2a37872df081ecde548734599a816e835ef2f92bf1d244bd2ac19",
+      "bytes": 3405,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/evidence/checkers/14h_selfcheck.py",
+      "sha256": "d34c19924505051d94e59505a8c185ac2bb04200ba1aed272b6ca3dbd826806b",
+      "bytes": 19650,
+      "role": "evidence",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/remaining-items.json",
+      "sha256": "7154c2a4db120eea5607bb2714a8edc59bcf3a7d78c091c7937acca36faa7e3a",
+      "bytes": 13370,
+      "role": "metadata",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/revision-diff.json",
+      "sha256": "1404fef5663874864e1ce8c8d2b445f606c65fb48798309bf2836f346e6a7197",
+      "bytes": 18868,
+      "role": "metadata",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/rule-adoption-map.json",
+      "sha256": "29bcd2aa3c23970a860694ce10671f9e69c394fcc8820771e1dc21775e147b9b",
+      "bytes": 18455,
+      "role": "metadata",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/self-check-record.json",
+      "sha256": "d6047993c80cb72613b31c96ad11a922f093aea3375a15441e0e1ce7b077fc3b",
+      "bytes": 8958,
+      "role": "metadata",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/source-corrections.json",
+      "sha256": "b2e675d0594a8837397c3d51be1ac6c87f1a98f0e97747299b3e0ea502b5d360",
+      "bytes": 15520,
+      "role": "metadata",
+      "matches": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/source-use-map.json",
+      "sha256": "19d0a33d8f41efc6ce1281ac26911a5acfb99c4e3d8a49bc074a9796959308a3",
+      "bytes": 26201,
+      "role": "metadata",
+      "matches": true
+    }
+  ],
+  "payloads": [
+    {
+      "path": "SKILL.md",
+      "matches": true
+    },
+    {
+      "path": "THIRD-PARTY-NOTICE.md",
+      "matches": true
+    },
+    {
+      "path": "references/01-official-basis.md",
+      "matches": true
+    },
+    {
+      "path": "references/02-n01-feature-and-independent-claim.md",
+      "matches": true
+    },
+    {
+      "path": "references/03-n02-claim-graph-and-fallback.md",
+      "matches": true
+    },
+    {
+      "path": "references/04-n03-support-terms-parameters.md",
+      "matches": true
+    },
+    {
+      "path": "references/05-source-and-output-contract.md",
+      "matches": true
+    },
+    {
+      "path": "references/output-schema.json",
+      "matches": true
+    }
+  ],
+  "warnings_original": 10,
+  "warnings_revision": 12,
+  "warning_ids": [
+    "host-Flow-2-6-m06-limited-9a439835-3122-46c3-ad6c-e714ee0df0f8",
+    "host-Flow-2-6-m06-limited-d4fda3b7-6cf4-4191-b727-2f36827e8276",
+    "host-Flow-2-6-manual-9a439835-3122-46c3-ad6c-e714ee0df0f8",
+    "host-Flow-2-6-missing-upstream_md_file",
+    "host-Flow-2-6-professional-review",
+    "m06-drawings-text-only",
+    "m06-experiment-evidence-missing",
+    "m06-functional-term-boundary",
+    "m06-lock-implementation-missing",
+    "m06-no-old-draft",
+    "m06-no-prior-art",
+    "m06-upstream-missing"
+  ],
+  "claim_block_provenance": {
+    "source_input_id": "disclosure_file",
+    "source_locator": "底座上设有沿同一方向延伸的导向槽，滑块与导向槽配合并可沿槽移动。底座上设有锁止件，锁止件能够在允许滑块移动的状态与限制滑块移动的状态之间改变。",
+    "source_hash": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+    "trust_status": "reasoned_inference"
+  },
+  "candidate_status": {
+    "skillId": "m06-claims-draft",
+    "skillVersion": "0.1.3",
+    "frontmatterVersion": "0.1.3-candidate",
+    "candidateOnly": true,
+    "producerManifestSHA256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9"
+  },
+  "professional_signature": null,
+  "user_acceptance": null,
+  "release": false
+}

@@ -1,0 +1,36 @@
+✔ ordinary Host exposes no candidate preparation or generation path (34.955125ms)
+✖ controlled Host goes through registered Fetch confirmation and installed native SDK exactly once (60.581917ms)
+✔ the explicit package subpath loads the controlled Host while the ordinary export stays distinct (0.425792ms)
+✔ controlled entry refuses missing native context before routes or credentials (2.568125ms)
+✔ controlled entry never falls back to legacy fixture mode even at a non-admitted fixture path (2.361416ms)
+✔ controlled Host rejects route drift and incomplete confirmation before persistence or SDK dispatch (11.436875ms)
+✔ controlled preparation rejects stale revision, API source and unsupported node without a call (8.501583ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 276.031084
+
+✖ failing tests:
+
+test at test/m06-controlled-host.test.mjs:23:1
+✖ controlled Host goes through registered Fetch confirmation and installed native SDK exactly once (60.581917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '7d998e25aa7dc05470e4bf16d7f58e9dd0165d226ba32a30a695b1b39e191d00'
+  - '169bdbe8741986a7a4408506f732f73f293655014fc3d8f4a622b34012574558'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/test/m06-controlled-host.test.mjs:52:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '7d998e25aa7dc05470e4bf16d7f58e9dd0165d226ba32a30a695b1b39e191d00',
+    expected: '169bdbe8741986a7a4408506f732f73f293655014fc3d8f4a622b34012574558',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

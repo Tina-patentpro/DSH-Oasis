@@ -1,0 +1,10 @@
+{
+  "command": [
+    "tools/bin/node",
+    "--test",
+    "packages/oasis-professional-service/test/workbench-rpc.test.mjs",
+    "packages/oasis-professional-service/test/workbench-connection.test.mjs"
+  ],
+  "exit_code": 0,
+  "scope": "affected common RPC and Fetch contract regression; no real service calls"
+}

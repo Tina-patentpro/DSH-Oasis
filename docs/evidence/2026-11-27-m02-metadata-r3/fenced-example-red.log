@@ -1,0 +1,48 @@
+✔ metadata derives 0 pairs from actual arrays (0.580666ms)
+✔ metadata derives 1 pairs from actual arrays (0.108292ms)
+✔ metadata derives 2 pairs from actual arrays (0.058542ms)
+✔ metadata missing section is inserted without replacing prose (0.063667ms)
+✔ metadata skips fenced source headings and preserves source quotes (0.044583ms)
+✔ metadata refuses unbound receipt versions (0.077708ms)
+✔ metadata cannot present mismatched or duplicate pairs as valid (0.076083ms)
+✔ source rows do not count as supplements (0.039291ms)
+✔ original v9 live receipt retains original prompt identity (4.243708ms)
+✖ metadata replacement retains fenced examples inside the information section (0.398084ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 98.890167
+
+✖ failing tests:
+
+test at .local/dsh-m02-metadata-r3-20261127/package/test/m02-body-metadata-r3.test.mjs:35:1
+✖ metadata replacement retains fenced examples inside the information section (0.398084ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /```text\n- 交付状态：源材料逐字保留\n```/. Input:
+  
+  '## 文档信息\n' +
+    '```text\n' +
+    '```\n' +
+    '- 合同与版本：Host 原始生成凭证 v340-native-candidate-9；正文元信息修订 R3。\n' +
+    '- 交付状态：本次未产生模型补齐（登记 0 条，更新 0 条）；分析建议仍待专业审核。\n' +
+    '\n' +
+    '## 核心结果\n' +
+    '保留\n'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-metadata-r3-20261127/package/test/m02-body-metadata-r3.test.mjs:37:61)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '## 文档信息\n```text\n```\n- 合同与版本：Host 原始生成凭证 v340-native-candidate-9；正文元信息修订 R3。\n- 交付状态：本次未产生模型补齐（登记 0 条，更新 0 条）；分析建议仍待专业审核。\n\n## 核心结果\n保留\n',
+    expected: /```text\n- 交付状态：源材料逐字保留\n```/,
+    operator: 'match',
+    diff: 'simple'
+  }

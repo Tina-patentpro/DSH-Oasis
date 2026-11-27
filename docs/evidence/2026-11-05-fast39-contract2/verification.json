@@ -1,0 +1,158 @@
+{
+  "at": "2026-11-05T13:55:30.653672+08:00",
+  "scope": "document candidate2 and offline schema only",
+  "checks": {
+    "preexisting_files_unchanged": true,
+    "all_33_preflight_inputs_unchanged": true,
+    "candidate1_six_originals_unchanged_readonly": true,
+    "candidate2_freeze_bytes_modes_match": true,
+    "head_and_branch_unchanged": true,
+    "only_authorized_new_paths": true,
+    "fresh_schema_checks_passed": true,
+    "fresh_schema_hash_matches_frozen": true
+  },
+  "all_passed": true,
+  "preexisting_count": 179,
+  "preflight_input_count": 33,
+  "old_p0_evidence_count_preserved": 9,
+  "changed_preexisting": [],
+  "changed_inputs": [],
+  "unexpected_new_paths": [],
+  "candidate1": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+      "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5",
+      "mode": "0o444"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/FREEZE.json",
+      "sha256": "24d09287321b85944d20e4223c3df535c22a58ba4b47a15f400b34c84c616063",
+      "mode": "0o444"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/delivery-binding.candidate.json",
+      "sha256": "1f5a4c0aa6e96bc08f4a8ef6cd4fd4e40ba69802ed925d50b5cb2576d2bf5f50",
+      "mode": "0o444"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/schemas.json",
+      "sha256": "5c5bec6db36e18f3477089ff8a6bcc73cbda253b9196527b498b045fe0b9731c",
+      "mode": "0o444"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/synthetic-example.json",
+      "sha256": "d03d9c9961a0a1a374a9cc215d7bc91d2bc90c8bf005a1e592c954e90c22531f",
+      "mode": "0o444"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/validation-cases.json",
+      "sha256": "be31427f1cc5a7d33cd24c3fcb0bc4c468d219f253ae1d8b5510b1693d397513",
+      "mode": "0o444"
+    }
+  ],
+  "candidate2": [
+    {
+      "path": "CONTRACT.md",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    },
+    {
+      "path": "adoption-scope.json",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    },
+    {
+      "path": "capacity-policy.json",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    },
+    {
+      "path": "changes-from-candidate1.json",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    },
+    {
+      "path": "code-abi.json",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    },
+    {
+      "path": "delivery-binding.candidate.json",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    },
+    {
+      "path": "examples.json",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    },
+    {
+      "path": "schemas.json",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    },
+    {
+      "path": "transition-table.json",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    },
+    {
+      "path": "validation-cases.json",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    },
+    {
+      "path": "限定用途与设计采用说明.md",
+      "sha256_match": true,
+      "bytes_match": true,
+      "mode": "0o444"
+    }
+  ],
+  "candidate2_FREEZE_sha256": "8c4ea72c51cd380815682292e3c8cd9473224fccf423dbe6b4d812b6214e643d",
+  "schema_verification_sha256": "04501595c9a5f14ba776760d7ca1dc0ac36017fd8a2a3b8f18fc41aedc182e0f",
+  "preflight_sha256": "f71726086272cb2ddc163264fbf637462a0981951aa88205f1a2f83daf0c2522",
+  "review_return_sha256": "8f65e92e1c9c428413e351a5e1c60b628cfa30fce2ba739af4b194322f24d31a",
+  "probe_script": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-contract2-20261105/verify_documents.py",
+    "sha256": "d38db0941a0981a288b7eb7a4cd8a8cd1f50709252fdfb7450a717826d17116d"
+  },
+  "new_authorized_files_before_this_receipt": [
+    "docs/business-baseline/fast39-result-contract-candidate-2/CONTRACT.md",
+    "docs/business-baseline/fast39-result-contract-candidate-2/FREEZE.json",
+    "docs/business-baseline/fast39-result-contract-candidate-2/adoption-scope.json",
+    "docs/business-baseline/fast39-result-contract-candidate-2/capacity-policy.json",
+    "docs/business-baseline/fast39-result-contract-candidate-2/changes-from-candidate1.json",
+    "docs/business-baseline/fast39-result-contract-candidate-2/code-abi.json",
+    "docs/business-baseline/fast39-result-contract-candidate-2/delivery-binding.candidate.json",
+    "docs/business-baseline/fast39-result-contract-candidate-2/examples.json",
+    "docs/business-baseline/fast39-result-contract-candidate-2/schemas.json",
+    "docs/business-baseline/fast39-result-contract-candidate-2/transition-table.json",
+    "docs/business-baseline/fast39-result-contract-candidate-2/validation-cases.json",
+    "docs/business-baseline/fast39-result-contract-candidate-2/限定用途与设计采用说明.md",
+    "docs/evidence/2026-11-05-fast39-contract2/preflight.json",
+    "docs/evidence/2026-11-05-fast39-contract2/schema-verification.json",
+    "docs/evidence/2026-11-05-fast39-contract2/评审回执.md"
+  ],
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "candidate2_technical_status": "static author review and offline assertions passed; runtime/professional/consumer acceptance not granted",
+  "business_code_changes": 0,
+  "deployment_actions": 0,
+  "source_registry_mutations": 0,
+  "uploads": 0,
+  "new_generation_calls": 0,
+  "paid_calls": 0,
+  "commits": 0,
+  "pushes": 0,
+  "self_hash": "excluded"
+}

@@ -1,0 +1,30 @@
+output_schema[{'type': 'text', 'en_name': 'brief_summary', 'cn_name': '正文'}, {'type': 'file', 'en_name': 'file_output', 'cn_name': '附件'}]
+返回值{'data': {'status': 'succeeded', 'outputs': {'brief_summary': 'Flow-1-5 公开合成回放正文', 'file_output': [{'url': None}, {'url': None}, {'url': None}]}}}
+output_schema[{'type': 'text', 'en_name': 'review', 'cn_name': '正文'}, {'type': 'file', 'en_name': 'file_output', 'cn_name': '附件'}]
+返回值{'data': {'status': 'succeeded', 'outputs': {'review': 'Flow-5-13 公开合成回放正文', 'file_output': [{'url': None}]}}}
+{
+  "phase": "original",
+  "historicalSource": "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/snapshots/2026-10-17-qingdao/extracted/shared-api-source/www/wwwroot/lzpy/app/core/workflow.py",
+  "historicalSourceSha256": "028e1b08a899b4d50387ac85d2951008b79a66b953b28207da9fb048d479f434",
+  "rows": [
+    {
+      "flow": "Flow-1-5",
+      "items": 3,
+      "bodyField": "brief_summary",
+      "failure": "sequence item 0: expected str instance, NoneType found",
+      "saveReached": false
+    },
+    {
+      "flow": "Flow-5-13",
+      "items": 1,
+      "bodyField": "review",
+      "failure": "sequence item 0: expected str instance, NoneType found",
+      "saveReached": false
+    }
+  ],
+  "mockReads": 0,
+  "remoteCreates": 0,
+  "productionWrites": 0,
+  "chargedCny": "0.00",
+  "limits": "Candidate isolates response assembly. The partial state, authorization and ledger are test doubles, not backend implementation."
+}

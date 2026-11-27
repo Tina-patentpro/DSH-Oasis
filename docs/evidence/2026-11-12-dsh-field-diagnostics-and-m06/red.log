@@ -1,0 +1,197 @@
+✔ Flow-1-5 confirms, dispatches once and persists its exact Skill identity with populated output (56.089792ms)
+✔ Flow-1-1 confirms, dispatches once and persists its exact Skill identity with populated output (20.930583ms)
+✔ Flow-1-2 confirms, dispatches once and persists its exact Skill identity with populated output (22.981166ms)
+✖ Flow-1-1 records source-hash-mismatch at updates.0.source_hash without retaining raw values (26.094875ms)
+✖ Flow-1-1 records source-locator-mismatch at updates.0.source_locator without retaining raw values (19.792125ms)
+✖ Flow-1-2 records duplicate-table-row at tables.T1.1.row_id without retaining raw values (18.029875ms)
+✖ Flow-1-2 records invalid-type at tables.T1.0.row_id without retaining raw values (17.235625ms)
+✖ Flow-1-5 records missing-field at core_result_markdown without retaining raw values (16.93375ms)
+✖ Flow-1-5 records unexpected-field at warnings.0 without retaining raw values (20.309291ms)
+✖ Flow-1-5 records invalid-json at  without retaining raw values (16.49125ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 3
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 418.027333
+
+✖ failing tests:
+
+test at test/oasis-first-batch.test.mjs:105:3
+✖ Flow-1-1 records source-hash-mismatch at updates.0.source_hash without retaining raw values (26.094875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   code: 'source-hash-mismatch',
+  -   path: [
+  -     'updates',
+  -     0,
+  -     'source_hash'
+  -   ]
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/package/test/oasis-first-batch.test.mjs:116:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'source-hash-mismatch', path: [ 'updates', 0, 'source_hash' ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/oasis-first-batch.test.mjs:105:3
+✖ Flow-1-1 records source-locator-mismatch at updates.0.source_locator without retaining raw values (19.792125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   code: 'source-locator-mismatch',
+  -   path: [
+  -     'updates',
+  -     0,
+  -     'source_locator'
+  -   ]
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/package/test/oasis-first-batch.test.mjs:116:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'source-locator-mismatch', path: [ 'updates', 0, 'source_locator' ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/oasis-first-batch.test.mjs:105:3
+✖ Flow-1-2 records duplicate-table-row at tables.T1.1.row_id without retaining raw values (18.029875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   code: 'duplicate-table-row',
+  -   path: [
+  -     'tables',
+  -     'T1',
+  -     1,
+  -     'row_id'
+  -   ]
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/package/test/oasis-first-batch.test.mjs:116:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'duplicate-table-row', path: [ 'tables', 'T1', 1, 'row_id' ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/oasis-first-batch.test.mjs:105:3
+✖ Flow-1-2 records invalid-type at tables.T1.0.row_id without retaining raw values (17.235625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   code: 'invalid-type',
+  -   path: [
+  -     'tables',
+  -     'T1',
+  -     0,
+  -     'row_id'
+  -   ]
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/package/test/oasis-first-batch.test.mjs:116:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'invalid-type', path: [ 'tables', 'T1', 0, 'row_id' ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/oasis-first-batch.test.mjs:105:3
+✖ Flow-1-5 records missing-field at core_result_markdown without retaining raw values (16.93375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   code: 'missing-field',
+  -   path: [
+  -     'core_result_markdown'
+  -   ]
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/package/test/oasis-first-batch.test.mjs:116:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'missing-field', path: [ 'core_result_markdown' ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/oasis-first-batch.test.mjs:105:3
+✖ Flow-1-5 records unexpected-field at warnings.0 without retaining raw values (20.309291ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   code: 'unexpected-field',
+  -   path: [
+  -     'warnings',
+  -     0
+  -   ]
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/package/test/oasis-first-batch.test.mjs:116:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'unexpected-field', path: [ 'warnings', 0 ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/oasis-first-batch.test.mjs:105:3
+✖ Flow-1-5 records invalid-json at  without retaining raw values (16.49125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   code: 'invalid-json',
+  -   path: []
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/package/test/oasis-first-batch.test.mjs:116:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'invalid-json', path: [] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

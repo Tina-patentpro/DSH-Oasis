@@ -1,0 +1,80 @@
+✖ recovery launch spec carries exclusive zero-real policy and does not launch App (62.072416ms)
+✖ recovery installation rejects budget (46.070042ms)
+✖ recovery installation rejects guard drift (44.98275ms)
+✔ recovery installation rejects mixed mode (17.004ms)
+✖ recovery installation rejects foreign root (43.56775ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 1
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 251.780083
+
+✖ failing tests:
+
+test at scripts/tests/f-installed-native-business-recovery.test.mjs:21:1
+✖ recovery launch spec carries exclusive zero-real policy and does not launch App (62.072416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - true
+  
+      at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-native-business-recovery.test.mjs:25:10
+      at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:256:16
+      at withInstalledWriter (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:178:57)
+      at Module.withInstalledLaunchSpec (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:250:9)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-native-business-recovery.test.mjs:24:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/tests/f-installed-native-business-recovery.test.mjs:37:3
+✖ recovery installation rejects budget (46.070042ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-native-business-recovery.test.mjs:38:43)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at scripts/tests/f-installed-native-business-recovery.test.mjs:37:3
+✖ recovery installation rejects guard drift (44.98275ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-native-business-recovery.test.mjs:38:43)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at scripts/tests/f-installed-native-business-recovery.test.mjs:37:3
+✖ recovery installation rejects foreign root (43.56775ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-native-business-recovery.test.mjs:38:43)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }

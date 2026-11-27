@@ -1,0 +1,154 @@
+✖ normal evidence keeps exactly one original six-string fragment and only backend-reported byte receipt (1.397084ms)
+✖ execution and correlation states take precedence over content and never fabricate a completed artifact (0.382709ms)
+✖ invalid phase/outcome/code combinations and non-2xx provider receipts are refused (0.108792ms)
+✖ missing response has no enhanced receipt and does not imply cancellation or retry (0.081375ms)
+✖ request/run binding conflicts cannot record another execution receipt (0.094417ms)
+✖ client content error preserves provider succeeded and the exact received strings without defaults (0.093125ms)
+✖ oversized or escaped-overflow output subsets are dropped whole, with bounded hash-only error evidence (0.186459ms)
+✖ capacity fallback retains original execution phase/outcome for nonterminal receipts (0.071958ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138.44875
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:13:1
+✖ normal evidence keeps exactly one original six-string fragment and only backend-reported byte receipt (1.397084ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:14:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:30:1
+✖ execution and correlation states take precedence over content and never fabricate a completed artifact (0.382709ms)
+  TypeError: api.inspectM06Fast39Fragment is not a function
+      at inspect (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:10:43)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:38:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:47:1
+✖ invalid phase/outcome/code combinations and non-2xx provider receipts are refused (0.108792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:48:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:59:1
+✖ missing response has no enhanced receipt and does not imply cancellation or retry (0.081375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:60:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:66:1
+✖ request/run binding conflicts cannot record another execution receipt (0.094417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:67:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:74:1
+✖ client content error preserves provider succeeded and the exact received strings without defaults (0.093125ms)
+  TypeError: api.inspectM06Fast39Fragment is not a function
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:76:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:89:1
+✖ oversized or escaped-overflow output subsets are dropped whole, with bounded hash-only error evidence (0.186459ms)
+  TypeError: api.inspectM06Fast39Fragment is not a function
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:92:47)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:107:1
+✖ capacity fallback retains original execution phase/outcome for nonterminal receipts (0.071958ms)
+  TypeError: api.inspectM06Fast39Fragment is not a function
+      at inspect (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:10:43)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs:108:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

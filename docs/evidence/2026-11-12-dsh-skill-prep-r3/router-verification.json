@@ -1,0 +1,289 @@
+{
+  "cases": [
+    {
+      "id": "1",
+      "text": "请把给定材料写成发明交底书。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 34,
+        "childPath": "skills/patent-disclosure/SKILL.md",
+        "childSha256": "fe93aa6342f689fb3f765cd1f00580b3014a3855ea3b3b45864292cd092eea82",
+        "extra": null,
+        "routeId": "disclosure",
+        "gate": null,
+        "status": "selected"
+      }
+    },
+    {
+      "id": "2",
+      "text": "请做保护型 1+N 围栏。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 35,
+        "childPath": "skills/patent-disclosure/SKILL.md",
+        "childSha256": "fe93aa6342f689fb3f765cd1f00580b3014a3855ea3b3b45864292cd092eea82",
+        "extra": "prompts/fence",
+        "routeId": "fence",
+        "gate": "confirmed-first-disclosure",
+        "status": "needs-material"
+      }
+    },
+    {
+      "id": "3",
+      "text": "请做发明分案规划。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 36,
+        "childPath": "skills/patent-application/SKILL.md",
+        "childSha256": "15cf180bcc04c998b3cb46fe07e623c2a3c623d87919722b0e114da574b3f922",
+        "extra": "prompts/divisional.md",
+        "routeId": "divisional",
+        "gate": null,
+        "status": "selected"
+      }
+    },
+    {
+      "id": "4",
+      "text": "请按指定交底目录做申请底稿。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 37,
+        "childPath": "skills/patent-application/SKILL.md",
+        "childSha256": "15cf180bcc04c998b3cb46fe07e623c2a3c623d87919722b0e114da574b3f922",
+        "extra": null,
+        "routeId": "application",
+        "gate": "verified-disclosure-directory",
+        "status": "needs-material"
+      }
+    },
+    {
+      "id": "5",
+      "text": "请一条龙制作交底和申请。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 38,
+        "childPath": "skills/patent-docket/SKILL.md",
+        "childSha256": "f3e981e00cadbe1e632d6cfd7088b3961d1135f2318e4f8e51c4786375f665ec",
+        "extra": null,
+        "routeId": "docket",
+        "gate": null,
+        "status": "selected"
+      }
+    },
+    {
+      "id": "6",
+      "text": "请按著录字段检索国内公开公告。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 39,
+        "childPath": "skills/patent-search/SKILL.md",
+        "childSha256": "52d130073b67a9996739a7532266119bfb4e6beaba58f6dadfbc741642f7ce75",
+        "extra": null,
+        "routeId": "search-cn",
+        "gate": null,
+        "status": "selected"
+      }
+    },
+    {
+      "id": "7",
+      "text": "请明确查美国专利。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 40,
+        "childPath": "skills/patent-search/SKILL.md",
+        "childSha256": "52d130073b67a9996739a7532266119bfb4e6beaba58f6dadfbc741642f7ce75",
+        "extra": null,
+        "routeId": "search-overseas",
+        "gate": null,
+        "status": "selected"
+      }
+    },
+    {
+      "id": "8",
+      "text": "请解读公开号 US223898A。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 41,
+        "childPath": "skills/patent-reader/SKILL.md",
+        "childSha256": "5a5ea8d7ca0bcf38789ab5561cf9863f156d9daf6a838b0879c6075615b5752e",
+        "extra": null,
+        "routeId": "reader",
+        "gate": null,
+        "status": "selected"
+      }
+    },
+    {
+      "id": "9",
+      "text": "请做权利要求对照表。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 42,
+        "childPath": "skills/patent-chart/SKILL.md",
+        "childSha256": "63e126866c7c0ffab2caab302d815f1eae38d372620c113491d4d2fdc6cf0ccc",
+        "extra": null,
+        "routeId": "chart",
+        "gate": "verified-claim-features",
+        "status": "needs-material"
+      }
+    },
+    {
+      "id": "10",
+      "text": "请打开测试库的专利地图。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 43,
+        "childPath": "skills/patent-map/SKILL.md",
+        "childSha256": "031e6176cfcddd69a54654c8cc9618e0c47ba1b6313c7f924f3595412abc21ec",
+        "extra": null,
+        "routeId": "map",
+        "gate": "verified-reader-vault",
+        "status": "needs-material"
+      }
+    },
+    {
+      "id": "11",
+      "text": "请根据给定的模拟审查意见草拟答复。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 44,
+        "childPath": "skills/patent-oa/SKILL.md",
+        "childSha256": "cafc4ad2a21ee2054f54d42fe4710e2b9f1c612fca8d767c98c99d1d91a31a9d",
+        "extra": null,
+        "routeId": "oa",
+        "gate": "chart-tool-version-mismatch",
+        "status": "blocked"
+      }
+    },
+    {
+      "id": "12",
+      "text": "请给出近期政策简报。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 45,
+        "childPath": "skills/patent-exam-policy/SKILL.md",
+        "childSha256": "6aeb3433eb49f821c049095a6f6f83135706d218deb5da00ff0b638ddd10a1ef",
+        "extra": null,
+        "routeId": "policy",
+        "gate": null,
+        "status": "selected"
+      }
+    },
+    {
+      "id": "negative-application",
+      "text": "请出申请底稿，项目里没有交底目录。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 37,
+        "childPath": "skills/patent-application/SKILL.md",
+        "childSha256": "15cf180bcc04c998b3cb46fe07e623c2a3c623d87919722b0e114da574b3f922",
+        "extra": null,
+        "routeId": "application",
+        "gate": "verified-disclosure-directory",
+        "status": "needs-material"
+      }
+    },
+    {
+      "id": "negative-disclosure",
+      "text": "请把这份交底资料整理为发明交底书。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 34,
+        "childPath": "skills/patent-disclosure/SKILL.md",
+        "childSha256": "fe93aa6342f689fb3f765cd1f00580b3014a3855ea3b3b45864292cd092eea82",
+        "extra": null,
+        "routeId": "disclosure",
+        "gate": null,
+        "status": "selected"
+      }
+    },
+    {
+      "id": "negative-reader",
+      "text": "请解读公开号 US223898A，只交可读笔记。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 41,
+        "childPath": "skills/patent-reader/SKILL.md",
+        "childSha256": "5a5ea8d7ca0bcf38789ab5561cf9863f156d9daf6a838b0879c6075615b5752e",
+        "extra": null,
+        "routeId": "reader",
+        "gate": null,
+        "status": "selected"
+      }
+    },
+    {
+      "id": "explicit-negation",
+      "text": "请整理交底书，不要做对照表。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "sourceLine": 34,
+        "childPath": "skills/patent-disclosure/SKILL.md",
+        "childSha256": "fe93aa6342f689fb3f765cd1f00580b3014a3855ea3b3b45864292cd092eea82",
+        "extra": null,
+        "routeId": "disclosure",
+        "gate": null,
+        "status": "selected"
+      }
+    },
+    {
+      "id": "multiple-intents",
+      "text": "请制作专利地图。也请编写政策简报。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "status": "needs-clarification",
+        "reason": "multiple-intents",
+        "routeId": null
+      }
+    },
+    {
+      "id": "unmatched",
+      "text": "整理一下这些内容。",
+      "actual": {
+        "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+        "sourceSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+        "dispatchEnabled": false,
+        "status": "needs-clarification",
+        "reason": "unmatched",
+        "routeId": null
+      }
+    }
+  ],
+  "wrongSuiteRejected": true,
+  "extraPayloadRejected": true,
+  "workbenchStateUnchanged": true,
+  "suiteRestored": true,
+  "childDispatches": 0
+}

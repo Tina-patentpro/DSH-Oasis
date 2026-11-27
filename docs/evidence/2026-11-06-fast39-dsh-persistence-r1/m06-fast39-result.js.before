@@ -1,0 +1,359 @@
+import { createHash } from 'node:crypto'
+import { prepareV340Inputs } from './v340-document.js'
+import { prepareM06WorkareaConstrainedCalibration } from './m06-workarea-material-packet.js'
+import {
+  FAST39_INPUT_IDS, FAST39_DIRECT_FIELDS, FAST39_LIMITS,
+  fast39RegistrySchema, fast39OutputsSchema, fast39QualityReportSchema,
+} from './m06-fast39-contract.js'
+
+const digest = text => createHash('sha256').update(text, 'utf8').digest('hex')
+function fail(code = 'FAST39_RESULT_FIELDS_INVALID') {
+  throw Object.assign(new Error('Fast39结果不符合冻结合同；未截断、补造或重新派发。'), { code })
+}
+function need(value, code) { if (!value) fail(code) }
+function scalarText(value) {
+  need(typeof value === 'string' && value.isWellFormed() && !value.includes('\0'))
+  return value
+}
+function scalarCompare(a, b) {
+  const aa = Array.from(a, c => c.codePointAt(0)), bb = Array.from(b, c => c.codePointAt(0))
+  for (let i = 0; i < Math.min(aa.length, bb.length); i++) if (aa[i] !== bb[i]) return aa[i] - bb[i]
+  return aa.length - bb.length
+}
+function checkJson(value, depth = 0, parents = new Set()) {
+  if (typeof value === 'string') { scalarText(value); return }
+  if (value === null || typeof value === 'boolean') return
+  if (typeof value === 'number') { need(Number.isSafeInteger(value)); return }
+  need(typeof value === 'object' && !parents.has(value))
+  need(depth <= FAST39_LIMITS.depth, 'FAST39_RESULT_TOO_LARGE')
+  const array = Array.isArray(value)
+  need(array || Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null)
+  const keys = Object.keys(value)
+  need(keys.length <= (array ? FAST39_LIMITS.arrayItems : FAST39_LIMITS.objectKeys), 'FAST39_RESULT_TOO_LARGE')
+  if (array) need(keys.length === value.length && keys.every((key, i) => key === String(i)))
+  parents.add(value)
+  for (const key of keys) { scalarText(key); checkJson(value[key], depth + 1, parents) }
+  parents.delete(value)
+}
+
+// Manual key emission also avoids JSON.stringify's reordering of integer-like keys.
+export function fast39CanonicalJson(value) {
+  checkJson(value)
+  const emit = v => v === null || typeof v !== 'object' ? JSON.stringify(v)
+    : Array.isArray(v) ? '[' + v.map(emit).join(',') + ']'
+      : '{' + Object.keys(v).sort(scalarCompare).map(k => JSON.stringify(k) + ':' + emit(v[k])).join(',') + '}'
+  return emit(value)
+}
+const same = (a, b) => fast39CanonicalJson(a) === fast39CanonicalJson(b)
+const sameSet = (a, b) => {
+  const aa = a.map(fast39CanonicalJson), bb = b.map(fast39CanonicalJson)
+  return new Set(aa).size === aa.length && new Set(bb).size === bb.length && same(aa.sort(), bb.sort())
+}
+
+// JSON.parse alone silently overwrites duplicate keys, including escaped aliases.
+// This bounded parser is exclusively for the C4 integer-only JSON structures.
+export function parseFast39Json(text, maxBytes = FAST39_LIMITS.outputBytes) {
+  scalarText(text)
+  need(Buffer.byteLength(text, 'utf8') <= maxBytes, 'FAST39_RESULT_TOO_LARGE')
+  let i = 0
+  const space = () => { while (/[\t\n\r ]/.test(text[i] ?? '') && i < text.length) i++ }
+  function string() {
+    const begin = i++
+    let closed = false
+    while (i < text.length) {
+      const c = text[i++]
+      if (c === '\\') { i++; continue }
+      if (c === '"') { closed = true; break }
+    }
+    need(closed)
+    try { return scalarText(JSON.parse(text.slice(begin, i))) } catch { fail() }
+  }
+  function value(depth = 0) {
+    space()
+    const c = text[i]
+    if (c === '"') return string()
+    if (c === '{' || c === '[') {
+      need(depth <= FAST39_LIMITS.depth, 'FAST39_RESULT_TOO_LARGE')
+      const array = c === '[', close = array ? ']' : '}', result = array ? [] : {}, seen = new Set()
+      i++; space()
+      if (text[i] === close) { i++; return result }
+      for (;;) {
+        space()
+        let key
+        if (!array) {
+          need(text[i] === '"'); key = string(); need(!seen.has(key)); seen.add(key)
+          space(); need(text[i++] === ':')
+        }
+        const item = value(depth + 1)
+        if (array) result.push(item)
+        else Object.defineProperty(result, key, { value: item, enumerable: true, configurable: true, writable: true })
+        need((array ? result.length : seen.size) <= (array ? FAST39_LIMITS.arrayItems : FAST39_LIMITS.objectKeys), 'FAST39_RESULT_TOO_LARGE')
+        space()
+        if (text[i] === close) { i++; return result }
+        need(text[i++] === ',')
+      }
+    }
+    for (const [token, result] of [['true', true], ['false', false], ['null', null]]) {
+      if (text.startsWith(token, i)) { i += token.length; return result }
+    }
+    const number = /^-?(?:0|[1-9][0-9]*)/.exec(text.slice(i))
+    need(number); i += number[0].length
+    need(!/[.eE]/.test(text[i] ?? ''))
+    const result = Number(number[0]); need(Number.isSafeInteger(result)); return result
+  }
+  const result = value(); space(); need(i === text.length); checkJson(result); return result
+}
+
+function shape(schema, value, code = 'FAST39_RESULT_FIELDS_INVALID') {
+  const result = schema.safeParse(value); need(result.success, code); return result.data
+}
+function role(id) {
+  return id === 'user_input' ? 'manual_instruction' : id.startsWith('claim_requirements_') ? 'output_requirement' : 'technical_material'
+}
+export function validateM06Fast39Registry(value) {
+  checkJson(value)
+  const reg = shape(fast39RegistrySchema, value, 'FAST39_INPUT_RECEIPT_INVALID')
+  for (const [index, entry] of reg.entries.entries()) {
+    const r = entry.original_receipt, manual = entry.input_id === 'user_input'
+    need(entry.input_id === FAST39_INPUT_IDS[index] && entry.role === role(entry.input_id), 'FAST39_INPUT_RECEIPT_INVALID')
+    if (r.status === 'not_provided') {
+      need(r.sha256 === 'none' && r.filename === 'not_provided' && r.content_origin === 'none'
+        && entry.status === 'not_provided' && entry.text === (manual ? null : '')
+        && entry.filename === null && entry.source_sha256 === null && entry.receipt_sha256 === null, 'FAST39_INPUT_RECEIPT_INVALID')
+    } else {
+      need(/^[a-f0-9]{64}$/.test(r.sha256) && entry.receipt_sha256 === r.sha256, 'FAST39_INPUT_RECEIPT_INVALID')
+      need(entry.status === (!manual && r.status === 'accepted' ? 'provided' : 'unverified'), 'FAST39_INPUT_RECEIPT_INVALID')
+      if (manual) need(entry.text === null && entry.source_sha256 === null && entry.filename === null, 'FAST39_INPUT_RECEIPT_INVALID')
+      else {
+        need(typeof entry.text === 'string' && digest(entry.text) === entry.source_sha256, 'FAST39_INPUT_RECEIPT_INVALID')
+        if (r.status === 'accepted') need(entry.source_sha256 === r.sha256, 'FAST39_INPUT_RECEIPT_INVALID')
+        need(entry.filename === (entry.input_id.endsWith('_file') ? r.filename : null), 'FAST39_INPUT_RECEIPT_INVALID')
+        need(entry.input_id === 'upstream_md_file' ? Buffer.byteLength(entry.text, 'utf8') <= 1048576 : entry.text.length <= 300000,
+          'FAST39_RESULT_TOO_LARGE')
+      }
+    }
+  }
+  return reg
+}
+
+export function buildM06Fast39Registry({ prepared, packetText, User_input, directFields, documentCount }) {
+  need(documentCount === 1 && directFields && same(Object.keys(directFields).sort(), [...FAST39_DIRECT_FIELDS].sort())
+    && Object.values(directFields).every(v => v === ''), 'FAST39_SCOPE_MISMATCH')
+  need(prepared?.nodeId === 'Flow-2-6', 'FAST39_SCOPE_MISMATCH')
+  let fresh, proposal
+  try {
+    fresh = prepareV340Inputs('Flow-2-6', prepared.values)
+    need(same(fresh, prepared), 'FAST39_INPUT_RECEIPT_INVALID')
+    proposal = prepareM06WorkareaConstrainedCalibration(fresh)
+  } catch (error) {
+    if (error?.code?.startsWith('FAST39_')) throw error
+    fail(error?.code === 'M06_PACKET_TOO_LARGE' ? 'FAST39_RESULT_TOO_LARGE' : 'FAST39_INPUT_RECEIPT_INVALID')
+  }
+  need(packetText === new TextDecoder().decode(proposal.document.bytes) && User_input === proposal.apiTextInputs.User_input,
+    'FAST39_SCOPE_MISMATCH')
+  const packet = parseFast39Json(packetText, FAST39_LIMITS.packetBytes)
+  const entries = FAST39_INPUT_IDS.map(id => {
+    const r = fresh.receipts[id], manual = id === 'user_input', absent = r.status === 'not_provided'
+    const raw = fresh.values[id], text = manual ? null : absent ? '' : typeof raw === 'string' ? raw : raw.body
+    return { input_id: id, role: role(id), status: absent ? 'not_provided' : !manual && r.status === 'accepted' ? 'provided' : 'unverified',
+      text, source_sha256: manual || absent ? null : digest(text), receipt_sha256: absent ? null : r.sha256,
+      filename: !absent && id.endsWith('_file') ? r.filename : null, original_receipt: structuredClone(r) }
+  })
+  return validateM06Fast39Registry({ version: 'flow26-source-trace-3', source_mode: 'packet2', entries,
+    packet_text_sha256: digest(packetText), original_input_hash_claim: packet.inputHash,
+    actual_user_input_sha256: digest(User_input), input_warnings: structuredClone(packet.inputWarnings),
+    limitations: structuredClone(packet.limitations), required_missing_input_lines: structuredClone(packet.semanticContract.requiredMissingInputLines),
+    receipt_mapping_version: 'flow26-receipt-map-1' })
+}
+
+function fenced(text) {
+  scalarText(text)
+  const longest = Math.max(0, ...[...text.matchAll(/`+/g)].map(x => x[0].length))
+  const fence = '`'.repeat(Math.max(3, longest + 1))
+  return `${fence}text\n${text}\n${fence}`
+}
+export function renderM06Fast39Pending(report) {
+  const missing = report.required_missing_input_lines
+  need(missing.every(line => line.startsWith('未提供：') && !/[\r\n]/.test(line)))
+  const lines = [`状态：${report.quality_status}`, '输入缺项：',
+    ...(missing.length ? missing.map(line => '- ' + line) : ['未列出；不表示已无风险。'])]
+  const groups = [
+    ['原材料警示', report.input_warnings.map(w => scalarText(w.problem))], ['原材料限制', report.limitations],
+    ['Outline原警示', report.outline_quality.warnings],
+    ['Outline后续提示', report.outline_quality.fallback_hint ? [report.outline_quality.fallback_hint] : []],
+    ['Outline错误', report.outline_error ? [report.outline_error] : []],
+    ['编号提示', report.marker_warnings], ['依赖提示', report.dependency_warnings],
+  ]
+  for (const [label, values] of groups) {
+    lines.push(label + '：', ...(values.length ? values.map(fenced) : ['未列出；不表示已无风险。']))
+  }
+  lines.push(`Outline原状态：${report.outline_quality.status}`, `依赖解析状态：${report.dependency_parse_status}`,
+    '来源技术支持与专业接受：未评估；须人工复核。')
+  return lines.join('\n')
+}
+function cell(value) {
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\r\n|\r|\n/g, '〈换行〉').replace(/[\u0001-\u001f\u007f]/g, c => `〈U+${c.charCodeAt(0).toString(16).padStart(4, '0')}〉`)
+    .replace(/\\/g, '\\\\').replace(/[|`*_\[\]()#!~]/g, c => '\\' + c)
+    .replace(/\bhttps?:/gi, s => '&#104;' + s.slice(1)).replace(/\bwww\./gi, 'www&#46;').replace(/@/g, '&#64;')
+}
+export function renderM06Fast39Output(outputs, report) {
+  const rows = ['|权项／计划|特征|input_id|正文hash|原文短引|UTF16区间|处置|', '|---|---|---|---|---|---|---|']
+  for (const d of report.feature_dispositions) {
+    const sources = report.source_map.filter(s => s.planned_claim_id === d.planned_claim_id && s.feature_id === d.feature_id)
+    const values = sources.length ? sources.map(s => [
+      `${s.claim_id ?? '未映射'}／${s.planned_claim_id}`, s.feature_id, s.input_id, s.source_sha256,
+      s.quote, `[${s.start_utf16},${s.end_utf16})`, `${d.action}／${d.locator_status}`,
+    ]) : [[`${d.claim_id ?? '未映射'}／${d.planned_claim_id}`, d.feature_id, '未核', '未核', '未核', '未核', `${d.action}／${d.locator_status}`]]
+    for (const row of values) rows.push('|' + row.map(cell).join('|') + '|')
+  }
+  // Only the display tree is lowered; the six received strings stay untouched.
+  const tree = markdownLines(outputs.dependency_tree, (line, literal) => literal ? line : line.replace(/^( {0,3})## /, '$1### '))
+  return `## 权利要求草稿\n${outputs.claims_text}\n\n${tree}\n\n## 材料缺项与未确认事项\n${renderM06Fast39Pending(report)}\n\n## 技术特征来源\n${rows.join('\n')}`
+}
+export function visibleFast39Sections(text) {
+  const sections = []
+  markdownLines(text, (line, literal) => {
+    if (!literal) { const h = /^ {0,3}## ([^#].*?)\s*$/.exec(line); if (h) sections.push(h[1]) }
+    return line
+  })
+  return sections
+}
+function markdownLines(text, visit) {
+  const parts = text.split(/(\r\n|\r|\n)/)
+  let fence = null
+  for (let i = 0; i < parts.length; i += 2) {
+    const line = parts[i]
+    const match = /^ {0,3}(`{3,}|~{3,})(.*)$/.exec(line)
+    let literal = fence !== null
+    if (match) {
+      if (fence) {
+        if (match[1][0] === fence[0] && match[1].length >= fence.length && /^[ \t]*$/.test(match[2])) fence = null
+      } else if (match[1][0] !== '`' || !match[2].includes('`')) {
+        fence = match[1]; literal = true
+      }
+    }
+    parts[i] = visit(line, literal)
+  }
+  return parts.join('')
+}
+
+const tuple = v => JSON.stringify([v.planned_claim_id, v.feature_id])
+function unique(values) { return new Set(values).size === values.length }
+function sourceValid(s, entries) {
+  const e = entries.get(s.input_id)
+  need(e && e.role === 'technical_material' && e.status === 'provided' && e.source_sha256 === s.source_sha256)
+  const a = s.start_utf16, b = s.end_utf16, raw = e.text
+  need(a >= 0 && a < b && b <= raw.length && b <= FAST39_LIMITS.sourceCoordinate
+    && raw.slice(a, b).isWellFormed() && raw.slice(a, b) === s.quote)
+}
+function claimSegments(text) {
+  need(text === text.trim() && !text.includes('\r'))
+  const starts = [...text.matchAll(/^([1-9][0-9]{0,3})\. /gm)]
+  need(starts.length && starts[0].index === 0, 'FAST39_NO_SUPPORTED_CLAIM')
+  return starts.map((m, index) => {
+    need(m[1] === String(index + 1))
+    const bodyStart = m.index + m[0].length
+    const end = (index + 1 < starts.length ? starts[index + 1].index : text.length)
+    const body = text.slice(bodyStart, end).trimEnd()
+    need(body.trim().length > 0 && !/^\s*[0-9]+[.、．]/m.test(body))
+    return { id: m[1], body, bodyStart }
+  })
+}
+
+// This client view proves reported self-consistency against caller-owned frozen
+// materials. It does not attest the original Outline, provider bytes or support.
+export function validateM06Fast39Outputs(value, { registry }) {
+  checkJson(value)
+  for (const v of Object.values(value)) if (typeof v === 'string') {
+    need(v.length <= FAST39_LIMITS.outputUtf16 && Buffer.byteLength(v, 'utf8') <= FAST39_LIMITS.outputBytes, 'FAST39_RESULT_TOO_LARGE')
+  }
+  if (typeof value.claims_text === 'string') need(value.claims_text.trim().length > 0, 'FAST39_NO_SUPPORTED_CLAIM')
+  const outputs = shape(fast39OutputsSchema, value)
+  const q = shape(fast39QualityReportSchema, parseFast39Json(outputs.quality_report))
+  const reg = validateM06Fast39Registry(registry), basis = q.outline_anchor.basis
+  need(q.source_registry_sha256 === digest(fast39CanonicalJson(reg)), 'FAST39_BINDING_MISMATCH')
+  need(q.outline_anchor.sha256 === digest(fast39CanonicalJson(basis)), 'FAST39_BINDING_MISMATCH')
+  need(same(q.input_warnings, reg.input_warnings) && same(q.limitations, reg.limitations)
+    && same(q.required_missing_input_lines, reg.required_missing_input_lines), 'FAST39_BINDING_MISMATCH')
+  need(same(q.outline_quality, basis.outline_quality) && q.outline_error === basis.outline_error)
+  const plans = basis.planned_claims, planIds = plans.map(p => p.planned_claim_id)
+  need(unique(planIds) && planIds.filter(id => id === 'plan:core').length === 1)
+  const targets = []
+  for (const p of plans) {
+    const expected = p.planned_claim_id === 'plan:core' ? 'core_root' : p.planned_claim_id.startsWith('plan:parallel:') ? 'parallel_root' : 'dependent_cluster'
+    need(p.role === expected && unique(p.feature_ids) && (expected === 'dependent_cluster' || p.feature_ids.length > 0))
+    if (p.role !== 'dependent_cluster') for (const feature_id of p.feature_ids) targets.push({ planned_claim_id: p.planned_claim_id, feature_id })
+  }
+  need(sameSet(basis.critical_feature_targets, targets))
+  const allFeatures = plans.flatMap(p => p.feature_ids.map(feature_id => ({ planned_claim_id: p.planned_claim_id, feature_id })))
+  const featureSet = new Set(allFeatures.map(tuple))
+  const entries = new Map(reg.entries.map(e => [e.input_id, e]))
+  for (const s of basis.outline_source_map) { need(featureSet.has(tuple(s))); sourceValid(s, entries) }
+  need(unique(basis.outline_source_map.map(fast39CanonicalJson)))
+  need(same(q.claim_id_map.map(m => m.planned_claim_id), planIds))
+  const segments = claimSegments(outputs.claims_text), byClaim = new Map(segments.map(s => [s.id, s]))
+  const mappings = new Map(q.claim_id_map.map(m => [m.planned_claim_id, m.final_claim_id]))
+  const emitted = q.claim_id_map.filter(m => m.final_claim_id !== null)
+  need(q.claim_count === segments.length && emitted.length === segments.length
+    && emitted.every((m, i) => m.final_claim_id === String(i + 1)))
+  need(same(q.feature_dispositions.map(d => ({ planned_claim_id: d.planned_claim_id, feature_id: d.feature_id })), allFeatures))
+  const expectedSources = basis.outline_source_map.map(s => ({ ...s, claim_id: mappings.get(s.planned_claim_id) }))
+  need(sameSet(q.source_map, expectedSources))
+  const supported = new Set(basis.outline_source_map.map(tuple)), missing = [], unverified = []
+  let anyBlocked = false, anyUnverified = false
+  const targetSet = new Set(targets.map(tuple))
+  for (const d of q.feature_dispositions) {
+    const key = tuple(d)
+    if (d.action === 'blocked_missing_support') {
+      need(d.claim_id === null && d.output_quote === '' && d.output_start_utf16 === null
+        && d.output_end_utf16 === null && d.locator_status === 'not_applicable')
+      anyBlocked = true
+      if (targetSet.has(key)) missing.push({ planned_claim_id: d.planned_claim_id, feature_id: d.feature_id })
+      continue
+    }
+    need(d.claim_id !== null && d.claim_id === mappings.get(d.planned_claim_id) && supported.has(key) && d.output_quote.length > 0)
+    const segment = byClaim.get(d.claim_id); need(segment)
+    const first = segment.body.indexOf(d.output_quote)
+    const single = first !== -1 && segment.body.indexOf(d.output_quote, first + 1) === -1
+    if (single) {
+      need(d.locator_status === 'verified' && d.output_start_utf16 === segment.bodyStart + first
+        && d.output_end_utf16 === segment.bodyStart + first + d.output_quote.length)
+    } else {
+      need(d.locator_status === 'unverified' && d.output_start_utf16 === null && d.output_end_utf16 === null)
+      anyUnverified = true
+      if (targetSet.has(key)) unverified.push({ planned_claim_id: d.planned_claim_id, feature_id: d.feature_id })
+    }
+  }
+  for (const m of emitted) need(q.feature_dispositions.some(d => d.planned_claim_id === m.planned_claim_id
+    && d.action !== 'blocked_missing_support' && supported.has(tuple(d))), 'FAST39_NO_SUPPORTED_CLAIM')
+  const expectedCoverage = { status: anyBlocked ? 'incomplete' : anyUnverified ? 'unverified' : 'complete',
+    missing_core_targets: missing, unverified_core_targets: unverified }
+  need(q.feature_coverage.status === expectedCoverage.status
+    && sameSet(q.feature_coverage.missing_core_targets, missing) && sameSet(q.feature_coverage.unverified_core_targets, unverified))
+  const graph = new Map(segments.map(s => [s.id, []])), parents = new Set()
+  need(unique(q.dependency_edges.map(e => JSON.stringify([e.parent, e.child]))))
+  for (const edge of q.dependency_edges) {
+    need(byClaim.has(edge.parent) && byClaim.has(edge.child) && edge.parent !== edge.child)
+    graph.get(edge.parent).push(edge.child); parents.add(edge.child)
+  }
+  const visited = new Set(), visiting = new Set()
+  function visit(id) {
+    need(!visiting.has(id)); if (visited.has(id)) return
+    visiting.add(id); for (const child of graph.get(id)) visit(child); visiting.delete(id); visited.add(id)
+  }
+  for (const id of graph.keys()) visit(id)
+  for (const p of plans) {
+    const id = mappings.get(p.planned_claim_id)
+    if (id !== null) need(parents.has(id) === (p.role === 'dependent_cluster'))
+  }
+  const rank = { ok: 0, partial: 1, insufficient: 2 }
+  let minimum = rank[q.outline_quality.status]
+  if (expectedCoverage.status !== 'complete' || q.source_status === 'unverified' || q.dependency_parse_status !== 'ok') minimum = 2
+  else if (q.outline_error || q.outline_quality.fallback_hint || q.outline_quality.warnings.length || q.marker_warnings.length
+    || q.dependency_warnings.length || q.input_warnings.length || q.limitations.length || q.required_missing_input_lines.length) minimum = Math.max(minimum, 1)
+  need(rank[q.quality_status] >= minimum && outputs.quality_status === q.quality_status)
+  need(outputs.pending_confirmation === renderM06Fast39Pending(q) && outputs.output === renderM06Fast39Output(outputs, q))
+  need(same(visibleFast39Sections(outputs.output), ['权利要求草稿', '材料缺项与未确认事项', '技术特征来源']))
+  return q
+}

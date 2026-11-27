@@ -1,0 +1,48 @@
+{
+  "version": "flow26-receipt-map-1",
+  "profile": "packet2 current prepareV340Inputs receipt, preserve original_receipt full object",
+  "rows": [
+    {
+      "original_status": "not_provided",
+      "original_sha256": "none",
+      "normalized_status": "not_provided",
+      "receipt_sha256": null,
+      "source_sha256": null,
+      "technical_source_allowed": false
+    },
+    {
+      "original_status": "accepted",
+      "input_kind": "nonmanual with original body/hash verified",
+      "normalized_status": "provided",
+      "receipt_sha256": "same original lowercase SHA256",
+      "source_sha256": "SHA256 raw body UTF8, separately verified",
+      "technical_source_allowed": "only technical_material role"
+    },
+    {
+      "original_status": "warning",
+      "normalized_status": "unverified",
+      "receipt_sha256": "same valid original SHA256",
+      "source_sha256": "raw body UTF8 hash if body exists",
+      "technical_source_allowed": false
+    },
+    {
+      "original_status": "accepted/warning",
+      "input_kind": "user_input",
+      "normalized_status": "unverified",
+      "receipt_sha256": "same valid original SHA256",
+      "source_sha256": null,
+      "text": null,
+      "technical_source_allowed": false
+    }
+  ],
+  "rejections": [
+    "missing receipt/common ID or unknown status",
+    "not_provided with hash other than none, wrong absent filename/origin",
+    "accepted/warning with none/null/invalid hash",
+    "provided body hash differs from original current receipt",
+    "unknown or injected input ID/role",
+    "manual body reverse parsed from wrapped User_input"
+  ],
+  "no_original_receipt_rewrite": true,
+  "scope_change": "warning source remains unverified and cannot support kept/rephrased in this controlled enhancement; legacy material/prepared untouched"
+}

@@ -1,0 +1,120 @@
+{
+  "candidate": "C4-R1",
+  "document_errata": "C3-CR01 and C3-CR02 closed at contract level",
+  "status": "PRECISE_ADOPTION_AND_DELIVERY_PENDING",
+  "items": [
+    {
+      "id": "BASELINE-ADOPTION",
+      "when": "before business implementation",
+      "owners": [
+        "task decision / affected delivery owners"
+      ],
+      "requires": [
+        "explicit C4-R1 implementation baseline adoption and scope",
+        "exact CONTRACT/FREEZE/INHERITANCE identity, not unqualified latest"
+      ],
+      "blocks": "business implementation under C4",
+      "status": "OPEN"
+    },
+    {
+      "id": "EXACT-RULE-SKILL-ADOPTION",
+      "when": "at selected engineering/Dify adoption",
+      "owners": [
+        "TL",
+        "PD",
+        "WD"
+      ],
+      "requires": [
+        "M06 0.1.3-candidate manifest, 8 payloads and 2 operator-only exclusions",
+        "V019 SRC-01/SRC-02/CORE-01/FACT-01/WARN-01 visibility/use/clause-to-Skill-to-node/variable/Schema mapping",
+        "concrete trial scope conflict disposition if applicable; S1 reference already allowed"
+      ],
+      "blocks": "claiming actual selected production adoption",
+      "status": "OPEN"
+    },
+    {
+      "id": "SHARED-BEHAVIOR-ADOPTION",
+      "when": "before affected cross-layer changes/integration",
+      "owners": [
+        "workflow",
+        "backend",
+        "DSH"
+      ],
+      "requires": [
+        "accepted limited eligibility, warning/restricted-result behavior, byte receipt and capacity/persistence-failure policy",
+        "legacy projection/save_and_deduct/queue/storage/reload/rollback compatibility scope and verification ownership"
+      ],
+      "blocks": "corresponding cross-layer implementation and integration",
+      "status": "OPEN"
+    },
+    {
+      "id": "SOURCE-ADMISSION",
+      "when": "before actual source workflow production",
+      "owners": [
+        "WD source governance owner"
+      ],
+      "requires": [
+        "applicable Batch/prior actual exit or explicit bounded exception",
+        "owned approved_records transaction and controlled candidate designation"
+      ],
+      "blocks": "source workflow production, not static documents",
+      "status": "OPEN"
+    },
+    {
+      "id": "BACKEND-TEST-BINDING",
+      "when": "before corresponding implementation validation",
+      "owners": [
+        "backend"
+      ],
+      "requires": [
+        "reuse existing Task0 isolated7-file source and reserved test path",
+        "bind actual application test environment/dependencies/fixtures and compatibility commands; Schema env not application env"
+      ],
+      "blocks": "backend implementation verification",
+      "status": "OPEN"
+    },
+    {
+      "id": "ACTUAL-DELIVERY-BINDING",
+      "when": "after candidate production, before integration/activation",
+      "owners": [
+        "WD",
+        "DF",
+        "backend",
+        "DSH"
+      ],
+      "requires": [
+        "actual DSL/published workflow/node IDs/Code/Schema/capability identities",
+        "backend/client source manifests and actual test artifacts",
+        "fingerprint composition/algorithm/value and exact C4 composite identity",
+        "actual origin/account/workspace/folder/service/catalog/schema/contract/version/ownership binding"
+      ],
+      "blocks": "integration and activation; not static candidate creation",
+      "status": "OPEN"
+    },
+    {
+      "id": "LATER-RUNTIME-ACCEPTANCE",
+      "when": "at separately authorized operation/acceptance/release",
+      "owners": [
+        "task decision",
+        "runtime owners",
+        "professional/user/consumer"
+      ],
+      "requires": [
+        "current explicit implementation/deploy/real-call authorization at relevant action",
+        "same-version real evidence, professional/user/consumer acceptance",
+        "retained formal M06 API/G0/release gates"
+      ],
+      "blocks": "relevant real operation/product acceptance/release",
+      "status": "OPEN"
+    }
+  ],
+  "not_required_as_blanket_preconditions": [
+    "all29 Skills or all cases complete",
+    "all rules formally effective",
+    "repeat generic S1 reference permission",
+    "invent old Fast39 adoption receipts",
+    "runtime success or new node IDs before creating the static candidate"
+  ],
+  "runtime_activation": "inherited C3 proposal disabled; after fields null",
+  "current_request_authorizes_implementation": false
+}

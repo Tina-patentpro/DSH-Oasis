@@ -1,0 +1,134 @@
+{
+  "requestKey": "10959308-8e6f-4675-84c3-e9c89a655721",
+  "runId": "v340-b99a5c74-ba33-4244-b5af-604d7c5d6c16",
+  "newModelPosts": 1,
+  "resubmissions": 0,
+  "professionalApiRequests": 0,
+  "provider": {
+    "at": "2026-11-14T00:19:02.193Z",
+    "http": 200,
+    "requestId": null,
+    "messageId": "9f5a1f3d-dc88-417d-b641-2ed5db02ae26",
+    "providerModel": "deepseek-flash",
+    "stopReason": "end_turn",
+    "messageStop": true,
+    "finalUsage": true,
+    "usage": {
+      "input_tokens": 467,
+      "output_tokens": 12976,
+      "cache_read_input_tokens": 5888,
+      "cache_creation_input_tokens": 0,
+      "streamIncomplete": true
+    }
+  },
+  "host": {
+    "status": "completed",
+    "failureCode": null,
+    "summary": {
+      "finishKind": "stop",
+      "usage": {
+        "inputTokens": 467,
+        "outputTokens": 12976,
+        "totalTokens": 19331,
+        "cacheReadTokens": 5888
+      }
+    },
+    "inputSha256": "d9f5bc4149a69714db96d88526bc99f1354d03104c1e9367de2df7a051a03e10",
+    "outputHash": "951b3c4deae292e5b87d4cb9b30ad8c6f8604f4aa05488ea12941aa6ee26c7e6",
+    "documentStatus": "completed_with_warnings",
+    "reviewStatus": "not-reviewed",
+    "deliverableStatus": "ready_with_warnings",
+    "fieldIssue": null
+  },
+  "wire": {
+    "nodeId": "Flow-1-1",
+    "requestKey": "10959308-8e6f-4675-84c3-e9c89a655721",
+    "runId": "v340-b99a5c74-ba33-4244-b5af-604d7c5d6c16",
+    "model": "deepseek-flash",
+    "effort": "low",
+    "maxOutputTokens": 16384,
+    "serializedBytes": 27207,
+    "systemSha256": "997a8e1fe68a5f6d398a23cb03a73fdcd605a494ebecac2f88272bb2409f6123",
+    "inputContentSha256": "9c3dbf1b59a52c8aa9d48d6fd714e9e0dc66769067a476c73097ae80357b3bf5",
+    "tools": 0,
+    "at": "2026-11-14T00:17:46.030Z",
+    "mode": "live",
+    "promptTokens": 6355,
+    "fullWireTokens": 7183,
+    "inputTokenBudget": 32000,
+    "protocolReserveTokens": 2000,
+    "conservativeInputTokens": 9183
+  },
+  "submittedAtBeijing": "2026-11-14T08:17:47.172000+08:00",
+  "meteredFeeCny": "0.05248876",
+  "accountDebitObservedCny": "0.00",
+  "immediateBalanceReadable": true,
+  "followupAt": "2026-11-14T00:20:06.625055+00:00",
+  "settlementLineItemAvailable": false,
+  "isolatedCredentialRemoved": true,
+  "artifacts": {
+    "M01-完整结果.md": {
+      "sha256": "951b3c4deae292e5b87d4cb9b30ad8c6f8604f4aa05488ea12941aa6ee26c7e6",
+      "bytes": 83260
+    },
+    "M01-技术背景研究正文.md": {
+      "sha256": "30494bc3411933cdd26623f1b687b4ec10c4172cc5f8856496d97dcc7cc611ef",
+      "bytes": 20483
+    }
+  },
+  "sourceProjection": [
+    {
+      "contentId": "m01.obj.001",
+      "trustStatus": "source_fact",
+      "sourceInputId": "research_request_text",
+      "exactLocatorAndHash": true
+    },
+    {
+      "contentId": "m01.func.001",
+      "trustStatus": "reasoned_inference",
+      "sourceInputId": "research_request_text",
+      "exactLocatorAndHash": true
+    },
+    {
+      "contentId": "m01.fail.001",
+      "trustStatus": "hypothesis_to_verify",
+      "sourceInputId": "research_request_text",
+      "exactLocatorAndHash": true
+    },
+    {
+      "contentId": "m01.search.001",
+      "trustStatus": "reasoned_inference",
+      "sourceInputId": "research_request_text",
+      "exactLocatorAndHash": true
+    }
+  ],
+  "historicalFilesUnchanged": true,
+  "t1Status": "missing",
+  "t1Rows": 0,
+  "warningIds": [
+    "host-Flow-1-1-missing-research_request_file",
+    "host-Flow-1-1-professional-review",
+    "host-Flow-1-1-missing-table-T1",
+    "W-M01-001",
+    "W-M01-002",
+    "W-M01-003",
+    "W-M01-004"
+  ],
+  "providerBalanceObservations": [
+    {
+      "at": "2026-11-14T00:19:14.008349+00:00",
+      "http": 200,
+      "observedDebitCny": "0.00"
+    },
+    {
+      "at": "2026-11-14T00:19:30.143752+00:00",
+      "http": 200,
+      "observedDebitCny": "0.00"
+    },
+    {
+      "at": "2026-11-14T00:20:06.625055+00:00",
+      "http": 200,
+      "observedDebitCny": "0.00"
+    }
+  ]
+}

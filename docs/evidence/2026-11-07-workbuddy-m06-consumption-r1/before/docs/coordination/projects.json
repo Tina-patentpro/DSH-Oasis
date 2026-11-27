@@ -1,0 +1,922 @@
+{
+  "schema_version": 1,
+  "coordination_version": "1.2.2",
+  "effective_date": "2026-11-05",
+  "decision_source": "AGENTS.md",
+  "charter": "docs/coordination/README.md",
+  "contracts": "docs/coordination/CONTRACTS.md",
+  "plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+  "ownership": {
+    "primary_frontend": "dsh-oasis",
+    "account_frontend": "workarea",
+    "finance_frontend": "workarea",
+    "backend": "backend",
+    "skill_producer": "patent-distillery",
+    "knowledge_owner": "knowledge",
+    "test_infrastructure": "test-library",
+    "bridge": "workbuddy-bridge",
+    "workflow_design_owner": "dify-design",
+    "methodology_owner": "five-step-method"
+  },
+  "projects": [
+    {
+      "id": "dsh-oasis",
+      "name": "DSH-Oasis",
+      "kind": "local",
+      "path": "DSH-Oasis",
+      "git_root": "DSH-Oasis",
+      "parent": null,
+      "readme": "DSH-Oasis/README.md",
+      "agents": "DSH-Oasis/AGENTS.md",
+      "responsibilities": [
+        "由Codex开发主要用户作业入口，提供Skills与经后台衔接Dify的专业服务；全部用户账户管理与财务页面归workarea，GitHub说明由WorkBuddy撰写。"
+      ],
+      "progress_sources": [
+        {
+          "path": "DSH-Oasis/docs/project-current-state.md",
+          "role": "current_entry"
+        },
+        {
+          "path": "DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+          "role": "current_entry"
+        },
+        {
+          "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+          "role": "planning_reference"
+        }
+      ],
+      "dependencies": [
+        {
+          "project": "patent-distillery",
+          "relation": "skill_input",
+          "condition": "固定业务Skill与当前Host/输入合同经核对后装配，不自动启用来源"
+        },
+        {
+          "project": "backend",
+          "relation": "runtime_api",
+          "condition": "专业API调用须满足实际模板、项目与后台合同"
+        },
+        {
+          "project": "test-library",
+          "relation": "validation_reference",
+          "condition": "按适用规则与准确输入分别验证实现和专业质量"
+        },
+        {
+          "project": "workarea",
+          "relation": "account_finance_entry",
+          "condition": "仅账户管理和财务服务入口指向workarea；DSH身份接入沿后台合同，本地Skill运行不以网站页面可用为前置"
+        }
+      ],
+      "aliases": [
+        "dsh-lab"
+      ],
+      "master_plan": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "plan_status": "planning_only",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "id": "workarea",
+      "name": "workarea",
+      "kind": "local",
+      "path": "workarea",
+      "git_root": "workarea",
+      "parent": null,
+      "readme": "workarea/README.md",
+      "agents": "workarea/AGENTS.md",
+      "responsibilities": [
+        "由Codex开发用户Web专业服务、账户管理和财务页面；身份/权限/账务事实归后台，网站推文内容发布与GitHub说明由WorkBuddy负责。"
+      ],
+      "progress_sources": [
+        {
+          "path": "workarea/docs/development/macos-setup.md",
+          "role": "current_entry"
+        },
+        {
+          "path": "workarea/docs/reports/2026-10-24-dependency-remediation.md",
+          "role": "dated_evidence"
+        },
+        {
+          "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+          "role": "planning_reference"
+        }
+      ],
+      "dependencies": [
+        {
+          "project": "backend",
+          "relation": "runtime_api",
+          "condition": "按实际页面调用与C0/旧接口兼容合同接入，不以服务封装存在推定可用"
+        },
+        {
+          "project": "test-library",
+          "relation": "validation_reference",
+          "condition": "专业服务按适用业务判据和案例核对；网站UI与账户/财务测试仍由本项目维护"
+        }
+      ],
+      "master_plan": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+      "plan_status": "planning_only",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "id": "backend",
+      "name": "绿洲慧写-后台4.0",
+      "kind": "local",
+      "path": "绿洲慧写-后台4.0",
+      "git_root": "绿洲慧写-后台4.0",
+      "parent": null,
+      "readme": "绿洲慧写-后台4.0/README.md",
+      "agents": "绿洲慧写-后台4.0/AGENTS.md",
+      "responsibilities": [
+        "由Codex开发以数据库和API为核心的后台，衔接Dify并维护身份、项目、任务、文件和资金事实；管理端独立交付，GitHub说明由WorkBuddy撰写。"
+      ],
+      "progress_sources": [
+        {
+          "path": "绿洲慧写-后台4.0/README.md",
+          "role": "current_entry"
+        },
+        {
+          "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-18-dual-client-support-plan.md",
+          "role": "planning_reference"
+        },
+        {
+          "path": "绿洲慧写-后台4.0/docs/superpowers/execution/2026-10-24-db0-n3-p19-05-joint-signoff-v26/README.md",
+          "role": "dated_evidence"
+        },
+        {
+          "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+          "role": "planning_reference"
+        }
+      ],
+      "dependencies": [
+        {
+          "project": "dify",
+          "relation": "runtime_api",
+          "condition": "实际应用/Schema/文件能力核对及既有后台前置满足后接入，不以计划放行"
+        },
+        {
+          "project": "test-library",
+          "relation": "validation_reference",
+          "condition": "共享业务案例需按后台任务、权限和资金合同适配并独立验证"
+        }
+      ],
+      "master_plan": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+      "plan_status": "planning_only",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "id": "knowledge",
+      "name": "专利知识库",
+      "kind": "local",
+      "path": "专利知识库",
+      "git_root": "专利知识库",
+      "parent": null,
+      "readme": "专利知识库/README.md",
+      "agents": "专利知识库/AGENTS.md",
+      "responsibilities": [
+        "由WorkBuddy从微信公众号、腾讯IMA和大型专利所定期采集信息并保存源知识库，基于知识库撰写并发布公众号及网站推文；Codex负责知识工程开发和Skills所需蒸馏，双方保留来源、版本、条件与许可。"
+      ],
+      "progress_sources": [
+        {
+          "path": "专利知识库/README.md",
+          "role": "current_entry"
+        },
+        {
+          "path": "专利知识库/1、分类目录/_共享知识/当前知识入口.json",
+          "role": "current_entry"
+        },
+        {
+          "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+          "role": "planning_reference"
+        }
+      ],
+      "dependencies": [
+        {
+          "project": "workbuddy-bridge",
+          "relation": "orchestration",
+          "condition": "仅请求WorkBuddy采集/文稿或实际跨工具交接时绑定任务和返回产物；Codex本地开发、蒸馏和Skills/工作流制作不以WorkBuddy取件为前置，投递/文稿不代业务接受"
+        },
+        {
+          "project": "five-step-method",
+          "relation": "methodology_input",
+          "condition": "仅采用具体五步法/要素表命题时核原件、版本/条件/许可；不是所有知识整理的统一前置"
+        }
+      ],
+      "master_plan": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+      "plan_status": "planning_only",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "id": "patent-distillery",
+      "name": "patent-distillery",
+      "kind": "local",
+      "path": "专利知识库/patent-distillery",
+      "git_root": "专利知识库/patent-distillery",
+      "parent": "knowledge",
+      "readme": "专利知识库/patent-distillery/README.md",
+      "agents": "专利知识库/patent-distillery/AGENTS.md",
+      "responsibilities": [
+        "由Codex蒸馏专利知识库中的知识和适用规则、制作版本化业务Skills，交付DSH及WorkBuddy入口资源与Dify工作流制作依据；WorkBuddy提供采集知识和GitHub说明，不承担Skills制作。"
+      ],
+      "progress_sources": [
+        {
+          "path": "专利知识库/patent-distillery/README.md",
+          "role": "current_entry"
+        },
+        {
+          "path": "专利知识库/patent-distillery/state.md",
+          "role": "dated_evidence"
+        },
+        {
+          "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+          "role": "planning_reference"
+        }
+      ],
+      "dependencies": [
+        {
+          "project": "knowledge",
+          "relation": "knowledge_input",
+          "condition": "按当前需求和用途读取已核依据，关键缺口/许可保留"
+        },
+        {
+          "project": "test-library",
+          "relation": "validation_reference",
+          "condition": "规则与参考样稿标明生效/试用及接受范围"
+        },
+        {
+          "project": "workbuddy-bridge",
+          "relation": "orchestration",
+          "condition": "仅请求WorkBuddy采集/文稿或实际跨工具交接时绑定任务和返回产物；Codex本地开发、蒸馏和Skills/工作流制作不以WorkBuddy取件为前置，投递/文稿不代业务接受"
+        }
+      ],
+      "master_plan": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+      "plan_status": "planning_only",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "skills_workflow_guidance_ref": "SKILLS-WORKFLOW-GUIDANCE-20261106-G1"
+    },
+    {
+      "id": "test-library",
+      "name": "测试集库",
+      "kind": "local",
+      "path": "测试集库",
+      "git_root": "测试集库",
+      "parent": null,
+      "readme": "测试集库/README.md",
+      "agents": "测试集库/AGENTS.md",
+      "responsibilities": [
+        "由Codex建设维护Skills和Dify测试基础设施，规则用于Skills及工作流制作；参考文稿、规则生效、技术运行和专业接受分别维护，GitHub说明由WorkBuddy撰写。"
+      ],
+      "progress_sources": [
+        {
+          "path": "测试集库/README.md",
+          "role": "current_entry"
+        },
+        {
+          "path": "测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段07/阶段7当前状态.json",
+          "role": "dated_evidence"
+        },
+        {
+          "path": "测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段08/阶段8当前状态.json",
+          "role": "dated_evidence"
+        },
+        {
+          "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+          "role": "planning_reference"
+        }
+      ],
+      "dependencies": [
+        {
+          "project": "patent-distillery",
+          "relation": "test_subject",
+          "condition": "实际测试Skills时绑定准确受测业务Skill；规则与参考文稿制作不等待受测实现"
+        },
+        {
+          "project": "dify",
+          "relation": "test_subject",
+          "condition": "实际运行Dify测试时绑定准确工作流/应用版本；不是规则制作的启动前置"
+        },
+        {
+          "project": "five-step-method",
+          "relation": "methodology_input",
+          "condition": "方法建议经规则审阅才进入适用判据，保留原规则效力/接受记录，不由方法原件自动升格"
+        },
+        {
+          "project": "dify-design",
+          "relation": "design_input",
+          "condition": "静态规格可先核对；本地候选不等外部实例运行，评价答案不进入设计生成输入"
+        }
+      ],
+      "master_plan": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+      "plan_status": "planning_only",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "id": "workbuddy-bridge",
+      "name": "WorkBuddy连接器",
+      "kind": "local",
+      "path": "workbuddy连接器",
+      "git_root": "workbuddy连接器/workbuddy-session-bridge",
+      "parent": null,
+      "readme": "workbuddy连接器/README.md",
+      "agents": "workbuddy连接器/AGENTS.md",
+      "responsibilities": [
+        "由Codex开发Codex与WorkBuddy任务及返回衔接工具，兼具内部效率和独立开源专业展示价值；WorkBuddy撰写GitHub说明，Computer Use、文档与Git辅助交接，不操作内部数据库。"
+      ],
+      "progress_sources": [
+        {
+          "path": "workbuddy连接器/README.md",
+          "role": "current_entry"
+        },
+        {
+          "path": "workbuddy连接器/workbuddy-session-bridge/README.md",
+          "role": "current_entry"
+        },
+        {
+          "path": "workbuddy连接器/迁移记录/Mac开发计划-20261014.md",
+          "role": "dated_evidence"
+        },
+        {
+          "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+          "role": "planning_reference"
+        }
+      ],
+      "dependencies": [],
+      "repo_readme": "workbuddy连接器/workbuddy-session-bridge/README.md",
+      "repo_agents": "workbuddy连接器/workbuddy-session-bridge/AGENTS.md",
+      "master_plan": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+      "plan_status": "planning_only",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "id": "dify",
+      "name": "Dify工作流",
+      "kind": "external",
+      "path": null,
+      "git_root": null,
+      "parent": null,
+      "readme": null,
+      "agents": null,
+      "responsibilities": [
+        "由Codex制作和适配外部Dify实例的工作流，完成获准的导入、环境配置、独立验证与版本化导出，经后台为前端提供专业能力；GitHub说明由WorkBuddy撰写，不以本地YML存在认定部署。"
+      ],
+      "progress_sources": [
+        {
+          "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-17-dify-integration-plan.md",
+          "role": "planning_reference"
+        },
+        {
+          "path": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+          "role": "planning_reference"
+        }
+      ],
+      "dependencies": [
+        {
+          "project": "patent-distillery",
+          "relation": "workflow_basis",
+          "condition": "专业业务工作流使用固定业务Skill/规则/输入输出合同，Dify运行证据单独取得；原Batch3通道仅消费具名来源执行Skill和输入判据，不以其冒充业务包"
+        },
+        {
+          "project": "test-library",
+          "relation": "validation_reference",
+          "condition": "同组业务判据分别测试，Skills通过不推出Dify通过"
+        },
+        {
+          "project": "dify-design",
+          "relation": "design_input",
+          "condition": "仅导入对应本地固定设计/hash；实例变更回写版本差异，外部测试与后台接入另验"
+        }
+      ],
+      "master_plan": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+      "plan_status": "planning_only",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "skills_workflow_guidance_ref": "SKILLS-WORKFLOW-GUIDANCE-20261106-G1"
+    },
+    {
+      "id": "dify-design",
+      "name": "Dify工作流设计",
+      "kind": "local",
+      "path": "2、工作流设计",
+      "git_root": null,
+      "parent": null,
+      "readme": "2、工作流设计/README.md",
+      "agents": "2、工作流设计/AGENTS.md",
+      "responsibilities": [
+        "由Codex负责本地Dify工作流设计与制作，维护YML、节点、Schema和规则/Skill映射；实例运行及后台服务发布分别验收，GitHub说明由WorkBuddy撰写，原件治理边界保持。"
+      ],
+      "progress_sources": [
+        {
+          "path": "2、工作流设计/README.md",
+          "role": "current_entry"
+        },
+        {
+          "path": "docs/coordination/observations/2026-10-25-migrated-projects-intake.md",
+          "role": "dated_evidence"
+        },
+        {
+          "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+          "role": "planning_reference"
+        }
+      ],
+      "dependencies": [
+        {
+          "project": "patent-distillery",
+          "relation": "workflow_basis",
+          "condition": "专业业务设计消费固定业务Skill及规则映射，旧YML来源单列；原Batch3通道复用具名来源执行Skill，不等待待测业务包或全部Skills完成"
+        },
+        {
+          "project": "test-library",
+          "relation": "validation_reference",
+          "condition": "适用规则用于设计基础并记录节点/变量/检查落点；兄弟测试集库为当前规则权威，源端副本不自动覆盖"
+        },
+        {
+          "project": "five-step-method",
+          "relation": "methodology_input",
+          "condition": "仅涉及方法的节点核对原件与用途，冲突先列差异，不改变14节点合同或全局等待"
+        },
+        {
+          "project": "dify",
+          "relation": "runtime_feedback",
+          "condition": "WD-04仅消费固定设计对应实例导出/hash与实际或未运行反馈；不倒作同一候选静态出口的前置。原Batch3通道实际出口仍是后续业务批次前置，失败/未运行反馈不满足该出口；不因此授权实例操作"
+        }
+      ],
+      "master_plan": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+      "plan_status": "planning_only",
+      "entry_policy": "imported_source_read_only",
+      "coordination_entry": "docs/coordination/entries/dify-design.md",
+      "embedded_git_roots": [
+        "2、工作流设计/1、专利工作流/Flow-1-3-概要专利检索"
+      ],
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "skills_workflow_guidance_ref": "SKILLS-WORKFLOW-GUIDANCE-20261106-G1"
+    },
+    {
+      "id": "five-step-method",
+      "name": "绿洲五步法",
+      "kind": "local",
+      "path": "1、绿洲慧写五步法",
+      "git_root": null,
+      "parent": null,
+      "readme": "1、绿洲慧写五步法/README.md",
+      "agents": "1、绿洲慧写五步法/AGENTS.md",
+      "responsibilities": [
+        "维护绿洲五步法与技术要素表的方法论原件和培训来源；Codex负责技术映射及开发，WorkBuddy负责基于知识库的传播文稿与GitHub说明，具体用途仍须独立审阅。"
+      ],
+      "progress_sources": [
+        {
+          "path": "1、绿洲慧写五步法/README.md",
+          "role": "current_entry",
+          "scope": "methodology_and_training_navigation_not_professional_acceptance"
+        },
+        {
+          "path": "1、绿洲慧写五步法/PPT制作/README.md",
+          "role": "dated_evidence",
+          "scope": "2026-06-13_training_materials_only"
+        },
+        {
+          "path": "docs/coordination/observations/2026-10-25-migrated-projects-intake.md",
+          "role": "dated_evidence"
+        },
+        {
+          "path": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+          "role": "planning_reference"
+        }
+      ],
+      "dependencies": [
+        {
+          "project": "test-library",
+          "relation": "validation_reference",
+          "condition": "现有规则仅作方法具体用途审阅依据或反馈；原件/候选映射可先交，不以该方法尚待派生的新规则为前置"
+        },
+        {
+          "project": "workbuddy-bridge",
+          "relation": "orchestration",
+          "condition": "仅请求WorkBuddy采集/文稿或实际跨工具交接时绑定任务和返回产物；Codex本地开发、蒸馏和Skills/工作流制作不以WorkBuddy取件为前置，投递/文稿不代业务接受"
+        }
+      ],
+      "master_plan": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+      "plan_status": "planning_only",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    }
+  ],
+  "revision_note": "2026-10-25规划1.3全面文档审计修订为1.3.1；协同1.2.1补齐反馈/交接关系，不启动业务。；2026-11-05 BM1-R1明确WorkBuddy采集/内容/GitHub说明、Codex全部开发及Skills/工作流制作；协同1.2.2，仅文档。",
+  "independent_plan_index": "docs/coordination/independent-plans.json",
+  "compatibility_plan": "docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+  "planning_status": "planning_only",
+  "research_reference_addendum": "docs/coordination/plans/2026-10-25-research-rules-and-migration-addendum.md",
+  "pending_migrations": [],
+  "migration_records": [
+    {
+      "reference_id": "MIG-DIFY-DESIGN-WIN-MAC",
+      "reported_project_name": "dify工作流设计项目",
+      "from": "WinPC",
+      "to": "本MAC",
+      "status": "LOCAL_PRESENCE_CONFIRMED_SOURCE_EQUIVALENCE_UNVERIFIED",
+      "local_path": "2、工作流设计",
+      "git_root": null,
+      "git_head": null,
+      "binding": "BOUND_TO_OBSERVED_LOCAL_DIRECTORY",
+      "planned_relationship": "核验实际本地设计项目身份后登记其源码关系；dify外部运行实例/应用身份及部署验证分别保留，不以设计迁移替代运行登记。",
+      "not_claimed": [
+        "WinPC-to-Mac byte-complete transfer",
+        "business acceptance",
+        "deployed or callable service"
+      ],
+      "intake_reference": "docs/coordination/observations/2026-10-25-migrated-projects-intake.md",
+      "affected_work_packages": {
+        "dify": [
+          "DF-01",
+          "DF-02",
+          "DF-03"
+        ],
+        "backend": [
+          "BE-01",
+          "BE-03"
+        ],
+        "test-library": [
+          "TL-02",
+          "TL-04"
+        ],
+        "dify-design": [
+          "WD-01",
+          "WD-02",
+          "WD-03",
+          "WD-04"
+        ]
+      },
+      "dependency_scope": "Only the function consuming the specific imported design/version waits; existing unrelated work does not.",
+      "project_id": "dify-design",
+      "source_equivalence": "NOT_VERIFIED_NO_SOURCE_MANIFEST",
+      "local_presence": "CONFIRMED_2026-10-25",
+      "embedded_git_roots": [
+        "2、工作流设计/1、专利工作流/Flow-1-3-概要专利检索"
+      ]
+    },
+    {
+      "reference_id": "MIG-FIVE-STEP-METHOD-WIN-MAC",
+      "reported_project_name": "绿洲五步法专利撰写方法论项目",
+      "from": "WinPC",
+      "to": "本MAC",
+      "status": "LOCAL_PRESENCE_CONFIRMED_SOURCE_EQUIVALENCE_UNVERIFIED",
+      "local_path": "1、绿洲慧写五步法",
+      "git_root": null,
+      "git_head": null,
+      "binding": "BOUND_TO_OBSERVED_LOCAL_DIRECTORY",
+      "planned_relationship": "独立方法论来源项目；按用途经知识/规则/Skill映射供下游消费。内容/版本/许可和冲突未核时不覆盖现合同，不自动合并Git。",
+      "not_claimed": [
+        "WinPC-to-Mac byte-complete transfer",
+        "business acceptance",
+        "deployed or callable service"
+      ],
+      "intake_reference": "docs/coordination/observations/2026-10-25-migrated-projects-intake.md",
+      "affected_work_packages": {
+        "knowledge": [
+          "KN-01",
+          "KN-02",
+          "KN-03",
+          "KN-04"
+        ],
+        "patent-distillery": [
+          "PD-01",
+          "PD-02"
+        ],
+        "test-library": [
+          "TL-01",
+          "TL-02",
+          "TL-05"
+        ],
+        "dify": [
+          "DF-01",
+          "DF-02"
+        ],
+        "dify-design": [
+          "WD-01",
+          "WD-02",
+          "WD-03",
+          "WD-04"
+        ],
+        "five-step-method": [
+          "ME-01",
+          "ME-02",
+          "ME-03",
+          "ME-04"
+        ]
+      },
+      "dependency_scope": "Only adopted method/knowledge/rule usages wait for their reviewed originals; no blanket wait for every project.",
+      "project_id": "five-step-method",
+      "source_equivalence": "NOT_VERIFIED_NO_SOURCE_MANIFEST",
+      "local_presence": "CONFIRMED_2026-10-25"
+    }
+  ],
+  "migration_intake_reference": "docs/coordination/observations/2026-10-25-migrated-projects-intake.md",
+  "planning_audit_reference": "docs/coordination/audits/2026-10-25-plan-1.3-audit.md",
+  "business_mode_reference": {
+    "id": "BUSINESS-MODE-20261105-BM1",
+    "revision": "BM1-R1",
+    "date": "2026-11-05",
+    "path": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+    "plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+    "anchor": "oasis-business-mode-bm1",
+    "planning_status": "documentation_only_no_business_execution",
+    "entrypoint_target": [
+      "DSH plugin",
+      "WorkBuddy user plugin (planned; mechanism and implementation unbound)"
+    ],
+    "legacy_billing": "retain maintenance, not priority",
+    "transitional_backend": "existing third-party development version on Aliyun Qingdao; actual production capabilities separately verified",
+    "time_basis": null,
+    "professional_paid_capabilities_window_months": [
+      1,
+      2
+    ],
+    "self_built_open_source_backend_replacement_window_months": [
+      2,
+      3
+    ],
+    "bridge_dual_role": [
+      "internal_efficiency",
+      "independent_open_source_expertise_GitHub_reach_and_consulting"
+    ],
+    "open_source_license": "UNDECIDED_PER_RELEASE_SCOPE",
+    "monetization": [
+      "patent-enterprise AI transformation consulting",
+      "private deployment for patent firms and large enterprises",
+      "professional paid capabilities; exact delivery and pricing undecided"
+    ],
+    "roles_id": "BUSINESS-ROLES-20261105-BM1-R1",
+    "roles_anchor": "bm1-roles-r1",
+    "brief_plan": "docs/coordination/plans/2026-11-05-overall-plan-brief-bm1-r1.md",
+    "execution_roles": {
+      "development": "Codex",
+      "skill_creation": "Codex",
+      "workflow_creation": "Codex",
+      "information_collection": "WorkBuddy",
+      "article_writing_and_publishing": "WorkBuddy",
+      "github_explanatory_writing": "WorkBuddy"
+    },
+    "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+    "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+  },
+  "planned_components": [
+    {
+      "id": "workbuddy-user-plugin",
+      "kind": "planned_component_not_registered_project",
+      "path": null,
+      "git_root": null,
+      "implementation_owner": "Codex",
+      "contract_coordination_project": "dsh-oasis",
+      "status": "CODEX_EXECUTOR_CONFIRMED_MECHANISM_AND_DIRECTORY_UNBOUND",
+      "business_mode_reference": "BUSINESS-MODE-20261105-BM1",
+      "not_equivalent_to": "workbuddy-bridge",
+      "blocking_scope": "WorkBuddy user entry only; not DSH or all Skill releases",
+      "implementation_project": null
+    }
+  ],
+  "execution_roles": {
+    "development": "Codex",
+    "skill_creation": "Codex",
+    "workflow_creation": "Codex",
+    "information_collection": "WorkBuddy",
+    "article_writing_and_publishing": "WorkBuddy",
+    "github_explanatory_writing": "WorkBuddy"
+  },
+  "test_asset_use_reference": {
+    "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+    "revision": "BM1-R1/S1",
+    "date": "2026-11-05",
+    "path": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+    "anchor": "bm1-test-assets-s1",
+    "plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+    "plan_anchor": "oasis-test-assets-bm1-r1-s1",
+    "scope": "rule_production_inputs_sample_development_tests_and_public_account_website_material",
+    "execution_roles_unchanged": true,
+    "evaluation_only_isolated": true,
+    "no_asset_reclassification_or_publication": true,
+    "evidence": "docs/coordination/execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md"
+  },
+  "workstreams": [
+    {
+      "id": "landing-page",
+      "name": "网站落地页",
+      "kind": "cross_project_workstream_existing_repository",
+      "implementation_path": "Frontpage",
+      "git_root": "Frontpage",
+      "agents": "Frontpage/AGENTS.md",
+      "readme": "Frontpage/README.md",
+      "master_plan": "Frontpage/docs/plans/2026-11-05-frontpage-master-plan.md",
+      "technical_owner": "Codex",
+      "content_and_content_publication_owner": "WorkBuddy",
+      "technical_entry_sources": [
+        "Frontpage/package.json",
+        "Frontpage/src/App.tsx",
+        "Frontpage/docs/content/site-content-constitution.md",
+        "Frontpage/docs/plans/2026-09-03-responsive-layout-release-gates.md"
+      ],
+      "tasks": [
+        "LP-01",
+        "LP-02",
+        "LP-03"
+      ],
+      "reference": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "identity_observation": "Local repository identity observed; current production and deployment acceptance not reverified",
+      "current_followup": {
+        "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+        "path": "Frontpage/docs/plans/2026-11-05-frontpage-master-plan.md",
+        "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+        "revision": "BM1-R1/S2-R1"
+      },
+      "progress_sources": [
+        {
+          "path": "Frontpage/README.md",
+          "role": "current_entry",
+          "scope": "coordination_navigation_only_not_runtime_or_acceptance"
+        },
+        {
+          "path": "Frontpage/docs/plans/2026-11-05-frontpage-master-plan.md",
+          "role": "planning_reference",
+          "scope": "plan not execution or acceptance"
+        }
+      ]
+    },
+    {
+      "id": "wechat-official-account",
+      "name": "微信公众号",
+      "kind": "content_operations_workstream_no_code_project",
+      "implementation_path": null,
+      "git_root": null,
+      "agents": null,
+      "readme": null,
+      "master_plan": "docs/coordination/plans/2026-11-05-wechat-official-account-workstream-plan.md",
+      "technical_owner": "Codex",
+      "content_and_content_publication_owner": "WorkBuddy",
+      "channel_identity": "UNBOUND; do not assume video account identity",
+      "tasks": [
+        "WX-01",
+        "WX-02",
+        "WX-03"
+      ],
+      "reference": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "current_followup": {
+        "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+        "path": "docs/coordination/plans/2026-11-05-wechat-official-account-workstream-plan.md",
+        "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+        "revision": "BM1-R1/S2-R1"
+      },
+      "progress_sources": [
+        {
+          "path": "docs/coordination/plans/2026-11-05-wechat-official-account-workstream-plan.md",
+          "role": "planning_reference",
+          "scope": "plan not execution or acceptance"
+        }
+      ],
+      "current_entry_status": "UNREGISTERED_NOT_INFERRED_FROM_PLAN"
+    }
+  ],
+  "public_channels_reference": {
+    "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+    "revision": "BM1-R1/S2-R1",
+    "path": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+    "anchor": "bm1-public-channels-s2-r1",
+    "plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+    "plan_anchor": "oasis-public-channels-bm1-r1-s2-r1",
+    "workstream_ids": [
+      "landing-page",
+      "wechat-official-account"
+    ],
+    "evidence": "docs/coordination/execution/2026-11-05-bm1-r1-s2-audit-r1/审计与修订记录.md",
+    "previous_id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+    "previous_revision": "BM1-R1/S2",
+    "task_flow": {
+      "nodes": [
+        "LP-01",
+        "LP-02.page",
+        "LP-02.article",
+        "LP-03.prepare",
+        "LP-03.verify",
+        "WX-01",
+        "WX-02",
+        "WX-03.website",
+        "WX-03.wechat"
+      ],
+      "edges": [
+        {
+          "from": "LP-01",
+          "to": "LP-02.page",
+          "condition": "selected page technical preparation only"
+        },
+        {
+          "from": "WX-01",
+          "to": "WX-02",
+          "condition": "selected article material"
+        },
+        {
+          "from": "WX-02",
+          "to": "LP-02.article",
+          "condition": "only article integration, not all public pages"
+        },
+        {
+          "from": "LP-02.page",
+          "to": "LP-03.prepare",
+          "condition": "when this selected page needs new technical delivery"
+        },
+        {
+          "from": "LP-02.article",
+          "to": "LP-03.prepare",
+          "condition": "when this selected article needs new integration"
+        },
+        {
+          "from": "LP-03.prepare",
+          "to": "WX-03.website",
+          "condition": "or reuse existing same-version hosting proof; no whole-package wait"
+        },
+        {
+          "from": "WX-02",
+          "to": "WX-03.website",
+          "condition": "selected article and original channel approval"
+        },
+        {
+          "from": "WX-03.website",
+          "to": "LP-03.verify",
+          "condition": "post-event verification only"
+        },
+        {
+          "from": "WX-02",
+          "to": "WX-03.wechat",
+          "condition": "WeChat original gates; independent of landing-page completion"
+        }
+      ],
+      "scope": "conditional planning only; prepare may reuse evidence; node suffixes are steps of the original six tasks, not extra work packages"
+    },
+    "source_authority": "workstreams scopes; no parallel business status"
+  },
+  "skills_workflow_guidance_reference": {
+    "id": "SKILLS-WORKFLOW-GUIDANCE-20261106-G1",
+    "path": "专利业务Skills清单.md",
+    "registered_at": "2026-11-06T08:27:34.631771+08:00",
+    "registration_revision": "G1",
+    "source_declared_save_date": "2026-11-06",
+    "source_declared_version": null,
+    "source_sha256_at_registration": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+    "role": "target_product_guidance_not_runtime_or_rule_authority",
+    "scope": "future_Skills_and_Dify_workflow_planning_creation_and_adaptation",
+    "core_project_ids": [
+      "patent-distillery",
+      "dify-design",
+      "dify"
+    ],
+    "target_ids": [
+      "M00",
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10",
+      "M11",
+      "M12",
+      "M13",
+      "M14",
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "E10",
+      "E11",
+      "E12",
+      "E13",
+      "E14"
+    ],
+    "supporting_tool": "T01 separate; not the 30th business Skill",
+    "first_batch_order": "recommendation_only_not_approved_release_order",
+    "read_requirement": "Apply root R1/EXEC-R2 for applicable planning or execution/resumption; read current raw bytes, record version/hash, selected IDs and bounded differences from registration.",
+    "preserves": "BM1-R1/S1/S2-R1; original source/rule authority, scope exclusions, contracts, independent acceptance and historical FAIL/UNKNOWN; no execution permission",
+    "overall_plan_anchor": "oasis-skills-workflow-guidance-g1",
+    "record": "docs/coordination/execution/2026-11-06-skills-workflow-guidance-g1/登记记录.md"
+  }
+}

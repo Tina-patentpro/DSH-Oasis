@@ -1,0 +1,27 @@
+✔ trusted zero catalog exposes mode, and real transport prepares input without creating a business task (25.148417ms)
+✔ zero entry selects memory preview while ordinary entry retains real task creation (7.057125ms)
+✔ input changes invalidate confirmation/results; cancellation rejects late results without retry (4.831625ms)
+✔ normal catalog cannot construct a zero preview; mismatched preparation identity is refused (4.342625ms)
+✔ zero function center disables ordinary service/import/non-M06 entries and offers only M06 preview (6.071416ms)
+✔ zero settings never requests account status or credentials after Host capability is read (4.194459ms)
+✔ zero PanelPages renders eight shared inputs without task records or saved/reviewed claims (4.487208ms)
+✖ embedded hydration, local panel opening and preparation issue only readonly RPCs and retain actual repository (5.843583ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 174.900708
+
+✖ failing tests:
+
+test at test/v340-zero-preview.test.mjs:91:1
+✖ embedded hydration, local panel opening and preparation issue only readonly RPCs and retain actual repository (5.843583ms)
+  Error: 零生成预览上下文不可用
+      at prepareV340ZeroPreview (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/client/workbench-store.js:809:188)
+      at Object.invoke [as prepareV340ZeroPreview] (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/client/workbench-store.js:1890:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-zero-preview.test.mjs:97:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

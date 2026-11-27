@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/node",
+    "--import",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-public-build-r1/archive-source-loader.mjs",
+    "--input-type=module",
+    "-e",
+    "import assert from 'node:assert/strict';\nimport {loadClaimsSkill} from './src/claims-skill-pin.js';\nimport {loadPublicClaimsV2Skill} from './src/public-claims-v2-pin.js';\nimport {loadM06BusinessInstruction} from './src/m06-business-resources.js';\nimport {loadM06BusinessInstruction013} from './src/m06-business-resources-0.1.3.js';\nawait assert.rejects(loadClaimsSkill(),{code:'BUILTIN_SKILL_UNAVAILABLE'});\nawait assert.rejects(loadPublicClaimsV2Skill(),{code:'BUILTIN_SKILL_UNAVAILABLE'});\nassert.throws(loadM06BusinessInstruction,{code:'M06_BUSINESS_RESOURCE_UNAVAILABLE'});\nassert.throws(loadM06BusinessInstruction013,{code:'M06_BUSINESS_RESOURCE_UNAVAILABLE'});\nconsole.log('4 excluded-resource paths refuse without fallback; no dispatch');\n"
+  ],
+  "exitCode": 0
+}

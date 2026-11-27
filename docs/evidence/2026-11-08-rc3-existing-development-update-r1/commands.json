@@ -1,0 +1,65 @@
+[
+  {
+    "stage": "old installation check",
+    "argv": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "--check",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1"
+    ],
+    "controllerSHA256AtExecution": "6cc7d4f37f3d0dc1c9f568196bbd42f09257bbec19c655811577e14e624be77a",
+    "exitCode": 0,
+    "log": "check-before.log"
+  },
+  {
+    "stage": "existing-root controller handoff and upgrade",
+    "argv": [
+      "tools/bin/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-rc3-existing-development-update-r1/update-to-rc3.mjs"
+    ],
+    "exitCode": 0,
+    "log": "update-to-rc3.log"
+  },
+  {
+    "stage": "actual installed SDK/SSR/read-only composition",
+    "argv": [
+      "tools/bin/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-rc3-existing-development-update-r1/verify-installed-readonly.mjs"
+    ],
+    "exitCode": 0,
+    "log": "installed-readonly.log"
+  },
+  {
+    "stage": "new installation check",
+    "argv": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "--check",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1"
+    ],
+    "controllerSHA256AtExecution": "0398b0c882b3a78186239ab43872a3b67944d65fa60b886a84a27cf3b23fa085",
+    "exitCode": 0,
+    "log": "check-after.log"
+  },
+  {
+    "stage": "old release/profile/receipt, control snapshots,48 files and125 installed members",
+    "argv": [
+      "python3",
+      "-"
+    ],
+    "exitCode": 0,
+    "result": "preservation-result.json"
+  },
+  {
+    "stage": "whitespace",
+    "argv": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "docs/project-current-state.md",
+      "docs/evidence/2026-10-23-stage5-progress-and-remaining.md"
+    ],
+    "exitCode": 0
+  }
+]

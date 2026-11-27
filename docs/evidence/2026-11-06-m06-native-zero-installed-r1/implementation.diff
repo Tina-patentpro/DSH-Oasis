@@ -1,0 +1,94 @@
+diff --git a/scripts/f-installed-runtime.mjs b/scripts/f-installed-runtime.mjs
+index 7f5aef0..b72999b 100644
+--- a/scripts/f-installed-runtime.mjs
++++ b/scripts/f-installed-runtime.mjs
+@@ -5,7 +5,7 @@ import {join,resolve,dirname,relative,sep,isAbsolute} from 'node:path'
+ import {fileURLToPath,pathToFileURL} from 'node:url'
+ import {createHash,randomUUID} from 'node:crypto'
+ import {isDeepStrictEqual} from 'node:util'
+-import {canonicalDirectory,assertInstalledPath,assertInstalledDataRoots,acquireInstalledLease,installedGateSHA256} from '../patches/storage-json-single-owner/installed-lease.mjs'
++import {canonicalDirectory,assertInstalledPath,assertInstalledDataRoots,acquireInstalledLease,assertInstalledLease,installedGateSHA256} from '../patches/storage-json-single-owner/installed-lease.mjs'
+ import {acquireJsonRootOwnership} from '../patches/storage-json-single-owner/ownership.mjs'
+ const script=fileURLToPath(import.meta.url)
+ export const installationVersions=Object.freeze({desktop:'2.0.17',dsh:'0.2.0-rc.2',cordis:'4.0.4',sidebar:'0.24.1',node:'24.21.0',pnpm:'11.8.0'})
+@@ -41,6 +41,15 @@ export function verifySignedInstallationApp(app){
+  const version=cp.execFileSync('/usr/bin/plutil',['-extract','CFBundleShortVersionString','raw','-o','-',join(app,'Contents/Info.plist')],{encoding:'utf8'}).toString().trim()
+  if(version!==installationVersions.desktop)throw Error('fixed signed App version mismatch')
+ }
++function nativeZeroPolicy(release,template){
++ if(!Object.hasOwn(template,'nativeZeroGeneration'))return false
++ const p=template.nativeZeroGeneration,guards=['src/index.js','src/workbench-rpc.js']
++ if(p?.schemaVersion!==1||p.policy!=='m06-native-zero-generation-installed-v1'||!idOK(p.archiveSHA256)
++  ||!isDeepStrictEqual(p.budget,{model:0,api:0,upload:0,payment:0})
++  ||!isDeepStrictEqual(Object.keys(p.guardedFiles??{}).sort(),guards.toSorted()))throw Error('installed native zero budget/guard policy mismatch')
++ for(const file of guards)if(!idOK(p.guardedFiles[file])||installationFileHash(join(release,template.components['oasis-professional-service'],file))!==p.guardedFiles[file])throw Error('installed native zero guard drift')
++ return true
++}
+ function verifyPolicy(payload,manifest){
+  const template=read(assertInstalledPath(payload,join(payload,'profile-template.json'),{directory:false})),expected=componentVersions(manifest.checkpoint)
+  if(template.checkpoint!==manifest.checkpoint||!isDeepStrictEqual(Object.keys(template.components??{}).sort(),Object.keys(expected).sort())||template.manifest?.packageManager!=='pnpm@11.8.0'||template.manifest?.scripts)throw Error('installed component/profile policy mismatch')
+@@ -60,6 +69,7 @@ function verifyPolicy(payload,manifest){
+  if(disabledPlugins.some(id=>!found.has(id)))throw Error('installed no-model policy missing')
+  const guard=join(payload,template.components['dsh-storage-json-single-owner'])
+  if(installationFileHash(join(guard,'index.mjs'))!==installedProviderIndexSHA256||installationFileHash(join(guard,'installed-lease.mjs'))!==installedGateSHA256())throw Error('installed provider lease policy drift')
++ nativeZeroPolicy(payload,template)
+ }
+ export function verifyFBundle(bundle,expectedSHA256){
+  canonicalDirectory(bundle)
+@@ -114,6 +124,20 @@ function activate(root,release){
+  save(join(profile,'package.json'),{...template.manifest,dependencies});save(join(profile,'cordis.yml'),'[]\n')
+  save(join(profile,'cordis.patch.yml'),applyTemplate(template.patch,release));save(join(profile,'pnpm-workspace.yaml'),fs.readFileSync(join(release,'pnpm-workspace.yaml'),'utf8'))
+  materialize(root,release,profile)
++ if(nativeZeroPolicy(release,template)){
++  // Prepare configuration only, before finishRelease seals the active Profile.
++  // This fixed Node subprocess never invokes Desktop, Host boot or plugin apply.
++  const program=`import {pathToFileURL} from 'node:url';
++   globalThis.fetch=()=>{throw Error('offline Desktop preparation cannot fetch')};
++   const [modulePath,home]=process.argv.slice(1);
++   const {prepareDesktopProfile}=await import(pathToFileURL(modulePath).href);
++   const p=prepareDesktopProfile('1',home,'darwin','desktop',undefined,
++    {requested:'disabled',effective:'disabled',legacyDefaulted:true},{lanAddresses:[],aaEnabled:false});
++   console.log(JSON.stringify({requiresDependencyMigration:p.requiresDependencyMigration,port:p.port,networkExposure:p.networkExposure}));`
++  const result=JSON.parse(cp.execFileSync(join(release,'node/bin/node'),['--input-type=module','--eval',program,join(release,'App/DSH Desktop.app/Contents/Resources/app/lib/profile.js'),join(root,'data/home')],
++   {cwd:release,env:{...installedEnvironment(root),OASIS_NATIVE_ZERO_GENERATION:'1'},encoding:'utf8',stdio:'pipe'}))
++  if(result.requiresDependencyMigration!==false||result.networkExposure!=='loopback'||!Number.isSafeInteger(result.port))throw Error('installed native zero Desktop preparation incomplete')
++ }
+ }
+ function controls(root){return Object.fromEntries(installationControlFiles.map(p=>[p,installationFileHash(assertInstalledPath(root,join(root,'control',p),{directory:false}))]))}
+ function stateFor(root){
+@@ -217,16 +241,31 @@ export async function rollbackFInstallation(root,{releaseId,expectedCurrent}){
+   atomic(join(root,'installation.json'),{...state,current:releaseId});return checkFInstallation(root)
+  })
+ }
+-export async function startFInstallation(root){
++function installedEnvironment(root,leaseEnv={}){
++ const dataRoot=join(root,'data'),home=join(dataRoot,'user'),node=join(root,'control/node')
++ return{...leaseEnv,PATH:dirname(node)+':/usr/bin:/bin:/usr/sbin:/sbin',HOME:home,CFFIXED_USER_HOME:home,ZDOTDIR:home,DSH_HOME:join(dataRoot,'home'),TMPDIR:join(dataRoot,'temp'),MAC_CHROMIUM_TMPDIR:join(dataRoot,'temp'),XDG_CACHE_HOME:join(dataRoot,'cache'),XDG_CONFIG_HOME:join(home,'.config'),XDG_DATA_HOME:join(home,'.local/share'),NPM_CONFIG_USERCONFIG:'/dev/null',NPM_CONFIG_GLOBALCONFIG:'/dev/null',NPM_CONFIG_CACHE:join(dataRoot,'cache/npm'),COREPACK_ENABLE_NETWORK:'0',npm_config_manage_package_manager_versions:'false',DSH_TELEMETRY_DISABLED:'1',HTTP_PROXY:'http://127.0.0.1:9',HTTPS_PROXY:'http://127.0.0.1:9',ALL_PROXY:'http://127.0.0.1:9',NO_PROXY:'localhost,127.0.0.1,::1',SHELL:'/bin/zsh',LANG:'en_US.UTF-8',LC_ALL:'en_US.UTF-8',CI:'true'}
++}
++export async function withInstalledLaunchSpec(root,callback){
++ if(typeof callback!=='function')throw Error('installed launch spec callback required')
+  return withInstalledWriter(root,'desktop',async({current,dataRoot,env:leaseEnv})=>{
+-  const release=join(root,'releases',current),home=join(dataRoot,'user'),node=join(root,'control/node'),prefix=join(dataRoot,'evidence','installed-launch-'+randomUUID())
+-  const env={...leaseEnv,PATH:dirname(node)+':/usr/bin:/bin:/usr/sbin:/sbin',HOME:home,CFFIXED_USER_HOME:home,ZDOTDIR:home,DSH_HOME:join(dataRoot,'home'),TMPDIR:join(dataRoot,'temp'),MAC_CHROMIUM_TMPDIR:join(dataRoot,'temp'),XDG_CACHE_HOME:join(dataRoot,'cache'),XDG_CONFIG_HOME:join(home,'.config'),XDG_DATA_HOME:join(home,'.local/share'),NPM_CONFIG_USERCONFIG:'/dev/null',NPM_CONFIG_GLOBALCONFIG:'/dev/null',NPM_CONFIG_CACHE:join(dataRoot,'cache/npm'),COREPACK_ENABLE_NETWORK:'0',npm_config_manage_package_manager_versions:'false',DSH_TELEMETRY_DISABLED:'1',HTTP_PROXY:'http://127.0.0.1:9',HTTPS_PROXY:'http://127.0.0.1:9',ALL_PROXY:'http://127.0.0.1:9',NO_PROXY:'localhost,127.0.0.1,::1',SHELL:'/bin/zsh',LANG:'en_US.UTF-8',LC_ALL:'en_US.UTF-8',CI:'true'}
++  const release=join(root,'releases',current),template=read(join(release,'profile-template.json'))
++  const nativeZeroGeneration=nativeZeroPolicy(release,template),env=installedEnvironment(root,leaseEnv)
++  if(nativeZeroGeneration)env.OASIS_NATIVE_ZERO_GENERATION='1'
++  assertInstalledLease(join(dataRoot,'home/storages'),env)
++  // Loader rows resolve from the release; every writable directory uses data/.
++  return await callback({root,current,dataRoot,nativeZeroGeneration,realCallBudget:0,
++   exe:join(release,'App/DSH Desktop.app/Contents/MacOS/DSH Desktop'),args:['--user-data-dir='+join(dataRoot,'userdata'),'--proxy-server=http://127.0.0.1:9','--proxy-bypass-list=localhost;127.0.0.1;[::1]','--disable-background-networking'],cwd:release,env,shell:false})
++ })
++}
++export async function startFInstallation(root){
++ return withInstalledLaunchSpec(root,async({current,dataRoot,...spec})=>{
++  const prefix=join(dataRoot,'evidence','installed-launch-'+randomUUID())
+   const out=fs.openSync(prefix+'.stdout.log','wx',0o600),err=fs.openSync(prefix+'.stderr.log','wx',0o600);let child
+   const stop=()=>child?.kill('SIGTERM');process.on('SIGINT',stop);process.on('SIGTERM',stop)
+   try{
+    // The client registry resolves Loader rows relative to the launch directory.
+    // Only the release owns runtime modules; data remains at the explicit HOME paths.
+-   child=cp.spawn(join(release,'App/DSH Desktop.app/Contents/MacOS/DSH Desktop'),['--user-data-dir='+join(dataRoot,'userdata'),'--proxy-server=http://127.0.0.1:9','--proxy-bypass-list=localhost;127.0.0.1;[::1]','--disable-background-networking'],{cwd:release,env,stdio:['ignore',out,err],shell:false})
++   child=cp.spawn(spec.exe,spec.args,{cwd:spec.cwd,env:spec.env,stdio:['ignore',out,err],shell:spec.shell})
+    const exitPromise=new Promise((ok,fail)=>{child.once('error',fail);child.once('close',(code,signal)=>ok({code,signal}))})
+    save(prefix+'.json',{root,current,pid:child.pid,launcherPid:process.pid,startedAtUTC:new Date().toISOString()});console.log(JSON.stringify({root,current,pid:child.pid,prefix}))
+    const exit=await exitPromise;save(prefix+'.exit.json',{...exit,endedAtUTC:new Date().toISOString()});return exit

@@ -1,0 +1,101 @@
+✔ both offline sources return seven-field M06 results without a network call (38.473166ms)
+✔ offline Host routes generate both sources and safely preview the current saved Markdown (166.008791ms)
+✔ client preparation and cancellation do not dispatch; explicit confirmation dispatches only once (128.744667ms)
+▶ late preparation after cancellation, page change, workspace removal or configuration change cannot be confirmed
+  ✔ cancel (12.216584ms)
+  ✔ page (18.843125ms)
+  ✔ workspace (11.733166ms)
+  ✔ configuration (11.255208ms)
+✔ late preparation after cancellation, page change, workspace removal or configuration change cannot be confirmed (54.604208ms)
+✔ read-only reconciliation without the original run keeps UNKNOWN and blocks another dispatch (10.024709ms)
+✔ changing session or saving changed inputs invalidates candidate confirmation before transport (11.64125ms)
+✔ lost candidate reply preserves the request and never prepares or dispatches another request automatically (43.366417ms)
+✔ typed candidate transport rejects mismatched preparation identity and generic mutation access (9.386625ms)
+✔ controlled input page presents model confirmation while the ordinary input page remains disabled (12.651416ms)
+✔ saving the GitHub suite in settings enables the third-party task preview and runs it through the Host (29.956541ms)
+✔ ordinary Host exposes no candidate preparation or generation path (45.892042ms)
+✖ controlled Host goes through registered Fetch confirmation and installed native SDK exactly once (89.235333ms)
+✔ the explicit package subpath loads the controlled Host while the ordinary export stays distinct (0.510334ms)
+✔ controlled entry refuses missing native context before routes or credentials (3.942458ms)
+✔ controlled entry never falls back to legacy fixture mode even at a non-admitted fixture path (10.002042ms)
+✔ controlled Host rejects route drift and incomplete confirmation before persistence or SDK dispatch (15.408083ms)
+✔ controlled preparation rejects stale revision, API source and unsupported node without a call (10.033834ms)
+✔ public resources load the approved portable bodies with operator qualifications outside generation (7.465166ms)
+✔ public loader rejects tampering and the old internal container without fallback (1.650541ms)
+✔ Flow-1-5 confirms, dispatches once and persists its exact Skill identity (85.201459ms)
+✔ Flow-1-1 confirms, dispatches once and persists its exact Skill identity (47.271542ms)
+✔ Flow-1-2 confirms, dispatches once and persists its exact Skill identity (32.023083ms)
+✔ old profiles default to Oasis and a saved suite survives opening settings again (1.5735ms)
+✔ settings presents both repositories with Oasis selected by default (3.452375ms)
+✔ the selected external suite disables local generation without hiding the task inputs (3.339ms)
+✔ switching the host suite blocks pending local confirmation and controlled generation without switching executors (5.955792ms)
+✔ Flow-1-1 binds its own fixed resource and all input channels at durable native admission (101.069416ms)
+✔ Flow-1-2 binds its own fixed resource and all input channels at durable native admission (79.009958ms)
+✔ Flow-1-3 binds its own fixed resource and all input channels at durable native admission (61.102042ms)
+✔ Flow-1-4 binds its own fixed resource and all input channels at durable native admission (45.86ms)
+✔ Flow-1-5 binds its own fixed resource and all input channels at durable native admission (53.648083ms)
+✔ Flow-2-6 binds its own fixed resource and all input channels at durable native admission (53.653667ms)
+✔ Flow-2-7 binds its own fixed resource and all input channels at durable native admission (55.04675ms)
+✔ Flow-3-8 binds its own fixed resource and all input channels at durable native admission (62.331792ms)
+✔ Flow-3-9 binds its own fixed resource and all input channels at durable native admission (72.313417ms)
+✔ Flow-3-10 binds its own fixed resource and all input channels at durable native admission (59.596792ms)
+✔ Flow-4-11 binds its own fixed resource and all input channels at durable native admission (52.55475ms)
+✔ Flow-4-12 binds its own fixed resource and all input channels at durable native admission (58.927083ms)
+✔ Flow-5-13 binds its own fixed resource and all input channels at durable native admission (57.855375ms)
+✔ Flow-6-14 binds its own fixed resource and all input channels at durable native admission (68.890084ms)
+✔ same Workspace ID moving root and session cwd invalidates an already prepared confirmation (2.12375ms)
+✔ same-ID root and cwd movement during prepareCall blocks stream dispatch (8.015584ms)
+✔ node-bound factory rejects another node preparation and unknown node before any call (1.29975ms)
+✔ v2 system supplies the strict model response schema and retains the original node instruction (11.07175ms)
+✔ first-batch native v1 prepared record remains byte-compatible without migration (1.237208ms)
+✔ first-batch native v1 completed record remains byte-compatible without migration (1.159791ms)
+✔ a captured v1 prepared authorization cannot be dispatched by the new candidate executor (1.357417ms)
+✔ new native confirmation rejects an unselected empty root (1.409833ms)
+✔ new native confirmation rejects an unselected relative root (1.220667ms)
+✔ frozen text source receipts make a legitimate native provenance update possible without invented hashes (17.293792ms)
+✔ Flow-1-1 invalidates confirmation after model, root or input revision changes before dispatch (2.48325ms)
+✔ Flow-1-2 invalidates confirmation after model, root or input revision changes before dispatch (3.281541ms)
+✔ Flow-1-3 invalidates confirmation after model, root or input revision changes before dispatch (2.406458ms)
+✔ Flow-1-4 invalidates confirmation after model, root or input revision changes before dispatch (2.266708ms)
+✔ Flow-1-5 invalidates confirmation after model, root or input revision changes before dispatch (2.345834ms)
+✔ Flow-2-6 invalidates confirmation after model, root or input revision changes before dispatch (2.326084ms)
+✔ Flow-2-7 invalidates confirmation after model, root or input revision changes before dispatch (2.278875ms)
+✔ Flow-3-8 invalidates confirmation after model, root or input revision changes before dispatch (2.870541ms)
+✔ Flow-3-9 invalidates confirmation after model, root or input revision changes before dispatch (2.635125ms)
+✔ Flow-3-10 invalidates confirmation after model, root or input revision changes before dispatch (2.42475ms)
+✔ Flow-4-11 invalidates confirmation after model, root or input revision changes before dispatch (2.367125ms)
+✔ Flow-4-12 invalidates confirmation after model, root or input revision changes before dispatch (2.4955ms)
+✔ Flow-5-13 invalidates confirmation after model, root or input revision changes before dispatch (2.278833ms)
+✔ Flow-6-14 invalidates confirmation after model, root or input revision changes before dispatch (3.2635ms)
+✔ native Flow-6-14 cannot publish human-confirmed origin through a structurally valid output (14.10325ms)
+✔ native Flow-6-14 cannot publish confirmed technical fact through a structurally valid output (11.565041ms)
+✔ native Flow-6-14 cannot publish another node provenance through a structurally valid output (11.771125ms)
+ℹ tests 71
+ℹ suites 0
+ℹ pass 70
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1212.37
+
+✖ failing tests:
+
+test at test/m06-controlled-host.test.mjs:23:1
+✖ controlled Host goes through registered Fetch confirmation and installed native SDK exactly once (89.235333ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '7d998e25aa7dc05470e4bf16d7f58e9dd0165d226ba32a30a695b1b39e191d00'
+  - '169bdbe8741986a7a4408506f732f73f293655014fc3d8f4a622b34012574558'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/package/test/m06-controlled-host.test.mjs:52:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '7d998e25aa7dc05470e4bf16d7f58e9dd0165d226ba32a30a695b1b39e191d00',
+    expected: '169bdbe8741986a7a4408506f732f73f293655014fc3d8f4a622b34012574558',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

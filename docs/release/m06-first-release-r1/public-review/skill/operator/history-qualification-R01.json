@@ -1,0 +1,74 @@
+{
+  "task_id": "PD-M06-CANDIDATE013-HISTORY-QUALIFICATION-20261027-R01",
+  "recorded_at": "2026-10-26T18:28:18.655181+00:00",
+  "candidate": {
+    "path": "oiw-source:996cb7169615a0bcf429",
+    "bytes": 7543,
+    "sha256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9"
+  },
+  "qualification_scope": "Additionalnon-generativeoperatorhistorynote; original30candidateand28externalrecordsunchanged. NotnewbusinessinputorSkillpayload.",
+  "items": [
+    {
+      "id": "HIST-14F-RUN01",
+      "status": "HISTORY_LIMITED",
+      "subject": "0.1.2/14Ffirstchecker",
+      "expected_original": {
+        "bytes": null,
+        "lines": 473,
+        "sha256": "c9b1ebaee482687ef4d487227ff2aec809a084bc4156450fb9c72ed5f4b16264"
+      },
+      "basis": {
+        "artifact": {
+          "path": "oiw-source:5a97a4012e83088cb781",
+          "bytes": 30889,
+          "sha256": "59d60d6d62c708c0f8f3657de108d42bf74b0559c30c92793c61a142d5cd3158"
+        },
+        "pointer": "/history_and_statistics/current_14f_run01"
+      },
+      "fact": "Originalfirstcheckersourcebytesnotincluded; logs/result/commandarestillactualwhereavailable. 0.1.3historylistmustnotbeinterpretedasexhaustivewhenonlyC/D/Earelisted."
+    },
+    {
+      "id": "HIST-14H-BUILDER-R0",
+      "status": "HISTORY_LIMITED",
+      "subject": "0.1.3/14Hfirstderive_metadata builder",
+      "expected_original": {
+        "artifact": {
+          "path": "oiw-source:4ec47cf4c656f5a06b91",
+          "bytes": 7543,
+          "sha256": "bce00d6d30d5249be9bdd6ab3b59be6b7d9fdaf877caf2dec50ca0d53c00e23c"
+        },
+        "pointer": "/files/10",
+        "original_entry": {
+          "path": "evidence/authoring/derive_metadata_14h.py",
+          "class": "evidence",
+          "bytes": 39425,
+          "sha256": "9c5e3a8a56422992501d0b907d24584b4a1cf5d1397195a8ac2e62977a1c6748"
+        }
+      },
+      "current_builder": {
+        "path": "oiw-source:f8a52262e6e4da4d6d91",
+        "bytes": 40250,
+        "sha256": "9465f0349b08656dc8d425a9c8ced7a0c6e9fd24b3ce1965372b58fded50b6e5"
+      },
+      "current_manifest_entry": {
+        "path": "evidence/authoring/derive_metadata_14h.py",
+        "class": "evidence",
+        "bytes": 40250,
+        "sha256": "9465f0349b08656dc8d425a9c8ced7a0c6e9fd24b3ce1965372b58fded50b6e5"
+      },
+      "fact": "Fixedcandidate/externalscopeprovidesoldR0outputswithoriginal39425B/9c5e...builderidentity,butnotthoseoriginalsourcebytes. Current40250B/9465...builderisadifferentversion; fullchecker-sourcecopiesdonotrestorefirstbuilder.",
+      "not_claimed": "No globaldiskabsenceproven; ifgenuineoldbyteslaterappear, verifyexpectedSHA. Neverreverseengineer/guessoldsourceandlabelitaspreserved."
+    }
+  ],
+  "actual_check_interpretation": {
+    "author_check": "20/22 then22/22, checker-sourcecopiespreserved",
+    "first_postmanifest": "11/11 PASS evenwithwrongR0payloaddelta; notclaimedthatvalidatorcaughtthatstatsbug",
+    "correct_payload_bytes": {
+      "parent012": 151313,
+      "current013": 161209,
+      "delta": 9896
+    },
+    "scope": "Currentcountscheckedbyindependentauditorseparately; node/model/semanticacceptanceseparate."
+  },
+  "preservation": "AllknownrawFAILandR0wrongoutputsretained. Qualificationdoesnotmodifyoldreportsorfiles, waive rightsorgrantprofessional/useracceptance. Twoadditionalhistoryitemsmusttravelwithcurrentconsumerhandoff."
+}

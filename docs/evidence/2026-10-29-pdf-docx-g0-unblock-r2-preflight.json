@@ -1,0 +1,316 @@
+{
+  "id": "DSH-PDF-DOCX-G0-UNBLOCK-R2-20261029",
+  "at": "2026-10-29T19:13:50.525121+08:00",
+  "executor": "Codex /root, single agent",
+  "user_instruction": "继续解决第3、4项的阻塞，推进PDF/DOCX接入和新版Flow-2-6双来源验收。",
+  "existing_plan": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-29-project-summary-and-next-development-plan.md",
+  "steps": "DS-03/Task4; DS-02/04 conditional C/G0",
+  "coordination": "1.2.1",
+  "overall": "1.3.1 / NS1-R1 / P28",
+  "supplement_anchors": [
+    "oasis-next-steps-ns1",
+    "oasis-plan-progress-p28"
+  ],
+  "supplement_parent_full_hashes_bound": true,
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "main",
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "sha256": "6e5809942b2ac28e01c6ef1e048256b9055d0565fd682e58c5cbb7655dc72cab",
+      "bytes": 19522,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/00-AGENTS.md",
+      "read_scope": "full current rules/charter reread",
+      "prior_sha256": "6e5809942b2ac28e01c6ef1e048256b9055d0565fd682e58c5cbb7655dc72cab",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+      "bytes": 24047,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/01-AGENTS.md",
+      "read_scope": "full current rules/charter reread",
+      "prior_sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "sha256": "2fb9c4c7b469c7593e0605d97ebff7915ca11bdfb92b0f9e953301d7267e1b9a",
+      "bytes": 17363,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/02-README.md",
+      "read_scope": "full current rules/charter reread",
+      "prior_sha256": "2fb9c4c7b469c7593e0605d97ebff7915ca11bdfb92b0f9e953301d7267e1b9a",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "sha256": "32f62af49b9d6c975dc4f10071efb1fbf4e8d28859a1bb451b0ef6cae0f88ff9",
+      "bytes": 23053,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/03-projects.json",
+      "read_scope": "top entry fields and full dsh-oasis/backend objects",
+      "prior_sha256": "32f62af49b9d6c975dc4f10071efb1fbf4e8d28859a1bb451b0ef6cae0f88ff9",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "sha256": "39e79b8f13029f29aa4ab2a853eb80246fca98d83836b98cea143e18932be4b2",
+      "bytes": 56825,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/04-independent-plans.json",
+      "read_scope": "top routing, exact NS1-R1/P28 followup and full dsh-oasis entry",
+      "prior_sha256": "39e79b8f13029f29aa4ab2a853eb80246fca98d83836b98cea143e18932be4b2",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "sha256": "12ad32e7d9aeeed8453682dcb8da7d67c865b8bcb7ddbbffa19c4ab76329fa4d",
+      "bytes": 25156,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/05-2026-10-25-independent-projects-and-compatibility.md",
+      "read_scope": "global constraints, applicable NS1-R1/P28 text and DSH row",
+      "prior_sha256": "12ad32e7d9aeeed8453682dcb8da7d67c865b8bcb7ddbbffa19c4ab76329fa4d",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "sha256": "5a4049f6c0355b44e4c30d0dd5cc344c7495c70d075b144e6f053c68771af761",
+      "bytes": 27501,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/06-2026-10-25-project-compatibility.md",
+      "read_scope": "use rules and DSH-relevant IC rows; remaining text not claimed read",
+      "prior_sha256": "5a4049f6c0355b44e4c30d0dd5cc344c7495c70d075b144e6f053c68771af761",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "sha256": "2f04f96b62610e80563ebbb7769726694ce3687d8d6fd4f4ba111dc8a809b67b",
+      "bytes": 10712,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/07-CONTRACTS.md",
+      "read_scope": "sections 2-4, applicable source/API/evidence requirements",
+      "prior_sha256": "2f04f96b62610e80563ebbb7769726694ce3687d8d6fd4f4ba111dc8a809b67b",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-10-25-research-rules-and-migration-addendum.md",
+      "sha256": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "bytes": 6688,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/08-2026-10-25-research-rules-and-migration-addendum.md",
+      "read_scope": "identity only; prior named evidence reused without a repeated whole audit",
+      "prior_sha256": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "sha256": "1d00b4a569bf5b044ac4f8a9c2ed90717cb8a157eb776b6f24f844a340b6faf2",
+      "bytes": 27939,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/09-2026-10-25-dsh-oasis-master-plan.md",
+      "read_scope": "continuation, DS-03/04/05 and NS1/P28",
+      "prior_sha256": "1d00b4a569bf5b044ac4f8a9c2ed90717cb8a157eb776b6f24f844a340b6faf2",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-29-project-summary-and-next-development-plan.md",
+      "sha256": "2e454b1c266e282a9146a671f22644c95237dd4fd6c2d97b9d5a9f5ca79097b3",
+      "bytes": 19601,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/10-2026-10-29-project-summary-and-next-development-plan.md",
+      "read_scope": "existing Task4 and conditional C/G0; no new plan approval inferred",
+      "prior_sha256": "2e454b1c266e282a9146a671f22644c95237dd4fd6c2d97b9d5a9f5ca79097b3",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "sha256": "15b1dc0687c668004a5a64f089bf3ccf906fb9b9c0ab13f37e1ca3d335e65c62",
+      "bytes": 293239,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/11-project-current-state.md",
+      "read_scope": "dated current prefix and named prior-return evidence; not entire historical log",
+      "prior_sha256": "a2ad457deeb40545b6457f3a21ca9247105ac6f8b021eb66375b1c476790913e",
+      "difference": "prior current-entry prefix updated by last authorized batch; old bytes preserved, no new call permission"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "sha256": "41cc9156564dcccd8411941aeef9afe3f1c56437a3f42aaa5842adaf544a42c6",
+      "bytes": 91831,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/12-2026-10-23-stage5-progress-and-remaining.md",
+      "read_scope": "dated current prefix and named prior-return evidence; not entire historical log",
+      "prior_sha256": "ba454d8c812ee9c0ca99d8894b5c292d10245d0dd6178d47fb4e7b09dae8f0e2",
+      "difference": "prior current-entry prefix updated by last authorized batch; old bytes preserved, no new call permission"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+      "sha256": "5ae0223a5935de83d2c45b80f99ee4cd084000c19541b43ec055a22dcaf924bf",
+      "bytes": 19579,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/13-2026-10-26-follow-up-remaining.md",
+      "read_scope": "dated current prefix and named prior-return evidence; not entire historical log",
+      "prior_sha256": "5c1c5129508f6b98501017963abd0952a20079f55841380540b4696c66a34feb",
+      "difference": "prior current-entry prefix updated by last authorized batch; old bytes preserved, no new call permission"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-inputs.json",
+      "sha256": "ad818dccdf5c0a16147482d6dd1614ff093c2d8073755d12cca5498716566e5a",
+      "bytes": 12666,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/14-2026-10-29-project-summary-plan-inputs.json",
+      "read_scope": "identity only; prior named evidence reused without a repeated whole audit",
+      "prior_sha256": "ad818dccdf5c0a16147482d6dd1614ff093c2d8073755d12cca5498716566e5a",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-material-extraction-contract.md",
+      "sha256": "0490387f05f66c4c1a62bcede198f0f6e8ec0aceb07dd45d086c052f98620c38",
+      "bytes": 16955,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/15-v340-material-extraction-contract.md",
+      "read_scope": "identity only; prior named evidence reused without a repeated whole audit",
+      "prior_sha256": "0490387f05f66c4c1a62bcede198f0f6e8ec0aceb07dd45d086c052f98620c38",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-extraction-product-gates.json",
+      "sha256": "9d9fc75b45e641d9ac80012eb7b5fc30346462c92a91af5f40072ed9e9bbffd6",
+      "bytes": 9634,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/16-v340-extraction-product-gates.json",
+      "read_scope": "identity only; prior named evidence reused without a repeated whole audit",
+      "prior_sha256": "9d9fc75b45e641d9ac80012eb7b5fc30346462c92a91af5f40072ed9e9bbffd6",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-extraction-distribution-candidate.json",
+      "sha256": "de7838799c749fc58e1171336c063feedd2c724bfb35cab598af3dd3af0501aa",
+      "bytes": 2894578,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/17-v340-extraction-distribution-candidate.json",
+      "read_scope": "identity only; prior named evidence reused without a repeated whole audit",
+      "prior_sha256": "de7838799c749fc58e1171336c063feedd2c724bfb35cab598af3dd3af0501aa",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-dsh-provider-discovery.json",
+      "sha256": "3b9803cffcf97b3a5618a504bcc389c6ea901abd9c1646554760b6922cee40d4",
+      "bytes": 6582,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/18-2026-10-26-dsh-provider-discovery.json",
+      "read_scope": "identity only; prior named evidence reused without a repeated whole audit",
+      "prior_sha256": "3b9803cffcf97b3a5618a504bcc389c6ea901abd9c1646554760b6922cee40d4",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input-r2.json",
+      "sha256": "a2ae924ef88cab1514144e04b23d978d8612b421a0e8ade274ba5490cebaac7d",
+      "bytes": 7450,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/19-2026-10-29-m06-public-calibration-input-r2.json",
+      "read_scope": "identity only; prior named evidence reused without a repeated whole audit",
+      "prior_sha256": "a2ae924ef88cab1514144e04b23d978d8612b421a0e8ade274ba5490cebaac7d",
+      "difference": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-intake-delta.json",
+      "sha256": "d390b4f476758a9fae8a73ac89c59815286ff02d1616fd7b306df027bbdc163e",
+      "bytes": 40005,
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/inputs/20-2026-10-29-m06-intake-delta.json",
+      "read_scope": "identity only; prior named evidence reused without a repeated whole audit",
+      "prior_sha256": "d390b4f476758a9fae8a73ac89c59815286ff02d1616fd7b306df027bbdc163e",
+      "difference": "unchanged"
+    }
+  ],
+  "preserved_worktree": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "sha256": "41cc9156564dcccd8411941aeef9afe3f1c56437a3f42aaa5842adaf544a42c6",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-23-stage5-progress-and-remaining.md"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+      "sha256": "5ae0223a5935de83d2c45b80f99ee4cd084000c19541b43ec055a22dcaf924bf",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-26-follow-up-remaining.md"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "sha256": "1d00b4a569bf5b044ac4f8a9c2ed90717cb8a157eb776b6f24f844a340b6faf2",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/plans/2026-10-25-dsh-oasis-master-plan.md"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "sha256": "15b1dc0687c668004a5a64f089bf3ccf906fb9b9c0ab13f37e1ca3d335e65c62",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/project-current-state.md"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-recovery-interruption-diagnosis.json",
+      "sha256": "218dbc56fe04ae12f4a7685037a4230e430de94e88a13a422705ae85bd411f9f",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-f-recovery-interruption-diagnosis.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-g0-admission.json",
+      "sha256": "90b78a32adfc6534b534925f7c637ec733988365af09896283fd0f1f864aca81",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-flow26-g0-admission.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-execution-preflight.json",
+      "sha256": "457fbc03b746b014571af64ea6c9253a9033d3bbd0749f5b3ed9544158660a13",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-m06-f-execution-preflight.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-intake-and-interruption-return.md",
+      "sha256": "dbbb73395d465f6f3de10954ddebc37c57f5ca124490a4b51a40de99f320229a",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-m06-f-intake-and-interruption-return.md"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-verification.json",
+      "sha256": "f1173d3aedb20f6033129f516e60d070a82becde255348c42ab2d0906f364931",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-m06-f-verification.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-intake-delta.json",
+      "sha256": "d390b4f476758a9fae8a73ac89c59815286ff02d1616fd7b306df027bbdc163e",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-m06-intake-delta.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input-r2.json",
+      "sha256": "a2ae924ef88cab1514144e04b23d978d8612b421a0e8ade274ba5490cebaac7d",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-m06-public-calibration-input-r2.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input.json",
+      "sha256": "56e9cfe23bf33ffaf2d954816ca59379929b2a40c7435670548e94c7db6d3b85",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-m06-public-calibration-input.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-and-flow26-g0-return.md",
+      "sha256": "7922a999a8460af4b36d3335eba51cbf353ffdec498a3391285aecc73c376a4f",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-pdf-docx-and-flow26-g0-return.md"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-execution-preflight.json",
+      "sha256": "a4844c5745eaf5697f21cc5d269563553f7daff6e99a6c9e9c05114e1a9d698c",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-pdf-docx-g0-execution-preflight.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-verification.json",
+      "sha256": "564068e2ee0d86f6bfbf420818f1c2faf737abee6a1398265bf2ce287b71292e",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-pdf-docx-g0-verification.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-provider-readiness.json",
+      "sha256": "404b16bc163f3e3e34f77d0195c470a3cb3e29814cf3fc873527c1d2fb65865b",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-pdf-docx-provider-readiness.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-inputs.json",
+      "sha256": "ad818dccdf5c0a16147482d6dd1614ff093c2d8073755d12cca5498716566e5a",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-project-summary-plan-inputs.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-verification.json",
+      "sha256": "e5f49e893cc03b00e77b63d63fc25ad88654f37c922b91cd6c6217cdaf40875c",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/evidence/2026-10-29-project-summary-plan-verification.json"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-29-project-summary-and-next-development-plan.md",
+      "sha256": "2e454b1c266e282a9146a671f22644c95237dd4fd6c2d97b9d5a9f5ca79097b3",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/preserved/docs/plans/2026-10-29-project-summary-and-next-development-plan.md"
+    }
+  ],
+  "authorized_next": "Read current public capability/OS support and actual existing service metadata; prepare bounded compatible corrections/decision materials. No same-provider reinstall or repeat old suites.",
+  "conditional_actions": "Only qualified format READY→frozen U1 command→actual U1→D1. Real creation requires mapped service/ownership and exact current data/fee scope; old once/3CNY consumed. No private executor/relaxed limits or fixed-version upgrade inferred.",
+  "prior_result": "R1 text preparation/8 tests, fixed-source 15-member identity and v3 collision diagnosis reused, not repeated as progress.",
+  "new_scope": "Resolve blockers rather than restating them; if an external business decision/capability change is indispensable, produce concrete minimal decision and continue independent work.",
+  "not_authorized": [
+    "daily Profile writes",
+    "unknown rerun or automatic source fallback",
+    "push/release",
+    "messages to others"
+  ],
+  "read_limitations": "Some combined read output was truncated; scopes above intentionally restrict claimed reading. No full distribution manifest audit."
+}

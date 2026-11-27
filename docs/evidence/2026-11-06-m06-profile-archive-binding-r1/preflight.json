@@ -1,0 +1,494 @@
+{
+  "at": "2026-11-06T11:05:13.986813+08:00",
+  "executor": "Codex single agent",
+  "project": "dsh-oasis",
+  "step": "Task1/P1 AV02/04 fresh local dependency-view/profile binding for existing archive",
+  "authority": "Continue plan after AV01/02 proof; original no real calls/publication remains. Reversible isolated local link materialization only, no application startup or daily Profile writes.",
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "revision": "R1/EXEC-R2/BM1-R1/S1/S2-R1 + G1",
+      "bytes": 33933,
+      "sha256": "b2714a423740de7719fd8c82f4c226c82d5e13959dfbc1d5e2381222a25ab061",
+      "previous_sha256": "b2714a423740de7719fd8c82f4c226c82d5e13959dfbc1d5e2381222a25ab061",
+      "difference": "same bytes",
+      "read_scope": "full current text read"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "revision": "project rules/BM1-R1/S2-R1",
+      "bytes": 34618,
+      "sha256": "2f0b4c780db2b558db9351c225f65b62edc55e2510aac39847c2142de0a27642",
+      "previous_sha256": "2f0b4c780db2b558db9351c225f65b62edc55e2510aac39847c2142de0a27642",
+      "difference": "same bytes",
+      "read_scope": "project EXEC/BM1/single-agent/profile materialization clauses read; remaining unchanged supplied rules retained"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "revision": "coordination1.2.2",
+      "bytes": 28642,
+      "sha256": "431c8844b039e1c8e528531ee93d89f2b8346146084a5898bc53f06bde280e8b",
+      "previous_sha256": "431c8844b039e1c8e528531ee93d89f2b8346146084a5898bc53f06bde280e8b",
+      "difference": "same bytes",
+      "read_scope": "current charter read; applicable sections re-read"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "revision": "schema/current registry",
+      "bytes": 36880,
+      "sha256": "6ef28151f632bba8fa0454b80cca199e148163b47057be7a33fed0cf45fb3804",
+      "previous_sha256": "6ef28151f632bba8fa0454b80cca199e148163b47057be7a33fed0cf45fb3804",
+      "difference": "same bytes",
+      "read_scope": "full JSON parsed; exact global/project plan/master/current entries and followups read"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "revision": "1.3.1/NS1-R1/BM1-R1/S2-R1 + G1",
+      "bytes": 105212,
+      "sha256": "20a3ccb56d96d75f2fe0f762dd46103e778975356384b80ecb2578775cf66f45",
+      "previous_sha256": "20a3ccb56d96d75f2fe0f762dd46103e778975356384b80ecb2578775cf66f45",
+      "difference": "same bytes",
+      "read_scope": "full JSON parsed; exact global/project plan/master/current entries and followups read"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "revision": "1.3.1/NS1-R1/BM1-R1/S2-R1 + G1",
+      "bytes": 43964,
+      "sha256": "cac383be1f64cff69b95a28e535c6b748d986b338d62b0404ae0bcaa5a5e2e7d",
+      "previous_sha256": "cac383be1f64cff69b95a28e535c6b748d986b338d62b0404ae0bcaa5a5e2e7d",
+      "difference": "same bytes",
+      "read_scope": "applicable identity, license, candidate/consumer and BM1 constraints read; no full historical audit"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "revision": "1.3.1/NS1-R1/BM1-R1/S2-R1",
+      "bytes": 47960,
+      "sha256": "861a5b49c2dc524df90fe1bb9e169ff61080a56f5424c0f5927a474c98d39788",
+      "previous_sha256": "861a5b49c2dc524df90fe1bb9e169ff61080a56f5424c0f5927a474c98d39788",
+      "difference": "same bytes",
+      "read_scope": "applicable identity, license, candidate/consumer and BM1 constraints read; no full historical audit"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "revision": "BM1-R1/S1/S2-R1",
+      "bytes": 37706,
+      "sha256": "702c46ec3558046698aa796f7afe7e18bbb24699da80d4a598d68ecc7a69b24c",
+      "previous_sha256": "702c46ec3558046698aa796f7afe7e18bbb24699da80d4a598d68ecc7a69b24c",
+      "difference": "same bytes",
+      "read_scope": "applicable identity, license, candidate/consumer and BM1 constraints read; no full historical audit"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "revision": "1.3.1 plus BM1/S1/S2-R1",
+      "bytes": 38734,
+      "sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "previous_sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "difference": "same bytes",
+      "read_scope": "applicable identity, license, candidate/consumer and BM1 constraints read; no full historical audit"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "revision": "coordination1.2.2 plus BM1/S1/S2-R1",
+      "bytes": 21718,
+      "sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "previous_sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "difference": "same bytes",
+      "read_scope": "applicable identity, license, candidate/consumer and BM1 constraints read; no full historical audit"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-06-project-summary-and-next-plan.md",
+      "revision": "R1",
+      "bytes": 16819,
+      "sha256": "8bc17d3ccef81a52ee1943bffd9eef24e382c4d90abdcdeb6fb56e2e423a4a2a",
+      "previous_sha256": "8bc17d3ccef81a52ee1943bffd9eef24e382c4d90abdcdeb6fb56e2e423a4a2a",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "revision": "dated current entry",
+      "bytes": 321672,
+      "sha256": "ca5bc9981c68b7561b88d61962c9d9dc6626e2bd2bf513129fefbef7d941b54e",
+      "previous_sha256": "84efc78c3681ee8f17390c9714f0eaef04a6644e0c72aa56e8582fa0fb9427dc",
+      "difference": "prior offline proof added status prefix; original suffix retained",
+      "read_scope": "latest archive/entry proof current prefixes read"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "revision": "dated current entry",
+      "bytes": 112907,
+      "sha256": "0eb95d87b44efb6db87a00feb81fe3d4d17ba028cec00faf6eea889dcf64a985",
+      "previous_sha256": "ee37d036df4a9f4dc2144e98c12676d0adcb18634bea37e6f0cef12f198e465e",
+      "difference": "prior offline proof added status prefix; original suffix retained",
+      "read_scope": "latest archive/entry proof current prefixes read"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-release-attribution-addendum-r1/decision.md",
+      "revision": "R1",
+      "bytes": 935,
+      "sha256": "923b134f46ce6fc48851a091e5a33f31fdfa36dea245c0fa4cd0918aefbb7d1e",
+      "previous_sha256": "923b134f46ce6fc48851a091e5a33f31fdfa36dea245c0fa4cd0918aefbb7d1e",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-revision-release-prep-r1/release-inputs-r1.md",
+      "revision": "R1",
+      "bytes": 5681,
+      "sha256": "4400ce6a8f841beeead9ff4884f68640e320f2d97cfaa745138c837884c9e91f",
+      "previous_sha256": "4400ce6a8f841beeead9ff4884f68640e320f2d97cfaa745138c837884c9e91f",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利业务Skills清单.md",
+      "revision": "G1 registered; source no declared version",
+      "bytes": 6157,
+      "sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "previous_sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-prep2-review/release-checklist.md",
+      "revision": "R1",
+      "bytes": 6300,
+      "sha256": "3345eb06e1c8facfcb789adee357cb26001510d3b5bfd6359f4ef4b548fe6ad1",
+      "previous_sha256": "3345eb06e1c8facfcb789adee357cb26001510d3b5bfd6359f4ef4b548fe6ad1",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-prep2-review/m06-checks.json",
+      "revision": "R1",
+      "bytes": 16595,
+      "sha256": "68a6efd01691b5ff34abae37f12a2de94c3c7aa888de5678134754f600b3c1c8",
+      "previous_sha256": "68a6efd01691b5ff34abae37f12a2de94c3c7aa888de5678134754f600b3c1c8",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-oasisintwrite-license-draft-r1/record.md",
+      "revision": "R1",
+      "bytes": 4177,
+      "sha256": "83c3f2418c7dc53a4b66038d3749b0b39fd6f7685dd9e47d179230d80b590dce",
+      "previous_sha256": "83c3f2418c7dc53a4b66038d3749b0b39fd6f7685dd9e47d179230d80b590dce",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-revision-release-prep-r1/package-pairing.json",
+      "revision": "R1",
+      "bytes": 23036,
+      "sha256": "eabdc784090f3adafd3e80a701b837017d74de74905939d90df71f1e471cbc19",
+      "previous_sha256": "eabdc784090f3adafd3e80a701b837017d74de74905939d90df71f1e471cbc19",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/package.json",
+      "revision": "0.0.1 private",
+      "bytes": 3040,
+      "sha256": "3e86b10e88a7424bb1fb74429d86bc303bfe60ce2ff41c9598c12f4da0faef0e",
+      "previous_sha256": "3e86b10e88a7424bb1fb74429d86bc303bfe60ce2ff41c9598c12f4da0faef0e",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-candidate-0.1.3.json",
+      "revision": "0.1.3 candidate",
+      "bytes": 179486,
+      "sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+      "previous_sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-resources-0.1.3.js",
+      "revision": "current uncommitted source identity",
+      "bytes": 3660,
+      "sha256": "38bf2c0bf2e97b14f7f98045f48d70b1a0736c7ec9adc9027bf3f741c2e377b1",
+      "previous_sha256": "38bf2c0bf2e97b14f7f98045f48d70b1a0736c7ec9adc9027bf3f741c2e377b1",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-controlled-host-013.js",
+      "revision": "current source",
+      "bytes": 284,
+      "sha256": "45baef11f2765d7400df5b85b9e036be2fc0a4949758c7f67560f1e18f74bfd0",
+      "previous_sha256": "45baef11f2765d7400df5b85b9e036be2fc0a4949758c7f67560f1e18f74bfd0",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/cordis.patch.yml",
+      "revision": "current source",
+      "bytes": 229,
+      "sha256": "ddd8f6b2ea4c114fc532da926d8b6d8162bb2a908fed0ee051808adc5c71949d",
+      "previous_sha256": "ddd8f6b2ea4c114fc532da926d8b6d8162bb2a908fed0ee051808adc5c71949d",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-release-scope-r1/review-return.md",
+      "revision": "existing fixed input",
+      "bytes": 7929,
+      "sha256": "8c346956aaaf5b0885736cb8e6bab69bd32217d69e9a766edf2f87d2fefd5708",
+      "previous_sha256": "8c346956aaaf5b0885736cb8e6bab69bd32217d69e9a766edf2f87d2fefd5708",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-release-scope-r1/review-only-notices/NOTICE-PLAN-DRAFT.md",
+      "revision": "existing fixed input",
+      "bytes": 2342,
+      "sha256": "7d5f5fc6198407611c6aa2d3e3c65086af3517ab80953b0e27fbb4576203bbe8",
+      "previous_sha256": "7d5f5fc6198407611c6aa2d3e3c65086af3517ab80953b0e27fbb4576203bbe8",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-release-scope-r1/review-only-notices/cn-patent-drafting-MIT.txt",
+      "revision": "existing fixed input",
+      "bytes": 1090,
+      "sha256": "010444fa8759a89fc9b6c9d90ecbd331075f75a487fa09dc6802627f9e12c83d",
+      "previous_sha256": "010444fa8759a89fc9b6c9d90ecbd331075f75a487fa09dc6802627f9e12c83d",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-release-scope-r1/review-only-notices/zod-4.4.3-MIT.txt",
+      "revision": "existing fixed input",
+      "bytes": 1072,
+      "sha256": "3f1189b28e3866e0d979968d466b78f813f76827cfdca1fbb124cc0a5c8841f8",
+      "previous_sha256": "3f1189b28e3866e0d979968d466b78f813f76827cfdca1fbb124cc0a5c8841f8",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-release-scope-r1/release-scope.json",
+      "revision": "existing fixed input",
+      "bytes": 112289,
+      "sha256": "e3d4429b0d7a36b35b73d5a674402cd9e5b8d385ff7f0b61fb4dc6c2b426212e",
+      "previous_sha256": "e3d4429b0d7a36b35b73d5a674402cd9e5b8d385ff7f0b61fb4dc6c2b426212e",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/index.js",
+      "revision": "existing fixed input",
+      "bytes": 8501,
+      "sha256": "c3b542c77108147187925b0d7a152c081e85cd7e9fe91d4361a19663ececa588",
+      "previous_sha256": "c3b542c77108147187925b0d7a152c081e85cd7e9fe91d4361a19663ececa588",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/assembly-and-validation.md",
+      "revision": "exact existing local input",
+      "bytes": 6293,
+      "sha256": "dfc7cb37e7e908200358693252260154b8284ed3107646b494e7df7df748942f",
+      "previous_sha256": "dfc7cb37e7e908200358693252260154b8284ed3107646b494e7df7df748942f",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/execution.md",
+      "revision": "exact existing local input",
+      "bytes": 3805,
+      "sha256": "7f4b5742d66676697989ffb65f953106bd3704ec1305fc73cd4457716ccab382",
+      "previous_sha256": "7f4b5742d66676697989ffb65f953106bd3704ec1305fc73cd4457716ccab382",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/local-package-candidate.json",
+      "revision": "exact existing local input",
+      "bytes": 52780,
+      "sha256": "b5ba4b31da0ab61fd50c513103a1e1bb4d7f6c3ba74f7bb64d811860889d3900",
+      "previous_sha256": "b5ba4b31da0ab61fd50c513103a1e1bb4d7f6c3ba74f7bb64d811860889d3900",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/verification.json",
+      "revision": "exact existing local input",
+      "bytes": 6263,
+      "sha256": "1e23f628249db4247767386620dd77da44e382609c290543cf5200fd511402da",
+      "previous_sha256": "1e23f628249db4247767386620dd77da44e382609c290543cf5200fd511402da",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/npm",
+      "revision": "exact existing local input",
+      "bytes": 227,
+      "sha256": "6b7f836c411fcaaf6f29705c8b45701083b0e4ebc6e61838a095772e0d05a1d7",
+      "previous_sha256": "6b7f836c411fcaaf6f29705c8b45701083b0e4ebc6e61838a095772e0d05a1d7",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/node-v24.21.0-darwin-arm64/bin/node",
+      "revision": "exact existing local input",
+      "bytes": 122129232,
+      "sha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b",
+      "previous_sha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/node-v24.21.0-darwin-arm64/lib/node_modules/npm/package.json",
+      "revision": "exact existing local input",
+      "bytes": 6597,
+      "sha256": "09dfcf187178ce1ab3ea6194c80d3ae082ad2a86dc1269ac963f94429e718122",
+      "previous_sha256": "09dfcf187178ce1ab3ea6194c80d3ae082ad2a86dc1269ac963f94429e718122",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/helpers/m06-controlled-host-harness.mjs",
+      "revision": "exact existing local input",
+      "bytes": 4576,
+      "sha256": "465036a9f878555549985c402da35f660112e4c12657a9fa9d39a0fd0f37966e",
+      "previous_sha256": "465036a9f878555549985c402da35f660112e4c12657a9fa9d39a0fd0f37966e",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/helpers/v340-native-harness.mjs",
+      "revision": "exact existing local input",
+      "bytes": 5565,
+      "sha256": "d14d3a12f2f8da4ecccf621aaf0abc3ebbe08d57866901456442ff11b7276738",
+      "previous_sha256": "d14d3a12f2f8da4ecccf621aaf0abc3ebbe08d57866901456442ff11b7276738",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-resources-0.1.3.js",
+      "revision": "exact existing local input",
+      "bytes": 3660,
+      "sha256": "38bf2c0bf2e97b14f7f98045f48d70b1a0736c7ec9adc9027bf3f741c2e377b1",
+      "previous_sha256": "38bf2c0bf2e97b14f7f98045f48d70b1a0736c7ec9adc9027bf3f741c2e377b1",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.gitignore",
+      "revision": "exact existing local input",
+      "bytes": 314,
+      "sha256": "205adfdb3fc880347b131755fda4267ec33d3c460f0dae16db9633273ddd1fcd",
+      "previous_sha256": "205adfdb3fc880347b131755fda4267ec33d3c460f0dae16db9633273ddd1fcd",
+      "difference": "same bytes",
+      "read_scope": "identity only; reuse prior bounded evidence"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-controlled-profile-r2.json",
+      "revision": "exact prior evidence or fixed tool",
+      "bytes": 4908,
+      "sha256": "37d03bbe61d8d8061f88a277a9c425ac736cbf109c37cfb16f4aa7f0fb104a42",
+      "read_scope": "full relevant composition evidence/function or tool identity"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/check-controlled-profile.mjs",
+      "revision": "exact prior evidence or fixed tool",
+      "bytes": 5118,
+      "sha256": "585b084b988271d45a3afa90666fdd25f050bb8ec98d9e10388102d4a5f7e6d3",
+      "read_scope": "full relevant composition evidence/function or tool identity"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/actual-full-profile-composition.json",
+      "revision": "exact prior evidence or fixed tool",
+      "bytes": 1710,
+      "sha256": "c3406495416c9fbf07b3f88ccf5f5dceb1a6848a2fb61f95950d3412ac27e00e",
+      "read_scope": "full relevant composition evidence/function or tool identity"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-offline-package-proof-r1/archive-inspection.json",
+      "revision": "exact prior evidence or fixed tool",
+      "bytes": 31360,
+      "sha256": "e1979ba62ef431c53539852162fad89bc44dc5e9c87c6419f996ceebba32f8f0",
+      "read_scope": "full relevant composition evidence/function or tool identity"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-offline-package-proof-r1/registered-entry-observation.json",
+      "revision": "exact prior evidence or fixed tool",
+      "bytes": 1101,
+      "sha256": "fbb58d0ea4cde1b1c310e97fe7162ea57774391b9807d7a93a2b3eb33274a286",
+      "read_scope": "full relevant composition evidence/function or tool identity"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/pnpm",
+      "revision": "exact prior evidence or fixed tool",
+      "bytes": 189,
+      "sha256": "c64f3f8857dbe531e767404e4f4108c8acee66232de20ec9532eb1aae0fb9f0c",
+      "read_scope": "full relevant composition evidence/function or tool identity"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/pnpm-11.8.0/package.json",
+      "revision": "exact prior evidence or fixed tool",
+      "bytes": 2216,
+      "sha256": "b3144ca9688dfdd1f6bf81826855b9dffe199d46465c9e27dc72aabcbc104367",
+      "read_scope": "full relevant composition evidence/function or tool identity"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/home/profiles/desktop/cordis.patch.yml",
+      "revision": "existing original configuration/metadata",
+      "bytes": 1970,
+      "sha256": "7ffa557aa1a2fdcf6227eee2da99db250706e557a7f78b2870c2cbff9cf18b8c",
+      "read_scope": "configuration parsed or identity only; no credential files read"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/home/profiles/desktop/pnpm-lock.yaml",
+      "revision": "existing original configuration/metadata",
+      "bytes": 2874,
+      "sha256": "c7102597f2a05154d8f2dc72943ceab7116e3a6e983b24e761684c1e630dec82",
+      "read_scope": "configuration parsed or identity only; no credential files read"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/home/profiles/desktop/node_modules/.modules.yaml",
+      "revision": "existing original configuration/metadata",
+      "bytes": 711,
+      "sha256": "e14a9c051dad30ee99f93ba4d22bdfc8f37873b7db8bba8d3e1d66c113bc9c06",
+      "read_scope": "configuration parsed or identity only; no credential files read"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/pnpm-lock.yaml",
+      "revision": "existing original configuration/metadata",
+      "bytes": 144065,
+      "sha256": "18414cf12a8ead253ce145c093e83be45099df0c53f96d6303f2f506b8412d8b",
+      "read_scope": "configuration parsed or identity only; no credential files read"
+    }
+  ],
+  "global_followup": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+  "project_followup": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+  "scope": [
+    "Reuse original fixed installed boot/include modules and full final overlay, which already select controlled M06",
+    "Generate isolated installation-view and Profile source manifests with all original link targets retained except Oasis to existing immutable archive extraction",
+    "Use only Node24.21.0/pnpm11.8.0 offline ignore-scripts/no-manager-download; first produce candidate lockfile-only then freeze hash before link materialization",
+    "Prove actual boot/include composition, Host/client resolution to same archive, stable old ID and single active business Host; no boot() or credentials/runtime stores"
+  ],
+  "limits": [
+    "No source/lib/default package patch change",
+    "No existing Profile/package metadata or dependencies changed",
+    "No .env/credentials/session/workspace/auth copy",
+    "No model/API/Dify/HTTP/payment/WorkBuddy",
+    "No actual app/Host launch, deployment, Git commit/push/publication or community license adoption"
+  ],
+  "rulings": [
+    "Prior bare-package RLS04 analysis omitted existing final Profile overlay; its actual configuration already selected controlled M06. Correct scope and reuse evidence, do not claim a new original-entry defect.",
+    "Installed resolution takes installation anchor before Profile fallback; bind both isolated dependency anchors rather than changing only a Host path and risking stale client resolution.",
+    "Lockfile-only generation creates new candidate input, not dependency-link materialization; actual links are created only in a subsequent frozen-lockfile pnpm step. All 604 direct specs are local links."
+  ],
+  "scratch": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1",
+  "old_profile": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/data/home/profiles/desktop",
+  "old_runtime_manifest": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/package.json",
+  "archive_root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/archive-review-20261106-r1/package",
+  "archive_sha256": "c476b1f091b483d4ca2342f68cccb350d4af217f6d916cd8e59866f1084690c5",
+  "git": {
+    "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+    "branch": "codex/pdf-m06-minimal-20261029"
+  },
+  "verdict": "Continue isolated dependency/configuration binding and correction; no real application or release acceptance inferred"
+}

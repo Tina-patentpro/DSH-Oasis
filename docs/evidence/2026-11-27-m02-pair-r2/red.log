@@ -1,0 +1,81 @@
+✖ M02 R2 accepts 0 matched pairs with unique v9 identity (39.335417ms)
+✖ M02 R2 accepts 1 matched pairs with unique v9 identity (22.479625ms)
+✖ M02 R2 accepts 2 matched pairs with unique v9 identity (20.687834ms)
+✔ M02 R2 still rejects orphan registration at the correct field (17.944875ms)
+✔ M02 R2 still rejects missing registration at the correct field (16.437917ms)
+✔ M02 R2 still rejects different IDs at the correct field (16.658792ms)
+✔ M02 R2 still rejects analysis is not a matching supplement at the correct field (15.597875ms)
+✔ M02 R2 still rejects duplicate registrations at the correct field (17.433375ms)
+✔ M02 R2 still rejects duplicate updates at the correct field (15.8505ms)
+✔ M02 R2 still rejects case mismatch at the correct field (15.913083ms)
+✔ M02 R2 preserves original v5 and v8 system fingerprints (2.022833ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 8
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 335.4165
+
+✖ failing tests:
+
+test at .local/dsh-m02-pair-r2-20261127/package/test/m02-completion-pair-r2.test.mjs:46:28
+✖ M02 R2 accepts 0 matched pairs with unique v9 identity (39.335417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'v340-native-candidate-8'
+  - 'v340-native-candidate-9'
+                           ^
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-pair-r2-20261127/package/test/m02-completion-pair-r2.test.mjs:51:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'v340-native-candidate-8',
+    expected: 'v340-native-candidate-9',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at .local/dsh-m02-pair-r2-20261127/package/test/m02-completion-pair-r2.test.mjs:46:28
+✖ M02 R2 accepts 1 matched pairs with unique v9 identity (22.479625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'v340-native-candidate-8'
+  - 'v340-native-candidate-9'
+                           ^
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-pair-r2-20261127/package/test/m02-completion-pair-r2.test.mjs:51:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'v340-native-candidate-8',
+    expected: 'v340-native-candidate-9',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at .local/dsh-m02-pair-r2-20261127/package/test/m02-completion-pair-r2.test.mjs:46:28
+✖ M02 R2 accepts 2 matched pairs with unique v9 identity (20.687834ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'v340-native-candidate-8'
+  - 'v340-native-candidate-9'
+                           ^
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-pair-r2-20261127/package/test/m02-completion-pair-r2.test.mjs:51:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'v340-native-candidate-8',
+    expected: 'v340-native-candidate-9',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

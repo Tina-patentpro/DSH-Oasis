@@ -1,0 +1,173 @@
+{
+  "at": "2026-11-05T03:34:15.686Z",
+  "timezone": "Asia/Shanghai",
+  "status": "PASS_EXECUTION_IDENTITY_AND_BOUNDED_PRESERVATION",
+  "runtime": "ONE_NEW_UPDATED_FAST39_CALL_COMPLETED",
+  "engineeringAcceptance": "PARTIAL_NOT_ACCEPTED_AS_COMPLETE_CLAIMS",
+  "professionalAcceptance": "NOT_OBTAINED",
+  "userAcceptance": "NOT_OBTAINED",
+  "formalApiBindingEnabled": false,
+  "G0": "OPEN",
+  "authorization": {
+    "userFeeCap": null,
+    "scope": "Current requested retest; user explicitly stated 不限制预算",
+    "actualCreates": 1,
+    "actualUploads": 1,
+    "actualCostCNY": 3,
+    "automaticRetries": 0,
+    "localIndependentModelCalls": 0,
+    "workflowLlmNodesObserved": 9
+  },
+  "checks": {
+    "backendRecordId": 5343,
+    "runId": "5e374a6f-5a89-4472-aa82-dfc768b9b6c4",
+    "all36NodesSucceeded": true,
+    "totalTokens": 85934,
+    "materialExtractionExactSHA256": "ea2f8c0c03a4ca7cde4760906dd6bf0a736b6a5f1b15774f41bb3c8130251a79",
+    "UserInputUnchanged": true,
+    "backendSemanticCopyCanonicalMatchesLive": true,
+    "allSixOriginalOutputsVerified": true,
+    "combinedOutputWarningsRetained": true,
+    "oldSectionInspection": "contract-mismatch; approved=false; different headings do not prove warning loss",
+    "oldOriginals": [
+      {
+        "run": "r1",
+        "sha256": "81a7ca8eeb01c0156e66b9cc64f17bfa24c5200c5596dfd5f6959f7cae6fe06f",
+        "decision": "FAIL_SOURCE_CONSISTENCY"
+      },
+      {
+        "run": "r2",
+        "sha256": "48f619c5b6de781235b9b24a31dbafe0e8f2903864807b6152be89d625105b55",
+        "decision": "FAIL_SOURCE_CONSISTENCY_AND_WARNING_RETENTION"
+      }
+    ],
+    "preservedFilesChecked": 142,
+    "unchangedFiles": 138,
+    "ownPrefixUpdates": 3,
+    "parallelPlanUpdates": 1,
+    "parallelPlanReReadAndPreserved": true,
+    "profileRestored": true,
+    "parentPins": "PASS",
+    "isolatedDesktopStopped": true,
+    "branchAndHeadUnchanged": true,
+    "noBusinessSourceRepair": true
+  },
+  "limitations": {
+    "sourceIdsLostBeforeOutline": true,
+    "lockMemberDroppedByFinalNode": true,
+    "extraStructuredOutputsNotProjected": true,
+    "completeNodeArchiveDownloadBlocked": true,
+    "rawNodeArchiveSaved": false,
+    "oldNodeRootCauseNotProvedByNewRun": true,
+    "sharedUiReviewSaveReferenceRecoveryNotRetested": true,
+    "centralBM1InputChanges": "Bounded re-read and recorded, no global compatibility acceptance claimed"
+  },
+  "preservedPrefixChanges": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "beforeSHA256": "34acdf7544f7700a64c3dc64692f665c40cf0c3c55ce1dba411e6f9108a93f94",
+      "afterSHA256": "66aa7d13118ce2a3ad19df18ddc534fa86a0a5728413eff70bb8274496549faa",
+      "prefixBytes": 1514,
+      "beforeSnapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/status-before-closeout/project-current-state.md",
+      "suffixPreserved": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "beforeSHA256": "fa772c0d35fe3a18a73eba2993807bb016fe6a3d5c656f49d4f14ec3f2238ffc",
+      "afterSHA256": "041afbc713b6f3f3ce735cafd7e8847fc3946856f5dab7f15de583a410f50fec",
+      "prefixBytes": 1505,
+      "beforeSnapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/status-before-closeout/2026-10-23-stage5-progress-and-remaining.md",
+      "suffixPreserved": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+      "beforeSHA256": "240cdffff6fd13fb6dddaf0635ff9bc7b1cb8948f1b9cbc2ea3fe74307a8ac4b",
+      "afterSHA256": "633767e3e0ff9b1c461c19bd286a32ca5071fcd518094533506e1dfafec64460",
+      "prefixBytes": 1505,
+      "beforeSnapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/status-before-closeout/2026-10-26-follow-up-remaining.md",
+      "suffixPreserved": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/request-snapshot.json",
+      "sha256": "06adb499f84d5ea2b9fc81e74b88ee91272284a1d67818ef1bd7249ea1842d61"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/upload-readback-verification.json",
+      "sha256": "cb1c1518b3c6bf397041d5aae83cde9ed7e9b8e31b86fc5a9318aea336eb0d5b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/dispatch-approved.json",
+      "sha256": "732bee11dffa01f015f35f59df976a85025e3e43a3984d9b4bf819f071a5d770"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/dispatch-terminal.json",
+      "sha256": "dfeaf38252082ed33bc61017176721d24be365027700a1966152d989ed75e955"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/create-intent.json",
+      "sha256": "1b84ef560e2e4e5756c578f3a468ed23cd4bee68cc41518be170e1032a72fcaf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/create-response.json",
+      "sha256": "af4c43f2bbc92352ddfb1eebfbb1393616c1da33a8d37d47f7d7b35acb391abc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/balance-after.json",
+      "sha256": "b1253334f7b6184af6435da4d438324f82d3c81307363cf3a1e0efcf9aa334f1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/backend-workflow-log-semantic-copy.json",
+      "sha256": "a5703e983f3f7f471a7dd3db43c879ef55e07a1ac8553a6458efcc9775cef0ee"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/backend-evidence-copy-verification.json",
+      "sha256": "5d95cf1514bcf3e0190a47afb2aef7db0141b4597fd743c75841398e78b3081f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/engineering-review.json",
+      "sha256": "6206dadab9b876239bb0b44b398874ec5aaaf0a36c8d25ba71e5a4a66fe912ce"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/existing-calibration-inspection.json",
+      "sha256": "9134e30f72597a9c5bc42cbc424fd49361dbdf345fc559e2bcba6827adf052b7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/api-original-answer.txt",
+      "sha256": "e278b16a9a23fc61a6ee90332e3d4a574de126c41bfe177a0d7488c5e4f17f60"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/dify-output-original.txt",
+      "sha256": "f1ced017c4b42655ec96bf2adfad3cd4025871658d53db4bebf9895e1bfb20da"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/authorized-mount-delta.json",
+      "sha256": "88e51eea4316a05a968e62de24391e67f4ebd18999b4f9688a5b619ec71765f9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/closeout.mjs",
+      "sha256": "73e8b96ee4c2138b3cc944ba82e5362cb7d821a4d4ec3b5e7825cb3021277dba"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-jtti-retest-authorized-resume.json",
+      "sha256": "fb64150c8f324a756cdb8e3e0af453c7fe983d7214dbabafa4ba47c7b3df1130"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-jtti-node-trace-observations.json",
+      "sha256": "81ff262bdf31fc7eee29426aa225ebf72353d1cc5980bdc6cc763e3ce9792a09"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-jtti-retest-return.md",
+      "sha256": "ea03fb157c00d45a4936fc32a4be1994f4c9f8a0f0944b35956c547ca4515552"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-jtti-bm1-closeout-addendum.json",
+      "sha256": "2bdb52a85565d1152c599b45814da08069ec9d2028b235db18379e5c85e8cb75"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/claims_fast39_jtti_20261105_6d83593b_OIW.md",
+      "sha256": "f1ced017c4b42655ec96bf2adfad3cd4025871658d53db4bebf9895e1bfb20da"
+    }
+  ]
+}

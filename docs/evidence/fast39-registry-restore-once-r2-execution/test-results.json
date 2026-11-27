@@ -1,0 +1,56 @@
+{
+  "at": "2026-11-05T22:42:57.794613+08:00",
+  "status": "PASS_FINAL_ISOLATED_MECHANISM_20",
+  "final_test_count": 20,
+  "environment": {
+    "python": "3.12.14",
+    "jsonschema": "4.26.0",
+    "interpreter": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python",
+    "install": false
+  },
+  "command": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python -B .local/fast39-registry-restore-once-r2/test_restore_once.py",
+  "attempts": [
+    {
+      "log": "tests-red.log",
+      "exit_code": 1,
+      "observation": "17 failures before implementation",
+      "sha256": "06d41f8c9945d08319e38536588f19728d1137521414e8ab4b8772f6fc7b97d8"
+    },
+    {
+      "log": "tests-green-attempt-1.log",
+      "exit_code": 0,
+      "observation": "17 initial pass, pre-freeze",
+      "sha256": "e8c5b2ebf8780c42411a616f642c5ffb99c80f29e671cb91e8983727558b2bf5"
+    },
+    {
+      "log": "tests-red-hardening.log",
+      "exit_code": 1,
+      "observation": "20 tests,2 failures in preliminary audit",
+      "sha256": "c6259efbf02c8e049e8a6db76fc379ce1fe03f76e6a327b4adebfb3082f35d41"
+    },
+    {
+      "log": "tests-red-exact-setup.log",
+      "exit_code": 1,
+      "observation": "3 exact setup metadata/count forgery failures before correction",
+      "sha256": "05ec0e0857c4dda609599183d79ceda71eb66d3085db443a09faf6fb2e3a1a12"
+    },
+    {
+      "log": "tests-green-final.log",
+      "exit_code": 0,
+      "observation": "20 final pass",
+      "sha256": "5c91151827cfb76b3b5a2008f68e1d20deaa9787543ce2243eb98e94d693452f"
+    }
+  ],
+  "tested_final_script_sha256": "731ba9a7af4dcc048c48acec6a43a31b5a0f8b506625ad0ea2e4153f74151e35",
+  "tested_template_sha256": "776abc0ab21bbb7854f922344e164627be4ae6346cda836c87d4878550717c21",
+  "tested_tests_sha256": "39bc1c0a420870e30b58a80ccc2ca2c327f1f28036506c7697a74c4031a50610",
+  "isolated_outcome_counts": {
+    "COMMITTED": 12,
+    "FAILED_BEFORE_REPLACE": 9,
+    "UNKNOWN_AFTER_REPLACE": 6
+  },
+  "live_source_apply_or_commit_calls": 0,
+  "actual_source_mode_tested": false,
+  "source_authority_authentication": "manual exact user decision provenance still required; program consistency is not authority",
+  "production_ready": false
+}

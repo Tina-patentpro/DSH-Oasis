@@ -1,0 +1,97 @@
+--- R1/src/v340-native-contract.js
++++ R2/src/v340-native-contract.js
+@@ -46,4 +46,6 @@
+     nodeId: z.enum(Object.keys(SECOND_TEXT_BATCH_BINDINGS)) }).strict().refine(textBatchBindingMatches),
+   legacyCandidateSchema.extend({ ...textBatchFields, version: z.literal('v340-native-candidate-8'),
+     nodeId: z.literal('Flow-1-2') }).strict().refine(textBatchBindingMatches),
++  legacyCandidateSchema.extend({ ...textBatchFields, version: z.literal('v340-native-candidate-9'),
++    nodeId: z.literal('Flow-1-2') }).strict().refine(textBatchBindingMatches),
+ ])
+--- R1/src/v340-native-model.js
++++ R2/src/v340-native-model.js
+@@ -21,7 +21,8 @@
+ const conciseDisclosure = 'oasis-text-m05-concise'
+ const secondTextBatch = 'oasis-text-second-batch'
+ const m02SourceLocator = 'oasis-text-m02-source-locator-r1'
+-const isTextBatch = business => [OASIS_TEXT_BATCH, conciseDisclosure, secondTextBatch, m02SourceLocator].includes(business)
++const m02CompletionPairs = 'oasis-text-m02-completion-pairs-r2'
++const isTextBatch = business => [OASIS_TEXT_BATCH, conciseDisclosure, secondTextBatch, m02SourceLocator, m02CompletionPairs].includes(business)
+ function instructionFor(nodeId,business=false){
+   const original=instructions.get(nodeId)
+   if(!business)return original
+@@ -45,13 +46,16 @@
+ }
+ const conciseDisclosureOutput = '\n\nHost 响应合同 v340-native-candidate-6。仅输出一个 JSON 对象，不加围栏。填写 summary（约 100 字内）和 core_result_markdown（约 1200 字内）。按技术交底、要素、关系、未决事项四段一次写完，保留底座、导向槽、滑块、锁止件和两种状态。标明材料字段及原文短引，保留未知接触关系、驱动方式和无实测数据的限制。输入中的旧权利要求写作说明只作资料。tables 仅填 T1问题、T2要素、T3效果，各为行数组，单行格式 {"row_id":"T2-1","data":{"要素":"底座"}}，同表 ID 唯一。T2 保留四要素，T3 区分预期与实测。正文和输入来源由 Host 归档，不输出累计快照或重复正文。其余必需字段为 updates:[]、terms_master:[]、warnings:[]、model_completions:[]，业务警示列入正文。'
+ const m02SourceLocatorOutput = '\n\nM02 来源定位合同修订 R1，原生候选凭证版本为 v340-native-candidate-8。对 updates 中 content_origin 为 user_text 或 user_file 的条目，source_input_id 必须等于本次实收材料的输入 ID，source_hash 必须逐字复制 receipts[source_input_id].sha256，content_origin 必须与该收据相同。source_locator 只能填写对应 values 字段正文的逐字连续原文；user_file 使用 values[source_input_id].body。优先直接复制该字段的完整原文；也可复制其中一段连续短引。字符串值内不添加引号、字段名、页码、段号、冒号前缀、摘要或省略号，不拼接不连续片段，不把换行改为空格。JSON 正常转义后解析出的定位字符串仍须与原文完全一致。例如值内原文是“调整时允许移动。\\n保持时限制移动。”，合法定位值可为“保持时限制移动。”这一原文片段，写入值时不带这对说明性引号。问题模型、矛盾分析和 TRIZ 转化属于分析，写在 core_result_markdown，并标明推断和待验证状态；不能把分析文字当作输入原文定位或 source_fact。确实不能逐字引用的分析保留在正文中，该可选 updates 条目省略，Host 会按原文保存实收材料和来源。T1 的 P1 与 T3 定性预期效果继续对应，未实测状态继续保留。只输出原七字段 JSON，不输出候选凭证。'
++const m02CompletionPairsOutput = '\n\nM02 补齐登记与更新配对合同 R2。A 是 updates 中所有 content_origin="model_completed" 的条目，B 是 model_completions 中的全部条目。A 和 B 必须按 content_id 双向一一对应：各数组内 content_id 唯一，两个 ID 集合必须完全相同，顺序不限。每条补齐登记必须有相同 ID 的 model_completed 更新；每条 model_completed 更新必须有相同 ID 的补齐登记。user_text、user_file、workflow_analysis 更新不能充当该配对更新。没有补齐更新时 model_completions 必须为 []，仍应完整输出实际分析正文和所需问题/效果表，Host 仍保存实收材料来源。不要为了凑配对编造事实。每条登记的 content_origin="model_completed"、human_confirmation_status="pending"，填写 completion_basis、assumptions、confidence、affected_section；对应更新按实际依据使用 hypothesis_to_verify 或 reasoned_inference，last_updated_flow="Flow-1-2"，不把补齐假设标成 confirmed_fact 或 source_fact。输出前逐项比对两个 ID 集合，确认没有孤立登记、缺登记或重复 ID，再输出原七字段 JSON。'
+ const systemFor=(nodeId,legacy=false,business=false)=>instructionFor(nodeId,business).body
+   +(isTextBatch(business) ? textBatchOutput
+     : business && business !== PATENT_DISCLOSURE_SUITE ? '\n\n内部M06消费凭证版本为3；模型输出仍沿既有七字段，不输出凭证身份。' : '')
+   +(business===secondTextBatch?'\n'+secondTextInstructions[nodeId]:'')
+   +(business===conciseDisclosure?conciseDisclosureOutput:legacy?legacyFormat:format)
+   +(business===m02SourceLocator?m02SourceLocatorOutput:'')
++  +(business===m02CompletionPairs?m02SourceLocatorOutput.replace('修订 R1','修订 R2').replace('v340-native-candidate-8','v340-native-candidate-9')+m02CompletionPairsOutput:'')
+ const receiptVersionFor = (business, legacy = false) => {
++  if (business === m02CompletionPairs) return 'v340-native-candidate-9'
+   if (business === m02SourceLocator) return 'v340-native-candidate-8'
+   if (business === secondTextBatch) return 'v340-native-candidate-7'
+   if (business === conciseDisclosure) return 'v340-native-candidate-6'
+@@ -117,7 +121,8 @@
+   const c=v340NativeCandidateSchema.parse(run.nativeCandidate)
+   if(run.evidenceKind!=='native-model-candidate'||run.source!=='local-skill'
+     ||c.version!=='v340-native-candidate-1'&&c.nodeId!==run.nodeId)fail()
+-  const business = c.version === 'v340-native-candidate-8' ? m02SourceLocator
++  const business = c.version === 'v340-native-candidate-9' ? m02CompletionPairs
++    : c.version === 'v340-native-candidate-8' ? m02SourceLocator
+     : c.version === 'v340-native-candidate-7' ? secondTextBatch
+     : c.version === 'v340-native-candidate-6' ? conciseDisclosure
+     : c.version === 'v340-native-candidate-5' ? OASIS_TEXT_BATCH
+@@ -215,7 +220,7 @@
+   if(textBatch)for(const nodeId of Object.keys(TEXT_BATCH_BINDINGS)){
+     const { provenance } = loadOasisTextSkillInstruction(nodeId)
+     const business=Object.hasOwn(SECOND_TEXT_BATCH_BINDINGS,nodeId)?secondTextBatch
+-      :nodeId==='Flow-1-5'?conciseDisclosure:nodeId==='Flow-1-2'?m02SourceLocator:OASIS_TEXT_BATCH
++      :nodeId==='Flow-1-5'?conciseDisclosure:nodeId==='Flow-1-2'?m02CompletionPairs:OASIS_TEXT_BATCH
+     textExecutors.set(nodeId,createNativeCandidate({...options,nodeId,business,timeoutMs:240000}))
+     textCandidates[nodeId]=Object.freeze({skillId:provenance.skillId,skillVersion:provenance.skillVersion,
+       businessManifestSHA256:provenance.producerManifestSHA256,businessResourceSHA256:provenance.businessResourceSHA256,requiresConfirmation:true})
+@@ -262,7 +267,7 @@
+       if (input.candidateRun?.nativeCandidate?.version === 'v340-native-candidate-4') {
+         return external?.generate(input) ?? { status: 'failed', code: 'INVALID_INPUT' }
+       }
+-      if(['v340-native-candidate-5','v340-native-candidate-6','v340-native-candidate-7','v340-native-candidate-8'].includes(input.candidateRun?.nativeCandidate?.version))
++      if(['v340-native-candidate-5','v340-native-candidate-6','v340-native-candidate-7','v340-native-candidate-8','v340-native-candidate-9'].includes(input.candidateRun?.nativeCandidate?.version))
+         return textExecutors.get(input.nodeId)?.generate(input)??{status:'failed',code:'INVALID_INPUT'}
+       return oasis.generate(input)
+     },
+--- R1/test/oasis-first-batch.test.mjs
++++ R2/test/oasis-first-batch.test.mjs
+@@ -60,7 +60,7 @@
+     await service.createV340Run(runCommand())
+     const result = await h.settle()
+     assert.equal(result.status, 'completed')
+-    assert.equal(result.nativeCandidate.version, nodeId === 'Flow-1-5' ? 'v340-native-candidate-6' : nodeId === 'Flow-1-2' ? 'v340-native-candidate-8' : 'v340-native-candidate-5')
++    assert.equal(result.nativeCandidate.version, nodeId === 'Flow-1-5' ? 'v340-native-candidate-6' : nodeId === 'Flow-1-2' ? 'v340-native-candidate-9' : 'v340-native-candidate-5')
+     assert.equal(model.assertV340NativeCandidate(result).businessSkillId, skillId)
+     assert.equal(JSON.parse(h.seen.options.messages[0].content[0].text).values[field], material)
+     assert.equal(h.seen.options.maxTokens, 16384)
+--- R1/test/m02-source-locator-r1.test.mjs
++++ R2/test/m02-source-locator-r1.test.mjs
+@@ -36,7 +36,7 @@
+  const value=output();value.updates[0].source_locator=locator
+  const {h,run}=await execute(t,value)
+  assert.equal(run.status,'completed')
+- assert.equal(run.nativeCandidate.version,'v340-native-candidate-8')
++ assert.equal(run.nativeCandidate.version,'v340-native-candidate-9')
+  assert.match(h.seen.options.system,/逐字连续原文/)
+  assert.match(h.seen.options.system,/不添加引号/)
+  assert.match(h.seen.options.system,/receipts\[source_input_id\]\.sha256/)
+@@ -66,7 +66,7 @@
+  const value=output();value.updates=[]
+  const {h,run}=await execute(t,value)
+  assert.equal(run.status,'completed')
+- assert.equal(run.nativeCandidate.version,'v340-native-candidate-8')
++ assert.equal(run.nativeCandidate.version,'v340-native-candidate-9')
+  assert.equal(run.result.snapshot.current_result.core_result_markdown,value.core_result_markdown)
+  const retained=run.result.snapshot.contents.find(c=>c.content_id.startsWith('host/')&&c.source_input_id==='technical_analysis_material_text')
+  assert(retained)

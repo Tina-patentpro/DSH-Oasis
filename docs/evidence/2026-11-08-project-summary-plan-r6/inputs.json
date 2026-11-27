@@ -1,0 +1,1752 @@
+{
+  "recorded_at": "2026-11-08T19:47:09.629746+08:00",
+  "timezone": "Asia/Shanghai",
+  "executor": "Codex single agent",
+  "task": "Project summary, goal comparison and next plan",
+  "scope": "documentation planning only; no business execution",
+  "project_id": "dsh-oasis",
+  "git": {
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis",
+    "branch": "codex/pdf-m06-minimal-20261029",
+    "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+    "tracked_changes_before": 42
+  },
+  "versions": {
+    "coordination": "1.2.2",
+    "overall": "1.3.1/NS1-R1 + BM1-R1/S1/S2-R1/G1/GH1/P1108",
+    "global_and_project_followup": "PLAN-PROGRESS-REFRESH-20261108-P1108",
+    "project_plan": "R6 local bounded followup; central P1108 retained"
+  },
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "sha256": "b915facac470e75cbe13c1e32adf94f125ae687b4cc808989c8a5818bee2c66c",
+      "bytes": 37469,
+      "read_scope": "Full current rules R1/EXEC-R2/BM1/S1/S2/G1/R3-07/GH1",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "sha256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "bytes": 35618,
+      "read_scope": "Full project rules",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "sha256": "c8a0bce2cf7ffecbda9caf763b5dc9d6cb2ed248e06a429b8262a3feb8bd5867",
+      "bytes": 29184,
+      "read_scope": "Full coordination charter",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "sha256": "20f37db6ba293a0c39edaaba18e7b8c5207748f862ce37653c1414ebb566292e",
+      "bytes": 44979,
+      "read_scope": "Parsed relevant top-level references, dsh-oasis, planned_components and workstreams; unrelated state not reviewed",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "sha256": "e66244ce2d0990a3f8fa0733d94a57f79c6104b180c91aa766c449cc300db2c0",
+      "bytes": 119495,
+      "read_scope": "Parsed global/project P1108, contract roles and guidance; draft interface bodies not reviewed",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "sha256": "b0cbc2b3dda66b89e9b21a4502b623b6d79ac7d390d2afed393e6da8063dff1c",
+      "bytes": 53418,
+      "read_scope": "Goals, independent roles, NS1/R1, P28/P30, BM1/S1/S2/G1/GH1/P1108; historical audits navigation only",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "sha256": "ff06b4699351b798c27482bbef3c1ac886fda7def80ed1def4e7470576e9ba2b",
+      "bytes": 42682,
+      "read_scope": "BM1 stages, roles, S1, S2-R1, GH1 and P1108",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "bytes": 38734,
+      "read_scope": "11 contracts and layered delivery criteria, BM1/S1/S2; draft standards navigation only",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "bytes": 21718,
+      "read_scope": "Full contracts and applicable supplements",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-10-25-research-rules-and-migration-addendum.md",
+      "sha256": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "bytes": 6688,
+      "read_scope": "29 targets/rule adoption; migration observations historical",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利业务Skills清单.md",
+      "sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "bytes": 6157,
+      "read_scope": "Full target guidance; M06 retained, no new first-batch selection",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-07-github-operations-workstream-plan.md",
+      "sha256": "506883853f1ca0f0258b4060cf830ef8550568aa07652bc14e28faca885c2776",
+      "bytes": 11448,
+      "read_scope": "Full GH1 including P1108",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "sha256": "c0dab8f0a171c458fece62b9a4d21e9b7b844ea62dd921bef3a9e86016f5457c",
+      "bytes": 67906,
+      "read_scope": "DS-01..05, BM1/roles/S1/S2 and R3/R4/R5/P1108; historical subplans not fully reaudited",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-07-project-summary-and-next-plan-r5.md",
+      "sha256": "5e0fa56ea9117c7267265e134bf72a61f6cf895410bcdb2308a5fb1ea0d6cf73",
+      "bytes": 15735,
+      "read_scope": "Full R5; superseded starting points resolved by later receipts",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-07-project-summary-and-remediation-plan-r3.md",
+      "sha256": "5fd36e94c5cb288486eb34ecce57889aa1f2498b21da24d956393e6dc56d7d4f",
+      "bytes": 23337,
+      "read_scope": "Constraints/problems and R3-01..05; remainder not fully reaudited",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "sha256": "a074d4e167b559009af51d6b99357703c8e7e1ca84cb25b53d31f874154684cb",
+      "bytes": 370037,
+      "read_scope": "Current prefix lines1-210, Fast39/PDF sections and stage1-3 closeout; historical remainder not fully reaudited",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "sha256": "2331d93b87cb4706c0360f5d857dc2f4d54474cdd686a7bac12f2a67185db742",
+      "bytes": 156162,
+      "read_scope": "Current prefix lines1-100; historical remainder not reaudited",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-development-installation-decision-r1.md",
+      "sha256": "5f7fa82be891861497d10ad456d5140a39b647994d115bb75ae6971a16eeeec1",
+      "bytes": 991,
+      "read_scope": "Full user decision",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-rc3-existing-development-update-r1/execution-return.md",
+      "sha256": "b89bbd71943cbf6ddb73c67d4647f01586a87bfc21de6cb10634652168c30677",
+      "bytes": 5401,
+      "read_scope": "Full exact installed/offline update receipt",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-rc3-existing-development-update-r1/next-native-ui-retest-scope.md",
+      "sha256": "aa0e3f53f93a258310c19d52c3df8db5c91f59880a356b8cbedce3cbef7c8ffd",
+      "bytes": 1586,
+      "read_scope": "Full proposed single-start targeted scope; not executed",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-rc3-existing-development-update-r1/verification.json",
+      "sha256": "ac8d713aab1ec8bcc49a2932e5ccb6d41a78e918ffb4a605cf5769b6e89754ca",
+      "bytes": 5947,
+      "read_scope": "Full existing verification identity and limits; not rerun this task",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-m06-rc2-native-r1/execution-return.md",
+      "sha256": "e1ee42f026dffadc73521be7350aa4f5a2782f72251122e9eb0526238a6fd600",
+      "bytes": 8036,
+      "read_scope": "Full native synthetic recovery receipt; unsubmitted result draft across restart not covered",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/ADOPTION.md",
+      "sha256": "5178d376ffcf19e7b2d29db936df86c146e017802f47409c165b80afeade033a",
+      "bytes": 3508,
+      "read_scope": "Full preparation, binding and static candidate limits",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-first-release-r1/ADOPTION-STATUS.md",
+      "sha256": "83108086519c9af9a8a9f65f23be3df1857df3505f7de874c7b2e0da3b6520a0",
+      "bytes": 2374,
+      "read_scope": "Full exact license adoption and no-publication decision",
+      "version": "As declared in source; no version fabricated"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.1/FIRST-RELEASE-CHECKLIST-R1.md",
+      "sha256": "a26442ce5378dc7bbb785214e86b2cbc1bf6250e2b30d3a55acd751d91c77e7c",
+      "bytes": 3388,
+      "read_scope": "Full RL01..09 at rc1 time; later version requires addendum",
+      "version": "As declared in source; no version fabricated"
+    }
+  ],
+  "source_protection": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skill-loader.js",
+      "sha256": "f60f09dc80c54b52f1178ffa117e9493dd20c1414acbbac5b530bb248aa9e94e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.0/SKILL.md",
+      "sha256": "b90559a1f00f13ffe0f0bd0e8862568846f723019349dd39d2e40254b31a4ec4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.0/assets/claims-output-template.md",
+      "sha256": "d70e7fe249bdbc7e3d420e60ba53a2c14bee2933603275ac6f1ef3735de09d61"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.0/manifest.json",
+      "sha256": "63254666e5e1af582b2251423a003686cc2f112f655b35ed088900fbb5cdaaa1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.0/references/drafting-rules.md",
+      "sha256": "1f724b4490db3e32db8a79ebd83cfc739b645f52ef772c7bcdfd307280c1e9b3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.0/references/special-domain-boundary.md",
+      "sha256": "ee2cccad227a1e2be2694633517f340b63b3fefe88102995f78b53ba06b046b6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.1/SKILL.md",
+      "sha256": "87bce634fe9042c692cf19e48fe76923c57c788390491ff26ea49c351a342886"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.1/assets/claims-output-template.md",
+      "sha256": "1c89945da2aa213885e33054f055d3f115a18da26a5a773c5f1db7153a4b5723"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.1/manifest.json",
+      "sha256": "d472b4b7a7b74d5223e95513dd1175927e8b9766e392d47a4910c8ce4f0c8dbf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.1/references/drafting-rules.md",
+      "sha256": "d53870bd2ba5b0a1a9c3ae0c894ae8a4548affc1c2f07503360b703e619011b1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.1/references/special-domain-boundary.md",
+      "sha256": "ee2cccad227a1e2be2694633517f340b63b3fefe88102995f78b53ba06b046b6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.2/SKILL.md",
+      "sha256": "f9f26a3d473418e40e7461047877cdcf0f7e7be0f20cf9dd15739930fd1af830"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.2/assets/claims-output-template.md",
+      "sha256": "2bb1d0df7a5a6210e3979b69e6c198a88126b9bd8a2d6d93e4e333f0ac55c1de"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.2/manifest.json",
+      "sha256": "f81d427db60ab671dcd552a24794f68c1a323d2dd1b440510bb26f9bfe23d706"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.2/references/drafting-rules.md",
+      "sha256": "cf95acbe249a2419e230348c09ef7a3e2be56c87680ab6adb87816e29048052a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/builtin-skills/flow-2-6/0.2.2/references/special-domain-boundary.md",
+      "sha256": "ee2cccad227a1e2be2694633517f340b63b3fefe88102995f78b53ba06b046b6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/claims-api-document.js",
+      "sha256": "1bd53ba9334c7e1803029a6adb251989aaa47f40c5f30b0c4674294e9fa8185a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/claims-api-execution-contract.js",
+      "sha256": "20418bf686e2f56d69f97aa7c7e30f480ea0dd338a1eb7a5968b6d7765b7fff1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/claims-skill-pin.js",
+      "sha256": "16a03ce5b1c69c93e493b9fc81c3c79403a8bc49bcaced4cddc176a6ad93be50"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/claims-upstream.js",
+      "sha256": "58f5d7090f397c5cd87758f5f1b02dff6b1f04430967d493ddea61383a2c5c2d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/claims-v2-result.js",
+      "sha256": "211072334798c7ffbd5686cf5f18a157a47cc49b4108d959d3714b20c08d375e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/ConversationInputRegistration.js",
+      "sha256": "f8de5656123a29498011df5b4fd1c3ceb44fafd6c1c72f9217f74726807fc0eb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/FunctionCenter.js",
+      "sha256": "d2bba730d48565a33108b49b47938ca2ebfb3777bbcf0f6f19c60f29a4596fdf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/GenerationSourceSwitch.js",
+      "sha256": "b46fc722520b1e801155528e9a660acab23b063037f69a1ab9291c2875dd7553"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/MaterialReferences.js",
+      "sha256": "1f9c59ba66195edc1bc1a3ab4814995e7a000b0a76e0c49ece02ac4fa976eb86"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/OasisAccountSettings.js",
+      "sha256": "febd63ddfe6a92463f59670b3ee6468e7c6ae23840d0c6d53dc230b73121fcaf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/OasisBetterSidebarTab.js",
+      "sha256": "100247afe401ca91186aa4d1a5a5b3d2e4910e74985abb62f4516da2d9f5a7d5"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/OasisConnectionSettings.js",
+      "sha256": "c8d9aef9cdb8af6b80d3fd3360f0105aa27ffee498cf0a8b0ab154009921a606"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/OasisPanelBoundary.js",
+      "sha256": "837bccd061c8e4da4029c1a7f1153c7af08de25ac80dd709aecfff1d80242686"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/OasisPanelHost.js",
+      "sha256": "2b5727d836f7c3b2164bb63ddf267a4222b4d3ef57bc8c74f1b6ffeb8b0c9ebe"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/OasisPanelPortal.js",
+      "sha256": "fc12af328bea234653d1c0aa54c7ad2361681be20e6fe1fd5da5a34b56e10424"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/OasisSettingsSection.js",
+      "sha256": "0fa1dbb541686845ce9f9fa8b5dbe1de30eb488ef71166b8b604597ba53659fc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/OasisWorkbenchSurface.js",
+      "sha256": "9bcf8789a2ff0a90fd6f76d96d08c69e3a5444c7d1a2e0ff6bfa0f68a8f33af9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/PanelChrome.js",
+      "sha256": "a77991264c0f272d4d6538f21b4d0efbf9737facb27313d516829337b557c9d6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/PanelPages.js",
+      "sha256": "7eacb7333c730322782dc9e54962f571ac438e6f7dc5c9a607eee6ffd79d3649"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/ProfessionalServicePanel.js",
+      "sha256": "b59b561850e5d59062b56a723d845324d08e7bc45a95c813e947d185b7085f3a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/RunPreview.js",
+      "sha256": "4614a6fc55124711237bb2bf9fea03a5151c3657ac048751e94002debebbef51"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/SafeMarkdownPreview.js",
+      "sha256": "2e00633f89f52d62d1d8e7325fb59ddb8ba4036e57eab40b489c42ea319522aa"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/UnifiedGenerationPage.js",
+      "sha256": "462fe271c67f146179d563850abb8f71df601e6a97302b32a0dca7b0055d77fa"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/UnifiedResultPanel.js",
+      "sha256": "53c08f55058e29071b34af3b6bb9af832173214f75e5e08ae7b58c985448ef59"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/V340GenerationPage.js",
+      "sha256": "2ab10295e7e4eea0ed12fa5177b60a0afd453ee33a6d506bfc7121b55937e473"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/V340ZeroPreview.js",
+      "sha256": "b37a8e01ba71d65be8002d9391daa8df609dca59da796e377dc84d2537c53269"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/WebsiteImportDialog.js",
+      "sha256": "e3cc43f7ae214f0c300b12bc3e7c432012696a08f8f1820a8c439c164338f47e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/WorkbenchEntry.js",
+      "sha256": "4a87c94d75b6e95190537b2e540119d813a3edcaa3ba88d37b6c47f713255273"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/WorkflowForm.js",
+      "sha256": "b1621ff528e442e0e0c0c036aec53be98c260b376e07996771377b2a2d25eb68"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/WorkspaceApiBindingSettings.js",
+      "sha256": "0a81c54607b48afed2b5bc8e195422ac3c0c79521fccf28458c3dc5ed64176d9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/WorkspaceContextBridge.js",
+      "sha256": "adb6d1d63974e1f5911c5bf3e9e8ad2e4dd1ea9f86cb57a5e4a481dda64b99e4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/WritebackPanel.js",
+      "sha256": "72d0590ba418ddd4af10113bcfc6a8730bc359a3f641c3a4a0144b310fec3808"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/codex-icons.js",
+      "sha256": "a3fbb63d856b49e88bf545fb2700a0de6f1af5673d596a1719c5a9e43bca2aa9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/conversation-draft-bridge.js",
+      "sha256": "96c47b678ae610226502aa51bd38e1f45da294ef36cf5e6ddc0d9bd14b48e801"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/layout-adapter.js",
+      "sha256": "6a59cfa9f8c8d21622ddaf2a3c0183d1988e14e7a2bd7119000b619e1bcc61ed"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/native-composer-input.js",
+      "sha256": "0dbbcc9f35cb232f79f4909df16710fd77caaaa6ef2cdad5aa8d83093878fd2c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/oasis-connection-settings.js",
+      "sha256": "2f3cb471bdf91aafde3d8ae4afe7848791eedc617a52de8326cfa12d6253b31e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/panel-geometry.js",
+      "sha256": "d48f866809f115aff2ce9b4290e115594f05fadbe384e2a9b1fe4b2a3e6f8e28"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/panel-host-coordinator.js",
+      "sha256": "2e7605c5f2df7653fc9e286723107d3aae58b7ae833c669e2c297e87f4ffc46e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/product-settings.js",
+      "sha256": "d404cc454fcf9ce9eafb6c37cbb7802e5aa8d3640655046eba1b34839d34fbd2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/project-resolution.js",
+      "sha256": "c4224b4e5b303fbb4870558c2de7251c79fce93e3ea111b34f2a9f7bb59a036c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/v340-zero-preview.js",
+      "sha256": "d8a1230489353987310a4799d0dabb406e03869b659c616be55ecb3fd8d59e6a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/website-import-controller.js",
+      "sha256": "f6fe7a60c285c4a59b2b6f840aa3b4217c574c1a826e2f1969abfa8bd3a32d41"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/workbench-model.js",
+      "sha256": "d6776726fdcd760f6f39ae6aae683b33ef15ccc1dbfb7902eddb968f6a6c42bf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/workbench-remote.js",
+      "sha256": "b3ce61c8c9cdb7b1fcccf8d5ef3c839f8bf269587123b82db2f43cea57c3f6f9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/workbench-store.js",
+      "sha256": "69e7ce04307a034d1195044ae54077245a2fdfea58b96d220b0a4520ecd04b70"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/workspace-api-binding-controller.js",
+      "sha256": "988d70d3ad2598aa3739c2c942472f836887c47f744a8833587ac1530f113217"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client-entry.js",
+      "sha256": "b24bdfe1ce55d8a691f2379ced3e81b12456fbb60cee3c95b5221d8c8f5099a5"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client.js",
+      "sha256": "9e82df2f7d9be8dbf3a298960c7da54229dd194d9435280e1e240527d1e67a5a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/dsh-generation-adapter.js",
+      "sha256": "58abef1b5b9da5bac9c4d81449da6ac7dd9a440fda7518d5973366b41a95e8a6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/dsh-generation-context.js",
+      "sha256": "58a6335d3b7aab24ef048aba9f5a7ad7bddf78e9f4ee8b209aa7596009ced291"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/generation-contract.js",
+      "sha256": "6abda67a52f72402940cd290889867c12c2ccb56cd9e3dee19ad15f4a12ef762"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/generation-preferences.js",
+      "sha256": "a35c4f89f1d51a73b8a6bace3c20884409707e04d434dbb46c46b57ec874cc2f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/index.js",
+      "sha256": "eda542bb2268dbd0c4ef03ee4a7a740ab2f25625e140f499f7c8abade0037d2b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/local-generation-service.js",
+      "sha256": "f2f575c588df0f974601b80b0aa8a34725c01e76562ac0d953c36ab81ff83907"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/local-mock-runner.js",
+      "sha256": "7567bd3b97110b7f08e6efc348e703526193baa8b2c967b8ad42054ee61ac62c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/local-run-summary.js",
+      "sha256": "23e4e8f71638a3793c4c97fbd224fba764106fc0c3ea4cae38eba23ce48340c4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-api-contract-adapter.js",
+      "sha256": "a573330085904be3b95af5b4115a348587999830c09c659812c24d3ee6953abc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-candidate-0.1.2.json",
+      "sha256": "ef01f5cb9b6f99b9b6ee39b8619fe0a56d1accc6b0a0d099e4d15bcdc4b5b7e7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-candidate-0.1.3.json",
+      "sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-public-r1.json",
+      "sha256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-resources-0.1.3.js",
+      "sha256": "38bf2c0bf2e97b14f7f98045f48d70b1a0736c7ec9adc9027bf3f741c2e377b1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-resources.js",
+      "sha256": "335b81faf9ce815a27dd559e95b283916bf84a5d482c5c1c61ef5d2fe5ad84e3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-controlled-host-013.js",
+      "sha256": "45baef11f2765d7400df5b85b9e036be2fc0a4949758c7f67560f1e18f74bfd0"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-fast39-contract.js",
+      "sha256": "16769ab3e54f13b99efcf59a637a9605d2ee693749a460c74c5ccacb42ab49f6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-fast39-json.js",
+      "sha256": "e58a373877cccf8f8adbb58a4098340454778ff84954670585ba1b78fd085f05"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-fast39-render.js",
+      "sha256": "43b96187b1ee582111915931271585e019678033360b9a5c31f03906e79c94a9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-fast39-result.js",
+      "sha256": "a28274f98cf19eaa479445d2f38b01bf511c3dc4fac60e130682affd454760ed"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-native-business-recovery-host.js",
+      "sha256": "af476fdbc569cb27a0c8d3a0284d0569aea5618d2303c676fc95bacba28cce71"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-native-business-recovery.js",
+      "sha256": "524368389a24fa1b354929af91beb30c40cb3dc58b885c491fbe0f6fba48eec8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-public-manifest-r1.json",
+      "sha256": "254a685fe95c9063be7232cb8dcb25333c1864ed9a5e670c0f62a04af3f3ccd4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-public-resources-r1.js",
+      "sha256": "5014c54c258566b6313e216b0ce8f4bd23d1d54d84ad5ad9b00e91d5bf27b3e2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-workarea-host-013.js",
+      "sha256": "9561a304fc30c08235857a24b3bbd816939062ebf77e9689e68f3c7d12dfc8a1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-workarea-material-packet.js",
+      "sha256": "300866f6032531be5a4d23213a40dd6ff39458d5f58d32ecab27aead623ecd96"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/native-model-runtime.js",
+      "sha256": "2bb0cc95b7ee6599739e092c617bfd32262859bfda1291a45232c5fd3b1bae24"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/native-offline-runtime.js",
+      "sha256": "9ab31191a483162f215c05b7802f276607ce4fe38ddf1121d0c6bbcb5ebf9d53"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-account-contract.js",
+      "sha256": "04ee956a1dffe3ebb1e7bb89be7a58a1ffc760289f83c58bccedae610ef306ad"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-account.js",
+      "sha256": "820d4e71422a72e59054f1522e19d617d37723bf1dc355033237f3544cb443de"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-api-contract.js",
+      "sha256": "16e993ef1dbd7d3ee1152a89a18bce4e47ac0bccc292735940f539ffb6bcabe7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-fast-contract.js",
+      "sha256": "aff47700170418b181eae5659a25a2782dd82f9f324a26bd7af69ee51913615c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-origin-policy.js",
+      "sha256": "2816d7985b4c481b21c52b1a6c9d1e6da60320b146bee8e8d64758e0828db454"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-remote-service.js",
+      "sha256": "b4b4c8a9353f6d6b96ef586df2f26acfcfb461dbbf4e8b385ffaf60a0773322b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-runtime-config.js",
+      "sha256": "298a6b84d16de157bf12e3645f98a78b9353785a3c3104fb2e8d69c72c06b3ac"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-workspace-binding.js",
+      "sha256": "1c848580a357c6e705fb5746d7898c85459cbba4fc97e9077c1709957ae506bf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/pdf-extraction-process.js",
+      "sha256": "a4e2231b5cc61bed8f8e68f476af874f673c3ac7cdc4cee10cb49cc94b3c8f75"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/project-output-name.js",
+      "sha256": "e5a17e4102b394bb57030095709e4aa97252ec5062352c67097c6e641c79e164"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/public-claims-v2/SKILL.md",
+      "sha256": "c4d09a9e317520ffc426aaeeedc25615d348a5013b6fa691910cb01d85102d37"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/public-claims-v2/assets/claims-output-template.md",
+      "sha256": "a5a2bd77e4595d74a6a16a353d367d0c3d861930e229e6924a6b0b1f8547370b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/public-claims-v2/manifest.json",
+      "sha256": "f26448b70bfebe82528d6c207f69881e9a49366270c332ef5f2ed31f4903c9db"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/public-claims-v2/references/drafting-rules.md",
+      "sha256": "02581473118ff7b5b959dd2b65ad41862139976a8bb44ae3585fa6dbe8d218e4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/public-claims-v2/references/special-domain-boundary.md",
+      "sha256": "ffec9b43eb31ed9a803f0c174d7de9ffd776f77d567f2e02712cfd0ae458dc95"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/public-claims-v2-pin.js",
+      "sha256": "3a72b141a6e727321dad04b955a586243f6ccb102c92f76ec2983062b75d66a2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/status.js",
+      "sha256": "a729c0f3f7cb8208002ab8751ad324df24aedffe504be832f444219f9ad97349"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/unified-fixture-environment.js",
+      "sha256": "ea7434b5b814aba57c7a24755617345c94a048365817e100d3aeeddf9120d74f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/unified-fixture.js",
+      "sha256": "5d498ceaa7eece5379b0daba2b2bd06fe3f68b783d683dc65591f3c682828545"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/unified-generation-service.js",
+      "sha256": "5e8d8a48ed373ded7ca6d22fad940fc81534061bca7ad79c669db89333ccbf9c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-catalog.js",
+      "sha256": "e8d45a8984b1909b303fce0ef9c2bb879744dd2de56710c8f46cb708435217cb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-contracts.json",
+      "sha256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-document.js",
+      "sha256": "09c1da8418912488afd390d4b8266edd5987d7b079498094adbf095f5b47610f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-input-snapshot.js",
+      "sha256": "a7dcf327b85173368685ab05d497f93e42110f63a249c0e361cccda418aca923"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-native-contract.js",
+      "sha256": "0ce4bee1b1dbaca0dfd48ec6aad5b43ee2fa0a2f29b04d891e7b34a2f884e1ac"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-native-model.js",
+      "sha256": "5a18ed7d8248f49762ed36f62ea7ffcbfbe042c0c86f18c244b8d2b78c35e917"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-preparation.js",
+      "sha256": "fafb6cd0842f578246842828e57ee3fb3ee7a2906055fccf1dda5868ef865572"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-result-service.js",
+      "sha256": "8ed3ba5663ed24c3ccb3cbd3cba1baa4c276ab1405a3eed43671ffa61e2ae601"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-runtime-contract.js",
+      "sha256": "1c5d65694d617d4d68f8d97914dc960bdd35ab6d63c739e0774c89eaa7830c47"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-runtime-integrity.js",
+      "sha256": "ec78363b8851f10b2c74c90e22ffd79ba7ceb6639e210a90c69a31d5d86d0236"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-runtime-service.js",
+      "sha256": "5b54455ed7d781bb175474b2b8c0ba826502a6c0806390788659072d394ed387"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/website-import-client.js",
+      "sha256": "9cd3b9408ac5d25057d472ecece3abffd740661d5c358c1a6b4a5796b25fe8e7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/website-import-contract.js",
+      "sha256": "21246a6ecf93fcaa873424f7844b3b214bab0a55608f1a4a4cda0dc2960a8edc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/website-import-service.js",
+      "sha256": "55800d533050417405ae6432d278f4b1a9d38a9aa0a3defb7b1132c37b01976a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/website-record-files.js",
+      "sha256": "d9e2cf9e2cb23b0e05ab4d63a5d53af3f03d544b5a47e031b1c1faaf1d99d716"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-connection.js",
+      "sha256": "24abc0ada65562ac8a742d2a60a19e3050a3a15e6c463f9a27ef2585b0479a29"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-contract.js",
+      "sha256": "8efc752ae8ddd24604218571c762f37a94e1b0382e54ed8f5ac16b788ad40901"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js",
+      "sha256": "a680f06f09d97620fed97bba1a73c542e8ceb23eea5a0e69ff725500d1a5c852"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js",
+      "sha256": "dd70348151a5dd0ad7997521e834d79b79df02245314928e798a0aba98dc867f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-rpc.js",
+      "sha256": "be813e9fc665e24b1466822f2a8531292fc4dff8266df6028097958766855e0c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-service.js",
+      "sha256": "8d84093b50cd47536ddee2c350d5a3dbaccea680626fb43ec1bef2b5afa6f2fd"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workflow-catalog.js",
+      "sha256": "b1bf770bec21e53610acc280c5effb8d5b7013c2a82de135fd9e75df0f6c0c72"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workspace-materials.js",
+      "sha256": "b38fa2ea095054b2d59ef78e8e4870eb9be47d48e3661b599463c89a15ad2778"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workspace-operation-guard.js",
+      "sha256": "04be0cd5349305836f70ada86623e7c65bb4d2ecdad4302da152e5696ec93a3a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/writeback-service.js",
+      "sha256": "c9ca00cc93cfc2b58acb9552b64c574ca191bdbf0b0f0d724c294a22e84e23c8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/builtin-skill-fixture.mjs",
+      "sha256": "5a90e04c94566bdd1a3531b6327a1489a05f9d410d0c85a89a22b4a4803b2770"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/builtin-skill-loader.test.mjs",
+      "sha256": "ad555f3ca1f760959c1035b7254408a22ab785af59025a2380748cdfb2af4d41"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/bundle-contract.test.mjs",
+      "sha256": "d0eafd03c806afd59dd0a678e48d08ed60640fbb55766497df4e4993b35e50ee"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/claims-api-client.test.mjs",
+      "sha256": "67eabb05fbcd7664d0aad547dd85a213556537b8b0296485aad9d4633a1882e6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/claims-api-document.test.mjs",
+      "sha256": "966e8345c5bc188f5c63b0671a2e87e14c99228568992937646e8863ab28a0e4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/claims-api-execution-harness.mjs",
+      "sha256": "a8aeaae9d1016583f373d3b6e82f58274a4057b7999e24f57994180be7192cfb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/claims-api-execution.test.mjs",
+      "sha256": "f4c899886547959279724ee1e5296567b3130aac878d9954fcdd99a84735ff74"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/claims-api-preflight.test.mjs",
+      "sha256": "bbe05c912fc9c67c690d60adb96286b3338dee054ac228432e0b58682c86e96e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/claims-api-preparation.test.mjs",
+      "sha256": "2ed2ae29218be767cc6cb9c75aed09a110ab3b2b9ea892347a4a85a831df2c4c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/claims-api-transport.test.mjs",
+      "sha256": "c9938774f6dfcc4cbfe647e03c79c853390513673aef9640be009ee79d4c5b11"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/claims-skill-upgrade.test.mjs",
+      "sha256": "f873afacc24683fb8706c3670a6c8ce866872a94d695598942ae7f6b092f95fd"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/claims-upstream.test.mjs",
+      "sha256": "86a79da5c31d59e60fc72963a4a384fef5802eb38f594a4cd40592f28c3c8cb9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/claims-v2.test.mjs",
+      "sha256": "434c48de3eb54d78624735ff6802a0b94a468128ac81d03153fde3c54227836a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/client-build-contract.test.mjs",
+      "sha256": "2d0e0c83ea51ffe6fe60df1dc8feda4f60e0357e325daf558573ca167f21d654"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/client-panel-contract.test.mjs",
+      "sha256": "85243c752da1ba4efcaf6db245a0c9279e8f1a75c30a6ac72d8b7237cf3cdd16"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/connection-fixture.mjs",
+      "sha256": "96056dd94a27f68edd8a17317ab520f2e5844945422bec2eada4bd3ba2bdc3e6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/conversation-draft-bridge.test.mjs",
+      "sha256": "28744ec4f2e7c7ed95c0a3b84c850cd3ef0c916dd7fa03b56119eebb133aeb54"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/dsh-02-settings.test.mjs",
+      "sha256": "65c8f2116dc16a851ced3e86e0774107e66757a4ef8550b644363d1e6333d993"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/dsh-generation-adapter.test.mjs",
+      "sha256": "dc1ffde7f607f832a943f93259b10978e7a74cf258aac3473a9a29a7ea54b36e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/dsh-generation-context.test.mjs",
+      "sha256": "f1558705a683eb76f1b6edbbbc06e4a7464eb8bb283b8c8659115848256f0b1a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/dsh-stream-lifecycle.test.mjs",
+      "sha256": "53e1cddd1707787cd75fa1c9d78bcc745ef07ecc2306a0e0cddc482d9322f141"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/embedded-workspace-host.test.mjs",
+      "sha256": "281b586efc7b61eea49b4e7041a1de5083b93b84bbc15dc79630a34ca6c2b6ba"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fast-project-mapping.test.mjs",
+      "sha256": "1e15cb98643310ff424c409aef8d9f483694dee40fe69b55afdfe95e21380a6f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fast-service-fixture.mjs",
+      "sha256": "04c311b9f47a3f1a16cd1312e82b87ec2ae1e7a66701c7d248f198987d65c963"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/m06-fast39-r1-calibration-20261031.json",
+      "sha256": "a4b0ab5c40df44c18f3eeb220c4a7ad37cdc15847b20cf71d38156be054be46f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/m06-native-012-record.json",
+      "sha256": "27e2d82eb7a5fa4314ca58e35ea6c0d71e573556126e4151c9f43c9bce288791"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-backtick-fence/README.md",
+      "sha256": "fd828c71ba5e081f4006a69a00c045e82363b2b7f4aaf180fdf8c288e9bbe4b4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-backtick-fence/dense.json.gz",
+      "sha256": "cb16cdc9e5f88befd604ce8ac7dbbf75ee7df9c60b8020fbc7d786e29074f5e9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-backtick-fence/historical-small.json",
+      "sha256": "b2c8b0a1e88cc6d085d847230a7e80f0c78cbe976291830806b339d3167b673c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-backtick-fence/plain.json.gz",
+      "sha256": "0b7f0a81bf4a497c5c057ec186df4b78fa91386b3352379b456199d11e46e4fc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/README.md",
+      "sha256": "4c74ff29ba056ecf2bcaa8c808706e6fbfdddac02a043c3fdf4a77658d3e8542"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/absent-explicit.docx",
+      "sha256": "166a57cd1eb0795c094ea605f53fdbcb99de5f2a10c68221882f395a251d82e8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/absent-unused.docx",
+      "sha256": "50ed7a736b1bcf16925d47d210bd84029f1fbe0f9c2b91642f729962d51133a9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/direct-zero-1.docx",
+      "sha256": "e6da59d945abfbede0d144253457478e7b081a043435cdded23674e7f636e452"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/direct-zero-on.docx",
+      "sha256": "e99491df424c4c7891f0978a903d4624f28cf90d610f4a2563aa69d561fa4742"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/direct-zero-true.docx",
+      "sha256": "dad03a357135de81e5fc131c0827c4c148d8fdb7e7aab76d25be02bc81e091f2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/explicit-style-0.docx",
+      "sha256": "c11cf0ecf329c53ece59a136a5ee0fdd38ca72261e5e07c6560c5949f91848c9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/explicit-style-false.docx",
+      "sha256": "32eb73afe31437194475bc1105a078267531b01b15334f1dec5fd45a1c8b3a3a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/explicit-style-off.docx",
+      "sha256": "2fe68396a8776666cd71ef8bb59c843a3a6b5637eaaf5036733debaf712efcb9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/false-0.docx",
+      "sha256": "7cdd373543dc08c082f39aea015ed810f33fbe0eeaeafb7bbc086b053a08113f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/false-off.docx",
+      "sha256": "a960350e83f69934f68fbfca23f93f83ffe751c534e085379b00cf3db93f2d2f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/false-word.docx",
+      "sha256": "d099ebd3c16bb6c1128ed33bb56b849aadb6153061ed9e0c81a34c38850d02ba"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/invalid-empty.docx",
+      "sha256": "93bbb4f911af2fda81e18747222d328ac1c92da22fdbdb353d55ab8fabb7c9d6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/invalid-word.docx",
+      "sha256": "02f623575568e5938e8858bfbd430b7271bce30b27ef370e9f04bcc386c2dde6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/leaf-zero-1.docx",
+      "sha256": "5a6140eeb952d50c9c651366a3d0dd7f8003ad42efbd90b690b33ffee23908ae"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/leaf-zero-on.docx",
+      "sha256": "7a717579bc66afc1762f923642aea461d851d2fde2fdf73b7e31a8b42bb7776d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/leaf-zero-true.docx",
+      "sha256": "081e8545a3b1bbeaf4da6ea3f70021e71aeb1c64bb29e5f4489e173d1c9d2933"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/manifest.json",
+      "sha256": "d8e14662c74b110a910fbaab5a32194101322e3be6a6c822f13b9bf4456fa355"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/mixed-true-defaults.docx",
+      "sha256": "3b801c3b47bf8c4a429c6b216754f5f00ab67b61e424af8e1b50923e7b64b832"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/true-1.docx",
+      "sha256": "37df1cf5fdae0b5d8e2c650843b1bb0fef63ed8b5ff4244762acfc3cdf231b33"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/true-on.docx",
+      "sha256": "3b67afa6cfa96b14d01497a84239ed56f97bd7de3f5cc4dc0773fc6050367cf8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-default-boolean/true-word.docx",
+      "sha256": "c86ad596dc3a1c72f8ba8f18733b43b5f4ea728a1bcf2ae0b70184516ede9e8f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/README.md",
+      "sha256": "c6f3820dd2154db8b46545b21935cb29f1e13561a349acecfc241686462c121e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/bullet.docx",
+      "sha256": "60a109497cf9c7c919ac264feb063cbb0ac92281bc88f3a91c060c87a275f3e1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/default-style.docx",
+      "sha256": "37df1cf5fdae0b5d8e2c650843b1bb0fef63ed8b5ff4244762acfc3cdf231b33"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/direct-zero-disables.docx",
+      "sha256": "4383ff71dc3a156460362f07221d9b2c01201fcaa8b068489e012903be286d19"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/direct.docx",
+      "sha256": "23ca25876167dd79b3413bb33c19de1550ad81b13ea14553f976427932c2dbb3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/ilvl-only-inherits-id.docx",
+      "sha256": "416377e2aa30867711abe3a8b6e114538af75ee11f6da0146e23646e2eb236d2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/invalid-utf16-dtd.docx",
+      "sha256": "2b479c24db0a4758981c4f479dbb9982af2129ad6915150073dd12f816e6f529"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/manifest.json",
+      "sha256": "4ec0d0426607dc6c4468c24fff8b82b0335714040b1ac923686e024b3b11f936"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/manual-plain.docx",
+      "sha256": "cf282c5e26756a8cb09885cfb4630d15789cedd02471d5a4c0f4b3bda20d50c7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/manual-unused-definitions.docx",
+      "sha256": "3b13c4d469dc01b8e3b389e7351621ce0eac2b04481e43b8644e2ab3aa84c7e3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/multilevel.docx",
+      "sha256": "b8dd2c231813bf7bf6c19c3b21678541e64311fbf3e08e04c99643e60b68d7f1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/restart.docx",
+      "sha256": "03bf87c9485971cf8436a78e3334589efd575f111adf3d006da86188fcc273ce"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/style-chain.docx",
+      "sha256": "38781dbbd62c0fb5fc3a38c39dce4ffeeb085b0f8e257adfa1107b7a8022dc3c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/style-zero-disables.docx",
+      "sha256": "7b7d0ed38b80a78f800b700d34e25bb42f2537b1596baabc64598e21fd3f99c9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/style.docx",
+      "sha256": "73d57c92dea2a018ad4668a626686941536403bdb0b2c55887c7e8e7cd993d7f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/unused-list-style-cycle.docx",
+      "sha256": "a1cee4aa75a0a68258f77133135f929bbed076b8d76217b41afe3d6eba173ae6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/unused-numbering-style.docx",
+      "sha256": "6a4d01b2c124132d5e642867725b78d54ab9446d8d94c13fe984748df84ee5cc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/unused-restart-multilevel.docx",
+      "sha256": "ec7266afa37047183c98bff78730460897ce660f5a1f4d2c2486a22a5067b5c9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-numbering/used-style-cycle.docx",
+      "sha256": "9cd88f7ca479e04b88bd55a80f4dc0a9393159c80a46a16d2e5a3bd5b1de1053"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/README.md",
+      "sha256": "1c09b736179d8d410d76e4eb34c17d86d2e618d0ce7aa9b6acfdd50ec57a86ca"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/character-default-does-not-conflict.docx",
+      "sha256": "cad174ccac6a7959429e9873322e773c71f1fab0d986bfda25e5d1c409d8171d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/explicit-plain-over-default-1.docx",
+      "sha256": "a5ad572370986aa1885cef1218a20406d9f627d7bf6fa4215f6a94eec660fc6d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/explicit-plain-over-default-on.docx",
+      "sha256": "c00b3c1c7f5e09d59ebc990906a00e2c98fd3f79dbcf8d8ec51d099b52793363"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/explicit-plain-over-default-true.docx",
+      "sha256": "f4b32fe7954d18e5137c7c9902816a2b3e79812f6a8226b173691e6a44970ef1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/false-default-unused-alongside-true.docx",
+      "sha256": "2767760d329fc2220f45845e5faf161df5a5f4d0c6b06ab3c6865d4d2d9c6790"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/invalid-empty-type.docx",
+      "sha256": "8ff790ef76a16c7378af027e9725f024186325523d945ac5364da9e6c3301109"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/invalid-unknown-type.docx",
+      "sha256": "5865883fd528ef36762ef1ade77ade10d833e25fc6c895332836e75c8346c7cc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/manifest.json",
+      "sha256": "d13c6ed14f8dbf4cce0281cb8f7bbf5bdd591a2791bf08baf2d25821c3aaf880"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-base-type-leaf-zero.docx",
+      "sha256": "98f6fc011bb86587eeab8b7ca629746c1d5a50c0953f7918813b81a6a5d23b1d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-default-1.docx",
+      "sha256": "84dfd3b7fbfbf6e7bd65dcfdaed902f2194fbe714b6ab1444406752a407fcc9b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-default-on.docx",
+      "sha256": "914aeae68d9438e7b9f7d16d85ad8db0d53a86bf24cd0ab9641911478496b507"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-default-true.docx",
+      "sha256": "788c42ad1d2d0f8ed7ef97e291607a1ec105840fae8c9e3a63015959be4668a6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-direct-zero-1.docx",
+      "sha256": "e684252b36f32d661cf7166f5001a1576c61a3e39e5199a4f9dcb675ef57cfcf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-direct-zero-on.docx",
+      "sha256": "077fb3826c61dbee6ca7ea626bf3ea1e89edd61ab1bba0007a854d38748d2640"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-direct-zero-true.docx",
+      "sha256": "fa31c1e7e551b5c4e4ed3213d5dd6fd6fb68892eeed46d7bded680c37aa88228"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-explicit-manual.docx",
+      "sha256": "5dfe2071d10876bbe600529efde66a61241096bcfbb1c48873a42ec0de13beb8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-false-explicit-0.docx",
+      "sha256": "2d5bc7f412773da6d86d91d76d3e5ec31ea30272858283bbfd17f75bebff9c54"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-false-explicit-false.docx",
+      "sha256": "1f14b2653b1cc794f58cb39cc98047cd77f8acbc7dfad906324a0c5a9cdcf954"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-false-explicit-off.docx",
+      "sha256": "0667d7298a1fa62c776423186ce1c2d5235e72c85c0fa43e3562f8b5f54d2bb3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-leaf-zero-1.docx",
+      "sha256": "0fcf151df0faed22d17aedebe5864cad280a464194b2ff3c251a13896bb7b05d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-leaf-zero-on.docx",
+      "sha256": "547eb309995b2034c80a011f2c79f020f831d82351541ccb3b8d92603e75eecb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-leaf-zero-true.docx",
+      "sha256": "76d1e80a3d8c3f5ef5bbf1f7c8994444df4b102f2fe3b9c58130d8362fc75077"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-plain-over-default.docx",
+      "sha256": "edb387c1ac55ef8686bb26f2b82c564a3e353b333a08f39abcc0f23a35ca2c39"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-unused-0.docx",
+      "sha256": "64c7ba1a8eb2e8eb5b41c238dc00536dfd1940a7c52c3995a69b5821b7ca086b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-unused-false.docx",
+      "sha256": "126f58cfbedc0d899b5b68ad3602e86ba93ad46ed10e7fcd9f6f927ac93fc8e4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/missing-type-unused-off.docx",
+      "sha256": "11cf9a0ad6ef3d9694b8c2949dd3febc8183513a8dfe07cc3a5bb5be39c04dcc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/unused-character-default.docx",
+      "sha256": "b801751cebd908a701b99eff07ef466ebae4822814fcda0e15fe7980761cf6ad"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/unused-numbering-default.docx",
+      "sha256": "4542178af294a79a00b5ed9230a47ef6bdc1733e996bd102d27270e287645621"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-docx-style-type/unused-table-default.docx",
+      "sha256": "49a690bae57d15e6518f9e065e7d42f3e1737b7c82fd7f262ca4f8007cdd54b1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-native-candidate-v1/README.md",
+      "sha256": "c925e8173dd848ab2d571d338ad17f67ad20979c3cd7fd751872f15a06f4413f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-native-candidate-v1/completed.json",
+      "sha256": "f587369624861abe8276cd722685eda5b4274a7a356bcb3418a1c8e731e46f3a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-native-candidate-v1/prepared.json",
+      "sha256": "63eeedd0111afa6c64113b9b3855fbe0c328159d37725e08bb0849d8dc4b84eb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-pre-p2-empty-upstream/README.md",
+      "sha256": "d6af826a724a5886b9695502340198fd3a04ebbc698cab0279c9c50414d18f04"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-pre-p2-empty-upstream/failed.json",
+      "sha256": "0f83d8725d776e51bafbf279180fdf9abe04ffb3c1e6b0778e2ba87f8d7e0979"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-pre-p2-empty-upstream/prepared.json",
+      "sha256": "fbd2cf8670ce61154fd3610ce213ec20e52f9dfa786c22a908de81325ec3a781"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/fixtures/v340-pre-p2-empty-upstream/unknown.json",
+      "sha256": "cafd505716a164715c7e9f0103eb38967fb340bd69ba9b7a983b70e7da142b3d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/formal-claims-skill.test.mjs",
+      "sha256": "72ef0f73e87e6bb6f43efe5fdf563243c4e52126b501eb2e868527f80f9e9605"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/function-center.test.mjs",
+      "sha256": "2098756f27013f757a75246e59e21b8545c953cbf50cb4a86bc0e01207f2e720"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/helpers/m06-controlled-host-harness.mjs",
+      "sha256": "465036a9f878555549985c402da35f660112e4c12657a9fa9d39a0fd0f37966e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/helpers/v340-mapping-read-probe.mjs",
+      "sha256": "10541518807a56a600bc54c2e3bc86ca0fa5b45410b1a49686ce73139ed68d0b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/helpers/v340-native-cases.mjs",
+      "sha256": "1e12fb1d148f9628148ccefd4333ad0ed5300d19be7f7c9d7da0438919c04249"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/helpers/v340-native-harness.mjs",
+      "sha256": "d14d3a12f2f8da4ecccf621aaf0abc3ebbe08d57866901456442ff11b7276738"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/host-runtime.integration.test.mjs",
+      "sha256": "853c9dc802ac0612556820b9660d1eef6563a2252840bd99967e4c3a5355ecfe"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/host-tool.test.mjs",
+      "sha256": "8016a80951bbcb96578bd351928416f59152711cc703694b0deea0c42c674067"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/layout-adapter.test.mjs",
+      "sha256": "b424e8c438a8b95814856c38d392b3e5cb0571f3f70764f20883594e7047ac38"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/local-generation-service.test.mjs",
+      "sha256": "9483775bbf2b3c00773bd2710e188017b764b7a3418b363e2470cfa764d97749"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/local-mock-runner.test.mjs",
+      "sha256": "7de096fa21bef7be57416dbbaa2ce51ebb2ab07ff0e3f0a966363ab1dc01e7ab"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-api-contract-adapter.test.mjs",
+      "sha256": "57ef1b1186dc22104a450903bc40d850e3f22fb297a21b61a80250ce004d8925"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-business-candidate.test.mjs",
+      "sha256": "310de3c0a0096e9bd254754ffd8e4c012ec10efe6f9a2ca3dd1d0ed328f40c76"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-business-version013.test.mjs",
+      "sha256": "f7a3f36ae8f50f7bf34877b8ca32fa8b1a1da89cc844af23dfd27d2585a195cf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-controlled-client.test.mjs",
+      "sha256": "c186db6de545736b60e17ca0140c88fb73562701a175698c52269af82c9ca150"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-controlled-host.test.mjs",
+      "sha256": "1e40a9ca1d4be5eea0e0b3dfae7ac9cf4da70787fc48a00d5215183701878cfb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-controlled-workspace-recovery.test.mjs",
+      "sha256": "9be658e7b9585a362597ef451f366b2da712c7ac508b4911cb2b8e68c7ea71a4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs",
+      "sha256": "b3ed4dd16b02ba75f561c25aa1aef9c266fecdeb1ab25e757f329fe1935a177b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-evidence.test.mjs",
+      "sha256": "d348f12888aa5d46e29cb837001efd33f9be85976178d3b8ab15523310e95707"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs",
+      "sha256": "6f3cb16555e80c73c1023dc15f9a0ad9a64f3812f39a59126ff2f119f02ff832"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-result.test.mjs",
+      "sha256": "00af5bc811a84f182249831226a4d52ded0ce2360a9abaafb3b23e2b05b48673"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs",
+      "sha256": "b554e0b145a44639f63594734be0de30e2c9223b932f2b07adea9c0bc56f5415"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-transport.test.mjs",
+      "sha256": "0e15c44b6fdcdd3779fea9be01fb58703f3cd0784e7f15bd4bb896abc4e7ad39"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-native-availability.test.mjs",
+      "sha256": "d72b9e4ba97cbbd8af94ac802ade34629ee4120a3391639d97751e1ac6b5b1ee"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs",
+      "sha256": "e12bc6876ab7db3319bb7afed22bd34253ac8413e7387510666a8b371617cfd8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-native-business-recovery-installation.test.mjs",
+      "sha256": "72b11e90be57408e718cdb66ff5da28ba31571bb20487892f06b11ec3fdd3eb2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-native-business-recovery.test.mjs",
+      "sha256": "c99fb57377a416a7d9085026717ead44c8c9b6ae58fb2ab5dd38b91474359241"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-native-zero-generation.test.mjs",
+      "sha256": "4884124c127dde27d765eba829829fcf32c663e59af832de82bd5ac1a86d0920"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-public-native-r1.test.mjs",
+      "sha256": "bd2bd6da01648df9ad16edefcff4f9ccab2f4ad11a83b84c0f5115a573ac635b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-public-resources-r1.test.mjs",
+      "sha256": "6aec496cdd24351215d3b72e97ab5af7eb256cbad661bfd23538685ff42e52d8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-structured-revision.test.mjs",
+      "sha256": "d86046f9e5b7655f65438ae5b85ebd88017a19d0cffd0e9de93c762952f33a97"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-theme-readability.test.mjs",
+      "sha256": "477e12ead647e19c2c31c403cf932049b9fcf869177f3480aa831c9f52111404"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-workarea-calibration-constraints.test.mjs",
+      "sha256": "81e6e5ff5be20a5185b732ae2c555d30794156cc6d7179326fd835c8605b6a21"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-workarea-host.test.mjs",
+      "sha256": "975ec19b1dd8370ed474b2e95b99c564cda19e18358f20fd7dcb40f330865e87"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-workarea-material-packet.test.mjs",
+      "sha256": "3429208471bc81861e0b3b327eec2bfcdaf47cd519b472a8864af67389bf2fba"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/macos-contract.test.mjs",
+      "sha256": "812f414e3b137b2eceb2e45e05cab9f49b8c95a84cdf464632f49abbe94640d9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/native-composer-input.test.mjs",
+      "sha256": "09acea777aedc7e9b514277b73e6ff5306fcd5c7785e846601454527df39b61e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/native-model-service.test.mjs",
+      "sha256": "f55e36b025ba6ed37a7b98905b7a3d2ad9b4b1d6482b4d8338464a77cf97ed0b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/native-offline-runtime.test.mjs",
+      "sha256": "230963c30706a3f72d444e8dcf2cd375dd37312f02f1b5afb7f400ca8fa99e6f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-account.test.mjs",
+      "sha256": "be4eedacb704db9f1d785a937e8dcc22da4607b6b8cafedbd92fb6f64e893f96"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-api-contract.test.mjs",
+      "sha256": "a692da13848c85c8c44bee3cb42eaaccc5b80a8639acccc4ee66712a623fed79"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-api-detail-legacy.test.mjs",
+      "sha256": "15dfaed5fa98a0d740f33f8e735ed9a53dcfac33a42d48e9c7aeafa13bd40195"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-connection-settings-ui.test.mjs",
+      "sha256": "f45bbb8e505726b1f9d3a1c6007523676a7c1806a9958b32bc6184bc2b848677"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-connection-settings.test.mjs",
+      "sha256": "f2964850650392741f2e86157e6ad67788e24d274f2b553a365ea79dccbdb435"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-online-policy.test.mjs",
+      "sha256": "3c081d15b467d9db0402562faa3c3b309809df4216915460780ba528a3ef84cd"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-remote-service.test.mjs",
+      "sha256": "19fbfe1bcb4dae00cf523850e1289a752344ce21ab17c5980871e15ad7c4f9fa"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-runtime-config.test.mjs",
+      "sha256": "02cbb127342c808db84d771043319f1656a91b7eff871395a2d6787f1592aadb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-runtime-snapshot.test.mjs",
+      "sha256": "55bb638e04b057491db5c5fd42f74cfb17ee5ea17a8a37c58ff475112457ff7c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-text-fixture.test.mjs",
+      "sha256": "a515bb8333dc34e8eb5fd0ebd55608b418ff1bb78cca72318bb29599596b0680"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-upload-checkpoints.test.mjs",
+      "sha256": "e745292a94953acd2e8fc9dbfa8bdf85f728497f7db6834cf8531585c48259fa"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-workspace-binding.test.mjs",
+      "sha256": "e8791a1a53026335c948166ed6aed994f0b5f902a2a75e33be17fdeeda49953f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/package-contract.test.mjs",
+      "sha256": "be7003f785a9bcfa1f1bd55f9a0b25d79dde0819c6b268b5ae87915c40721472"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/panel-geometry.test.mjs",
+      "sha256": "2fe7debcd98649727902492194d177b694957a57919f5b61a2d7f64647a5c9a8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/panel-host-coordinator.test.mjs",
+      "sha256": "cda136bf9b83bcd74eae511cc3315b405c3b4444f53b16cf7d94a57768bb4ec6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/panel-keyboard.test.mjs",
+      "sha256": "5eedf03a1bf392925881b89df089dcda10b76fe554263d804e17cde3f6b55031"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/panel-local-loop-ui.test.mjs",
+      "sha256": "ae8a669524878ee54d5241e7b4250eaa8923f2859072069d4df0a0cf93be23c8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/panel-persistence-ui.test.mjs",
+      "sha256": "c63a3d2ce322fd31acd650c8308242ce619648f502fafda280c2b8d02517d8f6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/panel-portal-contract.test.mjs",
+      "sha256": "25d68fefcee38638163c88cc8564a363e39add59bfd88dc6fa8f3f1834d3b106"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/pdf-extraction-process.test.mjs",
+      "sha256": "49e61e419bd949f3460be8ccf7e7c85b33ed27f1e1d6a4e574c54f7854037cfe"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/product-settings.test.mjs",
+      "sha256": "496595db6506cb83f5279f017aa5540f014e7d3e697befea862339ddddb775fe"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/project-output-name.test.mjs",
+      "sha256": "8a3481aa9bd300b8a985b4483308011c68cecb85c97976ff4babdc586e24eb0f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/project-resolution.test.mjs",
+      "sha256": "48fb9fd634cc8296f88c13a0771431c84c42521113d64c70b688d29528bc3f85"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/result-conflict-recovery.test.mjs",
+      "sha256": "1dcf50eb785964dd49b7a5c3ebc0ff65e44afaff6bfb184048b2ea1a1a2cd38b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/result-edit-drafts.test.mjs",
+      "sha256": "8abba3e96cd05b76f8623bd819ef3f4f7ae640c0394c794a9b9c6d9abf481ff2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/result-edit-fixture.mjs",
+      "sha256": "fb3e1149cce8b614f127fc93061af6d0c5ac3d2ee37e5243eaa44174b71cd1c4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/result-panel.browser.mjs",
+      "sha256": "31624687b83f2e3b07d26ffe080aec8883e4ea245fc8d42a9784b97f476f88dc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/result-review-confirmation.test.mjs",
+      "sha256": "18a4299c88a799d1d159ea6fdf2d997646198a71d5ed5e0290addb9d7a1ca9f6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/saved-file-open.test.mjs",
+      "sha256": "ce4d17ad13d72905771ac9a6145e14fd2147b25fad87a394f694125dde3254d8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/simplified-settings.test.mjs",
+      "sha256": "047e32e6f8b0b3500832322fbaeebac129061caac11762046097b3e0ddeb4347"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/skill-contract.test.mjs",
+      "sha256": "d06830867fc2be5bd990102c1430f135c14adfb52f031a1a40178c589ae7c56f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/slot-contract.test.mjs",
+      "sha256": "7cc143a3d337df25e60e8120bcac7072a6e7c610c9bd8c7d1c87c2c8a7df8e22"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/status.test.mjs",
+      "sha256": "074cf1550df145bb5ff00001709cc63d8f9da9f740dc92107e89219a2249caeb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/unified-fixture-gate.test.mjs",
+      "sha256": "97da58350695258774f1611c28ac95b45a9e31a01008e4b431002c45c413c5f9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/unified-generation-client.test.mjs",
+      "sha256": "4de1b39cedf513a7f8ccc22a2c0ebedcec6753b030c5d33f2b97d03bafe8f114"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/unified-generation-harness.mjs",
+      "sha256": "48bbbd18db23acdb25a67e80fcbd096621fab6ae3b8a8d274af9c8a0325950c6"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/unified-generation-service.test.mjs",
+      "sha256": "92ba0f6305c3c84d999a5d4d1bb6de7e9a155ff86de7731d0e454e926d3d0809"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/unified-generation-ui.test.mjs",
+      "sha256": "e02ef617677d3616b5a87f5846a5efaf6a19e7537f060429d9aef838c6795275"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-action-limit.test.mjs",
+      "sha256": "6e52d4e9e45f8c4358a8c3a0508cae4b1077528105f7fbc1673a8f76900d57e2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-backtick-fence.test.mjs",
+      "sha256": "338f24c6c5d8b91b17fb3dd2786b12aae2c8d79328c711ac2441d1e694ecec26"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-client.test.mjs",
+      "sha256": "303ad9f37166457332ff1f60d559adc23dcb39b2183e911e24f077f3669da080"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-close-isolation.test.mjs",
+      "sha256": "ea36ad4e0febc00d2637ed1a155baa2609f942533929183f1986c54e6a9ce904"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-close-reentrant.test.mjs",
+      "sha256": "f2f5da2357e135d671bffe884b86a3d527d8de809ee87585c6774eb1af132f2a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-creation-admission.test.mjs",
+      "sha256": "a3abf72fc53affc514f4be3bda0ecaf9fc03e3a2ff1c94901c9f208d360bea8c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-docx-default-boolean.test.mjs",
+      "sha256": "93a02fee6d67fc39750a714691b281e87badd144fe7c37d3c310b24a4d69e01c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-docx-numbering-policy.test.mjs",
+      "sha256": "dd80d975444c2d3c2130c4fb357cac85af5adf667867307492d77a38c221764c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-docx-style-type.test.mjs",
+      "sha256": "c4836970f2ec09918008a8b59ee12657e3da675d242a74c548124686b3bd6c0c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-legacy-upstream.test.mjs",
+      "sha256": "7a881c66763b70865adcc7f4dbc0ef42a0e02d2ca3d3b98ab5e3c69d1dde131d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-native-all-nodes.test.mjs",
+      "sha256": "de34cb4737936041d9a10b350eeedcb7100e9c14236347b026b45e62e649e169"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-native-candidate.test.mjs",
+      "sha256": "47441dd4989fdcaad7ff686c06db4c345c02ff6f096a49bd40e9486d47de49ba"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-native-dsh-contract.test.mjs",
+      "sha256": "3ccefee1e8d31641845a4f3cf03d69925f1858772b95f233eca929c71541a29e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-native-handoff-p2.test.mjs",
+      "sha256": "757f8fe53dd5cdefa33e96e2c58300bf90e33411d8696bb6285344b304dfe4cf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-native-handoff.browser.mjs",
+      "sha256": "194a6418a23f96060e8435746b9856daacbac66735f9088ca3d6a9430bd910b3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-native-handoff.test.mjs",
+      "sha256": "a2db9ce589b98c15795499e8dc7e46e3c8b8a2df9677c737eb2fb5aa73b7286f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-native-lifecycle.test.mjs",
+      "sha256": "3d097789df7c2edbc60e96a3d0f381270ed23a83a18a8dcb9bc0abc8021e7d90"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-open-panel-replay.test.mjs",
+      "sha256": "ea2691a77bba3058d3f76d8520c8aa959337035b86a5625e94daba6855d2203a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-p2-closeout.test.mjs",
+      "sha256": "54b198ad04f6627a688ef8e9a1c2a47a1dfc3d2e337c63d8e71ac45c5473aab3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-p2.browser.mjs",
+      "sha256": "c6758ec9a6d9ff419f4bf858673ec7d62842b3e00108a52807676022fb530226"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-page.browser.mjs",
+      "sha256": "334f15b7aa9e6afdecf8f1baa177123c30c86106321a0ef9f3b900fa3af7037a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-preparation.test.mjs",
+      "sha256": "07913aa1bce50aaf75c00e0f5a41250efb24bc80271a1e3daf09d30dfef0ebc5"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-result-fixture.mjs",
+      "sha256": "e387c6e08a7d0f2a8dd5a0ff5395b71eefac1dc5820e349900b70a64ad1cb0bb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-results.test.mjs",
+      "sha256": "f5e6a3cf662c8f93128d98b9d364bfb0c8c8d0dfdd293a718289c2473700e0da"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-retained-writes.test.mjs",
+      "sha256": "58e6737a44847dfaf73c5f229263c17944189c2a0ccefd64bad4a9e7b69978c7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-runtime.test.mjs",
+      "sha256": "abd75f5dc5f93fc9e7c7106dfc058d020898697ec46f9093ad51188d95cbfeeb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-snapshot-admission.test.mjs",
+      "sha256": "cc063621bd4c0afc26d9112993550c9a3ed624cb282c078234f880845f55edcb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping-admission.test.mjs",
+      "sha256": "4ab0b284c4d4f866f78f55da9a2ba0a327068bbf1ffdff449220682e806d243b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-source-mapping.test.mjs",
+      "sha256": "2a759e2317a3fae91d3165866b9c230f3a8ca1e656856d28b165e296e6793745"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-workflow.test.mjs",
+      "sha256": "67e55b6933a707f28d069019473971a547a7ef8d05cfb20060d22cd45c3a712d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-zero-preview.test.mjs",
+      "sha256": "9cbcc626dee77ba79bc01afd4b26801c93f2650a0696049b335307cebc056569"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/website-import-api-scope.test.mjs",
+      "sha256": "dfa0bb28ab4a3839434f536b3146fa9929db9e51690c939560304d04c94084ad"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/website-import-diagnostics.test.mjs",
+      "sha256": "79055f8fb8c65b502e407b477ebfb665bf3aa541fa1b7ebb94fabe28a77ea930"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/website-import-download-diagnostics.test.mjs",
+      "sha256": "d2ebb69793154c84fee0a35b6ddb007beba3b45943ae7b96cff93dca67a99c45"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/website-import-ui.test.mjs",
+      "sha256": "a3a20acdccad29a9222fcaccb8e71d8808a5cec8cc133cb8aa9bee0c49d0c9da"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/website-import.test.mjs",
+      "sha256": "b9b9580e43ca871aad868de035ae12dd896c01bcbe16a98fb2c84d70f967f32b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/website-record-client.test.mjs",
+      "sha256": "2aaead71ef3d3edce97ecf9d82ef331cb218580c6246a6c461a409d9bb865949"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/website-record-files.test.mjs",
+      "sha256": "72d324ac38e275d388babfc1c56bdf31787654d358de7b3e084250d5efc6c814"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/website-record-service.test.mjs",
+      "sha256": "a174935030fa92c5e5be723dcc5a217fcd719b9bb5d9f5155bd641d9176a75a7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/website-record-ui.test.mjs",
+      "sha256": "c5ebd29745bbba4aec386029df238cbc228cd45543f9572b1536ae8570d850cf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-connection.test.mjs",
+      "sha256": "5abadb59562dda094d5e536a3219fab850fa528fdd534ca25a57935779349ee1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-contract.test.mjs",
+      "sha256": "e1d0bd1c4ea3425a5f9a1513d581a70d30c6c9b641258f6b782929074c1677b2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-domain.test.mjs",
+      "sha256": "0b435232c4c3bb5b316700d5fd90bd7c3f029b5c1c07d97855f3de0b8aa82790"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-fixtures.mjs",
+      "sha256": "aba4912c5e5f24bcea89df3a59811f31f44ea3c3f71f151dc57c1dbaa91ce61f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-migration.test.mjs",
+      "sha256": "b0f211c11a9296fc60148136fde8b1694a26b291b8779721fad1089c105105de"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-model.test.mjs",
+      "sha256": "cf99942a4a0c8b04d67bd835c234a0527518813b13c3bb4aae9a7778063da812"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-persistence.test.mjs",
+      "sha256": "d06671580a8e8069dab9def2f61263d4d54c3e0515a71f6dba0c42affdacbfc9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-remote.test.mjs",
+      "sha256": "56b14846ddc46ce8cc0d646f2ce8daa401fd938b41f6f1763c6e7d27ee6fd0f4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-repository.test.mjs",
+      "sha256": "110bc0605fa317eb2eb07ae1c4e1843f9902e80784c02fe909a12681305cd7f8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-rpc.test.mjs",
+      "sha256": "321ff2240e59417c0c3aec440e9c21091a72984192e7fcdee4fbc6d153d51ad0"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-service.test.mjs",
+      "sha256": "2deaaf052cad440fba0727c7a2b6f3f66c2e4989f84dff7fac2ec38007f62b86"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-store.test.mjs",
+      "sha256": "47e548ba0b60a5c81d9a56a433203c3f4949242d8f408b0135636f92e72a43d7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-v3-contract.test.mjs",
+      "sha256": "639df23c8e1ce68d41a3ce24b9fee398936f36737ae3427801393d3a02dc8d20"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workbench-v4-contract.test.mjs",
+      "sha256": "82f84dfe2be03171974cdf2e76b31a80bebff3ba7d83e99785b1a31ceeeb05b9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workflow-catalog.test.mjs",
+      "sha256": "def740c3a873a5506b2dc67f8dcc383c2c541b7bf4897b10bd2fc24eba5d1248"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workspace-api-binding-client.test.mjs",
+      "sha256": "4cfaad0709b05811d589ca714be89cccc510ede4e635f4ea7acfa91c8bdd8e54"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workspace-context-bridge.test.mjs",
+      "sha256": "ae1c02d4396f4aa6413f0a568c823fb4253ee288b7c05007a923997395dd00cb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workspace-materials.test.mjs",
+      "sha256": "77b550bf2095c96c477eaaa86899c9504289eabb8fd99244dd36eaaa0c0461c8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workspace-operation-race.test.mjs",
+      "sha256": "c248ce1e10b0f7b34f0f7a78000cf8bdbdf1301377cfdecb530e72f9c8462f70"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/writeback-service.test.mjs",
+      "sha256": "92a924c371bf27b2ce2cba1fbc0819521ba5df02566f0497ac750abeae51865d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/ADOPTION.md",
+      "sha256": "5178d376ffcf19e7b2d29db936df86c146e017802f47409c165b80afeade033a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/build_private_package.py",
+      "sha256": "9814606828e2847f550019cc459cb1d0d189f6fced4a357f2fcbdbf9f3733415"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/candidate/SKILL.md",
+      "sha256": "8d649960bb174fb3e496d5517615e04dd987ada1def6494aaef4656ad1c22267"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/consumption-contract.md",
+      "sha256": "fc71230f5b656cc4cc1fd811ee7c4ec1f5d75ce2d5bf2afcd6e5ea10b7282b8e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/source-binding.json",
+      "sha256": "1059449830ad9e62f117df66e75bfeabde844e4bbf573af0eeb4eb7f304c65c9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/test/test_private_package.py",
+      "sha256": "7a8d81bd124d343e8c6ed627d16e50874ae12bd02dbef44ceb6d785ab6a687b2"
+    }
+  ],
+  "business_permission_created": false
+}

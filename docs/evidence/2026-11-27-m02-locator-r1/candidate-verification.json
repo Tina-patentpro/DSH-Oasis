@@ -1,0 +1,25 @@
+{
+  "candidateRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package",
+  "scope": "M02 来源定位合同修订 R1，新增 v8 凭证保持旧版系统指纹读取；原组装来源判据字节一致。",
+  "sourceFiles": {
+    "src/v340-native-model.js": {
+      "before": "e44d4bf24098b1693cc5fdaade6f689ce2c66989a991c85b4fae85879ebd4e42",
+      "after": "5d248dd90ed900021da69dc4416fa87ab15d3bd283176733bfc120b008051fe3"
+    },
+    "src/v340-native-contract.js": {
+      "before": "125ca594c142caf14822c3c1be238080509f730bcd251255b4543facd0975a1e",
+      "after": "acdf9d7238a417fa43f491e5c279a23abb2378945be5d3a4953e4a3d7d10a553"
+    }
+  },
+  "assemblerSha256": "33b93356f601dbbcc619a1b0061012501bfe4a1fd5ff05b014f4e30fee39be76",
+  "originalAssemblerSha256": "33b93356f601dbbcc619a1b0061012501bfe4a1fd5ff05b014f4e30fee39be76",
+  "clientSha256": "acc839fb4ae86c75e0bb3293094380fbe4d180cdb12aab52b7a0d592b609c5a3",
+  "testFile": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs",
+  "regressions": {
+    "total": 68,
+    "passed": 68,
+    "failed": 0,
+    "log": "green-final.log"
+  },
+  "testFix": "初次补充测试把 parseStoredWorkbenchRecord 的实参少传一个，修正测试调用后重核 68/68。"
+}

@@ -1,0 +1,34 @@
+✔ trusted zero catalog exposes mode, and real transport prepares input without creating a business task (24.051625ms)
+✔ zero entry selects memory preview while ordinary entry retains real task creation (4.802625ms)
+✔ input changes invalidate confirmation/results; cancellation rejects late results without retry (6.787292ms)
+✔ normal catalog cannot construct a zero preview; mismatched preparation identity is refused (4.242417ms)
+✔ zero function center disables ordinary service/import/non-M06 entries and offers only M06 preview (5.915958ms)
+✔ zero settings never requests account status or credentials after Host capability is read (4.497917ms)
+✖ zero PanelPages renders eight shared inputs without task records or saved/reviewed claims (4.05825ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 165.095041
+
+✖ failing tests:
+
+test at test/v340-zero-preview.test.mjs:78:1
+✖ zero PanelPages renders eight shared inputs without task records or saved/reviewed claims (4.05825ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /仅核对输入与准备结果/. Input:
+  
+  '<div style="padding:20px;color:#66706b">请新建任务页。</div>'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-zero-preview.test.mjs:81:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '<div style="padding:20px;color:#66706b">请新建任务页。</div>',
+    expected: /仅核对输入与准备结果/,
+    operator: 'match',
+    diff: 'simple'
+  }

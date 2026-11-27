@@ -1,0 +1,316 @@
+{
+  "revision": "Task0-R2-adoption-audit-1",
+  "status": "AUDIT_FIXED / HISTORICAL_DIFY_ADOPTION_UNPROVEN / PROPOSED_MAPPING_NOT_ADOPTED",
+  "producer_skill": {
+    "id": "m06-claims-draft",
+    "version": "0.1.3-candidate",
+    "producer_manifest": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/MANIFEST.sha256.json",
+    "producer_manifest_sha256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9",
+    "rule_adoption_map_sha256": "29bcd2aa3c23970a860694ce10671f9e69c394fcc8820771e1dc21775e147b9b",
+    "payloads": [
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/SKILL.md",
+        "sha256": "ad3d7c00243d70d2368f281c6834a5fb6381558df8989e33bdae3a42f3aa75b5",
+        "bytes": 49106
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/THIRD-PARTY-NOTICE.md",
+        "sha256": "4006dd520582d4c70b4ed616083265ad0d1c10811807539b1baac7d75ad98764",
+        "bytes": 6972
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/01-official-basis.md",
+        "sha256": "f68c7976880494d1ce94c5017af72c07fedc006b64eab441671eb29919759319",
+        "bytes": 19703
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/02-n01-feature-and-independent-claim.md",
+        "sha256": "c2ca0d0e43b3987b2f1919988757f511b4ed2fd41e9a049f75d77a3506c012ea",
+        "bytes": 14244
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/03-n02-claim-graph-and-fallback.md",
+        "sha256": "57f8764d627d19a0c5248bae14952331df27e034a23873df5da7cdf3248d8919",
+        "bytes": 11334
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/04-n03-support-terms-parameters.md",
+        "sha256": "5ff11fbab081577d7bc96b1ce267d010eb54f493e95ecb90a6290ffee3e98040",
+        "bytes": 17527
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/05-source-and-output-contract.md",
+        "sha256": "eb3efa3fb2e28415ee8ae49859e83909c1eb89b94648062b226dd3590de58fd9",
+        "bytes": 28729
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/output-schema.json",
+        "sha256": "8eeb5986504e353293ded5ed582cd516b2b731f0ba2eeb7be664d226eb3c9975",
+        "bytes": 13594
+      }
+    ]
+  },
+  "dsh_consumer_bundle": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-candidate-0.1.3.json",
+    "sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+    "payloads_match_producer": 8,
+    "qualifications_count": 2,
+    "qualification_role": "operator-only-not-generation",
+    "old_builtin_flow_2_6_022": "historical separate resource, not substituted for M06 .013"
+  },
+  "rule_versions": {
+    "producer_bound": {
+      "version": "0.1.9",
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "receipt": {
+        "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/F26V019精确试行验收登记-20261021/F26_V0.1.9_真实用户试行批准收据.json",
+        "bytes": 10054,
+        "sha256": "7fa56a74163ef216b5191414b1ea89e9fd80c2e16370425030c27188117b8f43",
+        "note": "approved_for_trial=true、formally_effective=false；规则创建时 pending 字段属保留历史"
+      },
+      "formally_effective": false,
+      "runtime_authorized_by_rule_receipt": false
+    },
+    "library_current": {
+      "version": "0.1.12",
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.12.md",
+      "sha256": "c8c4691db030af30c3ee7c275502cb679c7a3aea8ea0ec601994efc4e6b5b7ac",
+      "receipt": {
+        "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/F26规则调整计划-20261030/执行与验收提交/精确试行验收登记/F26_V0.1.12_真实用户试行验收.json",
+        "bytes": 2032,
+        "sha256": "3638464c87dcfc84527fca2ed2bcb5af436887366c49e9b03ea6a5ecd15284c4"
+      },
+      "scope": "phase6 manuscript trial only; engineering/Dify false",
+      "formally_effective": false
+    },
+    "silent_rebind_permitted": false
+  },
+  "design": {
+    "registry_revision": 483,
+    "current_candidate": "undesignated",
+    "app_exact_binding_found": false,
+    "archive_read": false,
+    "business_assets_changed": false
+  },
+  "service": {
+    "app_id": "b1af2fc9-817e-5247-aeed-dd16abad8337",
+    "current_graph_semantic_sha256": "2be2019b05560cc3a7d0be3b296c0175b83fb4f49a0699326e57c53495631b75",
+    "producer_skill_receipt_for_this_app": null,
+    "status": "PROMPT_COMPARISON_NOT_HISTORICAL_ADOPTION_PROOF"
+  },
+  "mapping": [
+    {
+      "id": "SRC-01",
+      "source_clause": "R03 / §1.3 L74-80",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "source_sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "skill_locus": "SKILL §3.6, ref05 §3.7.1–3.7.3",
+      "principle": "稳定feature_id与缺失/冲突登记；缺T2不强制停止",
+      "current_node_ids": [
+        "1770000100005",
+        "1770000100003",
+        "1764588108416"
+      ],
+      "current_observation": "six-field semantic/merge loses original input IDs; Outline lacks source_map",
+      "proposed_adaptation": "F1 source_registry side branch + explicit source_map/critical_feature_ids; inherited IDs kept; new Outline-local IDs labeled workflow-analysis rather than inherited T2",
+      "verification": "V1/V2",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval"
+    },
+    {
+      "id": "SRC-02",
+      "source_clause": "R06 / §1.6 L179-185",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "source_sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "skill_locus": "ref05 §3.6–3.7",
+      "principle": "逐特征实际input_id、原文hash和定位；来源不等充分支持",
+      "current_node_ids": [
+        "1764588108416",
+        "1769301001101"
+      ],
+      "current_observation": "six named semantic fields are provenance labels only, no raw locator contract",
+      "proposed_adaptation": "F1/F2 source_map UTF16 original quote; support review remains unassessed",
+      "verification": "V1/V2",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval"
+    },
+    {
+      "id": "CORE-01",
+      "source_clause": "R04a / §1.4.1 L100-106",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "source_sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "skill_locus": "SKILL S1 OP-N01-B; ref02 §B.3",
+      "principle": "移出限定须理由与关系影响；不能只剩目标",
+      "current_node_ids": [
+        "1728183992412",
+        "1769301001008",
+        "1769301001100",
+        "1769301001101"
+      ],
+      "current_observation": "final prompt allows delete/narrow on insufficient support; runtime removed lock member",
+      "proposed_adaptation": "F2 feature dispositions + critical coverage, missing => insufficient, no fabricated implementation",
+      "verification": "V3",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval"
+    },
+    {
+      "id": "FACT-01",
+      "source_clause": "R11/R12 / §3.3 L292-295",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "source_sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "skill_locus": "SKILL §5/6; ref04 support rules",
+      "principle": "不编造技术事实，不以警示抵消必要关系缺失",
+      "current_node_ids": [
+        "1770000100005",
+        "1728183992412",
+        "1769301001101"
+      ],
+      "current_observation": "no fabrication instruction exists; actual semantic/professional sufficiency not proven",
+      "proposed_adaptation": "retain existing non-fabrication constraints; technical support review never computed from hashes",
+      "verification": "V3/V5",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval"
+    },
+    {
+      "id": "WARN-01",
+      "source_clause": "R11/R12 / §3.3 L298-300",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "source_sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "skill_locus": "ref05 §3.5, §3.7 branchC",
+      "principle": "缺项/警示/旧状态保留；不足可受限草稿，不无限重试",
+      "current_node_ids": [
+        "1769301001101",
+        "1727495950805"
+      ],
+      "current_observation": "current formatter preserves Outline warnings and partial, lacks critical coverage",
+      "proposed_adaptation": "preserve existing quality keys/warnings byte values; add versioned coverage metadata; no new LLM calls",
+      "verification": "V5/V6",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval"
+    },
+    {
+      "id": "WIRE-01",
+      "source_clause": "M06-production-wire-contract R01, NOT F26 rule",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-production-wire-contract-R01.json",
+      "source_sha256": "c48eaeb8aa1d821f4b8324e940d057978c7fc61bc4eaea4777bd3bc46d2bad4d",
+      "skill_locus": "ref05 §3, output-schema.json",
+      "principle": "M06八输入七字段及五章累计合同",
+      "current_node_ids": [
+        "current Dify Start/End vs DSH M06 adapter"
+      ],
+      "current_observation": "Dify uses eight legacy inputs and six string outputs, not M06 seven-field contract",
+      "proposed_adaptation": "NOT_ADOPTED_AS_DIFY_WIRE; new contract is bounded Fast39 transport, never fabricate old M06 seven fields",
+      "verification": "V4/V6",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval"
+    },
+    {
+      "id": "V012-01",
+      "source_clause": "V0.1.12 R04d-TIME/PRED, R04a-COST, R04b/e-VALUE, R07-CURRENT",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.12.md",
+      "source_sha256": "c8c4691db030af30c3ee7c275502cb679c7a3aea8ea0ec601994efc4e6b5b7ac",
+      "skill_locus": "no replacement in0.1.3",
+      "principle": "current stage6 manuscript-trial changes",
+      "current_node_ids": [
+        "all business nodes"
+      ],
+      "current_observation": "current candidate is0.1.3 based onV019; noV012 adoption evidence",
+      "proposed_adaptation": "REFERENCE_ONLY_SCOPE_BLOCKED_FOR_DIFY; no silent rule upgrade or whole-rule conformance claim",
+      "verification": "future exact producer package",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/MANIFEST.sha256.json",
+      "sha256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9",
+      "scope": "all30 listed member identity verification; not full professional rereview"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/rule-adoption-map.json",
+      "sha256": "29bcd2aa3c23970a860694ce10671f9e69c394fcc8820771e1dc21775e147b9b",
+      "scope": "firstF26 item+wire distinction+14H boundaries"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/source-use-map.json",
+      "sha256": "19d0a33d8f41efc6ce1281ac26911a5acfb99c4e3d8a49bc074a9796959308a3",
+      "scope": "identity and section lookup only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/SKILL.md",
+      "sha256": "ad3d7c00243d70d2368f281c6834a5fb6381558df8989e33bdae3a42f3aa75b5",
+      "scope": "§3.6, S0/S1 and limits"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/02-n01-feature-and-independent-claim.md",
+      "sha256": "c2ca0d0e43b3987b2f1919988757f511b4ed2fd41e9a049f75d77a3506c012ea",
+      "scope": "§B.3 scope/feature decisions"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/05-source-and-output-contract.md",
+      "sha256": "eb3efa3fb2e28415ee8ae49859e83909c1eb89b94648062b226dd3590de58fd9",
+      "scope": "§3.5–3.7 and conditional identity rules"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "scope": "§1.3,1.4.1,1.6,3.3 normative only; evaluation examples excluded"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/F26V019精确试行验收登记-20261021/F26_V0.1.9_真实用户试行批准收据.json",
+      "sha256": "7fa56a74163ef216b5191414b1ea89e9fd80c2e16370425030c27188117b8f43",
+      "scope": "exact trial scope, not engineering/Dify"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/F26规则调整计划-20261030/执行与验收提交/精确试行验收登记/精确试行验收登记清单_V0.1.0.json",
+      "sha256": "e3e72d9282fb6c42e3160fabc03bdfca5f46e0cba18eedda562fc1dec6fa4e64",
+      "scope": "current V012 routing only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.12.md",
+      "sha256": "c8c4691db030af30c3ee7c275502cb679c7a3aea8ea0ec601994efc4e6b5b7ac",
+      "scope": "identity and relevant changed rule clauses; no evaluation examples"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/F26规则调整计划-20261030/执行与验收提交/精确试行验收登记/F26_V0.1.12_真实用户试行验收.json",
+      "sha256": "3638464c87dcfc84527fca2ed2bcb5af436887366c49e9b03ea6a5ecd15284c4",
+      "scope": "exact no engineering/Dify scope"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-candidate-0.1.3.json",
+      "sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+      "scope": "resource identity vs producer bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/AGENTS.md",
+      "sha256": "03d4bf9ac483c0107bde2763613c6d1853d3601731941d09b65f1522c8d23278",
+      "scope": "rules read; no mutation/transaction"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/README.md",
+      "sha256": "b04ce91d7feaa0e2441f12804d942f08564c06b678fddde5ca198cce3ad88f52",
+      "scope": "revision483; Flow2-6 rows; current candidate and exact app tokens"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/README.md",
+      "sha256": "9706502a39df1189a9a32800bd531db4eac02facd861e0b64da7bde0634b2904",
+      "scope": "current F26 exact trial routing"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/README.md",
+      "sha256": "cfdbcece8d5eb3a99fe9be37dabcd9c72b6974b2f75d18fe7936bc7f0d66a5e1",
+      "scope": "currentR13 and appendBM1-R1; no oldstate evidence inference"
+    }
+  ],
+  "evaluation_answers_or_cases_copied": false,
+  "implementation_admission": "NOT_GRANTED; exact source Skill/rule scope and IC-DESIGN production package still required for business workflow making; technical contract documents may be reviewed independently"
+}

@@ -1,0 +1,85 @@
+{
+  "status": "SPECIFICATION_ONLY_NOT_EXECUTED_BUSINESS_TESTS",
+  "cases": [
+    {
+      "id": "C01",
+      "trigger": "baseline synthetic object",
+      "expected": "document shape/location only pass; remains partial"
+    },
+    {
+      "id": "C02",
+      "trigger": "source quote end_utf16=2, splits surrogate pair",
+      "expected": "reject source location"
+    },
+    {
+      "id": "C03",
+      "trigger": "CRLF normalized before locating source",
+      "expected": "reject source hash/location mismatch"
+    },
+    {
+      "id": "C04",
+      "trigger": "input_id changed to claim_requirements_text/user_input",
+      "expected": "reject as technical support"
+    },
+    {
+      "id": "C05",
+      "trigger": "remove critical disposition and report complete",
+      "expected": "content error / coverage incomplete / insufficient; no retry"
+    },
+    {
+      "id": "C06",
+      "trigger": "keep critical feature only in another final/dependent claim",
+      "expected": "target mismatch; incomplete; no semantic support pass"
+    },
+    {
+      "id": "C07",
+      "trigger": "blocked_missing_support with nonempty quote or numeric offsets",
+      "expected": "reject disposition shape/semantic consistency"
+    },
+    {
+      "id": "C08",
+      "trigger": "quality_status outer differs from quality_report",
+      "expected": "content contract error; preserve existing create fact"
+    },
+    {
+      "id": "C09",
+      "trigger": "quality_report duplicate JSON key / deep object / invalid UTF8",
+      "expected": "reject bounded parsing; no auto retry"
+    },
+    {
+      "id": "C10",
+      "trigger": "unknown contract version/new field/no run id",
+      "expected": "reject enhanced confirmation; retain legacy result"
+    },
+    {
+      "id": "C11",
+      "trigger": "request_key/run binding/Workspace-account-folder mismatch",
+      "expected": "reject adoption into new task; no cross-project hash permission"
+    },
+    {
+      "id": "C12",
+      "trigger": "old result with no structured_result",
+      "expected": "keep historical legacy behavior; no backfill or new assessment"
+    },
+    {
+      "id": "C13",
+      "trigger": "legacy file, no original source IDs",
+      "expected": "legacy_unmapped/unverified; quality insufficient for enhanced completeness"
+    },
+    {
+      "id": "C14",
+      "trigger": "ASCII/BMP/nonBMP strings at char/byte/record limits",
+      "expected": "all existing and new bounds must hold; no truncate"
+    },
+    {
+      "id": "C15",
+      "trigger": "malformed structured outputs after a returned response",
+      "expected": "structured_result_error; old save/deduct queue count unchanged, no second Dify request"
+    },
+    {
+      "id": "C16",
+      "trigger": "unknown/timeout/401 after create sent",
+      "expected": "execution unknown preserved; no cancellation/refund/retry inference"
+    }
+  ]
+}

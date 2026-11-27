@@ -1,0 +1,31 @@
+✖ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (25.107083ms)
+✔ native M06 preparation rejects second model request (19.159667ms)
+✔ native M06 preparation rejects API budget (19.907958ms)
+✔ native M06 preparation rejects foreign root (25.7635ms)
+✔ native M06 preparation rejects foreign endpoint (19.201792ms)
+✔ native M06 preparation rejects provider retries (18.585625ms)
+✔ native M06 preparation rejects output above scope (18.6975ms)
+✔ native M06 preparation rejects another model provider (17.87075ms)
+✔ native M06 preparation rejects mixed recovery (18.230084ms)
+✔ native M06 preparation rejects guard drift (18.285042ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 270.018042
+
+✖ failing tests:
+
+test at scripts/tests/f-installed-native-m06-generation.test.mjs:29:1
+✖ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (25.107083ms)
+  Error: unsupported fixed installation bundle
+      at verifyFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:95:207)
+      at Module.installFBundle (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:213:14)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-native-m06-generation.test.mjs:30:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

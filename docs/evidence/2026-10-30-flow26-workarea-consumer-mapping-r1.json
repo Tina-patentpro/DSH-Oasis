@@ -1,0 +1,289 @@
+{
+  "id": "FLOW26-WORKAREA-CONSUMER-MAPPING-20261030-R1",
+  "status": "ACTUAL_METADATA_READ_COMPLETE_NEW_TEMPLATE_MAPPING_INCOMPLETE",
+  "observedAt": "2026-10-29T23:19:07.815Z",
+  "route": "workarea login -> existing backend API only",
+  "origin": "https://lzhxpy.oasisintwrite.com",
+  "detailEndpoint": {
+    "method": "POST",
+    "path": "/api/apicategories/apidetail",
+    "body": "name = actual api_endpoint"
+  },
+  "catalogEndpoint": {
+    "method": "GET",
+    "path": "/api/apicategories/detail"
+  },
+  "catalogEntry": {
+    "id": 6,
+    "name": "权利要求书生成",
+    "group": "专利撰写",
+    "description": "基于技术交底书快速生成权利要求书",
+    "file_url": "",
+    "workflow": "说明书生成-Basic",
+    "sort": 3,
+    "is_active": true,
+    "apis": [
+      {
+        "id": 211,
+        "sub_category_id": 6,
+        "ai_model_id": 1,
+        "aimodel": "fast",
+        "api_endpoint": "权利要求书生成-Fast",
+        "api_description": "基于技术交底书快速生成权利要求书草稿。Fast版设定为思维活跃，主要用于在撰写初期的预览或思路拓展。多次运行能够得到不同的拓展。",
+        "api_process": "输入内容整理,核心独立权利要求撰写,权利要求架构搭建,从属权利要求撰写,审查权利要求书初稿,权利要求"
+      },
+      {
+        "id": 212,
+        "sub_category_id": 6,
+        "ai_model_id": 2,
+        "aimodel": "Basic",
+        "api_endpoint": "权利要求书生成-Basic",
+        "api_description": "该工作流根据技术交底信息自动生成专利权利要求书。系统会识别创新点，形成独权、从权和保护梯度。报告会说明保护策略、补强事项和优化方向。",
+        "api_process": ""
+      }
+    ]
+  },
+  "services": [
+    {
+      "id": 39,
+      "name": "权利要求书生成-Fast",
+      "api_type": "Workflow",
+      "price": 3,
+      "model_name": "",
+      "is_async": 0,
+      "input_schema": [
+        {
+          "type": "paragraph",
+          "cn_name": "技术方案",
+          "content": "用于生成“技术方案”主体的核心构思、关键结构/步骤、技术要素及其协同关系输入。",
+          "en_name": "technical_solutions"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "技术领域",
+          "content": "用于生成“技术领域”段落的所属技术方向、应用场景与分类线索（可含关键词/IPC意向）。",
+          "en_name": "technical_field"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "背景技术",
+          "content": "用于生成“背景技术”段落的现有技术情况、痛点问题与改进需求描述输入。",
+          "en_name": "background_art_TD"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "有益效果",
+          "content": "用于生成“有益效果”段落的性能提升、成本/效率优势与可验证效果点输入。",
+          "en_name": "beneficial_effects_TD"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "具体实施方式",
+          "content": "用于生成“具体实施方式/实施例”段落的实现细节、参数范围、流程与可选替换方案输入。",
+          "en_name": "embodiments_TD"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "附图说明和标记",
+          "content": "用于生成“附图说明”段落的各图编号、图名及图中要素对应关系的说明输入。",
+          "en_name": "drawings_explain_TD"
+        },
+        {
+          "type": "file",
+          "cn_name": "技术交底书文件",
+          "content": "完整的技术交底书文件",
+          "en_name": "Technical_Disclosure_file"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "用户指令",
+          "content": "请在这里填写你对本次输出的额外要求，例如重点关注内容、表达风格或需要避免的问题。   不要把正文、原始材料或核心业务内容直接写在这里。   主要输入内容应填写到对应的主材料输入字段，否则系统可能无法正确识别和处理。   没有补充要求时可填写“无”。",
+          "en_name": "User_input"
+        }
+      ],
+      "output_schema": [
+        {
+          "type": "paragraph",
+          "cn_name": "生成内容",
+          "content": "",
+          "en_name": "output"
+        }
+      ],
+      "created_at": "2026-03-20T20:08:42.830000",
+      "updated_at": "2026-05-06T07:43:23"
+    },
+    {
+      "id": 46,
+      "name": "权利要求书生成-Basic",
+      "api_type": "Workflow",
+      "price": 5,
+      "model_name": "",
+      "is_async": 1,
+      "input_schema": [
+        {
+          "type": "file",
+          "cn_name": "技术交底书文件",
+          "content": "用于上传完整技术交底书文件，供工作流自动提取并生成权利要求书。",
+          "en_name": "Technical_Disclosure_file"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "技术方案",
+          "content": "用于提供本发明的核心技术构思、技术手段和主要实现路径。",
+          "en_name": "technical_solutions"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "技术领域",
+          "content": "用于指定发明所属技术领域，帮助工作流选择匹配的撰写规则和审查重点。",
+          "en_name": "technical_field"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "背景技术",
+          "content": "用于提供现有技术问题、已有方案缺陷和发明产生背景。",
+          "en_name": "background_art_TD"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "有益效果",
+          "content": "用于说明本发明相对于现有技术能够取得的技术效果或改进价值。",
+          "en_name": "beneficial_effects_TD"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "具体实施方式",
+          "content": "用于提供发明的具体实现细节、结构组成、步骤流程或参数示例。",
+          "en_name": "embodiments_TD"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "附图说明",
+          "content": "用于提供附图对应的结构、部件、流程或标号解释。",
+          "en_name": "drawings_explain_TD"
+        },
+        {
+          "type": "paragraph",
+          "cn_name": "用户指令",
+          "content": "用于补充用户对本次权利要求书生成的特殊要求、偏好或限制条件。",
+          "en_name": "User_input"
+        }
+      ],
+      "output_schema": [
+        {
+          "type": "paragraph",
+          "cn_name": "生成内容",
+          "content": "",
+          "en_name": "claims_text"
+        },
+        {
+          "type": "file",
+          "cn_name": "权利要求书",
+          "content": "",
+          "en_name": "claims_docx"
+        },
+        {
+          "type": "file",
+          "cn_name": "权利要求书生成报告",
+          "content": "",
+          "en_name": "report_docx"
+        }
+      ],
+      "created_at": "2026-05-05T17:33:07.597000",
+      "updated_at": "2026-05-06T07:41:26"
+    }
+  ],
+  "credentialFieldsExcluded": true,
+  "credentialTransferredToDSH": false,
+  "catalogIdentityRule": "category6, catalogEntry211/212 and API detail39/46 are distinct; create.id uses actual detail.id, never catalog entry id or category.workflow",
+  "inputMapping": [
+    {
+      "common": "upstream_md_file",
+      "target": null,
+      "status": "UNMAPPED",
+      "reason": "No cumulative Markdown input; cannot put upstream technical data into User_input."
+    },
+    {
+      "common": "disclosure_file",
+      "target": "Technical_Disclosure_file",
+      "status": "SEMANTIC_MATCH_TRANSFER_UNVERIFIED",
+      "reason": "Existing single-file field can carry a full disclosure file via backend upload receipt; no URL/transfer/PDF interpretation test performed."
+    },
+    {
+      "common": "disclosure_text",
+      "target": "technical_solutions",
+      "status": "PARTIAL_SEMANTICS_NOT_LOSSLESS_PROVEN",
+      "reason": "Source is full disclosure text; target describes core technical solution only. Do not infer splitting into technical_field/background_art/benefits/embodiments or merge all materials."
+    },
+    {
+      "common": "drawings_file",
+      "target": null,
+      "status": "UNMAPPED",
+      "reason": "No separate drawings-file input; disclosure file field cannot be reused for multiple semantic files."
+    },
+    {
+      "common": "drawings_text",
+      "target": "drawings_explain_TD",
+      "status": "SEMANTIC_MATCH",
+      "reason": "Drawing explanations and marks; full limit/required/coexistence semantics not published."
+    },
+    {
+      "common": "claim_requirements_file",
+      "target": null,
+      "status": "UNMAPPED",
+      "reason": "No separate requirements-file input."
+    },
+    {
+      "common": "claim_requirements_text",
+      "target": null,
+      "status": "UNMAPPED",
+      "reason": "No separate requirements material input; User_input is manual instructions and expressly excludes original material/core business content."
+    },
+    {
+      "common": "user_input",
+      "target": "User_input",
+      "status": "SEMANTIC_MATCH",
+      "reason": "Only the existing explicit manual instruction text, no default 无 injected."
+    }
+  ],
+  "outputMapping": {
+    "Fast39": {
+      "output": "core prose for existing preview/review path",
+      "unassessed": [
+        "source updates",
+        "T1-T6 tables",
+        "term register",
+        "risks/questions",
+        "model completions"
+      ],
+      "sevenFieldJSONRequired": false,
+      "professionalAcceptance": false
+    },
+    "Basic46": {
+      "claims_text": "core prose",
+      "claims_docx": "file candidate, must actually receive and validate",
+      "report_docx": "file candidate, must actually receive and validate",
+      "async": "not supported by current synchronous consumer; no auto retry/progress-to-result inference"
+    }
+  },
+  "undeclaredMetadata": [
+    "required and empty-input behavior",
+    "coexistence policy for file and text",
+    "per-field byte/character/file limits",
+    "accepted MIME/PDF profile",
+    "new M06 fixed rule/resource semantics"
+  ],
+  "ownership": {
+    "workareaAuthenticated": true,
+    "workspaceAccountFolderBinding": "NOT_ESTABLISHED_BY_BROWSER_LOGIN",
+    "projectOption302": "historical website project only; not authority for native Workspace binding"
+  },
+  "actions": {
+    "adminOrDifyLogin": false,
+    "newServiceCreated": false,
+    "createWorkflow": 0,
+    "upload": 0,
+    "generationSpend": 0
+  },
+  "nextEvidence": "Within existing API route, obtain or confirm semantics for the unmapped fields and current Workspace/account/folder binding. No console login or appId/DSL requirement. Until then retain old service compatibility separately and disable only the new M06 source."
+}

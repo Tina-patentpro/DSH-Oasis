@@ -1,3 +1,15 @@
+## 2026-11-27 M02 R4 技术内容审核与零费用保存恢复
+
+已对保存的 R3 稿完成 Codex 内容审核与条件性再审，8 项问题更正，T1/T2/T3 共 10 个原行与正文同步修订。新版本 `revision-3e7693ba-ee06-444e-8292-0f645d2fb4c0`，SHA256 `74495c5e3f5bd1637854c8cf20388c0e5ed75372dd2f0d07303e1d9330662d82`，隔离 Host 草稿恢复、工程再审、排他保存及冷启动回读通过。结论限公开合成案例的条件性概念分析，真实根因/性能、独立人类专业签认及用户接受分别保持未完成。本轮新增模型/API 请求 0、费用 0 元，旧 R2/R3 稿和原收据保留。 [本轮回执](evidence/2026-11-27-m02-content-review-r4/execution-return.md) · [核验](evidence/2026-11-27-m02-content-review-r4/verification.json)。以下历史字节保持。
+
+---
+
+## 2026-11-27 M02 R3 元信息修订与零费用工程恢复
+
+复用原 M02 请求 `eb6bee3f-e23c-4333-b51f-554ebe6f94a7`／run `v340-10b9e02f-3991-47b5-a503-24f829e9b2e0`，另立修订 `revision-89f6e6d5-0358-4979-bb23-6ef533572810`。更正文档原始凭证为 v9、空补齐为“未产生模型补齐”；原技术正文、表和来源保留。100/100 离线检查通过，隔离 DSH Host 草稿冷读、固定修订工程审核、排他保存与重启全文回读通过。本轮新增模型/API 请求 0、费用 0 元。R3 v10 新生成规则仅离线验证；专业/用户接受、日常安装及发布保持待办。 [本轮回执](evidence/2026-11-27-m02-metadata-r3/execution-return.md) · [核验](evidence/2026-11-27-m02-metadata-r3/verification.json)。以下历史字节保持。
+
+---
+
 ## 2026-11-10 R7-04 M06 rc.5 源码预览已提交 GitHub
 
 `Tina-patentpro/DSH-Oasis` 操作前已为公开仓库。已把限定源码预览推到 `codex/m06-rc5-source-preview`，公开提交 `ae893658` 以独立历史承载 127 个文件，匿名读取已验证。源码预览保留社区许可和第三方通知，公开投影移除私有 Windows 开发路径并关闭对应夹具入口。现有默认分支仍为 `mac/continuity-v2`。R7-03 仍待对真实正文开展编辑、再审、保存和草稿恢复。 [GitHub 预览](https://github.com/Tina-patentpro/DSH-Oasis/tree/codex/m06-rc5-source-preview) · [公开回执](evidence/2026-11-10-r7-04-github-source-preview-r1/execution-return.md)。以下历史完整字节保持。

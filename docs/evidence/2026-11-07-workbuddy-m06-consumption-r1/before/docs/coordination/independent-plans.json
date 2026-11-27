@@ -1,0 +1,2272 @@
+{
+  "schema_version": 1,
+  "plan_revision": "2026-10-25/1.3.1",
+  "status": "planning_only",
+  "coordination_version": "1.2.2",
+  "coordination_plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+  "compatibility_spec": "docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+  "historical_coordination_plan": "docs/superpowers/plans/2026-10-24-oasis-integrated-roadmap.md",
+  "contracts": {
+    "IC-KNOWLEDGE": {
+      "title": "逐用途知识包",
+      "producers": [
+        "knowledge"
+      ],
+      "consumers": [
+        "patent-distillery"
+      ],
+      "content": "需求/对象ID、原文位置/hash、版本/法域/时点、条件/例外、许可、编辑结论、关键缺口与审阅范围",
+      "checks": "来源可回读；未核用途不被继承；失效/隔离对象不变成有效通则。"
+    },
+    "IC-RULES": {
+      "title": "规则与测试材料包",
+      "producers": [
+        "test-library"
+      ],
+      "consumers": [
+        "patent-distillery",
+        "dify",
+        "dsh-oasis",
+        "backend",
+        "workarea",
+        "dify-design",
+        "five-step-method"
+      ],
+      "content": "规则版本/hash、生效或试用范围、参考原件/运行输入/evaluation_only角色、允许变体、严重错误和专业评价判据；独立测试规格/结果引用、受测包hash、环境与专业/用户限制；规则→Skill章节/约束→Dify节点/变量/输出检查的版本映射；对五步法仅交适用规则依据/审阅反馈，不要求先审定全部方法；对本地设计交明确节点/变量/检查采用要求",
+      "checks": "原文稿接受不当运行通过；评价答案不泄漏给生成方；超限原件不裁剪；按实际用途选案。规则/规格可先交，候选受测后另交结果，不形成先验完才给规则/受测包的循环。适用规则须进入Skill制作与Dify编排的基础，记录采用位置、条件及不适用理由；不只留作事后评价。规则分母与采用/不适用/冲突/缺件逐项可核，原效力沿原登记；生产与评价角色分开。"
+    },
+    "IC-SKILL": {
+      "title": "业务Skill交付",
+      "producers": [
+        "patent-distillery"
+      ],
+      "consumers": [
+        "dsh-oasis",
+        "dify",
+        "test-library",
+        "dify-design"
+      ],
+      "content": "业务Skill ID/版本/hash、来源与规则映射、正文/refs/assets清单、输入输出schema及语义、依赖和适用限制；规则采用记录身份及未决项",
+      "checks": "消费方实际读取同版内容并按职责装配、设计或测试；设计读取不等Host已加载或实例已运行。缺关键输入/许可不伪装就绪；旧示例不冒充本批成果。规则采用另验，不以文件存在或引用清单代替。"
+    },
+    "IC-WORKFLOW": {
+      "title": "Dify工作流交付",
+      "producers": [
+        "dify"
+      ],
+      "consumers": [
+        "backend",
+        "test-library",
+        "dify-design"
+      ],
+      "content": "实际实例/应用/工作流版本、DSL导出hash、Skill映射、输入输出/终态/usage/文件/错误、依赖与能力矩阵；规则采用记录与固定Skill/DSL映射身份及差异；对应IC-DESIGN版本/hash、实例适配差异及运行/未运行反馈，关联固定输入与结果证据",
+      "checks": "固定Skill/规则与实际编排差异逐项可追溯；候选可先交并显式列未运行/未知，运行可用声明须有对应实例独立运行证据；候选、已导入、已部署分别列。dify-design仅消费具名版本反馈，不取得实例操作权限；未知/异步/流式不预称支持。 通道冒烟与业务交付分别标用途；通道证据只回原Batch3，不作业务能力或后台激活证明。"
+    },
+    "IC-API": {
+      "title": "后台专业服务API",
+      "producers": [
+        "backend"
+      ],
+      "consumers": [
+        "dsh-oasis",
+        "workarea"
+      ],
+      "content": "实际完整URL/方法/字段/类型、服务/Schema/合同版本、请求键/任务身份、结果与文件、错误/超时/重试及能力矩阵",
+      "checks": "旧调用保兼容；只出现一个/api前缀；另一端查原任务不再创建；缺映射明确禁用或拒绝。"
+    },
+    "IC-ACCOUNT": {
+      "title": "身份与财务事实",
+      "producers": [
+        "backend"
+      ],
+      "consumers": [
+        "dsh-oasis",
+        "workarea"
+      ],
+      "content": "同用户身份与独立会话、归属/撤权、服务端报价和余额/流水/扣退事实、金额类型/规则版本",
+      "checks": "一套资金权威；并发不能重复资金效果；客户端标识不提升权限；UNKNOWN不自动重扣/退款。"
+    },
+    "IC-ACCOUNT-ENTRY": {
+      "title": "用户账户财务入口",
+      "producers": [
+        "workarea"
+      ],
+      "consumers": [
+        "dsh-oasis"
+      ],
+      "content": "实际用户账户中心及财务入口、允许的浏览器跳转/返回、身份衔接边界、不可用提示",
+      "checks": "全部管理页面归网站；不在URL放凭据；不擅自新增SSO/设备码；本地Skill执行不依赖网站页面。"
+    },
+    "IC-ARTIFACT": {
+      "title": "产物身份与交接",
+      "producers": [
+        "dsh-oasis",
+        "dify",
+        "backend"
+      ],
+      "consumers": [
+        "dsh-oasis",
+        "backend",
+        "workarea",
+        "test-library"
+      ],
+      "content": "准确来源/任务/项目/版本、原件与正文hash及其区别、实际读取路径、审核/修改/保存身份、格式/容量和访问权限",
+      "checks": "hash不是权限；单一前序累计MD按14节点原合同；非专利产物不套五标题；快照导入不自动双向同步。"
+    },
+    "IC-BRIDGE": {
+      "title": "跨工具任务与返回",
+      "producers": [
+        "workbuddy-bridge"
+      ],
+      "consumers": [
+        "knowledge",
+        "patent-distillery",
+        "five-step-method"
+      ],
+      "content": "业务任务ID/bridge指令ID、目标会话、授权与输入身份、取件/返回、产物/hash、Git或未提交状态及限制",
+      "checks": "投递/取件/done与产物复核分开；不重复派发未知任务；无工具时文档/Git辅助并如实标注。"
+    },
+    "IC-DESIGN": {
+      "title": "本地工作流设计包",
+      "producers": [
+        "dify-design"
+      ],
+      "consumers": [
+        "dify",
+        "test-library"
+      ],
+      "content": "准确来源路径/候选身份/本地YML hash、节点说明、Schema/Code ABI、固定Skill与规则映射、依赖和静态检查；待实例验证项、源端治理阻断及Git范围；声明源项目批次出口/候选指定依据、可进入制作的规则与评价隔离，实例能力预期与待证项目分开 原Batch3执行通道使用WD-01固定Textin候选/来源执行Skill，经DF-01—04验证及WD-04反馈；只验基础设施，不豁免业务IC-SKILL/规则或源前批/治理条件，不作后台用户服务。",
+      "checks": "源治理/前批/候选条件按原项目核对，缺件诊断可先交但不冒充可制作/已验设计。同一候选静态交付不以其自身实例已运行或消费者接受为前置；原Batch3通道实际出口仍约束后续业务批次，失败/未运行反馈不关闭出口。运行另由dify验证并回传对应版本，实例改动须关联本地新版本，密钥不随包交付。"
+    },
+    "IC-METHOD": {
+      "title": "方法论来源与用途包",
+      "producers": [
+        "five-step-method"
+      ],
+      "consumers": [
+        "knowledge",
+        "test-library",
+        "dify-design"
+      ],
+      "content": "原件路径/hash、文本提取hash区别、具体命题与坐标、版本/许可/条件、技术要素表术语差异、拟采用用途和未决冲突；来源核对、候选用途映射、具体用途审阅三层分别列，审阅角色/判据/结论/允许用途及保留项消费前具名",
+      "checks": "原件可读与候选映射可先交，不等待其派生新规则；具体采用须核来源/许可和用途审阅，缺必需依据不得标可用。方法原文不是生效规则；编辑/AI推导不是已确认技术事实；训练文案不等专业接受。涉及规则/Skill变化须回知识/测试集库及distillery更版，再进入设计；14节点不被五步概括改序。"
+    }
+  },
+  "projects": [
+    {
+      "project_id": "dsh-oasis",
+      "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "goal": "以DSH插件优先交付可用业务Skills，保留后发收费专业服务入口；与WorkBuddy用户插件共享业务合同，后者的机制/目录/实现归属待绑定。",
+      "retains": [
+        "DSH-Oasis/docs/plans/2026-10-13-oasis-development-roadmap.md",
+        "DSH-Oasis/docs/plans/2026-10-23-stage5-follow-up-plan.md",
+        "DSH-Oasis/docs/plans/2026-10-24-stage5-d1-unblocking-plan.md",
+        "DSH-Oasis/docs/project-current-state.md"
+      ],
+      "status": "planning_only",
+      "plan_revision": "2026-10-25/1.3.1",
+      "produces": [
+        "IC-ARTIFACT"
+      ],
+      "consumes": [
+        "IC-RULES",
+        "IC-SKILL",
+        "IC-API",
+        "IC-ACCOUNT",
+        "IC-ACCOUNT-ENTRY",
+        "IC-ARTIFACT"
+      ],
+      "state_references": [
+        "DSH-Oasis/docs/project-current-state.md",
+        "DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+        "DSH-Oasis/docs/plans/2026-10-24-stage5-d1-unblocking-plan.md",
+        "DSH-Oasis/docs/plans/2026-10-13-oasis-development-roadmap.md",
+        "DSH-Oasis/AGENTS.md",
+        "DSH-Oasis/docs/plans/2026-10-25-stage5-d1-prerequisite-materials-plan.md",
+        "DSH-Oasis/docs/evidence/2026-10-25-stage5-d1-prerequisites-closeout.md",
+        "DSH-Oasis/docs/evidence/2026-10-25-stage5-d1-prerequisites-reaudit.md",
+        "DSH-Oasis/docs/evidence/2026-10-25-stage5-d1-acquisition-closeout.md",
+        "DSH-Oasis/docs/business-baseline/v340-material-extraction-originals.json",
+        "DSH-Oasis/docs/evidence/2026-10-25-stage5-d1-license-closure-closeout.md",
+        "DSH-Oasis/docs/business-baseline/v340-extraction-distribution-candidate.json"
+      ],
+      "contract_work_packages": {
+        "IC-RULES": {
+          "produce": [],
+          "consume": [
+            "DS-01",
+            "DS-02",
+            "DS-05"
+          ]
+        },
+        "IC-SKILL": {
+          "produce": [],
+          "consume": [
+            "DS-01",
+            "DS-02"
+          ]
+        },
+        "IC-API": {
+          "produce": [],
+          "consume": [
+            "DS-04",
+            "DS-05"
+          ]
+        },
+        "IC-ACCOUNT": {
+          "produce": [],
+          "consume": [
+            "DS-04",
+            "DS-05"
+          ]
+        },
+        "IC-ACCOUNT-ENTRY": {
+          "produce": [],
+          "consume": [
+            "DS-04"
+          ]
+        },
+        "IC-ARTIFACT": {
+          "produce": [
+            "DS-02",
+            "DS-04",
+            "DS-05"
+          ],
+          "consume": [
+            "DS-03",
+            "DS-04",
+            "DS-05"
+          ]
+        }
+      },
+      "next_steps": {
+        "supplement": "NS1",
+        "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+        "anchor": "oasis-next-steps-ns1",
+        "status": "planning_only",
+        "revision": "R1",
+        "current_followup": {
+          "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+          "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+          "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+          "revision": "BM1-R1/S2-R1",
+          "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+          "addendum_anchor": "bm1-public-channels-s2-r1",
+          "status": "planning_only",
+          "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+        },
+        "historical_current_followups": [
+          {
+            "id": "PLAN-PROGRESS-REFRESH-20261030-P30",
+            "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+            "anchor": "oasis-plan-progress-p30",
+            "audit_reference": "docs/coordination/audits/2026-10-30-plan-progress-refresh.md",
+            "status": "planning_only",
+            "supersedes_only": "obsolete starting points; original requirements/gates remain",
+            "previous_followup_id": "PLAN-PROGRESS-REFRESH-20261028-P28"
+          },
+          {
+            "id": "BUSINESS-MODE-20261105-BM1",
+            "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+            "anchor": "oasis-business-mode-bm1",
+            "revision": "BM1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "status": "planning_only",
+            "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
+          },
+          {
+            "id": "BUSINESS-ROLES-20261105-BM1-R1",
+            "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+            "anchor": "oasis-business-roles-bm1-r1",
+            "revision": "BM1-R1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-roles-r1",
+            "status": "planning_only",
+            "supersedes_only": "executor roles; original stages/gates/progress retained"
+          },
+          {
+            "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+            "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+            "anchor": "oasis-test-assets-bm1-r1-s1",
+            "revision": "BM1-R1/S1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-test-assets-s1",
+            "status": "planning_only",
+            "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+          },
+          {
+            "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+            "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+            "anchor": "oasis-public-channels-bm1-r1-s2",
+            "revision": "BM1-R1/S2",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-public-channels-s2",
+            "status": "planning_only",
+            "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+          }
+        ]
+      },
+      "historical_goal_before_bm1": "交付以DSH为主要作业入口的专业客户端，支持版本化本地业务Skills和经后台提供的Dify专业服务，复用原生文件、模型与会话能力。",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "project_id": "workarea",
+      "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+      "goal": "网站账户/财务页面和旧按次收费、充值、余额功能保留，重点转为兼容维护与插件账户入口；产品信息和咨询链接供宣传渠道使用。",
+      "retains": [
+        "workarea/docs/development/macos-setup.md",
+        "workarea/docs/reports/2026-10-24-dependency-remediation.md",
+        "workarea/docs/plans/2026-06-05-frontend-improvement-plan.md",
+        "workarea/AGENTS.md"
+      ],
+      "status": "planning_only",
+      "plan_revision": "2026-10-25/1.3.1",
+      "produces": [
+        "IC-ACCOUNT-ENTRY"
+      ],
+      "consumes": [
+        "IC-RULES",
+        "IC-API",
+        "IC-ACCOUNT",
+        "IC-ARTIFACT"
+      ],
+      "state_references": [
+        "workarea/docs/development/macos-setup.md",
+        "workarea/docs/reports/2026-10-24-dependency-remediation.md",
+        "workarea/AGENTS.md",
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-18-dual-client-support-plan.md"
+      ],
+      "contract_work_packages": {
+        "IC-RULES": {
+          "produce": [],
+          "consume": [
+            "WA-01",
+            "WA-02",
+            "WA-05"
+          ]
+        },
+        "IC-API": {
+          "produce": [],
+          "consume": [
+            "WA-01",
+            "WA-02",
+            "WA-05"
+          ]
+        },
+        "IC-ACCOUNT": {
+          "produce": [],
+          "consume": [
+            "WA-03",
+            "WA-05"
+          ]
+        },
+        "IC-ACCOUNT-ENTRY": {
+          "produce": [
+            "WA-04"
+          ],
+          "consume": []
+        },
+        "IC-ARTIFACT": {
+          "produce": [],
+          "consume": [
+            "WA-02",
+            "WA-05"
+          ]
+        }
+      },
+      "next_steps": {
+        "supplement": "NS1",
+        "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+        "anchor": "oasis-next-steps-ns1",
+        "status": "planning_only",
+        "revision": "R1",
+        "current_followup": {
+          "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+          "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+          "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+          "revision": "BM1-R1/S2-R1",
+          "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+          "addendum_anchor": "bm1-public-channels-s2-r1",
+          "status": "planning_only",
+          "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+        },
+        "historical_current_followups": [
+          {
+            "id": "PLAN-PROGRESS-REFRESH-20261030-P30",
+            "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+            "anchor": "oasis-plan-progress-p30",
+            "audit_reference": "docs/coordination/audits/2026-10-30-plan-progress-refresh.md",
+            "status": "planning_only",
+            "supersedes_only": "obsolete starting points; original requirements/gates remain",
+            "previous_followup_id": null
+          },
+          {
+            "id": "BUSINESS-MODE-20261105-BM1",
+            "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+            "anchor": "oasis-business-mode-bm1",
+            "revision": "BM1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "status": "planning_only",
+            "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
+          },
+          {
+            "id": "BUSINESS-ROLES-20261105-BM1-R1",
+            "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+            "anchor": "oasis-business-roles-bm1-r1",
+            "revision": "BM1-R1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-roles-r1",
+            "status": "planning_only",
+            "supersedes_only": "executor roles; original stages/gates/progress retained"
+          },
+          {
+            "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+            "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+            "anchor": "oasis-test-assets-bm1-r1-s1",
+            "revision": "BM1-R1/S1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-test-assets-s1",
+            "status": "planning_only",
+            "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+          },
+          {
+            "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+            "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+            "anchor": "oasis-public-channels-bm1-r1-s2",
+            "revision": "BM1-R1/S2",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-public-channels-s2",
+            "status": "planning_only",
+            "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+          }
+        ]
+      },
+      "historical_goal_before_bm1": "交付独立Web专业工作区，并完整承担用户账户管理和财务服务体验，与共享后台及DSH账户/财务入口兼容。",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "project_id": "backend",
+      "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+      "goal": "青岛服务器第三方开发版暂作实际后台，约2—3个月目标窗口以全自制开源版替换；同期支持约1—2个月的收费专业能力目标。",
+      "retains": [
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-17-admin-4-upgrade-plan.md",
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-18-dual-client-support-plan.md",
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-17-database-upgrade-plan.md",
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-17-dify-integration-plan.md",
+        "绿洲慧写-后台4.0/README.md"
+      ],
+      "status": "planning_only",
+      "plan_revision": "2026-10-25/1.3.1",
+      "produces": [
+        "IC-API",
+        "IC-ACCOUNT",
+        "IC-ARTIFACT"
+      ],
+      "consumes": [
+        "IC-RULES",
+        "IC-WORKFLOW",
+        "IC-ARTIFACT"
+      ],
+      "state_references": [
+        "绿洲慧写-后台4.0/README.md",
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-22-project-progress-and-next-plan.md",
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-17-admin-4-upgrade-plan.md",
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-18-dual-client-support-plan.md",
+        "绿洲慧写-后台4.0/docs/superpowers/execution/2026-10-24-db0-n3-p19-05-joint-signoff-v26/README.md"
+      ],
+      "contract_work_packages": {
+        "IC-RULES": {
+          "produce": [],
+          "consume": [
+            "BE-01",
+            "BE-03",
+            "BE-05"
+          ]
+        },
+        "IC-WORKFLOW": {
+          "produce": [],
+          "consume": [
+            "BE-01",
+            "BE-03"
+          ]
+        },
+        "IC-API": {
+          "produce": [
+            "BE-02",
+            "BE-03",
+            "BE-05"
+          ],
+          "consume": []
+        },
+        "IC-ACCOUNT": {
+          "produce": [
+            "BE-02",
+            "BE-03",
+            "BE-04",
+            "BE-05"
+          ],
+          "consume": []
+        },
+        "IC-ARTIFACT": {
+          "produce": [
+            "BE-03",
+            "BE-05"
+          ],
+          "consume": [
+            "BE-03",
+            "BE-05"
+          ]
+        }
+      },
+      "next_steps": {
+        "supplement": "NS1",
+        "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+        "anchor": "oasis-next-steps-ns1",
+        "status": "planning_only",
+        "revision": "R1",
+        "current_followup": {
+          "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+          "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+          "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+          "revision": "BM1-R1/S2-R1",
+          "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+          "addendum_anchor": "bm1-public-channels-s2-r1",
+          "status": "planning_only",
+          "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+        },
+        "historical_current_followups": [
+          {
+            "id": "PLAN-PROGRESS-REFRESH-20261030-P30",
+            "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+            "anchor": "oasis-plan-progress-p30",
+            "audit_reference": "docs/coordination/audits/2026-10-30-plan-progress-refresh.md",
+            "status": "planning_only",
+            "supersedes_only": "obsolete starting points; original requirements/gates remain",
+            "previous_followup_id": null
+          },
+          {
+            "id": "BUSINESS-MODE-20261105-BM1",
+            "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+            "anchor": "oasis-business-mode-bm1",
+            "revision": "BM1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "status": "planning_only",
+            "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
+          },
+          {
+            "id": "BUSINESS-ROLES-20261105-BM1-R1",
+            "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+            "anchor": "oasis-business-roles-bm1-r1",
+            "revision": "BM1-R1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-roles-r1",
+            "status": "planning_only",
+            "supersedes_only": "executor roles; original stages/gates/progress retained"
+          },
+          {
+            "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+            "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+            "anchor": "oasis-test-assets-bm1-r1-s1",
+            "revision": "BM1-R1/S1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-test-assets-s1",
+            "status": "planning_only",
+            "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+          },
+          {
+            "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+            "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+            "anchor": "oasis-public-channels-bm1-r1-s2",
+            "revision": "BM1-R1/S2",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-public-channels-s2",
+            "status": "planning_only",
+            "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+          }
+        ]
+      },
+      "historical_goal_before_bm1": "以数据库和API交付共享业务后台，衔接Dify，维护身份/权限/项目/任务/文件/资金事实，并保留既定R1用户—资金—任务管理闭环。",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "project_id": "knowledge",
+      "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+      "goal": "按首批Skills和咨询展示的具名用途交可追溯知识包，标出可公开自有成果、第三方原文与许可限制；全开源不授予源材料权利。",
+      "retains": [
+        "专利知识库/README.md",
+        "专利知识库/3、过程文件/项目管理/一期范围与执行计划_v0.5_20261022.md",
+        "专利知识库/3、过程文件/项目管理/进展与计划_v0.6_20261023/项目进展与后续计划_v0.6_20261023.md"
+      ],
+      "status": "planning_only",
+      "plan_revision": "2026-10-25/1.3.1",
+      "produces": [
+        "IC-KNOWLEDGE"
+      ],
+      "consumes": [
+        "IC-BRIDGE",
+        "IC-METHOD"
+      ],
+      "state_references": [
+        "专利知识库/1、分类目录/_共享知识/当前知识入口.json",
+        "专利知识库/README.md",
+        "专利知识库/3、过程文件/项目管理/一期范围与执行计划_v0.5_20261022.md",
+        "专利知识库/3、过程文件/项目管理/进展与计划_v0.6_20261023/项目进展与后续计划_v0.6_20261023.md",
+        "专利知识库/3、过程文件/项目管理/GooglePatents检索MCP建设方案_v0.3_一期29项.md"
+      ],
+      "contract_work_packages": {
+        "IC-KNOWLEDGE": {
+          "produce": [
+            "KN-03",
+            "KN-04"
+          ],
+          "consume": []
+        },
+        "IC-BRIDGE": {
+          "produce": [],
+          "consume": [
+            "KN-01",
+            "KN-03"
+          ]
+        },
+        "IC-METHOD": {
+          "produce": [],
+          "consume": [
+            "KN-01",
+            "KN-02",
+            "KN-03",
+            "KN-04"
+          ]
+        }
+      },
+      "next_steps": {
+        "supplement": "NS1",
+        "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+        "anchor": "oasis-next-steps-ns1",
+        "status": "planning_only",
+        "revision": "R1",
+        "current_followup": {
+          "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+          "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+          "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+          "revision": "BM1-R1/S2-R1",
+          "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+          "addendum_anchor": "bm1-public-channels-s2-r1",
+          "status": "planning_only",
+          "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+        },
+        "historical_current_followups": [
+          {
+            "id": "PLAN-PROGRESS-REFRESH-20261028-P28",
+            "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+            "anchor": "oasis-plan-progress-p28",
+            "audit_reference": "docs/coordination/audits/2026-10-28-plan-progress-refresh.md",
+            "status": "planning_only"
+          },
+          {
+            "id": "BUSINESS-MODE-20261105-BM1",
+            "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+            "anchor": "oasis-business-mode-bm1",
+            "revision": "BM1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "status": "planning_only",
+            "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
+          },
+          {
+            "id": "BUSINESS-ROLES-20261105-BM1-R1",
+            "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+            "anchor": "oasis-business-roles-bm1-r1",
+            "revision": "BM1-R1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-roles-r1",
+            "status": "planning_only",
+            "supersedes_only": "executor roles; original stages/gates/progress retained"
+          },
+          {
+            "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+            "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+            "anchor": "oasis-test-assets-bm1-r1-s1",
+            "revision": "BM1-R1/S1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-test-assets-s1",
+            "status": "planning_only",
+            "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+          },
+          {
+            "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+            "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+            "anchor": "oasis-public-channels-bm1-r1-s2",
+            "revision": "BM1-R1/S2",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-public-channels-s2",
+            "status": "planning_only",
+            "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+          }
+        ]
+      },
+      "historical_goal_before_bm1": "在WorkBuddy中持续收集、整理和维护29项目标及T01所需的可追溯知识资产，按指定用途交付可消费知识包；原一期F0/T01配套工具作为独立未来路线保留，不因此启动实现。",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "project_id": "patent-distillery",
+      "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+      "goal": "优先交可公开的版本化业务Skills候选及Host中立输入输出合同，分别供DSH、待核WorkBuddy入口和后发Dify适配，避免复制同一套规则正文。",
+      "retains": [
+        "专利知识库/patent-distillery/README.md",
+        "专利知识库/patent-distillery/state.md",
+        "专利知识库/3、过程文件/项目管理/进展与计划_v0.6_20261023/项目进展与后续计划_v0.6_20261023.md"
+      ],
+      "status": "planning_only",
+      "plan_revision": "2026-10-25/1.3.1",
+      "produces": [
+        "IC-SKILL"
+      ],
+      "consumes": [
+        "IC-KNOWLEDGE",
+        "IC-RULES",
+        "IC-BRIDGE"
+      ],
+      "state_references": [
+        "专利知识库/patent-distillery/README.md",
+        "专利知识库/patent-distillery/state.md",
+        "专利知识库/1、分类目录/_共享知识/当前知识入口.json",
+        "DSH-Oasis/AGENTS.md"
+      ],
+      "contract_work_packages": {
+        "IC-KNOWLEDGE": {
+          "produce": [],
+          "consume": [
+            "PD-01",
+            "PD-02"
+          ]
+        },
+        "IC-RULES": {
+          "produce": [],
+          "consume": [
+            "PD-01",
+            "PD-02",
+            "PD-03"
+          ]
+        },
+        "IC-SKILL": {
+          "produce": [
+            "PD-02",
+            "PD-04"
+          ],
+          "consume": []
+        },
+        "IC-BRIDGE": {
+          "produce": [],
+          "consume": [
+            "PD-01",
+            "PD-02",
+            "PD-04"
+          ]
+        }
+      },
+      "next_steps": {
+        "supplement": "NS1",
+        "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+        "anchor": "oasis-next-steps-ns1",
+        "status": "planning_only",
+        "revision": "R1",
+        "current_followup": {
+          "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+          "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+          "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+          "revision": "BM1-R1/S2-R1",
+          "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+          "addendum_anchor": "bm1-public-channels-s2-r1",
+          "status": "planning_only",
+          "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+        },
+        "historical_current_followups": [
+          {
+            "id": "PLAN-PROGRESS-REFRESH-20261028-P28",
+            "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+            "anchor": "oasis-plan-progress-p28",
+            "audit_reference": "docs/coordination/audits/2026-10-28-plan-progress-refresh.md",
+            "status": "planning_only"
+          },
+          {
+            "id": "BUSINESS-MODE-20261105-BM1",
+            "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+            "anchor": "oasis-business-mode-bm1",
+            "revision": "BM1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "status": "planning_only",
+            "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
+          },
+          {
+            "id": "BUSINESS-ROLES-20261105-BM1-R1",
+            "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+            "anchor": "oasis-business-roles-bm1-r1",
+            "revision": "BM1-R1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-roles-r1",
+            "status": "planning_only",
+            "supersedes_only": "executor roles; original stages/gates/progress retained"
+          },
+          {
+            "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+            "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+            "anchor": "oasis-test-assets-bm1-r1-s1",
+            "revision": "BM1-R1/S1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-test-assets-s1",
+            "status": "planning_only",
+            "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+          },
+          {
+            "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+            "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+            "anchor": "oasis-public-channels-bm1-r1-s2",
+            "revision": "BM1-R1/S2",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-public-channels-s2",
+            "status": "planning_only",
+            "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+          }
+        ]
+      },
+      "historical_goal_before_bm1": "在WorkBuddy中将具名知识与规则蒸馏成版本化业务Skills，分别交付DSH消费资源和Dify编排依据。",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "skills_workflow_guidance_ref": "SKILLS-WORKFLOW-GUIDANCE-20261106-G1"
+    },
+    {
+      "project_id": "test-library",
+      "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+      "goal": "为Skills首发和后发收费Dify提供适用规则、独立验证规格及允许公开示例；不为开源泄露评价答案或将文稿接受改成运行通过。",
+      "retains": [
+        "测试集库/测试集库支持/mac-validation-20261013/项目检查与后续计划_20261014.md",
+        "测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段08/阶段8当前状态.json",
+        "测试集库/14节点清单V3.4.0.md",
+        "测试集库/AGENTS.md"
+      ],
+      "status": "planning_only",
+      "plan_revision": "2026-10-25/1.3.1",
+      "produces": [
+        "IC-RULES"
+      ],
+      "consumes": [
+        "IC-SKILL",
+        "IC-WORKFLOW",
+        "IC-ARTIFACT",
+        "IC-METHOD",
+        "IC-DESIGN"
+      ],
+      "state_references": [
+        "测试集库/README.md",
+        "测试集库/测试集库支持/mac-validation-20261013/项目检查与后续计划_20261014.md",
+        "测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段07/阶段7当前状态.json",
+        "测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段08/阶段8当前状态.json",
+        "测试集库/14节点清单V3.4.0.md",
+        "测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段09/阶段9当前状态.json",
+        "测试集库/测试集库支持/mac-validation-20261013/Mac开发与验证入口.md"
+      ],
+      "contract_work_packages": {
+        "IC-RULES": {
+          "produce": [
+            "TL-01",
+            "TL-02",
+            "TL-05"
+          ],
+          "consume": []
+        },
+        "IC-SKILL": {
+          "produce": [],
+          "consume": [
+            "TL-03"
+          ]
+        },
+        "IC-WORKFLOW": {
+          "produce": [],
+          "consume": [
+            "TL-04"
+          ]
+        },
+        "IC-ARTIFACT": {
+          "produce": [],
+          "consume": [
+            "TL-03",
+            "TL-04"
+          ]
+        },
+        "IC-METHOD": {
+          "produce": [],
+          "consume": [
+            "TL-01",
+            "TL-02",
+            "TL-05"
+          ]
+        },
+        "IC-DESIGN": {
+          "produce": [],
+          "consume": [
+            "TL-02",
+            "TL-04"
+          ]
+        }
+      },
+      "next_steps": {
+        "supplement": "NS1",
+        "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+        "anchor": "oasis-next-steps-ns1",
+        "status": "planning_only",
+        "revision": "R1",
+        "current_followup": {
+          "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+          "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+          "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+          "revision": "BM1-R1/S2-R1",
+          "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+          "addendum_anchor": "bm1-public-channels-s2-r1",
+          "status": "planning_only",
+          "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+        },
+        "historical_current_followups": [
+          {
+            "id": "PLAN-PROGRESS-REFRESH-20261028-P28",
+            "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+            "anchor": "oasis-plan-progress-p28",
+            "audit_reference": "docs/coordination/audits/2026-10-28-plan-progress-refresh.md",
+            "status": "planning_only"
+          },
+          {
+            "id": "BUSINESS-MODE-20261105-BM1",
+            "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+            "anchor": "oasis-business-mode-bm1",
+            "revision": "BM1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "status": "planning_only",
+            "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
+          },
+          {
+            "id": "BUSINESS-ROLES-20261105-BM1-R1",
+            "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+            "anchor": "oasis-business-roles-bm1-r1",
+            "revision": "BM1-R1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-roles-r1",
+            "status": "planning_only",
+            "supersedes_only": "executor roles; original stages/gates/progress retained"
+          },
+          {
+            "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+            "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+            "anchor": "oasis-test-assets-bm1-r1-s1",
+            "revision": "BM1-R1/S1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-test-assets-s1",
+            "status": "planning_only",
+            "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+          },
+          {
+            "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+            "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+            "anchor": "oasis-public-channels-bm1-r1-s2",
+            "revision": "BM1-R1/S2",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-public-channels-s2",
+            "status": "planning_only",
+            "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+          }
+        ]
+      },
+      "historical_goal_before_bm1": "交付可复用规则、参考文稿与Skills/Dify测试基础设施，准确区分文稿建设和工程运行两条工作线。",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "project_id": "workbuddy-bridge",
+      "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+      "goal": "连接器同时用于内部工作效率及独立开源专业展示/社区传播、GitHub Star与咨询线索；用户WorkBuddy业务插件是另一计划组件，不能由本连接器成果补认。",
+      "retains": [
+        "workbuddy连接器/workbuddy-session-bridge/README.md",
+        "workbuddy连接器/迁移记录/Mac开发计划-20261014.md",
+        "workbuddy连接器/workbuddy-session-bridge/AGENTS.md"
+      ],
+      "status": "planning_only",
+      "plan_revision": "2026-10-25/1.3.1",
+      "produces": [
+        "IC-BRIDGE"
+      ],
+      "consumes": [],
+      "state_references": [
+        "workbuddy连接器/workbuddy-session-bridge/README.md",
+        "workbuddy连接器/workbuddy-session-bridge/AGENTS.md",
+        "workbuddy连接器/迁移记录/Mac开发计划-20261014.md"
+      ],
+      "contract_work_packages": {
+        "IC-BRIDGE": {
+          "produce": [
+            "WB-01",
+            "WB-02",
+            "WB-04"
+          ],
+          "consume": []
+        }
+      },
+      "next_steps": {
+        "supplement": "NS1",
+        "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+        "anchor": "oasis-next-steps-ns1",
+        "status": "planning_only",
+        "revision": "R1",
+        "current_followup": {
+          "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+          "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+          "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+          "revision": "BM1-R1/S2-R1",
+          "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+          "addendum_anchor": "bm1-public-channels-s2-r1",
+          "status": "planning_only",
+          "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+        },
+        "historical_current_followups": [
+          {
+            "id": "PLAN-PROGRESS-REFRESH-20261030-P30",
+            "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+            "anchor": "oasis-plan-progress-p30",
+            "audit_reference": "docs/coordination/audits/2026-10-30-plan-progress-refresh.md",
+            "status": "planning_only",
+            "supersedes_only": "obsolete starting points; original requirements/gates remain",
+            "previous_followup_id": "PLAN-PROGRESS-REFRESH-20261028-P28"
+          },
+          {
+            "id": "BUSINESS-MODE-20261105-BM1",
+            "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+            "anchor": "oasis-business-mode-bm1",
+            "revision": "BM1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "status": "planning_only",
+            "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
+          },
+          {
+            "id": "BUSINESS-ROLES-20261105-BM1-R1",
+            "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+            "anchor": "oasis-business-roles-bm1-r1",
+            "revision": "BM1-R1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-roles-r1",
+            "status": "planning_only",
+            "supersedes_only": "executor roles; original stages/gates/progress retained"
+          },
+          {
+            "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+            "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+            "anchor": "oasis-test-assets-bm1-r1-s1",
+            "revision": "BM1-R1/S1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-test-assets-s1",
+            "status": "planning_only",
+            "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+          },
+          {
+            "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+            "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+            "anchor": "oasis-public-channels-bm1-r1-s2",
+            "revision": "BM1-R1/S2",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-public-channels-s2",
+            "status": "planning_only",
+            "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+          }
+        ]
+      },
+      "historical_goal_before_bm1": "交付Codex与WorkBuddy之间可核对的任务投递、定向取件、执行返回与产物复核通道。",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    },
+    {
+      "project_id": "dify",
+      "path": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+      "goal": "为约1—2个月目标窗口中的具名收费专业能力交实际Dify实例/导出和运行服务，工作流代码纳入开源目标，并兼容过渡及未来后台。",
+      "retains": [
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-17-dify-integration-plan.md",
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-18-dual-client-support-plan.md",
+        "docs/coordination/CONTRACTS.md"
+      ],
+      "status": "planning_only",
+      "plan_revision": "2026-10-25/1.3.1",
+      "produces": [
+        "IC-WORKFLOW",
+        "IC-ARTIFACT"
+      ],
+      "consumes": [
+        "IC-RULES",
+        "IC-SKILL",
+        "IC-DESIGN"
+      ],
+      "state_references": [
+        "docs/coordination/projects.json",
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-17-dify-integration-plan.md",
+        "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-18-dual-client-support-plan.md",
+        "测试集库/14节点清单V3.4.0.md"
+      ],
+      "contract_work_packages": {
+        "IC-RULES": {
+          "produce": [],
+          "consume": [
+            "DF-01",
+            "DF-02",
+            "DF-03"
+          ]
+        },
+        "IC-SKILL": {
+          "produce": [],
+          "consume": [
+            "DF-01",
+            "DF-02"
+          ]
+        },
+        "IC-WORKFLOW": {
+          "produce": [
+            "DF-02",
+            "DF-04"
+          ],
+          "consume": []
+        },
+        "IC-ARTIFACT": {
+          "produce": [
+            "DF-02",
+            "DF-03",
+            "DF-04"
+          ],
+          "consume": []
+        },
+        "IC-DESIGN": {
+          "produce": [],
+          "consume": [
+            "DF-01",
+            "DF-02",
+            "DF-03",
+            "DF-04"
+          ]
+        }
+      },
+      "next_steps": {
+        "supplement": "NS1",
+        "path": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+        "anchor": "oasis-next-steps-ns1",
+        "status": "planning_only",
+        "revision": "R1",
+        "current_followup": {
+          "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+          "path": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+          "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+          "revision": "BM1-R1/S2-R1",
+          "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+          "addendum_anchor": "bm1-public-channels-s2-r1",
+          "status": "planning_only",
+          "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+        },
+        "historical_current_followups": [
+          {
+            "id": "BUSINESS-MODE-20261105-BM1",
+            "path": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+            "anchor": "oasis-business-mode-bm1",
+            "revision": "BM1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "status": "planning_only",
+            "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
+          },
+          {
+            "id": "BUSINESS-ROLES-20261105-BM1-R1",
+            "path": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+            "anchor": "oasis-business-roles-bm1-r1",
+            "revision": "BM1-R1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-roles-r1",
+            "status": "planning_only",
+            "supersedes_only": "executor roles; original stages/gates/progress retained"
+          },
+          {
+            "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+            "path": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+            "anchor": "oasis-test-assets-bm1-r1-s1",
+            "revision": "BM1-R1/S1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-test-assets-s1",
+            "status": "planning_only",
+            "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+          },
+          {
+            "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+            "path": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+            "anchor": "oasis-public-channels-bm1-r1-s2",
+            "revision": "BM1-R1/S2",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-public-channels-s2",
+            "status": "planning_only",
+            "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+          }
+        ]
+      },
+      "historical_goal_before_bm1": "消费固定本地设计及业务Skill/规则，在获准Dify实例导入、配置、独立验证并向后台交付版本化专业能力。",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "skills_workflow_guidance_ref": "SKILLS-WORKFLOW-GUIDANCE-20261106-G1"
+    },
+    {
+      "project_id": "dify-design",
+      "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+      "goal": "以固定业务Skill与测试集库规则制作后发收费专业能力的开源设计候选；Skills首发不等本项目全部工作流完成。",
+      "retains": [
+        "2、工作流设计/README.md",
+        "2、工作流设计/AGENTS.md",
+        "2、工作流设计/1、专利工作流/14节点清单V3.4.0.md"
+      ],
+      "status": "planning_only",
+      "plan_revision": "2026-10-25/1.3.1",
+      "produces": [
+        "IC-DESIGN"
+      ],
+      "consumes": [
+        "IC-RULES",
+        "IC-SKILL",
+        "IC-METHOD",
+        "IC-WORKFLOW"
+      ],
+      "state_references": [
+        "2、工作流设计/README.md",
+        "2、工作流设计/AGENTS.md",
+        "2、工作流设计/1、专利工作流/14节点清单V3.4.0.md"
+      ],
+      "contract_work_packages": {
+        "IC-DESIGN": {
+          "produce": [
+            "WD-01",
+            "WD-03",
+            "WD-04"
+          ],
+          "consume": []
+        },
+        "IC-RULES": {
+          "produce": [],
+          "consume": [
+            "WD-01",
+            "WD-02",
+            "WD-03"
+          ]
+        },
+        "IC-SKILL": {
+          "produce": [],
+          "consume": [
+            "WD-02",
+            "WD-03"
+          ]
+        },
+        "IC-METHOD": {
+          "produce": [],
+          "consume": [
+            "WD-01",
+            "WD-02"
+          ]
+        },
+        "IC-WORKFLOW": {
+          "produce": [],
+          "consume": [
+            "WD-04"
+          ]
+        }
+      },
+      "next_steps": {
+        "supplement": "NS1",
+        "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+        "anchor": "oasis-next-steps-ns1",
+        "status": "planning_only",
+        "revision": "R1",
+        "current_followup": {
+          "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+          "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+          "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+          "revision": "BM1-R1/S2-R1",
+          "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+          "addendum_anchor": "bm1-public-channels-s2-r1",
+          "status": "planning_only",
+          "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+        },
+        "historical_current_followups": [
+          {
+            "id": "PLAN-PROGRESS-REFRESH-20261028-P28",
+            "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+            "anchor": "oasis-plan-progress-p28",
+            "audit_reference": "docs/coordination/audits/2026-10-28-plan-progress-refresh.md",
+            "status": "planning_only"
+          },
+          {
+            "id": "BUSINESS-MODE-20261105-BM1",
+            "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+            "anchor": "oasis-business-mode-bm1",
+            "revision": "BM1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "status": "planning_only",
+            "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
+          },
+          {
+            "id": "BUSINESS-ROLES-20261105-BM1-R1",
+            "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+            "anchor": "oasis-business-roles-bm1-r1",
+            "revision": "BM1-R1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-roles-r1",
+            "status": "planning_only",
+            "supersedes_only": "executor roles; original stages/gates/progress retained"
+          },
+          {
+            "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+            "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+            "anchor": "oasis-test-assets-bm1-r1-s1",
+            "revision": "BM1-R1/S1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-test-assets-s1",
+            "status": "planning_only",
+            "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+          },
+          {
+            "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+            "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+            "anchor": "oasis-public-channels-bm1-r1-s2",
+            "revision": "BM1-R1/S2",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-public-channels-s2",
+            "status": "planning_only",
+            "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+          }
+        ]
+      },
+      "historical_goal_before_bm1": "交付以固定业务Skills和测试集库规则为基础、可追溯的本地工作流设计包，与外部Dify实例及后台合同兼容。",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "skills_workflow_guidance_ref": "SKILLS-WORKFLOW-GUIDANCE-20261106-G1"
+    },
+    {
+      "project_id": "five-step-method",
+      "path": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+      "goal": "让可公开方法与培训来源支撑Skills、专业服务、AI转型咨询和公众号传播，方法原件、专业采用与宣传表述分开。",
+      "retains": [
+        "1、绿洲慧写五步法/PPT制作/README.md",
+        "1、绿洲慧写五步法/绿洲技术要素表的定义.md",
+        "1、绿洲慧写五步法/绿洲五步法白皮书.docx"
+      ],
+      "status": "planning_only",
+      "plan_revision": "2026-10-25/1.3.1",
+      "produces": [
+        "IC-METHOD"
+      ],
+      "consumes": [
+        "IC-RULES",
+        "IC-BRIDGE"
+      ],
+      "state_references": [
+        "1、绿洲慧写五步法/README.md",
+        "1、绿洲慧写五步法/PPT制作/README.md",
+        "1、绿洲慧写五步法/绿洲技术要素表的定义.md",
+        "1、绿洲慧写五步法/绿洲五步法白皮书.docx"
+      ],
+      "contract_work_packages": {
+        "IC-METHOD": {
+          "produce": [
+            "ME-02",
+            "ME-03",
+            "ME-04"
+          ],
+          "consume": []
+        },
+        "IC-RULES": {
+          "produce": [],
+          "consume": [
+            "ME-02",
+            "ME-04"
+          ]
+        },
+        "IC-BRIDGE": {
+          "produce": [],
+          "consume": [
+            "ME-02",
+            "ME-03",
+            "ME-04"
+          ]
+        }
+      },
+      "next_steps": {
+        "supplement": "NS1",
+        "path": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+        "anchor": "oasis-next-steps-ns1",
+        "status": "planning_only",
+        "revision": "R1",
+        "current_followup": {
+          "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+          "path": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+          "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+          "revision": "BM1-R1/S2-R1",
+          "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+          "addendum_anchor": "bm1-public-channels-s2-r1",
+          "status": "planning_only",
+          "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+        },
+        "historical_current_followups": [
+          {
+            "id": "BUSINESS-MODE-20261105-BM1",
+            "path": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+            "anchor": "oasis-business-mode-bm1",
+            "revision": "BM1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "status": "planning_only",
+            "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
+          },
+          {
+            "id": "BUSINESS-ROLES-20261105-BM1-R1",
+            "path": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+            "anchor": "oasis-business-roles-bm1-r1",
+            "revision": "BM1-R1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-roles-r1",
+            "status": "planning_only",
+            "supersedes_only": "executor roles; original stages/gates/progress retained"
+          },
+          {
+            "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+            "path": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+            "anchor": "oasis-test-assets-bm1-r1-s1",
+            "revision": "BM1-R1/S1",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-test-assets-s1",
+            "status": "planning_only",
+            "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+          },
+          {
+            "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+            "path": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+            "anchor": "oasis-public-channels-bm1-r1-s2",
+            "revision": "BM1-R1/S2",
+            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+            "addendum_anchor": "bm1-public-channels-s2",
+            "status": "planning_only",
+            "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+          }
+        ]
+      },
+      "historical_goal_before_bm1": "维护可追溯的绿洲五步法和技术要素表原件、术语及培训资料，按用途为知识、规则与工作流设计提供经审阅来源。",
+      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
+      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1",
+      "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+    }
+  ],
+  "audit_reference": "docs/coordination/audits/2026-10-25-plan-1.3-audit.md",
+  "planning_addendum": "docs/coordination/observations/2026-10-25-migrated-projects-intake.md",
+  "last_full_document_audit_plan_revision": "2026-10-25/1.3.1",
+  "research_references": [
+    {
+      "thread_id": "01a15b6e-6a46-7ba2-8518-71f3543e44ad",
+      "title": "读取专利知识库项目",
+      "thread_url": "codex://threads/01a15b6e-6a46-7ba2-8518-71f3543e44ad",
+      "read_scope": "Read thread user/final messages covering the original service research and later phase-1 scope decision; commands and other-task execution instructions are not adopted as this task authorization.",
+      "analysis_turn_id": "01a16289-9648-7a81-a684-2d3868e65760",
+      "phase1_user_decision_turn_id": "01a16364-22f1-7ec1-a339-33d5e33b05b0",
+      "adopted_scope": "15 core M00-M14 plus 14 extensions E01-E14; T01 supporting tool separate; pre-litigation excluded from phase 1.",
+      "local_references": [
+        {
+          "path": "专利知识库/3、过程文件/一期知识映射_29项_20261022/一期目标目录_v0.5.json",
+          "sha256": "db11dc468669cd7ad04026757fc6bdadd0014b76765e4dd94785f9fef72e96c3"
+        },
+        {
+          "path": "专利知识库/3、过程文件/一期知识映射_29项_20261022/一期任务需求卡_v0.5.json",
+          "sha256": "644690778fdeee16c6b52b6962be127d47cebec74038f80eb9e9087e30bb7c55"
+        }
+      ],
+      "limits": "Research/catalog and task cards do not demonstrate implemented Skills, deployed services or professional readiness."
+    }
+  ],
+  "service_scope_reference": "docs/coordination/service-scope.json",
+  "service_scope_readme": "docs/coordination/compatibility/2026-10-25-service-coverage.md",
+  "rule_adoption_template": "docs/coordination/templates/rule-adoption.md",
+  "migration_intake_reference": "docs/coordination/observations/2026-10-25-migrated-projects-intake.md",
+  "audit_history": [
+    {
+      "plan_revision": "2026-10-25/1.1",
+      "path": "docs/coordination/audits/2026-10-25-independent-plan-audit.md"
+    },
+    {
+      "plan_revision": "2026-10-25/1.2.1",
+      "path": "docs/coordination/audits/2026-10-25-plan-1.2-audit.md",
+      "scope": "full_document_audit"
+    },
+    {
+      "plan_revision": "2026-10-25/1.3",
+      "path": "docs/coordination/audits/2026-10-25-migration-intake-verification.json",
+      "scope": "local_intake_only"
+    }
+  ],
+  "audit_scope": "ten_plan_document_contract_dependency_acceptance_alignment_only",
+  "intake_reference": "docs/coordination/observations/2026-10-25-migrated-projects-intake.md",
+  "latest_revision_verification": "docs/coordination/audits/2026-10-25-plan-1.3-verification.json",
+  "historical_planning_addendum": "docs/coordination/plans/2026-10-25-research-rules-and-migration-addendum.md",
+  "next_steps_supplement": {
+    "id": "NS1",
+    "date": "2026-10-25",
+    "base_plan_revision": "2026-10-25/1.3.1",
+    "status": "planning_only",
+    "index": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+    "anchor": "oasis-next-steps-ns1",
+    "verification": "docs/coordination/audits/2026-10-25-ns1-audit-verification.json",
+    "scope": "existing_45_work_packages_next_actions_blockers_acceptance_local_order_only",
+    "business_execution_started": false,
+    "historical_full_audit_unchanged": true,
+    "progress_authority": "original_project_current_entries_not_this_index",
+    "revision": "R1",
+    "audit_reference": "docs/coordination/audits/2026-10-25-ns1-audit.md",
+    "original_verification": "docs/coordination/audits/2026-10-25-plan-1.3.1-next-steps-verification.json",
+    "operational_scope": "documentation_audit_only_no_business_execution",
+    "followups": [
+      {
+        "id": "STAGE08-STATUS-ALIGNMENT-20261025",
+        "audit_reference": "docs/coordination/audits/2026-10-25-stage8-status-alignment.md",
+        "verification": "docs/coordination/audits/2026-10-25-stage8-status-alignment-verification.json",
+        "scope": "test_library_stage08_summary_and_planning_references_only",
+        "progress_authority": "original_project_current_entries",
+        "business_execution_started": false
+      },
+      {
+        "id": "PLAN-PROGRESS-REFRESH-20261028-P28",
+        "date": "2026-10-28",
+        "revision": "P28",
+        "audit_reference": "docs/coordination/audits/2026-10-28-plan-progress-refresh.md",
+        "verification": "docs/coordination/audits/2026-10-28-plan-progress-refresh-verification.json",
+        "read_baseline": "docs/coordination/audits/2026-10-28-plan-progress-read-baseline.json",
+        "source_report": "docs/coordination/daily/2026-10-27-2256-scheduled-progress.md",
+        "scope": "existing_plan_progress_references_next_actions_only",
+        "affected_projects": [
+          "dsh-oasis",
+          "knowledge",
+          "patent-distillery",
+          "test-library",
+          "workbuddy-bridge",
+          "dify-design"
+        ],
+        "progress_authority": "original_project_current_entries_not_this_followup",
+        "business_execution_started": false,
+        "supersedes": "only obsolete next-action starting points, not historical audit bytes or original gates"
+      },
+      {
+        "id": "PLAN-PROGRESS-REFRESH-20261030-P30",
+        "date": "2026-10-30",
+        "revision": "P30",
+        "audit_reference": "docs/coordination/audits/2026-10-30-plan-progress-refresh.md",
+        "verification": "docs/coordination/audits/2026-10-30-plan-progress-verification.json",
+        "read_baseline": "docs/coordination/audits/2026-10-30-plan-progress-read-baseline.json",
+        "source_report": "docs/coordination/daily/2026-10-29-231736-scheduled-progress.md",
+        "scope": "bounded_existing_plan_starting_points_and_independent_next_steps_only",
+        "affected_projects": [
+          "dsh-oasis",
+          "backend",
+          "workarea",
+          "workbuddy-bridge"
+        ],
+        "progress_authority": "original_current_entries_and_named_evidence_not_this_followup",
+        "business_execution_started": false,
+        "supersedes": "only affected obsolete starting points; P28/NS1 remaining requirements, contracts, historical evidence and all business gates retained"
+      },
+      {
+        "id": "BUSINESS-MODE-20261105-BM1",
+        "date": "2026-11-05",
+        "revision": "BM1",
+        "path": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+        "anchor": "oasis-business-mode-bm1",
+        "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+        "scope": "user_confirmed_business_mode_and_bounded_planning_navigation_only",
+        "affected_projects": [
+          "dsh-oasis",
+          "workarea",
+          "backend",
+          "knowledge",
+          "patent-distillery",
+          "test-library",
+          "workbuddy-bridge",
+          "dify",
+          "dify-design",
+          "five-step-method"
+        ],
+        "previous_followup_id": "PLAN-PROGRESS-REFRESH-20261030-P30",
+        "progress_authority": "original_project_current_entries_and_named_evidence",
+        "business_execution_started": false,
+        "supersedes": "only conflicting business priorities and remaining starting points; original gates/evidence retained"
+      },
+      {
+        "id": "BUSINESS-ROLES-20261105-BM1-R1",
+        "date": "2026-11-05",
+        "revision": "BM1-R1",
+        "path": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+        "anchor": "oasis-business-roles-bm1-r1",
+        "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+        "addendum_anchor": "bm1-roles-r1",
+        "previous_followup_id": "BUSINESS-MODE-20261105-BM1",
+        "affected_projects": [
+          "dsh-oasis",
+          "workarea",
+          "backend",
+          "knowledge",
+          "patent-distillery",
+          "test-library",
+          "workbuddy-bridge",
+          "dify",
+          "dify-design",
+          "five-step-method"
+        ],
+        "scope": "executor_roles_and_documents_only",
+        "business_execution_started": false,
+        "supersedes": "old executor roles only; BM1 stage targets, original gates/progress retained"
+      },
+      {
+        "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+        "date": "2026-11-05",
+        "revision": "BM1-R1/S1",
+        "path": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+        "anchor": "oasis-test-assets-bm1-r1-s1",
+        "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+        "addendum_anchor": "bm1-test-assets-s1",
+        "previous_followup_id": "BUSINESS-ROLES-20261105-BM1-R1",
+        "affected_projects": [
+          "dsh-oasis",
+          "workarea",
+          "backend",
+          "knowledge",
+          "patent-distillery",
+          "test-library",
+          "workbuddy-bridge",
+          "dify",
+          "dify-design",
+          "five-step-method"
+        ],
+        "scope": "test_asset_use_documentation_only_roles_and_business_gates_retained",
+        "business_execution_started": false,
+        "supersedes": "only incomplete asset-use descriptions; BM1-R1 roles, BM1 stages, original contracts/progress/evidence retained"
+      },
+      {
+        "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+        "date": "2026-11-05",
+        "revision": "BM1-R1/S2",
+        "path": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+        "anchor": "oasis-public-channels-bm1-r1-s2",
+        "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+        "addendum_anchor": "bm1-public-channels-s2",
+        "previous_followup_id": "TEST-ASSETS-20261105-BM1-R1-S1",
+        "affected_projects": [
+          "dsh-oasis",
+          "workarea",
+          "backend",
+          "knowledge",
+          "patent-distillery",
+          "test-library",
+          "workbuddy-bridge",
+          "dify",
+          "dify-design",
+          "five-step-method"
+        ],
+        "affected_workstreams": [
+          "landing-page",
+          "wechat-official-account"
+        ],
+        "scope": "planning_navigation_roles_and_nonduplication_only",
+        "business_execution_started": false,
+        "supersedes": "only old unbound landing-page carrier and incomplete channel scope; roles, S1, stages and original gates retained"
+      },
+      {
+        "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+        "date": "2026-11-05",
+        "revision": "BM1-R1/S2-R1",
+        "path": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+        "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+        "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+        "addendum_anchor": "bm1-public-channels-s2-r1",
+        "previous_followup_id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+        "affected_projects": [
+          "dsh-oasis",
+          "workarea",
+          "backend",
+          "knowledge",
+          "patent-distillery",
+          "test-library",
+          "workbuddy-bridge",
+          "dify",
+          "dify-design",
+          "five-step-method"
+        ],
+        "affected_workstreams": [
+          "landing-page",
+          "wechat-official-account"
+        ],
+        "scope": "bounded_S2_document_audit_repairs_only",
+        "business_execution_started": false,
+        "supersedes": "S2 ambiguous scope/publishing phases and entry metadata only; original S2 bytes, roles, S1, business states and source gates retained"
+      }
+    ],
+    "current_followup": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+  },
+  "interface_standard_references": {
+    "revision": "IS06-STATIC-20261027-R1",
+    "scope": "document_drafts_only_not_business_state",
+    "review_path": "docs/coordination/interfaces/2026-10-27-interface-static-review.md",
+    "bindings_path": "docs/coordination/interfaces/is03-is06-source-bindings-v0.1.json",
+    "common_path": "docs/coordination/interfaces/common-v0.2.md",
+    "template_path": "docs/coordination/interfaces/interface-template-v0.2.md",
+    "standards": {
+      "IC-KNOWLEDGE": {
+        "path": "docs/coordination/interfaces/IC-KNOWLEDGE.md",
+        "version": "V0.1-draft",
+        "sha256": "9953f4771581756a7261a90d2f6b00092b02ce7c0bc3b35f7f75b5e8a27af427",
+        "examples_path": "docs/coordination/interfaces/examples/IC-KNOWLEDGE/draft-trials-v0.1.md",
+        "examples_sha256": "baf78beba9d26fb375ccccde18ca4f0218f355dc5bd1366907127b5a70b6d34e",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      },
+      "IC-RULES": {
+        "path": "docs/coordination/interfaces/IC-RULES.md",
+        "version": "V0.1-draft",
+        "sha256": "94d0fd0ab871904b5886832840c7ff97799fb543199654e92acccc54fdba9c11",
+        "examples_path": "docs/coordination/interfaces/examples/IC-RULES/draft-trials-v0.1.md",
+        "examples_sha256": "c798c0ea3d800f3e6ee4ff73c3168e1fbe2bd8f6ffcc6097d1c7d6efab42e111",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      },
+      "IC-SKILL": {
+        "path": "docs/coordination/interfaces/IC-SKILL.md",
+        "version": "V0.1-draft",
+        "sha256": "b64aa31b270218e9dd17b7f54352cf2a1360ff05e035d5a8a6d2a2ba9dbfd9ef",
+        "examples_path": "docs/coordination/interfaces/examples/IC-SKILL/draft-trials-v0.1.md",
+        "examples_sha256": "5fff0d996436e98cc2c4a04be460b414e6a0989cf90619e5f7830ce7476e5596",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      },
+      "IC-WORKFLOW": {
+        "path": "docs/coordination/interfaces/IC-WORKFLOW.md",
+        "version": "V0.1-draft",
+        "sha256": "68590f388f5e7ac89d8d048342bb1aec982d9c5c7656a5ebafe90ac869a6f139",
+        "examples_path": "docs/coordination/interfaces/examples/IC-WORKFLOW/followup-trials-v0.1.md",
+        "examples_sha256": "9f0a2c315cd8352bbf8b2ffa502bab78f7d92af25f30e626a7f99c71499e77a2",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      },
+      "IC-API": {
+        "path": "docs/coordination/interfaces/IC-API.md",
+        "version": "V0.1-draft",
+        "sha256": "365d82a7141379d23ec6db4355cd0901cc0a57f981bf144f40ba2d8b0fa0f4a0",
+        "examples_path": "docs/coordination/interfaces/examples/IC-API/followup-trials-v0.1.md",
+        "examples_sha256": "4b67a0d164bb574d18ed42e926c5d2a117bab619e1f631e4511d6935a6e08e9d",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      },
+      "IC-ACCOUNT": {
+        "path": "docs/coordination/interfaces/IC-ACCOUNT.md",
+        "version": "V0.1-draft",
+        "sha256": "d11914511dae310b1e6cccc5647c2ffa416e586021794b67175e92a084654837",
+        "examples_path": "docs/coordination/interfaces/examples/IC-ACCOUNT/followup-trials-v0.1.md",
+        "examples_sha256": "3d942b78cd61df1772471efe46f1937185c47896979c7a77e7da0f68f39311b0",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      },
+      "IC-ACCOUNT-ENTRY": {
+        "path": "docs/coordination/interfaces/IC-ACCOUNT-ENTRY.md",
+        "version": "V0.1-draft",
+        "sha256": "247d5fdd679e451378aa37ae2dfff9ddba0f76a35290e734ceeb0dd3af1556f4",
+        "examples_path": "docs/coordination/interfaces/examples/IC-ACCOUNT-ENTRY/followup-trials-v0.1.md",
+        "examples_sha256": "109f162ccb498986203c26af02c743bcf45cac3ffa4d63df2a46384dc8d53e6f",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      },
+      "IC-ARTIFACT": {
+        "path": "docs/coordination/interfaces/IC-ARTIFACT.md",
+        "version": "V0.1-draft",
+        "sha256": "7b73370d31da82f1d0a6ce13caf643ae750beb331775df5442b82d78691afdb0",
+        "examples_path": "docs/coordination/interfaces/examples/IC-ARTIFACT/followup-trials-v0.1.md",
+        "examples_sha256": "b160ab0938f04ae37c5cfc5cbaa249d77dbde92d0011570806bcda5c9d0fa6ca",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      },
+      "IC-BRIDGE": {
+        "path": "docs/coordination/interfaces/IC-BRIDGE-v0.2.md",
+        "version": "V0.2-draft",
+        "sha256": "d244570b20d1f58e6f50008de607b19421ed60a9ce2881cecd0a844cee5e0971",
+        "examples_path": "docs/coordination/interfaces/examples/IC-BRIDGE/followup-trials-v0.1.md",
+        "examples_sha256": "ef7b16c684958021f56f49ca509d88e28b72fc5db8b8cbad5bbb74b6b4be7b29",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      },
+      "IC-DESIGN": {
+        "path": "docs/coordination/interfaces/IC-DESIGN.md",
+        "version": "V0.1-draft",
+        "sha256": "12f02c3967f2cfc6fe903018675e517b8e0c4ee07a3219162e60821981ced7db",
+        "examples_path": "docs/coordination/interfaces/examples/IC-DESIGN/followup-trials-v0.1.md",
+        "examples_sha256": "78373f9255d9a01fcf845fb5a257d5e4bc05285db775ee84ae1757623162bfc1",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      },
+      "IC-METHOD": {
+        "path": "docs/coordination/interfaces/IC-METHOD.md",
+        "version": "V0.1-draft",
+        "sha256": "0ccf93cab3936f1318c94b3820defd6f5d277514f67dce597a3e1c6f40d52490",
+        "examples_path": "docs/coordination/interfaces/examples/IC-METHOD/draft-trials-v0.1.md",
+        "examples_sha256": "4d943c6da6751077558cad7e1f45ca6d22bf5c93c8286c1d44c111e1f600d491",
+        "document_finalization": "NOT_FINALIZED",
+        "provider_consumer_versions": "SOURCE_DOCUMENT_IDENTITIES_ONLY_ACTUAL_DELIVERY_UNBOUND",
+        "runtime_or_adoption": "NOT_VERIFIED_THIS_TASK"
+      }
+    },
+    "t01_original_contract": {
+      "path": "专利知识库/3、过程文件/项目管理/GooglePatents检索MCP建设方案_v0.3_一期29项.md",
+      "sha256": "9b5426ae4c09ad0d1f27a2d4af1e8cb40e1805dbef86f0cfa5070c9da62ae2f8",
+      "status": "ORIGINAL_DOCUMENT_RETAINED_ACTUAL_TOOL_AVAILABILITY_NOT_VERIFIED"
+    },
+    "formal_technical_signatures_obtained": false,
+    "implementation_or_runtime_started_by_this_reference": false,
+    "current_document_repair": {
+      "id": "IS03-06-DOC-REPAIR-20261028-R1",
+      "revision": "V0.2 document repair / BRIDGE V0.3-draft",
+      "scope": "只替换当前文档整改导航；原IS06引用/历史hash原样保留；11类未定稿，不是项目状态或实际接入登记",
+      "review_path": "docs/coordination/interfaces/2026-10-28-interface-static-review-v0.2.md",
+      "matrix_path": "docs/coordination/interfaces/2026-10-28-interface-static-review-v0.2.json",
+      "bindings_path": "docs/coordination/interfaces/is03-is06-repair-source-bindings-v0.2.json",
+      "execution_path": "docs/coordination/execution/2026-10-28-is03-is06-repair.md",
+      "standards": {
+        "IC-KNOWLEDGE": {
+          "path": "docs/coordination/interfaces/IC-KNOWLEDGE.md",
+          "version": "V0.1-draft",
+          "sha256": "9953f4771581756a7261a90d2f6b00092b02ce7c0bc3b35f7f75b5e8a27af427",
+          "examples_path": "docs/coordination/interfaces/examples/IC-KNOWLEDGE/draft-trials-v0.1.md",
+          "examples_sha256": "baf78beba9d26fb375ccccde18ca4f0218f355dc5bd1366907127b5a70b6d34e"
+        },
+        "IC-RULES": {
+          "path": "docs/coordination/interfaces/IC-RULES.md",
+          "version": "V0.1-draft",
+          "sha256": "94d0fd0ab871904b5886832840c7ff97799fb543199654e92acccc54fdba9c11",
+          "examples_path": "docs/coordination/interfaces/examples/IC-RULES/draft-trials-v0.1.md",
+          "examples_sha256": "c798c0ea3d800f3e6ee4ff73c3168e1fbe2bd8f6ffcc6097d1c7d6efab42e111"
+        },
+        "IC-SKILL": {
+          "path": "docs/coordination/interfaces/IC-SKILL.md",
+          "version": "V0.1-draft",
+          "sha256": "b64aa31b270218e9dd17b7f54352cf2a1360ff05e035d5a8a6d2a2ba9dbfd9ef",
+          "examples_path": "docs/coordination/interfaces/examples/IC-SKILL/draft-trials-v0.1.md",
+          "examples_sha256": "5fff0d996436e98cc2c4a04be460b414e6a0989cf90619e5f7830ce7476e5596"
+        },
+        "IC-WORKFLOW": {
+          "path": "docs/coordination/interfaces/IC-WORKFLOW-v0.2.md",
+          "version": "V0.2-draft",
+          "sha256": "6618814134d25a1e4bcda9e3532195e61ee8e5eb071f7d9e19d1174f3fd9320e",
+          "examples_path": "docs/coordination/interfaces/examples/IC-WORKFLOW/repair-trials-v0.2.md",
+          "examples_sha256": "80185e06ea189ad8ef32fad473c169cb6d8ee4e0e362067cec7d825c3031d580"
+        },
+        "IC-API": {
+          "path": "docs/coordination/interfaces/IC-API.md",
+          "version": "V0.1-draft",
+          "sha256": "365d82a7141379d23ec6db4355cd0901cc0a57f981bf144f40ba2d8b0fa0f4a0",
+          "examples_path": "docs/coordination/interfaces/examples/IC-API/followup-trials-v0.1.md",
+          "examples_sha256": "4b67a0d164bb574d18ed42e926c5d2a117bab619e1f631e4511d6935a6e08e9d"
+        },
+        "IC-ACCOUNT": {
+          "path": "docs/coordination/interfaces/IC-ACCOUNT-v0.2.md",
+          "version": "V0.2-draft",
+          "sha256": "95bf9d965ebc3129b684dfa2cf3fd1b0fdeaf46f14ce41584430c45f9bed5295",
+          "examples_path": "docs/coordination/interfaces/examples/IC-ACCOUNT/repair-trials-v0.2.md",
+          "examples_sha256": "545e63fdf3d9697b52d9e38078ca09d157264075f3eecc30d57b57ceed6cf7ef"
+        },
+        "IC-ACCOUNT-ENTRY": {
+          "path": "docs/coordination/interfaces/IC-ACCOUNT-ENTRY.md",
+          "version": "V0.1-draft",
+          "sha256": "247d5fdd679e451378aa37ae2dfff9ddba0f76a35290e734ceeb0dd3af1556f4",
+          "examples_path": "docs/coordination/interfaces/examples/IC-ACCOUNT-ENTRY/followup-trials-v0.1.md",
+          "examples_sha256": "109f162ccb498986203c26af02c743bcf45cac3ffa4d63df2a46384dc8d53e6f"
+        },
+        "IC-ARTIFACT": {
+          "path": "docs/coordination/interfaces/IC-ARTIFACT-v0.2.md",
+          "version": "V0.2-draft",
+          "sha256": "e4f759e7f7b1c0730218d838bad507c3544c12a62ecb1d431597c7508cff82d2",
+          "examples_path": "docs/coordination/interfaces/examples/IC-ARTIFACT/repair-trials-v0.2.md",
+          "examples_sha256": "99dcc678089fe7eb69a7231639c72aa0dc56f6b89329b4328e917617dd5317ee"
+        },
+        "IC-BRIDGE": {
+          "path": "docs/coordination/interfaces/IC-BRIDGE-v0.3.md",
+          "version": "V0.3-draft",
+          "sha256": "779d4d9572d27d3fd95277361b7d920d9325b003c448469a1d326a9fd72cd903",
+          "examples_path": "docs/coordination/interfaces/examples/IC-BRIDGE/repair-trials-v0.3.md",
+          "examples_sha256": "4a6f57188db8e1fda8a809125eaab00586c91bce9f752336dfcdd89f2fdd1cc6"
+        },
+        "IC-DESIGN": {
+          "path": "docs/coordination/interfaces/IC-DESIGN-v0.2.md",
+          "version": "V0.2-draft",
+          "sha256": "79426a28d53da9ab747af82c1ec7b5444bb42a4328aeb47bb4d7fd1b5c4c3429",
+          "examples_path": "docs/coordination/interfaces/examples/IC-DESIGN/repair-trials-v0.2.md",
+          "examples_sha256": "c7c46838408ab9737f7b640aae73f7723fdec9d0e41bc4faa010a721952d1c57"
+        },
+        "IC-METHOD": {
+          "path": "docs/coordination/interfaces/IC-METHOD.md",
+          "version": "V0.1-draft",
+          "sha256": "0ccf93cab3936f1318c94b3820defd6f5d277514f67dce597a3e1c6f40d52490",
+          "examples_path": "docs/coordination/interfaces/examples/IC-METHOD/draft-trials-v0.1.md",
+          "examples_sha256": "4d943c6da6751077558cad7e1f45ca6d22bf5c93c8286c1d44c111e1f600d491"
+        }
+      },
+      "formal_technical_signatures_obtained": false,
+      "implementation_WB_runtime_or_integration_started": false,
+      "current_followup": "IS03-06-P2P3-DOC-REPAIR-20261028-R1",
+      "followup_resolution": "将current_followup字符串解析为本对象followups中同ID条目；父对象其余字段保持原六项文档修复证据，不以新导航重签旧记录。",
+      "followups": [
+        {
+          "id": "IS03-06-P2P3-DOC-REPAIR-20261028-R1",
+          "revision": "V0.3 bounded P2/P3 document repair / ARTIFACT V0.3 / BRIDGE V0.4",
+          "scope": "只修RAF-0306-01/02；父对象旧导航/hash保留。0新技术签收，原42/42和FAIL不重签。",
+          "review_path": "docs/coordination/interfaces/2026-10-28-interface-static-review-v0.3.md",
+          "matrix_path": "docs/coordination/interfaces/2026-10-28-interface-static-review-v0.3.json",
+          "bindings_path": "docs/coordination/interfaces/is03-is06-p2p3-source-bindings-v0.3.json",
+          "execution_path": "docs/coordination/execution/2026-10-28-is03-is06-p2p3-repair.md",
+          "verification_path": "docs/coordination/execution/2026-10-28-is03-is06-p2p3-repair-verification.json",
+          "standards": {
+            "IC-KNOWLEDGE": {
+              "path": "docs/coordination/interfaces/IC-KNOWLEDGE.md",
+              "version": "V0.1-draft",
+              "sha256": "9953f4771581756a7261a90d2f6b00092b02ce7c0bc3b35f7f75b5e8a27af427",
+              "examples_path": "docs/coordination/interfaces/examples/IC-KNOWLEDGE/draft-trials-v0.1.md",
+              "examples_sha256": "baf78beba9d26fb375ccccde18ca4f0218f355dc5bd1366907127b5a70b6d34e"
+            },
+            "IC-RULES": {
+              "path": "docs/coordination/interfaces/IC-RULES.md",
+              "version": "V0.1-draft",
+              "sha256": "94d0fd0ab871904b5886832840c7ff97799fb543199654e92acccc54fdba9c11",
+              "examples_path": "docs/coordination/interfaces/examples/IC-RULES/draft-trials-v0.1.md",
+              "examples_sha256": "c798c0ea3d800f3e6ee4ff73c3168e1fbe2bd8f6ffcc6097d1c7d6efab42e111"
+            },
+            "IC-SKILL": {
+              "path": "docs/coordination/interfaces/IC-SKILL.md",
+              "version": "V0.1-draft",
+              "sha256": "b64aa31b270218e9dd17b7f54352cf2a1360ff05e035d5a8a6d2a2ba9dbfd9ef",
+              "examples_path": "docs/coordination/interfaces/examples/IC-SKILL/draft-trials-v0.1.md",
+              "examples_sha256": "5fff0d996436e98cc2c4a04be460b414e6a0989cf90619e5f7830ce7476e5596"
+            },
+            "IC-WORKFLOW": {
+              "path": "docs/coordination/interfaces/IC-WORKFLOW-v0.2.md",
+              "version": "V0.2-draft",
+              "sha256": "6618814134d25a1e4bcda9e3532195e61ee8e5eb071f7d9e19d1174f3fd9320e",
+              "examples_path": "docs/coordination/interfaces/examples/IC-WORKFLOW/repair-trials-v0.2.md",
+              "examples_sha256": "80185e06ea189ad8ef32fad473c169cb6d8ee4e0e362067cec7d825c3031d580"
+            },
+            "IC-API": {
+              "path": "docs/coordination/interfaces/IC-API.md",
+              "version": "V0.1-draft",
+              "sha256": "365d82a7141379d23ec6db4355cd0901cc0a57f981bf144f40ba2d8b0fa0f4a0",
+              "examples_path": "docs/coordination/interfaces/examples/IC-API/followup-trials-v0.1.md",
+              "examples_sha256": "4b67a0d164bb574d18ed42e926c5d2a117bab619e1f631e4511d6935a6e08e9d"
+            },
+            "IC-ACCOUNT": {
+              "path": "docs/coordination/interfaces/IC-ACCOUNT-v0.2.md",
+              "version": "V0.2-draft",
+              "sha256": "95bf9d965ebc3129b684dfa2cf3fd1b0fdeaf46f14ce41584430c45f9bed5295",
+              "examples_path": "docs/coordination/interfaces/examples/IC-ACCOUNT/repair-trials-v0.2.md",
+              "examples_sha256": "545e63fdf3d9697b52d9e38078ca09d157264075f3eecc30d57b57ceed6cf7ef"
+            },
+            "IC-ACCOUNT-ENTRY": {
+              "path": "docs/coordination/interfaces/IC-ACCOUNT-ENTRY.md",
+              "version": "V0.1-draft",
+              "sha256": "247d5fdd679e451378aa37ae2dfff9ddba0f76a35290e734ceeb0dd3af1556f4",
+              "examples_path": "docs/coordination/interfaces/examples/IC-ACCOUNT-ENTRY/followup-trials-v0.1.md",
+              "examples_sha256": "109f162ccb498986203c26af02c743bcf45cac3ffa4d63df2a46384dc8d53e6f"
+            },
+            "IC-ARTIFACT": {
+              "path": "docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+              "version": "V0.3-draft",
+              "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+              "examples_path": "docs/coordination/interfaces/examples/IC-ARTIFACT/repair-trials-v0.3.md",
+              "examples_sha256": "720b56b8068c7557215748982582cb985767616150f4794c8cdeebcd3f36f0a5"
+            },
+            "IC-BRIDGE": {
+              "path": "docs/coordination/interfaces/IC-BRIDGE-v0.4.md",
+              "version": "V0.4-draft",
+              "sha256": "08d53c334edf8fcce9414f23481330fddd8186e37f4257d34ff7d4e6ab3fac03",
+              "examples_path": "docs/coordination/interfaces/examples/IC-BRIDGE/repair-trials-v0.4.md",
+              "examples_sha256": "8fdbbf515507376a1631f1ec19c9d4f614af79b3d70d4fe6de01582708e2c4b7"
+            },
+            "IC-DESIGN": {
+              "path": "docs/coordination/interfaces/IC-DESIGN-v0.2.md",
+              "version": "V0.2-draft",
+              "sha256": "79426a28d53da9ab747af82c1ec7b5444bb42a4328aeb47bb4d7fd1b5c4c3429",
+              "examples_path": "docs/coordination/interfaces/examples/IC-DESIGN/repair-trials-v0.2.md",
+              "examples_sha256": "c7c46838408ab9737f7b640aae73f7723fdec9d0e41bc4faa010a721952d1c57"
+            },
+            "IC-METHOD": {
+              "path": "docs/coordination/interfaces/IC-METHOD.md",
+              "version": "V0.1-draft",
+              "sha256": "0ccf93cab3936f1318c94b3820defd6f5d277514f67dce597a3e1c6f40d52490",
+              "examples_path": "docs/coordination/interfaces/examples/IC-METHOD/draft-trials-v0.1.md",
+              "examples_sha256": "4d943c6da6751077558cad7e1f45ca6d22bf5c93c8286c1d44c111e1f600d491"
+            }
+          },
+          "formal_technical_signatures_obtained": false,
+          "implementation_WB_runtime_or_integration_started": false
+        }
+      ]
+    }
+  },
+  "business_mode_reference": {
+    "id": "BUSINESS-ROLES-20261105-BM1-R1",
+    "revision": "BM1-R1",
+    "path": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+    "parent_plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+    "anchor": "bm1-roles-r1",
+    "status": "planning_only_no_business_execution",
+    "brief_plan": "docs/coordination/plans/2026-11-05-overall-plan-brief-bm1-r1.md",
+    "public_channels_ref": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1"
+  },
+  "execution_roles": {
+    "development": "Codex",
+    "skill_creation": "Codex",
+    "workflow_creation": "Codex",
+    "information_collection": "WorkBuddy",
+    "article_writing_and_publishing": "WorkBuddy",
+    "github_explanatory_writing": "WorkBuddy"
+  },
+  "test_asset_use_reference": {
+    "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+    "revision": "BM1-R1/S1",
+    "date": "2026-11-05",
+    "path": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+    "anchor": "bm1-test-assets-s1",
+    "plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+    "plan_anchor": "oasis-test-assets-bm1-r1-s1",
+    "scope": "rule_production_inputs_sample_development_tests_and_public_account_website_material",
+    "execution_roles_unchanged": true,
+    "evaluation_only_isolated": true,
+    "no_asset_reclassification_or_publication": true,
+    "evidence": "docs/coordination/execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md"
+  },
+  "workstreams": [
+    {
+      "id": "landing-page",
+      "name": "网站落地页",
+      "kind": "cross_project_workstream_existing_repository",
+      "implementation_path": "Frontpage",
+      "git_root": "Frontpage",
+      "agents": "Frontpage/AGENTS.md",
+      "readme": "Frontpage/README.md",
+      "master_plan": "Frontpage/docs/plans/2026-11-05-frontpage-master-plan.md",
+      "technical_owner": "Codex",
+      "content_and_content_publication_owner": "WorkBuddy",
+      "technical_entry_sources": [
+        "Frontpage/package.json",
+        "Frontpage/src/App.tsx",
+        "Frontpage/docs/content/site-content-constitution.md",
+        "Frontpage/docs/plans/2026-09-03-responsive-layout-release-gates.md"
+      ],
+      "tasks": [
+        "LP-01",
+        "LP-02",
+        "LP-03"
+      ],
+      "reference": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "identity_observation": "Local repository identity observed; current production and deployment acceptance not reverified",
+      "current_followup": {
+        "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+        "path": "Frontpage/docs/plans/2026-11-05-frontpage-master-plan.md",
+        "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+        "revision": "BM1-R1/S2-R1"
+      },
+      "progress_sources": [
+        {
+          "path": "Frontpage/README.md",
+          "role": "current_entry",
+          "scope": "coordination_navigation_only_not_runtime_or_acceptance"
+        },
+        {
+          "path": "Frontpage/docs/plans/2026-11-05-frontpage-master-plan.md",
+          "role": "planning_reference",
+          "scope": "plan not execution or acceptance"
+        }
+      ]
+    },
+    {
+      "id": "wechat-official-account",
+      "name": "微信公众号",
+      "kind": "content_operations_workstream_no_code_project",
+      "implementation_path": null,
+      "git_root": null,
+      "agents": null,
+      "readme": null,
+      "master_plan": "docs/coordination/plans/2026-11-05-wechat-official-account-workstream-plan.md",
+      "technical_owner": "Codex",
+      "content_and_content_publication_owner": "WorkBuddy",
+      "channel_identity": "UNBOUND; do not assume video account identity",
+      "tasks": [
+        "WX-01",
+        "WX-02",
+        "WX-03"
+      ],
+      "reference": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "current_followup": {
+        "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+        "path": "docs/coordination/plans/2026-11-05-wechat-official-account-workstream-plan.md",
+        "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+        "revision": "BM1-R1/S2-R1"
+      },
+      "progress_sources": [
+        {
+          "path": "docs/coordination/plans/2026-11-05-wechat-official-account-workstream-plan.md",
+          "role": "planning_reference",
+          "scope": "plan not execution or acceptance"
+        }
+      ],
+      "current_entry_status": "UNREGISTERED_NOT_INFERRED_FROM_PLAN"
+    }
+  ],
+  "public_channels_reference": {
+    "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+    "revision": "BM1-R1/S2-R1",
+    "path": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+    "anchor": "bm1-public-channels-s2-r1",
+    "plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+    "plan_anchor": "oasis-public-channels-bm1-r1-s2-r1",
+    "workstream_ids": [
+      "landing-page",
+      "wechat-official-account"
+    ],
+    "evidence": "docs/coordination/execution/2026-11-05-bm1-r1-s2-audit-r1/审计与修订记录.md",
+    "previous_id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+    "previous_revision": "BM1-R1/S2",
+    "task_flow": {
+      "nodes": [
+        "LP-01",
+        "LP-02.page",
+        "LP-02.article",
+        "LP-03.prepare",
+        "LP-03.verify",
+        "WX-01",
+        "WX-02",
+        "WX-03.website",
+        "WX-03.wechat"
+      ],
+      "edges": [
+        {
+          "from": "LP-01",
+          "to": "LP-02.page",
+          "condition": "selected page technical preparation only"
+        },
+        {
+          "from": "WX-01",
+          "to": "WX-02",
+          "condition": "selected article material"
+        },
+        {
+          "from": "WX-02",
+          "to": "LP-02.article",
+          "condition": "only article integration, not all public pages"
+        },
+        {
+          "from": "LP-02.page",
+          "to": "LP-03.prepare",
+          "condition": "when this selected page needs new technical delivery"
+        },
+        {
+          "from": "LP-02.article",
+          "to": "LP-03.prepare",
+          "condition": "when this selected article needs new integration"
+        },
+        {
+          "from": "LP-03.prepare",
+          "to": "WX-03.website",
+          "condition": "or reuse existing same-version hosting proof; no whole-package wait"
+        },
+        {
+          "from": "WX-02",
+          "to": "WX-03.website",
+          "condition": "selected article and original channel approval"
+        },
+        {
+          "from": "WX-03.website",
+          "to": "LP-03.verify",
+          "condition": "post-event verification only"
+        },
+        {
+          "from": "WX-02",
+          "to": "WX-03.wechat",
+          "condition": "WeChat original gates; independent of landing-page completion"
+        }
+      ],
+      "scope": "conditional planning only; prepare may reuse evidence; node suffixes are steps of the original six tasks, not extra work packages"
+    },
+    "source_authority": "workstreams scopes; no parallel business status"
+  },
+  "skills_workflow_guidance_reference": {
+    "id": "SKILLS-WORKFLOW-GUIDANCE-20261106-G1",
+    "path": "专利业务Skills清单.md",
+    "registered_at": "2026-11-06T08:27:34.631771+08:00",
+    "registration_revision": "G1",
+    "source_declared_save_date": "2026-11-06",
+    "source_declared_version": null,
+    "source_sha256_at_registration": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+    "role": "target_product_guidance_not_runtime_or_rule_authority",
+    "scope": "future_Skills_and_Dify_workflow_planning_creation_and_adaptation",
+    "core_project_ids": [
+      "patent-distillery",
+      "dify-design",
+      "dify"
+    ],
+    "target_ids": [
+      "M00",
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10",
+      "M11",
+      "M12",
+      "M13",
+      "M14",
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09",
+      "E10",
+      "E11",
+      "E12",
+      "E13",
+      "E14"
+    ],
+    "supporting_tool": "T01 separate; not the 30th business Skill",
+    "first_batch_order": "recommendation_only_not_approved_release_order",
+    "read_requirement": "Apply root R1/EXEC-R2 for applicable planning or execution/resumption; read current raw bytes, record version/hash, selected IDs and bounded differences from registration.",
+    "preserves": "BM1-R1/S1/S2-R1; original source/rule authority, scope exclusions, contracts, independent acceptance and historical FAIL/UNKNOWN; no execution permission",
+    "overall_plan_anchor": "oasis-skills-workflow-guidance-g1",
+    "record": "docs/coordination/execution/2026-11-06-skills-workflow-guidance-g1/登记记录.md"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "id": "DSH-FLOW26-LIVE-SERVICE-METADATA-R2-20261029",
+  "observedDate": "2026-10-29",
+  "timezone": "Asia/Shanghai",
+  "evidenceKind": "actual authenticated website UI and observed response metadata; no generation",
+  "authentication": "User completed login in the visible browser and replied 已登陆. No credential value read, copied or migrated by the executor.",
+  "website": "https://app.oasisintwrite.com/workspace",
+  "websiteVersionVisible": "v1.0.7",
+  "observedMetadataEndpoint": "https://lzhxpy.oasisintwrite.com/api/apicategories/apidetail",
+  "capturePolicy": "Network.responseReceived and response body allowlist only. api_key and credentials excluded; raw bodies neither printed nor saved.",
+  "fast": {
+    "responseStatus": 200,
+    "id": 39,
+    "name": "权利要求书生成-Fast",
+    "api_type": "Workflow",
+    "price": 3,
+    "model_name": "",
+    "is_async": 0,
+    "input_schema": [
+      {"type": "paragraph", "cn_name": "技术方案", "en_name": "technical_solutions"},
+      {"type": "paragraph", "cn_name": "技术领域", "en_name": "technical_field"},
+      {"type": "paragraph", "cn_name": "背景技术", "en_name": "background_art_TD"},
+      {"type": "paragraph", "cn_name": "有益效果", "en_name": "beneficial_effects_TD"},
+      {"type": "paragraph", "cn_name": "具体实施方式", "en_name": "embodiments_TD"},
+      {"type": "paragraph", "cn_name": "附图说明和标记", "en_name": "drawings_explain_TD"},
+      {"type": "file", "cn_name": "技术交底书文件", "en_name": "Technical_Disclosure_file"},
+      {"type": "paragraph", "cn_name": "用户指令", "en_name": "User_input"}
+    ],
+    "output_schema": [{"type": "paragraph", "cn_name": "生成内容", "en_name": "output"}]
+  },
+  "basic": {
+    "responseStatus": 200,
+    "id": 46,
+    "name": "权利要求书生成-Basic",
+    "api_type": "Workflow",
+    "price": 5,
+    "model_name": "",
+    "is_async": 1,
+    "input_schema": [
+      {"type": "file", "cn_name": "技术交底书文件", "en_name": "Technical_Disclosure_file"},
+      {"type": "paragraph", "cn_name": "技术方案", "en_name": "technical_solutions"},
+      {"type": "paragraph", "cn_name": "技术领域", "en_name": "technical_field"},
+      {"type": "paragraph", "cn_name": "背景技术", "en_name": "background_art_TD"},
+      {"type": "paragraph", "cn_name": "有益效果", "en_name": "beneficial_effects_TD"},
+      {"type": "paragraph", "cn_name": "具体实施方式", "en_name": "embodiments_TD"},
+      {"type": "paragraph", "cn_name": "附图说明", "en_name": "drawings_explain_TD"},
+      {"type": "paragraph", "cn_name": "用户指令", "en_name": "User_input"}
+    ],
+    "output_schema": [
+      {"type": "paragraph", "cn_name": "生成内容", "en_name": "claims_text"},
+      {"type": "file", "cn_name": "权利要求书", "en_name": "claims_docx"},
+      {"type": "file", "cn_name": "权利要求书生成报告", "en_name": "report_docx"}
+    ]
+  },
+  "requiredFlags": "Not present in the allowlisted observed schema fields; required/empty/coexistence semantics not confirmed.",
+  "credentialPlaceholderClassification": {
+    "fast": {"api_key": "null", "credentials": "empty-placeholder"},
+    "basic": {"api_key": "null", "credentials": "empty-placeholder"},
+    "scope": "Only state classification from the same already received bodies; no credential value printed, saved or reused. Does not bypass original payload validation."
+  },
+  "publicProjectOption": {
+    "id": "302",
+    "name": "DSH-Oasis-Flow2-6公开合成校准-20261026",
+    "observation": "Actual option value in visible 选择关联项目 DOM. Option not selected; no new project created.",
+    "actualNativeDSHWorkspaceBindingAccepted": false
+  },
+  "actions": {
+    "metadataRead": true,
+    "generationCreate": 0,
+    "filesUploaded": 0,
+    "projectsCreated": 0,
+    "nativeCredentialsWritten": 0,
+    "fees": 0,
+    "unknownRequestsRetried": 0
+  },
+  "networkObservationLimit": "The retained CDP request window showed two apidetail POSTs, background user-message/project-list GETs and no generation create. Buffer truncated=true, so this is not an all-period/all-egress certificate. No Generate/Upload/New Project action was performed. Network capture was disabled after observation; the authenticated tab was kept for handoff.",
+  "conclusion": "No compatible V3.4.0/M06 service established. Fast39 has old eight fields and one output; Basic46 has asynchronous three-output contract. Do not activate current synchronous adapter for Basic, infer seven-output compliance, or guess Workspace/account/folder authority. Current website reading closes stale-service-metadata uncertainty only."
+}

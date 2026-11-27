@@ -1,0 +1,293 @@
+{
+  "id": "M06-PUBLIC-R2-LOCAL-LOOP-VERIFICATION-20261031-R1",
+  "clientDate": "2026-10-31",
+  "observedAtUTC": "2026-10-31T05:28:05.184Z",
+  "timezone": "Asia/Shanghai",
+  "executor": "Codex single agent",
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "scope": "one new local calibration and bounded engineering review/edit/save/native open/unsent reference/normal restart",
+  "authorizationReceipt": "docs/evidence/2026-10-31-m06-public-r2-newcall-preflight.json",
+  "completed": {
+    "oneNewNativeGeneration": true,
+    "sourceConsistencyEngineeringReview": true,
+    "editNewVersion": true,
+    "reviewNotInherited": true,
+    "reReview": true,
+    "noOverwriteSave": true,
+    "artifactHashesMatch": true,
+    "canonicalMarkdownReadback": true,
+    "nativeOpen": true,
+    "unsentReferencePrepared": true,
+    "normalRestartRecovery": true
+  },
+  "actual": {
+    "clientDate": "2026-10-31",
+    "observedAtUTC": "2026-10-31T05:25:16.993Z",
+    "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+    "preservedFiles": 114,
+    "allExistingFilesUnchanged": true,
+    "allStartupPinsMatch": true,
+    "oldRunUnchanged": true,
+    "runCount": 2,
+    "newRun": {
+      "runId": "v340-d4fda3b7-6cf4-4191-b727-2f36827e8276",
+      "requestKey": "e7fc0b80-36a8-4e1c-a78d-fbafb694d4cd",
+      "status": "completed",
+      "inputHash": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b",
+      "createdAt": "2026-10-31T05:19:19.275Z",
+      "completedAt": "2026-10-31T05:20:44.160Z",
+      "durationMs": 84885,
+      "nativeCandidate": {
+        "version": "v340-native-candidate-3",
+        "executionScope": "injected-only",
+        "dispatchEnabled": false,
+        "realCallVerified": false,
+        "sessionId": "session-15baadaf-916a-46ee-875c-31a52d510476",
+        "route": {
+          "provider": "deepseek-official",
+          "model": "deepseek-flash"
+        },
+        "inputSHA256": "dc89a8a855dd4b0b1fa3529a9677d87e037477d38086ac8de844c3d86d4c9a88",
+        "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+        "instructionSHA256": "cf1daa43371521f7aca3ebb1e5d3e6934b429d7505e57daee0852a498131f1ac",
+        "systemSHA256": "169bdbe8741986a7a4408506f732f73f293655014fc3d8f4a622b34012574558",
+        "preparedSHA256": "fb01f3abfc715ef6330aa6d11e47b6909d95509a286c68d987388ccdffd0af8e",
+        "requestSHA256": "5be812daed6970be57d7fd344200da155317ce58563cecf902f2a98f8e14b7df",
+        "confirmationSHA256": "fff01f490784c197eeb2c4955d7c305f22ccfd7419e54a892e7ab06e6c078079",
+        "confirmedRevision": 12,
+        "budget": {
+          "maxCalls": 1,
+          "usedCalls": 1
+        },
+        "admissionSHA256": "98ed2ca0ef86dda278900821111bd948943d623a84ef10631c9fcad8f5dad8f7",
+        "nodeId": "Flow-2-6",
+        "workspaceRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a",
+        "contextSHA256": "52a1bd09274c45e7c6723c064cc8c5565c0b722159b34f278313206ffc38f58e",
+        "businessSkillId": "m06-claims-draft",
+        "businessSkillVersion": "0.1.3",
+        "businessManifestSHA256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9",
+        "businessResourceSHA256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca"
+      }
+    },
+    "versions": [
+      {
+        "versionId": "v340-d4fda3b7-6cf4-4191-b727-2f36827e8276",
+        "resultSHA256": "2b9a1183e04c16a9737a181f10ed30774a8f9494d509d0273f493f1d489ab9a1",
+        "review": {
+          "status": "approved",
+          "sha256": "2b9a1183e04c16a9737a181f10ed30774a8f9494d509d0273f493f1d489ab9a1",
+          "updatedAt": "2026-10-31T05:21:43.201Z"
+        },
+        "writebackCount": 0
+      },
+      {
+        "versionId": "revision-9a439835-3122-46c3-ad6c-e714ee0df0f8",
+        "resultSHA256": "e0fb29d388c9bae19be253e7bd048c31ed8ba40987adf3cdddc8d1bd354ff815",
+        "review": {
+          "status": "approved",
+          "sha256": "e0fb29d388c9bae19be253e7bd048c31ed8ba40987adf3cdddc8d1bd354ff815",
+          "updatedAt": "2026-10-31T05:22:20.659Z"
+        },
+        "writebackCount": 1
+      }
+    ],
+    "files": [
+      {
+        "relativePath": "claims_20261031132202_9a439835.md",
+        "sha256": "e0fb29d388c9bae19be253e7bd048c31ed8ba40987adf3cdddc8d1bd354ff815",
+        "mediaType": "text/markdown",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/claims_20261031132202_9a439835.md",
+        "bytes": 69523
+      },
+      {
+        "relativePath": "claims_20261031132202_9a439835.oasis.json",
+        "sha256": "8c6c8a3006f79f1a769bda75abe722fa4c41d2014f501ee510e3a259bf3fe89e",
+        "mediaType": "application/json",
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/claims_20261031132202_9a439835.oasis.json",
+        "bytes": 1048
+      }
+    ],
+    "workspaceRevision": 20,
+    "workspaceBeforeAfterRestartIdentical": true,
+    "sourceMaterialsUnchanged": true,
+    "cumulativeMarkdownReadbackAccepted": true,
+    "unsentReferenceRestored": true,
+    "nativeFileOpenedBeforeAndAfterRestart": true,
+    "engineeringReviewOnly": true,
+    "professionalAcceptance": false,
+    "userAcceptance": null,
+    "totalNewModelCalls": 1,
+    "automaticRetries": 0,
+    "oldRequestRetried": false,
+    "remoteCreates": 0,
+    "uploads": 0,
+    "conversationSent": false,
+    "remaining": "professional/user acceptance and remote dual-source/G0 are separate and remain open; token usage/fee not returned by business run record"
+  },
+  "referenceRestart": {
+    "clientDate": "2026-10-31",
+    "rawAXWhitespaceDiffers": true,
+    "beforeAfterContentEqualIgnoringAXWhitespace": true,
+    "fullCanonicalDraftMatchesIgnoringAXWhitespace": true,
+    "normalizedDraftSHA256": "a9888a86b5cb3e2bc807dbf5503f1af08dad185e20dbf7c4182cce2c73ed2bc3",
+    "canonicalDraftSHA256": "d250691ecda5eea1af30f712dfd7ab5bd986eb1dcb0444ab3c9d344ffdef161f",
+    "versionId": "revision-9a439835-3122-46c3-ad6c-e714ee0df0f8",
+    "resultSHA256": "e0fb29d388c9bae19be253e7bd048c31ed8ba40987adf3cdddc8d1bd354ff815",
+    "draftSent": false
+  },
+  "preservation": {
+    "existingFiles": 114,
+    "unchanged": 111,
+    "allOriginalSnapshotsIntact": true,
+    "changes": [
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+        "before": "cbaa4cc33fdc89140130d87e5a78160915e6b9720f787f9c0a51618e8e82f871",
+        "after": "7b2e28fef7a7cf1f5cf557520823ef256d7b55bb14031907cf433f8f473af1bc",
+        "change": "prefix only; original bytes retained"
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+        "before": "d9a6ab4436a161e3b97ab2b1a4c7646127784ea55d7831db185de55ac91a69e5",
+        "after": "f7d7310c9ac99f2668bf562ba1ee5a9351057d32cfb58fcdd276c783684360e0",
+        "change": "prefix only; original bytes retained"
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+        "before": "1ac3bdd76fd6ae81b0bfcc0c0179990dcbb590c2d96e6ea413c973667caf65bb",
+        "after": "30e45a8676daf64974c9696978596a338b5560f098393abcd3cd62af3e409d1c",
+        "change": "prefix only; original bytes retained"
+      }
+    ],
+    "originalFailedRunUnchanged": true,
+    "sourcePinsUnchanged": true,
+    "publicMaterialsUnchanged": true,
+    "project302BindingRetainedViaUnchangedProfile": true
+  },
+  "newModelCalls": 1,
+  "automaticRetries": 0,
+  "originalRequestRetried": false,
+  "uploads": 0,
+  "remoteCreates": 0,
+  "conversationSent": false,
+  "professionalAcceptance": false,
+  "userAcceptance": null,
+  "formalDualSourceG0Accepted": false,
+  "usageAndActualFee": "not returned in business run record; no invented value",
+  "productionCodeChanged": false,
+  "dependencyChanged": false,
+  "dailyProfileChanged": false,
+  "difyAdminAccess": false,
+  "committed": false,
+  "pushed": false,
+  "released": false,
+  "verificationCommands": {
+    "realArtifactAndRuntimeContractExitCode": 0,
+    "afterRestartPreservationExitCode": 0,
+    "normalizedFullReferenceCheckExitCode": 0,
+    "scopedWhitespaceExitCode": 0,
+    "oldBusinessTestsRerun": false
+  },
+  "artifacts": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/new-call-intent.json",
+      "sha256": "a7251887d924e2d153d839f512892e292e50564af188eb86f09636d0afe7552e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/new-run-initial.json",
+      "sha256": "609bf6bebe4570e392e3040e325dddf96bed2d341dd4a0e4861df12163c181f1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/new-run-terminal.json",
+      "sha256": "0495e56e39c5fd38fece3bd364a19fe48fb0549cec1e0abac8c040390d9f0278"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/engineering-review-v1.json",
+      "sha256": "3a062c5a42477edb11d2b1afbe72699e0b77e998935f42fb7ee705e56adf08ee"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/new-run-v1-reviewed.json",
+      "sha256": "0fb369ef2005127ae8d735d2499d0aa02f3e806b1dacf2918abc723cb08f63fa"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/reviewed-v2-core.txt",
+      "sha256": "f4e536692f1af6555328bb63572afaadc55bf1baf392b090194a43b587ba79c9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/new-run-v2-unreviewed.json",
+      "sha256": "b1010064ffbed340d8a5c905e811ad4ae863e3cd6f5a3cce0f9c75a0b6e55352"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/engineering-review-v2.json",
+      "sha256": "ff4ef1217c79e914dd9095c3481c63f210275d06d513ffb936344adeaa194b18"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/new-run-saved.json",
+      "sha256": "c3ff4970c108c98bbee595c76abe6ec41d114a720b10c4fa6c8aa518e81e2f6a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/writeback-receipt.json",
+      "sha256": "2bb128ee77f5e86d4ad8a6ff36bd09b4fc6096348f41bc31366fc32b0cc2d8cb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/native-open-saved-ax.txt",
+      "sha256": "80f7c3d30a3af74ffb639b990d74d168849dc3b259128ae71b7f2297d74837bd"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/reference-draft-before-restart-ax.txt",
+      "sha256": "474c08131030cbd34e3d74c9cd5f649103d7e348c8882db3cbfb945c33904129"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/reference-restart-verification.json",
+      "sha256": "b9da09f642fc2de7a4c6734fb558f83de71a5f396ff1f09af968380773797e2a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/restart-reference-draft-ax.txt",
+      "sha256": "f8648819c58f718e1d576a4fbfa4e5b3d10fb9151376dbdc9dfbf05592bfee45"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/restart-result-view-ax.txt",
+      "sha256": "9eb7cadbbf22b25ef1c27fbfb552abb6d1421942bac317bb2a0bb928094cc3de"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/restart-open-saved-ax.txt",
+      "sha256": "d08b053c439e5ca314c16663c7b91615c579b815eb6becf9aa87d5ad7370e549"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/completed-loop-after-restart.png",
+      "sha256": "fdb5f5fb3e5507f872f340ce39dfb417444594a7dbcc03418c052de77b84ae36"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/before-closeout-verification.json",
+      "sha256": "b722b19ba20785e8d3e5cf6f7945341efbe09d772ef2b963271ffd070476a560"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/workspace-before-restart.json",
+      "sha256": "3fdcbd1f7b53144027779e6ed0de36aa4733c072f0910c8cd998e7d5f1f8c7fc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/direct-stream-no-retry-review.json",
+      "sha256": "aacd4d7033395026b1f9b33124728725a68e40d50a561ff013d609e0e3115e8c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/native-run/native-candidate.json",
+      "sha256": "177154730c19da16c62065ee05ed19cfb81bd0f786f9999016831a476326cf97"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/native-run/native-start.json",
+      "sha256": "bfe54af120ba7a5b0d76c3d5dd79384504a89a45a4740c1de170a978534c5a2b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/native-run/native-exit.json",
+      "sha256": "35166e304084ef0e3b867592b9e7275b4701b41cd0942005de368eec0772facd"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/restart-run/native-candidate.json",
+      "sha256": "02a32bba4dcfdd9bc28c2356739c1cdbc3255317eb77098a21a1731df02f5928"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-r2-newcall-20261031/restart-run/native-start.json",
+      "sha256": "645f611225b2355ea26a5f903a40ca8fcfabf957aab69841db2721a652ca22c8"
+    }
+  ]
+}

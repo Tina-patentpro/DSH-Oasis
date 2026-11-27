@@ -1,0 +1,35 @@
+test_MR04_receipt_uses_digests_confirmed_before_write (prep2_regressions.RevisionTests.test_MR04_receipt_uses_digests_confirmed_before_write) ... FAIL
+
+======================================================================
+FAIL: test_MR04_receipt_uses_digests_confirmed_before_write (prep2_regressions.RevisionTests.test_MR04_receipt_uses_digests_confirmed_before_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 96, in test_MR04_receipt_uses_digests_confirmed_before_write
+    try:result=self.m.commit(self.f1,self.gate,self.ctx,_fault=lose_pin_access)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/restore_once.py", line 229, in commit
+    result={'kind':'EXCEPTION_RECEIPT','mode':ctx.mode,'target':str(ctx.root/'README.md'),'status':status,'error':error,'cleanup_error':cleanup_error,'observation_error':observation_error,'replace_attempted':attempted,'before_sha256':sha(old),'frozen_after_sha256':sha(candidate),'observed_after_sha256':observed,'request_original_sha256':sha(raw),'exception_intent_sha256':intent_hash(raw),'actual_observed_at':datetime.now().astimezone().isoformat(),'producer':'one-time exception module, NOT native apply','runtime_or_user_acceptance':False,'attempt_start_path':str(start),'receipt_path':str(out),'read_only_reconcile_required':status!='COMMITTED'}
+                                                                                                                                                                                                                                                                                                                                                                                      ^^^^^^^^^^^^^^^^
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/restore_once.py", line 87, in intent_hash
+    def intent_hash(raw):return sha(canonical(strict_request(raw)))
+                                              ^^^^^^^^^^^^^^^^^^^
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/restore_once.py", line 83, in strict_request
+    _pins();o=strict_json(raw)
+    ^^^^^^^
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 93, in unavailable
+    def unavailable():raise self.m.Refused('simulated postwrite input pin unavailable')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+restore_once.Refused: simulated postwrite input pin unavailable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 97, in test_MR04_receipt_uses_digests_confirmed_before_write
+    except Exception as ex:self.fail('postwrite input revalidation swallowed durable outcome: '+type(ex).__name__)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: postwrite input revalidation swallowed durable outcome: Refused
+
+----------------------------------------------------------------------
+Ran 1 test in 1.144s
+
+FAILED (failures=1)

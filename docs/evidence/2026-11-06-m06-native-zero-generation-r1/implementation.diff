@@ -1,0 +1,127 @@
+--- /Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-generation-r1/before/scripts/macos-development-launch.mjs	2026-11-06 11:36:53
++++ /Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/macos-development-launch.mjs	2026-11-06 11:39:20
+@@ -18,7 +18,8 @@
+  if(realpathSync(target)!==target) throw Error('Noncanonical confined path');
+  return target;
+ }
+-export function makeLaunchSpec({root,app,node,acceptance=false,realAcceptance=false}) {
++export function makeLaunchSpec({root,app,node,acceptance=false,realAcceptance=false,nativeZeroGeneration=false}) {
++ if(nativeZeroGeneration && realAcceptance)throw Error('Native zero generation and real acceptance are exclusive');
+  root=canonicalRoot(root);app=canonicalRoot(app);node=realpathSync(node);
+  for(const name of ['user','home','userdata','cache','temp','evidence','workspace-a','workspace-b']) assertConfined(root,join(root,name));
+  const env={PATH:[dirname(node),'/usr/bin','/bin','/usr/sbin','/sbin'].join(delimiter),
+@@ -28,6 +29,10 @@
+   npm_config_store_dir:join(root,'cache/pnpm'),SHELL:'/bin/zsh',LANG:'en_US.UTF-8',LC_ALL:'en_US.UTF-8',
+   DSH_TELEMETRY_DISABLED:'1',OASIS_UNIFIED_FIXTURE:'1',HTTP_PROXY:'http://127.0.0.1:9',HTTPS_PROXY:'http://127.0.0.1:9',
+   ALL_PROXY:'http://127.0.0.1:9',NO_PROXY:'127.0.0.1,localhost,::1',CI:'true'};
++ if(nativeZeroGeneration===true) {
++  delete env.OASIS_UNIFIED_FIXTURE;
++  env.OASIS_NATIVE_ZERO_GENERATION='1';
++ }
+  if(realAcceptance===true) {
+   delete env.OASIS_UNIFIED_FIXTURE;
+   env.DEEPSEEK_BASE_URL='https://api.deepseek.com/anthropic';
+@@ -99,6 +104,19 @@
+   || review.modelOrigin!=='https://api.deepseek.com/anthropic'
+   || review.apiOrigin!=='https://lzhxpy.oasisintwrite.com') throw Error('Missing or mismatched reviewed real acceptance admission');
+ }
++export function assertNativeZeroGenerationAdmission(pin) {
++ if(pin.policy!=='native-zero-generation-private-profile-v1' || pin.runtime_ready!==true)
++  throw Error('Native zero-generation composition is not ready');
++ const review=pin.native_zero_generation;
++ if(review?.protocol!==1 || !review.budget
++   || ['model','api','upload','payment'].some(key=>review.budget[key]!==0))
++  throw Error('Native zero-generation requires zero budgets');
++ if(!Array.isArray(review.guardedFiles) || new Set(review.guardedFiles).size<2
++   || review.guardedFiles.some(path=>typeof path!=='string' || !Object.hasOwn(pin.files??{},path)
++     || !/^[a-f0-9]{64}$/.test(pin.files[path])))
++  throw Error('Native zero-generation guard bindings are missing');
++ if(pin.real_acceptance)throw Error('Native zero-generation cannot reuse real acceptance');
++}
+ export function startOwnedChild(spec,{stdio,spawnProcess=spawn}={}) {
+  // User-approved: remove only this project's outer sandbox-exec wrapper.
+  // Keep signed Electron's native sandbox, clean environment and isolated paths.
+@@ -107,21 +125,30 @@
+ async function main() {
+  if(process.platform!=='darwin')throw Error('Mac launcher requires darwin');
+  const args=process.argv.slice(2);
+- if(!['--check','--start','--stop'].includes(args[0]) || args.length>2
+-  || (args.length===2 && !((args[0]==='--start' && args[1]==='--acceptance')
+-    || (['--check','--start'].includes(args[0]) && args[1]==='--real-acceptance'))))throw Error('Use --check [--real-acceptance], --start [--acceptance|--real-acceptance], or --stop');
++ const nativeZeroGeneration=args[1]==='--native-zero-generation';
++ if(!['--check','--start','--stop'].includes(args[0])
++  || (nativeZeroGeneration ? args.length!==3 : args.length>2
++    || (args.length===2 && !((args[0]==='--start' && args[1]==='--acceptance')
++      || (['--check','--start'].includes(args[0]) && args[1]==='--real-acceptance')))))
++  throw Error('Use --check [--real-acceptance], --start [--acceptance|--real-acceptance], --stop, or --check|--start|--stop --native-zero-generation <admission>');
+  const source=canonicalRoot(join(dirname(fileURLToPath(import.meta.url)),'..'));
+- const root=canonicalRoot(join(source,'.dsh-test/mac-dev'));
++ let root,pin;
++ if(nativeZeroGeneration) {
++  if(!isAbsolute(args[2]))throw Error('Native zero-generation admission must be absolute');
++  pin=JSON.parse(readFileSync(assertConfined(source,args[2]),'utf8'));
++  root=assertConfined(canonicalRoot(join(source,'.dsh-test')),pin.root);
++ } else root=canonicalRoot(join(source,'.dsh-test/mac-dev'));
+  if(args[0]==='--stop'){console.log(JSON.stringify(stopLaunch(root)));return;}
+- const pinPath=assertConfined(root,join(root,'evidence/admission.json'));
+- const pin=JSON.parse(readFileSync(pinPath,'utf8'));
+- if(pin.root!==root || pin.policy!=='no-model-private-profile-v2')throw Error('Invalid Mac admission');
++ if(!nativeZeroGeneration)pin=JSON.parse(readFileSync(assertConfined(root,join(root,'evidence/admission.json')),'utf8'));
++ if(pin.root!==root || !nativeZeroGeneration && pin.policy!=='no-model-private-profile-v2')throw Error('Invalid Mac admission');
++ if(nativeZeroGeneration)assertNativeZeroGenerationAdmission(pin);
+  verifyPins(pin);
+  const realAcceptance=args.includes('--real-acceptance');
+  if(realAcceptance)assertRealAcceptanceAdmission(pin);
+  if(realpathSync(process.execPath)!==realpathSync(pin.node))throw Error('Use pinned private Node');
+- const spec=makeLaunchSpec({root,app:pin.app,node:pin.node,acceptance:args.includes('--acceptance') || realAcceptance,realAcceptance});
+- if(args[0]==='--check') {console.log(JSON.stringify({status:'preflight-only',mode:realAcceptance?'real-acceptance':'no-model',runtimeAcceptance:pin.runtime_acceptance?.status ?? 'unverified',root,exe:spec.exe,home:spec.env.HOME,dshHome:spec.env.DSH_HOME,userData:join(root,'userdata'),network:realAcceptance?'Host fixed model/API HTTPS proxy bypass; renderer loopback; no outer kernel guard':'Profile loopback; no outer kernel network/file guard',launch:'direct signed Electron; native sandbox unchanged'}));return;}
++ const spec=makeLaunchSpec({root,app:pin.app,node:pin.node,acceptance:args.includes('--acceptance') || realAcceptance,realAcceptance,nativeZeroGeneration});
++ const mode=nativeZeroGeneration?'native-zero-generation':realAcceptance?'real-acceptance':'no-model';
++ if(args[0]==='--check') {console.log(JSON.stringify({status:'preflight-only',mode,runtimeAcceptance:pin.runtime_acceptance?.status ?? 'unverified',root,exe:spec.exe,home:spec.env.HOME,dshHome:spec.env.DSH_HOME,userData:join(root,'userdata'),network:realAcceptance?'Host fixed model/API HTTPS proxy bypass; renderer loopback; no outer kernel guard':'Profile loopback; no outer kernel network/file guard',launch:'direct signed Electron; native sandbox unchanged'}));return;}
+  const release=acquireLaunchLock(root);
+  const runId=Date.now(),base=join(root,'evidence','launch-'+runId);
+  const out=openSync(base+'.stdout.log','wx',0o600),err=openSync(base+'.stderr.log','wx',0o600);
+@@ -131,7 +158,7 @@
+  try {
+   child=startOwnedChild(spec,{stdio:['ignore',out,err]});
+   await new Promise((ok,fail)=>{child.once('spawn',ok);child.once('error',fail);});
+-  const record={runId,pid:child.pid,launcherPid:process.pid,exe:spec.exe,root,home:spec.env.HOME,dshHome:spec.env.DSH_HOME,userData:join(root,'userdata'),acceptance:args.includes('--acceptance') || realAcceptance,mode:realAcceptance?'real-acceptance':'no-model',status:'spawned; acceptance pending'};
++  const record={runId,pid:child.pid,launcherPid:process.pid,exe:spec.exe,root,home:spec.env.HOME,dshHome:spec.env.DSH_HOME,userData:join(root,'userdata'),acceptance:args.includes('--acceptance') || realAcceptance,mode,status:'spawned; acceptance pending'};
+   writeFileSync(base+'.json',JSON.stringify(record,null,2),{flag:'wx',mode:0o600});
+   console.log(JSON.stringify(record));
+   const result=await new Promise(ok=>child.once('close',(code,signal)=>ok({code,signal})));
+--- /Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-generation-r1/before/packages/oasis-professional-service/src/index.js	2026-11-06 11:36:53
++++ /Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/index.js	2026-11-06 11:39:20
+@@ -73,6 +73,8 @@
+ export async function applyM06WorkareaCandidate013(ctx, config) { return applyWorkbench(ctx,config,true,true) }
+ 
+ async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false) {
++  const nativeZeroGeneration=process.env.OASIS_NATIVE_ZERO_GENERATION==='1'
++  if(nativeZeroGeneration&&!controlledM06)throw new Error('Native zero-generation requires the controlled M06 entry.')
+   if(controlledM06&&(process.env.OASIS_UNIFIED_FIXTURE==='1'||process.env.OASIS_NATIVE_OFFLINE==='1'
+     ||typeof ctx?.llm?.prepareCall!=='function'||typeof ctx?.sessions?.get!=='function'
+     ||typeof ctx?.sessionProjections?.stateOf!=='function'||typeof ctx?.agentDefaultModel?.currentSelection!=='function')){
+@@ -158,7 +160,7 @@
+     disposeTool = registerStatusTool(ctx)
+     disposeRpc = registerWorkbenchRoutes(
+       ctx.connection,
+-      createWorkbenchRpcHandler(service, professionalService, accountService, importService,{m06Candidate013:controlledM06}),
++      createWorkbenchRpcHandler(service, professionalService, accountService, importService,{m06Candidate013:controlledM06,nativeZeroGeneration}),
+       {m06Candidate013:controlledM06},
+     )
+   } catch (error) {
+--- /Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-generation-r1/before/packages/oasis-professional-service/src/workbench-rpc.js	2026-11-06 11:36:53
++++ /Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-rpc.js	2026-11-06 11:39:20
+@@ -174,8 +174,11 @@
+   }
+ }
+ 
+-export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null, {m06Candidate013=false}={}) {
++export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null, {m06Candidate013=false,nativeZeroGeneration=false}={}) {
++  if(nativeZeroGeneration&&!m06Candidate013)throw new TypeError('Native zero-generation requires the controlled M06 entry')
++  const readonlyEndpoints=new Set(['state/get','workflow/catalog','workflow/v340/catalog','workflow/v340/prepare'])
+   return async function handleWorkbenchRpc(endpoint, payload) {
++    if(nativeZeroGeneration&&!readonlyEndpoints.has(endpoint))return {ok:false,error:{code:'NATIVE_ZERO_GENERATION',message:'本次仅检查界面与输入，不允许生成、联网或修改业务记录。',details:{}}}
+     if (endpoint.startsWith('import/')) {
+       const action = endpoint.slice('import/'.length)
+       const schema = Object.hasOwn(importCommands, action) ? importCommands[action] : null

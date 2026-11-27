@@ -1,0 +1,802 @@
+{
+  "id": "DSH-M06-F-20261029-01",
+  "scope": "READONLY_CONSUMER_DELTA_AND_PUBLIC_SYNTHETIC_VERIFICATION",
+  "providerIdentities": {
+    "producer_candidate_id": "m06-v340-range1-candidate",
+    "producer_candidate_version": "0.1.3",
+    "business_skill_id": "m06-claims-draft",
+    "frontmatter_version": "0.1.3-candidate",
+    "dsh_receipt_version": "v340-native-candidate-3",
+    "dsh_business_skill_version": "0.1.3",
+    "meaning": "Distinct producer artifact, runtime business, frontmatter and receipt identities; do not substitute for one another."
+  },
+  "resource": {
+    "bundleSHA256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+    "instructionSHA256": "cf1daa43371521f7aca3ebb1e5d3e6934b429d7505e57daee0852a498131f1ac",
+    "generationResourceBytes": 161209,
+    "payload": [
+      {
+        "path": "SKILL.md",
+        "bytes": 49106,
+        "sha256": "ad3d7c00243d70d2368f281c6834a5fb6381558df8989e33bdae3a42f3aa75b5",
+        "producerPath": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/SKILL.md",
+        "modelBodyContainsExactContent": true
+      },
+      {
+        "path": "THIRD-PARTY-NOTICE.md",
+        "bytes": 6972,
+        "sha256": "4006dd520582d4c70b4ed616083265ad0d1c10811807539b1baac7d75ad98764",
+        "producerPath": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/THIRD-PARTY-NOTICE.md",
+        "modelBodyContainsExactContent": true
+      },
+      {
+        "path": "references/01-official-basis.md",
+        "bytes": 19703,
+        "sha256": "f68c7976880494d1ce94c5017af72c07fedc006b64eab441671eb29919759319",
+        "producerPath": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/01-official-basis.md",
+        "modelBodyContainsExactContent": true
+      },
+      {
+        "path": "references/02-n01-feature-and-independent-claim.md",
+        "bytes": 14244,
+        "sha256": "c2ca0d0e43b3987b2f1919988757f511b4ed2fd41e9a049f75d77a3506c012ea",
+        "producerPath": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/02-n01-feature-and-independent-claim.md",
+        "modelBodyContainsExactContent": true
+      },
+      {
+        "path": "references/03-n02-claim-graph-and-fallback.md",
+        "bytes": 11334,
+        "sha256": "57f8764d627d19a0c5248bae14952331df27e034a23873df5da7cdf3248d8919",
+        "producerPath": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/03-n02-claim-graph-and-fallback.md",
+        "modelBodyContainsExactContent": true
+      },
+      {
+        "path": "references/04-n03-support-terms-parameters.md",
+        "bytes": 17527,
+        "sha256": "5ff11fbab081577d7bc96b1ce267d010eb54f493e95ecb90a6290ffee3e98040",
+        "producerPath": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/04-n03-support-terms-parameters.md",
+        "modelBodyContainsExactContent": true
+      },
+      {
+        "path": "references/05-source-and-output-contract.md",
+        "bytes": 28729,
+        "sha256": "eb3efa3fb2e28415ee8ae49859e83909c1eb89b94648062b226dd3590de58fd9",
+        "producerPath": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/05-source-and-output-contract.md",
+        "modelBodyContainsExactContent": true
+      },
+      {
+        "path": "references/output-schema.json",
+        "bytes": 13594,
+        "sha256": "8eeb5986504e353293ded5ed582cd516b2b731f0ba2eeb7be664d226eb3c9975",
+        "producerPath": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/output-schema.json",
+        "modelBodyContainsExactContent": true
+      }
+    ],
+    "qualifications": [
+      {
+        "path": "operator/source-audit-R27.md",
+        "sha256": "28e6a5d4fcce6c40568789940013841acdba187fba808dd388bc8bac36311405",
+        "role": "operator-only-not-generation",
+        "modelBodyContainsExactContent": false
+      },
+      {
+        "path": "operator/history-qualification-R01.json",
+        "sha256": "d64461fc51bba766cf1f6175f8af72c017dde74ee2f9a660665038854c371288",
+        "role": "operator-only-not-generation",
+        "modelBodyContainsExactContent": false
+      }
+    ]
+  },
+  "adoptedR47": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/OasisWorkbenchSurface.js",
+      "sha256": "631500960b75d5f18260620168bac702e4f13ba002251cc5fe519a8d0651b5e5",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/V340GenerationPage.js",
+      "sha256": "db917cde97775289e506a50eff43cc1288ed66e94b9f64daf0c2053050f5b2d1",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/GenerationSourceSwitch.js",
+      "sha256": "b46fc722520b1e801155528e9a660acab23b063037f69a1ab9291c2875dd7553",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/WorkbenchEntry.js",
+      "sha256": "e8ff0c69166bd8060bb095ae5be9c67a3d04698c25aa8f6d586a7e64855fca4e",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-theme-readability.test.mjs",
+      "sha256": "477e12ead647e19c2c31c403cf932049b9fcf869177f3480aa831c9f52111404",
+      "match": true
+    }
+  ],
+  "localInputs": [
+    {
+      "id": "upstream_md_file",
+      "channel": "前一工作流文件",
+      "importance": "expected",
+      "boundary": "一个由Flow-1-5生成并实际传入的累计主Markdown",
+      "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件",
+      "localValuePath": "filePaths.upstream_md_file",
+      "apiFieldCandidate": null,
+      "mappingConfirmed": false,
+      "serverRequiredness": "NOT_SUPPLIED",
+      "transformation": "NOT_APPROVED",
+      "reason": "No declared upstream cumulative Markdown field; cannot split or merge into technical_solutions without a contract."
+    },
+    {
+      "id": "disclosure_file",
+      "channel": "用户文件",
+      "importance": "optional",
+      "boundary": "一个用户修订或替换的技术交底文件",
+      "handling": "按明确指令更新累计交底；无替换指令时作为补充并保留差异",
+      "localValuePath": "filePaths.disclosure_file",
+      "apiFieldCandidate": "Technical_Disclosure_file",
+      "mappingConfirmed": false,
+      "serverRequiredness": "NOT_SUPPLIED",
+      "transformation": "NOT_APPROVED",
+      "reason": "Name/type candidate only; requires actual upload reference, content participation, permission and lossless format semantics."
+    },
+    {
+      "id": "disclosure_text",
+      "channel": "用户文本",
+      "importance": "optional",
+      "boundary": "一段用户修订或补充的技术交底文本",
+      "handling": "与文件并存时用于补充或纠正",
+      "localValuePath": "textInputs.disclosure_text",
+      "apiFieldCandidate": "technical_solutions",
+      "mappingConfirmed": false,
+      "serverRequiredness": "NOT_SUPPLIED",
+      "transformation": "NOT_APPROVED",
+      "reason": "Observed exact text equality for the prior single website calibration; not full新版 schema acceptance."
+    },
+    {
+      "id": "drawings_file",
+      "channel": "用户文件",
+      "importance": "optional",
+      "boundary": "一个用户修订附图文件或单一附图文档",
+      "handling": "用于核对结构、关系、标记和支持",
+      "localValuePath": "filePaths.drawings_file",
+      "apiFieldCandidate": null,
+      "mappingConfirmed": false,
+      "serverRequiredness": "NOT_SUPPLIED",
+      "transformation": "NOT_APPROVED",
+      "reason": "No second file field; cannot reuse the disclosure file or silently discard it."
+    },
+    {
+      "id": "drawings_text",
+      "channel": "用户文本",
+      "importance": "optional",
+      "boundary": "一段附图关系或修改说明文本",
+      "handling": "用于解释图示和更正图文关系",
+      "localValuePath": "textInputs.drawings_text",
+      "apiFieldCandidate": "drawings_explain_TD",
+      "mappingConfirmed": false,
+      "serverRequiredness": "NOT_SUPPLIED",
+      "transformation": "NOT_APPROVED",
+      "reason": "Semantic candidate only; confirmed transform, file/text coexistence and empty semantics missing."
+    },
+    {
+      "id": "claim_requirements_file",
+      "channel": "用户文件",
+      "importance": "optional",
+      "boundary": "一个权利要求范围、层级或表达要求文件",
+      "handling": "不得覆盖技术来源和申请类型限制",
+      "localValuePath": "filePaths.claim_requirements_file",
+      "apiFieldCandidate": null,
+      "mappingConfirmed": false,
+      "serverRequiredness": "NOT_SUPPLIED",
+      "transformation": "NOT_APPROVED",
+      "reason": "No declared claim-requirements file channel."
+    },
+    {
+      "id": "claim_requirements_text",
+      "channel": "用户文本",
+      "importance": "optional",
+      "boundary": "一段权利要求范围、层级或表达要求文本",
+      "handling": "与文件并存时作为补充或纠正",
+      "localValuePath": "textInputs.claim_requirements_text",
+      "apiFieldCandidate": null,
+      "mappingConfirmed": false,
+      "serverRequiredness": "NOT_SUPPLIED",
+      "transformation": "NOT_APPROVED",
+      "reason": "No declared requirements channel; cannot silently merge into User_input."
+    },
+    {
+      "id": "user_input",
+      "channel": "用户手动文本",
+      "importance": "optional",
+      "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+      "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理",
+      "localValuePath": "textInputs.user_input",
+      "apiFieldCandidate": "User_input",
+      "mappingConfirmed": false,
+      "serverRequiredness": "NOT_SUPPLIED",
+      "transformation": "NOT_APPROVED",
+      "reason": "Observed exact instruction text equality for the prior website calibration; must remain instructions, not technical facts."
+    }
+  ],
+  "output": {
+    "required": [
+      "summary",
+      "core_result_markdown",
+      "updates",
+      "tables",
+      "terms_master",
+      "warnings",
+      "model_completions"
+    ],
+    "schemaMatchesCurrentHost": true,
+    "schemaSHA256": "58a891b4018084f5dd5431c954ef082903630ac441e65b430e1ed66ae128e3f2",
+    "hostOwns": [
+      "cumulative Markdown",
+      "T1-T6",
+      "source/identity/hash",
+      "review and immutable versions"
+    ],
+    "fastObservedOutput": [
+      {
+        "type": "paragraph",
+        "en_name": "output",
+        "cn_name": "生成内容"
+      }
+    ],
+    "approvedAPIToHostMapping": null,
+    "missingEvaluationFields": "UNASSESSED_NOT_EMPTY_SAFE_ARRAYS"
+  },
+  "rules": {
+    "candidateBound": {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "bytes": 77079,
+      "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "uid": "6fcd7286-9380-40d3-ba8b-79686eddb1ce",
+      "version": "0.1.9",
+      "approved_for_trial": true,
+      "formally_effective": false,
+      "meaning": "Exactruletrial only, notgeneratorrunpermission or professionalacceptance",
+      "adoption_map": {
+        "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/rule-adoption-map.json",
+        "bytes": 18455,
+        "sha256": "29bcd2aa3c23970a860694ce10671f9e69c394fcc8820771e1dc21775e147b9b"
+      }
+    },
+    "currentTrial": {
+      "version": "0.1.11",
+      "document_uid": "4f8f58e0-f16a-4965-a873-c8589c1887b1",
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.11.md",
+      "bytes": 89919,
+      "sha256": "87cb3f69e615dbe29c73bc3effca14ae300dfc85f1bd4076339297d1e5c3dbe2",
+      "candidate_uid": "4f8f58e0-f16a-4965-a873-c8589c1887b1",
+      "filename": "F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.11.md",
+      "status": "user_approved_trial",
+      "approved_for_trial": true,
+      "formally_effective": false,
+      "approval_receipt": {
+        "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/阶段6同等质量与容缺初稿后续计划-20261026/执行与精确验收提交/精确验收登记-20261027/F26_V0.1.11_真实用户试行验收.json",
+        "bytes": 1932,
+        "sha256": "c6dc5ad06ef1d17e5370658bef082bff143a8f5296299e03b609afa5d0182212"
+      },
+      "trial_scope": "本轮阶段6同等专业质量/容缺初稿编制与文稿复核；不正式生效、不验证实现或运行、不重绑阶段7/8"
+    },
+    "currentApprovalScope": {
+      "acceptance_uid": "8ec455f9-ce79-4790-827e-fa568ed60bb9",
+      "recorded_at": "2026-10-27T07:43:11.231356+08:00",
+      "user_message": "确认精确验收清单",
+      "user_confirmation": {
+        "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/阶段6同等质量与容缺初稿后续计划-20261026/执行与精确验收提交/精确验收登记-20261027/真实用户确认原文与精确范围.json",
+        "bytes": 1730,
+        "sha256": "39ce920de6111660c11d4de1b216ec265ea010fe028b0e78a8ea5f8ec69e05fa"
+      },
+      "bound_submission": {
+        "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/阶段6同等质量与容缺初稿后续计划-20261026/执行与精确验收提交/精确验收提交清单.json",
+        "bytes": 75041,
+        "sha256": "39b46051852e0c171d673f5aecb3942c51c927c4e1ce59f6d79bc88738d5cefe"
+      },
+      "submission_uid": "700048d8-4186-44fd-80ac-c9423a8fd13f",
+      "exact_rule": {
+        "version": "0.1.11",
+        "document_uid": "4f8f58e0-f16a-4965-a873-c8589c1887b1",
+        "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.11.md",
+        "bytes": 89919,
+        "sha256": "87cb3f69e615dbe29c73bc3effca14ae300dfc85f1bd4076339297d1e5c3dbe2",
+        "precise_trial_acceptance": "pending"
+      },
+      "accepted": true,
+      "accepted_status": "user_approved_trial",
+      "scope": "本轮阶段6同等专业质量/容缺初稿编制与文稿复核；不正式生效、不验证实现或运行、不重绑阶段7/8",
+      "formally_effective": false,
+      "runtime_consistency_verified": false,
+      "prior_rule_and_receipts_preserved": true,
+      "O2": "document_level_disposition_only_runtime_not_verified",
+      "open_concerns_preserved": true,
+      "engineering_Dify": false
+    },
+    "automaticRuleUpgrade": false,
+    "disposition": "Keep original candidate identity and exclusions; PD/TL must decide a separately versioned production adoption or an explicit permitted comparison scope."
+  },
+  "sourceExclusions": {
+    "old_six": "PENDING_EXCLUDED",
+    "old_18_UID_payload": "EXCLUDED",
+    "independent_basis": {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/source-clean-basis-audit-R03.json",
+      "bytes": 117179,
+      "sha256": "4a19985a2ac4d6aa79d7e1d6879a9c22bf136f8a0b5786f28403653c3efcced4"
+    },
+    "MIT_NOTICE": {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/THIRD-PARTY-NOTICE.md",
+      "bytes": 6972,
+      "sha256": "4006dd520582d4c70b4ed616083265ad0d1c10811807539b1baac7d75ad98764"
+    },
+    "official_basis": {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/01-official-basis.md",
+      "bytes": 19703,
+      "sha256": "f68c7976880494d1ce94c5017af72c07fedc006b64eab441671eb29919759319"
+    },
+    "unknown_reference": "RULE-08-12-001-v1.1",
+    "definition_resolved": false,
+    "unresolved_reference_disposition": "UNCHANGED_SCOPED_INDEPENDENT_REFERENCE_NO_UNRESOLVED_EXECUTION",
+    "four_CUR": "Namedlocaleditorialguards, notglobalgates or nativeruledefinitions",
+    "chemical_scope": "TRIAGE_ONLY_NOT_COMPLETE_SPECIALTY_METHOD"
+  },
+  "backend": {
+    "fixedOrigin": "https://lzhxpy.oasisintwrite.com",
+    "observationDate": "2026-10-26",
+    "fast": {
+      "catalogEntryId": 211,
+      "detailId": 39,
+      "inputSchema": [
+        {
+          "type": "paragraph",
+          "en_name": "technical_solutions",
+          "cn_name": "技术方案"
+        },
+        {
+          "type": "paragraph",
+          "en_name": "technical_field",
+          "cn_name": "技术领域"
+        },
+        {
+          "type": "paragraph",
+          "en_name": "background_art_TD",
+          "cn_name": "背景技术"
+        },
+        {
+          "type": "paragraph",
+          "en_name": "beneficial_effects_TD",
+          "cn_name": "有益效果"
+        },
+        {
+          "type": "paragraph",
+          "en_name": "embodiments_TD",
+          "cn_name": "具体实施方式"
+        },
+        {
+          "type": "paragraph",
+          "en_name": "drawings_explain_TD",
+          "cn_name": "附图说明和标记"
+        },
+        {
+          "type": "file",
+          "en_name": "Technical_Disclosure_file",
+          "cn_name": "技术交底书文件"
+        },
+        {
+          "type": "paragraph",
+          "en_name": "User_input",
+          "cn_name": "用户指令"
+        }
+      ],
+      "outputSchema": [
+        {
+          "type": "paragraph",
+          "en_name": "output",
+          "cn_name": "生成内容"
+        }
+      ]
+    },
+    "basic": {
+      "detailId": 46,
+      "isAsync": 1,
+      "supportedByCurrentSyncAdapter": false
+    },
+    "bindingFields": [
+      "workspaceId",
+      "workspacePath",
+      "environmentKind",
+      "apiBaseOrigin",
+      "accountId",
+      "folderId",
+      "apiId",
+      "catalogEntryId",
+      "apiEndpoint",
+      "apiProcess",
+      "schemaHash"
+    ],
+    "actualWorkspaceAccountBindingAccepted": false,
+    "websiteProject302IsNotDSHBinding": true,
+    "apiActivationAllowed": false,
+    "realCallBudget": 0,
+    "r6": "Isolated transport/display/ACK/UNKNOWN evidence exists in separate backend worktree; no accepted M06 eight-input/seven-output semantic mapping or main-tree patch adoption inferred."
+  },
+  "websiteEntry": {
+    "observedLocalRoutes": [
+      "/auth/*",
+      "/workspace/*",
+      "/user/profile-reward"
+    ],
+    "financialViews": "internal currentPage balance/runningWater",
+    "approvedProductionDeepLink": null,
+    "localSkillsBlockedByWebsite": false
+  },
+  "remaining": [
+    {
+      "id": "M06-RULE-DELTA",
+      "owner": "patent-distillery + test-library",
+      "blocks": "adoption claims for newer rules",
+      "needs": "explicit permitted scope and exact new version/adoption map if changed"
+    },
+    {
+      "id": "M06-API-INPUTS",
+      "owner": "backend + business service owner",
+      "blocks": "M06 professional API activation",
+      "needs": "each common field required/empty/coexistence/transform and approved actual service/schema identity"
+    },
+    {
+      "id": "M06-API-OUTPUT",
+      "owner": "backend + DSH consumer",
+      "blocks": "API output to current cumulative document",
+      "needs": "actual result fields or approved deterministic adapter; warnings/questions unassessed when absent"
+    },
+    {
+      "id": "M06-WORKSPACE-BINDING",
+      "owner": "backend + DSH consumer",
+      "blocks": "actual submission",
+      "needs": "authoritative workspace/account/origin/folder/schema confirmation, invalidation and ACL evidence"
+    },
+    {
+      "id": "WA-ENTRY",
+      "owner": "workarea",
+      "blocks": "account/finance browser entry activation only",
+      "needs": "actual deployed URL/allowed params/return and unavailable behavior"
+    },
+    {
+      "id": "M06-REAL-CONSUMPTION",
+      "owner": "DSH executor + professional reviewer",
+      "blocks": "runtime/business acceptance",
+      "needs": "specific public input/model/destination/budget and named professional/user review"
+    }
+  ],
+  "identities": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/IC-SKILL-M06-0.1.3-candidate/provider-delivery.json",
+      "bytes": 19270,
+      "sha256": "39a153e5516efe73ef552ad47f6391d8fe9b77fb9e14ca01af05b0b6537df27a",
+      "readScope": "fixed delivery metadata and declared scope"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/MANIFEST.sha256.json",
+      "bytes": 7543,
+      "sha256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9",
+      "readScope": "identity only",
+      "expectedSHA256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-candidate-0.1.3.json",
+      "bytes": 179486,
+      "sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+      "readScope": "verified complete resource identity",
+      "expectedSHA256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/SKILL.md",
+      "bytes": 49106,
+      "sha256": "ad3d7c00243d70d2368f281c6834a5fb6381558df8989e33bdae3a42f3aa75b5",
+      "readScope": "identity and exact embedded payload equality",
+      "expectedSHA256": "ad3d7c00243d70d2368f281c6834a5fb6381558df8989e33bdae3a42f3aa75b5",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/THIRD-PARTY-NOTICE.md",
+      "bytes": 6972,
+      "sha256": "4006dd520582d4c70b4ed616083265ad0d1c10811807539b1baac7d75ad98764",
+      "readScope": "identity and exact embedded payload equality",
+      "expectedSHA256": "4006dd520582d4c70b4ed616083265ad0d1c10811807539b1baac7d75ad98764",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/01-official-basis.md",
+      "bytes": 19703,
+      "sha256": "f68c7976880494d1ce94c5017af72c07fedc006b64eab441671eb29919759319",
+      "readScope": "identity and exact embedded payload equality",
+      "expectedSHA256": "f68c7976880494d1ce94c5017af72c07fedc006b64eab441671eb29919759319",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/02-n01-feature-and-independent-claim.md",
+      "bytes": 14244,
+      "sha256": "c2ca0d0e43b3987b2f1919988757f511b4ed2fd41e9a049f75d77a3506c012ea",
+      "readScope": "identity and exact embedded payload equality",
+      "expectedSHA256": "c2ca0d0e43b3987b2f1919988757f511b4ed2fd41e9a049f75d77a3506c012ea",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/03-n02-claim-graph-and-fallback.md",
+      "bytes": 11334,
+      "sha256": "57f8764d627d19a0c5248bae14952331df27e034a23873df5da7cdf3248d8919",
+      "readScope": "identity and exact embedded payload equality",
+      "expectedSHA256": "57f8764d627d19a0c5248bae14952331df27e034a23873df5da7cdf3248d8919",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/04-n03-support-terms-parameters.md",
+      "bytes": 17527,
+      "sha256": "5ff11fbab081577d7bc96b1ce267d010eb54f493e95ecb90a6290ffee3e98040",
+      "readScope": "identity and exact embedded payload equality",
+      "expectedSHA256": "5ff11fbab081577d7bc96b1ce267d010eb54f493e95ecb90a6290ffee3e98040",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/05-source-and-output-contract.md",
+      "bytes": 28729,
+      "sha256": "eb3efa3fb2e28415ee8ae49859e83909c1eb89b94648062b226dd3590de58fd9",
+      "readScope": "identity and exact embedded payload equality",
+      "expectedSHA256": "eb3efa3fb2e28415ee8ae49859e83909c1eb89b94648062b226dd3590de58fd9",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/references/output-schema.json",
+      "bytes": 13594,
+      "sha256": "8eeb5986504e353293ded5ed582cd516b2b731f0ba2eeb7be664d226eb3c9975",
+      "readScope": "identity and exact embedded payload equality",
+      "expectedSHA256": "8eeb5986504e353293ded5ed582cd516b2b731f0ba2eeb7be664d226eb3c9975",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-business-candidate-audit-R27.md",
+      "bytes": 8896,
+      "sha256": "28e6a5d4fcce6c40568789940013841acdba187fba808dd388bc8bac36311405",
+      "readScope": "qualification metadata; not added to model context",
+      "expectedSHA256": "28e6a5d4fcce6c40568789940013841acdba187fba808dd388bc8bac36311405",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/candidate-0.1.3-history-qualification-R01.json",
+      "bytes": 3869,
+      "sha256": "d64461fc51bba766cf1f6175f8af72c017dde74ee2f9a660665038854c371288",
+      "readScope": "qualification metadata; not added to model context",
+      "expectedSHA256": "d64461fc51bba766cf1f6175f8af72c017dde74ee2f9a660665038854c371288",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-production-wire-contract-R01.json",
+      "bytes": 38799,
+      "sha256": "c48eaeb8aa1d821f4b8324e940d057978c7fc61bc4eaea4777bd3bc46d2bad4d",
+      "readScope": "fixed output contract schema metadata",
+      "expectedSHA256": "c48eaeb8aa1d821f4b8324e940d057978c7fc61bc4eaea4777bd3bc46d2bad4d",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "bytes": 77079,
+      "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "readScope": "identity; original candidate binding, not current approval",
+      "expectedSHA256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/rule-adoption-map.json",
+      "bytes": 18455,
+      "sha256": "29bcd2aa3c23970a860694ce10671f9e69c394fcc8820771e1dc21775e147b9b",
+      "readScope": "production section map and exact bound trial receipt",
+      "expectedSHA256": "29bcd2aa3c23970a860694ce10671f9e69c394fcc8820771e1dc21775e147b9b",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/F26V019精确试行验收登记-20261021/F26_V0.1.9_真实用户试行批准收据.json",
+      "bytes": 10054,
+      "sha256": "7fa56a74163ef216b5191414b1ea89e9fd80c2e16370425030c27188117b8f43",
+      "readScope": "identity of bound original trial receipt",
+      "expectedSHA256": "7fa56a74163ef216b5191414b1ea89e9fd80c2e16370425030c27188117b8f43",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/阶段6当前状态.json",
+      "bytes": 50164,
+      "sha256": "6cf5ac03eb98168b8bf7788a52499d8cad10da68605228660304b372437aea8d",
+      "readScope": "current_trial_rule and declared trial scope only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.11.md",
+      "bytes": 89919,
+      "sha256": "87cb3f69e615dbe29c73bc3effca14ae300dfc85f1bd4076339297d1e5c3dbe2",
+      "readScope": "identity and selected production-section comparison",
+      "expectedSHA256": "87cb3f69e615dbe29c73bc3effca14ae300dfc85f1bd4076339297d1e5c3dbe2",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/阶段6同等质量与容缺初稿后续计划-20261026/执行与精确验收提交/精确验收登记-20261027/F26_V0.1.11_真实用户试行验收.json",
+      "bytes": 1932,
+      "sha256": "c6dc5ad06ef1d17e5370658bef082bff143a8f5296299e03b609afa5d0182212",
+      "readScope": "declared approval scope",
+      "expectedSHA256": "c6dc5ad06ef1d17e5370658bef082bff143a8f5296299e03b609afa5d0182212",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-readability-primary-intake-R47/source-adoption-R01.json",
+      "bytes": 4668,
+      "sha256": "75e31ce17c3cd7e2fbcedb941d2af9fa2955ed5a4f91514c1835ececb6331e4b",
+      "readScope": "exact source adoption rows"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/OasisWorkbenchSurface.js",
+      "bytes": 16893,
+      "sha256": "631500960b75d5f18260620168bac702e4f13ba002251cc5fe519a8d0651b5e5",
+      "readScope": "R47 selected source byte comparison",
+      "expectedSHA256": "631500960b75d5f18260620168bac702e4f13ba002251cc5fe519a8d0651b5e5",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/V340GenerationPage.js",
+      "bytes": 18107,
+      "sha256": "db917cde97775289e506a50eff43cc1288ed66e94b9f64daf0c2053050f5b2d1",
+      "readScope": "R47 selected source byte comparison",
+      "expectedSHA256": "db917cde97775289e506a50eff43cc1288ed66e94b9f64daf0c2053050f5b2d1",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/GenerationSourceSwitch.js",
+      "bytes": 1550,
+      "sha256": "b46fc722520b1e801155528e9a660acab23b063037f69a1ab9291c2875dd7553",
+      "readScope": "R47 selected source byte comparison",
+      "expectedSHA256": "b46fc722520b1e801155528e9a660acab23b063037f69a1ab9291c2875dd7553",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/WorkbenchEntry.js",
+      "bytes": 3794,
+      "sha256": "e8ff0c69166bd8060bb095ae5be9c67a3d04698c25aa8f6d586a7e64855fca4e",
+      "readScope": "R47 selected source byte comparison",
+      "expectedSHA256": "e8ff0c69166bd8060bb095ae5be9c67a3d04698c25aa8f6d586a7e64855fca4e",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-theme-readability.test.mjs",
+      "bytes": 4311,
+      "sha256": "477e12ead647e19c2c31c403cf932049b9fcf869177f3480aa831c9f52111404",
+      "readScope": "R47 selected source byte comparison",
+      "expectedSHA256": "477e12ead647e19c2c31c403cf932049b9fcf869177f3480aa831c9f52111404",
+      "match": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-portable-consumer-intake-audit-R31.md",
+      "bytes": 4362,
+      "sha256": "9eae1bcb2129eb26e9264d36107e55d263ef9d33970aa1757cd487dabb913f8d",
+      "readScope": "bounded acceptance conclusions; no replay of old audit"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-controlled-primary-intake-audit-R37.md",
+      "bytes": 3210,
+      "sha256": "f417081c8901d34843c4c6ab301f42c14597e0bd359718308bf4f073ac7cfcec",
+      "readScope": "bounded acceptance conclusions; no replay of old audit"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-no-model-host-runtime-audit-R44.md",
+      "bytes": 4186,
+      "sha256": "eb2d5fbe00ecb373c3a33920c2fbf7ebbe1d8f42f9b9d6207ddca399941bdc60",
+      "readScope": "bounded acceptance conclusions; no replay of old audit"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-live-api-service-observation.json",
+      "bytes": 4056,
+      "sha256": "f3106004d3ddda9e5fc3b8a10bb2dde53b98023a1115f0d60b4bc1f4164565b8",
+      "readScope": "historical Fast39/Basic46 schema observation; not live endpoint verification"
+    },
+    {
+      "path": "/Users/tinadong7036/.codex/worktrees/backend-unblocking-dev/绿洲慧写-后台4.0/docs/superpowers/execution/2026-10-29-full-product-adoption-r6/README.md",
+      "bytes": 10376,
+      "sha256": "07c7a75c9d53dacf0fd07faf346081c111600908746e3ac29952317f82a01969",
+      "readScope": "bounded technical delivery; not production M06 semantics or main-tree adoption"
+    },
+    {
+      "path": "/Users/tinadong7036/.codex/worktrees/backend-unblocking-dev/绿洲慧写-后台4.0/contracts/development/consumer-adoption-v2-r6-addendum.md",
+      "bytes": 5012,
+      "sha256": "bba1f5b6fcfec0235e01f2ba7f734a8e46b0711f1195416b9d7d549d730f73fe",
+      "readScope": "loopback/native transport and recovery contract"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/workarea/src/app/App.tsx",
+      "bytes": 1920,
+      "sha256": "2dda569b9ac5b3249c86e0633da91aeae6828e2634471e8a302685a2c95b9273",
+      "readScope": "route and internal settings page state only; not production deep-link acceptance"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/workarea/src/components/SettingsPanel.tsx",
+      "bytes": 11691,
+      "sha256": "85534c550da3359a8b9ea7fe15732f5edd5ad6aaeaa098f121c026ef598e13e2",
+      "readScope": "route and internal settings page state only; not production deep-link acceptance"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-resources-0.1.3.js",
+      "bytes": 3660,
+      "sha256": "38bf2c0bf2e97b14f7f98045f48d70b1a0736c7ec9adc9027bf3f741c2e377b1",
+      "readScope": "selected current source path and contract"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-native-model.js",
+      "bytes": 11853,
+      "sha256": "66a56412ff0b4dc90f7e003608067ce8804eb4e2e23804c493c0da1b86a11600",
+      "readScope": "selected current source path and contract"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-native-contract.js",
+      "bytes": 1698,
+      "sha256": "0ce4bee1b1dbaca0dfd48ec6aad5b43ee2fa0a2f29b04d891e7b34a2f884e1ac",
+      "readScope": "selected current source path and contract"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-preparation.js",
+      "bytes": 2927,
+      "sha256": "fafb6cd0842f578246842828e57ee3fb3ee7a2906055fccf1dda5868ef865572",
+      "readScope": "selected current source path and contract"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-document.js",
+      "bytes": 23860,
+      "sha256": "276b6a79152a34f8e022e133b6f0ee3ad80b3ba3d1a49d5c5bf167219c45236f",
+      "readScope": "selected current source path and contract"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-catalog.js",
+      "bytes": 1851,
+      "sha256": "e8d45a8984b1909b303fce0ef9c2bb879744dd2de56710c8f46cb708435217cb",
+      "readScope": "selected current source path and contract"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-contracts.json",
+      "bytes": 133269,
+      "sha256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+      "readScope": "selected current source path and contract"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/index.js",
+      "bytes": 7872,
+      "sha256": "3ffd91dbc6e04e7b9ad8e9491e43450d1b1c11f9b4cc1386d1bc7d3a8bc451ed",
+      "readScope": "selected current source path and contract"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-api-contract.js",
+      "bytes": 19821,
+      "sha256": "8b56d9374c508304bef84d6f2bf5b7257b633230af5a118532e8e031653f785f",
+      "readScope": "selected current source path and contract"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-workspace-binding.js",
+      "bytes": 1585,
+      "sha256": "1c848580a357c6e705fb5746d7898c85459cbba4fc97e9077c1709957ae506bf",
+      "readScope": "selected current source path and contract"
+    }
+  ],
+  "ruleProductionSectionDelta": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-f-interruption-20261029/production-rule-section-diff.json",
+    "sha256": "982b779ea0a19d7f8fefa845af97389c77028d499545e51d6eb18bc29a84dbb3",
+    "changedSections": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4.5",
+      "1.6",
+      "1.7",
+      "1.8",
+      "2.1",
+      "3.3"
+    ],
+    "adoptionApproved": false
+  },
+  "nextIndependentPublicInput": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input-r2.json"
+}

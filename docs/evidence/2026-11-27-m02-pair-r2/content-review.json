@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-27T12:46:31.095307+08:00",
+  "requestKey": "eb6bee3f-e23c-4333-b51f-554ebe6f94a7",
+  "runId": "v340-10b9e02f-3991-47b5-a503-24f829e9b2e0",
+  "reviewType": "Codex technical consistency review; no professional or user acceptance",
+  "resultSha256": "3adb93e6473ad4f87ad20de8ee1512aec344c55f476ac72cf93dd904b2383b6a",
+  "checks": {
+    "P1InT1": true,
+    "T3AllReferenceP1": true,
+    "effectsNotMeasured": true,
+    "noConfirmedFactContents": true,
+    "twoUserSourceEntriesExact": true,
+    "completionUpdates": 0,
+    "completionRegistrations": 0,
+    "emptyPairSetsValid": true
+  },
+  "livePairCoverage": "真实模型选择将建议留在分析正文，两侧均为空；非空一对/多对、重复和缺项覆盖来自离线样例。",
+  "issues": [
+    {
+      "id": "R2-META-01",
+      "severity": "content_metadata",
+      "detail": "正文文档信息自述宿主响应合同 v340-native-candidate-2，实际 Host 冻结凭证为 v340-native-candidate-9。",
+      "handling": "保留原文与原哈希；版本身份以 Host 凭证为准，后续定向修订文档元信息提示。"
+    },
+    {
+      "id": "R2-META-02",
+      "severity": "content_metadata",
+      "detail": "正文自述 model_completed_pending_confirmation，实际 model_completions 与 model_completed 更新均为空。",
+      "handling": "候选分析仍待专业审核；不能据该标签推断存在已登记的补齐。"
+    },
+    {
+      "id": "R2-CONTENT-01",
+      "severity": "professional_review",
+      "detail": "正文使用缺少保持约束等推断描述，现材料只给定调整/保持需求；根因及候选机理须专业复核。S2 将楔紧与过中心机制并列，后续实施需拆清条件。",
+      "handling": "不提升为用户事实或已实施结论，专业/用户接受保持待办。"
+    },
+    {
+      "id": "R2-METER-01",
+      "severity": "telemetry",
+      "detail": "旁路计量 streamIncomplete=true，同时取得 HTTP200、end_turn、终止帧、最终用量及 Host 完整结果。",
+      "handling": "保留全部信号；本次 Host completed，不据该标记单独改成 unknown。"
+    },
+    {
+      "id": "R2-OUTPUT-01",
+      "severity": "headroom",
+      "detail": "输出 16183/16384 token，剩余 201 token，end_turn 正常结束。",
+      "handling": "记录后续输出精简需求，本次不重发。"
+    }
+  ],
+  "professionalAccepted": false,
+  "userAccepted": false,
+  "hostResultReviewStatus": "not-reviewed",
+  "newModelPostsAddedByReview": 0
+}

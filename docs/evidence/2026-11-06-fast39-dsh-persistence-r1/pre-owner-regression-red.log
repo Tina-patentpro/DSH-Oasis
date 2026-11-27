@@ -1,0 +1,61 @@
+✖ strict existing execution owner admits C4 error evidence and refuses contradictory status, key or duplicate owner (12.195458ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 180.7005
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:11:1
+✖ strict existing execution owner admits C4 error evidence and refuses contradictory status, key or duplicate owner (12.195458ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "[
+    {
+      "code": "unrecognized_keys",
+      "keys": [
+        "fast39Result"
+      ],
+      "path": [
+        "tasks",
+        "task-a",
+        "remoteExecutions",
+        "execution-fast39"
+      ],
+      "message": "Unrecognized key: \"fast39Result\""
+    }
+  ]"
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:16:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: ZodError: [
+      {
+        "code": "unrecognized_keys",
+        "keys": [
+          "fast39Result"
+        ],
+        "path": [
+          "tasks",
+          "task-a",
+          "remoteExecutions",
+          "execution-fast39"
+        ],
+        "message": "Unrecognized key: \"fast39Result\""
+      }
+    ]
+        at parseWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/.dsh-test/fast39-pre-owner-regression-20261106-r1/package/src/workbench-domain.js:184:56)
+        at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:16:29
+        at getActual (node:assert:611:5)
+        at strict.doesNotThrow (node:assert:779:32)
+        at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:16:10)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }

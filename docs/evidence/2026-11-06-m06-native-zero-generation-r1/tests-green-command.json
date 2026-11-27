@@ -1,0 +1,12 @@
+{
+  "command": [
+    "tools/bin/node",
+    "--test",
+    "tests/macos-native-zero-generation.test.mjs",
+    "tests/macos-development-launch.test.mjs",
+    "packages/oasis-professional-service/test/m06-native-zero-generation.test.mjs",
+    "packages/oasis-professional-service/test/m06-controlled-host.test.mjs"
+  ],
+  "exit_code": 0,
+  "scope": "new zero-mode and existing launcher/controlled Host; synthetic external services only"
+}

@@ -1,0 +1,86 @@
+{
+  "recordedAt": "2026-11-09T07:20:20.472265+08:00",
+  "status": "PARTIAL_PROGRESS_REAL_CALL_FAILED_MAX_TOKENS",
+  "stepStatus": {
+    "R7-01": "limited diagnosis/fix/native exit complete",
+    "R7-02": "one separately approved attempt failed/no body",
+    "R7-03": "not executed/no body",
+    "R7-04": "factual package ready/unpublished",
+    "R7-05": "bounded prerequisite preparation only",
+    "R7-06": "not selected/produced"
+  },
+  "sourceTests": {
+    "passed": 99,
+    "failed": 0,
+    "exit": 0,
+    "log": "substage-green.log"
+  },
+  "actualArchiveTests": {
+    "passed": 102,
+    "failed": 0,
+    "exit": 0,
+    "log": "archive-green.log"
+  },
+  "newFixedSDKCases": 5,
+  "expectedREDfailures": 3,
+  "archiveSHA256": "e94f9136f7d93373569444180fb2351b09db52ba2851fb84411e5125a56a0bc5",
+  "bundleSHA256": "947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b",
+  "controllerSHA256": "34cfa35cb3e62d004fedd13e06f7270932743e287931bb1ce1b5ee18224f982b",
+  "installedMembersMatch": 125,
+  "twoOriginalStateSuffixesPreserved": true,
+  "immutableInputsUnexpectedDrift": [],
+  "sourceMatchesArchiveExceptExplicitPublicImport": true,
+  "localLinksChecked": 37,
+  "missingLinks": [],
+  "gitDiffCheckExit": 0,
+  "port57619NoListener": true,
+  "AppStarts": 2,
+  "normalMenuExits": 2,
+  "nativeSend": false,
+  "realCallsThisTurn": 1,
+  "remainingAuthorizedCalls": 0,
+  "runId": "v340-c72ecef4-2cfd-4db1-9680-638738db5cff",
+  "actualFailureSummary": {
+    "failureStage": "stream",
+    "finishKind": "max-tokens",
+    "usage": {
+      "inputTokens": 735,
+      "outputTokens": 8192,
+      "totalTokens": 55903,
+      "cacheReadTokens": 46976
+    }
+  },
+  "feeKnown": false,
+  "oldRunsPreserved": true,
+  "R6AndR7PlanOriginalsUnchanged": true,
+  "independentCodeReview": false,
+  "professionalUserAcceptance": false,
+  "publicationCommitPushWorkBuddyDelivery": false,
+  "fullProjectComplete": false,
+  "centralCheck": "Prior FAIL10 retained; producer path still absent; no central changes/rerun",
+  "readScopeClarification": "Root/project/charter full, registry parsed, applicable overall/BM1/contracts/matrix sections. R7 current tasks read before execution, final R7-06/Review Focus reread at closure; same raw hash. Not a historical audit.",
+  "missingHistoricalArtifactsTiming": "Two old temporary artifacts absent at first pre-upgrade protection check; disappearance time/cause unverified.",
+  "verificationHarnessCorrection": "First link scan included preserved original historical .md backups and resolved their old links at backup location. Corrected to the five authored documents only; originals not edited.",
+  "artifacts": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/execution-return.md",
+      "sha256": "767d9033b37a1750ca2ca519a41b3019bcd5f0e2c07a53038267b5b462db6342"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/progress.md",
+      "sha256": "e694edd707c3b77bedd821858f79dcd0e2e08eba4bf5f56a85f221f691ed9dcd"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-09-r7-execution-r1/token-limit-analysis-r1.md",
+      "sha256": "02b5fe9f5629b03be09dc2c74f7b44c616d673c2bb339d6ceffedf78d5a185aa"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.5/RL-CONTINUATION-R1.md",
+      "sha256": "f1d7dc4679eb3c302d52352d2865a9060126b7ea178d6b20d27d3c4ed572add8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.5/TECHNICAL-FACTS-R1.md",
+      "sha256": "0f09863481dd1f8b1dfdb40bb481abb5319f808166ddd01f34f38df48b31ec15"
+    }
+  ]
+}

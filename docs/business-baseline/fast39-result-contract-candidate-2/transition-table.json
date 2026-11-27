@@ -1,0 +1,101 @@
+{
+  "version": "C2-R1",
+  "ordering": [
+    "no response/HTTP exception -> local unknown receipt, not a received enhanced error",
+    "received JSON: validate correlation first; preserve observed provider status",
+    "valid correlation: execution state before content",
+    "succeeded: eligibility/binding, zero-claim, structure/semantics/capacity checks"
+  ],
+  "received_json_rows": [
+    {
+      "provider_status": "succeeded",
+      "correlation": "valid",
+      "content": "valid",
+      "phase": "normal",
+      "execution_outcome": "succeeded",
+      "dsh_status": "completed",
+      "code": "NONE"
+    },
+    {
+      "provider_status": "failed",
+      "correlation": "valid",
+      "content": "any",
+      "phase": "execution",
+      "execution_outcome": "failed",
+      "dsh_status": "failed",
+      "code": "FAST39_PROVIDER_FAILED"
+    },
+    {
+      "provider_status": "stopped",
+      "correlation": "valid",
+      "content": "any",
+      "phase": "execution",
+      "execution_outcome": "failed",
+      "dsh_status": "failed",
+      "code": "FAST39_PROVIDER_STOPPED"
+    },
+    {
+      "provider_status": "running",
+      "correlation": "valid",
+      "content": "any",
+      "phase": "execution",
+      "execution_outcome": "pending",
+      "dsh_status": "submission-unknown",
+      "code": "FAST39_PROVIDER_PENDING"
+    },
+    {
+      "provider_status": "missing/unknown",
+      "correlation": "valid",
+      "content": "any",
+      "phase": "execution",
+      "execution_outcome": "unknown",
+      "dsh_status": "submission-unknown",
+      "code": "FAST39_PROVIDER_STATUS_UNKNOWN"
+    },
+    {
+      "provider_status": "any",
+      "correlation": "missing/invalid/conflicting",
+      "content": "any",
+      "phase": "correlation",
+      "execution_outcome": "uncorrelated",
+      "dsh_status": "submission-unknown",
+      "code": "FAST39_RUN_ID_INVALID"
+    },
+    {
+      "provider_status": "succeeded",
+      "correlation": "valid",
+      "content": "invalid",
+      "phase": "content",
+      "execution_outcome": "succeeded",
+      "dsh_status": "failed",
+      "code": "FAST39_RESULT_FIELDS_INVALID"
+    },
+    {
+      "provider_status": "succeeded",
+      "correlation": "valid",
+      "content": "zero supported claim",
+      "phase": "content",
+      "execution_outcome": "succeeded",
+      "dsh_status": "failed",
+      "code": "FAST39_NO_SUPPORTED_CLAIM"
+    },
+    {
+      "provider_status": "succeeded",
+      "correlation": "valid",
+      "content": "scope/binding/capacity mismatch",
+      "phase": "content",
+      "execution_outcome": "succeeded",
+      "dsh_status": "failed",
+      "code": "matching bounded content code"
+    }
+  ],
+  "transport_exception": {
+    "dsh_status": "submission-unknown",
+    "retry": false,
+    "structured_result_error": "not fabricated locally as server response"
+  },
+  "run_id_policy": "top workflow_run_id or data.id, legal UUID; both must match; invalid/missing -> null",
+  "enqueue_policy": "Original branch effects preserved, compare 0/1/unknown to original with future fakes. No new save/deduct or workflow request. No claim of durable exactly-once.",
+  "new_requests": 0,
+  "new_financial_policy": false
+}

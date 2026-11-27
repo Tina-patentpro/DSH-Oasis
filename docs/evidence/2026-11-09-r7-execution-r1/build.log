@@ -1,0 +1,16 @@
+[ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY] Aborted removal of modules directory due to no TTY
+
+If you are running pnpm in CI, set the CI environment variable to "true", or set "confirmModulesPurge" to "false".
+[ERROR] Command failed with exit code 1: '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/node-v24.21.0-darwin-arm64/bin/node' '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/pnpm-11.8.0/bin/pnpm.mjs' install
+
+pnpm: Command failed with exit code 1: '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/node-v24.21.0-darwin-arm64/bin/node' '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/pnpm-11.8.0/bin/pnpm.mjs' install
+    at getFinalError (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/tools/pnpm-11.8.0/dist/pnpm.mjs:34109:14)
+    at makeError (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/tools/pnpm-11.8.0/dist/pnpm.mjs:36416:21)
+    at getSyncResult (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/tools/pnpm-11.8.0/dist/pnpm.mjs:38260:10)
+    at spawnSubprocessSync (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/tools/pnpm-11.8.0/dist/pnpm.mjs:38220:14)
+    at execaCoreSync (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/tools/pnpm-11.8.0/dist/pnpm.mjs:38150:23)
+    at callBoundExeca (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/tools/pnpm-11.8.0/dist/pnpm.mjs:40678:23)
+    at boundExeca (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/tools/pnpm-11.8.0/dist/pnpm.mjs:40655:49)
+    at sync (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/tools/pnpm-11.8.0/dist/pnpm.mjs:40814:10)
+    at runPnpmCli (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/tools/pnpm-11.8.0/dist/pnpm.mjs:246476:5)
+    at runDepsStatusCheck (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/tools/pnpm-11.8.0/dist/pnpm.mjs:248210:7)

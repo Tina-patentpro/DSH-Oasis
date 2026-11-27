@@ -1,0 +1,87 @@
+{
+  "at": "2026-11-27T12:31:42.079135+08:00",
+  "requestKey": "8c8f27a1-8adc-43b8-ae19-b2b0d82584fe",
+  "runId": "v340-3296c958-368f-49eb-a7dc-2eefcf341049",
+  "submittedAtBeijing": "2026-11-27T12:28:13.625000+08:00",
+  "candidateReceiptVersion": "v340-native-candidate-8",
+  "modelPosts": 1,
+  "resubmissions": 0,
+  "professionalApiRequests": 0,
+  "host": {
+    "status": "failed",
+    "failureCode": "INVALID_OUTPUT",
+    "summary": {
+      "failureStage": "result-assembly",
+      "finishKind": "stop",
+      "assemblyIssue": {
+        "code": "orphan-completion",
+        "field": "model_completions",
+        "index": 0
+      },
+      "fieldIssue": {
+        "code": "orphan-completion",
+        "path": [
+          "model_completions",
+          0,
+          "content_id"
+        ]
+      },
+      "usage": {
+        "inputTokens": 975,
+        "outputTokens": 13463,
+        "totalTokens": 21222,
+        "cacheReadTokens": 6784
+      }
+    },
+    "documentStatus": null,
+    "deliverableStatus": null,
+    "reviewStatus": "not-reviewed",
+    "resultSha256": null
+  },
+  "provider": {
+    "at": "2026-11-27T04:29:57.756Z",
+    "http": 200,
+    "requestId": null,
+    "messageId": "9b4947d8-08e6-4f53-880e-ec2ef955cecb",
+    "providerModel": "deepseek-flash",
+    "stopReason": "end_turn",
+    "messageStop": true,
+    "finalUsage": true,
+    "usage": {
+      "input_tokens": 975,
+      "output_tokens": 13463,
+      "cache_read_input_tokens": 6784,
+      "cache_creation_input_tokens": 0,
+      "streamIncomplete": true
+    }
+  },
+  "meteredFeeCny": "0.05496268",
+  "pricePeriod": "offpeak",
+  "cnyPerMillion": {
+    "input": 1,
+    "cacheRead": 0.02,
+    "output": 4
+  },
+  "balanceObservations": [
+    {
+      "at": "2026-11-27T04:30:26.018709+00:00",
+      "http": 200,
+      "observedDebitCny": "0.00"
+    },
+    {
+      "at": "2026-11-27T04:31:27.567376+00:00",
+      "http": 200,
+      "observedDebitCny": "0.00"
+    }
+  ],
+  "observedDebitCny": "0.00",
+  "itemizedSettlementAvailable": false,
+  "isolatedCredentialRemoved": true,
+  "artifacts": {},
+  "coreCharacters": 0,
+  "tableRows": {},
+  "tableStatus": {},
+  "sourceChecks": [],
+  "warningIds": [],
+  "historicalFilesUnchanged": true
+}

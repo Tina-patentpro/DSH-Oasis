@@ -1,0 +1,86 @@
+{
+  "at": "2026-11-05T15:43:34.975939+08:00",
+  "reviewer": "Codex single agent author re-review, not independent",
+  "subject": "fast39-result-contract-candidate-3/C3-R1",
+  "subject_freeze_sha256": "b3caf57d4f0d5acc416cab186529b9bc6afc22b850a9f13ff309b2857d462db7",
+  "verdict": "REQUIRES_NARROW_DOCUMENT_ERRATA",
+  "counts": {
+    "P1": 1,
+    "P2": 1
+  },
+  "findings": [
+    {
+      "id": "C3-CR01",
+      "priority": "P1",
+      "original_item": "TR02",
+      "title": "block exclusive prose list omits mandatory decision_reason",
+      "loci": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-3/CONTRACT.md",
+          "line": 37
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-3/schemas.json",
+          "json_pointer": "/$defs/draft_block/required"
+        }
+      ],
+      "impact": "No block can satisfy the strict prose exclusive field list and required Schema simultaneously; examples/reference normalizer rely on decision_reason",
+      "minimum_disposition": "add decision_reason to block field list and distinguish it from per-feature reason; retain frozen C3-R1 and create traceable erratum/revision",
+      "runtime_implemented": false
+    },
+    {
+      "id": "C3-CR02",
+      "priority": "P2",
+      "original_item": "TR05",
+      "title": "clarify byte receipt capture before parse versus full wrapper assembly after parse",
+      "loci": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-3/CONTRACT.md",
+          "line": 71
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-3/code-abi.json",
+          "json_pointer": "/backend_boundary"
+        }
+      ],
+      "impact": "Byte/hash identity is explicit; prose conflates a pre-parse receipt with an immutable wrapper that requires parsed legacy_result",
+      "minimum_disposition": "capture immutable provider_response_receipt first, then assemble WorkflowServiceResult after successful legacy parse; preserve original error/queue branches, no extra call/parse",
+      "runtime_implemented": false
+    }
+  ],
+  "TR_status": [
+    {
+      "id": "TR01",
+      "status": "CLOSED_LIMITED_RECEIPT_PROFILE"
+    },
+    {
+      "id": "TR02",
+      "status": "ABI_DESIGN_FIXED_EXCLUSIVE_PROSE_FIELD_CONFLICT_OPEN",
+      "finding": "C3-CR01"
+    },
+    {
+      "id": "TR03",
+      "status": "CLOSED_WORKFLOW_BRANCH_VS_CLIENT_SELF_CONSISTENCY_SCOPE"
+    },
+    {
+      "id": "TR04",
+      "status": "CLOSED_FORMAT_AND_REFERENCE_CHECK_SPECIFICATION"
+    },
+    {
+      "id": "TR05",
+      "status": "BYTE_IDENTITY_OWNER_CLOSED_TIMING_WORDING_PENDING",
+      "finding": "C3-CR02"
+    },
+    {
+      "id": "TR06",
+      "status": "CLOSED_DECLARED_CAPACITY_OWNERS_AND_SOURCE_BOUNDS"
+    }
+  ],
+  "not_findings": [
+    "No new dangling root output references in unchanged frozen graph consumers",
+    "Schema may delegate cross-field checks to deterministic validators",
+    "New actual node IDs and delivery hashes are produced with future candidates, not prerequisites for static review",
+    "No independent original Outline verification by client is claimed in C3",
+    "No runtime/professional/consumer acceptance inferred from153 probe results"
+  ]
+}

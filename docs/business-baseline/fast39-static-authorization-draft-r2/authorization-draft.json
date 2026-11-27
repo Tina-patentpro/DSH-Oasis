@@ -1,0 +1,376 @@
+{
+  "draft_id": "FAST39-C4-EX-AUTH-DRAFT-R2",
+  "at": "2026-11-05T20:45:31.535364+08:00",
+  "status": "DRAFT_NOT_APPROVED_NOT_EXECUTABLE",
+  "approved": false,
+  "effective": false,
+  "approval_record": null,
+  "current_request_effect": "author R2 and separate one-time structural/process exception drafts only; no source code/registry/CI changes or calls",
+  "baseline": {
+    "candidate": "C4-R1",
+    "contract": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/CONTRACT.md",
+      "sha256": "88537f878856d304c6c34f909f286274b3e1ddcd34658e75c749f2840850f2b9",
+      "bytes": 19407
+    },
+    "freeze": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/FREEZE.json",
+      "sha256": "a5780ad83094d1a9fdb916f9da83f8fcc52e9794da456f1321dd23b4ab5f4901",
+      "bytes": 2876
+    },
+    "inheritance": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/INHERITANCE.json",
+      "sha256": "10f00fc27c082f2ef7d065cc9b7eb9cd7f7c7637b683fce377fd543ea06cf336",
+      "bytes": 5585
+    },
+    "adoption": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-c4-limited-adoption-20261105/adoption-record.json",
+      "sha256": "955ea6f4286acd9229a093a76ea22085a24a6b357b2a119321e6dbb8bd6c493b",
+      "bytes": 22648
+    },
+    "adoption_freeze": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-c4-limited-adoption-20261105/FREEZE.json",
+      "sha256": "53e414a3aa5c91311e2e8f50789137494b96c65d012e3b102dde44b9a1a59011",
+      "bytes": 1206
+    },
+    "before_DSL": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/current-saved-app.yaml",
+      "sha256": "3a249d33f9d3bb8e359c191134732d8f836e3ae506df8cc395151d1fbd91bd66",
+      "bytes": 465418
+    },
+    "source_native_contract": {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/1、专利工作流/14节点清单V3.4.0.md",
+      "sha256": "a0de1ecd22a74b72c236bc9dc73b71f0e48b2c88fdda0eef35b3b231bd6d10d6",
+      "bytes": 90329
+    }
+  },
+  "author_choices_not_yet_user_approved": {
+    "proposed_version": "0.1.0",
+    "basis": "unused three-part version for this restricted-profile proposal, not inferred source current/latest version",
+    "profile_registration": "owned root work item/events identify a tested static proposal; native node current_candidate_yml remains undesignated"
+  },
+  "conditional_exception": {
+    "id": "EX-BATCH-STATIC",
+    "grant_now": false,
+    "after_explicit_approval_scope": "allow one local static Fast39 C4/LA-bound restricted-profile proposal before original Batch1-3 exits; scope cannot transfer to other flows or real execution",
+    "native_Batch_states_changed": false,
+    "native_Batch_exits_accepted": false
+  },
+  "restricted_profile": {
+    "id": "fast39-c4-packet2-static-proposal-r1",
+    "registration_label": "受检Fast39限定profile静态提案，非V3.4.0节点当前候选",
+    "eligibility": "existing public packet2, one Technical_Disclosure_file and six exact-empty direct text inputs; original eight business inputs/six string outputs",
+    "native_differences": [
+      "three visible sections instead of native five-heading cumulative main Markdown",
+      "does not establish native T1-T6/T2 completeness or full preceding-file cumulative contract",
+      "zero supported claims yields C4 content error, no normal completed artifact",
+      "native M06 seven-field wire not adopted"
+    ],
+    "native_target_replaced": false,
+    "runtime_or_full_v340_claim": false
+  },
+  "file_allowlist": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/1、专利工作流/Flow-2-6-权利要求初稿/YML/flow-2-6-权利要求初稿-V0.1.0.yml",
+      "role": "one complete versioned local Fast39 restricted-profile proposal DSL",
+      "operation": "CREATE_ONCE_NO_OVERWRITE",
+      "exists_at_draft": false,
+      "after_sha256": null
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/1、专利工作流/Flow-2-6-权利要求初稿/nodebook/flow-2-6-V0.1.0-code.py",
+      "role": "consolidated code for permitted Code-node stages only",
+      "operation": "CREATE_ONCE_NO_OVERWRITE",
+      "exists_at_draft": false,
+      "after_sha256": null
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/1、专利工作流/Flow-2-6-权利要求初稿/nodebook/flow-2-6-V0.1.0-prompts.md",
+      "role": "permitted LLM prompt changes and minimal node/port notes only",
+      "operation": "CREATE_ONCE_NO_OVERWRITE",
+      "exists_at_draft": false,
+      "after_sha256": null
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/1、专利工作流/Flow-2-6-权利要求初稿/nodebook/flow-2-6-V0.1.0-schema.json",
+      "role": "permitted structured-output/JSON Schema only; fixed C4 definitions and mapping",
+      "operation": "CREATE_ONCE_NO_OVERWRITE",
+      "exists_at_draft": false,
+      "after_sha256": null
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/reports/FAST39-C4-STATIC-R1/范围与输入.json",
+      "role": "exact source/baseline and adopted-scope identity",
+      "operation": "CREATE_ONCE_NO_OVERWRITE",
+      "exists_at_draft": false,
+      "after_sha256": null
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/reports/FAST39-C4-STATIC-R1/候选清单.json",
+      "role": "actual produced file/node/prompt/Code/Schema/edge identities and restricted purpose",
+      "operation": "CREATE_ONCE_NO_OVERWRITE",
+      "exists_at_draft": false,
+      "after_sha256": null
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/reports/FAST39-C4-STATIC-R1/静态核验.json",
+      "role": "actual offline command/output/error/negative-case results only",
+      "operation": "CREATE_ONCE_NO_OVERWRITE",
+      "exists_at_draft": false,
+      "after_sha256": null
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/reports/FAST39-C4-STATIC-R1/静态交付说明.md",
+      "role": "limited static delivery and retained native contract/runtime gaps",
+      "operation": "CREATE_ONCE_NO_OVERWRITE",
+      "exists_at_draft": false,
+      "after_sha256": null
+    }
+  ],
+  "private_assembly_only": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-c4-static-source-r1",
+    "allowed": "same candidate bytes and bounded static logs before exclusive final creation; no new runner/scorer/framework, no package installation or Profile use",
+    "create_now": false
+  },
+  "logical_change_allowlist": [
+    "SOURCE_REGISTRY",
+    "OUTLINE",
+    "ANCHOR_ADAPTER",
+    "FINAL_WRITER",
+    "SANITIZER",
+    "NORMALIZER",
+    "DEPENDENCY_TREE",
+    "TREE_SANITIZER",
+    "FINAL_FORMATTER"
+  ],
+  "graph_boundary": {
+    "allowed": [
+      "new/changed ports and edges strictly needed by listed9 ABI stages",
+      "END rebinds only the original six output strings",
+      "existing START/document-extractor/merge output may be connected read-only to registry branch; preserve original extraction and business route"
+    ],
+    "preserve": [
+      "all other node data/code/prompts/semantics",
+      "model/provider/version/parameters and plugin/HTTP/extractor configuration",
+      "original eight business-input form semantics and six public output names",
+      "credential references; no new actual secrets/config retrieval"
+    ],
+    "new_actual_node_ids": "allocate and freeze only during actual candidate production",
+    "backend_provider_byte_receipt_and_DSH_persistence": "not implemented by this source-only proposal; remain downstream delivery gaps"
+  },
+  "weekly_policy": {
+    "normal_review_required": true,
+    "time_waiver_permitted": false,
+    "EX_GOV_TIME": "NOT_SELECTED_BY_LATEST_USER",
+    "required_before_source_start": [
+      "source-authorized CI owner uses existing substantive review process",
+      "fresh matching report/sentinel/hash and latest source governance exit0",
+      "do not merely rewrite dates/hash or close63 patterns to clear the gate"
+    ],
+    "CI_writes_in_this_draft": false,
+    "candidate_task_may_repair_CI": false
+  },
+  "registry_proposal": {
+    "owner_scope_id": "FAST39-C4-STATIC-SOURCE-R1",
+    "work_item_id": "FAST39-C4-STATIC-SOURCE-R1",
+    "registered_now": false,
+    "source_registry_observation": {
+      "revision": 489,
+      "sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+      "open_work_item_count": 35
+    },
+    "target_identity": {
+      "section": "## 4. 业务状态",
+      "Flow": "2-6",
+      "exact_raw_row_sha256": "1aaad85ea856242ec6eabc5b84e768bf31841e6cf116ed9d86ae50f124d341ab",
+      "hash_basis": "UTF-8 original exact raw row including actual LF; no normalization; initial candidate binding only",
+      "selector": {
+        "section": "## 4. 业务状态",
+        "key_column": "运行记录",
+        "key": "10157"
+      },
+      "expected_header": "| Flow | YML | Nodebook | 运行记录 | asset_state | current_candidate_yml | contract_state | work_state | evidence_status | latest_change_id | 下一动作 |",
+      "expected_header_columns": 11
+    },
+    "proposed_approved_records": [
+      {
+        "section": "## 4. 业务状态",
+        "key_column": "运行记录",
+        "key": "10157",
+        "fields": [
+          "YML",
+          "Nodebook",
+          "latest_change_id",
+          "下一动作"
+        ]
+      }
+    ],
+    "native_selector_status": "BLOCKED_ON_ACTUAL_SOURCE; proposed exact selector passes only readonly in-memory structural-restoration experiment",
+    "selector_activation_condition": "native find_row exactly1, exact header and Flow2-6, locator10157, original raw-row hash and approved immutable ownership; source restoration and separate approval/gates required; no fallback/rekey",
+    "business_before": {
+      "Flow": "2-6",
+      "YML": "5",
+      "Nodebook": "0",
+      "运行记录": "10157",
+      "asset_state": "legacy_assets_present",
+      "current_candidate_yml": "undesignated",
+      "contract_state": "gap_confirmed",
+      "work_state": "backlog",
+      "evidence_status": "STATIC_ONLY",
+      "latest_change_id": "REG-20260829094157-README-748f0d16",
+      "下一动作": "依据 V3.4.0 重构，创建新版本化候选并完成静态审计"
+    },
+    "business_field_rules": {
+      "YML": "5->6 only after exactly one whitelisted YML is exclusively created and inventory verified",
+      "Nodebook": "0->3 only after exactly three whitelisted nodebook files exist and are verified",
+      "latest_change_id": "actual REG-TXN event for this task only, no predicted success before verification",
+      "下一动作": "preserve original native reconstruction instruction; append restricted-profile proposal ID/file/manifest pointer and state native current candidate unassigned"
+    },
+    "business_fields_must_remain": {
+      "Flow": "2-6",
+      "运行记录": "10157",
+      "asset_state": "legacy_assets_present",
+      "current_candidate_yml": "undesignated",
+      "contract_state": "gap_confirmed",
+      "work_state": "backlog",
+      "evidence_status": "STATIC_ONLY"
+    },
+    "own_work_item_fields": {
+      "scope": "immutable after start; exact file/node/exception/profile/C4+LA scope, no pipe/backtick/newline in native cell values",
+      "work_state": "in_progress->review/closed only on corresponding actual static scope evidence; failed/stopped work not closed as success",
+      "acceptance_checks": "bounded static, source governance0 and actual file/ABI/hash evidence; no native/full/real acceptance",
+      "stop_conditions": "STOP01-STOP11; immutable authority cannot be expanded on update"
+    },
+    "append_only_event_fields": [
+      "event",
+      "scope",
+      "summary",
+      "verification",
+      "evidence_path",
+      "remaining_gaps",
+      "actor"
+    ],
+    "event_sequence": "started, actual progress, completed only if this limited static task passes; otherwise retain progress/error and gaps",
+    "derived_metadata_only": [
+      "registry_revision",
+      "open_work_item_count",
+      "last_updated_at",
+      "last_change_id",
+      "previous_registry_sha256"
+    ],
+    "derived_metadata_rule": "existing transaction tool computes from current whole registry; no fixed future35/36 or arbitrary manual increment",
+    "forbidden": [
+      "other tasks/rows/history",
+      "business column additions or header/section repair",
+      "current_candidate_yml or current_candidate_sha256 designation",
+      "native asset/contract/work/evidence status changes",
+      "Batch/authority/target contract/standards/CI changes",
+      "transaction tool changes or bypass"
+    ],
+    "locator_semantics": "运行记录10157 is fixed existing unchanged locator only, not business identity nor writable field; runtime count drift requires stop and new scoped binding review",
+    "row_hash_lifecycle": {
+      "initial_expected_raw_row_sha256": "1aaad85ea856242ec6eabc5b84e768bf31841e6cf116ed9d86ae50f124d341ab",
+      "before_first_business_change": "must match exact approved initial raw bytes after restoration and ordinary start; never refresh expected to disguise drift",
+      "after_successful_own_change": "only after confirmed native transaction, record actual complete post-row bytes/hash and exact approved delta; next expected_row_sha256 may be this evidenced own after-hash, not original baseline",
+      "unknown_or_failed": "read-only reconcile original transaction and actual bytes; no inferred success or blind new-ID replay",
+      "foreign_or_unexplained_change": "stop; no auto-update of expected hash"
+    },
+    "selector_guard_requirements": [
+      "exactly one native match within exact ##4",
+      "exact11-column header and Flow2-6",
+      "运行记录10157 unchanged and ungranted",
+      "initial exact original row hash; later only genuine own successful after-hash",
+      "same four fields and immutable own grants, plus semantic ownership conflict review across all extant grants, not selector string alone",
+      "any target/header/locator/hash/owner/grant drift stops, no automatic rekey or select-first"
+    ],
+    "source_restoration_component": "registry-restoration-draft.json; separately approved and executed, not included in static four-field grant"
+  },
+  "activation_preconditions": [
+    "explicit approval bound to this draft revision/manifest and exact scope; current draft request is not approval",
+    "normal CI route and new fresh source governance exit0; no time exception",
+    "separately approved B fully restored and verified, then exact R2 native selector/header/Flow/initial row hash/semantic owner and four-field checks; governance0 alone insufficient",
+    "pinned input identities/current paths/task namespace rechecked; whole-registry baseline reinspected immediately before native transaction",
+    "source-owned started event with actually valid exact approved_records; no business writes before successful start",
+    "existing offline parsing/Schema/Code capability available; no dependency or runtime upgrade authorized",
+    "technical re-review of this exact R2 and separate recovery/process component, including frozen future mechanism/request before actual recovery execution"
+  ],
+  "verification_scope_after_approval": [
+    "actual new graph vs fixed source and9-stage/END/edge whitelist",
+    "C4 eligibility/receipt/source-role/anchor/claim mapping/warning/safe projection/Unicode/size invariants using existing offline helpers plus actual produced code evidence",
+    "all declared node/port/Schema/Code/prompt identities and unchanged unrelated data",
+    "source governance0 and exact registry field/other-row/history preservation before claiming static handoff"
+  ],
+  "stops": [
+    {
+      "id": "STOP01",
+      "condition": "draft not explicitly approved or approval identity/scope is missing"
+    },
+    {
+      "id": "STOP02",
+      "condition": "normal weekly review/fresh exact source governance exit0 missing; any new governance failure"
+    },
+    {
+      "id": "STOP03",
+      "condition": "native strict parser/unique selector10157/exact11-header/Flow2-6/approved row-hash lifecycle/four fields/semantic ownership mismatch; no rekey, first-match or relaxed parser"
+    },
+    {
+      "id": "STOP04",
+      "condition": "pinned C4/LA/DSL/Skill/rule/ABI/authority hash changes without scoped reassessment"
+    },
+    {
+      "id": "STOP05",
+      "condition": "any proposed final path or task/transaction namespace occupied; no overwrite or automatic alternate version/path"
+    },
+    {
+      "id": "STOP06",
+      "condition": "unrelated graph/model/provider/HTTP/extractor/credential/dependency changes would be needed"
+    },
+    {
+      "id": "STOP07",
+      "condition": "static eligibility/Schema/ABI/anchor/source/warning/Unicode/size checks fail or required existing parser capability unavailable; no installs or remote fallback"
+    },
+    {
+      "id": "STOP08",
+      "condition": "whole registry drift rejects request; target/header/locator/row/owner/grant drift stops binding; only unrelated lawful registry drift may use original5.5 after all governance checks, max3 refreezes, no automatic merge/retry or lock takeover"
+    },
+    {
+      "id": "STOP09",
+      "condition": "publication would imply native V3.4.0 compliance/current-node designation, real run or professional/user acceptance"
+    },
+    {
+      "id": "STOP10",
+      "condition": "work requires API/model/upload/fee/deploy/backend/DSH changes, archive access or out-of-scope file/field writes"
+    },
+    {
+      "id": "STOP11",
+      "condition": "final immutable source files already created but fail verification; preserve failed artifacts/evidence, no overwrite/delete/second version under this proposal"
+    }
+  ],
+  "not_authorized_even_if_this_draft_approved": [
+    "actual model/API/upload/run/import/publish/deploy/fee calls",
+    "backend/DSH/workarea code or runtime binding activation",
+    "full V3.4.0 reconstruction or whole F26/native M06 wire adoption",
+    "source CI or registry tool modification; source README structural recovery requires explicitly separate B approval",
+    "new dependencies/frameworks/Skill production/other workflows/cases",
+    "daily Profile/global tools/Git commit/push/release/archive access"
+  ],
+  "handoff_only": "actual produced static proposal manifest and limits; future IC-WORKFLOW/API/ARTIFACT implementation/source/test/fingerprint/account-workspace ownership remain separately bound",
+  "previous_draft": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-static-authorization-draft-r1",
+    "freeze_sha256": "20f1a7d3184b4cb24397279caf8a7e039ad5a36168f671dbefa2fee1266347ba",
+    "preserved": true
+  },
+  "review_basis": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/authorization-review.json",
+    "sha256": "9212b191d777ab4ea9aec85084b1b369162b653dd345a3c916cb4379e9de7a74",
+    "finding": "AUTH-TR01"
+  },
+  "authorization_components": {
+    "A": "static candidate/EX-BATCH-STATIC, separately explicitly approved R2 manifest scope; conditional on normal CI and verified source restoration",
+    "B": "FAST39-REGISTRY-RESTORE-ONCE-DRAFT-R2 / EX-REGISTRY-STRUCTURE-ONCE; separately explicit exact structural/process authorization; never implied by A",
+    "C": "normal source CI weekly review under separately valid authority, no waiver; not granted by A or B",
+    "approval_scope_must_be_explicit": true,
+    "all_approved_now": false
+  },
+  "retained_static_identity": "profile/task/file-version/path IDs ending r1/R1 remain intentional unchanged prospective artifact identity from R1; only authorization document revision is R2. No R1 execution or approval implied."
+}

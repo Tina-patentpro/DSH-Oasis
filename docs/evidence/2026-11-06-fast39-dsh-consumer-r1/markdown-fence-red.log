@@ -1,0 +1,73 @@
+✔ C4 canonical JSON sorts scalar keys and preserves raw strings (1.772584ms)
+✔ report JSON parser rejects duplicate escaped keys and noninteger number tokens (1.163417ms)
+✔ local registry derives eight original receipts and separates manual wrapper identity (5.459833ms)
+✔ registry refuses changed packet, missing direct field, mixed input or extra document (2.841708ms)
+✔ warning receipts retain bodies without becoming usable technical sources (3.1035ms)
+✔ frozen C4 example is validated without rewriting the six strings or claiming acceptance (5.8085ms)
+✔ unknown report fields, duplicate JSON keys and forged assurance fail closed (1.495667ms)
+✔ all original warning groups must survive exact pending and output reconstruction (5.432ms)
+✔ source and final locators cannot be forged even when strings remain bounded (5.473666ms)
+✔ counts, plan IDs and dependency graph cannot admit a fabricated or cyclic claim (4.111542ms)
+✔ output budgets count UTF16, UTF8 and escaped JSON without truncating received data (0.565709ms)
+✔ warning renderer fences hostile Markdown and escapes all source table cells (0.273042ms)
+✔ same feature IDs in different plans stay distinct and non-BMP locators use UTF16 (1.690625ms)
+✔ self-consistent malformed source tuples cannot be hidden behind a newly computed hash (6.493834ms)
+✔ warning source cannot support claims after report and registry hashes are recomputed (5.958708ms)
+✔ root-to-dependent downgrade, missing parent and two-node cycles are rejected (4.903833ms)
+✔ unique locator cannot be forged from the first of two exact matches (2.716458ms)
+✔ empty claims are a no-supported-claim content error rather than a completed draft (0.229667ms)
+✔ every emitted plan needs a supported feature, including dependent clusters (1.025125ms)
+✔ all-original warning objects and safe literal groups participate in report validation (3.950459ms)
+✔ bounded JSON rejects container depth, array and key overflow before schema validation (1.2245ms)
+✔ target and source collections compare full tuples without inventing an array order requirement (2.520708ms)
+✖ invalid backtick fence info cannot hide an extra visible section from validation (1.990458ms)
+✖ display lowering preserves literal tree contents and original newline bytes inside code fences (3.813167ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 22
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 224.006625
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-fast39-result.test.mjs:295:1
+✖ invalid backtick fence info cannot hide an extra visible section from validation (1.990458ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-result.test.mjs:299:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'FAST39_RESULT_FIELDS_INVALID' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/m06-fast39-result.test.mjs:302:1
+✖ display lowering preserves literal tree contents and original newline bytes inside code fences (3.813167ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(result.includes('### 依赖树\r\n```text\r\n## 图中原文\r\n```'))
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-result.test.mjs:306:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

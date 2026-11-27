@@ -1,0 +1,141 @@
+--- a/src/v340-runtime-contract.js
++++ b/src/v340-runtime-contract.js
+@@ -67,6 +67,24 @@
+   if(invalid||bytes(value)>V340_LIMITS.snapshotBytes)ctx.addIssue({code:'custom',message:'V340 bounded JSON required'})
+ })
+ const entries = schema=>z.record(z.string().max(128),schema).refine(v=>Object.keys(v).length<=32)
++const m01Text=z.string().trim().min(1).max(10000).refine(v=>!v.includes('\0'))
++export const m01StructuredEditSchema=z.object({
++ schemaVersion:z.literal(1),reason:m01Text,
++ rows:z.array(z.object({
++  rowId:z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$/),
++  data:z.object({
++   tp_id:m01Text,'技术对象/场景':m01Text,'现有缺陷':m01Text,'原因或机理':m01Text,
++   '改进目标':m01Text,'指标/测量方法':m01Text,
++   '来源状态':z.object({
++    source_input_id:z.enum(['research_request_text','research_request_file']),source_hash:sha,
++    source_locator:m01Text,content_origin:z.literal('workflow_analysis'),
++    trust_status:z.enum(['reasoned_inference','hypothesis_to_verify']),
++   }).strict(),
++  }).strict(),
++  coreEvidence:z.object({sourceSha256:sha,quote:m01Text,start:z.number().int().min(0).max(300000),
++   end:z.number().int().min(1).max(300000)}).strict(),
++ }).strict()).min(1).max(64),
++}).strict().refine(v=>bytes(v)<=65536,'M01 table edit exceeds byte limit')
+ export const m06StructuredEditSchema=z.object({schemaVersion:z.literal(1),reason:z.string().trim().min(1).max(2000),
+  replacements:z.array(z.object({table:z.enum(['T2','T4']),rowId:z.string().min(1).max(128),beforeSha256:sha,
+   data:boundedJson.pipe(z.record(z.string().max(128),z.json()).refine(v=>Object.keys(v).length<=64)),
+@@ -156,7 +174,8 @@
+     .refine(c=>c.format!=='core-markdown'||c.body===null||!c.body.includes('\0')),
+   'offline/run':z.object({...command,requestKey:v340Id,confirmed:z.literal(true)}).strict(),
+   'run/create':z.object({...command,requestKey:v340Id,candidate:v340CandidateConfirmationSchema.optional()}).strict(),
+-  'result/edit':z.object({...command,runId:v340Id,versionId:v340Id,baseSha256:sha,draftSha256:sha,requestKey:v340Id,m06Structure:m06StructuredEditSchema.optional()}).strict(),
++  'result/edit':z.object({...command,runId:v340Id,versionId:v340Id,baseSha256:sha,draftSha256:sha,requestKey:v340Id,m06Structure:m06StructuredEditSchema.optional(),m01Structure:m01StructuredEditSchema.optional()}).strict()
++    .refine(v=>v.m06Structure===undefined||v.m01Structure===undefined),
+   'result/review':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha,confirmed:z.literal(true)}).strict(),
+   'result/prepare-save':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha}).strict(),
+   'result/commit-save':z.object({confirmationToken:z.string().min(1).max(512)}).strict(),
+--- a/src/v340-document.js
++++ b/src/v340-document.js
+@@ -1,6 +1,6 @@
+ import { z } from 'zod'
+ import { getV340Node, getV340Catalog, v340Hash, freezeV340 } from './v340-catalog.js'
+-import { v340DocumentBodySchema,m06StructuredEditSchema } from './v340-runtime-contract.js'
++import { v340DocumentBodySchema,m06StructuredEditSchema,m01StructuredEditSchema } from './v340-runtime-contract.js'
+ 
+ const text = z.string().min(1).max(300000).refine(v => v.trim().length > 0)
+ const id = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$/)
+@@ -203,6 +203,34 @@
+     deliverable_impact: '不能据此认定完整同步、结构删除或专业审阅已完成', recommended_action: '核对当前正文、相关表格与依据；完整变更另行处理' })
+ }
+ 
++export const m01StructuredEditHash=value=>value===undefined?'none':v340Hash(JSON.stringify(m01StructuredEditSchema.parse(value)))
++function fillM01Table(snapshot,structure,prepared,uid){
++ const edit=m01StructuredEditSchema.parse(structure),table=snapshot.tables.T1
++ if(snapshot.node_id!=='Flow-1-1'||prepared?.nodeId!=='Flow-1-1'||table.rows.length!==0||table.status!=='missing')fail()
++ const input=prepareV340Inputs('Flow-1-1',prepared.values),core=snapshot.current_result.core_result_markdown
++ if(input.inputHash!==prepared.inputHash)fail()
++ const seen=new Set()
++ for(const row of edit.rows){
++  const source=row.data['来源状态'],value=input.values[source.source_input_id],evidence=row.coreEvidence
++  const text=typeof value==='string'?value:value?.body
++  if(seen.has(row.rowId)||row.rowId!==row.data.tp_id||typeof text!=='string'
++   ||input.receipts[source.source_input_id]?.sha256!==source.source_hash||v340Hash(text)!==source.source_hash
++   ||!text.includes(source.source_locator)||v340Hash(core)!==evidence.sourceSha256
++   ||evidence.end<=evidence.start||evidence.end>core.length||core.slice(evidence.start,evidence.end)!==evidence.quote)fail()
++  seen.add(row.rowId)
++ }
++ const after={status:'generated',rows:edit.rows.map(row=>rowSchema.parse({row_id:row.rowId,data:row.data}))}
++ snapshot.revisions.push({revision_uid:uid,node_id:snapshot.node_id,table:'T1',before:copy(table),after:copy(after),
++  reason:edit.reason,source_evidence:copy(edit.rows),assessment:'manual_revision_not_fact_confirmation'})
++ snapshot.tables.T1=after
++ const missing=snapshot.warnings.find(w=>w.warning_id==='host-Flow-1-1-missing-table-T1'&&w.status==='open')
++ if(missing){
++  const before=copy(missing)
++  missing.status='resolved'
++  missing.current_handling='本次人工修订补入T1结构行；问题语义和测量判据待专业审核。'
++  snapshot.revisions.push({revision_uid:uid,warning_id:missing.warning_id,before,after:copy(missing),reason:edit.reason})
++ }
++}
+ export const m06StructuredEditHash=value=>value===undefined?'none':v340Hash(JSON.stringify(m06StructuredEditSchema.parse(value)))
+ function replaceM06Rows(snapshot,structure,prepared,uid){
+   const edit=m06StructuredEditSchema.parse(structure),seen=new Set()
+@@ -229,24 +257,28 @@
+ }
+ 
+ // Default edits retain all tables. Explicit M06 replacements retain before/after evidence.
+-export function reviseV340Document(parent,{workflowRunUid,generatedAt,body,m06Structure,prepared}){
++export function reviseV340Document(parent,{workflowRunUid,generatedAt,body,m06Structure,m01Structure,prepared}){
+   const core=v340DocumentBodySchema.refine(v=>v.trim().length>0).parse(body)
+   const uid=z.string().uuid().parse(workflowRunUid).toLowerCase(),snapshot=snapshotSchema.parse(copy(parent.snapshot))
+   const local=stamp(generatedAt),node=getV340Node(snapshot.node_id)
+   const limitedWarning=node.nodeId==='Flow-2-6'?makeM06LimitedWarning({workflowRunUid:uid,inheritedWarnings:snapshot.warnings}):null
+   const oldUid=snapshot.workflow_run_uid
++  if(m06Structure!==undefined&&m01Structure!==undefined)fail()
+   if(m06Structure!==undefined)replaceM06Rows(snapshot,m06Structure,prepared,uid)
++  if(m01Structure!==undefined)fillM01Table(snapshot,m01Structure,prepared,uid)
+   snapshot.workflow_run_uid=uid;snapshot.generated_at=`${local}+08:00`
+   snapshot.filename=`${node.filenamePrefix}_${local.replace(/[-T:]/g,'')}_${uid.replaceAll('-','').slice(0,8)}.md`
+   snapshot.manual_edit_manifest.push({source_run_uid:oldUid,source_file_sha256:parent.sha256,revision_uid:uid,
+     edited_section:m06Structure===undefined?'核心结果':'核心结果及指定T2/T4行',before_sha256:v340Hash(snapshot.current_result.core_result_markdown),after_sha256:v340Hash(core),reason:'人工编辑；技术事实、表和来源仍需独立核对',
+-    ...(m06Structure===undefined?{}:{structured_edit_sha256:m06StructuredEditHash(m06Structure)})})
++    ...(m06Structure===undefined?{}:{structured_edit_sha256:m06StructuredEditHash(m06Structure)}),
++    ...(m01Structure===undefined?{}:{edited_section:'核心结果及T1结构问题表',m01_structured_edit_sha256:m01StructuredEditHash(m01Structure)})})
+   snapshot.current_result.core_result_markdown=core
+   snapshot.contents.push({content_id:`host/${uid}/${node.nodeId}/core`,content_markdown:core,content_origin:'user_text',
+     source_input_id:'manual_edit',source_locator:'人工修订核心正文',source_hash:v340Hash(core),trust_status:'hypothesis_to_verify',
+     last_updated_flow:node.nodeId,revision_reason:'保留原正文和人工修订；不自动确认技术事实'})
+   snapshot.warnings.push({...warning(node.nodeId,`manual-${uid}`,'核心正文经人工修改；累计表、来源和技术语义需要重新核对。'),inherited_from:oldUid})
+   if(limitedWarning)snapshot.warnings.push(limitedWarning)
++  if(m01Structure!==undefined)snapshot.warnings.push({...warning(node.nodeId,`t1-repair-${uid}`,'本次补齐结构化技术问题表；问题、原因和指标仍为推断或待验证假设。'),inherited_from:oldUid})
+   if(m06Structure!==undefined)snapshot.warnings.push({...warning(node.nodeId,`structured-${uid}`,'本次显式修订核心正文及指定T2/T4行，保留旧行与来源位置；语义一致性、支持及回退价值仍待专业复核。'),inherited_from:oldUid})
+   snapshot.workflow_status='completed_with_warnings';snapshot.deliverable_status='not_recommended_for_filing'
+   const validated=snapshotSchema.parse(snapshot),document=render(validated,validated.current_result.summary,core)
+--- a/src/v340-result-service.js
++++ b/src/v340-result-service.js
+@@ -1,6 +1,6 @@
+ import {randomUUID} from 'node:crypto'
+ import {v340Commands,getV340Versions,getV340ResultDrafts,V340_LIMITS,V340_CONVERSATION_TEXT_LIMIT,formatV340ConversationDraft} from './v340-runtime-contract.js'
+-import {reviseV340Document,m06StructuredEditHash} from './v340-document.js'
++import {reviseV340Document,m06StructuredEditHash,m01StructuredEditHash} from './v340-document.js'
+ import {restoreV340Prepared} from './v340-input-snapshot.js'
+ import {v340Hash} from './v340-catalog.js'
+ import {hasPendingUnifiedRun} from './generation-contract.js'
+@@ -58,13 +58,14 @@
+     const draft=getV340ResultDrafts(run)[c.versionId]
+     const prior=versions.find(v=>v.editRequestKey===c.requestKey)
+     if(prior){const manifest=prior.result.snapshot.manual_edit_manifest.at(-1);if(prior.parentVersionId!==c.versionId||manifest?.after_sha256!==c.draftSha256
+-      ||(manifest?.structured_edit_sha256??'none')!==m06StructuredEditHash(c.m06Structure))fail('V340_EDIT_CONFLICT','修订请求已绑定其他内容。');return record}
++      ||(manifest?.structured_edit_sha256??'none')!==m06StructuredEditHash(c.m06Structure)
++      ||(manifest?.m01_structured_edit_sha256??'none')!==m01StructuredEditHash(c.m01Structure))fail('V340_EDIT_CONFLICT','修订请求已绑定其他内容。');return record}
+     if(draft&&draft.format!=='core-markdown')fail('V340_DRAFT_FORMAT_REQUIRED','旧草稿格式未确认，请先复制保留，并明确另起核心正文编辑。')
+     if(busy(record)||versions.length>=8||!draft||draft.baseSha256!==c.baseSha256||v340Hash(draft.body)!==c.draftSha256)fail('V340_EDIT_STALE','编辑草稿已变化或版本已达上限；原草稿保留。')
+     const uid=uuidFactory(),versionId=`revision-${uid}`,now=clock()
+     if(versions.some(v=>v.versionId===versionId))fail('V340_EDIT_CONFLICT','版本标识冲突。')
+-    const result=reviseV340Document(version.result,{workflowRunUid:uid,generatedAt:now,body:draft.body,m06Structure:c.m06Structure,
+-      ...(c.m06Structure===undefined?{}:{prepared:restoreV340Prepared(run.inputSnapshot)})})
++    const result=reviseV340Document(version.result,{workflowRunUid:uid,generatedAt:now,body:draft.body,m06Structure:c.m06Structure,m01Structure:c.m01Structure,
++      ...(c.m06Structure===undefined&&c.m01Structure===undefined?{}:{prepared:restoreV340Prepared(run.inputSnapshot)})})
+     const next=structuredClone(record),target=next.tasks[c.taskId].v340.runs[c.runId]
+     target.resultVersions=[...structuredClone(versions),{versionId,parentVersionId:c.versionId,editRequestKey:c.requestKey,result,createdAt:now,
+       review:{status:'not-reviewed',sha256:result.sha256,updatedAt:now},writebacks:[]}]

@@ -1,0 +1,40 @@
+✔ trusted zero catalog exposes mode, and real transport prepares input without creating a business task (42.804791ms)
+✔ zero entry selects memory preview while ordinary entry retains real task creation (5.773875ms)
+✔ input changes invalidate confirmation/results; cancellation rejects late results without retry (7.611708ms)
+✔ normal catalog cannot construct a zero preview; mismatched preparation identity is refused (4.942709ms)
+✔ zero function center disables ordinary service/import/non-M06 entries and offers only M06 preview (6.273917ms)
+✔ zero settings never requests account status or credentials after Host capability is read (4.52425ms)
+✔ zero PanelPages renders eight shared inputs without task records or saved/reviewed claims (4.499375ms)
+✔ embedded hydration, local panel opening and preparation issue only readonly RPCs and retain actual repository (5.529917ms)
+✔ preview reads selected project file through actual transport; editing clears result and confirmation (6.339416ms)
+✔ store rejects late preparation after Workspace is removed and reintroduced (4.991542ms)
+✖ early standalone entry resolves Host mode before attempting panel persistence (4.597625ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 289.230208
+
+✖ failing tests:
+
+test at test/v340-zero-preview.test.mjs:140:1
+✖ early standalone entry resolves Host mode before attempting panel persistence (4.597625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/v340-zero-preview.test.mjs:143:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

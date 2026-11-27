@@ -23,7 +23,7 @@ import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 import { createV340PreparationService } from './v340-preparation.js'
 import { createV340RuntimeService } from './v340-runtime-service.js'
 import {createV340ResultService} from './v340-result-service.js'
-import {m06CandidateCapabilitySchema} from './v340-runtime-contract.js'
+import { m06CandidateCapabilitySchema, patentDisclosureCandidateCapabilitySchema } from './v340-runtime-contract.js'
 
 function serviceError(code, message, details = {}) {
   return new WorkspaceMaterialError(code, message, details)
@@ -93,6 +93,7 @@ export function createWorkbenchService({
   unifiedFixtureEnabled = false,
   unifiedFixtureRunner,
   localGeneration,
+  getLocalSkillSuite,
   v340Executor,
   workspaceOperations = createWorkspaceOperationGuard(),
 } = {}) {
@@ -171,11 +172,12 @@ export function createWorkbenchService({
 
   const upstream = createClaimsUpstreamService({ repository, workspaceRegistry, clock })
   const unified = createUnifiedGenerationService({ repository, enabled: unifiedFixtureEnabled, clock, runIdFactory, runner: unifiedFixtureRunner, upstream, workspaceOperations })
-  const local = createLocalGenerationService({ repository, runtime: localGeneration, clock, runIdFactory, upstream, workspaceOperations })
+  const local = createLocalGenerationService({ repository, runtime: localGeneration, clock, runIdFactory, upstream, getLocalSkillSuite, workspaceOperations })
   return Object.freeze({
     ...unified, ...local, ...v340Runtime, ...createV340ResultService({repository,writebackManager:writebacks,materialManager:materials,clock}),
     get localGenerationEnabled() { return local.localGenerationEnabled },
     get localGenerationKind() { return local.localGenerationKind },
+    get patentDisclosureCandidateEnabled() { return Boolean(v340Executor?.patentDisclosureCandidate) },
     selectClaimsUpstream: upstream.selectClaimsUpstream,
     stopUnifiedRun(command) {
       const run = repository.get(command.workspaceId).tasks[command.taskId]?.runs[command.runId]
@@ -195,7 +197,9 @@ export function createWorkbenchService({
       const catalog=v340.getV340Catalog()
       if(!v340Executor?.m06Candidate)return catalog
       const m06Candidate=m06CandidateCapabilitySchema.parse(v340Executor.m06Candidate)
-      return {...catalog,nodes:catalog.nodes.map(node=>node.nodeId==='Flow-2-6'?{...node,m06Candidate}:node)}
+      const external = v340Executor.patentDisclosureCandidate
+      const candidates = external ? { m06Candidate, patentDisclosureCandidate: patentDisclosureCandidateCapabilitySchema.parse(external) } : { m06Candidate }
+      return { ...catalog, nodes: catalog.nodes.map(node => node.nodeId === 'Flow-2-6' ? { ...node, ...candidates } : node) }
     },
     prepareV340: v340.prepareV340,
     addMaterial({ workspaceId, taskId, expectedRevision, relativePath, confirmed }) {

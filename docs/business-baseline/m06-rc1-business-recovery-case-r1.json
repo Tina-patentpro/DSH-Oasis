@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "revision": "M06-RC1-BUSINESS-RECOVERY-DESIGN-R1",
+  "classification": "PUBLIC_SELF_AUTHORED_SYNTHETIC_DESIGN_INPUT_NOT_EXECUTED",
+  "purpose": "R4-01 minimum offline business revision recovery design; not an application manuscript, persisted state, runtime receipt or public release material selection",
+  "packageVersion": "0.1.0-rc.1",
+  "archiveSHA256": "a7cf9a5dd59db1da2c7fe34fb4eac413c3dbb0d2baad7ab88147c7bfaab63bc3",
+  "proposedIsolatedRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-rc1-business-recovery-offline-20261107-r1",
+  "rootCreated": false,
+  "workspaceId": "rc1-recovery-a",
+  "otherWorkspaceId": "rc1-recovery-b",
+  "taskId": "rc1-recovery-task",
+  "nodeId": "Flow-2-6",
+  "inputSchemaVersion": "v340-1",
+  "initialRequestKey": "rc1-recovery-synthetic-once-r1",
+  "editRequestKey": "rc1-recovery-core-edit-r1",
+  "source": "local-skill",
+  "evidenceKind": "synthetic",
+  "draft": {
+    "source": "local-skill",
+    "textInputs": {
+      "disclosure_text": "PUBLIC_M06_RC1_BUSINESS_RECOVERY_DESIGN_20261107_R1\n一种机械阀，包括阀体、阀芯和复位弹簧。复位弹簧连接阀芯与阀体，用于使阀芯复位。\n仅供同版业务稿的离线合成恢复试验，技术支持与申请适用性未评估。",
+      "user_input": "仅使用给定公开合成材料；保留缺失前序和未评估提示；不调用模型、API或工具，不发送或发布。"
+    },
+    "filePaths": {},
+    "configuration": {}
+  },
+  "eightInputRoles": [
+    {
+      "inputId": "upstream_md_file",
+      "status": "not_provided",
+      "utf8SHA256": null
+    },
+    {
+      "inputId": "disclosure_file",
+      "status": "not_provided",
+      "utf8SHA256": null
+    },
+    {
+      "inputId": "disclosure_text",
+      "status": "provided",
+      "utf8SHA256": "16f089c41922256e991007955314935a7b880016ee7858511875c37fcd9ac3b2"
+    },
+    {
+      "inputId": "drawings_file",
+      "status": "not_provided",
+      "utf8SHA256": null
+    },
+    {
+      "inputId": "drawings_text",
+      "status": "not_provided",
+      "utf8SHA256": null
+    },
+    {
+      "inputId": "claim_requirements_file",
+      "status": "not_provided",
+      "utf8SHA256": null
+    },
+    {
+      "inputId": "claim_requirements_text",
+      "status": "not_provided",
+      "utf8SHA256": null
+    },
+    {
+      "inputId": "user_input",
+      "status": "provided",
+      "utf8SHA256": "5b4e31d320608fd424a9219e681b47449c534a615b034bb89b7e978458c86527"
+    }
+  ],
+  "syntheticExecutorResponse": {
+    "status": "completed",
+    "output": {
+      "summary": "公开合成恢复样例，未作专业或用户接受。",
+      "core_result_markdown": "1. 一种机械阀，包括阀体、阀芯和复位弹簧，复位弹簧连接阀芯与阀体，用于使阀芯复位。\n\n本稿仅用于离线合成恢复试验，技术支持与申请适用性未评估。",
+      "updates": [],
+      "tables": {},
+      "terms_master": [],
+      "warnings": [],
+      "model_completions": []
+    }
+  },
+  "coreResultTemplateSHA256": "64e498773d0e33306eff6eff9fb9548f171c5f0506ff3490df3be4ab91d0b6d7",
+  "editedCoreBody": "1. 一种机械阀，包括阀体、阀芯和复位弹簧，复位弹簧连接阀芯与阀体，用于使阀芯复位。\n\n本稿仅用于离线合成恢复试验，技术支持与申请适用性未评估。\n\n人工编辑测试标记：RC1_RECOVERY_EDIT_R1；仅作恢复验证。",
+  "editedCoreBodySHA256": "b1b198df6c5206ad26653cfe8cfebf928b923432e6d88071bb3e989f67c35134",
+  "externalFileEditSuffix": "\nRC1_RECOVERY_USER_FILE_EDIT_R1\n",
+  "plannedSyntheticInitialExecutions": 1,
+  "plannedSubsequentDispatches": 0,
+  "realBudgets": {
+    "model": 0,
+    "professionalApi": 0,
+    "upload": 0,
+    "payment": 0
+  },
+  "businessInputHash": null,
+  "workflowRunUid": null,
+  "runId": null,
+  "versionId": null,
+  "resultSha256": null,
+  "writebackId": null,
+  "savedFilename": null,
+  "identityCapture": "Actual public service generates identifiers, canonical input snapshot/hash, full cumulative MD/hash and save receipts at execution; template hashes are not substitutes.",
+  "expectations": {
+    "newRevisionInitiallyNotReviewed": true,
+    "retainMissingUpstreamAndHostWarnings": true,
+    "snapshotDeliverableStatus": "not_recommended_for_filing",
+    "professionalAcceptance": "NOT_OBTAINED_FOR_NEW_CASE",
+    "userAcceptance": "NOT_OBTAINED_FOR_NEW_CASE",
+    "coldReopenAfterAllCloses": "same business revision and save receipt, no dispatch, unchanged business bytes",
+    "diskFileAfterExplicitEdit": "matchesReviewed=false; fixed result/hash retained"
+  },
+  "executionStatus": "NOT_EXECUTED",
+  "publicationAuthorized": false,
+  "runtimeStateSeed": false
+}

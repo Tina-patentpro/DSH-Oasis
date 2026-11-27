@@ -1,0 +1,163 @@
+test_MR01_dotdot_reference_rejected (__main__.RevisionTests.test_MR01_dotdot_reference_rejected) ... FAIL
+test_MR01_legal_same_scope_reference_accepted (__main__.RevisionTests.test_MR01_legal_same_scope_reference_accepted) ... ok
+test_MR01_nested_dotdot_reference_rejected (__main__.RevisionTests.test_MR01_nested_dotdot_reference_rejected) ... FAIL
+test_MR01_noncanonical_evidence_context_rejected (__main__.RevisionTests.test_MR01_noncanonical_evidence_context_rejected) ... FAIL
+test_MR02_linked_registry_rejected (__main__.RevisionTests.test_MR02_linked_registry_rejected) ... FAIL
+test_MR02_registry_link_drift_before_replace_stops (__main__.RevisionTests.test_MR02_registry_link_drift_before_replace_stops) ... FAIL
+test_MR02_temporary_link_drift_never_published (__main__.RevisionTests.test_MR02_temporary_link_drift_never_published) ... FAIL
+test_MR03_time_before_setup_rejected (__main__.RevisionTests.test_MR03_time_before_setup_rejected) ... FAIL
+test_MR03_valid_UTC_time_accepted (__main__.RevisionTests.test_MR03_valid_UTC_time_accepted) ... ok
+test_MR04_lock_release_failure_records_unknown (__main__.RevisionTests.test_MR04_lock_release_failure_records_unknown) ... ok
+test_MR04_outcome_write_failure_is_explicit_unknown (__main__.RevisionTests.test_MR04_outcome_write_failure_is_explicit_unknown) ... FAIL
+test_MR04_temp_cleanup_error_does_not_hide_failure (__main__.RevisionTests.test_MR04_temp_cleanup_error_does_not_hide_failure) ... FAIL
+test_MR04_unreadable_after_replace_records_unknown (__main__.RevisionTests.test_MR04_unreadable_after_replace_records_unknown) ... FAIL
+
+======================================================================
+FAIL: test_MR01_dotdot_reference_rejected (__main__.RevisionTests.test_MR01_dotdot_reference_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 20, in test_MR01_dotdot_reference_rejected
+    with self.assertRaises(self.m.Refused):self.m._bytes(ref,self.ctx)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refused not raised
+
+======================================================================
+FAIL: test_MR01_nested_dotdot_reference_rejected (__main__.RevisionTests.test_MR01_nested_dotdot_reference_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 25, in test_MR01_nested_dotdot_reference_rejected
+    with self.assertRaises(self.m.Refused):self.m._bytes({'path':str(inner/'..'/'..'/'outside.bin'),'sha256':fixture.sha(p.read_bytes())},self.ctx)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refused not raised
+
+======================================================================
+FAIL: test_MR01_noncanonical_evidence_context_rejected (__main__.RevisionTests.test_MR01_noncanonical_evidence_context_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 22, in test_MR01_noncanonical_evidence_context_rejected
+    with self.assertRaises(self.m.Refused):self.m.check_context(self.m.Context(self.root,self.ev/'..'/'evidence','isolated'))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refused not raised
+
+======================================================================
+FAIL: test_MR02_linked_registry_rejected (__main__.RevisionTests.test_MR02_linked_registry_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 31, in test_MR02_linked_registry_rejected
+    with self.assertRaises(self.m.Refused):self.m.assemble(self.raw,self.ctx,datetime.datetime.now().astimezone().isoformat(),str(self.ev/'outcome.json'))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refused not raised
+
+======================================================================
+FAIL: test_MR02_registry_link_drift_before_replace_stops (__main__.RevisionTests.test_MR02_registry_link_drift_before_replace_stops)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 38, in test_MR02_registry_link_drift_before_replace_stops
+    self.assertEqual('FAILED_BEFORE_REPLACE',result['status']);self.assertTrue(p.is_symlink());self.assertEqual(self.after,p.read_bytes())
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FAILED_BEFORE_REPLACE' != 'COMMITTED'
+- FAILED_BEFORE_REPLACE
++ COMMITTED
+
+
+======================================================================
+FAIL: test_MR02_temporary_link_drift_never_published (__main__.RevisionTests.test_MR02_temporary_link_drift_never_published)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 45, in test_MR02_temporary_link_drift_never_published
+    self.assertEqual('FAILED_BEFORE_REPLACE',result['status']);self.assertFalse((self.root/'README.md').is_symlink());self.assertEqual(self.after,(self.root/'README.md').read_bytes())
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FAILED_BEFORE_REPLACE' != 'COMMITTED'
+- FAILED_BEFORE_REPLACE
++ COMMITTED
+
+
+======================================================================
+FAIL: test_MR03_time_before_setup_rejected (__main__.RevisionTests.test_MR03_time_before_setup_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 48, in test_MR03_time_before_setup_rejected
+    with self.assertRaises(self.m.Refused):self.m.assemble(self.raw,self.ctx,'2000-01-01T00:00:00+08:00',str(self.ev/'outcome.json'))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refused not raised
+
+======================================================================
+FAIL: test_MR04_outcome_write_failure_is_explicit_unknown (__main__.RevisionTests.test_MR04_outcome_write_failure_is_explicit_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 76, in test_MR04_outcome_write_failure_is_explicit_unknown
+    try:self.m.commit(self.f1,self.gate,self.ctx,_fault=occupy)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/restore_once.py", line 203, in commit
+    _write_new(out,canonical(result));return result
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/restore_once.py", line 174, in _write_new
+    with p.open('xb') as f:f.write(data);f.flush();os.fsync(f.fileno())
+         ^^^^^^^^^^^^
+  File "/Users/tinadong7036/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/test_MR04_outcome_write_failure_is_explicit_unknown-870b52e7/evidence/attempt-outcome.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 78, in test_MR04_outcome_write_failure_is_explicit_unknown
+    self.assertEqual('OutcomeUnavailable',type(ex).__name__,'outcome failure must carry explicit UNKNOWN payload')
+AssertionError: 'OutcomeUnavailable' != 'FileExistsError'
+- OutcomeUnavailable
++ FileExistsError
+ : outcome failure must carry explicit UNKNOWN payload
+
+======================================================================
+FAIL: test_MR04_temp_cleanup_error_does_not_hide_failure (__main__.RevisionTests.test_MR04_temp_cleanup_error_does_not_hide_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 68, in test_MR04_temp_cleanup_error_does_not_hide_failure
+    try:result=self.m.commit(self.f1,self.gate,self.ctx,_fault=replace_temp)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/restore_once.py", line 201, in commit
+    if tmp is not None and tmp.exists():tmp.unlink()  # only our temporary, frozen candidate remains retained
+                                        ^^^^^^^^^^^^
+  File "/Users/tinadong7036/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1342, in unlink
+    os.unlink(self)
+PermissionError: [Errno 1] Operation not permitted: '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/test_MR04_temp_cleanup_error_does_not_hide_failure-40067566/root/.README.fast39-once-a93a4ccb9f834d348cb7b637a12df347.tmp'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 69, in test_MR04_temp_cleanup_error_does_not_hide_failure
+    except Exception as ex:self.fail('cleanup swallowed outcome: '+type(ex).__name__)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: cleanup swallowed outcome: PermissionError
+
+======================================================================
+FAIL: test_MR04_unreadable_after_replace_records_unknown (__main__.RevisionTests.test_MR04_unreadable_after_replace_records_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 58, in test_MR04_unreadable_after_replace_records_unknown
+    try:result=self.m.commit(self.f1,self.gate,self.ctx,_fault=lose)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/restore_once.py", line 202, in commit
+    result={'kind':'EXCEPTION_RECEIPT','mode':ctx.mode,'target':str(ctx.root/'README.md'),'status':status,'error':error,'replace_attempted':attempted,'before_sha256':sha(old),'frozen_after_sha256':sha(candidate),'observed_after_sha256':sha((ctx.root/'README.md').read_bytes()),'request_original_sha256':sha(raw),'exception_intent_sha256':intent_hash(raw),'actual_observed_at':datetime.now().astimezone().isoformat(),'producer':'one-time exception module, NOT native apply','runtime_or_user_acceptance':False}
+                                                                                                                                                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tinadong7036/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tinadong7036/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/test_MR04_unreadable_after_replace_records_unknown-6d55e3cf/root/README.md'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py", line 59, in test_MR04_unreadable_after_replace_records_unknown
+    except Exception as ex:self.fail('lost UNKNOWN outcome on postwrite observation failure: '+type(ex).__name__)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: lost UNKNOWN outcome on postwrite observation failure: FileNotFoundError
+
+----------------------------------------------------------------------
+Ran 13 tests in 8.394s
+
+FAILED (failures=10)

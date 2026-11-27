@@ -1,0 +1,85 @@
+{
+  "kind": "SYNTHETIC_DOCUMENT_EXAMPLE_NOT_RUNTIME",
+  "source_materials": {
+    "disclosure_text": "甲😀\r\n乙"
+  },
+  "structured_result": {
+    "contract_version": "flow26-fast-result-1",
+    "request_key": "synthetic-task0-only",
+    "workflow_run_id": "00000000-0000-4000-8000-000000000001",
+    "outputs": {
+      "output": "1. 甲。\n\n合成依赖树\n\n合成待确认",
+      "claims_text": "1. 甲。",
+      "dependency_tree": "合成依赖树",
+      "pending_confirmation": "合成待确认",
+      "quality_report": "{\"outline_quality\":{\"fallback_hint\":\"仅合成合同示例；待人工复核。\",\"status\":\"partial\",\"warnings\":[\"SYNTHETIC_NOT_PATENT_ACCEPTANCE\"]},\"outline_error\":\"\",\"marker_warnings\":[],\"dependency_warnings\":[],\"dependency_parse_status\":\"ok\",\"dependency_edges\":[],\"claim_count\":1,\"quality_status\":\"partial\",\"acceptance\":\"draft_requires_review_not_professional_acceptance\",\"contract_version\":\"flow26-quality-1\",\"source_trace_version\":\"flow26-source-trace-1\",\"source_status\":\"mapped\",\"source_map\":[{\"planned_claim_id\":\"outline:c1\",\"claim_id\":\"1\",\"feature_id\":\"wf:f1\",\"input_id\":\"disclosure_text\",\"source_sha256\":\"d61a27e3e318c6e146fa42899d6971860bf2e08c96ccc57d662e824510360399\",\"start_utf16\":1,\"end_utf16\":3,\"quote\":\"😀\"}],\"critical_feature_ids\":[\"wf:f1\"],\"critical_feature_targets\":[{\"planned_claim_id\":\"outline:c1\",\"feature_id\":\"wf:f1\"}],\"claim_id_map\":[{\"planned_claim_id\":\"outline:c1\",\"final_claim_id\":\"1\",\"reason\":\"合成一对一编号示例\"}],\"feature_dispositions\":[{\"planned_claim_id\":\"outline:c1\",\"claim_id\":\"1\",\"feature_id\":\"wf:f1\",\"action\":\"rephrased\",\"output_quote\":\"甲\",\"output_start_utf16\":3,\"output_end_utf16\":4,\"reason\":\"仅验证结构和定位，不证明改写等义\"}],\"feature_coverage\":{\"status\":\"complete\",\"missing_core_feature_ids\":[]},\"support_review_status\":\"not_assessed\"}",
+      "quality_status": "partial"
+    }
+  },
+  "parsed_quality_report": {
+    "outline_quality": {
+      "fallback_hint": "仅合成合同示例；待人工复核。",
+      "status": "partial",
+      "warnings": [
+        "SYNTHETIC_NOT_PATENT_ACCEPTANCE"
+      ]
+    },
+    "outline_error": "",
+    "marker_warnings": [],
+    "dependency_warnings": [],
+    "dependency_parse_status": "ok",
+    "dependency_edges": [],
+    "claim_count": 1,
+    "quality_status": "partial",
+    "acceptance": "draft_requires_review_not_professional_acceptance",
+    "contract_version": "flow26-quality-1",
+    "source_trace_version": "flow26-source-trace-1",
+    "source_status": "mapped",
+    "source_map": [
+      {
+        "planned_claim_id": "outline:c1",
+        "claim_id": "1",
+        "feature_id": "wf:f1",
+        "input_id": "disclosure_text",
+        "source_sha256": "d61a27e3e318c6e146fa42899d6971860bf2e08c96ccc57d662e824510360399",
+        "start_utf16": 1,
+        "end_utf16": 3,
+        "quote": "😀"
+      }
+    ],
+    "critical_feature_ids": [
+      "wf:f1"
+    ],
+    "critical_feature_targets": [
+      {
+        "planned_claim_id": "outline:c1",
+        "feature_id": "wf:f1"
+      }
+    ],
+    "claim_id_map": [
+      {
+        "planned_claim_id": "outline:c1",
+        "final_claim_id": "1",
+        "reason": "合成一对一编号示例"
+      }
+    ],
+    "feature_dispositions": [
+      {
+        "planned_claim_id": "outline:c1",
+        "claim_id": "1",
+        "feature_id": "wf:f1",
+        "action": "rephrased",
+        "output_quote": "甲",
+        "output_start_utf16": 3,
+        "output_end_utf16": 4,
+        "reason": "仅验证结构和定位，不证明改写等义"
+      }
+    ],
+    "feature_coverage": {
+      "status": "complete",
+      "missing_core_feature_ids": []
+    },
+    "support_review_status": "not_assessed"
+  },
+  "intended_result": "shape/location pass only; semantic equivalence not assessed; partial stays partial"
+}

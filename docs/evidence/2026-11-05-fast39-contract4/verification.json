@@ -1,0 +1,128 @@
+{
+  "at": "2026-11-05T16:19:55.728623+08:00",
+  "scope": "C4 document edition and offline verification only",
+  "candidate": "C4-R1",
+  "verdict": "PASS",
+  "failures": [],
+  "inputs_rechecked": 83,
+  "preexisting_git_visible_files_preserved": 3876,
+  "business_files_preserved": 353,
+  "C1_C3_readonly_files_preserved": 32,
+  "candidate_files_0444": 16,
+  "inherited_files_byte_identical": 12,
+  "new_visible_files": [
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/CONTRACT.md",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/FREEZE.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/INHERITANCE.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/adoption-scope.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/capacity-policy.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/changes-from-candidate2.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/changes-from-candidate3.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/code-abi.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/cross-field-checks.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/delivery-binding.candidate.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/examples.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/receipt-mapping.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/schemas.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/transition-table.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/validation-cases.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/限定用途与设计采用说明.md",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/errata-verification.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/preflight.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/schema-verification.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/verification-attempt-1.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/两处校正与离线复核回执.md"
+  ],
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "freeze_sha256": "a5780ad83094d1a9fdb916f9da83f8fcc52e9794da456f1321dd23b4ab5f4901",
+  "schema": {
+    "definitions": 33,
+    "passed": 153,
+    "failed": 0,
+    "python_version": "3.12.14",
+    "jsonschema": "4.26.0"
+  },
+  "errata": {
+    "passed": 11,
+    "failed": 0
+  },
+  "commands": [
+    {
+      "shell": "zsh",
+      "command": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python -B .local/fast39-contract4-20261105/verify_documents.py",
+      "exit_code": 0
+    },
+    {
+      "shell": "zsh",
+      "command": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python -B .local/fast39-contract4-20261105/verify_errata.py",
+      "exit_code": 0
+    }
+  ],
+  "new_generation_calls": 0,
+  "paid_calls": 0,
+  "network_attempts": [],
+  "business_code_edits": 0,
+  "deployments": 0,
+  "implementation_acceptance": false,
+  "evidence_files": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/errata-verification.json",
+      "sha256": "29a5e3d45e6e2a30d9b8356357a01adc9a131c85bd6a0d5b259a72a0266cdb31"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/preflight.json",
+      "sha256": "a13135fd145eb12fc7210c3e59de5c11f19e473cc28a71265f6d3cf85f24bb22"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/schema-verification.json",
+      "sha256": "0dabdba19aa80b824b8475dd7f4be6834f3468376d9cb034541852ddfe0fdadd"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/verification-attempt-1.json",
+      "sha256": "3da8bb1df736842f472ecb8f0cb78643f789bd2d5cd045df7226f9e9f783bd43"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/两处校正与离线复核回执.md",
+      "sha256": "65fe206e242c7be627e6760a3eda1e3e2d784599ccadd3e847e6b5c7c0ae45ba"
+    }
+  ],
+  "local_probe_files": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-contract4-20261105/prepare_metadata.py",
+      "sha256": "e0c9168073f1a62201b53f0ade3400633b0babc70aec70069075aca1b902f0be"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-contract4-20261105/verify_documents.py",
+      "sha256": "970534c1f6cb50a36d2884d00065abdf20867cb4b12ef462452f130e19e54546"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-contract4-20261105/verify_errata.py",
+      "sha256": "fd4a73b7c825acddb69610a40f8bd10922186f17a35c0b381310c7e34395788d"
+    }
+  ],
+  "preserved_first_verification": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4/verification-attempt-1.json",
+    "sha256": "3da8bb1df736842f472ecb8f0cb78643f789bd2d5cd045df7226f9e9f783bd43",
+    "verdict": "FAIL",
+    "reason": "ordinary-file baseline excluded two symlinks but final added-file enumeration included them"
+  },
+  "symlink_checks": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/node",
+      "target": "../node-v24.21.0-darwin-arm64/bin/node",
+      "index_entry": "120000 5513a9ac6926e1e0208beff28a87c7cc289a4e63 0\ttools/bin/node",
+      "baseline_status_clean": true,
+      "target_matches_git_index": true,
+      "baseline_limit": "link targets were not directly hashed in initial plain-file snapshot; clean initial status plus unchanged index target used"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/python3",
+      "target": "../python-3.14.8-darwin-arm64/bin/python3",
+      "index_entry": "120000 835ecd1890289291bb9ce62694496d1e5f5f938c 0\ttools/bin/python3",
+      "baseline_status_clean": true,
+      "target_matches_git_index": true,
+      "baseline_limit": "link targets were not directly hashed in initial plain-file snapshot; clean initial status plus unchanged index target used"
+    }
+  ]
+}

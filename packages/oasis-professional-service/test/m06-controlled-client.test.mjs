@@ -6,11 +6,12 @@ import { writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { createWorkbenchRemote } from '../src/client/workbench-remote.js'
 import { createWorkbenchStore } from '../src/client/workbench-store.js'
+import { createProductSettings } from '../src/client/product-settings.js'
 import { V340GenerationPage } from '../src/client/V340GenerationPage.js'
 import { setupM06ControlledHost } from './helpers/m06-controlled-host-harness.mjs'
 
-async function client(t, { loseRunReply = false, loseBeforeAdmission = false, holdPreview } = {}) {
-  const host = await setupM06ControlledHost(t), calls = []
+async function client(t, { loseRunReply = false, loseBeforeAdmission = false, holdPreview, beforeApply, connectionSettings } = {}) {
+  const host = await setupM06ControlledHost(t, { beforeApply }), calls = []
   let sessionId = 's'
   const remote = createWorkbenchRemote({ rpc: { async call(channel, method, payload, signal) {
     assert.equal(channel, '/api'); signal?.throwIfAborted()
@@ -22,7 +23,7 @@ async function client(t, { loseRunReply = false, loseBeforeAdmission = false, ho
     if (loseRunReply && endpoint === 'workflow/v340/candidate/run') throw Error('synthetic lost reply after real admission')
     return result
   } } })
-  const store = createWorkbenchStore({ remote, saveDelayMs: 0, getGenerationSession: () => sessionId })
+  const store = createWorkbenchStore({ remote, connectionSettings, saveDelayMs: 0, getGenerationSession: () => sessionId })
   t.after(() => store.dispose())
   store.syncWorkspaces([{ workspaceId: 'w' }]); await store.hydrateWorkspace('w'); await store.loadWorkflowCatalog('w')
   // Host task creation does not select a client tab; exercise the actual selection/save path.
@@ -156,4 +157,53 @@ test('controlled input page presents model confirmation while the ordinary input
   assert.match(confirm, /确认生成一次/); assert.match(confirm, /fixture-model/); assert.match(confirm, /synthetic-native-test/)
   assert.match(confirm, /专业/); assert.match(confirm, /取消/)
   assert.equal(c.host.calls.adapter, 0)
+})
+
+test('saving the GitHub suite in settings enables the third-party task preview and runs it through the Host', async t => {
+  let value = {}, listener, invalidate
+  const settings = createProductSettings({
+    remote: { async accountStatus() {
+      return { authenticated: false, available: false, writable: false, accountId: null, revision: null, retryAfterSeconds: 0 }
+    } },
+    onInvalidated: () => invalidate?.(),
+  })
+  t.after(() => settings.dispose())
+  const form = {
+    getSnapshot: () => ({ status: 'ready', mode: 'host', writable: true, value }),
+    subscribe(fn) { listener = fn; return () => {} },
+    async set(key, next) { value = { ...value, [key]: next }; listener(); return true },
+  }
+  settings.bind({ configForms: { get: () => form }, remote: { $host: { isLoopback: true } },
+    connection: { isLoopback: true, generation: { getSnapshot: () => 1, subscribe: () => () => {} } } })
+  const c = await client(t, { connectionSettings: settings, beforeApply(ctx) {
+    ctx.settings.register = (_namespace, _schema, options) => ({ get: () => ({ ...options.base, ...value }) })
+  } })
+  invalidate = () => c.store.refreshProfessionalConfiguration(false)
+  await c.store.prepareV340Candidate('w', 't')
+  assert.equal(c.operation().v340CandidatePreview.businessSkillId, 'm06-claims-draft')
+  assert.equal(await settings.saveLocalSkillSuite('patent-disclosure'), true)
+  await assert.rejects(c.store.confirmV340Candidate('w', 't'))
+  assert.equal(c.host.calls.adapter, 0)
+  await c.store.prepareV340Candidate('w', 't')
+  const state = { ...c.state(), localSkillSuite: settings.getSnapshot().localSkillSuite }
+  const html = renderToStaticMarkup(createElement(V340GenerationPage, {
+    state, page: state.pages.find(p => p.pageId === 't'), node: state.v340Catalog.nodes.find(n => n.nodeId === 'Flow-2-6'),
+    operation: c.operation(), actions: { prepareCandidate() {}, confirmCandidate() {} },
+  }))
+  assert.match(html, /中国专利 Skill · 权利要求初稿/)
+  assert.match(html, /确认生成一次/)
+  await c.store.confirmV340Candidate('w', 't')
+  const record = await c.host.state(), run = Object.values(record.tasks.t.v340.runs)[0]
+  assert.equal(run.nativeCandidate.businessSkillId, 'patent-disclosure-claims')
+  await c.store.v340Action('w', 't', 'run/observe', { runId: run.runId })
+  assert.equal(c.host.calls.adapter, 1)
+  assert.equal(c.host.calls.network, 0)
+  assert.match(c.host.actualCall.system, /先有 .application_plan.yaml. 的 .claim_tree./)
+  let persisted
+  for (let i = 0; i < 100; i++) {
+    persisted = (await c.host.state()).tasks.t.v340.runs[run.runId]
+    if (persisted.status !== 'prepared') break
+    await new Promise(resolve => setTimeout(resolve, 5))
+  }
+  assert.equal(persisted.status, 'completed')
 })

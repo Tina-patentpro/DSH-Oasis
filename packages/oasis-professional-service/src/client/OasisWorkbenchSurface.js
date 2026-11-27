@@ -299,7 +299,8 @@ export function OasisWorkbenchSurface({
     showFunctionCenter: center,
     nativeAvailability: coordinator?.nativeAvailability(workspaceId) ?? {},
     onOpenNative: type => coordinator?.openNativeTool(workspaceId, type) === true,
-    state: { ...state, professionalConfigurationBlocked: !configuration.canSubmit, conversationUnavailableReason },
+    state: { ...state, localSkillSuite: configuration.localSkillSuite,
+      professionalConfigurationBlocked: !configuration.canSubmit, conversationUnavailableReason },
     effectiveMode,
     onSelectWorkflow: (pageId, workflowId) => {
       if (!pageId||store.getWorkspaceState(workspaceId).pages.find(page => page.pageId === pageId)?.workflowId) {

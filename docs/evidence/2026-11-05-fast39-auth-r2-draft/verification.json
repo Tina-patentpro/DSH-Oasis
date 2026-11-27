@@ -1,0 +1,106 @@
+{
+  "at": "2026-11-05T20:50:53.562963+08:00",
+  "verdict": "PASS_DOCUMENT_DRAFT_AND_PRESERVATION",
+  "failures": [],
+  "scope": "document author self-check, not independent technical acceptance or source repair; future one-shot exception mechanism not implemented/tested",
+  "draft_id": "FAST39-C4-EX-AUTH-DRAFT-R2",
+  "freeze_sha256": "05dc0f89933ac4e1fe274e00fcfb5694c5cce7408028c12f6870ff91132bfa56",
+  "draft_approved": false,
+  "draft_effective": false,
+  "document_and_memory_checks": 51,
+  "guard_cases": 9,
+  "preserved_existing_files": 3941,
+  "preserved_symlinks": 2,
+  "preserved_business_files": 364,
+  "inputs_unchanged": 241,
+  "source_registry_sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+  "source_addressability": "BLOCKED actual malformed table separator; only hypothetical repaired text can select proposed row",
+  "source_governance_exit_code": 1,
+  "weekly_time_waiver": false,
+  "remaining_release_conditions": [
+    "exact R2 A/B technical review and separate explicit approvals",
+    "normal substantive source weekly review and fresh full governance0 under valid CI authority",
+    "frozen/reviewed/approved one-shot exception intent/script/hash/provenance before source recovery",
+    "actual source restoration/strict native selector/header/Flow/hash/semantic ownership and preservation proof",
+    "candidate started/grants and current input/path/capability conditions"
+  ],
+  "source_writes": 0,
+  "business_code_edits": 0,
+  "CI_writes": 0,
+  "deployments": 0,
+  "new_API_model_upload_generation_paid_calls": 0,
+  "Git_commits_or_pushes": 0,
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "new_git_visible_files_before_this_verification": [
+    "docs/business-baseline/fast39-static-authorization-draft-r2/FREEZE.json",
+    "docs/business-baseline/fast39-static-authorization-draft-r2/R1至R2变更说明.md",
+    "docs/business-baseline/fast39-static-authorization-draft-r2/authorization-draft.json",
+    "docs/business-baseline/fast39-static-authorization-draft-r2/registry-restoration-draft.json",
+    "docs/business-baseline/fast39-static-authorization-draft-r2/授权草案.md",
+    "docs/business-baseline/fast39-static-authorization-draft-r2/源登记表结构恢复与流程例外草案.md",
+    "docs/evidence/2026-11-05-fast39-auth-r2-draft/draft-checks.json",
+    "docs/evidence/2026-11-05-fast39-auth-r2-draft/governance-rerun.json",
+    "docs/evidence/2026-11-05-fast39-auth-r2-draft/preflight.json",
+    "docs/evidence/2026-11-05-fast39-auth-r2-draft/读取与差异说明.md"
+  ],
+  "evidence_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r2-draft/draft-checks.json",
+      "sha256": "a9afee9d2f66efda263c80e847fa652bfc25cd8eaec6dc161417727ee17bf35c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r2-draft/governance-rerun.json",
+      "sha256": "8b0bfe26f36ef30a34633a767b80374158e231a460840b9f70ec487ecec0da81"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r2-draft/preflight.json",
+      "sha256": "d034fa3b5c02587a415e7650ee1ef32c9705c665cc0a4bbefa28cc83c80ed5a0"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r2-draft/读取与差异说明.md",
+      "sha256": "585a2ea9ed5a7240738950a5eb0f4aab9135751b8e1bd3688b3c9e759e42bf51"
+    }
+  ],
+  "private_document_check_script_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-auth-r2-draft-20261105/build.py",
+      "sha256": "41988e693b479fdd7c5454a6b2dc4a43b2149dfe4624c6264fd91f03c54eb9ed"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-auth-r2-draft-20261105/check.py",
+      "sha256": "aa87987b8e60c7a062d7d6c3ba671973db8111ecda2537a49933f9c201ca41b4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-auth-r2-draft-20261105/finalize.py",
+      "sha256": "322cc428e4bc046f609ce2ae14435a4784d6d38a49ed5d138fc58dc3807e5e41"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-auth-r2-draft-20261105/prepare.py",
+      "sha256": "01a8e997d60a8f9a69e737bdd576a7ebf20fa8b2c9f77a20f9e21a32d2c169d2"
+    }
+  ],
+  "commands": [
+    {
+      "command": "tools/bin/python3 -B .local/fast39-auth-r2-draft-20261105/prepare.py",
+      "initial_exit": 1,
+      "reason": "index uses project_id, not id; only own empty dirs/private snapshot created",
+      "corrected_exit": 0
+    },
+    {
+      "command": "tools/bin/python3 -B .local/fast39-auth-r2-draft-20261105/build.py",
+      "exit": 0
+    },
+    {
+      "command": "tools/bin/python3 -B .local/fast39-auth-r2-draft-20261105/check.py",
+      "exit": 0,
+      "governance_child_exit": 1
+    },
+    {
+      "command": "tools/bin/python3 -B .local/fast39-auth-r2-draft-20261105/finalize.py",
+      "initial_exit": 1,
+      "initial_error": "private verifier SyntaxError before any execution or freeze write; corrected else spacing",
+      "exit": 0
+    }
+  ]
+}

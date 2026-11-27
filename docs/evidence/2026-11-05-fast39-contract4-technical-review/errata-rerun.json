@@ -1,0 +1,56 @@
+{
+  "candidate": "C4-R1",
+  "at": "2026-11-05T16:28:44.050139+08:00",
+  "scope": "document-only errata self-check; not independent review or runtime acceptance",
+  "checks": [
+    {
+      "name": "Only two substantive paragraphs plus three edition metadata lines",
+      "pass": true
+    },
+    {
+      "name": "Complete document equals recorded exact transformation",
+      "pass": true
+    },
+    {
+      "name": "All12 shared files byte-identical to C3",
+      "pass": true
+    },
+    {
+      "name": "Exclusive prose matches all five required Schema fields",
+      "pass": true
+    },
+    {
+      "name": "Plan reason distinguished from per-feature reason",
+      "pass": true
+    },
+    {
+      "name": "Unchanged writer fixture accepted",
+      "pass": true
+    },
+    {
+      "name": "Missing decision_reason rejected",
+      "pass": true
+    },
+    {
+      "name": "Capture then successful original parse then wrapper assembly",
+      "pass": true
+    },
+    {
+      "name": "Single response, no extra request/assembly parse; original branches retained",
+      "pass": true
+    },
+    {
+      "name": "Schema and node ABI unchanged",
+      "pass": true
+    },
+    {
+      "name": "No network or remote Schema resolution",
+      "pass": true
+    }
+  ],
+  "passed": 11,
+  "failed": 0,
+  "network_attempts": [],
+  "new_generation_calls": 0,
+  "paid_calls": 0
+}

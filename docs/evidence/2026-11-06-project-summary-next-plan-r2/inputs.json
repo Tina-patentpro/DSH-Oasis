@@ -1,0 +1,388 @@
+{
+  "at": "2026-11-06T11:21:48.983500+08:00",
+  "executor": "Codex single agent",
+  "project": "dsh-oasis",
+  "scope": "project summary and next-plan R2 only; no business implementation or real calls/publication",
+  "git_root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis",
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "git_status_before": "M AGENTS.md\n M README.md\n M docs/evidence/2026-10-23-stage5-progress-and-remaining.md\n M docs/evidence/2026-10-26-follow-up-remaining.md\n M docs/plans/2026-10-25-dsh-oasis-master-plan.md\n M docs/project-current-state.md\n M packages/oasis-professional-service/lib/client.js\n M packages/oasis-professional-service/lib/client.js.map\n M packages/oasis-professional-service/package.json\n M packages/oasis-professional-service/src/client/V340GenerationPage.js\n M packages/oasis-professional-service/src/client/workbench-store.js\n M packages/oasis-professional-service/src/client/workspace-api-binding-controller.js\n M packages/oasis-professional-service/src/index.js\n M packages/oasis-professional-service/src/oasis-remote-service.js\n M packages/oasis-professional-service/src/oasis-runtime-config.js\n M packages/oasis-professional-service/src/v340-native-model.js\n M packages/oasis-professional-service/src/v340-runtime-contract.js\n M packages/oasis-professional-service/src/v340-runtime-service.js\n M packages/oasis-professional-service/src/website-import-service.js\n M packages/oasis-professional-service/test/helpers/m06-controlled-host-harness.mjs\n M packages/oasis-professional-service/test/oasis-workspace-binding.test.mjs\n M packages/oasis-professional-service/test/website-import.test.mjs\n M packages/oasis-professional-service/test/workspace-api-binding-client.test.mjs\n?? docs/business-baseline/fast39-c4-limited-adoption-20261105/\n?? docs/business-baseline/fast39-result-contract-candidate-1/\n?? docs/business-baseline/fast39-result-contract-candidate-2/\n?? docs/business-baseline/fast39-result-contract-candidate-3/\n?? docs/business-baseline/fast39-result-contract-candidate-4/\n?? docs/business-baseline/fast39-static-authorization-draft-r1/\n?? docs/business-baseline/fast39-static-authorization-draft-r2/\n?? docs/business-baseline/fast39-static-authorization-draft-r3/\n?? docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.json\n?? docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.md\n?? docs/business-baseline/oasisintwrite-community-license-1.0-draft-r1/\n?? docs/business-baseline/v340-pdf-integration-compatibility-r1.md\n?? docs/evidence/2026-10-29-f-recovery-interruption-diagnosis.json\n?? docs/evidence/2026-10-29-flow26-controlled-profile-r2.json\n?? docs/evidence/2026-10-29-flow26-g0-admission.json\n?? docs/evidence/2026-10-29-flow26-installed-admission-r2.json\n?? docs/evidence/2026-10-29-flow26-live-service-metadata-r2.json\n?? docs/evidence/2026-10-29-flow26-remote-contract-request-r2.json\n?? docs/evidence/2026-10-29-m06-admin-access-verification.json\n?? docs/evidence/2026-10-29-m06-admin-access.json\n?? docs/evidence/2026-10-29-m06-f-execution-preflight.json\n?? docs/evidence/2026-10-29-m06-f-intake-and-interruption-return.md\n?? docs/evidence/2026-10-29-m06-f-verification.json\n?? docs/evidence/2026-10-29-m06-intake-delta.json\n?? docs/evidence/2026-10-29-m06-public-calibration-input-r2.json\n?? docs/evidence/2026-10-29-m06-public-calibration-input.json\n?? docs/evidence/2026-10-29-m06-workarea-method-binding.json\n?? docs/evidence/2026-10-29-pdf-api-minimal-preflight.json\n?? docs/evidence/2026-10-29-pdf-api-minimal-return.md\n?? docs/evidence/2026-10-29-pdf-api-minimal-verification.json\n?? docs/evidence/2026-10-29-pdf-container-minimal-return.md\n?? docs/evidence/2026-10-29-pdf-container-minimal-verification.json\n?? docs/evidence/2026-10-29-pdf-container-spike-preflight.json\n?? docs/evidence/2026-10-29-pdf-container-two-cases.json\n?? docs/evidence/2026-10-29-pdf-docx-and-flow26-g0-return.md\n?? docs/evidence/2026-10-29-pdf-docx-g0-execution-preflight.json\n?? docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-preflight.json\n?? docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-return.md\n?? docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-verification.json\n?? docs/evidence/2026-10-29-pdf-docx-g0-verification.json\n?? docs/evidence/2026-10-29-pdf-docx-provider-readiness.json\n?? docs/evidence/2026-10-29-pdf-m06-implementation-preflight.json\n?? docs/evidence/2026-10-29-pdf-m06-implementation-return.md\n?? docs/evidence/2026-10-29-pdf-m06-implementation-verification.json\n?? docs/evidence/2026-10-29-pdf-selected-parser-verification.json\n?? docs/evidence/2026-10-29-pdf-worker-isolation-verification-r2.json\n?? docs/evidence/2026-10-29-pdf-worker-isolation-verification-r3.json\n?? docs/evidence/2026-10-29-pdf-worker-isolation-verification.json\n?? docs/evidence/2026-10-29-project-summary-plan-inputs.json\n?? docs/evidence/2026-10-29-project-summary-plan-verification.json\n?? docs/evidence/2026-10-29-workarea-api-only-continuation.json\n?? docs/evidence/2026-10-29-workarea-api-only-verification.json\n?? docs/evidence/2026-10-30-flow26-workarea-consumer-mapping-r1.json\n?? docs/evidence/2026-10-30-interface-stage1-technical-review/\n?? docs/evidence/2026-10-30-m06-credential-reference-preflight.json\n?? docs/evidence/2026-10-30-m06-credential-reference-return.md\n?? docs/evidence/2026-10-30-m06-credential-reference-reuse-proposal.md\n?? docs/evidence/2026-10-30-m06-credential-reference-verification.json\n?? docs/evidence/2026-10-30-m06-fast39-authorized-calibration-r1.json\n?? docs/evidence/2026-10-30-m06-native-current-preparation.json\n?? docs/evidence/2026-10-30-m06-native-login-and-single-call-return.md\n?? docs/evidence/2026-10-30-m06-native-login-and-single-call-verification.json\n?? docs/evidence/2026-10-30-m06-native-login-resume-r2.json\n?? docs/evidence/2026-10-30-m06-native-single-call-intent-r1.json\n?? docs/evidence/2026-10-30-m06-native-single-call-result-r1.json\n?? docs/evidence/2026-10-30-m06-nofee-repair-preflight.json\n?? docs/evidence/2026-10-30-m06-nofee-repair-return.md\n?? docs/evidence/2026-10-30-m06-nofee-repair-verification.json\n?? docs/evidence/2026-10-30-m06-tasks12-authorized-resume-r1.json\n?? docs/evidence/2026-10-30-m06-tasks12-authorized-resume-return.md\n?? docs/evidence/2026-10-30-m06-tasks12-authorized-resume-verification-r1.json\n?? docs/evidence/2026-10-30-m06-tasks12-resume-preservation-final.json\n?? docs/evidence/2026-10-30-m06-tasks12-review-packet.json\n?? docs/evidence/2026-10-30-m06-workarea-tasks12-preflight.json\n?? docs/evidence/2026-10-30-m06-workarea-tasks12-return.md\n?? docs/evidence/2026-10-30-m06-workarea-tasks12-verification.json\n?? docs/evidence/2026-10-30-project-plan-inputs.json\n?? docs/evidence/2026-10-30-project-plan-verification.json\n?? docs/evidence/2026-10-30-workarea-pdf-execution-preflight.json\n?? docs/evidence/2026-10-30-workarea-pdf-integration-return.md\n?? docs/evidence/2026-10-30-workarea-pdf-verification.json\n?? docs/evidence/2026-10-31-m06-credential-reuse-preflight.json\n?? docs/evidence/2026-10-31-m06-credential-reuse-return.md\n?? docs/evidence/2026-10-31-m06-credential-reuse-verification.json\n?? docs/evidence/2026-10-31-m06-fast39-r1-calibration-return.md\n?? docs/evidence/2026-10-31-m06-fast39-r1-preflight.json\n?? docs/evidence/2026-10-31-m06-fast39-r1-verification.json\n?? docs/evidence/2026-10-31-m06-fast39-r2-calibration-return.md\n?? docs/evidence/2026-10-31-m06-fast39-r2-preflight.json\n?? docs/evidence/2026-10-31-m06-fast39-r2-verification.json\n?? docs/evidence/2026-10-31-m06-fast39-semantics-preflight.json\n?? docs/evidence/2026-10-31-m06-fast39-semantics-return.md\n?? docs/evidence/2026-10-31-m06-fast39-semantics-verification.json\n?? docs/evidence/2026-10-31-m06-public-r2-local-loop-return.md\n?? docs/evidence/2026-10-31-m06-public-r2-local-loop-verification.json\n?? docs/evidence/2026-10-31-m06-public-r2-newcall-preflight.json\n?? docs/evidence/2026-11-05-fast39-auth-r1-technical-review/\n?? docs/evidence/2026-11-05-fast39-auth-r2-draft/\n?? docs/evidence/2026-11-05-fast39-auth-r2-technical-review/\n?? docs/evidence/2026-11-05-fast39-auth-r3-draft/\n?? docs/evidence/2026-11-05-fast39-auth-r3-technical-review/\n?? docs/evidence/2026-11-05-fast39-c4-limited-adoption/\n?? docs/evidence/2026-11-05-fast39-chain-analysis.json\n?? docs/evidence/2026-11-05-fast39-chain-preflight.json\n?? docs/evidence/2026-11-05-fast39-chain-return.md\n?? docs/evidence/2026-11-05-fast39-chain-verification.json\n?? docs/evidence/2026-11-05-fast39-contract2-technical-review/\n?? docs/evidence/2026-11-05-fast39-contract2/\n?? docs/evidence/2026-11-05-fast39-contract3-technical-review/\n?? docs/evidence/2026-11-05-fast39-contract3/\n?? docs/evidence/2026-11-05-fast39-contract4-technical-review/\n?? docs/evidence/2026-11-05-fast39-contract4/\n?? docs/evidence/2026-11-05-fast39-existing-runs-backend-r2.json\n?? docs/evidence/2026-11-05-fast39-existing-runs-preflight-r2.json\n?? docs/evidence/2026-11-05-fast39-existing-runs-return-r2.md\n?? docs/evidence/2026-11-05-fast39-existing-runs-verification-r2.json\n?? docs/evidence/2026-11-05-fast39-jtti-bm1-closeout-addendum.json\n?? docs/evidence/2026-11-05-fast39-jtti-node-trace-observations.json\n?? docs/evidence/2026-11-05-fast39-jtti-retest-authorized-resume.json\n?? docs/evidence/2026-11-05-fast39-jtti-retest-metadata-return.md\n?? docs/evidence/2026-11-05-fast39-jtti-retest-metadata-verification.json\n?? docs/evidence/2026-11-05-fast39-jtti-retest-preflight.json\n?? docs/evidence/2026-11-05-fast39-jtti-retest-return.md\n?? docs/evidence/2026-11-05-fast39-jtti-retest-verification.json\n?? docs/evidence/2026-11-05-fast39-mechanism-prep1-review/\n?? docs/evidence/2026-11-05-fast39-mechanism-prep2/\n?? docs/evidence/2026-11-05-fast39-minimal-repair-plan-inputs.json\n?? docs/evidence/2026-11-05-fast39-minimal-repair-plan-verification.json\n?? docs/evidence/2026-11-05-fast39-p0-review/\n?? docs/evidence/2026-11-05-fast39-source-admission-readonly/\n?? docs/evidence/2026-11-05-fast39-static-authorization-draft/\n?? docs/evidence/2026-11-05-fast39-task0-preflight.json\n?? docs/evidence/2026-11-05-fast39-task0-r2-adoption-map.json\n?? docs/evidence/2026-11-05-fast39-task0-r2-backend-copy.json\n?? docs/evidence/2026-11-05-fast39-task0-r2-preflight.json\n?? docs/evidence/2026-11-05-fast39-task0-r2-return.md\n?? docs/evidence/2026-11-05-fast39-task0-r2-verification.json\n?? docs/evidence/2026-11-05-fast39-task0-return.md\n?? docs/evidence/2026-11-05-fast39-task0-source-binding.json\n?? docs/evidence/2026-11-05-fast39-task0-verification.json\n?? docs/evidence/2026-11-05-project-plan-inputs.json\n?? docs/evidence/2026-11-05-project-plan-verification.json\n?? docs/evidence/2026-11-05-project-progress-next-steps-inputs.json\n?? docs/evidence/2026-11-05-project-progress-next-steps-r2/\n?? docs/evidence/2026-11-05-project-progress-next-steps-verification.json\n?? docs/evidence/2026-11-06-m06-notice-packaging-r1/\n?? docs/evidence/2026-11-06-m06-offline-package-proof-r1/\n?? docs/evidence/2026-11-06-m06-prep2-review/\n?? docs/evidence/2026-11-06-m06-profile-archive-binding-r1/\n?? docs/evidence/2026-11-06-m06-release-attribution-addendum-r1/\n?? docs/evidence/2026-11-06-m06-release-scope-r1/\n?? docs/evidence/2026-11-06-m06-revision-release-prep-r1/\n?? docs/evidence/2026-11-06-oasisintwrite-license-draft-r1/\n?? docs/evidence/2026-11-06-project-summary-next-plan-r2/\n?? docs/evidence/2026-11-06-project-summary-next-plan/\n?? docs/evidence/fast39-registry-restore-once-r2-execution/\n?? docs/plans/2026-10-29-project-summary-and-next-development-plan.md\n?? docs/plans/2026-10-30-project-completion-and-next-development-plan.md\n?? docs/plans/2026-11-05-fast39-minimal-repair-plan.md\n?? docs/plans/2026-11-05-project-progress-and-next-plan.md\n?? docs/plans/2026-11-05-project-progress-and-next-steps-r2.md\n?? docs/plans/2026-11-05-project-progress-and-next-steps.md\n?? docs/plans/2026-11-06-project-summary-and-next-plan.md\n?? packages/oasis-professional-service/THIRD-PARTY-NOTICES.md\n?? packages/oasis-professional-service/licenses/\n?? packages/oasis-professional-service/src/m06-api-contract-adapter.js\n?? packages/oasis-professional-service/src/m06-workarea-host-013.js\n?? packages/oasis-professional-service/src/m06-workarea-material-packet.js\n?? packages/oasis-professional-service/src/pdf-extraction-process.js\n?? packages/oasis-professional-service/test/fixtures/m06-fast39-r1-calibration-20261031.json\n?? packages/oasis-professional-service/test/m06-api-contract-adapter.test.mjs\n?? packages/oasis-professional-service/test/m06-native-availability.test.mjs\n?? packages/oasis-professional-service/test/m06-workarea-calibration-constraints.test.mjs\n?? packages/oasis-professional-service/test/m06-workarea-host.test.mjs\n?? packages/oasis-professional-service/test/m06-workarea-material-packet.test.mjs\n?? packages/oasis-professional-service/test/pdf-extraction-process.test.mjs\n?? scripts/pdf-text-worker.py\n?? scripts/tests/test_pdf_distribution.py\n?? scripts/tests/test_pdf_text_worker.py\n?? scripts/verify-pdf-distribution.py\n?? tools/.DS_Store",
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "revision": "R1/EXEC-R2/BM1-R1/S1/S2-R1/G1",
+      "sha256": "b2714a423740de7719fd8c82f4c226c82d5e13959dfbc1d5e2381222a25ab061",
+      "bytes": 33933,
+      "read_scope": "full text read in bounded calls",
+      "previous_sha256": "b2714a423740de7719fd8c82f4c226c82d5e13959dfbc1d5e2381222a25ab061",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "revision": "project current rules",
+      "sha256": "2f0b4c780db2b558db9351c225f65b62edc55e2510aac39847c2142de0a27642",
+      "bytes": 34618,
+      "read_scope": "full supplied rules and physical text; tail reread",
+      "previous_sha256": "2f0b4c780db2b558db9351c225f65b62edc55e2510aac39847c2142de0a27642",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "revision": "1.2.2",
+      "sha256": "431c8844b039e1c8e528531ee93d89f2b8346146084a5898bc53f06bde280e8b",
+      "bytes": 28642,
+      "read_scope": "full text",
+      "previous_sha256": "431c8844b039e1c8e528531ee93d89f2b8346146084a5898bc53f06bde280e8b",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "revision": "schema1 / coordination1.2.2",
+      "sha256": "6ef28151f632bba8fa0454b80cca199e148163b47057be7a33fed0cf45fb3804",
+      "bytes": 36880,
+      "read_scope": "full JSON parsed; selected registration, references and current_entry roles inspected",
+      "previous_sha256": "6ef28151f632bba8fa0454b80cca199e148163b47057be7a33fed0cf45fb3804",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "revision": "1.3.1 / NS1-R1 + BM1-R1/S2-R1/G1",
+      "sha256": "20a3ccb56d96d75f2fe0f762dd46103e778975356384b80ecb2578775cf66f45",
+      "bytes": 105212,
+      "read_scope": "full JSON parsed; dsh-oasis and current followup resolution inspected",
+      "previous_sha256": "20a3ccb56d96d75f2fe0f762dd46103e778975356384b80ecb2578775cf66f45",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "revision": "1.3.1/NS1-R1/P28/P30/BM1-R1/S1/S2-R1/G1",
+      "sha256": "cac383be1f64cff69b95a28e535c6b748d986b338d62b0404ae0bcaa5a5e2e7d",
+      "bytes": 43964,
+      "read_scope": "lines1-100,132-192,198-end; applicable governance, DSH and followups",
+      "previous_sha256": "cac383be1f64cff69b95a28e535c6b748d986b338d62b0404ae0bcaa5a5e2e7d",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "revision": "BM1-R1/S1/S2-R1",
+      "sha256": "702c46ec3558046698aa796f7afe7e18bbb24699da80d4a598d68ecc7a69b24c",
+      "bytes": 37706,
+      "read_scope": "full text",
+      "previous_sha256": "702c46ec3558046698aa796f7afe7e18bbb24699da80d4a598d68ecc7a69b24c",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "revision": "1.3.1 + BM1-R1/S1/S2-R1",
+      "sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "bytes": 38734,
+      "read_scope": "lines1-156,182-end; relevant contracts and supplements; intervening draft navigation not reopened",
+      "previous_sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "revision": "coordination1.2.2",
+      "sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "bytes": 21718,
+      "read_scope": "full text",
+      "previous_sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-10-25-research-rules-and-migration-addendum.md",
+      "revision": "1.2.1, historical local-intake/roles partly superseded",
+      "sha256": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "bytes": 6688,
+      "read_scope": "full text",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利业务Skills清单.md",
+      "revision": "G1 registration; source no declared version",
+      "sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "bytes": 6157,
+      "read_scope": "full text; selected M06; six-item release order recommendation only",
+      "previous_sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "revision": "1.3.1/NS1-R1/P28/P30/BM1-R1/S1/S2-R1 + Nov6R1 navigation",
+      "sha256": "861a5b49c2dc524df90fe1bb9e169ff61080a56f5424c0f5927a474c98d39788",
+      "bytes": 47960,
+      "read_scope": "applicable body read in calls; initial combined output truncated, beginning/DS task body reread; historical nested links not recursively reopened",
+      "previous_sha256": "861a5b49c2dc524df90fe1bb9e169ff61080a56f5424c0f5927a474c98d39788",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-06-project-summary-and-next-plan.md",
+      "revision": "R1",
+      "sha256": "8bc17d3ccef81a52ee1943bffd9eef24e382c4d90abdcdeb6fb56e2e423a4a2a",
+      "bytes": 16819,
+      "read_scope": "full text",
+      "previous_sha256": "8bc17d3ccef81a52ee1943bffd9eef24e382c4d90abdcdeb6fb56e2e423a4a2a",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "revision": "current_entry, no single declared revision",
+      "sha256": "cb31302c3343ef7c54ef09eff4186570724434ed7768b85989b96bcd0b693e5e",
+      "bytes": 323326,
+      "read_scope": "latest prefixes lines1-110; historical body not fully reread",
+      "previous_sha256": "ca5bc9981c68b7561b88d61962c9d9dc6626e2bd2bf513129fefbef7d941b54e",
+      "difference": "changed; semantic impact in record.md"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "revision": "current_entry, stage5",
+      "sha256": "e55d3028c2ea3538ae5003a6c1d14a54bafbd4489640c38e853fb3e9b67f03b7",
+      "bytes": 113946,
+      "read_scope": "latest prefixes lines1-85; historical body not fully reread",
+      "previous_sha256": "0eb95d87b44efb6db87a00feb81fe3d4d17ba028cec00faf6eea889dcf64a985",
+      "difference": "changed; semantic impact in record.md"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/binding-return.md",
+      "revision": "R1",
+      "sha256": "6767a479440cec2f33f1a6b74e7692d627abb3164a89cfd949ee2917b8904664",
+      "bytes": 7766,
+      "read_scope": "full text",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-prep2-review/prep2-technical-review.md",
+      "revision": "PREP2 bounded review",
+      "sha256": "33c806c4cb7a335b53e86397f387d9266494a56ba627e7a015e6196b7639d4fb",
+      "bytes": 6732,
+      "read_scope": "full text",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-revision-release-prep-r1/revision-return.md",
+      "revision": "R1",
+      "sha256": "70507e0d7a164bb2fa70ceb091c593c426973059bffa459f5720a81e013a9505",
+      "bytes": 3500,
+      "read_scope": "full text",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/assembly-and-validation.md",
+      "revision": "AV01-07 / R1, RLS04 scope corrected by later return",
+      "sha256": "dfc7cb37e7e908200358693252260154b8284ed3107646b494e7df7df748942f",
+      "bytes": 6293,
+      "read_scope": "full text",
+      "previous_sha256": "dfc7cb37e7e908200358693252260154b8284ed3107646b494e7df7df748942f",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/oasisintwrite-community-license-1.0-draft-r1/scope-and-review.md",
+      "revision": "draft R1",
+      "sha256": "0c101b6fcfd0665ce458754429a998e9363676341e6a9256d9b7f446eea96651",
+      "bytes": 9628,
+      "read_scope": "full text; draft itself not re-legally-reviewed",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-offline-package-proof-r1/proof-return.md",
+      "revision": "R1",
+      "sha256": "95d424a76413d53dfbe47200d9ee05d307e9f25fa66a29200cfb28afd09d36e5",
+      "bytes": 7503,
+      "read_scope": "archive and entry proof sections read; combined output truncated near continuation",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-31-m06-public-r2-local-loop-return.md",
+      "revision": "2026-10-31 bounded real evidence",
+      "sha256": "12756e1cacd36498fde537664ba3f443b7f45d332b6f99b985fe888c5d0006ac",
+      "bytes": 6927,
+      "read_scope": "lines1-45; selected engineering loop, input and versions",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-jtti-retest-return.md",
+      "revision": "2026-11-05 bounded real evidence",
+      "sha256": "ea03fb157c00d45a4936fc32a4be1994f4c9f8a0f0944b35956c547ca4515552",
+      "bytes": 9729,
+      "read_scope": "selected defect section from lines1-50 plus current_entry; no fresh server observation",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/macos-development-launch.mjs",
+      "revision": "current working bytes; no declared revision",
+      "sha256": "49b34189b8b8206e6fef25ad3ad517dd8ca27e7b349fce42b039f687f191bf6a",
+      "bytes": 10046,
+      "read_scope": "lines1-146 full file",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-prep2-review/verification.json",
+      "revision": "original dated validation",
+      "sha256": "fba0d73568acd09b036f791b67905d60f3553fab1a205333806335406b999af2",
+      "bytes": 14282,
+      "read_scope": "JSON parsed; headline and selected checks inspected; no product rerun",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-release-scope-r1/verification.json",
+      "revision": "original dated validation",
+      "sha256": "563dbbc21b8dafa861df025b2a983fc4c3376a2c81bd84107b4f880783b0cf18",
+      "bytes": 9595,
+      "read_scope": "JSON parsed; headline and selected checks inspected; no product rerun",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/verification.json",
+      "revision": "original dated validation",
+      "sha256": "1e23f628249db4247767386620dd77da44e382609c290543cf5200fd511402da",
+      "bytes": 6263,
+      "read_scope": "JSON parsed; headline and selected checks inspected; no product rerun",
+      "previous_sha256": "1e23f628249db4247767386620dd77da44e382609c290543cf5200fd511402da",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-offline-package-proof-r1/verification.json",
+      "revision": "original dated validation",
+      "sha256": "2f3305faf341dcd9e02a7dbc8440a01d5c7cb05ed6f2de4c6f699b7e54eb597d",
+      "bytes": 7330,
+      "read_scope": "JSON parsed; headline and selected checks inspected; no product rerun",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-profile-archive-binding-r1/verification.json",
+      "revision": "original dated validation",
+      "sha256": "1a34e447aeeab1f43b57f4719e0614a492832d1113eb382655a20f73d334c547",
+      "bytes": 9302,
+      "read_scope": "JSON parsed; headline and selected checks inspected; no product rerun",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/package.json",
+      "revision": "current bound identity",
+      "sha256": "3e86b10e88a7424bb1fb74429d86bc303bfe60ce2ff41c9598c12f4da0faef0e",
+      "bytes": 3040,
+      "read_scope": "identity/hash only in this round; semantic basis is corresponding read return",
+      "previous_sha256": "3e86b10e88a7424bb1fb74429d86bc303bfe60ce2ff41c9598c12f4da0faef0e",
+      "difference": "same raw bytes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/oasisintwrite-community-license-1.0-draft-r1/LICENSE-DRAFT.zh-CN.md",
+      "revision": "current bound identity",
+      "sha256": "4836d54671e55e2ec36450d7f8a4f6ce0a49cc8364375b3ef4b69a8557513100",
+      "bytes": 13983,
+      "read_scope": "identity/hash only in this round; semantic basis is corresponding read return",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-offline-package-proof-20261106-r1/oasis-professional-service-0.0.1.tgz",
+      "revision": "current bound identity",
+      "sha256": "c476b1f091b483d4ca2342f68cccb350d4af217f6d916cd8e59866f1084690c5",
+      "bytes": 775221,
+      "read_scope": "identity/hash only in this round; semantic basis is corresponding read return",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1/installation-view/pnpm-lock.yaml",
+      "revision": "current bound identity",
+      "sha256": "d52b5d047035e489b9138b5a6be69cf5640b36a5c06dc1108a588aee6656505e",
+      "bytes": 346899,
+      "read_scope": "identity/hash only in this round; semantic basis is corresponding read return",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-profile-archive-binding-20261106-r1/installation-view/profiles/desktop/pnpm-lock.yaml",
+      "revision": "current bound identity",
+      "sha256": "29509ce3f3d6d790cb030efc86feb9e0940b96068b692cdeb014404d6d36565f",
+      "bytes": 3211,
+      "read_scope": "identity/hash only in this round; semantic basis is corresponding read return",
+      "previous_sha256": null,
+      "difference": "first binding in this comparison; no invented prior baseline"
+    }
+  ],
+  "resolved": {
+    "coordination_version": "1.2.2",
+    "overall_plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+    "project_master": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+    "current_entries": [
+      "DSH-Oasis/docs/project-current-state.md",
+      "DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md"
+    ],
+    "global_followup": {
+      "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "date": "2026-11-05",
+      "revision": "BM1-R1/S2-R1",
+      "path": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+      "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "addendum_anchor": "bm1-public-channels-s2-r1",
+      "previous_followup_id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+      "affected_projects": [
+        "dsh-oasis",
+        "workarea",
+        "backend",
+        "knowledge",
+        "patent-distillery",
+        "test-library",
+        "workbuddy-bridge",
+        "dify",
+        "dify-design",
+        "five-step-method"
+      ],
+      "affected_workstreams": [
+        "landing-page",
+        "wechat-official-account"
+      ],
+      "scope": "bounded_S2_document_audit_repairs_only",
+      "business_execution_started": false,
+      "supersedes": "S2 ambiguous scope/publishing phases and entry metadata only; original S2 bytes, roles, S1, business states and source gates retained"
+    },
+    "project_followup": {
+      "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+      "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+      "revision": "BM1-R1/S2-R1",
+      "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "addendum_anchor": "bm1-public-channels-s2-r1",
+      "status": "planning_only",
+      "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+    },
+    "selected_guidance": "M06; G1 source has no declared version"
+  },
+  "previous_baseline_comparison": {
+    "source": "2026-11-06-m06-profile-archive-binding-r1/protected-baseline.json",
+    "drift": [
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+        "old_sha256": "ca5bc9981c68b7561b88d61962c9d9dc6626e2bd2bf513129fefbef7d941b54e",
+        "new_sha256": "cb31302c3343ef7c54ef09eff4186570724434ed7768b85989b96bcd0b693e5e"
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+        "old_sha256": "0eb95d87b44efb6db87a00feb81fe3d4d17ba028cec00faf6eea889dcf64a985",
+        "new_sha256": "e55d3028c2ea3538ae5003a6c1d14a54bafbd4489640c38e853fb3e9b67f03b7"
+      }
+    ],
+    "note": "two current_entry prefixes expected since prior task pre-edit baseline; no inference that all 957 remained identical to its pre-edit moment"
+  },
+  "allowed_existing_edits": [
+    "docs/project-current-state.md",
+    "docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+    "docs/plans/2026-10-25-dsh-oasis-master-plan.md"
+  ]
+}

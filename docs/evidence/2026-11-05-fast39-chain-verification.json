@@ -1,0 +1,75 @@
+{
+  "time": "2026-11-05T08:25:20.955672+08:00",
+  "verification_status": "PASS_LOCAL_DIAGNOSTIC_AND_PRESERVATION_ONLY",
+  "business_status": "STATIC_ONLY_REMOTE_CAUSE_UNRESOLVED",
+  "preflight_sha256": "81f31eb58007e85acaa733bcb6b523ca0ce27c70cfcdf2bcc758678c7d26a37c",
+  "analysis_sha256": "879de7a91071242336da11a6ecd7c379eff708737474a093c9fa03402b6f1849",
+  "report_sha256": "0363996d1c8562b8bdb46e6538b408fd585be80c00983ae28ced366c3c63eb97",
+  "head_unchanged": true,
+  "preexisting_files_count": 131,
+  "unchanged_preexisting_files_excluding_three_status_prefixes": 128,
+  "allowed_status_prefixes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "before_image": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-chain-20261105/before/project-current-state.md",
+      "before_sha256": "a1cb52507bb043fc5b7ecd09809e96449d1a94112c79c0fe00d8d49c63c8b854",
+      "prefix_bytes": 934
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "before_image": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-chain-20261105/before/2026-10-23-stage5-progress-and-remaining.md",
+      "before_sha256": "386160f26ad28b973594c0f513fd0a3a88d9d61a3baf0f3fe35969dae8f456b9",
+      "prefix_bytes": 925
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+      "before_image": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-chain-20261105/before/2026-10-26-follow-up-remaining.md",
+      "before_sha256": "f87c66d7975f2a789b739ae521846daaf91b8eaadb7b07966912b3feea7dbe15",
+      "prefix_bytes": 925
+    }
+  ],
+  "unexpected_changed_preexisting_files": [],
+  "source_drift": [],
+  "input_drift": [],
+  "links_checked": 7,
+  "missing_links": [],
+  "archived_entry_hash_checks": [
+    {
+      "revision": "r1",
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-fast39-r1-20261031/temporary-entry-archived.mjs",
+      "sha256": "a82009466d342c3712bbffe0d9afc0c52e5b7a2ccea71f1de2c298a8e8a1c2e4",
+      "matches_historical_verification": true
+    },
+    {
+      "revision": "r2",
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-fast39-r2-20261031/temporary-entry-archived.mjs",
+      "sha256": "f509f3eff4bb66d33185c5727ea512135087b37ca0c68037cdfe46c64336a77d",
+      "matches_historical_verification": true
+    }
+  ],
+  "offline_probe": {
+    "command": "tools/bin/node .local/fast39-chain-20261105/offline-replay.mjs",
+    "exit_code": 0,
+    "cases": 2,
+    "memory_upload_callbacks": 2,
+    "memory_create_callbacks": 2,
+    "network_attempts": 0,
+    "real_uploads": 0,
+    "real_creates": 0,
+    "model_calls": 0,
+    "fee_actions": 0,
+    "credentials_read": 0,
+    "script_sha256": "d913d550e5b1ae6999ec7f2d14978195f0dee050cffbfd8f5c786718e0dddd89",
+    "result_sha256": "98ab6657946977a89b3cd3d0269667acd16c9424bdc831012f0204d77baaadac"
+  },
+  "product_code_modified": false,
+  "foreign_project_sources_changed": false,
+  "business_tests_or_build_run": false,
+  "independent_review": false,
+  "not_proven": [
+    "历史或当前线上部署与本地源码一致",
+    "历史服务器上传文件字节hash",
+    "原运行的提取文本、关键节点实际提示、完整workflow outputs",
+    "唯一远端根因、修复有效性、正式API或G0通过"
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "scope": "same public PDF + native-memory OOM only, new worker implementation verification; no new dependency/image/probe matrix",
+  "workerSHA256": "50b9e939092b77b7c865563de6549cda68853c12fc7a8309ca7a33d733aa61e5",
+  "imageId": "sha256:7e1ff0cb5e83403d186374ef035979dd27cf42ce90337cea6847e8eec86dc73e",
+  "cases": [
+    {
+      "case": "text",
+      "name": "oiw-pdf-impl-text-9159ade3",
+      "flags": [
+        "--memory=268435456",
+        "--memory-swap=268435456",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--pids-limit=1",
+        "--tmpfs=/tmp:rw,noexec,nosuid,size=8388608,mode=1777",
+        "--user=65534:65534",
+        "--restart=no"
+      ],
+      "exitCode": 0,
+      "seconds": 0.48395895799999994,
+      "stdout": "{\"body\": \"D0 public synthetic valve - page 1\\n公开合成阀体：壳体与弹簧。\", \"rawSHA256\": \"77f4ec7d9c27c1510991b38fd45edc692e9ab3d81d71199cf3d2f639ce21d415\", \"textSHA256\": \"f8d850701bf5e3201bab7c688dea0807f7d341981b29b32dfbe03ffe9e671ecf\", \"locations\": [{\"locator\": {\"kind\": \"pdf-page\", \"page\": 1}, \"startUTF16\": 0, \"endUTF16\": 34}, {\"locator\": {\"kind\": \"pdf-page\", \"page\": 2}, \"startUTF16\": 35, \"endUTF16\": 48}], \"pages\": 2, \"objects\": 11, \"decodedBytes\": 718, \"parser\": \"pypdf/6.10.0\", \"isolation\": {\"mechanism\": \"seccomp-bpf-aarch64-v1\", \"open\": \"EPERM\", \"socket\": \"EPERM\", \"exec\": \"EPERM\", \"clone\": \"EPERM\", \"memoryMax\": 268435456, \"memorySwapMax\": 0, \"pidsMax\": 1, \"kernelAlarmSeconds\": 5}}\n",
+      "stderr": "",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-29T13:27:43.298722639Z",
+        "FinishedAt": "2026-10-29T13:27:43.695118264Z"
+      },
+      "constraints": {
+        "Memory": 268435456,
+        "MemorySwap": 268435456,
+        "NetworkMode": "none",
+        "ReadonlyRootfs": true,
+        "PidsLimit": 1,
+        "Binds": null,
+        "CapDrop": [
+          "ALL"
+        ],
+        "SecurityOpt": [
+          "no-new-privileges"
+        ],
+        "Tmpfs": {
+          "/tmp": "rw,noexec,nosuid,size=8388608,mode=1777"
+        }
+      }
+    },
+    {
+      "case": "memory",
+      "name": "oiw-pdf-impl-memory-8a7d6bb0",
+      "flags": [
+        "--memory=268435456",
+        "--memory-swap=268435456",
+        "--network=none",
+        "--read-only",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--pids-limit=1",
+        "--tmpfs=/tmp:rw,noexec,nosuid,size=8388608,mode=1777",
+        "--user=65534:65534",
+        "--restart=no"
+      ],
+      "exitCode": 137,
+      "seconds": 0.48198850000000004,
+      "stdout": "{\"isolation\": {\"mechanism\": \"seccomp-bpf-aarch64-v1\", \"open\": \"EPERM\", \"socket\": \"EPERM\", \"exec\": \"EPERM\", \"clone\": \"EPERM\", \"memoryMax\": 268435456, \"memorySwapMax\": 0, \"pidsMax\": 1, \"kernelAlarmSeconds\": 5}}\n",
+      "stderr": "",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": true,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-10-29T13:27:43.808244479Z",
+        "FinishedAt": "2026-10-29T13:27:44.208616554Z"
+      },
+      "constraints": {
+        "Memory": 268435456,
+        "MemorySwap": 268435456,
+        "NetworkMode": "none",
+        "ReadonlyRootfs": true,
+        "PidsLimit": 1,
+        "Binds": null,
+        "CapDrop": [
+          "ALL"
+        ],
+        "SecurityOpt": [
+          "no-new-privileges"
+        ],
+        "Tmpfs": {
+          "/tmp": "rw,noexec,nosuid,size=8388608,mode=1777"
+        }
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "name": "oiw-pdf-impl-text-9159ade3",
+      "exitCode": 0,
+      "output": "oiw-pdf-impl-text-9159ade3\n"
+    },
+    {
+      "name": "oiw-pdf-impl-memory-8a7d6bb0",
+      "exitCode": 0,
+      "output": "oiw-pdf-impl-memory-8a7d6bb0\n"
+    }
+  ],
+  "U1Passed": false,
+  "productPDFActivated": false,
+  "result": "PASS_SAME_TWO_CASES_WITH_NEW_WORKER",
+  "id": "DSH-PDF-IMPLEMENTATION-TWO-CASE-20261029-03",
+  "at": "2026-10-29T21:27:44.287643+08:00",
+  "scopeAddendum": "same two cases with required cgroup-v2 envelope and kernel alarm armed; no timeout-expiry or hostile-output case added",
+  "actualNetworkBusinessRequests": 0,
+  "newDependenciesInstalled": false
+}

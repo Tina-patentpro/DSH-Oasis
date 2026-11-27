@@ -1,0 +1,46 @@
+{
+  "recordedAt": "2026-11-08T12:53:21.104504+00:00",
+  "status": "BOUNDED_VERIFICATION_WITH_REAL_RUN_UNKNOWN_AND_CENTRAL_REFERENCE_FAIL",
+  "currentBundleSHA256": "f1efed185c033c2e6e00c8dcd97642370c73537bc4d73fa0239174ee10316144",
+  "currentControllerSHA256": "d64bdcf2ba12be2520d7aeed92234d66e2c962a8541cd68607b0e7ecd79a520d",
+  "archive125MembersMatch": true,
+  "oldTaskEntireObjectUnchanged": true,
+  "protectedFilesUnchanged": 47,
+  "authorizedBusinessJSONChanged": true,
+  "workspaceBytesUnchanged": true,
+  "businessRevision": 115,
+  "businessSHA256": "dd4ccf256253d393f6288990b02991de6a8380e9aa5577fd10a64b44eec1ad70",
+  "newRunCount": 1,
+  "originalRunStatus": "unknown",
+  "originalAuthorizationRemainingCalls": 0,
+  "normalAppExit": {
+    "code": 0,
+    "signal": null,
+    "endedAtUTC": "2026-11-08T12:45:03.921Z"
+  },
+  "postProxyFixAppStarts": 0,
+  "postProxyFixModelCalls": 0,
+  "affectedTests": {
+    "command": "node --test scripts/tests/f-installed-runtime.test.mjs scripts/tests/f-installed-native-zero.test.mjs scripts/tests/f-installed-native-business-recovery.test.mjs scripts/tests/f-installed-native-m06-generation.test.mjs scripts/tests/f-installed-controller-handoff.test.mjs",
+    "exitCode": 0,
+    "pass": 37,
+    "log": "native-proxy-final-tests.log"
+  },
+  "vendorProxyOfflineProof": "native-proxy-offline-proof.json",
+  "localLinksVerified": 18,
+  "coordinationCheck": {
+    "command": "python3 -B /Users/tinadong7036/Documents/开发项目/docs/coordination/check.py",
+    "exitCode": 1,
+    "scope": "coordination_structure_only",
+    "status": "FAIL",
+    "reason": "Registered patent-distillery local path absent; 10 reference/link errors",
+    "modifiedCenterToHideError": false
+  },
+  "baselineChanges": [
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md"
+  ],
+  "fullGoalComplete": false,
+  "independentReview": false,
+  "commitPushPublicationOrWorkbuddyDelivery": false
+}

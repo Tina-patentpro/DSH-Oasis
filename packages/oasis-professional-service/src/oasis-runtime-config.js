@@ -6,6 +6,7 @@ import { normalizeGenerationPreferences } from './generation-preferences.js'
 import { parseWorkspaceApiBindings } from './oasis-workspace-binding.js'
 import { OASIS_PRODUCT_ORIGIN } from './oasis-account-contract.js'
 import { parseWebsiteProjectLinks } from './website-import-contract.js'
+import { DEFAULT_LOCAL_SKILL_SUITE, LOCAL_SKILL_SUITES } from './local-skill-suites.js'
 
 const DEFAULT_CREDENTIAL_REF = 'OASIS_USER_JWT'
 
@@ -25,6 +26,7 @@ export const OASIS_SETTINGS_SCHEMA = z.object({
   credentialRef: z.string().default(DEFAULT_CREDENTIAL_REF),
   downloadOrigins: z.array(z.string()).default([]),
   defaultGenerationSource: z.string().default('local-skill'),
+  localSkillSuite: z.union(Object.keys(LOCAL_SKILL_SUITES).map(suite => z.const(suite))).default(DEFAULT_LOCAL_SKILL_SUITE),
   outputDirectoryPrefix: z.string().default(''),
   localModelEnabled: z.boolean().default(false),
   websiteProjectLinks: z.array(z.object({ workspaceId: z.string(), workspacePath: z.string(), apiBaseOrigin: z.string(),
@@ -89,6 +91,7 @@ export function registerOasisSettings(ctx, base = {}) {
     credentialRef: DEFAULT_CREDENTIAL_REF,
     downloadOrigins: [],
     defaultGenerationSource: 'local-skill',
+    localSkillSuite: DEFAULT_LOCAL_SKILL_SUITE,
     outputDirectoryPrefix: '',
     localModelEnabled: false,
     workspaceApiBindings: [],

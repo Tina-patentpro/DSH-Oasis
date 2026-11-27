@@ -1,0 +1,43 @@
+[
+  {
+    "id": "M02",
+    "workspaceId": "06ba4714-d9d3-4210-84a0-2249f9bb8a87",
+    "sessionId": "session-c5ca987d-f9fa-4336-bbfe-bee925361654",
+    "taskId": "m02-pair-r2-919a3319",
+    "requestKey": "919a3319-776b-4910-ad59-3feddc8744a3",
+    "skillId": "patent-triz-analysis",
+    "skillVersion": "0.3.0-rc.4",
+    "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+    "runId": "v340-1ad3ddcc-efb5-44ff-af69-bd667b04d264",
+    "status": "failed",
+    "failureCode": "INVALID_OUTPUT",
+    "summary": {
+      "failureStage": "result-assembly",
+      "finishKind": "stop",
+      "assemblyIssue": {
+        "code": "missing-completion",
+        "field": "updates",
+        "index": 1
+      },
+      "fieldIssue": {
+        "code": "missing-completion",
+        "path": [
+          "updates",
+          1,
+          "content_id"
+        ]
+      },
+      "usage": {
+        "inputTokens": 512,
+        "outputTokens": 63,
+        "totalTokens": 575
+      }
+    },
+    "candidateReceiptVersion": "v340-native-candidate-9",
+    "receiptSystemSha256": "8949dce7026b04d7ecc363caca54782e02d65be3093af1a8a6697964b7edad36",
+    "inputSha256": "17ea2dff936703dece679e1fbc15a0c6319238ee89a1fa5ba9729f7102e466c8",
+    "preparedSha256": "33b47e2135ef748d93d50f2ce9ae4c6e429da077e8e4e75abcae3b73c25b9e1c",
+    "wireTerminal": true,
+    "livePostAttempt": false
+  }
+]

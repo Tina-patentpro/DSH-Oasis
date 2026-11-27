@@ -1,0 +1,120 @@
+{
+  "record_id": "FAST39-C4-LA-20261105-R1",
+  "current_source": {
+    "registry": {
+      "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/README.md",
+      "bytes": 908878,
+      "sha256": "0a77649b88bd0cfe3f11e91dd0bb1a313632fc8d09a5045e5c3e1335fb8e60fb"
+    },
+    "revision": 487,
+    "Flow2_6_row": "| 2-6 | 5 | 0 | 10157 | `legacy_assets_present` | `undesignated` | `gap_confirmed` | `backlog` | `STATIC_ONLY` | `REG-20260829094157-README-748f0d16` | 依据 V3.4.0 重构，创建新版本化候选并完成静态审计 |",
+    "Flow2_6_row_sha256": "fee6d622e0236970d1b86392047cd32409b7e08990266a5e6e9e74fc2fef64f5",
+    "candidate": "undesignated",
+    "Batch_status": "registry states Batch1 in_progress; actual full Batch exit/governance audit not performed or waived here",
+    "observation_status": "initial frozen observation at preflight, not an assertion that source never changes",
+    "later_observation": {
+      "revision": 488,
+      "sha256": "ff2c2cb65aa1b7c8bfce87e919d58dce6c8f7aee1815dea01add36f9b1e306b3",
+      "at": "2026-11-05T18:41:42.632930+08:00",
+      "evidence": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/concurrent-source-delta.json",
+      "Flow2_6_row_unchanged": true
+    }
+  },
+  "closed_design_gates": {
+    "BASELINE-ADOPTION": "CLOSED_FOR_FUTURE_IMPLEMENTATION_BASELINE",
+    "EXACT-RULE-SKILL-ADOPTION": "CLOSED_AT_SELECTED_DESIGN_SCOPE",
+    "SHARED-BEHAVIOR-ADOPTION": "CLOSED_AT_SHARED_DESIGN_SCOPE",
+    "actual_source_production": "NOT_AUTHORIZED_NOT_STARTED",
+    "actual_host_or_service_adoption": "NOT_CLAIMED",
+    "legacy_service_historical_adoption": "UNPROVEN"
+  },
+  "gates": [
+    {
+      "id": "G-EXEC",
+      "when": "before business code/DSL production",
+      "status": "OPEN",
+      "owner": "project decision",
+      "release": [
+        "explicit instruction for bounded implementation, target projects and allowed actions; current instruction remains documents only"
+      ],
+      "not_required": [
+        "repeat C4 baseline/design adoption already recorded here"
+      ]
+    },
+    {
+      "id": "G-SOURCE-ADMISSION",
+      "when": "before WD active asset mutation",
+      "status": "OPEN",
+      "owner": "WD owner / project decision",
+      "release": [
+        "bind applicable V3.4.0/standards raw hashes and current source row/work item",
+        "evidence of applicable previous Batch exit recorded in root README, or explicit bounded exception covering Fast39 Flow-2-6 static production; current adoption grants no Batch exception",
+        "owned started transaction using registry_transaction with inspect current revision/hash, owner_scope_id/work_item_id and exact approved_records fields",
+        "preserve unrelated rows/events and excluded archive; governance or relevant contract failures must be resolved for the affected step or covered by authorized bounded scope, never erased by center PASS"
+      ],
+      "not_required": [
+        "same new candidate runtime success before its static creation",
+        "all independent projects complete"
+      ]
+    },
+    {
+      "id": "G-CANDIDATE-DESIGNATION",
+      "when": "after new candidate exists, before consuming it as current source",
+      "status": "OPEN_UNDESIGNATED",
+      "owner": "WD owner",
+      "release": [
+        "retain old YML/nodebook and create separately named three-part-version candidate only within authorized source scope",
+        "exact new YML path/hash plus Code/prompt/Schema manifest and logical-to-actual node mapping",
+        "owned approved_records authority and row hash for Flow2-6 current_candidate_yml and other explicitly permitted state fields; record static result/remaining gaps and append progress/end events through scoped transaction",
+        "if registry drift occurs follow execution standard5.5 bounded reassessment/rebuild, no stale apply, no auto merge or lock removal"
+      ],
+      "not_required": [
+        "guess latest file or treat legacy Fast39 name as candidate",
+        "Dify import/run before static designation"
+      ]
+    },
+    {
+      "id": "G-BACKEND-TEST",
+      "when": "before affected backend verification/integration",
+      "status": "OPEN",
+      "owner": "backend/DSH implementers",
+      "release": [
+        "reuse Task0 seven-file isolated source and reserved test path; bind actual app test environment/dependencies/fixtures",
+        "bind new backend and DSH source manifests and focused old projection/save/charge/queue/error/storage/reload/overflow/rollback results",
+        "Schema-only offline env is not evidence of app tests or deployment"
+      ]
+    },
+    {
+      "id": "G-DELIVERY-BINDING",
+      "when": "after candidate production, before actual integration/activation",
+      "status": "OPEN",
+      "owner": "WD/DF/backend/DSH",
+      "release": [
+        "IC-DESIGN actual new YML/node/Code/Schema/model-plugin capability identities mapped to this adoption record and C4 compound identity",
+        "IC-WORKFLOW exact actual imported/published app/workflow/version/DSL export and adaptation differences; no inference from local file",
+        "IC-API/backend and IC-ARTIFACT/DSH source/test artifacts, legacy compatibility and ownership-bound schema mapping",
+        "frozen delivery fingerprint composition/algorithm/value plus origin/account/workspace/folder/service/catalog/schema/contract/version ownership; observed service39/catalog214/account33/folder302 not default new binding",
+        "new explicit binding record must name C4 CONTRACT/FREEZE/INHERITANCE and this adoption record; inherited disabled C3 delivery proposal remains historical"
+      ],
+      "not_required": [
+        "actual new node IDs/hashes before any candidate has been created"
+      ]
+    },
+    {
+      "id": "G-RUNTIME-ACCEPTANCE",
+      "when": "at real operation/product acceptance/release",
+      "status": "OPEN",
+      "owner": "project decision/runtime/professional/user/consumer owners",
+      "release": [
+        "separate explicit deploy/upload/real-generation/fee authorization at corresponding action",
+        "same-version real evidence; unknown only observe original run, no new request/retry",
+        "professional/user/consumer acceptance and retained formal M06 API/G0/release gates"
+      ],
+      "not_required": [
+        "reuse prior unlimited-budget wording to bypass current no-call instruction"
+      ]
+    }
+  ],
+  "all_future_target_hashes": "not available until actual candidate production; do not fill invented values",
+  "current_source_registry_written": false
+}

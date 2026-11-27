@@ -1,0 +1,195 @@
+{
+  "at": "2026-11-12T09:39:35.642284+08:00",
+  "executor": "Codex",
+  "project": "dsh-oasis",
+  "workPackages": [
+    "DS-02",
+    "DS-05"
+  ],
+  "scope": "用户确认续办：隔离装配 M03、M04、M07，并做中国专利总路由与停止条件离线验证。费用范围 ¥0.00。",
+  "coordination": "1.2.2 / 1.3.1 NS1-R1 / P1111 / BM1-R1/S1 / 接口专项 R2",
+  "overall": {
+    "id": "PLAN-PROGRESS-REFRESH-20261112-P1111",
+    "revision": "P1111",
+    "date": "2026-11-12",
+    "path": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+    "anchor": "oasis-plan-progress-p1111",
+    "source_report": "docs/coordination/daily/2026-11-11-230229-scheduled-progress.md",
+    "record": "docs/coordination/execution/2026-11-12-plan-progress-refresh-p1111/修订说明.md",
+    "read_baseline": "docs/coordination/execution/2026-11-12-plan-progress-refresh-p1111/baseline.json",
+    "verification": "docs/coordination/execution/2026-11-12-plan-progress-refresh-p1111/verification.json",
+    "affected_projects": [
+      "dsh-oasis",
+      "workarea",
+      "backend",
+      "patent-distillery",
+      "test-library",
+      "workbuddy-bridge",
+      "dify",
+      "dify-design"
+    ],
+    "affected_workstreams": [
+      "landing-page",
+      "wechat-official-account",
+      "github-operations"
+    ],
+    "previous_followup_id": "PLAN-PROGRESS-REFRESH-20261110-P1110",
+    "scope": "planning refresh; changed starting points and exact evidence references only; source knowledge repo read-only",
+    "business_execution_started": false,
+    "tests_resumed": false,
+    "progress_authority": "registered current_entry and exact receipts",
+    "supersedes": "only obsolete starting points within P1111; original package identities, dependencies, contracts, scope-limited acceptances and gates remain in effect"
+  },
+  "local": {
+    "id": "PLAN-PROGRESS-REFRESH-20261112-P1111",
+    "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+    "anchor": "oasis-plan-progress-p1111",
+    "revision": "P1111",
+    "previous_followup_id": "PLAN-PROGRESS-REFRESH-20261108-P1108",
+    "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+    "addendum_anchor": "oasis-plan-progress-p1111",
+    "source_report": "docs/coordination/daily/2026-11-11-230229-scheduled-progress.md",
+    "record": "docs/coordination/execution/2026-11-12-plan-progress-refresh-p1111/修订说明.md",
+    "status": "planning_only",
+    "supersedes_only": "only local starting points in the P1111 section; previous scope, original work packages and gates apply"
+  },
+  "interface": {
+    "id": "INTERFACE-STANDARDS-FOLLOWUP-20261111-R2",
+    "date": "2026-11-11",
+    "revision": "R2",
+    "role": "planning_reference",
+    "status": "planning_only",
+    "path": "docs/superpowers/plans/2026-11-11-interface-standards-post-r03-plan.md",
+    "anchor": "oasis-interface-standards-followup-r2",
+    "sha256": "8c64d3ee0bae1d2971c3ec52ce1d6859ab7498092861c8070e54b9e772e6977f",
+    "read_baseline": "docs/coordination/plans/2026-11-11-interface-standards-post-r03-baseline.json",
+    "based_on_overall_followup_id": "PLAN-PROGRESS-REFRESH-20261110-P1110",
+    "scope": "Post-R03 AR7 readiness and bounded R04–R06; independent AR3, BRIDGE-1, LIVE1, M05 and design preparation",
+    "previous_followup": {
+      "id": "INTERFACE-STANDARDS-FOLLOWUP-20261110-R1",
+      "date": "2026-11-10",
+      "revision": "R1",
+      "role": "planning_reference",
+      "status": "planning_only",
+      "path": "docs/superpowers/plans/2026-11-10-interface-standards-followup-plan.md",
+      "anchor": "oasis-interface-standards-followup-p1110",
+      "sha256": "7b0f93b72537d9bb8f53bf17972f7faff5fa95e865fdc99f2a9fc8c587dec954",
+      "read_baseline": "docs/coordination/plans/2026-11-10-interface-standards-followup-baseline.json",
+      "based_on_overall_followup_id": "PLAN-PROGRESS-REFRESH-20261110-P1110",
+      "scope": "R02–R06 continuation; prioritized uses, readiness and evidence layers"
+    }
+  },
+  "governance": {
+    "/Users/tinadong7036/Documents/开发项目/AGENTS.md": {
+      "currentSha256": "5da00f111b7d1632ea0f7d59c4d45790743988c1a8ba5f84ac895258b3ca7559",
+      "previousSha256": "5da00f111b7d1632ea0f7d59c4d45790743988c1a8ba5f84ac895258b3ca7559",
+      "scope": "根 R1/EXEC-R2 与接口纳管规则"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md": {
+      "currentSha256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "previousSha256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "scope": "项目规则及当前适用范围"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md": {
+      "currentSha256": "f2e51a7dcdc2f894f5ae748400356119759febb2ddee5dda21e5320f24ed79fd",
+      "previousSha256": "f2e51a7dcdc2f894f5ae748400356119759febb2ddee5dda21e5320f24ed79fd",
+      "scope": "协同 1.2.2，工作交付与状态来源"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json": {
+      "currentSha256": "a98e081d3d4e4537210d357c79541796f6e7575bd5ae583d38b94b7dca4519ac",
+      "previousSha256": "a98e081d3d4e4537210d357c79541796f6e7575bd5ae583d38b94b7dca4519ac",
+      "scope": "协同 1.2.2，登记入口与 followup"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json": {
+      "currentSha256": "f6f67ad8f1e2db431b272cdb430c92d05e75d533f39e2ebcd1bc7f6c431a206d",
+      "previousSha256": "f6f67ad8f1e2db431b272cdb430c92d05e75d533f39e2ebcd1bc7f6c431a206d",
+      "scope": "1.3.1，NS1-R1 与 P1110/P1108 解析"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md": {
+      "currentSha256": "a1e45ed0487cb997837a0efaf248c013fc4fd9a637a008ab7518699d9773a6eb",
+      "previousSha256": "a1e45ed0487cb997837a0efaf248c013fc4fd9a637a008ab7518699d9773a6eb",
+      "scope": "1.3.1/NS1-R1，BM1-R1/S1/G1 与 P1110 适用段落"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md": {
+      "currentSha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "previousSha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "scope": "IC-SKILL/IC-RULES/IC-ARTIFACT 消费与证据"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md": {
+      "currentSha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "previousSha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "scope": "协同 1.2.2，规则、产物、Skill 和双来源相关合同"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md": {
+      "currentSha256": "888f305ab686df59114fe4f8075eb68c99452122423384bdfb7f09d725cc5a22",
+      "previousSha256": "888f305ab686df59114fe4f8075eb68c99452122423384bdfb7f09d725cc5a22",
+      "scope": "BM1-R1/S1，Skills 优先和样例用途"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-11-11-interface-standards-post-r03-plan.md": {
+      "currentSha256": "8c64d3ee0bae1d2971c3ec52ce1d6859ab7498092861c8070e54b9e772e6977f",
+      "previousSha256": "8c64d3ee0bae1d2971c3ec52ce1d6859ab7498092861c8070e54b9e772e6977f",
+      "scope": "R2，AR7 与 M05 适用段落"
+    },
+    "/Users/tinadong7036/Documents/开发项目/专利业务Skills清单.md": {
+      "currentSha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "previousSha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "scope": "G1，原件无版本声明，M01–M14 对照"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-SKILL.md": {
+      "currentSha256": "b64aa31b270218e9dd17b7f54352cf2a1360ff05e035d5a8a6d2a2ba9dbfd9ef",
+      "previousSha256": "b64aa31b270218e9dd17b7f54352cf2a1360ff05e035d5a8a6d2a2ba9dbfd9ef",
+      "scope": "V0.1-draft，SKILL-1"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-RULES.md": {
+      "currentSha256": "94d0fd0ab871904b5886832840c7ff97799fb543199654e92acccc54fdba9c11",
+      "previousSha256": "94d0fd0ab871904b5886832840c7ff97799fb543199654e92acccc54fdba9c11",
+      "scope": "V0.1-draft，RULES-3 与输入评价隔离"
+    },
+    "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md": {
+      "currentSha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+      "previousSha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+      "scope": "V0.3-draft，引用 AR7 具名适用判据"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md": {
+      "currentSha256": "924a0385c247127cd0ec205f14f28af2388f0350526363eacf5b544e7886a6b5",
+      "previousSha256": "924a0385c247127cd0ec205f14f28af2388f0350526363eacf5b544e7886a6b5",
+      "scope": "项目 P1108，DS-02/03/05"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-11-dsh-oasis-next-development-plan-r8.md": {
+      "currentSha256": "5bda5605d913b2d788fbd2a0699f817fbc3b4f606103865c5c981f4b3d49679a",
+      "previousSha256": "5bda5605d913b2d788fbd2a0699f817fbc3b4f606103865c5c981f4b3d49679a",
+      "scope": "R8，DSH 现有准备边界"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-12-dual-skill-full-coverage.md": {
+      "currentSha256": "f41f09181830c5db58832face5cfc0439f280e4c40c7973ab0906cd7a18ef4de",
+      "previousSha256": "f41f09181830c5db58832face5cfc0439f280e4c40c7973ab0906cd7a18ef4de",
+      "scope": "已执行的 25 入口静态及离线证据"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md": {
+      "currentSha256": "6bf99848509ed6f4fa06e4d74cec0a167562484399b4c563e5b5a1f2b85ca478",
+      "previousSha256": "6bf99848509ed6f4fa06e4d74cec0a167562484399b4c563e5b5a1f2b85ca478",
+      "scope": "current_entry，相关状态段落"
+    },
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md": {
+      "currentSha256": "ebdcef28e95fa0de355e49055a54235ca4f5ce0e6d47f3c35892934172a48307",
+      "previousSha256": "ebdcef28e95fa0de355e49055a54235ca4f5ce0e6d47f3c35892934172a48307",
+      "scope": "current_entry，相关状态段落"
+    }
+  },
+  "namedInputs": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-12-dsh-skill-test-prep/cases.json": "4a654d93565dd41e2502389881704247bc5384ddf2930acff54631caadee82c1",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-12-dsh-skill-test-prep/prepared-manifest.json": "a21ab94db0a485f2ea35c57d9771ad2d7b68ce1bc1cbb3f378e6910a2912b152",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-12-dsh-next-first-three-live/execution-return.md": "4a3c2d90460fbffbd0b4902cfee621d810f572fda4b725581067a4086b11ee4d",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-12-dsh-next-first-three-live/live-verification.json": "02141d028011fe4b3d83008e1edd7cbdc120684404d1ea84520635625aaa7bf5",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-12-dsh-skill-prep-r2/execution-preflight.json": "ff67212f1ec53f9c76d84f298002351f32af298356c99f0caf83682d2460537d",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-12-dsh-skill-prep-r2/execution-return.md": "430e8ff1bece9e1e309178069fa15af19ca61b5c3cca0d6ed5c29268a9a7f141",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-12-dsh-skill-prep-r2/offline-verification.json": "9ce81d18a4083596f8f57371234840e5bc9b91112bf43b6a9e47fb46f61a9947",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-12-dsh-skill-prep-r2/material-and-router-verification.json": "881bc1ac3fc4e1ede3569df27d3772d2438e0def179d97d12b03669c1a8138bc"
+  },
+  "plan": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-12-dsh-dual-skill-test-preparation.md",
+    "sha256": "187f7916f7d58fcc1041ca6d6cb3a72d249fd9fbb0d3f6737ecb717d88daa277"
+  },
+  "sourceBase": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-next-skill-prep-r2-20261112/package",
+  "isolatedCandidate": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-next-skill-prep-r3-20261112/package"
+}

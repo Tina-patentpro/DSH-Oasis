@@ -1,0 +1,66 @@
+{
+  "at": "2026-11-05T19:40:31.184686+08:00",
+  "verdict": "PASS_READONLY_AUDIT_PRESERVATION",
+  "failures": [],
+  "audit_completed": true,
+  "source_admission_released": false,
+  "source_governance_status": "FAIL_RETAINED",
+  "source_governance_exit_code": 1,
+  "source_governance_error_count": 1,
+  "preserved_existing_files": 3920,
+  "preserved_symlinks": 2,
+  "preserved_business_files": 353,
+  "preflight_input_count": 170,
+  "additional_known_sources": 18,
+  "legacy_inventory_files_identity_checked": 18,
+  "source_registry_revision": 489,
+  "source_registry_sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "new_files": [
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-source-admission-readonly/admission-review.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-source-admission-readonly/preflight.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-source-admission-readonly/source-governance.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-source-admission-readonly/source-inputs-addendum.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-source-admission-readonly/源设计准入只读核对与例外边界.md"
+  ],
+  "source_registry_writes": 0,
+  "business_source_edits": 0,
+  "model_API_upload_generation_paid_calls": 0,
+  "deployments": 0,
+  "commits_or_pushes": 0,
+  "historical245_tests_rerun": false,
+  "C4_153_reference_cases_rerun": false,
+  "archive_scanned": false,
+  "source_preservation_scope": "all explicitly read/bound source objects and target legacy inventories; not a newly hashed whole-source-tree claim",
+  "commands": [
+    {
+      "shell": "zsh",
+      "command": "python3 -B .local/fast39-source-admission-20261105/verify_readonly.py",
+      "exit_code": 0
+    }
+  ],
+  "evidence_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-source-admission-readonly/admission-review.json",
+      "sha256": "5433eb067b8c41705292a76242d7db7c332f13ff81ad75829dd270529a083d1d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-source-admission-readonly/preflight.json",
+      "sha256": "2141a5a5285964d150d7aba871ff0de31e1c4c5e22ebf10dfcc98e59e567bf66"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-source-admission-readonly/source-governance.json",
+      "sha256": "329667716b1c9390810e0512153479217f18eb5a8c5978e3a60e300b9df44478"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-source-admission-readonly/source-inputs-addendum.json",
+      "sha256": "6bc7477b81d767bb6489196b5f62601371c75cada2b252431b15966db1ff1361"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-source-admission-readonly/源设计准入只读核对与例外边界.md",
+      "sha256": "2f3c54e43662b47f7deb977f99fcb4938ba2c51426c3a3e898b28507ba92d70a"
+    }
+  ],
+  "verifier_sha256": "5957f51a10bbc8dc1d64d0e99da0884f6f7db415c9eb39b599d536b347992062"
+}

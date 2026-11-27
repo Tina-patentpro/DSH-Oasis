@@ -1,0 +1,97 @@
+{
+  "at": "2026-11-05T23:15:04.317240+08:00",
+  "runtime": {
+    "interpreter_logical": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python",
+    "interpreter_real": {
+      "path": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python",
+      "sha256": "811e2679c20fd2c7413f7c5ca28ce903065eea8dadb8660f1b9379a28959a480",
+      "bytes": 18058560
+    },
+    "python_version": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "jsonschema_version": "4.26.0",
+    "dependency_identity_scope": "existing interpreter and jsonschema version/metadata, NOT full package distribution/release closure",
+    "new_installs": false
+  },
+  "subject_module": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/restore_once.py",
+    "sha256": "664ab5ad0327b7acf16a5b8726a3f4d880b7a94ac4c2534ffd2673ff999ab164",
+    "bytes": 22411
+  },
+  "new_tests": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py",
+    "sha256": "95eafbcae6c30e4d38aab1d391bb22d17376a9b89a7fabea4961af72a9c3c978",
+    "bytes": 7063
+  },
+  "inherited_tests": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/test_restore_once.py",
+    "sha256": "39bc1c0a420870e30b58a80ccc2ca2c327f1f28036506c7697a74c4031a50610",
+    "bytes": 14247
+  },
+  "template": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/intent-template.json",
+    "sha256": "776abc0ab21bbb7854f922344e164627be4ae6346cda836c87d4878550717c21",
+    "bytes": 3288
+  },
+  "command_prefix": [
+    "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python",
+    "-B",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2/test_revision.py"
+  ],
+  "red_core": {
+    "subject": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2",
+    "args": [
+      "--subject",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2",
+      "--red-core"
+    ],
+    "exit_code": 1,
+    "tests": 4,
+    "failures": 4
+  },
+  "red_regressions": {
+    "subject": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2",
+    "args": [
+      "--subject",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2",
+      "--new-only"
+    ],
+    "exit_code": 1,
+    "tests": 13,
+    "failures": 10,
+    "passed": 3
+  },
+  "green": {
+    "subject": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/revisions/prep-2",
+    "args": [],
+    "exit_code": 0,
+    "tests": 33,
+    "failures": 0,
+    "passed": 33,
+    "new": 13,
+    "inherited": 20
+  },
+  "logs": {
+    "tests-red-core.log": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/tests-red-core.log",
+      "sha256": "a5db1288c92813b4b93c0472d067dc1cdb42c2e84dea04e94d51d341e9c3a23b",
+      "bytes": 5470
+    },
+    "tests-red-regressions.log": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/tests-red-regressions.log",
+      "sha256": "a46679077329f3e2f7c03542e5ffbc5f5f1174fe98b50e8520f89a566157a6ec",
+      "bytes": 13796
+    },
+    "tests-green-attempt-1.log": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep2/tests-green-attempt-1.log",
+      "sha256": "3908f0f132ea8554c2ce62d05a71b6235e9483f652ef6a9acbef1067faaa5b43",
+      "bytes": 3956
+    }
+  },
+  "scope": "actual isolated native setup/lock/atomic IO/fault tests; all synthetic authority mode isolated; source mode0",
+  "MR01": "CLOSED_AT_ISOLATED_MECHANISM_LEVEL",
+  "MR02": "CLOSED_AT_ISOLATED_MECHANISM_LEVEL",
+  "MR03": "CLOSED_AT_ISOLATED_MECHANISM_LEVEL",
+  "MR04": "CLOSED_AT_ISOLATED_MECHANISM_LEVEL",
+  "independent_acceptance": false,
+  "runtime_or_source_acceptance": false
+}

@@ -1,0 +1,139 @@
+{
+  "at": "2026-11-05T18:47:04.784543+08:00",
+  "verdict": "PASS",
+  "failures": [],
+  "record_id": "FAST39-C4-LA-20261105-R1",
+  "adoption_freeze_sha256": "53e414a3aa5c91311e2e8f50789137494b96c65d012e3b102dde44b9a1a59011",
+  "C4_freeze_unchanged": "a5780ad83094d1a9fdb916f9da83f8fcc52e9794da456f1321dd23b4ab5f4901",
+  "source_inputs": 149,
+  "unchanged_existing_files": 3902,
+  "current_entry_change": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+    "before_sha256": "66aa7d13118ce2a3ad19df18ddc534fa86a0a5728413eff70bb8274496549faa",
+    "after_sha256": "b5fd628a442235ed5e8aa0f3353b19e15c1a349771a1e962718322726bff3e2d",
+    "preserved_original_suffix_bytes": 310496,
+    "preserved_original_suffix_sha256": "66aa7d13118ce2a3ad19df18ddc534fa86a0a5728413eff70bb8274496549faa"
+  },
+  "symlinks_preserved": 2,
+  "business_files_preserved": 353,
+  "concurrent_source_delta": "487->488 independently scoped S2 audit start; all prior245 table rows unchanged, no candidate/Batch gate released",
+  "closed_design_adoption": [
+    "BASELINE-ADOPTION",
+    "EXACT-RULE-SKILL-ADOPTION within selected scope",
+    "SHARED-BEHAVIOR-ADOPTION at design level"
+  ],
+  "remaining_gates": 6,
+  "document_checks": {
+    "passed": 22,
+    "failed": 0,
+    "schema_definitions_checked": 33,
+    "semantic153_cases": "not rerun, prior unchanged C4-TR1 evidence referenced"
+  },
+  "commands": [
+    {
+      "shell": "zsh",
+      "command": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python -B .local/fast39-c4-adoption-20261105/verify_adoption.py",
+      "exit_code": 0
+    }
+  ],
+  "first_failures_preserved": [
+    "document-verification-attempt-1.json",
+    "document-verification-attempt-2.json"
+  ],
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "new_visible_files": [
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-c4-limited-adoption-20261105/FREEZE.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-c4-limited-adoption-20261105/adoption-record.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-c4-limited-adoption-20261105/release-conditions.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-c4-limited-adoption-20261105/source-identities.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-c4-limited-adoption-20261105/限定采用确认与解除条件.md",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/concurrent-source-delta.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/document-verification-attempt-1.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/document-verification-attempt-2.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/document-verification.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/preflight-s2-r1-supplement.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/preflight.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/verification-attempt-1.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/并行入口接续复核.md"
+  ],
+  "network_attempts": [],
+  "business_source_edits": 0,
+  "source_registry_writes": 0,
+  "runtime_binding_activations": 0,
+  "new_generation_calls": 0,
+  "paid_calls": 0,
+  "deployments": 0,
+  "commits_or_pushes": 0,
+  "evidence_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/concurrent-source-delta.json",
+      "sha256": "858d06bb8604955f06c02bb7fc23b25252d8d6e0d4ff90994d3c9ebae80e00b9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/document-verification-attempt-1.json",
+      "sha256": "1008991c89bccee31a5f0a9ee3a70d369fd3c046d69976e837159f06aaaa3154"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/document-verification-attempt-2.json",
+      "sha256": "d923b8fbacc1e5e44bdcc44b247175d7dc183d2de81dd3a32cb03437770119ef"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/document-verification.json",
+      "sha256": "513bca448cafaaa5f739ec61491366445b4a4160bdf07cc73e138c7bdd04c41e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/preflight-s2-r1-supplement.json",
+      "sha256": "8c57abc5a3db0261dc2084b7aaf20884d9741e6260d41150150a4b4605f8f278"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/preflight.json",
+      "sha256": "828b7bb74a4499ade9f09a4e0b17c1e533b9b53a9bf245269e1db916a64ed827"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/verification-attempt-1.json",
+      "sha256": "714858522b3cda246b09420c84d175b51fd51d7cac929707960cd37cbaa8b30d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-c4-limited-adoption/并行入口接续复核.md",
+      "sha256": "793fad8099cbf54b54799dba8940771e6c04e5a8d68081097ebc48f7e67a48f9"
+    }
+  ],
+  "private_probe_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-c4-adoption-20261105/author_adoption.py",
+      "sha256": "21b0ede8fe46d86f7c41123b7a70324fba4ee98a7686769477a9d6fd5ed7f563"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-c4-adoption-20261105/verify_adoption.py",
+      "sha256": "7a5f37c3037800aabe0d663eda212c81af275dfd964fd06eba4b3453a26a2dce"
+    }
+  ],
+  "reviewed_parallel_workspace_files": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "old_sha256": "4110470bd8b7aba25aa3493588a270897b8d180ffe49cf17adef3e15af1ec28a",
+      "reviewed_current_sha256": "2f0b4c780db2b558db9351c225f65b62edc55e2510aac39847c2142de0a27642",
+      "preserved_parallel_change": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/README.md",
+      "old_sha256": "c160c1d821d5c403deaf6a7850fdcd61770a75cb975d897d989d8d7514058ce5",
+      "reviewed_current_sha256": "f1ed2b34269f2214e516be83d2a57ccd72c6548e770502e6e816f6a6f596cbae",
+      "preserved_parallel_change": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "old_sha256": "e62f9d37723046ccbbe094fb18c2b5e3863c2add5ef739d198a7c83ac88569f2",
+      "reviewed_current_sha256": "4e4050a4df0c92be181245ce1f356aeedce8e9bac413af988f996701cd552600",
+      "preserved_parallel_change": true
+    }
+  ],
+  "reviewed_parallel_inputs": 14,
+  "current_followup": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+  "historical_FAIL_records_preserved": [
+    "document-verification-attempt-1.json",
+    "document-verification-attempt-2.json",
+    "verification-attempt-1.json"
+  ]
+}

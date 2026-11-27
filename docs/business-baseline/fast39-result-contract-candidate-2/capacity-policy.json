@@ -1,0 +1,49 @@
+{
+  "version": "C2-R1",
+  "classification": "NEW_CONTROLLED_ENHANCEMENT_LIMITS_NOT_EXISTING_M06_INTERSECTION",
+  "owner": "tasks[taskId].remoteExecutions[executionId].fast39Result",
+  "schema_extension": "optional sibling of unifiedClaims in oasisRemoteExecutionSchema; not implemented",
+  "new_limits": {
+    "each_output_utf16": 100000,
+    "each_output_utf8_bytes": 262144,
+    "evidence_record_compact_json_utf8_bytes": 524288,
+    "parsed_report_or_evidence_container_depth_root_zero": 8,
+    "array_items": 1024,
+    "object_keys": 256
+  },
+  "existing_owners": [
+    {
+      "owner": "legacy answerText/artifact",
+      "bytes": 262144
+    },
+    {
+      "owner": "workspace legacyValue excluding task.v340",
+      "bytes": 1048576
+    },
+    {
+      "owner": "whole workspace record",
+      "bytes": 8388608
+    },
+    {
+      "owner": "v340 document only",
+      "bytes": 1048576
+    },
+    {
+      "owner": "v340 snapshot only",
+      "bytes": 2097152
+    },
+    {
+      "owner": "M06 source packet only",
+      "bytes": 1048576
+    }
+  ],
+  "serialization": "JSON.stringify-equivalent compact UTF8; effective record size includes all existing body/artifact duplication and current workspace headroom; test actual full serialized candidate record",
+  "overflow": {
+    "no_truncation": true,
+    "small_receipt_retention": "hash_only_not_persisted",
+    "raw_full_local_preservation_claim": false,
+    "if_receipt_cannot_fit": "do not overwrite; retain pre-dispatch evidence; show persistence failure; manual recovery, no automatic retry or unbounded sidecar"
+  },
+  "non_bmp_count": "UTF16 uses two code units; lone surrogates/NUL reject; valid scalar text only",
+  "raw_response": "hash alone is not raw retention; original backend queue durability unproved"
+}

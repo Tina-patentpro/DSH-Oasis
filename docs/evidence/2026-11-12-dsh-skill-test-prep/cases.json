@@ -1,0 +1,139 @@
+{
+  "format": 1,
+  "relativeInputRoot": "inputs",
+  "commonUserInstruction": "本次仅用于公开合成软件测试。请区分材料、推断和待确认事项，不将合成编号当成实际公开号，不补造技术事实或已执行的工具结果。",
+  "defaultUpstreamMode": "independent-case-no-predecessor",
+  "firstSuggestedBatch": [
+    "M05",
+    "M01",
+    "M02"
+  ],
+  "cases": [
+    {"id":"I01","suite":"oasis","skill":"patent-drawing","nodeId":null,"batch":"artifacts","request":"按标号表绘制滑移组件关系图。","fields":{},"attachments":[{"path":"public-disclosure.md"},{"path":"drawing-key.md"},{"path":"public-schematic.png"}],"capabilities":["workspace-preview","image-output"]},
+    {"id":"M01","suite":"oasis","skill":"patent-background-research","nodeId":"Flow-1-1","batch":"text","request":"围绕导向与锁止形成技术背景和后续研究问题。","fields":{"research_request_text":{"path":"scenarios.md","section":"background"}},"attachments":[],"capabilities":[]},
+    {"id":"M02","suite":"oasis","skill":"patent-triz-analysis","nodeId":"Flow-1-2","batch":"text","request":"围绕 P1 和给定定性预期效果完成 TRIZ 问题分析。","fields":{"technical_analysis_material_text":{"path":"scenarios.md","section":"triz"}},"attachments":[],"capabilities":[]},
+    {"id":"M03","suite":"oasis","skill":"patent-overview-search","nodeId":"Flow-1-3","batch":"text","request":"输出可复用的概要检索策略。本例用本地材料演练。","fields":{"search_target_text":{"path":"scenarios.md","section":"search"}},"attachments":[],"capabilities":[]},
+    {"id":"M04","suite":"oasis","skill":"patent-solution-selection","nodeId":"Flow-1-4","batch":"text","request":"按给定比较维度筛选两个合成方案。","fields":{"solution_selection_basis_text":{"path":"scenarios.md","section":"alternatives"}},"attachments":[],"capabilities":[]},
+    {"id":"M05","suite":"oasis","skill":"patent-technical-disclosure","nodeId":"Flow-1-5","batch":"text","request":"依据原始交底和访谈记录整理技术交底和要素。","fields":{"technical_disclosure_file":{"path":"public-disclosure.md"},"drawings_text":{"path":"drawing-key.md"},"supplemental_data_text":{"path":"scenarios.md","section":"feedback"}},"attachments":[],"capabilities":[]},
+    {"id":"M06","suite":"oasis","skill":"patent-claims-draft","nodeId":"Flow-2-6","batch":"text","request":"使用当前所选版本，依据原始交底编写权利要求初稿。","fields":{"disclosure_file":{"path":"public-disclosure.md"}},"attachments":[],"capabilities":[]},
+    {"id":"M07","suite":"oasis","skill":"patent-specification-draft","nodeId":"Flow-2-7","batch":"text","request":"根据原始交底、给定权项与标号表撰写说明书初稿。","fields":{"claims_text":{"path":"claims-spec.md","section":"claims-draft"},"disclosure_file":{"path":"public-disclosure.md"},"drawings_text":{"path":"drawing-key.md"}},"attachments":[],"capabilities":[]},
+    {"id":"M08","suite":"oasis","skill":"patent-fulltext-recheck","nodeId":"Flow-3-8","batch":"text","request":"以给定对照全文逐段复检权项，不扩展检索范围。","fields":{"claims_text":{"path":"claims-spec.md","section":"claims-draft"},"specification_text":{"path":"claims-spec.md","section":"specification"},"comparison_doc_1_file":{"path":"simulated-reference.md"}},"attachments":[],"capabilities":[]},
+    {"id":"M09","suite":"oasis","skill":"patent-drafting-plan","nodeId":"Flow-3-9","batch":"text","request":"按交付要求、当前权项及说明书列撰写计划。","fields":{"claims_text":{"path":"claims-spec.md","section":"claims-draft"},"specification_text":{"path":"claims-spec.md","section":"specification"},"strategy_text":{"path":"scenarios.md","section":"strategy"}},"attachments":[],"capabilities":[]},
+    {"id":"M10","suite":"oasis","skill":"patent-technical-confirmation","nodeId":"Flow-3-10","batch":"text","request":"根据访谈形成给发明人核对的问题清单。","fields":{"technical_feedback_text":{"path":"scenarios.md","section":"feedback"},"drawings_text":{"path":"drawing-key.md"}},"attachments":[],"capabilities":[]},
+    {"id":"M11","suite":"oasis","skill":"patent-claims-final","nodeId":"Flow-4-11","batch":"text","request":"审阅候选 B 相对初稿 A 的变化并给出修订依据。","fields":{"claims_text":{"path":"claims-spec.md","section":"claims-revision"},"claims_file":{"path":"claims-baseline.md"},"specification_text":{"path":"claims-spec.md","section":"specification"},"confirmation_text":{"path":"scenarios.md","section":"feedback"}},"attachments":[],"capabilities":[]},
+    {"id":"M12","suite":"oasis","skill":"patent-specification-final","nodeId":"Flow-4-12","batch":"text","request":"用给定权项、说明书、交底及标号表修订说明书例稿。","fields":{"claims_text":{"path":"claims-spec.md","section":"claims-draft"},"specification_text":{"path":"claims-spec.md","section":"specification"},"disclosure_file":{"path":"public-disclosure.md"},"drawings_text":{"path":"drawing-key.md"}},"attachments":[],"capabilities":[]},
+    {"id":"M13","suite":"oasis","skill":"patent-final-check","nodeId":"Flow-5-13","batch":"text","request":"终检给定申请文件例稿，输出有位置的缺项。","fields":{"claims_text":{"path":"claims-spec.md","section":"claims-draft"},"specification_text":{"path":"claims-spec.md","section":"specification"},"drawings_text":{"path":"drawing-key.md"}},"attachments":[],"capabilities":[]},
+    {"id":"M14","suite":"oasis","skill":"patent-office-action-response","nodeId":"Flow-6-14","batch":"text","request":"为模拟审查意见整理逐项答复和原文支持。","fields":{"oa_notice_file":{"path":"simulated-office-action.md"},"original_application_file":{"path":"public-disclosure.md"},"current_application_text":{"path":"claims-spec.md","section":"claims-draft"},"comparison_doc_1_file":{"path":"simulated-reference.md"}},"attachments":[],"capabilities":[]},
+    {"id":"CN-ROUTER","suite":"patent-disclosure","skill":"patent-disclosure-skill","nodeId":null,"batch":"router","request":"按单条用户意图选出子 Skill 入口，给出可追溯路由；本案为路由核验。","fields":{},"attachments":[],"capabilities":["explicit-route"],"publicSources":[]},
+    {"id":"CN-DISCLOSURE","suite":"patent-disclosure","skill":"patent-disclosure","nodeId":null,"batch":"tools","request":"用给定滑移组件材料准备发明交底。实用新型与外观场景分别标所需材料。","fields":{},"attachments":[{"path":"public-disclosure.md"},{"path":"drawing-key.md"},{"path":"scenarios.md","section":"feedback"}],"capabilities":["workspace-output"],"publicSources":[]},
+    {"id":"CN-APPLICATION","suite":"patent-disclosure","skill":"patent-application","nodeId":null,"batch":"tools","request":"明确指定 inputs/invention-case，基于其发明交底制作申请底稿。","fields":{},"attachments":[{"path":"invention-case/滑移组件_20261112090000.md"}],"capabilities":["material-gate","docx-output","figure-render","workspace-output"],"publicSources":[]},
+    {"id":"CN-DOCKET","suite":"patent-disclosure","skill":"patent-docket","nodeId":null,"batch":"tools","request":"为该滑移组件开一份测试案卷，依次准备交底和申请底稿。","fields":{},"attachments":[{"path":"public-disclosure.md"},{"path":"scenarios.md","section":"feedback"}],"capabilities":["docket-local-state","explicit-route","docx-output","workspace-output"],"publicSources":[]},
+    {"id":"CN-SEARCH","suite":"patent-disclosure","skill":"patent-search","nodeId":null,"batch":"network","request":"请做专利著录检索。先在 CNIPA 搜索公开技术关键词“滑块 导向槽”，每次最多一页。海外变体另行明确点名。","fields":{},"attachments":[],"capabilities":["cnipa-public-search","google-patents-public-search"],"publicSources":["cnipa-search","google-patents"]},
+    {"id":"CN-READER","suite":"patent-disclosure","skill":"patent-reader","nodeId":null,"batch":"tools","request":"请解读给定模拟全文，另生成可核对的特征行和段落数据。","fields":{},"attachments":[{"path":"simulated-reference.md"}],"capabilities":["workspace-output","test-vault-write"],"publicSources":[]},
+    {"id":"CN-CHART","suite":"patent-disclosure","skill":"patent-chart","nodeId":null,"batch":"tools","request":"请制作权利要求对照表，按 SIM-REF-01 段落逐格列证据。","fields":{},"attachments":[{"path":"claims-spec.md","section":"claims-draft"},{"path":"simulated-reference.md"}],"capabilities":["docx-output","workspace-output"],"publicSources":[]},
+    {"id":"CN-MAP","suite":"patent-disclosure","skill":"patent-map","nodeId":null,"batch":"tools","request":"请打开当前测试案例的专利地图，数据源为 inputs/vault。","fields":{},"attachments":[{"path":"vault/Research/Patents/SIM-REF-01/SIM-REF-01_解读_20261112.md"},{"path":"vault/Research/Patents/SIM-REF-02/SIM-REF-02_解读_20261112.md"}],"capabilities":["test-vault-read","local-map-loopback","fixed-vector-model"],"publicSources":[]},
+    {"id":"CN-OA","suite":"patent-disclosure","skill":"patent-oa","nodeId":null,"batch":"tools","request":"请根据模拟意见准备审查答复草稿并复核对照表。","fields":{},"attachments":[{"path":"simulated-office-action.md"},{"path":"public-disclosure.md"},{"path":"claims-spec.md","section":"claims-draft"},{"path":"simulated-reference.md"}],"capabilities":["docx-output","workspace-output","chart-sync"],"publicSources":[]},
+    {"id":"CN-POLICY","suite":"patent-disclosure","skill":"patent-exam-policy","nodeId":null,"batch":"network","request":"请按已固定的国家知识产权局公告入口制作政策简报，记录实际读取的正文和生效日期。","fields":{},"attachments":[{"path":"scenarios.md","section":"strategy"}],"capabilities":["official-policy-fetch","workspace-output"],"publicSources":["cnipa-policy"]}
+  ],
+  "variants": [
+    {
+      "case": "M08",
+      "id": "M08-MISSING-TEXT",
+      "remove": [
+        "comparison_doc_1_file"
+      ],
+      "request": "本次没有对照全文，仅列明缺件及下一步。"
+    },
+    {
+      "case": "CN-APPLICATION",
+      "id": "CN-APPLICATION-NO-CASE",
+      "remove": [
+        "attachments"
+      ],
+      "request": "请做申请底稿，我还没有提供交底目录。"
+    },
+    {
+      "case": "CN-SEARCH",
+      "id": "CN-SEARCH-OVERSEAS",
+      "request": "请明确按美国公开号 US223898A 查询一件海外文献。",
+      "capabilities": [
+        "google-patents-public-search"
+      ],
+      "publicSources": [
+        "google-patents"
+      ]
+    },
+    {
+      "case": "CN-READER",
+      "id": "CN-READER-PUBLIC-NUMBER",
+      "request": "请只解读美国公开文献 US223898A。",
+      "attachments": [],
+      "capabilities": [
+        "google-patents-public-document",
+        "workspace-output"
+      ],
+      "publicSources": [
+        "google-patents"
+      ]
+    },
+    {
+      "case": "CN-READER",
+      "id": "CN-READER-PDF",
+      "request": "请读取美国国家档案馆的原始附图扫描页。仅报告实际读取的内容及格式限制。",
+      "attachments": [
+        {
+          "path": "US223898A-nara-drawing.pdf"
+        }
+      ],
+      "capabilities": [
+        "pdf-admission",
+        "scan-or-ocr",
+        "workspace-output"
+      ],
+      "publicSources": [
+        "nara-patent-drawing"
+      ]
+    },
+    {
+      "case": "CN-MAP",
+      "id": "CN-MAP-IPC",
+      "request": "请打开当前测试案例的专利地图，使用 IPC 后备模式并说明取数范围。"
+    },
+    {
+      "case": "CN-ROUTER",
+      "id": "CN-ROUTER-INTENTS",
+      "probes": [
+        "请把给定材料写成发明交底书。",
+        "请做保护型 1+N 围栏。",
+        "请做发明分案规划。",
+        "请按指定交底目录做申请底稿。",
+        "请一条龙制作交底和申请。",
+        "请按著录字段检索国内公开公告。",
+        "请明确查美国专利。",
+        "请解读公开号 US223898A。",
+        "请做权利要求对照表。",
+        "请打开测试库的专利地图。",
+        "请根据给定的模拟审查意见草拟答复。",
+        "请给出近期政策简报。"
+      ]
+    }
+  ],
+  "publicSources": {
+    "cnipa-search": {
+      "url": "https://epub.cnipa.gov.cn/",
+      "purpose": "国内著录查询；准备时公开页超时，实际可达性待证"
+    },
+    "google-patents": {
+      "url": "https://patents.google.com/patent/US223898A/en",
+      "purpose": "海外公开样例索引；运行时服务行为另核"
+    },
+    "nara-patent-drawing": {
+      "url": "https://www.archives.gov/files/historical-docs/doc-content/images/edison-patent-light-bulb.pdf",
+      "purpose": "美国国家档案馆公开附图扫描页，冻结本地原件，仅用于格式测试"
+    },
+    "cnipa-policy": {
+      "url": "https://www.cnipa.gov.cn/col/col74/index.html",
+      "purpose": "官方公告目录；实际取到的正文 URL、发布日期及施行时间另记"
+    }
+  }
+}

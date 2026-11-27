@@ -1,0 +1,44 @@
+✖ actual backend handler prefixed legacy body and six outputs survive DSH transport, persistence and cold reopen (97.893959ms)
+✖ legacy body and C4 rendering retain independent integrity checks after backend pairing (60.098208ms)
+✔ actual backend known provider failure preserves original queue fact and DSH bounded error receipt without completed artifact (58.012417ms)
+✔ actual backend pending provider preserves original queue fact and DSH bounded error receipt without completed artifact (57.769042ms)
+✔ actual backend conflicting run ID preserves original queue fact and DSH bounded error receipt without completed artifact (57.87175ms)
+✔ actual backend invalid sixth output preserves original queue fact and DSH bounded error receipt without completed artifact (64.604333ms)
+✔ actual backend zero claims preserves original queue fact and DSH bounded error receipt without completed artifact (56.544708ms)
+✔ actual backend UTF16 overflow preserves original queue fact and DSH bounded error receipt without completed artifact (56.794125ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 6
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 650.480375
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:42:1
+✖ actual backend handler prefixed legacy body and six outputs survive DSH transport, persistence and cold reopen (97.893959ms)
+  Error [WorkspaceMaterialError]: 原正文与服务结果不一致，结果未写入。
+      at remoteError (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/oasis-remote-service.js:25:10)
+      at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/oasis-remote-service.js:985:17
+      at async Object.run (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workspace-operation-guard.js:14:20)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:46:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'FAST39_BINDING_MISMATCH',
+    details: {}
+  }
+
+test at packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:61:1
+✖ legacy body and C4 rendering retain independent integrity checks after backend pairing (60.098208ms)
+  Error [WorkspaceMaterialError]: 原正文与服务结果不一致，结果未写入。
+      at remoteError (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/oasis-remote-service.js:25:10)
+      at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/oasis-remote-service.js:985:17
+      at async Object.run (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workspace-operation-guard.js:14:20)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-backend-pairing.test.mjs:63:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'FAST39_BINDING_MISMATCH',
+    details: {}
+  }

@@ -1,0 +1,174 @@
+{
+  "at": "2026-11-05T20:28:37.386590+08:00",
+  "scope": "counterfactual strings in process memory only, original source unchanged; no actual repair/apply/permission grant",
+  "source_path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/README.md",
+  "source_sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+  "source_revision": 489,
+  "native_tool_sha256": "05a18deb923f9f7fa3b0f106bfcfab8dbcab5d1005a1b5fcee937e0c369ef780",
+  "experiments": [
+    {
+      "case": "A original / R1 Flow selector",
+      "selector": {
+        "section": "## 4. 业务状态",
+        "key_column": "Flow",
+        "key": "2-6"
+      },
+      "outcome": "REJECTED",
+      "error": "malformed table separator"
+    },
+    {
+      "case": "B separator-only counterfactual",
+      "selector": {
+        "section": "## 4. 业务状态",
+        "key_column": "Flow",
+        "key": "2-6"
+      },
+      "outcome": "REJECTED",
+      "error": "malformed table width"
+    },
+    {
+      "case": "C separator+relocation counterfactual / R1 selector",
+      "selector": {
+        "section": "## 4. 业务状态",
+        "key_column": "Flow",
+        "key": "2-6"
+      },
+      "outcome": "REJECTED",
+      "error": "record missing or ambiguous"
+    },
+    {
+      "case": "D same counterfactual / unique existing unchanged column",
+      "selector": {
+        "section": "## 4. 业务状态",
+        "key_column": "运行记录",
+        "key": "10157"
+      },
+      "outcome": "SELECTED",
+      "cells": {
+        "Flow": "2-6",
+        "YML": "5",
+        "Nodebook": "0",
+        "运行记录": "10157",
+        "asset_state": "legacy_assets_present",
+        "current_candidate_yml": "undesignated",
+        "contract_state": "gap_confirmed",
+        "work_state": "backlog",
+        "evidence_status": "STATIC_ONLY",
+        "latest_change_id": "REG-20260829094157-README-748f0d16",
+        "下一动作": "依据 V3.4.0 重构，创建新版本化候选并完成静态审计"
+      },
+      "row_sha256": "1aaad85ea856242ec6eabc5b84e768bf31841e6cf116ed9d86ae50f124d341ab"
+    },
+    {
+      "case": "E original known-working owned work-item selector",
+      "selector": {
+        "section": "## 5. 开放工作项",
+        "key_column": "work_item_id",
+        "key": "COORD-S2-AUDIT-20261105-R1"
+      },
+      "outcome": "SELECTED",
+      "cells": {
+        "work_item_id": "COORD-S2-AUDIT-20261105-R1",
+        "scope": "S2 documentation audit role boundary entry publication and conditional dependency repair only",
+        "work_state": "closed",
+        "acceptance_checks": "Frontpage workarea WeChat consistent; Codex WorkBuddy and human gates preserved; immutable S2 and foreign records unchanged",
+        "stop_conditions": "Related contract ownership drift or archive business asset impact; no website execution permitted"
+      },
+      "row_sha256": "8f3c6c7d1e38bbd1c83d80cd09a1a6cb05e740ed9887d66acd6d95045afca93c"
+    }
+  ],
+  "root_causes": [
+    {
+      "id": "REG01",
+      "source_line": 127,
+      "fact": "candidate table header11 columns vs separator10",
+      "raw_sha256": "0c53399cecd5d92f67cb184f722ac9306604b51d6660eef12932dc012dc250a1"
+    },
+    {
+      "id": "REG02",
+      "source_line": 128,
+      "fact": "7-cell legacy completed-work row including trailing separator fragment embedded in11-column candidate table",
+      "raw_row": "| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |---|\n",
+      "raw_sha256": "a6660d518820fd5a1f5feb751608969650fa7c10041df0a44d9d4232a9c65ba0",
+      "preserved_six_data_cells": [
+        " `REMOTE-RUN-SYNC-20260906` ",
+        " 活动工作流远端运行记录增量归档 ",
+        " `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` ",
+        " 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 ",
+        " `closed` ",
+        " `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` "
+      ]
+    },
+    {
+      "id": "REG03",
+      "fact": "two distinct tables in exact ##4 section contain Flow=2-6, original selector remains ambiguous after data-shape correction",
+      "matches": [
+        {
+          "cells": {
+            "Flow": "2-6",
+            "目录": "Flow-2-6-权利要求初稿",
+            "唯一前序 Flow": "1-5",
+            "主 Markdown 文件名模式": "claims_<YYYYMMDDHHMMSS>_<run_uid8>.md"
+          },
+          "row_sha256": "6b764f15b12a1e3384ad044595ab237094a4930c18687360e9f10fa47d893ca7"
+        },
+        {
+          "cells": {
+            "Flow": "2-6",
+            "YML": "5",
+            "Nodebook": "0",
+            "运行记录": "10157",
+            "asset_state": "legacy_assets_present",
+            "current_candidate_yml": "undesignated",
+            "contract_state": "gap_confirmed",
+            "work_state": "backlog",
+            "evidence_status": "STATIC_ONLY",
+            "latest_change_id": "REG-20260829094157-README-748f0d16",
+            "下一动作": "依据 V3.4.0 重构，创建新版本化候选并完成静态审计"
+          },
+          "row_sha256": "1aaad85ea856242ec6eabc5b84e768bf31841e6cf116ed9d86ae50f124d341ab"
+        }
+      ]
+    }
+  ],
+  "counterfactual_minimum_source_data_change": {
+    "separator_before": "|---|---:|---:|---:|---|---|---|---|---|---|\n",
+    "separator_after": "|---|---:|---:|---:|---|---|---|---|---|---|---|\n",
+    "legacy_completed_before": "| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |---|\n",
+    "legacy_completed_relocated_after": "| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |\n",
+    "destination": "existing ###5.1 completed-work table under ##5, after its six-column separator",
+    "unrelated_bytes_equal": true,
+    "historical_event_bodies_changed": false,
+    "legacy_six_data_cells_preserved": true,
+    "hypothetical_registry_contract_errors": [],
+    "hypothetical_sha256_not_actual_registry_revision": "387d98c964778975c65644dcdc6b24d254ced045b16f0cb78cb0c6f6ffaaa59c",
+    "diff": "--- actual original\n+++ in-memory hypothetical only\n@@ -124,8 +124,7 @@\n 本表是可更新的状态视图。`YML/Nodebook/运行记录`仅为资产数量，不表示合同符合性或候选版本。\n \n | Flow | YML | Nodebook | 运行记录 | asset_state | current_candidate_yml | contract_state | work_state | evidence_status | latest_change_id | 下一动作 |\n-|---|---:|---:|---:|---|---|---|---|---|---|\n-| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |---|\n+|---|---:|---:|---:|---|---|---|---|---|---|---|\n | 1-1 | 4 | 1 | 1348 | `legacy_assets_present` | `undesignated` | `gap_confirmed` | `backlog` | `STATIC_ONLY` | `REG-20260829094157-README-748f0d16` | 依据 V3.4.0 重构，创建新版本化候选并完成静态审计 |\n | 1-2 | 34 | 3 | 3446 | `legacy_assets_present` | `undesignated` | `gap_confirmed` | `backlog` | `STATIC_ONLY` | `REG-20260829094157-README-748f0d16` | 依据 V3.4.0 重构，创建新版本化候选并完成静态审计 |\n | 1-3 | 4 | 1 | 2 | `legacy_assets_present` | `undesignated` | `gap_confirmed` | `backlog` | `STATIC_ONLY` | `REG-20260829094157-README-748f0d16` | 依据 V3.4.0 重构，创建新版本化候选并完成静态审计 |\n@@ -417,6 +416,7 @@\n \n | work_item_id | scope | base_sha256 | acceptance | work_state | completed_change_id |\n |---|---|---|---|---|---|\n+| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |\n | `GOV-REVIEW-20260926-FOUR-ERRORS` | 当前WorkflowDesign手动完整复盘及4项治理状态修复 | `6ca43a9efc9bbba27b6413ac80dd4876072d76797a4a713d72f1dd8643356a49` | PASS：27单测通过、治理exit0；25问题已复盘，14模式仍开放，不强行关闭；业务材料保护通过 | `closed` | `REG-20260926234624-GOV-REVIEW-COMPLETED` |\n | `REMOTE-RUN-SYNC-20260926` | 23个活动运行记录目录的远端Dify未保存记录增量归档 | `7830818aaced0af9d61d1c47598c4b73d9510c91c4bb2dbbd832577343e452a8` | PASS_WITH_CONCERNS：115条唯一运行记录、1288节点执行、19条可用应用日志；7个目标批次归档；45015个既有文件SHA256未变；复查远端差集0；16+11本地测试通过。治理集成仍有4项既有持续改进/周报问题，未修改 | `closed` | `REG-20260926224018-REMOTE-RUN-SYNC-COMPLETED` |\n | `F11-STD033-3C9A5AC7` | F-1-1 V0.3.3审计修订与精简 | `74e9fd847963c18eb2012f796f41f7c1943a489568ca2e54f5341d4cd6a611f3` | PASS_WITH_CONCERNS：V0.3.3 A01修正及O01/O02精简完成；35项测试/治理exit0；仅本地规则修订，不继承旧版实证。 | `closed` | `REG-20260912141836-F11-STD033-COMPLETED` |\n"
+  },
+  "alternative_selector_proposal": {
+    "approved_now": false,
+    "binding": {
+      "section": "## 4. 业务状态",
+      "key_column": "运行记录",
+      "key": "10157"
+    },
+    "fields_unchanged": [
+      "YML",
+      "Nodebook",
+      "latest_change_id",
+      "下一动作"
+    ],
+    "runtime_record_count_is_locator_not_business_identity": true,
+    "mandatory_guards": [
+      "exactly one native match",
+      "returned Flow equals2-6",
+      "exact11-column candidate header and expected raw row hash",
+      "运行记录 remains10157 and never granted for update",
+      "any mismatch stops; no automatic rekey or alternative row selection"
+    ],
+    "R1_change_required": "new draft/reviewed binding before execution; never substitute under R1"
+  },
+  "legacy_relocated_record_work_state": "closed",
+  "no_new_ownership_of_legacy_record": true,
+  "source_written": false,
+  "actual_registry_unchanged": true
+}

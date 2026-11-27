@@ -1,0 +1,3015 @@
+{
+  "request_id": "S1C-20261030-R1-dsh-oasis",
+  "at": "2026-10-30T16:15:39.881149+08:00",
+  "timezone": "Asia/Shanghai",
+  "document_revision": "R1 / first actual return in this chat for this request",
+  "reviewer": {
+    "project_id": "dsh-oasis",
+    "named_identity": "DSH-Oasis项目Codex / 01a177c0-e0a2-7841-ab7b-634f0bacc752 / S1C-20261030-R1 实际复核R1",
+    "chat_id": "01a177c0-e0a2-7841-ab7b-634f0bacc752",
+    "actual_review_round": "本请求首次实际执行/返回 R1，实际来源为本聊天收到的中心委任请求及本次工具读写证据",
+    "platform_turn_uuid": null,
+    "platform_turn_uuid_status": "UNAVAILABLE_NOT_FABRICATED",
+    "not_human_professional_or_user_acceptance": true,
+    "same_reviewer_legal_dual_role": "AR7提供/消费同一项目Codex分别评职责；没有虚构第二项目或第二位独立人"
+  },
+  "assignment_evidence": [
+    {
+      "path": "/Users/tinadong7036/Documents/Codex/operation-records/2026-10-30-interface-stage1-closeout-r1/approval-evidence.json",
+      "bytes": 3482,
+      "sha256": "da3c9c9307b721a4bdb50e24a78713ec706938d61017d0211a3669f44563ee05",
+      "read_scope": "全文真实用户委任"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-10-30-interface-stage1-closeout/assignment-record.json",
+      "bytes": 3147,
+      "sha256": "056e2a53607fe4daeab31752ecd14fa4180006a3a01b0e92e78959b1c06f15b9",
+      "read_scope": "全文六槽位，认领仅本项目三槽"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-10-30-interface-stage1-closeout/requests.json",
+      "bytes": 23524,
+      "sha256": "9c0381bb94b77ef445e6f156f4e5540d06d132c566293251bded5e4781a6c922",
+      "read_scope": "顶层及dsh-oasis准确35/22格；其他目标不代评"
+    }
+  ],
+  "preflight_record": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-interface-stage1-technical-review/execution-preflight.json",
+  "git": {
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis",
+    "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+    "branch": "codex/pdf-m06-minimal-20261029"
+  },
+  "preexisting_uncommitted_identity_record": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-interface-stage1-technical-review/execution-preflight.json#/git/preexisting_changes",
+  "read_inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "bytes": 19522,
+      "sha256": "6e5809942b2ac28e01c6ef1e048256b9055d0565fd682e58c5cbb7655dc72cab",
+      "read_scope": "全文 EXEC-R2/R1，协同1.2.1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "bytes": 17363,
+      "sha256": "2fb9c4c7b469c7593e0605d97ebff7915ca11bdfb92b0f9e953301d7267e1b9a",
+      "read_scope": "全文，协同1.2.1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "bytes": 23053,
+      "sha256": "32f62af49b9d6c975dc4f10071efb1fbf4e8d28859a1bb451b0ef6cae0f88ff9",
+      "read_scope": "登记结构、dsh-oasis对象、全局字段；其余项目仅索引身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "bytes": 59167,
+      "sha256": "ee1ec0bbe8c6de0046a75cf69af7038c3ef1d5ee3118148880bc97c1826c3fcf",
+      "read_scope": "顶层入口、dsh-oasis对象、NS1同对象P30及interface current_document_repair同对象followup；其余项目未逐项审读"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "bytes": 31468,
+      "sha256": "99fbb471debe2cecd0dd7961577a7a9a900b14032c8bf508158abc63efc7382d",
+      "read_scope": "全文，1.3.1/NS1-R1/P28/P30"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "bytes": 10712,
+      "sha256": "2f04f96b62610e80563ebbb7769726694ce3687d8d6fd4f4ba111dc8a809b67b",
+      "read_scope": "全文，1.2.1；特别§1/3/4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "bytes": 27501,
+      "sha256": "5a4049f6c0355b44e4c30d0dd5cc344c7495c70d075b144e6f053c68771af761",
+      "read_scope": "全文，1.3.1及V0.3接续"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-10-25-research-rules-and-migration-addendum.md",
+      "bytes": 6688,
+      "sha256": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "read_scope": "全文，历史1.2.1；只沿具体用途适用，旧八项目/迁移观察不替代1.3.1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "bytes": 24047,
+      "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+      "read_scope": "全文，特别§5/7/8/9及EXEC-R2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/README.md",
+      "bytes": 3829,
+      "sha256": "ce7a6994d2e2537a9a09889cf385965ace88e2d7fce4931a52342b4864ce6835",
+      "read_scope": "全文导航，历史分支说明不替代实际git"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "bytes": 33676,
+      "sha256": "c0657d2dcf3c55b6decdbce6790750b21e738be82dce8f393a5f312a8b4a573e",
+      "read_scope": "全文，1.3.1/NS1-R1/P28/P30及10月30日新计划导航"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-30-project-completion-and-next-development-plan.md",
+      "bytes": 14376,
+      "sha256": "5c236ae5612eea3600f8e9eb80639e358e2d87c19f9daabbffae77d7ccd3c581",
+      "read_scope": "全文，R1；本次仅核文档范围与直接门"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "bytes": 299811,
+      "sha256": "45be1c3ee0fd5c749122ab1b5274f8f55bf570d4b16a2597260bcc8b5eb14e10",
+      "read_scope": "前85行当前/近期接续，仅观察；未重审历史全部证据"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "bytes": 96440,
+      "sha256": "374c8f23617cbec6a801d6b5503eec38888610e403d71926d4f79555e92ee7d5",
+      "read_scope": "前80行当前/近期接续，仅观察；未重审历史全部证据"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-28-interface-standards-progress-retrospective-and-next-plan.md",
+      "bytes": 30826,
+      "sha256": "a72feffee8f239032df4f1114c29fffccb6e6a5944e32ecf4897c02c7af1f5ed",
+      "read_scope": "§1—3及R01/R02/R03/R04开头（1—130行）；本次执行R01，不采R02/03许可"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/review-inputs.json",
+      "bytes": 133892,
+      "sha256": "ef51aea03fa4414e72dad4c10d414b819079d60b2feada1e9a90ec498a3c933d",
+      "read_scope": "顶层、AR7/AR3两包及AR-C01—08交叉表；其他BRIDGE内容仅保留身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-10-29-interface-stage1-named-review.json",
+      "bytes": 160727,
+      "sha256": "0d5057555393265f4e42e7d299d266eb199252835f5abd4940430f7660b003d8",
+      "read_scope": "顶层旧状态及AR-C01—08旧出口；未将旧NOT_OBTAINED当本次结论"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+      "bytes": 7801,
+      "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+      "read_scope": "全文"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+      "bytes": 7252,
+      "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+      "read_scope": "全文"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+      "bytes": 18060,
+      "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+      "read_scope": "全文，V0.3-draft；本次只裁§7.1/AR-REQ07/AR-T07修复条件"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-trials-v0.3.md",
+      "bytes": 5764,
+      "sha256": "720b56b8068c7557215748982582cb985767616150f4794c8cdeebcd3f36f0a5",
+      "read_scope": "全文；其他试填不重新执行"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+      "bytes": 10959,
+      "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+      "read_scope": "13条件全文"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/2026-10-28-interface-static-review-v0.3.json",
+      "bytes": 1026234,
+      "sha256": "238949e82c2021df1bbd952886bfaef59b76196063b659a05d9e091ee42b8cea",
+      "read_scope": "顶层、ARTIFACT-3/7对象与原身份；未全审325行"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/website-import-contract.js",
+      "bytes": 4907,
+      "sha256": "21246a6ecf93fcaa873424f7844b3b214bab0a55608f1a4a4cda0dc2960a8edc",
+      "read_scope": "全文静态，协议2；不导入/执行"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/website-import-service.js",
+      "bytes": 16386,
+      "sha256": "84c2939f986c87555e042634cdbcd0874698575301bb945511fa90fa7606b13a",
+      "read_scope": "1—30及147—228行，显式快照命名、同字节skipped、wx及部分成功；其余仅身份"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/Codex/operation-records/2026-10-30-interface-stage1-closeout-r1/approval-evidence.json",
+      "bytes": 3482,
+      "sha256": "da3c9c9307b721a4bdb50e24a78713ec706938d61017d0211a3669f44563ee05",
+      "read_scope": "全文真实用户委任"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-10-30-interface-stage1-closeout/assignment-record.json",
+      "bytes": 3147,
+      "sha256": "056e2a53607fe4daeab31752ecd14fa4180006a3a01b0e92e78959b1c06f15b9",
+      "read_scope": "全文六槽位，认领仅本项目三槽"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-10-30-interface-stage1-closeout/requests.json",
+      "bytes": 23524,
+      "sha256": "9c0381bb94b77ef445e6f156f4e5540d06d132c566293251bded5e4781a6c922",
+      "read_scope": "顶层及dsh-oasis准确35/22格；其他目标不代评"
+    }
+  ],
+  "scope": "R01 RAF-0306-01 的 IC-ARTIFACT V0.3 §7.1/AR-REQ07/AR-T07；不重审其他主要求、其他职责或BRIDGE",
+  "condition_returns": [
+    {
+      "row_id": "ARTIFACT-7/ARN-01",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-01",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "Skills",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "NAMING_CONFORMS",
+      "given_expected": "NAMING_CONFORMS",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "Skills新产物报告.md不加来源后缀，符合AGENTS §7；名称片段未证明项目根可写。 Host保存提供方须以真实Skills任务身份产生无来源标记拟名。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/0"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-01",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-01",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "Skills",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "NAMING_CONFORMS",
+      "given_expected": "NAMING_CONFORMS",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "Skills新产物报告.md不加来源后缀，符合AGENTS §7；名称片段未证明项目根可写。 Workspace消费方应接受该命名片段，仍核审核版本、项目根及实际文件。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/0"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-02",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-02",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "NAMING_CONFORMS",
+      "given_expected": "NAMING_CONFORMS",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "专业API新产物报告_OIW.md在最后扩展名前保留_OIW，符合两类产物同根而名称有别的原规则。 Host保存提供方负责本地拟名，不能让远端URL替代本地路径。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/1"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-02",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-02",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "NAMING_CONFORMS",
+      "given_expected": "NAMING_CONFORMS",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "专业API新产物报告_OIW.md在最后扩展名前保留_OIW，符合两类产物同根而名称有别的原规则。 消费方核远端结果来源与Host最终文件身份，命名合规不证明下载或保存。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/1"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-03",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-03",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.v1.md",
+        "proposed_relative_name": "报告.v1_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "NAMING_CONFORMS",
+      "given_expected": "NAMING_CONFORMS",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "报告.v1.md的最后扩展名是.md，报告.v1_OIW.md保留中间.v1；本例不增加其他格式支持。 提供方按末扩展名前插入标记，不能把报告_OIW.v1.md当本例同等拟名。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/2"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-03",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-03",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.v1.md",
+        "proposed_relative_name": "报告.v1_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "NAMING_CONFORMS",
+      "given_expected": "NAMING_CONFORMS",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "报告.v1.md的最后扩展名是.md，报告.v1_OIW.md保留中间.v1；本例不增加其他格式支持。 消费方核准确拟名和格式准入，不能按文件名相似继承版本或审核。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/2"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-04",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-04",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "Skills",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "REJECT_NAMING",
+      "given_expected": "REJECT_NAMING",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "Skills新产物拟为报告_OIW.md误用了API来源标记，须拒绝命名；这不是否定Skills生成能力。 提供方不得为Skills新产物发布带API标记的名称。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/3"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-04",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-04",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "Skills",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "REJECT_NAMING",
+      "given_expected": "REJECT_NAMING",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "Skills新产物拟为报告_OIW.md误用了API来源标记，须拒绝命名；这不是否定Skills生成能力。 消费方应拒绝该错误来源命名，不据同一表单将其认作API产物。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/3"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-05",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-05",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "REJECT_NAMING",
+      "given_expected": "REJECT_NAMING",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "专业API新产物拟为报告.md漏_OIW，须拒绝；补命名不授权重新生成或收费。 提供方保存前须解决漏标，不能以远端成功绕过Host命名。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/4"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-05",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-05",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "REJECT_NAMING",
+      "given_expected": "REJECT_NAMING",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "专业API新产物拟为报告.md漏_OIW，须拒绝；补命名不授权重新生成或收费。 消费方不能凭正文正确就接受新API文件漏标，也不能重建原请求补救。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/4"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-06",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-06",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "legacy.md",
+        "proposed_relative_name": "legacy.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_expected": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "legacy.md已是已有本地API文件，保留名称位置和旧版本/hash；新版规则不追溯补_OIW。 提供方不得批量迁名、搬移或重签旧接受来套用新规则。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-06",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-06",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "legacy.md",
+        "proposed_relative_name": "legacy.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_expected": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "legacy.md已是已有本地API文件，保留名称位置和旧版本/hash；新版规则不追溯补_OIW。 消费方沿准确旧路径/版本核读取与审核，不要求旧文件补标才可审。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-07",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-07",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "legacy_OIW.md",
+        "proposed_relative_name": "legacy_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_expected": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "已有legacy_OIW.md应原名原位保持；不得去掉标记或再加一层_OIW。 提供方不重复处理既有文件名或改历史hash。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/6"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-07",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-07",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "legacy_OIW.md",
+        "proposed_relative_name": "legacy_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_expected": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "已有legacy_OIW.md应原名原位保持；不得去掉标记或再加一层_OIW。 消费方不能从后缀推断其为本次新产物，仍核原任务/版本/归属。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/6"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-08",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-08",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "Skills",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "draft.md",
+        "proposed_relative_name": "draft.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_expected": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "已有Skills draft.md沿原名原位，属于AR7本地职责；不扩为backend输出或AR3条件。 本地提供方保全旧Skills文件及接受身份。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/7"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-08",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-08",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "Skills",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "draft.md",
+        "proposed_relative_name": "draft.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_expected": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "已有Skills draft.md沿原名原位，属于AR7本地职责；不扩为backend输出或AR3条件。 本地消费方读取准确旧版本，不能自动搬到新项目或复用失效审核。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/7"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-09",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-09",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "legacy.md",
+        "proposed_relative_name": "子目录/legacy.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "REJECT_AUTO_MOVE_OR_RENAME",
+      "given_expected": "REJECT_AUTO_MOVE_OR_RENAME",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "已有legacy.md自动移入子目录属于禁止搬移；同样不能自动改成legacy_OIW.md。 提供方必须保留旧原件，不借升级/命名策略自动重排文件。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/8"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-09",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-09",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "legacy.md",
+        "proposed_relative_name": "子目录/legacy.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "REJECT_AUTO_MOVE_OR_RENAME",
+      "given_expected": "REJECT_AUTO_MOVE_OR_RENAME",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "已有legacy.md自动移入子目录属于禁止搬移；同样不能自动改成legacy_OIW.md。 消费方不得把自动搬移后的新路径当旧审核已覆盖的文件身份。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/8"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-10",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-10",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "RAW_INPUT",
+        "lifecycle": "INPUT_MATERIAL",
+        "original_relative_name": "输入.md",
+        "proposed_relative_name": "输入.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "NOT_APPLICABLE_NEW_OUTPUT_NAMING",
+      "given_expected": "NOT_APPLICABLE_NEW_OUTPUT_NAMING",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "RAW_INPUT/INPUT_MATERIAL不是生成产物，保持输入.md；不套新产物来源命名，上传另属AR8显式合同。 本地材料提供方不能因任务切到API就自动改名或上传。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/9"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-10",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-10",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "RAW_INPUT",
+        "lifecycle": "INPUT_MATERIAL",
+        "original_relative_name": "输入.md",
+        "proposed_relative_name": "输入.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "NOT_APPLICABLE_NEW_OUTPUT_NAMING",
+      "given_expected": "NOT_APPLICABLE_NEW_OUTPUT_NAMING",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "RAW_INPUT/INPUT_MATERIAL不是生成产物，保持输入.md；不套新产物来源命名，上传另属AR8显式合同。 本地消费方不能从输入材料推导API生成结果，亦不取得上传许可。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/9"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-11",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-11",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "WEBSITE_HISTORY_SNAPSHOT",
+        "lifecycle": "IMPORT_CANDIDATE",
+        "original_relative_name": "历史.md",
+        "proposed_relative_name": null,
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "PENDING_ORIGINAL_IMPORT_CONTRACT",
+      "given_expected": "PENDING_ORIGINAL_IMPORT_CONTRACT",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "显式网站历史快照不是NEW_OUTPUT；拟名null代表待核原导入/文件名/版本/归属，不得补默认或自动_OIW。 提供方应交明确快照身份及原导入依据；本例未提供真实对象，保持PENDING。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/10"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核",
+        "真实快照对象/原导入与目标对应保持PENDING"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-11",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-11",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "WEBSITE_HISTORY_SNAPSHOT",
+        "lifecycle": "IMPORT_CANDIDATE",
+        "original_relative_name": "历史.md",
+        "proposed_relative_name": null,
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "PENDING_ORIGINAL_IMPORT_CONTRACT",
+      "given_expected": "PENDING_ORIGINAL_IMPORT_CONTRACT",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "显式网站历史快照不是NEW_OUTPUT；拟名null代表待核原导入/文件名/版本/归属，不得补默认或自动_OIW。 消费方须先核协议2选择版本/确认/归属/目标文件；现有导入源码的编号避让及sameFile/skipped仍按原合同，不被新产物规则覆盖。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/10"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核",
+        "真实快照对象/原导入与目标对应保持PENDING"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-12",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-12",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "UNKNOWN",
+        "lifecycle": "UNKNOWN",
+        "original_relative_name": "候选.md",
+        "proposed_relative_name": null,
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "PENDING_SOURCE_AND_LIFECYCLE",
+      "given_expected": "PENDING_SOURCE_AND_LIFECYCLE",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "来源及新旧均UNKNOWN，候选.md或同hash/URL不能补足身份；只阻该对象命名，其他独立准备可继续。 提供方未交真实来源/生命周期前不得发出确定命名结论。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/11"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核",
+        "真实来源和新旧身份保持PENDING"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-12",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-12",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "UNKNOWN",
+        "lifecycle": "UNKNOWN",
+        "original_relative_name": "候选.md",
+        "proposed_relative_name": null,
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "PENDING_SOURCE_AND_LIFECYCLE",
+      "given_expected": "PENDING_SOURCE_AND_LIFECYCLE",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "来源及新旧均UNKNOWN，候选.md或同hash/URL不能补足身份；只阻该对象命名，其他独立准备可继续。 消费方不得以名称猜来源或视为不适用；真实任务/文件身份未核仍PENDING。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/11"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核",
+        "真实来源和新旧身份保持PENDING"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-13",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-13",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": true
+      },
+      "independently_determined_case_judgment": "STOP_NO_OVERWRITE",
+      "given_expected": "STOP_NO_OVERWRITE",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "这是PROFESSIONAL_API/NEW_OUTPUT且目标已存在；报告_OIW.md名称正确仍须STOP_NO_OVERWRITE，不因保存失败重新生成/收费。 提供方不能覆盖既有目标，或把保存问题当新创建/新预算授权。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/12"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-7/ARN-13",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-7",
+      "case_id": "ARN-13",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": true
+      },
+      "independently_determined_case_judgment": "STOP_NO_OVERWRITE",
+      "given_expected": "STOP_NO_OVERWRITE",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "这是PROFESSIONAL_API/NEW_OUTPUT且目标已存在；报告_OIW.md名称正确仍须STOP_NO_OVERWRITE，不因保存失败重新生成/收费。 消费方不能把名称合规当保存成功，须核独立权限/确认/实际字节；本例不改变历史快照原编号避让规则。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/12"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-3/ARN-02",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-3",
+      "case_id": "ARN-02",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "NAMING_CONFORMS",
+      "given_expected": "NAMING_CONFORMS",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "专业API新产物报告_OIW.md在最后扩展名前保留_OIW，符合两类产物同根而名称有别的原规则。 消费方核远端结果来源与Host最终文件身份，命名合规不证明下载或保存。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/1"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-3/ARN-03",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-3",
+      "case_id": "ARN-03",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.v1.md",
+        "proposed_relative_name": "报告.v1_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "NAMING_CONFORMS",
+      "given_expected": "NAMING_CONFORMS",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "报告.v1.md的最后扩展名是.md，报告.v1_OIW.md保留中间.v1；本例不增加其他格式支持。 消费方核准确拟名和格式准入，不能按文件名相似继承版本或审核。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/2"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-3/ARN-05",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-3",
+      "case_id": "ARN-05",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "REJECT_NAMING",
+      "given_expected": "REJECT_NAMING",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "专业API新产物拟为报告.md漏_OIW，须拒绝；补命名不授权重新生成或收费。 消费方不能凭正文正确就接受新API文件漏标，也不能重建原请求补救。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/4"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-3/ARN-06",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-3",
+      "case_id": "ARN-06",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "legacy.md",
+        "proposed_relative_name": "legacy.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_expected": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "legacy.md已是已有本地API文件，保留名称位置和旧版本/hash；新版规则不追溯补_OIW。 消费方沿准确旧路径/版本核读取与审核，不要求旧文件补标才可审。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-3/ARN-07",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-3",
+      "case_id": "ARN-07",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "legacy_OIW.md",
+        "proposed_relative_name": "legacy_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_expected": "KEEP_EXISTING_NAME_AND_LOCATION",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "已有legacy_OIW.md应原名原位保持；不得去掉标记或再加一层_OIW。 消费方不能从后缀推断其为本次新产物，仍核原任务/版本/归属。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/6"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-3/ARN-09",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-3",
+      "case_id": "ARN-09",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "EXISTING_FILE",
+        "original_relative_name": "legacy.md",
+        "proposed_relative_name": "子目录/legacy.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "REJECT_AUTO_MOVE_OR_RENAME",
+      "given_expected": "REJECT_AUTO_MOVE_OR_RENAME",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "已有legacy.md自动移入子目录属于禁止搬移；同样不能自动改成legacy_OIW.md。 消费方不得把自动搬移后的新路径当旧审核已覆盖的文件身份。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/8"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-3/ARN-11",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-3",
+      "case_id": "ARN-11",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "WEBSITE_HISTORY_SNAPSHOT",
+        "lifecycle": "IMPORT_CANDIDATE",
+        "original_relative_name": "历史.md",
+        "proposed_relative_name": null,
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "PENDING_ORIGINAL_IMPORT_CONTRACT",
+      "given_expected": "PENDING_ORIGINAL_IMPORT_CONTRACT",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "显式网站历史快照不是NEW_OUTPUT；拟名null代表待核原导入/文件名/版本/归属，不得补默认或自动_OIW。 消费方须先核协议2选择版本/确认/归属/目标文件；现有导入源码的编号避让及sameFile/skipped仍按原合同，不被新产物规则覆盖。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/10"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核",
+        "真实快照对象/原导入与目标对应保持PENDING"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-3/ARN-12",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-3",
+      "case_id": "ARN-12",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "UNKNOWN",
+        "lifecycle": "UNKNOWN",
+        "original_relative_name": "候选.md",
+        "proposed_relative_name": null,
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": false
+      },
+      "independently_determined_case_judgment": "PENDING_SOURCE_AND_LIFECYCLE",
+      "given_expected": "PENDING_SOURCE_AND_LIFECYCLE",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "来源及新旧均UNKNOWN，候选.md或同hash/URL不能补足身份；只阻该对象命名，其他独立准备可继续。 消费方不得以名称猜来源或视为不适用；真实任务/文件身份未核仍PENDING。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/11"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核",
+        "真实来源和新旧身份保持PENDING"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    },
+    {
+      "row_id": "ARTIFACT-3/ARN-13",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "edge_id": "ARTIFACT-3",
+      "case_id": "ARN-13",
+      "conclusion": "AGREE_DOCUMENT_CRITERION",
+      "conclusion_zh": "同意（本次文档判据）",
+      "input": {
+        "source": "PROFESSIONAL_API",
+        "lifecycle": "NEW_OUTPUT",
+        "original_relative_name": "报告.md",
+        "proposed_relative_name": "报告_OIW.md",
+        "workspace": "SYNTHETIC_CURRENT_PROJECT",
+        "target_exists": true
+      },
+      "independently_determined_case_judgment": "STOP_NO_OVERWRITE",
+      "given_expected": "STOP_NO_OVERWRITE",
+      "given_failure_criterion": "文档判定与本行预期或原合同条件相反；不能以静态判定证明实际保存/引用或准入",
+      "reason": "这是PROFESSIONAL_API/NEW_OUTPUT且目标已存在；报告_OIW.md名称正确仍须STOP_NO_OVERWRITE，不因保存失败重新生成/收费。 消费方不能把名称合规当保存成功，须核独立权限/确认/实际字节；本例不改变历史快照原编号避让规则。",
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/12"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "准确实际提供/采用版本、Workspace/权限/确认、实际保存/引用和模型消费均未核"
+      ],
+      "product_execution": "NOT_EXECUTED"
+    }
+  ],
+  "exit_returns": [
+    {
+      "exit_id": "AR-C01",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "applicable_case_ids": [
+        "ARN-01",
+        "ARN-04"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "修复将新Skills无来源标记与新API区分；只属AR7，项目根/权限独立，ARN-01正例及04反例足以判断本文命名条件。 本格评Host本地提供职责。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-01|AR7-P",
+        "ARTIFACT-7/ARN-04|AR7-P"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/0"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C01",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-01",
+        "ARN-04"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "修复将新Skills无来源标记与新API区分；只属AR7，项目根/权限独立，ARN-01正例及04反例足以判断本文命名条件。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-01|AR7-C",
+        "ARTIFACT-7/ARN-04|AR7-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/0"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C02",
+      "edge_id": "ARTIFACT-3",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-02",
+        "ARN-03",
+        "ARN-05"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "末扩展名前加_OIW、多点文件名和漏标反例可判，Host负责本地命名，backend远端结果不取得本地路径决定权。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-3/ARN-02|AR3-C",
+        "ARTIFACT-3/ARN-03|AR3-C",
+        "ARTIFACT-3/ARN-05|AR3-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/1"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C02",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "applicable_case_ids": [
+        "ARN-02",
+        "ARN-03",
+        "ARN-05"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "末扩展名前加_OIW、多点文件名和漏标反例可判，Host负责本地命名，backend远端结果不取得本地路径决定权。 本格评Host本地提供职责。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-02|AR7-P",
+        "ARTIFACT-7/ARN-03|AR7-P",
+        "ARTIFACT-7/ARN-05|AR7-P"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/1"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C02",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-02",
+        "ARN-03",
+        "ARN-05"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "末扩展名前加_OIW、多点文件名和漏标反例可判，Host负责本地命名，backend远端结果不取得本地路径决定权。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-02|AR7-C",
+        "ARTIFACT-7/ARN-03|AR7-C",
+        "ARTIFACT-7/ARN-05|AR7-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/1"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C03",
+      "edge_id": "ARTIFACT-3",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-06",
+        "ARN-07"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "既有文件无论来源或是否带后缀均保留原名/位置/版本/hash；AR3只06/07，AR7增加08。没有把旧文件当新版NEW_OUTPUT。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-3/ARN-06|AR3-C",
+        "ARTIFACT-3/ARN-07|AR3-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C03",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "applicable_case_ids": [
+        "ARN-06",
+        "ARN-07",
+        "ARN-08"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "既有文件无论来源或是否带后缀均保留原名/位置/版本/hash；AR3只06/07，AR7增加08。没有把旧文件当新版NEW_OUTPUT。 本格评Host本地提供职责。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-06|AR7-P",
+        "ARTIFACT-7/ARN-07|AR7-P",
+        "ARTIFACT-7/ARN-08|AR7-P"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C03",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-06",
+        "ARN-07",
+        "ARN-08"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "既有文件无论来源或是否带后缀均保留原名/位置/版本/hash；AR3只06/07，AR7增加08。没有把旧文件当新版NEW_OUTPUT。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-06|AR7-C",
+        "ARTIFACT-7/ARN-07|AR7-C",
+        "ARTIFACT-7/ARN-08|AR7-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C04",
+      "edge_id": "ARTIFACT-3",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-09"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "明确禁止自动移到子目录或自动补后缀；不以升级迁移或内容相同绕过旧文件保全。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-3/ARN-09|AR3-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/8"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C04",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "applicable_case_ids": [
+        "ARN-09"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "明确禁止自动移到子目录或自动补后缀；不以升级迁移或内容相同绕过旧文件保全。 本格评Host本地提供职责。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-09|AR7-P"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/8"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C04",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-09"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "明确禁止自动移到子目录或自动补后缀；不以升级迁移或内容相同绕过旧文件保全。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-09|AR7-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/8"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C05",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "applicable_case_ids": [
+        "ARN-10"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "原始输入不适用新产物命名；仅AR7条件，实际上传仍需AR8的用户显式选择/原API合同，不附带许可。 本格评Host本地提供职责。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-10|AR7-P"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/9"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C05",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-10"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "原始输入不适用新产物命名；仅AR7条件，实际上传仍需AR8的用户显式选择/原API合同，不附带许可。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-10|AR7-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/9"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C06",
+      "edge_id": "ARTIFACT-3",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-11"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "同意保持快照分支原合同及PENDING；本次只判断“不能由API来源推新命名”。协议2明确选择/版本/确认、导入编号避让与skipped原语义保留，真实快照和保存仍缺。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-3/ARN-11|AR3-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/10"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C06",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "applicable_case_ids": [
+        "ARN-11"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "同意保持快照分支原合同及PENDING；本次只判断“不能由API来源推新命名”。协议2明确选择/版本/确认、导入编号避让与skipped原语义保留，真实快照和保存仍缺。 本格评Host本地提供职责。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-11|AR7-P"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/10"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C06",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-11"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "同意保持快照分支原合同及PENDING；本次只判断“不能由API来源推新命名”。协议2明确选择/版本/确认、导入编号避让与skipped原语义保留，真实快照和保存仍缺。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-11|AR7-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/10"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C07",
+      "edge_id": "ARTIFACT-3",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-12"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "同意UNKNOWN不推来源/生命周期且只阻相关命名，拟名null不变成默认值或不适用，不建立全局等待。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-3/ARN-12|AR3-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/11"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C07",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "applicable_case_ids": [
+        "ARN-12"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "同意UNKNOWN不推来源/生命周期且只阻相关命名，拟名null不变成默认值或不适用，不建立全局等待。 本格评Host本地提供职责。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-12|AR7-P"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/11"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C07",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-12"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "同意UNKNOWN不推来源/生命周期且只阻相关命名，拟名null不变成默认值或不适用，不建立全局等待。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-12|AR7-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/11"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C08",
+      "edge_id": "ARTIFACT-3",
+      "slot_id": "AR3-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-13"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "同意本例NEW_OUTPUT目标存在即停止覆盖，保存失败不触发新的生成/收费；未推定实际保存或文件交付，未更改原快照导入的碰撞合同。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-3/ARN-13|AR3-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/12"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-3.md",
+          "sha256": "b6e18b104adc2422291715f84f5f61960341322230843cac1d8b8f36d7baea2c",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C08",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-P",
+      "side": "provider",
+      "applicable_case_ids": [
+        "ARN-13"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "同意本例NEW_OUTPUT目标存在即停止覆盖，保存失败不触发新的生成/收费；未推定实际保存或文件交付，未更改原快照导入的碰撞合同。 本格评Host本地提供职责。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-13|AR7-P"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/12"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    },
+    {
+      "exit_id": "AR-C08",
+      "edge_id": "ARTIFACT-7",
+      "slot_id": "AR7-C",
+      "side": "consumer",
+      "applicable_case_ids": [
+        "ARN-13"
+      ],
+      "conclusion": "AGREE_DOCUMENT_CORRECTION_EXIT",
+      "conclusion_zh": "同意（本职责修复出口的文档判据）",
+      "reason": "同意本例NEW_OUTPUT目标存在即停止覆盖，保存失败不触发新的生成/收费；未推定实际保存或文件交付，未更改原快照导入的碰撞合同。 本格评消费职责；不代提供方签收。",
+      "condition_return_keys": [
+        "ARTIFACT-7/ARN-13|AR7-C"
+      ],
+      "evidence": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/IC-ARTIFACT-v0.3.md",
+          "sha256": "35382445972163d35541920dbce6df6037a3948b22516a7c783da2d2e23a8b29",
+          "clause": "§7.1、§7/9 AR-REQ07→AR-T07"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+          "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+          "clause": "§7:101及103—107，§8无覆盖/不重派"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/examples/IC-ARTIFACT/repair-v0.3/naming-cases.json",
+          "sha256": "74e305b1e5e9cf38798925952451b3b8cea142793fded9269ad7cb247802e7f7",
+          "json_pointer": "/cases/12"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/interfaces/review-preparation/2026-10-28-stage1-r1/ARTIFACT-7.md",
+          "sha256": "c73b776cc5a475d39cfb6075fc85de174362039ed240663901ec185b957c4b33",
+          "clause": "§1、3、5"
+        }
+      ],
+      "unverified": [
+        "R02实际版本组合、真实保存/导入/引用、原专业/用户/发布接受均未核"
+      ],
+      "formal_standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE"
+    }
+  ],
+  "slot_returns": [
+    {
+      "slot_id": "AR7-P",
+      "project_id": "dsh-oasis",
+      "conclusion": "AGREE_DOCUMENT_CRITERIA_WITH_RUNTIME_UNVERIFIED",
+      "condition_cells": 13,
+      "exit_cells": 8,
+      "scope": "DS-02/04/05本地保存提供职责"
+    },
+    {
+      "slot_id": "AR7-C",
+      "project_id": "dsh-oasis",
+      "conclusion": "AGREE_DOCUMENT_CRITERIA_WITH_RUNTIME_UNVERIFIED",
+      "condition_cells": 13,
+      "exit_cells": 8,
+      "scope": "DS-03/04/05本地Workspace/审核/引用消费职责"
+    },
+    {
+      "slot_id": "AR3-C",
+      "project_id": "dsh-oasis",
+      "conclusion": "AGREE_DOCUMENT_CRITERIA_WITH_RUNTIME_UNVERIFIED",
+      "condition_cells": 9,
+      "exit_cells": 6,
+      "scope": "backend远端结果/显式快照在DSH Host的消费职责，不代AR3-P"
+    }
+  ],
+  "gap_disposition": [
+    {
+      "gap_id": "AR7-G01",
+      "conclusion": "THIS_RETURN_PROVIDES_BOTH_APPOINTED_DOCUMENT_ROLE_RETURNS",
+      "remaining": "仅AR7本次26条件格/16出口格的文档职责返回；不代整个AR7标准/实际提供采用签收",
+      "original_open_item": {
+        "id": "AR7-G01",
+        "item": "本地提供/消费职责真实技术复核人及书面范围/结论",
+        "owner": "DSH项目实际责任方",
+        "blocks": "具名技术复核与R03范围定稿",
+        "latest_point": "对AR7作具名技术确认前",
+        "release_evidence": "原项目记录中的真实角色/姓名、标准hash、明确结论/保留项"
+      },
+      "owner": "DSH项目实际责任方",
+      "latest_point": "对AR7作具名技术确认前"
+    },
+    {
+      "gap_id": "AR3-G01",
+      "conclusion": "THIS_RETURN_PROVIDES_CONSUMER_ONLY",
+      "remaining": "AR3-P由后台独立返回，未在此认定取得或通过",
+      "original_open_item": {
+        "id": "AR3-G01",
+        "item": "backend与DSH/Host真实技术复核人及各自结论",
+        "owner": "backend、DSH各自实际责任方",
+        "blocks": "双方技术确认/该边定稿",
+        "latest_point": "AR3技术签收前",
+        "release_evidence": "两个职责的具名范围、标准/提供/消费版本与各自结论"
+      },
+      "owner": "backend、DSH各自实际责任方",
+      "latest_point": "AR3技术签收前"
+    },
+    {
+      "gap_id": "AR7-G02",
+      "conclusion": "OPEN_UNCHANGED",
+      "owner": "DSH/Host",
+      "blocked_action": "R02准确Host/Workspace/资源/输入组合采用和运行声明",
+      "release_evidence": "原任务实际版本/hash/允许动作及U1/D1/Host对应准入",
+      "original_open_item": {
+        "id": "AR7-G02",
+        "item": "用于新标准技术签收的准确Host/Workspace/资源/输入对象版本；本包未绑定，不推定其不存在",
+        "owner": "DSH/Host",
+        "blocks": "R02该实际组合绑定及后续运行声明",
+        "latest_point": "实际采用/运行前沿原门",
+        "release_evidence": "原任务固定来源/版本/hash/工作区与原U1/D1/Host等适用准入证据"
+      },
+      "latest_point": "实际采用/运行前沿原门"
+    },
+    {
+      "gap_id": "AR7-G03",
+      "conclusion": "OPEN_UNCHANGED",
+      "owner": "DSH/Host按对应分支",
+      "blocked_action": "相应真实快照命名/导入/保存/引用结论",
+      "release_evidence": "原导入文件身份/项目/版本/目标、权限确认/无覆盖证据",
+      "original_open_item": {
+        "id": "AR7-G03",
+        "item": "快照实际命名/导入身份、目标已存在/权限/确认等实际证据",
+        "owner": "DSH/Host按对应分支",
+        "blocks": "仅该分支采用或真实保存/导入结论",
+        "latest_point": "消费该快照或写入前",
+        "release_evidence": "原导入/文件身份合同及具名目标、无覆盖/确认/归属验证；不靠ARN替代"
+      },
+      "latest_point": "消费该快照或写入前"
+    },
+    {
+      "gap_id": "AR3-G02",
+      "conclusion": "OPEN_UNCHANGED",
+      "owner": "backend提供，DSH按所选用途核",
+      "blocked_action": "R02实际服务/Schema/结果/文件与消费端目标组合及实际接入",
+      "release_evidence": "原任务C0/既有服务/消费版本、允许读取身份和原权限/容量/失效证据；不要求新建M06服务或控制台登录",
+      "original_open_item": {
+        "id": "AR3-G02",
+        "item": "该用途实际服务/Schema/结果/文件、消费端目标版本及允许读取身份；本包保持UNBOUND",
+        "owner": "backend提供，DSH按所选用途核",
+        "blocks": "R02真实组合及该协议定稿/实际接入",
+        "latest_point": "原C0/P1/U13及最早实际消费点",
+        "release_evidence": "原任务准确C0/服务与消费版本、文件权限/容量/失效等必要证据；既有具名子集按原范围复用"
+      },
+      "latest_point": "原C0/P1/U13及最早实际消费点"
+    },
+    {
+      "gap_id": "AR3-G03",
+      "conclusion": "OPEN_UNCHANGED",
+      "owner": "backend远端、DSH/Host本地分别负责",
+      "blocked_action": "相应显式历史快照实际消费/命名/保存",
+      "release_evidence": "原导入/文件名/归属/版本合同及Host确认/无覆盖对应",
+      "original_open_item": {
+        "id": "AR3-G03",
+        "item": "显式历史快照分支原导入/文件名/归属/版本及Host保存对应",
+        "owner": "backend远端、DSH/Host本地分别负责",
+        "blocks": "只阻相应快照消费/命名或保存结论",
+        "latest_point": "该导入/写入前",
+        "release_evidence": "原导入合同、选取版本/项目身份、确认及无覆盖证据；不由新API输出命名补认"
+      },
+      "latest_point": "该导入/写入前"
+    },
+    {
+      "gap_id": "BR1-G01",
+      "conclusion": "OUT_OF_ASSIGNED_SCOPE_RETAINED",
+      "owner": "bridge、knowledge各自实际责任方",
+      "blocked_action": "本返回不判断其他双方委任/结论，原记录保持",
+      "original_open_item": {
+        "id": "BR1-G01",
+        "item": "bridge与KN原用途真实技术复核人及本版明确结论",
+        "owner": "bridge、knowledge各自实际责任方",
+        "blocks": "本版技术复核和R03范围定稿",
+        "latest_point": "BRIDGE-1新技术签收前",
+        "release_evidence": "各职责真实姓名/角色、准确对象/标准hash、各自保留或退回结论"
+      },
+      "latest_point": "BRIDGE-1新技术签收前"
+    },
+    {
+      "gap_id": "BR1-G02",
+      "conclusion": "OUT_OF_ASSIGNED_SCOPE_RETAINED",
+      "owner": "原任务负责人及实际接收方",
+      "blocked_action": "本返回不处理实际bridge版本/任务组合",
+      "original_open_item": {
+        "id": "BR1-G02",
+        "item": "若后续选入真实交接，其实际任务/接收会话/输入与批准字节身份及有效范围；本阶段未绑定",
+        "owner": "原任务负责人及实际接收方",
+        "blocks": "只阻相关真实交接，不阻本地文档准备",
+        "latest_point": "调用前按原任务/EXEC-R2",
+        "release_evidence": "原ID/目标和原许可，必要新鲜预检/有效窗口及原与参数/预计正文独立身份；不能沿失效窗或新ID重发"
+      },
+      "latest_point": "调用前按原任务/EXEC-R2"
+    },
+    {
+      "gap_id": "BR1-G03",
+      "conclusion": "OUT_OF_ASSIGNED_SCOPE_RETAINED",
+      "owner": "实际WorkBuddy接收方、原任务负责人、KN消费方",
+      "blocked_action": "本返回不处理真实MCP/取件返回/产物消费证据",
+      "original_open_item": {
+        "id": "BR1-G03",
+        "item": "真实MCP领取/回填与实际产物、消费者接受的独立证据",
+        "owner": "实际WorkBuddy接收方、原任务负责人、KN消费方",
+        "blocks": "仅真实闭环/业务接受声明",
+        "latest_point": "宣称该任务闭环/接受前",
+        "release_evidence": "同ID/目标下合法取得的接收端轨迹与真实产物、KN按原用途复核；K17旧静态结论继续有效但不代此证据"
+      },
+      "latest_point": "宣称该任务闭环/接受前"
+    }
+  ],
+  "levels": {
+    "this_document_technical_review": "35/35条件职责格与22/22修复出口职责格逐项同意其文档判据；6个ARN-11/12格仍是PENDING case判断，不是实际命名通过",
+    "standard_finalization": "NOT_PERFORMED_R03_OUT_OF_SCOPE / V0.3仍draft",
+    "provider_actual_delivery_version": "UNBOUND_NOT_CLAIMED",
+    "consumer_actual_adoption_version": "UNBOUND_NOT_CLAIMED",
+    "runtime_or_integration": "NOT_VERIFIED_NOT_EXECUTED",
+    "professional_user_release_acceptance": "NOT_VERIFIED_NOT_GRANTED",
+    "full_F": "OPEN_UNCHANGED"
+  },
+  "not_executed": [
+    "产品或连接器测试",
+    "实现/构建/安装/提交/推送/发布",
+    "业务模型/API/Dify/数据库/支付/上传/Send",
+    "WorkBuddy任何连接器/私有库/队列/任务操作",
+    "跨聊天发送/新任务/子代理",
+    "5、存档/过程存档读取"
+  ],
+  "history_preservation": "旧标准、冻结输入/预期hash、FAIL/UNKNOWN/批准/收据及原试填静态结论均不覆盖；本返回独立新增，最终hash由中心外层绑定。",
+  "summary": {
+    "condition_cells": 35,
+    "exit_cells": 22,
+    "condition_agree": 35,
+    "exit_agree": 22,
+    "returned_document_clause_conflicts": 0,
+    "pending_case_judgment_cells": 6,
+    "other_slots_signed": 0,
+    "human_acceptances": 0
+  },
+  "verified_request_binding": {
+    "approval_source_chat_id": "01a172f3-589b-7063-819a-6490831bbbf0",
+    "question_item_id": "[\"request_user_input_async\",\"call_a588038e3af941718f26cde8f4932096\",0]",
+    "exact_user_answer": "指派这四个项目Codex并发送请求（推荐）",
+    "appointed_target": {
+      "project_id": "dsh-oasis",
+      "title": "制定 DSH-Oasis 后续开发计划",
+      "thread_id": "01a177c0-e0a2-7841-ab7b-634f0bacc752",
+      "slots": [
+        "AR7-P",
+        "AR7-C",
+        "AR3-C"
+      ],
+      "prompt_file": {
+        "absolute_path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-10-30-interface-stage1-closeout/dsh-oasis-request.md",
+        "bytes": 8913,
+        "sha256": "706a9adf756fbe9c0072a21ea025db4a07cead3e7dfd6ea6ada6fb8b99be0fbc"
+      }
+    },
+    "prompt_bytes_match_appointment": true,
+    "assignment_basis_matches_approval_raw_bytes": true,
+    "historical_requests_preparation_state_not_overwritten": true
+  }
+}

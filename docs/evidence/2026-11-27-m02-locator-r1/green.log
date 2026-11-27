@@ -1,0 +1,102 @@
+✔ Flow-1-3 binds its exact standalone Skill and dispatches one synthetic request (45.11425ms)
+✔ Flow-1-4 binds its exact standalone Skill and dispatches one synthetic request (28.063167ms)
+✔ Flow-2-7 binds its exact standalone Skill and dispatches one synthetic request (29.688708ms)
+✔ China route preview is suite-scoped and stops at unchecked material (3.754291ms)
+✖ M02 accepts full original and emits v8 with precise source instructions (45.824125ms)
+✖ M02 accepts contiguous excerpt and emits v8 with precise source instructions (28.403041ms)
+✖ M02 accepts original newline and emits v8 with precise source instructions (29.775875ms)
+✔ M02 still rejects field name without a second dispatch (20.52325ms)
+✔ M02 still rejects paraphrase without a second dispatch (18.963667ms)
+✔ M02 still rejects quoted text without a second dispatch (18.912458ms)
+✔ M02 still rejects ellipsis without a second dispatch (16.958041ms)
+✔ M02 still rejects normalized newline without a second dispatch (20.312125ms)
+✔ M02 still rejects wrong hash without a second dispatch (19.050875ms)
+✔ M02 still rejects wrong input without a second dispatch (17.431125ms)
+✔ M02 still rejects inference as fact without a second dispatch (17.656125ms)
+✔ M02 can retain unlocatable analysis in core while Host retains actual input sources (18.907ms)
+✔ new M02 instructions preserve historical v5 receipts and their system fingerprints (1.211917ms)
+✔ Flow-1-5 confirms, dispatches once and persists its exact Skill identity with populated output (51.406917ms)
+✔ Flow-1-1 confirms, dispatches once and persists its exact Skill identity with populated output (27.15025ms)
+✔ Flow-1-2 confirms, dispatches once and persists its exact Skill identity with populated output (25.188459ms)
+✔ Flow-1-1 records source-hash-mismatch at updates.0.source_hash without retaining raw values (20.294166ms)
+✔ Flow-1-1 records source-locator-mismatch at updates.0.source_locator without retaining raw values (16.268542ms)
+✔ Flow-1-2 records duplicate-table-row at tables.T1.1.row_id without retaining raw values (19.29375ms)
+✔ Flow-1-2 records invalid-type at tables.T1.0.row_id without retaining raw values (19.764584ms)
+✔ Flow-1-5 records missing-field at core_result_markdown without retaining raw values (20.135042ms)
+✔ Flow-1-5 records unexpected-field at warnings.0 without retaining raw values (20.235875ms)
+✔ Flow-1-5 records invalid-json at  without retaining raw values (19.638708ms)
+✔ Flow-1-1 binds its own fixed resource and all input channels at durable native admission (48.575833ms)
+✔ Flow-1-2 binds its own fixed resource and all input channels at durable native admission (62.372958ms)
+✔ Flow-1-3 binds its own fixed resource and all input channels at durable native admission (52.250083ms)
+✔ Flow-1-4 binds its own fixed resource and all input channels at durable native admission (51.442291ms)
+✔ Flow-1-5 binds its own fixed resource and all input channels at durable native admission (59.024875ms)
+✔ Flow-2-6 binds its own fixed resource and all input channels at durable native admission (51.02ms)
+✔ Flow-2-7 binds its own fixed resource and all input channels at durable native admission (57.034417ms)
+✔ Flow-3-8 binds its own fixed resource and all input channels at durable native admission (70.78575ms)
+✔ Flow-3-9 binds its own fixed resource and all input channels at durable native admission (82.164875ms)
+✔ Flow-3-10 binds its own fixed resource and all input channels at durable native admission (60.419667ms)
+✔ Flow-4-11 binds its own fixed resource and all input channels at durable native admission (54.52425ms)
+✔ Flow-4-12 binds its own fixed resource and all input channels at durable native admission (58.214375ms)
+✔ Flow-5-13 binds its own fixed resource and all input channels at durable native admission (56.697375ms)
+✔ Flow-6-14 binds its own fixed resource and all input channels at durable native admission (70.335458ms)
+✔ same Workspace ID moving root and session cwd invalidates an already prepared confirmation (2.951541ms)
+✔ same-ID root and cwd movement during prepareCall blocks stream dispatch (8.320375ms)
+✔ node-bound factory rejects another node preparation and unknown node before any call (1.528625ms)
+✔ v2 system supplies the strict model response schema and retains the original node instruction (10.327125ms)
+✔ first-batch native v1 prepared record remains byte-compatible without migration (1.150375ms)
+✔ first-batch native v1 completed record remains byte-compatible without migration (1.173167ms)
+✔ a captured v1 prepared authorization cannot be dispatched by the new candidate executor (1.512125ms)
+✔ new native confirmation rejects an unselected empty root (1.646ms)
+✔ new native confirmation rejects an unselected relative root (1.32225ms)
+✔ frozen text source receipts make a legitimate native provenance update possible without invented hashes (17.907375ms)
+✔ Flow-1-1 invalidates confirmation after model, root or input revision changes before dispatch (2.863791ms)
+✔ Flow-1-2 invalidates confirmation after model, root or input revision changes before dispatch (2.273167ms)
+✔ Flow-1-3 invalidates confirmation after model, root or input revision changes before dispatch (2.368542ms)
+✔ Flow-1-4 invalidates confirmation after model, root or input revision changes before dispatch (2.50075ms)
+✔ Flow-1-5 invalidates confirmation after model, root or input revision changes before dispatch (2.444ms)
+✔ Flow-2-6 invalidates confirmation after model, root or input revision changes before dispatch (2.456333ms)
+✔ Flow-2-7 invalidates confirmation after model, root or input revision changes before dispatch (2.33475ms)
+✔ Flow-3-8 invalidates confirmation after model, root or input revision changes before dispatch (2.472666ms)
+✔ Flow-3-9 invalidates confirmation after model, root or input revision changes before dispatch (2.798667ms)
+✔ Flow-3-10 invalidates confirmation after model, root or input revision changes before dispatch (2.831542ms)
+✔ Flow-4-11 invalidates confirmation after model, root or input revision changes before dispatch (2.264458ms)
+✔ Flow-4-12 invalidates confirmation after model, root or input revision changes before dispatch (2.70325ms)
+✔ Flow-5-13 invalidates confirmation after model, root or input revision changes before dispatch (2.565875ms)
+✔ Flow-6-14 invalidates confirmation after model, root or input revision changes before dispatch (3.362208ms)
+✔ native Flow-6-14 cannot publish human-confirmed origin through a structurally valid output (16.847542ms)
+✔ native Flow-6-14 cannot publish confirmed technical fact through a structurally valid output (14.543208ms)
+✔ native Flow-6-14 cannot publish another node provenance through a structurally valid output (14.099709ms)
+ℹ tests 68
+ℹ suites 0
+ℹ pass 65
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1084.235042
+
+✖ failing tests:
+
+test at .local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:35:4
+✖ M02 accepts full original and emits v8 with precise source instructions (45.824125ms)
+  Error: unsupported workbench schemaVersion: undefined
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/src/workbench-domain.js:266:9)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:45:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at .local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:35:4
+✖ M02 accepts contiguous excerpt and emits v8 with precise source instructions (28.403041ms)
+  Error: unsupported workbench schemaVersion: undefined
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/src/workbench-domain.js:266:9)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:45:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at .local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:35:4
+✖ M02 accepts original newline and emits v8 with precise source instructions (29.775875ms)
+  Error: unsupported workbench schemaVersion: undefined
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/src/workbench-domain.js:266:9)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:45:2)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

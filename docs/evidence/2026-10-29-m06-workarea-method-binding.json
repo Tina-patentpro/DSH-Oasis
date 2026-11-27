@@ -1,0 +1,64 @@
+{
+  "id": "DSH-M06-WORKAREA-METHOD-BINDING-20261029-01",
+  "at": "2026-10-29T21:20:41.479587+08:00",
+  "userSource": "/Users/tinadong7036/Documents/开发项目/workarea包含dify服务器api使用的方法",
+  "sources": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/workarea/AGENTS.md",
+      "sha256": "2a4a2439279e9a98083165b29f7c55880ef2b90f63f500b0951550ab3f2b94db",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-m06-implementation-20261029/workarea-source-00",
+      "readScope": "project rules / actual createWithApi boundary / section8.5 / guide overview; not secrets, environment or production configuration"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/workarea/src/api/services/ai.service.ts",
+      "sha256": "d0d2961b585c02289348aa473a432d536a20d9e2f9a4b96742c8c73c5392f52d",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-m06-implementation-20261029/workarea-source-01",
+      "readScope": "project rules / actual createWithApi boundary / section8.5 / guide overview; not secrets, environment or production configuration"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/workarea/API接口文档-用户端.md",
+      "sha256": "85aeb856ada9a41475542c2fe91ef8289c0eda97186b57c56837eedead0e080d",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-m06-implementation-20261029/workarea-source-02",
+      "readScope": "project rules / actual createWithApi boundary / section8.5 / guide overview; not secrets, environment or production configuration"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/workarea/docs/guides/DIFY-INTEGRATION-GUIDE.md",
+      "sha256": "99b0889700fb7988e4bf46cfc4ced5ae3e19107edb0e43c6d9982935ea96f9d1",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-m06-implementation-20261029/workarea-source-03",
+      "readScope": "project rules / actual createWithApi boundary / section8.5 / guide overview; not secrets, environment or production configuration"
+    }
+  ],
+  "workareaGitHead": "e4fdfc61ebb50ac31380be25c87692d48e600cf2",
+  "sourceReadOnly": true,
+  "actualMethod": {
+    "frontend": "backend only, not direct Dify",
+    "function": "src/api/services/ai.service.ts#createWithApi",
+    "method": "POST",
+    "finalPath": "/api/apicategories/create",
+    "body": [
+      "inputs",
+      "id",
+      "folder_id",
+      "api_process",
+      "key"
+    ],
+    "fileRepresentation": "actual file-type fields use Dify file objects from uploaded URLs; omitted when not uploaded",
+    "newM06Candidate": "proposed paragraph fields contain complete prepared text snapshots; this requires a new accepted service schema, never applying old file conversion by suffix"
+  },
+  "methodResolved": true,
+  "newM06ServiceBindingResolved": false,
+  "inspectionScope": "targeted src/docs/API document text search for M06, Flow-2-6 and m06_output_json; no matches; not proof about every possible remote service",
+  "actualM06ApiId": null,
+  "actualM06Endpoint": null,
+  "actualDifyApplicationId": null,
+  "actualDifyDSL_SHA256": null,
+  "missing": [
+    "deployed service metadata matching eight paragraph inputs and m06_output_json",
+    "actual Dify workflow/app/version and DSL export hash",
+    "backend producer acceptance and authorized account/Workspace/folder binding",
+    "new service quote and capacity semantics"
+  ],
+  "directDifyCalls": 0,
+  "realCreateRequests": 0,
+  "productionChanges": false
+}

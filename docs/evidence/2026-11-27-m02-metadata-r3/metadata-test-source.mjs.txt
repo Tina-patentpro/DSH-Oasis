@@ -1,0 +1,38 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import {readFile} from 'node:fs/promises'
+import {correctM02BodyMetadata} from '../src/m02-body-metadata.js'
+import {assertV340NativeCandidate} from '../src/v340-native-model.js'
+const old='## 文档信息\n\n- 节点：M02\n- 合同与版本：v340-native-candidate-2。\n- 交付状态：model_completed_pending_confirmation。\n\n## 核心结果\n\nP1 定性预期未实测。\n```text\n- 交付状态：源材料保留\n```\n'
+const options=count=>({receiptVersion:'v340-native-candidate-9',updates:Array.from({length:count},(_,i)=>({content_id:'c'+i,content_origin:'model_completed'})),modelCompletions:Array.from({length:count},(_,i)=>({content_id:'c'+i,human_confirmation_status:'pending'}))})
+for(const count of [0,1,2])test(`metadata derives ${count} pairs from actual arrays`,()=>{
+ const value=correctM02BodyMetadata(old,options(count))
+ assert.match(value,/Host 原始生成凭证 v340-native-candidate-9/)
+ assert.doesNotMatch(value,/candidate-2|model_completed_pending_confirmation/)
+ assert.match(value,new RegExp(`登记 ${count} 条，更新 ${count} 条`))
+ assert.match(value,count?/模型补齐待确认/:/未产生模型补齐/)
+ assert.equal(value.slice(value.indexOf('## 核心结果')),old.slice(old.indexOf('## 核心结果')))
+ assert.equal(correctM02BodyMetadata(value,options(count)),value)
+})
+test('metadata missing section is inserted without replacing prose',()=>{
+ const core='## 核心结果\n保留\n';const value=correctM02BodyMetadata(core,options(0));assert(value.endsWith(core));assert.match(value,/未产生模型补齐/)
+})
+test('metadata skips fenced source headings and preserves source quotes',()=>{
+ const core='```text\n## 文档信息\n- 交付状态：原材料\n```\n\n## 核心结果\n保留';const value=correctM02BodyMetadata(core,options(0));assert(value.endsWith(core))
+})
+test('metadata refuses unbound receipt versions',()=>assert.throws(()=>correctM02BodyMetadata(old,{...options(0),receiptVersion:'v340-native-candidate-2'})))
+test('metadata cannot present mismatched or duplicate pairs as valid',()=>{
+ for(const patch of [{updates:[]},{modelCompletions:[]},{modelCompletions:[...options(1).modelCompletions,...options(1).modelCompletions]},{modelCompletions:[{content_id:'other',human_confirmation_status:'pending'}]},{modelCompletions:[{content_id:'c0',human_confirmation_status:'confirmed'}]}])assert.throws(()=>correctM02BodyMetadata(old,{...options(1),...patch}))
+})
+test('source rows do not count as supplements',()=>{
+ const value=correctM02BodyMetadata(old,{...options(0),updates:[{content_id:'source',content_origin:'user_text'}]});assert.match(value,/未产生模型补齐/)
+})
+test('original v9 live receipt retains original prompt identity',async()=>{
+ const all=JSON.parse(await readFile(new URL('../../../../.local/dsh-m02-pair-r2-20261127/live/dsh-home/storages/oasis_workbench.json',import.meta.url),'utf8'))
+ const find=v=>{if(v&&typeof v==='object'){if(v.requestKey==='eb6bee3f-e23c-4333-b51f-554ebe6f94a7'&&v.inputSnapshot)return v;for(const x of Object.values(v)){const found=find(x);if(found)return found}}}
+ const run=find(all);assert.equal(assertV340NativeCandidate(run).version,'v340-native-candidate-9');assert.equal(run.nativeCandidate.systemSHA256,'8949dce7026b04d7ecc363caca54782e02d65be3093af1a8a6697964b7edad36')
+})
+test('metadata replacement retains fenced examples inside the information section',()=>{
+ const core='## 文档信息\n- 合同与版本：旧值\n```text\n- 交付状态：源材料逐字保留\n```\n- 交付状态：旧值\n\n## 核心结果\n保留\n'
+ const value=correctM02BodyMetadata(core,options(0));assert.match(value,/```text\n- 交付状态：源材料逐字保留\n```/);assert.doesNotMatch(value,/：旧值/)
+})

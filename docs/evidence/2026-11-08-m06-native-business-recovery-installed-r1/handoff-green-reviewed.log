@@ -1,0 +1,28 @@
+✔ handoff preserves receipt and business bytes, records originals, and releases ownership (187.196334ms)
+✔ refuses mismatched expectedOldControllerSHA256 before mutation (69.202375ms)
+✔ refuses mismatched expectedNewControllerSHA256 before mutation (53.250917ms)
+✔ refuses mismatched expectedBundleSHA256 before mutation (53.994125ms)
+✔ refuses mismatched expectedCurrent before mutation (57.204833ms)
+✔ existing installed writer prevents handoff without mutation (56.506084ms)
+✔ state write failure restores exact original control and installation bytes (68.548291ms)
+✔ preexisting recovery marker is never removed (40.889458ms)
+✔ rollback failure retains recovery marker and releases the installed lease (56.507916ms)
+✔ snapshot read failure releases JSON ownership before propagating the error (53.951ms)
+✔ recovery launch spec carries exclusive zero-real policy and does not launch App (131.2805ms)
+✔ recovery installation rejects budget (25.249292ms)
+✔ recovery installation rejects guard drift (31.027417ms)
+✔ recovery installation rejects mixed mode (27.176ms)
+✔ recovery installation rejects foreign root (23.62925ms)
+{"root":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-bnWzpK/installed","current":"f5c1b863f3180f80a23add8b33b53f6fdc056fd6abcafea6a26eeca85023305a","pid":64274,"prefix":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-bnWzpK/installed/data/evidence/installed-launch-d5f386fd-6f45-4690-a43e-934500a42fe5"}
+✔ installed zero spec uses sealed prepared Profile and live writer without spawning App (176.8175ms)
+✔ installed zero policy rejects nonzero budgets and incorrect guard bindings before creating root (25.411083ms)
+✔ installed zero policy rejects rehashed wrong guard before creating root (23.95125ms)
+✔ Desktop preparation failure leaves recovery refusal and releases maintenance lease (47.961875ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 750.292

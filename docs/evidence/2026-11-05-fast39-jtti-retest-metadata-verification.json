@@ -1,0 +1,88 @@
+{
+  "at": "2026-11-05T03:00:56.493Z",
+  "status": "PASS_READ_ONLY_PREPARATION_ONLY",
+  "scope": "No fresh generation result; new one-call spending cap still pending",
+  "metadata": {
+    "accountId": 33,
+    "folderId": 302,
+    "folderOwnerId": 33,
+    "balanceCNY": 219,
+    "quoteCNY": 3,
+    "catalogEntryId": 214,
+    "serviceDetailId": 39,
+    "serviceName": "F-2-6-权利要求书生成-Fast"
+  },
+  "checks": {
+    "priorPreexistingFilesUnchanged": 139,
+    "parentAdmissionPins": "PASS",
+    "profileRestoredSHA256": "005876e07eef78927fd0ae15cde9fcdf1c59847b8f89569baf7c65d665345efa",
+    "temporaryProfileOwnerRemoved": true,
+    "isolatedDesktopStopped": true,
+    "packetSHA256": "ea2f8c0c03a4ca7cde4760906dd6bf0a736b6a5f1b15774f41bb3c8130251a79",
+    "packetBytes": 6675,
+    "preparedRequestSyntaxExit": 0
+  },
+  "changes": {
+    "firstMetadataGate": {
+      "at": "2026-11-05T02:58:10.060Z",
+      "status": "STOPPED_BEFORE_CREATE",
+      "stage": "metadata",
+      "error": {
+        "code": "CATALOG_CHANGED",
+        "name": "Error"
+      },
+      "retries": 0
+    },
+    "catalogChange": {
+      "oldId": 211,
+      "newId": 214,
+      "detailIdUnchanged": 39
+    },
+    "firstMountFailure": "test-only PyYAML timestamp serialization; no operation started; corrected using original string-preserving profile"
+  },
+  "calls": {
+    "uploads": 0,
+    "creates": 0,
+    "directDify": 0,
+    "model": 0,
+    "retries": 0,
+    "feesCNY": 0
+  },
+  "authorization": "Awaiting explicit fresh single-call <=CNY3 spending cap; previous R1/R2 allowances consumed",
+  "formalAcceptance": "OPEN",
+  "originalR1R2FailuresPreserved": true,
+  "files": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/admin-safe-detail.json",
+      "sha256": "20d6d8b4c3402b9e8b32897b5511ed00117640b5316c78884aae9bd570b1bbfa"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/readonly-metadata.json",
+      "sha256": "23f89f40bb0c5623ba7bed2616970f57dec05e5d2a29755d9890ea6aa7a9e5be"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/prepared-request.json",
+      "sha256": "91a4abdb63a1d67105de7f51f518bef4c566409a163c0b629a6800c921da911d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/dispatch-preflight.json",
+      "sha256": "7304a13f9973b75c5eb0ac2c6f27e9d6cb4f329fd498bc445d0052699b046773"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/dispatch-entry.mjs",
+      "sha256": "de94ca4af6991e660fe61dc94a6a683545f5d719d09976e4305b972e36863686"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/reviewed-mount-delta.json",
+      "sha256": "ebf272abae9ee21c7986e96b03d2078c7cc98c4c14de98c5fffadd0e9e462841"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/mount-correction.json",
+      "sha256": "d7d2e82f6b36b39f4f57b94b4c75fa6fee3fa4af9063df4e50ca6c7865377aef"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-jtti-retest-20261105/readonly-reviewed-delta.json",
+      "sha256": "4a2fabcd9b05463891c1e440249d84876b4dc9da89f6f8a636502dab0af62078"
+    }
+  ]
+}

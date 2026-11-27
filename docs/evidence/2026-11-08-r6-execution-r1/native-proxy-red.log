@@ -1,0 +1,44 @@
+✖ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (113.65725ms)
+✔ native M06 preparation rejects second model request (18.224958ms)
+✔ native M06 preparation rejects API budget (16.531708ms)
+✔ native M06 preparation rejects foreign root (45.213167ms)
+✔ native M06 preparation rejects foreign endpoint (16.905958ms)
+✔ native M06 preparation rejects provider retries (17.045667ms)
+✔ native M06 preparation rejects output above scope (21.619417ms)
+✔ native M06 preparation rejects another model provider (19.774792ms)
+✔ native M06 preparation rejects mixed recovery (18.979875ms)
+✔ native M06 preparation rejects guard drift (17.605583ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 353.129791
+
+✖ failing tests:
+
+test at scripts/tests/f-installed-native-m06-generation.test.mjs:29:1
+✖ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (113.65725ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'localhost,127.0.0.1,::1'
+  - 'localhost,127.0.0.1,::1,api.deepseek.com'
+                            ^
+  
+      at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-native-m06-generation.test.mjs:43:10
+      at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:312:16
+      at withInstalledWriter (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:227:57)
+      at Module.withInstalledLaunchSpec (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:299:9)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-native-m06-generation.test.mjs:32:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'localhost,127.0.0.1,::1',
+    expected: 'localhost,127.0.0.1,::1,api.deepseek.com',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

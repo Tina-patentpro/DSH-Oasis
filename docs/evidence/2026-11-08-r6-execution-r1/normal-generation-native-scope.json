@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-11-08T20:39:27.744187+08:00",
+  "authorization": "Current goal execute R6 to completion plus explicit single-reference reuse/one real generation reply",
+  "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1",
+  "bundleSHA256": "a470a67ac44e78513ef95b1cbc7f11c7bd60163888b24a918333ed77ef3ae516",
+  "archiveSHA256": "b54454a5de8d18851288e73aae7d186c5e4562f029674f0f7ef615f430fa60b6",
+  "controllerSHA256": "9362a65f26cc5ca3c4c3adb22f59b9c22d8929fc253e7ce3ae5915316219dc02",
+  "nativeEntry": "./m06-controlled-host-013",
+  "provider": "deepseek-official",
+  "model": "deepseek-flash",
+  "baseURL": "https://api.deepseek.com/anthropic",
+  "maxOutputTokens": 8192,
+  "maxModelCalls": 1,
+  "automaticRetry": false,
+  "inputHash": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b",
+  "AppStarts": {
+    "initial": 1,
+    "plannedRestart": 1,
+    "purpose": "R6-03 real result and explicitly separated unsubmitted result-edit draft across restart gap from R6-02"
+  },
+  "permitted": [
+    "Create a new task and native empty session in existing workspace A; keep old synthetic run/versions",
+    "Prepare exact public inputs and model confirmation; at most one confirmation dispatch",
+    "Inspect actual output; edit as local engineering revision, restart before committing edit and verify draft recovery; then save revision/review for engineering and no-overwrite Markdown",
+    "Only prepare fixed-version conversation material; do not send messages"
+  ],
+  "notEquivalentTo": [
+    "Professional acceptance",
+    "User acceptance of new output",
+    "Release authorization",
+    "Remote API/Dify validation"
+  ],
+  "modelBudgetSharedAcrossAllAppStarts": true,
+  "abortOnUnknownOrUnexpectedDispatch": true
+}

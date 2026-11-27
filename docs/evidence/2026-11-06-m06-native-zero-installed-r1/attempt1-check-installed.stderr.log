@@ -1,0 +1,18 @@
+node:fs:621
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-installed-20261106-r1/data/home/profiles/desktop/cordis.desktop.root.yml'
+    at Object.openSync (node:fs:621:18)
+    at Object.readFileSync (node:fs:487:35)
+    at hash (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-installed-r1/check-installed.mjs:13:46)
+    at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-installed-r1/check-installed.mjs:24:65
+    at Array.map (<anonymous>)
+    at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-installed-r1/check-installed.mjs:24:55 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-installed-20261106-r1/data/home/profiles/desktop/cordis.desktop.root.yml'
+}
+
+Node.js v24.21.0

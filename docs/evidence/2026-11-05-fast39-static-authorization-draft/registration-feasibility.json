@@ -1,0 +1,61 @@
+{
+  "at": "2026-11-05T20:10:04.836620+08:00",
+  "purpose": "read-only native transaction-helper feasibility; no apply or repair",
+  "tool_sha256": "05a18deb923f9f7fa3b0f106bfcfab8dbcab5d1005a1b5fcee937e0c369ef780",
+  "registry": {
+    "revision": 489,
+    "sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+    "open_work_item_count": 35
+  },
+  "proposed_grant_shape_valid": true,
+  "proposed_grants": [
+    {
+      "section": "## 4. 业务状态",
+      "key_column": "Flow",
+      "key": "2-6",
+      "fields": [
+        "YML",
+        "Nodebook",
+        "latest_change_id",
+        "下一动作"
+      ]
+    }
+  ],
+  "row_selection_probes": [
+    {
+      "selector": {
+        "section": "## 4. 业务状态",
+        "key_column": "Flow",
+        "key": "2-6"
+      },
+      "status": "BLOCKED",
+      "error": "malformed table separator"
+    },
+    {
+      "selector": {
+        "section": "## 4. 业务状态",
+        "key_column": "运行记录",
+        "key": "10157"
+      },
+      "status": "BLOCKED",
+      "error": "malformed table separator"
+    }
+  ],
+  "first_rejection": {
+    "line": 127,
+    "error": "malformed table separator",
+    "header_columns": 11,
+    "separator_columns": 10,
+    "raw_line": "|---|---:|---:|---:|---|---|---|---|---|---|",
+    "limit": "first rejection point only; no claim a single separator repair would resolve all addressing errors"
+  },
+  "target_row_observation": {
+    "raw": "| 2-6 | 5 | 0 | 10157 | `legacy_assets_present` | `undesignated` | `gap_confirmed` | `backlog` | `STATIC_ONLY` | `REG-20260829094157-README-748f0d16` | 依据 V3.4.0 重构，创建新版本化候选并完成静态审计 |\n",
+    "sha256": "1aaad85ea856242ec6eabc5b84e768bf31841e6cf116ed9d86ae50f124d341ab",
+    "basis": "exact raw row including newline, observational only; not a successful native selector result"
+  },
+  "nonempty_existing_owned_grants": 7,
+  "section4_existing_owned_grants": [],
+  "conclusion": "REGISTRATION_ADDRESSABILITY_NOT_READY; proposal remains conditional, not executable",
+  "source_writes": 0
+}

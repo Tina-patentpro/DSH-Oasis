@@ -1,0 +1,56 @@
+{
+  "id": "M06-PUBLIC-CALIBRATION-20261029-01",
+  "purpose": "PUBLIC_SYNTHETIC_CALIBRATION_ONLY_NOT_REAL_UPSTREAM_G2",
+  "realModelAPICallsAuthorized": 0,
+  "files": [
+    {
+      "inputId": "upstream_md_file",
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-f-interruption-20261029/next-public-calibration/upstream_md_file.md",
+      "bytes": 10323,
+      "sha256": "06fed08ca056310adf3dd60ed7c695730cf13bc503e30ab37be1d07f2fad48f7",
+      "originalFixtureFilename": "disclosure_20261023160000_61616161.md"
+    },
+    {
+      "inputId": "disclosure_file",
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-f-interruption-20261029/next-public-calibration/disclosure_file.md",
+      "bytes": 57,
+      "sha256": "ace993ba06eea5f2e20731cb62c70fc1424b23b961c838ecfdbb3d16a1bb7f81",
+      "originalFixtureFilename": "disclosure.md"
+    },
+    {
+      "inputId": "drawings_file",
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-f-interruption-20261029/next-public-calibration/drawings_file.md",
+      "bytes": 39,
+      "sha256": "05ec78fad06afcef18304db486e0dea9e27dce934eed9fe176d9386b5ec4aac2",
+      "originalFixtureFilename": "drawing.txt"
+    },
+    {
+      "inputId": "claim_requirements_file",
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-f-interruption-20261029/next-public-calibration/claim_requirements_file.md",
+      "bytes": 30,
+      "sha256": "780ca9721b87c96fb3c3df16a351326c55b31b55c27c91887e4d953211b7b24a",
+      "originalFixtureFilename": "requirements.md"
+    }
+  ],
+  "textInputs": {
+    "disclosure_text": "公开文字补充：锁止件保持滑块位置。",
+    "drawings_text": "仅文字关系，无图像核查。",
+    "claim_requirements_text": "保留范围和支持缺项。",
+    "user_input": "只按本轮公开材料，不作确认。"
+  },
+  "preparedSHA256": "a5e159bfeb5d216c6bae133ffa96f12582011e09ce16b9714bce30b16c075c78",
+  "criteria": [
+    "same eight input identities and hashes",
+    "seven output fields parse under current schema",
+    "no invented technical facts",
+    "missing/evaluation fields remain unassessed",
+    "old confirmations cannot authorize new package",
+    "edit/review/save/reference/restart individually evidenced"
+  ],
+  "professionalReviewer": "UNASSIGNED_ROLE_REQUIRES_NAMED_REVIEW",
+  "userAcceptance": null,
+  "diagnosticOnly": true,
+  "notForRealModelAcceptanceInput": true,
+  "reason": "The synthetic upstream was assembled from generic test output. Preserve for test trace only; independently authored R2 is the selected next calibration input.",
+  "nextIndependentInput": "2026-10-29-m06-public-calibration-input-r2.json"
+}

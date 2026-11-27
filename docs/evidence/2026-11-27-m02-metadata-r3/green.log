@@ -1,0 +1,133 @@
+✔ Flow-1-3 binds its exact standalone Skill and dispatches one synthetic request (63.075792ms)
+✔ Flow-1-4 binds its exact standalone Skill and dispatches one synthetic request (40.319625ms)
+✔ Flow-2-7 binds its exact standalone Skill and dispatches one synthetic request (44.905875ms)
+✔ China route preview is suite-scoped and stops at unchecked material (5.514625ms)
+✔ metadata derives 0 pairs from actual arrays (1.133041ms)
+✔ metadata derives 1 pairs from actual arrays (0.162958ms)
+✔ metadata derives 2 pairs from actual arrays (0.076125ms)
+✔ metadata missing section is inserted without replacing prose (0.075459ms)
+✔ metadata skips fenced source headings and preserves source quotes (0.053667ms)
+✔ metadata refuses unbound receipt versions (0.095958ms)
+✔ metadata cannot present mismatched or duplicate pairs as valid (0.087958ms)
+✔ source rows do not count as supplements (0.043833ms)
+✔ original v9 live receipt retains original prompt identity (5.456833ms)
+✔ M02 R2 accepts 0 matched pairs with unique v9 identity (60.201583ms)
+✔ M02 R2 accepts 1 matched pairs with unique v9 identity (47.838625ms)
+✔ M02 R2 accepts 2 matched pairs with unique v9 identity (52.784959ms)
+✔ M02 R2 still rejects orphan registration at the correct field (28.209333ms)
+✔ M02 R2 still rejects missing registration at the correct field (43.517916ms)
+✔ M02 R2 still rejects different IDs at the correct field (29.667292ms)
+✔ M02 R2 still rejects analysis is not a matching supplement at the correct field (31.216875ms)
+✔ M02 R2 still rejects duplicate registrations at the correct field (25.990417ms)
+✔ M02 R2 still rejects duplicate updates at the correct field (30.098584ms)
+✔ M02 R2 still rejects case mismatch at the correct field (19.730583ms)
+✔ M02 R2 preserves original v5 and v8 system fingerprints (2.523375ms)
+✔ M02 accepts full original and emits v8 with precise source instructions (64.372417ms)
+✔ M02 accepts contiguous excerpt and emits v8 with precise source instructions (40.244166ms)
+✔ M02 accepts original newline and emits v8 with precise source instructions (76.114209ms)
+✔ M02 still rejects field name without a second dispatch (41.251709ms)
+✔ M02 still rejects paraphrase without a second dispatch (32.190792ms)
+✔ M02 still rejects quoted text without a second dispatch (33.0375ms)
+✔ M02 still rejects ellipsis without a second dispatch (21.923083ms)
+✔ M02 still rejects normalized newline without a second dispatch (26.89375ms)
+✔ M02 still rejects wrong hash without a second dispatch (20.558417ms)
+✔ M02 still rejects wrong input without a second dispatch (23.996792ms)
+✔ M02 still rejects inference as fact without a second dispatch (17.56825ms)
+✖ M02 can retain unlocatable analysis in core while Host retains actual input sources (18.9565ms)
+✔ new M02 instructions preserve historical v5 receipts and their system fingerprints (1.572042ms)
+✔ Flow-1-5 confirms, dispatches once and persists its exact Skill identity with populated output (66.320875ms)
+✔ Flow-1-1 confirms, dispatches once and persists its exact Skill identity with populated output (36.821333ms)
+✔ Flow-1-2 confirms, dispatches once and persists its exact Skill identity with populated output (40.532125ms)
+✔ Flow-1-1 records source-hash-mismatch at updates.0.source_hash without retaining raw values (30.099958ms)
+✔ Flow-1-1 records source-locator-mismatch at updates.0.source_locator without retaining raw values (18.139417ms)
+✔ Flow-1-2 records duplicate-table-row at tables.T1.1.row_id without retaining raw values (36.096208ms)
+✔ Flow-1-2 records invalid-type at tables.T1.0.row_id without retaining raw values (30.850875ms)
+✔ Flow-1-5 records missing-field at core_result_markdown without retaining raw values (38.653709ms)
+✔ Flow-1-5 records unexpected-field at warnings.0 without retaining raw values (26.605375ms)
+✔ Flow-1-5 records invalid-json at  without retaining raw values (28.06325ms)
+✔ Flow-1-1 binds its own fixed resource and all input channels at durable native admission (72.705875ms)
+✔ Flow-1-2 binds its own fixed resource and all input channels at durable native admission (87.786208ms)
+✔ Flow-1-3 binds its own fixed resource and all input channels at durable native admission (87.03175ms)
+✔ Flow-1-4 binds its own fixed resource and all input channels at durable native admission (88.158875ms)
+✔ Flow-1-5 binds its own fixed resource and all input channels at durable native admission (70.910458ms)
+✔ Flow-2-6 binds its own fixed resource and all input channels at durable native admission (56.258625ms)
+✔ Flow-2-7 binds its own fixed resource and all input channels at durable native admission (53.751334ms)
+✔ Flow-3-8 binds its own fixed resource and all input channels at durable native admission (67.391625ms)
+✔ Flow-3-9 binds its own fixed resource and all input channels at durable native admission (70.20575ms)
+✔ Flow-3-10 binds its own fixed resource and all input channels at durable native admission (62.631375ms)
+✔ Flow-4-11 binds its own fixed resource and all input channels at durable native admission (58.5085ms)
+✔ Flow-4-12 binds its own fixed resource and all input channels at durable native admission (56.442792ms)
+✔ Flow-5-13 binds its own fixed resource and all input channels at durable native admission (56.78725ms)
+✔ Flow-6-14 binds its own fixed resource and all input channels at durable native admission (71.272375ms)
+✔ same Workspace ID moving root and session cwd invalidates an already prepared confirmation (2.445875ms)
+✔ same-ID root and cwd movement during prepareCall blocks stream dispatch (10.153667ms)
+✔ node-bound factory rejects another node preparation and unknown node before any call (1.471917ms)
+✔ v2 system supplies the strict model response schema and retains the original node instruction (10.346334ms)
+✔ first-batch native v1 prepared record remains byte-compatible without migration (1.070708ms)
+✔ first-batch native v1 completed record remains byte-compatible without migration (1.141292ms)
+✔ a captured v1 prepared authorization cannot be dispatched by the new candidate executor (1.483875ms)
+✔ new native confirmation rejects an unselected empty root (1.503792ms)
+✔ new native confirmation rejects an unselected relative root (1.134834ms)
+✔ frozen text source receipts make a legitimate native provenance update possible without invented hashes (15.996542ms)
+✔ Flow-1-1 invalidates confirmation after model, root or input revision changes before dispatch (3.573833ms)
+✔ Flow-1-2 invalidates confirmation after model, root or input revision changes before dispatch (2.39425ms)
+✔ Flow-1-3 invalidates confirmation after model, root or input revision changes before dispatch (2.57425ms)
+✔ Flow-1-4 invalidates confirmation after model, root or input revision changes before dispatch (2.846542ms)
+✔ Flow-1-5 invalidates confirmation after model, root or input revision changes before dispatch (4.019708ms)
+✔ Flow-2-6 invalidates confirmation after model, root or input revision changes before dispatch (2.600334ms)
+✔ Flow-2-7 invalidates confirmation after model, root or input revision changes before dispatch (2.486833ms)
+✔ Flow-3-8 invalidates confirmation after model, root or input revision changes before dispatch (2.800541ms)
+✔ Flow-3-9 invalidates confirmation after model, root or input revision changes before dispatch (2.770625ms)
+✔ Flow-3-10 invalidates confirmation after model, root or input revision changes before dispatch (2.5575ms)
+✔ Flow-4-11 invalidates confirmation after model, root or input revision changes before dispatch (2.553625ms)
+✔ Flow-4-12 invalidates confirmation after model, root or input revision changes before dispatch (2.799541ms)
+✔ Flow-5-13 invalidates confirmation after model, root or input revision changes before dispatch (2.328ms)
+✔ Flow-6-14 invalidates confirmation after model, root or input revision changes before dispatch (3.29ms)
+✔ native Flow-6-14 cannot publish human-confirmed origin through a structurally valid output (16.869875ms)
+✔ native Flow-6-14 cannot publish confirmed technical fact through a structurally valid output (13.303541ms)
+✔ native Flow-6-14 cannot publish another node provenance through a structurally valid output (14.590375ms)
+✔ M06 R1 review is not factual confirmation (75.991541ms)
+✔ M06 R1 published-file recovery identity (85.235459ms)
+✔ M06 R1 edit is idempotent and oversized edit preserves draft and approved parent (100.608042ms)
+✔ local-skill: persisted edit creates immutable pending version, explicit review and no-overwrite root save survive reopen (68.300958ms)
+✔ oasis-api: persisted edit creates immutable pending version, explicit review and no-overwrite root save survive reopen (51.1245ms)
+✔ stale edits/reviews, pending drafts and stale save confirmations cannot approve or publish another version (24.527208ms)
+✔ existing file is never overwritten and RPC does not expose a generation route (18.356792ms)
+✔ published files survive an index write failure and RPC returns a recovery manifest (30.948542ms)
+✔ each version keeps its own persisted draft; editing one does not clear another (28.300375ms)
+✔ candidate count config accepts a positive integer and rejects invalid values (16.578542ms)
+✔ millisecond admission time remains compatible with the seconds-only business filename (12.521ms)
+ℹ tests 99
+ℹ suites 0
+ℹ pass 98
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1268.425959
+
+✖ failing tests:
+
+test at .local/dsh-m02-metadata-r3-20261127/package/test/m02-source-locator-r1.test.mjs:65:1
+✖ M02 can retain unlocatable analysis in core while Host retains actual input sources (18.9565ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '## 文档信息\n' +
+  +   '\n' +
+  +   '- 合同与版本：Host 原始生成凭证 v340-native-candidate-10；正文元信息修订 R3。\n' +
+  +   '- 交付状态：本次未产生模型补齐（登记 0 条，更新 0 条）；分析建议仍待专业审核。\n' +
+  +   '\n' +
+  +   'P1 对应调整与保持两种状态。效果为定性预期，待验证。'
+  - 'P1 对应调整与保持两种状态。效果为定性预期，待验证。'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-metadata-r3-20261127/package/test/m02-source-locator-r1.test.mjs:70:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '## 文档信息\n\n- 合同与版本：Host 原始生成凭证 v340-native-candidate-10；正文元信息修订 R3。\n- 交付状态：本次未产生模型补齐（登记 0 条，更新 0 条）；分析建议仍待专业审核。\n\nP1 对应调整与保持两种状态。效果为定性预期，待验证。',
+    expected: 'P1 对应调整与保持两种状态。效果为定性预期，待验证。',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

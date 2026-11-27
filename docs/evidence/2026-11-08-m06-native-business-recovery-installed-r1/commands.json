@@ -1,0 +1,114 @@
+[
+  {
+    "argv": [
+      "tools/bin/node",
+      "--test",
+      "scripts/tests/f-installed-controller-handoff.test.mjs"
+    ],
+    "stage": "missing helper RED",
+    "exitCode": 1,
+    "log": "handoff-red.log"
+  },
+  {
+    "argv": [
+      "tools/bin/node",
+      "--test",
+      "scripts/tests/f-installed-controller-handoff.test.mjs"
+    ],
+    "stage": "snapshot ownership RED",
+    "exitCode": 1,
+    "log": "handoff-snapshot-red.log"
+  },
+  {
+    "argv": [
+      "tools/bin/node",
+      "--test",
+      "scripts/tests/f-installed-controller-handoff.test.mjs",
+      "scripts/tests/f-installed-native-business-recovery.test.mjs",
+      "scripts/tests/f-installed-native-zero.test.mjs"
+    ],
+    "stage": "final reviewed GREEN",
+    "exitCode": 0,
+    "tests": 19,
+    "log": "handoff-green-reviewed.log"
+  },
+  {
+    "argv": [
+      "python3",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-m06-native-business-recovery-installed-r1/prepare-bundle.py"
+    ],
+    "exitCode": 0,
+    "log": "prepare-bundle.log"
+  },
+  {
+    "argv": [
+      "tools/bin/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-m06-native-business-recovery-installed-r1/install-candidate.mjs"
+    ],
+    "exitCode": 0,
+    "log": "install-candidate.log"
+  },
+  {
+    "argv": [
+      "tools/bin/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-m06-native-business-recovery-installed-r1/verify-installed.mjs",
+      "installed"
+    ],
+    "exitCode": 0,
+    "log": "installed-probe.log"
+  },
+  {
+    "argv": [
+      "tools/bin/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-m06-native-business-recovery-installed-r1/verify-installed.mjs",
+      "cold"
+    ],
+    "exitCode": 0,
+    "log": "cold-probe.log"
+  },
+  {
+    "argv": [
+      "python3",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-m06-native-business-recovery-installed-r1/verify-preservation.py"
+    ],
+    "exitCode": 0,
+    "log": "preservation.log"
+  },
+  {
+    "argv": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "--check",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1"
+    ],
+    "exitCode": 0,
+    "log": "installed-final-check.log"
+  },
+  {
+    "argv": [
+      "tools/bin/node",
+      "--check",
+      "scripts/f-installed-controller-handoff.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "tools/bin/node",
+      "--check",
+      "scripts/tests/f-installed-controller-handoff.test.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "docs/project-current-state.md",
+      "docs/evidence/2026-10-23-stage5-progress-and-remaining.md"
+    ],
+    "exitCode": 0
+  }
+]

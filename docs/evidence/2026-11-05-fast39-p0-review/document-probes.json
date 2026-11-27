@@ -1,0 +1,111 @@
+{
+  "kind": "FROZEN_DOCUMENT_AND_SYNTHETIC_ANALYTICAL_PROBES_ONLY",
+  "generation": 0,
+  "business_code_executed": false,
+  "schema_engine_run": false,
+  "probes": [
+    {
+      "id": "D01",
+      "purpose": "R2 exact output acceptance must be reconciled",
+      "observation": {
+        "R2_required_sections": [
+          "权利要求草稿",
+          "材料缺项与未确认事项",
+          "技术特征来源"
+        ],
+        "synthetic_example_output_has_exact_sections": false,
+        "candidate_end_fields": [
+          "output",
+          "claims_text",
+          "dependency_tree",
+          "pending_confirmation",
+          "quality_report",
+          "quality_status"
+        ]
+      },
+      "proof": "Original R2 packet has three required headings; candidate1 §5 does not define their rendering or explicit replacement acceptance",
+      "proof_limit": "Synthetic example is not a business run; this establishes an unresolved contract decision, not runtime failure"
+    },
+    {
+      "id": "D02",
+      "purpose": "Mixed/direct input source namespace",
+      "observation": {
+        "legacy_direct_fields_not_representable": [
+          "background_art_TD",
+          "beneficial_effects_TD",
+          "drawings_explain_TD",
+          "embodiments_TD",
+          "technical_field",
+          "technical_solutions"
+        ],
+        "merge_precedence": "direct > title > semantic",
+        "registry_inputs_in_contract": "extractor.text + actual User_input"
+      },
+      "proof": "Fixed merge choose() takes direct_value first; none of the six original field IDs exists in source input_id enum",
+      "proof_limit": "No live/fixture merge code executed; pure source/contract comparison"
+    },
+    {
+      "id": "D03",
+      "purpose": "Candidate1 capacity is not a proven existing M06 limit",
+      "observation": {
+        "example_utf16_units": 100001,
+        "example_utf8_bytes": 300003,
+        "candidate_outer_maxLength": 100000,
+        "candidate_utf8_cap": 262144,
+        "current_M06_inspector_utf8_cap": 1048576,
+        "V340_document_cap": 1048576,
+        "old_100000_guard_scope": "execution.unifiedClaims only"
+      },
+      "proof": "100001 BMP chars = 300003 UTF8 bytes: under M06 1MiB but over both new candidate limits; workbench strips v340 out of legacy 1MiB calculation",
+      "proof_limit": "Shows capacity-policy regression/rationale gap only; not a full valid patent/model result or complete schema-engine validation"
+    },
+    {
+      "id": "D04",
+      "purpose": "Separate provider execution status from content status",
+      "observation": {
+        "provider_status": "failed",
+        "outputs_match_synthetic_six_fields": true,
+        "enhanced_result_schema_contains_provider_status": false,
+        "current_backend_status_gate": "HTTP>=400 only; returns parsed JSON otherwise"
+      },
+      "proof": "Candidate1 §6 normal/error eligibility never defines data.status failed/stopped/running/unknown dispatch; same six outputs can accompany a non-success terminal",
+      "proof_limit": "No backend handler was called; schema absence is not proof the whole prose accepts a failed run. Contract transition table is missing"
+    },
+    {
+      "id": "D05",
+      "purpose": "A plan->final mapping must not define away an independent core target",
+      "observation": {
+        "synthetic_mapping": "outline:c1 -> final2, dependency1->2",
+        "all_declared_target_pair_IDs_still_equal": true,
+        "critical_target_properties": [
+          "planned_claim_id",
+          "feature_id"
+        ],
+        "candidate_has_frozen_target_role_or_outline_anchor": false
+      },
+      "proof": "Core target contains planned_claim_id+feature_id only; candidate does not bind original target role, cardinality/duplicate dispositions, authoritative Outline side-input or normalization mapping ABI",
+      "proof_limit": "Contract expressly forbids moving core only to dependent claim; probe identifies missing enforceable ABI/rules, not a valid enhanced result or professional judgment"
+    },
+    {
+      "id": "D06",
+      "purpose": "No-supported-claim insufficient boundary",
+      "observation": {
+        "claims_text_minLength": 1,
+        "claim_count_minimum": 1,
+        "current_formatter_requires_numbered_claim": true
+      },
+      "proof": "When no supported numbered claim remains, contract cannot carry zero-claim insufficient report; must choose explicit no-artifact/failure or alternate insufficient shape",
+      "proof_limit": "P2 edge outside fixed original R2 positive claim; no need to invent a claim or broaden scope silently"
+    },
+    {
+      "id": "D07",
+      "purpose": "JSON Schema layering intentionally has extra normative checks",
+      "observation": {
+        "quality_report_wire_type": "string",
+        "schema_comment_requires_extra_UTF16_bytes_semantics": true
+      },
+      "proof": "String length/type alone cannot assess quality JSON/source semantics. A required parsed-report + semantic layer is documented; its absence from pure JSONSchema is not itself a finding",
+      "proof_limit": "No substitute validator was built; no complete Schema engine pass claimed"
+    }
+  ]
+}

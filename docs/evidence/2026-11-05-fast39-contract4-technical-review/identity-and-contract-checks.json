@@ -1,0 +1,194 @@
+{
+  "at": "2026-11-05T16:29:25.268649+08:00",
+  "candidate": "C4-R1",
+  "reviewer": "Codex single agent author re-review, not independent",
+  "checks": [
+    {
+      "name": "C4 freeze covers every non-self file exactly once",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "C4 freeze byte lengths/hash/mode and external binding",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Parent C3 freeze identity matches both C4 records",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "All12 inherited assets including historical labels are exact",
+      "pass": true,
+      "detail": [
+        {
+          "path": "adoption-scope.json",
+          "sha256": "15ce84cfdcdcd6cc19383aa0ab33845aec92e261efc91e0ff68ae84ed466ef8a",
+          "match": true
+        },
+        {
+          "path": "capacity-policy.json",
+          "sha256": "afdeddaaf46e375b88908215b48ce4d2799c8c0c55e784d3049d1693d3b3e3da",
+          "match": true
+        },
+        {
+          "path": "changes-from-candidate2.json",
+          "sha256": "6e7a1125e3b1eab12f5d6893b3c9ff5ca97c7e92534e189a2e82bd8536bfde26",
+          "match": true
+        },
+        {
+          "path": "code-abi.json",
+          "sha256": "630b529db34c2de4f88454b11bd9ef1dd0a3e61b4de27021287f8c573f102a10",
+          "match": true
+        },
+        {
+          "path": "cross-field-checks.json",
+          "sha256": "5dc49acfb66e3fb814859c1cba718577d9bd7ca17c777be3b1907dcb01e8d4a0",
+          "match": true
+        },
+        {
+          "path": "delivery-binding.candidate.json",
+          "sha256": "b0467600f7b449e0cba6c128b12fd8ba6644e9a6d5598070b27ba331f9d9e2d2",
+          "match": true
+        },
+        {
+          "path": "examples.json",
+          "sha256": "99ed17eb6e2212510b586bdeb53928f4fed52d94c3fdb5874b7ade216a91ebdf",
+          "match": true
+        },
+        {
+          "path": "receipt-mapping.json",
+          "sha256": "acc5d842685abf2c19697c90f6caefa7eac2a0e55dd1b901b651e9cdc199c890",
+          "match": true
+        },
+        {
+          "path": "schemas.json",
+          "sha256": "4c525a5b1ddacd387efe2e2cbd3483e15c0063edd519042fa2af3692aafd5992",
+          "match": true
+        },
+        {
+          "path": "transition-table.json",
+          "sha256": "f29bf3fcadb301922c28dacc28428f8aa55beef994076d7de16e28fec2bb1605",
+          "match": true
+        },
+        {
+          "path": "validation-cases.json",
+          "sha256": "d8d29101d2f7fd8954015099f524756bef4b1174fa0a097136292ebbb2654e2b",
+          "match": true
+        },
+        {
+          "path": "限定用途与设计采用说明.md",
+          "sha256": "d034f9cdca157bb2f1b88a86543f5217506c9580cee667a60d29b452f1a47273",
+          "match": true
+        }
+      ]
+    },
+    {
+      "name": "C1-C3 historical manifests and readonly files valid",
+      "pass": true,
+      "detail": [
+        {
+          "candidate": 1,
+          "freeze_sha256": "24d09287321b85944d20e4223c3df535c22a58ba4b47a15f400b34c84c616063",
+          "listed_files": 5,
+          "all_match": true,
+          "all_readonly": true
+        },
+        {
+          "candidate": 2,
+          "freeze_sha256": "8c4ea72c51cd380815682292e3c8cd9473224fccf423dbe6b4d812b6214e643d",
+          "listed_files": 11,
+          "all_match": true,
+          "all_readonly": true
+        },
+        {
+          "candidate": 3,
+          "freeze_sha256": "b3caf57d4f0d5acc416cab186529b9bc6afc22b850a9f13ff309b2857d462db7",
+          "listed_files": 13,
+          "all_match": true,
+          "all_readonly": true
+        }
+      ]
+    },
+    {
+      "name": "CR01 control: old prose fails, C4 matches unchanged strict Schema",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "CR02 control: old conflation fails, C4 sequence explicit",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Receipt sequence compatible with unchanged ABI",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "C4 document edition retains exact C3 protocol set",
+      "pass": true,
+      "detail": [
+        {
+          "path": "/$defs/source_registry_internal/properties/version/const",
+          "value": "flow26-source-trace-3"
+        },
+        {
+          "path": "/$defs/source_registry_internal/properties/receipt_mapping_version/const",
+          "value": "flow26-receipt-map-1"
+        },
+        {
+          "path": "/$defs/quality_report/properties/contract_version/const",
+          "value": "flow26-quality-3"
+        },
+        {
+          "path": "/$defs/quality_report/properties/source_trace_version/const",
+          "value": "flow26-source-trace-3"
+        },
+        {
+          "path": "/$defs/quality_report/properties/receipt_mapping_version/const",
+          "value": "flow26-receipt-map-1"
+        },
+        {
+          "path": "/$defs/structured_result/properties/contract_version/const",
+          "value": "flow26-fast-result-3"
+        },
+        {
+          "path": "/$defs/structured_result_error/properties/contract_version/const",
+          "value": "flow26-fast-result-3"
+        },
+        {
+          "path": "/$defs/evidence_record/properties/version/const",
+          "value": "flow26-fast-evidence-3"
+        },
+        {
+          "path": "/$defs/writer_draft/properties/contract_version/const",
+          "value": "flow26-writer-draft-3"
+        },
+        {
+          "path": "/$defs/normalized_draft/properties/contract_version/const",
+          "value": "flow26-normalized-draft-3"
+        }
+      ]
+    },
+    {
+      "name": "C4 identity distinct from inherited disabled C3 proposal",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Task0 seven-file backend copy still matches inherited capture",
+      "pass": true,
+      "detail": {
+        "reserved_test_exists": false,
+        "claim": "local copy only; not live source/deployment verification"
+      }
+    }
+  ],
+  "passed": 11,
+  "failed": 0,
+  "freeze_sha256": "a5780ad83094d1a9fdb916f9da83f8fcc52e9794da456f1321dd23b4ab5f4901",
+  "network_calls": 0,
+  "paid_calls": 0
+}

@@ -1,0 +1,31 @@
+{
+  "source": "Executor summary of CUA getAXState/getScreenshot observations in this chat; not an automatic AX export or RPC capture",
+  "app": "DSH Desktop 2.0.17, exact 25f54985 release in authorized isolated root",
+  "stages": [
+    {"stage":"first-start","observed":"Official first-use guide skipped; existing A selected through native workspace menu; business result showed two versions, reviewed state and original saved file"},
+    {"stage":"draft","observed":"Editing textarea retained RC2_NATIVE_RECOVERY_R1; result-edit draft saved message; close task -> Function Center -> reopen restored same text"},
+    {"stage":"new-version","observed":"Version 3 appeared with pending-review label; before review no project writeback controls"},
+    {"stage":"review","observed":"Confirmation bound hash prefix 4392ed1e7e45; engineering confirmation then reviewed label"},
+    {"stage":"save","observed":"New MD and oasis.json names shown, project/version/file checkbox required; after click saved receipt and fixed-version-saved message"},
+    {"stage":"native-open","observed":"Sidebar file tab exact new absolute Workspace-A path; business feedback read matches fixed reviewed version"},
+    {"stage":"conversation","observed":"Exact version and full hash inserted into native composer as materials, explicitly unsent; existing draft blocks replacement; send not clicked"},
+    {"stage":"first-exit","observed":"Native App menu Exit DSH Desktop clicked; code0/no signal confirmed by controller receipt"},
+    {"stage":"second-start","observed":"Same task retained; input tab initially selected with fields/generation disabled; switching to results showed version 3, reviewed state and saved receipt; unsent composer draft retained"},
+    {"stage":"old-current-file","observed":"Selecting version 2 and opening original current MD showed file changed and prior review not applicable"},
+    {"stage":"new-current-file","observed":"Returning version 3 and opening new MD showed current file matches reviewed fixed version"},
+    {"stage":"second-exit","observed":"Native App menu Exit DSH Desktop clicked; final app inventory not running; code0/no signal and locks/port/PID absent confirmed"}
+  ],
+  "finding": {
+    "id":"UI-RC2-01",
+    "status":"OPEN_NOT_FIXED_IN_FROZEN_CANDIDATE",
+    "observation":"Closing all business task tabs exposes enabled-looking new-task and website-import affordances; Function Center has these disabled",
+    "forbiddenControlsClicked":false,
+    "sourceLocations":["packages/oasis-professional-service/src/client/PanelPages.js:124","packages/oasis-professional-service/src/client/PanelChrome.js:233","packages/oasis-professional-service/src/client/OasisWorkbenchSurface.js:260"],
+    "next":"Fix within approved V0.1 recovery restrictions, targeted offline tests, new exact candidate; no additional App start in this authorization"
+  },
+  "resultEditDraftAcrossTabClose":true,
+  "uncommittedResultEditDraftAcrossNativeRestart":"NOT_COVERED; consumed into version 3 before first exit",
+  "unsentNativeConversationDraftAcrossRestart":true,
+  "screenshot":"Pending-review version 3 screenshot is in this chat CUA tool output; no local screenshot file claimed",
+  "professionalOrUserAcceptance":false
+}

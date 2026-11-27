@@ -1,0 +1,241 @@
+{
+  "reviewer": "Codex single agent, author self-review not independent",
+  "subject": "fast39-result-contract-candidate-1/R1",
+  "subject_freeze_sha256": "24d09287321b85944d20e4223c3df535c22a58ba4b47a15f400b34c84c616063",
+  "verdict": "REQUIRES_REVISION / NOT_TECHNICALLY_ACCEPTED",
+  "counts": {
+    "P1": 5,
+    "P2": 1
+  },
+  "findings": [
+    {
+      "id": "F01",
+      "priority": "P1",
+      "title": "入口适用范围与六个直接字段来源未闭合",
+      "impact": "合同保留Fast39八legacy输入，但registry只收提取文本与User_input；实际merge优先直接值，增强input_id枚举无法表示六个直接字段，混合输入可能进入正文却不在原共同材料来源中。",
+      "document_probe": "D02",
+      "source_loci": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+          "line": 17,
+          "needle": "来源登记节点输入",
+          "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+          "line": 9,
+          "needle": "保留当前六个Dify外部输出",
+          "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1770000100003.py",
+          "line": 26,
+          "needle": "for candidate in",
+          "sha256": "bea44b28b1c7f16fe1a85d5ea34d16cc82a57837ba8acf17b4fb623fdfc801fe"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/schemas.json",
+          "line": 23,
+          "needle": "\"upstream_md_file\"",
+          "sha256": "5c5bec6db36e18f3477089ff8a6bcc73cbda253b9196527b498b045fe0b9731c"
+        }
+      ],
+      "disposition": "REQUIRED_CONTRACT_REVISION_NOT_IMPLEMENTED",
+      "release_condition": "另版明确增强入口矩阵。最小可选范围为packet2＋六直接字段为空，混合/直接/普通文件明确legacy_unmapped或拒绝增强确认并保留旧行为；若支持混合输入须交实际字段→来源→优先级映射和测试，禁止伪造共同ID。"
+    },
+    {
+      "id": "F02",
+      "priority": "P1",
+      "title": "未定义HTTP返回后工作流执行状态与增强结果的转换表",
+      "impact": "当前backend只以HTTP>=400判错；候选normal对象及content错误未规定data.status failed/stopped/running/unknown如何分层，可能把非成功工作流当正常增强交付或把执行失败归成纯内容错。",
+      "document_probe": "D04",
+      "source_loci": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+          "line": 91,
+          "needle": "只复制白名单字段",
+          "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+          "line": 93,
+          "needle": "增强校验失败且已经收到",
+          "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/backend-source/app/services/workflow_service.py",
+          "line": 51,
+          "needle": "if response.status_code >= 400",
+          "sha256": "3afbe8df5543c5b1d112bd3309e80351e284fc1d294b6a8fbc00f33f8ae428a3"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/backend-source/app/api/v1/apiconfig.py",
+          "line": 135,
+          "needle": "outputs = result.get",
+          "sha256": "34bb91b8f6b821f36d177ddd9f33fb6c533347949b27371a7ca39c983ec831b2"
+        }
+      ],
+      "disposition": "REQUIRED_CONTRACT_REVISION_NOT_IMPLEMENTED",
+      "release_condition": "另版明确succeeded+合法内容、已知failed/stopped、无终态/未知及HTTP错误的状态矩阵；固定合法run_id来源/缺失/矛盾规则，执行事实不由质量字段替代；每支保留原响应和原保存扣费排队事实，绝不重发，未部署恢复接口不补造。"
+    },
+    {
+      "id": "F03",
+      "priority": "P1",
+      "title": "关键旁路、警示继承和核心目标角色缺确定的Code ABI",
+      "impact": "需要保全的Outline原核心集合/计划角色、原包inputWarnings/limitations、终稿编号及规范化前后定位未明确由哪个冻结变量供给哪个代码节点；targets只有两ID，单靠可变claim_id_map不能证明核心仍位于原独立权项，也没有冲突处置/重复目标的裁定。",
+      "document_probe": "D05",
+      "source_loci": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+          "line": 38,
+          "needle": "核心检查目标",
+          "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+          "line": 48,
+          "needle": "规范化后重新计算",
+          "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+          "line": 65,
+          "needle": "保留原9项",
+          "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001101.py",
+          "line": 13,
+          "needle": "def main(",
+          "sha256": "63f5de193b62f3211117e3722e97a2fbd451e7f26648b42b43272fb24a13257d"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769151800001.py",
+          "line": 134,
+          "needle": "edges.append({'parent'",
+          "sha256": "7ddbcc9c94a9602fecdd72a80e5b7d7c56cebddeaa815234f4a59e3bc776f901"
+        }
+      ],
+      "disposition": "REQUIRED_CONTRACT_REVISION_NOT_IMPLEMENTED",
+      "release_condition": "另版交最小节点ABI表：输入selector/变量类型、Outline计划ID及角色来源、固定核心目标旁路、原警示/缺项保真通道、claim_id_map与终稿独立/从属关系验证、规范化定位策略；重复/相互矛盾处置必须确定失败/未核，不能任意择一。新增节点ID仍由候选实际分配。 这里只要求逻辑端口/类型及已有上游selector；新增节点可用逻辑名，不要求未产生的真实节点ID或自身运行。候选产出后再固定实际ID。"
+    },
+    {
+      "id": "F04",
+      "priority": "P1",
+      "title": "既有R2三节/缺项要求与新结果展示未显式接续",
+      "impact": "原packet2及实际User_input仍要求三节Markdown与逐行缺项。候选只固定六输出字符串和新metadata，未定义output中的三节/可读来源或具名的新验收要求；可能结构新合同通过却持续违背冻结R2请求。",
+      "document_probe": "D01",
+      "source_loci": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+          "line": 63,
+          "needle": "Dify结束仍恰好六个",
+          "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-workarea-material-packet.js",
+          "line": 31,
+          "needle": "const CALIBRATION_SECTIONS",
+          "sha256": "300866f6032531be5a4d23213a40dd6ff39458d5f58d32ecab27aead623ecd96"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-workarea-material-packet.js",
+          "line": 46,
+          "needle": "requiredMissingInputLines",
+          "sha256": "300866f6032531be5a4d23213a40dd6ff39458d5f58d32ecab27aead623ecd96"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001101.py",
+          "line": 54,
+          "needle": "output='\\n\\n'.join",
+          "sha256": "63f5de193b62f3211117e3722e97a2fbd451e7f26648b42b43272fb24a13257d"
+        }
+      ],
+      "disposition": "REQUIRED_CONTRACT_REVISION_NOT_IMPLEMENTED",
+      "release_condition": "另版二选一并明确接受对象：保留原三节/原缺项并规定可读来源落点；或显式制定新版本输入/格式验收（原R2材料事实可复用但不能冒称原请求格式已通过）。不得改写原6675字节包/旧FAIL或隐式删除约束。"
+    },
+    {
+      "id": "F05",
+      "priority": "P1",
+      "title": "容量限制套用了未证明适用于M06的旧路径",
+      "impact": "候选把100000码元/256KiB说成现有约束交集；实际100000 guard仅unifiedClaims，M06 inspector允许1MiB，v340记录从legacyValue剥离。新上限可能有理由，但目前是未声明的容量策略收缩，且未绑定S1实际持久化落点。",
+      "document_probe": "D03",
+      "source_loci": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+          "line": 105,
+          "needle": "100,000 UTF-16",
+          "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-remote-service.js",
+          "line": 360,
+          "needle": "execution.unifiedClaims &&",
+          "sha256": "167fd06af0e0c317de9eca6f008ae2616b9188c69b986440b6ebc261bd161710"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-workarea-material-packet.js",
+          "line": 81,
+          "needle": "Buffer.byteLength(result.answerText,'utf8')>1048576",
+          "sha256": "300866f6032531be5a4d23213a40dd6ff39458d5f58d32ecab27aead623ecd96"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-contract.js",
+          "line": 985,
+          "needle": "const {v340,...legacy}=task",
+          "sha256": "9759eb457dc7d289b807c9600218803d22f118dccbbf2935d53f444f7497d383"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-runtime-contract.js",
+          "line": 6,
+          "needle": "documentBytes:1024*1024",
+          "sha256": "366e32c633e243637589fc22ffd8e0e5a4f0799781d7e70e8c87e22724a2169b"
+        }
+      ],
+      "disposition": "REQUIRED_CONTRACT_REVISION_NOT_IMPLEMENTED",
+      "release_condition": "先在另版明确增强结果进入哪个实际record/schema，再列层级容量表与字符/UTF8/嵌套预算。保留该新上限须标为新的受控限制并确认适用范围及超限旧结果保全行为；不由历史guard推定，不裁剪合法原件；加入100000/100001码元、256KiB、1/2/8MiB的分层边界规格。"
+    },
+    {
+      "id": "F06",
+      "priority": "P2",
+      "title": "零可支持权项时的insufficient出口未界定",
+      "impact": "claims_text和claim_count最小为1，既有formatter要求编号权项；如果全部核心被blocked就没有零权项受限报告形状。不能为得到正常结果凑造权项。",
+      "document_probe": "D06",
+      "source_loci": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/schemas.json",
+          "line": 452,
+          "needle": "\"claim_count\"",
+          "sha256": "5c5bec6db36e18f3477089ff8a6bcc73cbda253b9196527b498b045fe0b9731c"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-20261105/dify/code-nodes/1769301001101.py",
+          "line": 20,
+          "needle": "FINAL_CLAIM_COUNT_OR_NUMBERING_INVALID",
+          "sha256": "63f5de193b62f3211117e3722e97a2fbd451e7f26648b42b43272fb24a13257d"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+          "line": 9,
+          "needle": "输入资料不足仍可形成",
+          "sha256": "52a04afaf26ac2b7722d4639f945cf7e5d98e8a29967b3146544d082317e5eb5"
+        }
+      ],
+      "disposition": "REQUIRED_CONTRACT_REVISION_NOT_IMPLEMENTED",
+      "release_condition": "在入口范围和状态矩阵中明确：不产出权项时保留无产物/失败与缺口，还是允许单独零权项insufficient报告；新增形状必须另版、保持无重试与原创建事实，不强制伪造正文。若严格限定当前有可支持权项的R2，可列为后续通用化缺件，不能对任意输入宣称覆盖。"
+    }
+  ],
+  "not_findings": [
+    "JSON Schema does not itself validate parsed quality_report or cross-field semantics: deliberate layered validation, not a defect merely because root schema accepts a string",
+    "source quote/location correctness is not semantic equivalence: candidate explicitly retains not_assessed",
+    "old M06 seven-field wire not adopted by Dify: an explicit boundary, not a requirement to add missing arrays",
+    "frozen package is not acceptance; no business permission derived"
+  ],
+  "principles_retained": [
+    "six external outputs; one optional structured object; legacy answer_text/file_url unchanged",
+    "new provider response only; no second Dify request/save/deduct introduced",
+    "UTF8 hash and UTF16 positions separate; preserve originals and old failures",
+    "source roles fixed by authoritative input contract; no technical facts from output requirements/instructions",
+    "professional/semantic/user acceptance separate from deterministic coverage"
+  ]
+}

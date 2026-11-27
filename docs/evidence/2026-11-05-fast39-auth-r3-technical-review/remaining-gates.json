@@ -1,0 +1,74 @@
+{
+  "at": "2026-11-05T22:03:32.441369+08:00",
+  "subject": "R3 P0.1 review followup",
+  "P0_1_contract_review": "completed within document scope only",
+  "items": [
+    {
+      "id": "G-PREPARE-MECHANISM",
+      "when": "before actual P0.2 mechanism preparation/fault checks",
+      "requires": "precise preparation scope; task-private fixed script/template/materialization and isolated objects; existing environment only",
+      "blocks": "actual mechanism preparation, not this delivered review",
+      "status": "OPEN"
+    },
+    {
+      "id": "G-NORMAL-CI",
+      "when": "before source F0/setup and fresh again at relevant commit gate",
+      "requires": "separately valid CI authority, substantive normal weekly review/report/sentinel/hash and fresh full governance0; no time waiver",
+      "blocks": "source mutations while governance fails",
+      "status": "OPEN"
+    },
+    {
+      "id": "G-F0-SETUP",
+      "when": "before ordinary source started",
+      "requires": "actual fixed F0 mechanism/template/native request/raw+ordinary intent/baseline and exact B_SETUP approval; explicit commit mode",
+      "blocks": "ordinary repair setup",
+      "status": "OPEN"
+    },
+    {
+      "id": "G-REAL-SETUP-F1",
+      "when": "after authorized setup success, before exceptional commit",
+      "requires": "real setup before/after/request/return/event/owner/empty grants, then actual final exception intent/both hashes/candidate/diff and input-protection evidence; only own setup delta",
+      "blocks": "F1 final binding and source exception commit",
+      "status": "OPEN"
+    },
+    {
+      "id": "G-COMMIT-AUTHORITY",
+      "when": "before at most one exceptional atomic commit",
+      "requires": "external exact F1 gate; existing precise conditional grant or final approval; locked baseline/hash/provenance/candidate reproduction; no retries/rebase",
+      "blocks": "exception source write",
+      "status": "OPEN"
+    },
+    {
+      "id": "G-SOURCE-AFTERCHECK",
+      "when": "after actual exception, before claiming repair complete",
+      "requires": "actual exception receipt, strict selector/header/Flow/raw-row/history/business-row preservation and fresh full governance0; honest ordinary lifecycle",
+      "blocks": "repair completion claim, not prior F0 setup",
+      "status": "OPEN"
+    },
+    {
+      "id": "G-A-PRODUCTION",
+      "when": "before A static workflow production",
+      "requires": "separate exact A Batch/profile/implementation grant and own four-field transaction with current pinned inputs/capabilities/ownership/paths; original native designation remains open",
+      "blocks": "actual A production",
+      "status": "OPEN"
+    },
+    {
+      "id": "G-DELIVERY-RUNTIME",
+      "when": "at later integration/runtime/acceptance/release stages",
+      "requires": "actual same-version workflow/backend/DSH/manifests/fingerprints/ownership/tests and relevant deployment/live-call/professional/user/release authority/evidence",
+      "blocks": "corresponding later actions, not current review or B preparation",
+      "status": "OPEN"
+    }
+  ],
+  "already_adopted_not_reopened": [
+    "C4 as later implementation baseline",
+    "LA-R1 limited rule/Skill/shared design adoption"
+  ],
+  "not_blanket_prerequisites": [
+    "all29 Skills or all cases",
+    "same candidate own runtime acceptance before static creation",
+    "all rules formally effective"
+  ],
+  "weekly_time_waiver": false,
+  "source_writes_authorized_by_review": false
+}

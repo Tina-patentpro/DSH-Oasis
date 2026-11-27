@@ -1,0 +1,111 @@
+--- PREP1/restore_once.py
++++ PREP2/restore_once.py
+@@ -7,15 +7,20 @@
+ from pathlib import Path
+ from dataclasses import dataclass
+ from datetime import datetime
+-import json,hashlib,sys,re,copy,os,uuid,difflib
++import json,hashlib,sys,re,copy,os,uuid,difflib,stat
+ from jsonschema import Draft202012Validator
+-W=Path(__file__).absolute().parent;P=W.parents[1];SOURCE=P.parent/'2、工作流设计';R3=P/'docs/business-baseline/fast39-static-authorization-draft-r3'
++W=Path(__file__).absolute().parent;P=W.parents[3];SOURCE=P.parent/'2、工作流设计';R3=P/'docs/business-baseline/fast39-static-authorization-draft-r3'
+ REAL_EVIDENCE=P/'docs/evidence/fast39-registry-restore-once-r2-execution'
+ R3_SHA='e67f4b318209d23af0eab22f46b8c0d9b6c6d8fc744cfad218af4b695e3ea1a4'
+ sys.path.insert(0,str(SOURCE/'tools'))
+ import registry_transaction as native
+ import validate_workflow_governance as governance
+ class Refused(ValueError):pass
++class OutcomeUnavailable(RuntimeError):
++ """Attempt marker retained; caller must reconcile read-only, never replay."""
++ def __init__(self,result):
++  self.result=result
++  super().__init__('outcome receipt unavailable; '+result['status']+'; read-only reconciliation required')
+ @dataclass(frozen=True)
+ class Context:
+  root:Path
+@@ -37,9 +42,17 @@
+   o=json.loads(raw.decode('utf-8','strict'),object_pairs_hook=_pairs,parse_float=_bad_number,parse_constant=_bad_number);canonical(o);return o
+  except (UnicodeError,json.JSONDecodeError,TypeError,ValueError) as ex:raise Refused(str(ex)) from ex
+ def _real(path):
+- p=Path(path);require(p.is_absolute(),'absolute path required')
++ raw=os.fspath(path);p=Path(raw);require(p.is_absolute(),'absolute path required')
++ require('..' not in p.parts and '.' not in raw.split('/'),'noncanonical path forbidden')
++ require(raw==str(p),'noncanonical path spelling forbidden')
+  for x in [p,*p.parents]:require(not x.is_symlink() and not x.is_junction(),'linked path forbidden')
+- require(not any(x in p.parts for x in ['5、存档','过程存档']),'archive forbidden');return p
++ require(not any(x in p.parts for x in ['5、存档','过程存档']),'archive forbidden')
++ require(p.resolve(strict=False)==p,'noncanonical real path forbidden');return p
++def _registry_bytes(ctx):
++ p=_real(ctx.root/'README.md')
++ with p.open('rb') as f:
++  require(stat.S_ISREG(os.fstat(f.fileno()).st_mode),'real regular registry required')
++  return f.read()
+ def file_ref(path):
+  p=_real(path);require(p.is_file(),'real file required');return {'path':str(p),'sha256':sha(p.read_bytes())}
+ def _pins():
+@@ -57,7 +70,7 @@
+   require((root/'.isolated-fast39-fixture').read_text()=='SYNTHETIC_ISOLATED_ONLY\n','isolated marker')
+  elif ctx.mode=='source':require(root==SOURCE and ev.is_relative_to(REAL_EVIDENCE),'source context scope')
+  else:raise Refused('unknown execution mode')
+- require((root/'README.md').is_file(),'existing registry required')
++ require(_real(root/'README.md').is_file(),'existing nonlinked registry required')
+ def _bytes(ref,ctx):
+  require(isinstance(ref,dict) and set(ref)=={'path','sha256'},'artifact reference shape')
+  p=_real(ref['path']);fixed={W/'restore_once.py',W/'intent-template.json',SOURCE/'tools/registry_transaction.py',R3/'FREEZE.json'}
+@@ -146,9 +159,10 @@
+ def diff_bytes(before,after):return ''.join(difflib.unified_diff(before.decode().splitlines(True),after.decode().splitlines(True),fromfile='baseline',tofile='candidate')).encode()
+ def assemble(raw,ctx,prepared_at,receipt_path):
+  I,old,_=_bind(raw,ctx);text=old.decode();metadata=native.frontmatter(text);n=native.newline(text)
+- stamp=datetime.fromisoformat(prepared_at);require(stamp.tzinfo is not None and stamp<=datetime.now(stamp.tzinfo),'invalid/future preparation time')
++ stamp=datetime.fromisoformat(prepared_at);base_time=datetime.fromisoformat(metadata['last_updated_at'])
++ require(stamp.tzinfo is not None and base_time.tzinfo is not None and base_time<=stamp<=datetime.now(stamp.tzinfo),'invalid/regressed/future preparation time')
+  require(_real(receipt_path).is_relative_to(ctx.evidence),'receipt scope');require(not Path(receipt_path).exists(),'receipt already exists')
+- require((ctx.root/'README.md').read_bytes()==old,'actual registry baseline drift')
++ require(_registry_bytes(ctx)==old,'actual registry baseline drift')
+  require(I['transaction_id'] not in native.bindings(text)[1],'transaction ID already used')
+  for op in I['operations']:
+   require(text.count(op['before'])==1 and sha(op['before'].encode())==op['before_sha256'],'structural before mismatch')
+@@ -188,18 +202,36 @@
+  _write_new(start,canonical({'mode':ctx.mode,'phase':'ATTEMPT_STARTED','F1':f1ref,'gate':gateref,'before_sha256':sha(old),'expected_after_sha256':sha(candidate),'request_original_sha256':sha(raw),'exception_intent_sha256':intent_hash(raw)}))
+  def fault(stage):
+   if _fault is not None:_fault(stage)
+- attempted=False;tmp=None;status='FAILED_BEFORE_REPLACE';error=None
++ attempted=False;tmp=None;tmp_identity=None;status='FAILED_BEFORE_REPLACE';error=None;cleanup_error=None
+  try:
+   with native.registry_lock(ctx.root):
+-   _f1(f1ref,gateref,ctx);require((ctx.root/'README.md').read_bytes()==old,'locked baseline drift')
++   _f1(f1ref,gateref,ctx);require(_registry_bytes(ctx)==old,'locked baseline drift')
+    fault('before_temp_write');tmp=ctx.root/('.README.fast39-once-'+uuid.uuid4().hex+'.tmp');_write_new(tmp,candidate)
+-   fault('before_replace');_f1(f1ref,gateref,ctx);require((ctx.root/'README.md').read_bytes()==old and tmp.read_bytes()==candidate,'external writer/temp drift')
++   ts=tmp.lstat();tmp_identity=(ts.st_dev,ts.st_ino)
++   fault('before_replace');_f1(f1ref,gateref,ctx);_real(tmp);ts=tmp.lstat()
++   require(stat.S_ISREG(ts.st_mode) and (ts.st_dev,ts.st_ino)==tmp_identity,'temporary identity drift')
++   require(_registry_bytes(ctx)==old and tmp.read_bytes()==candidate,'external writer/temp drift')
+    attempted=True;os.replace(tmp,ctx.root/'README.md');tmp=None;fault('after_replace')
+-   require((ctx.root/'README.md').read_bytes()==candidate,'postwrite drift; do not rollback');fault('after_readback');status='COMMITTED'
++   require(_registry_bytes(ctx)==candidate,'postwrite drift; do not rollback');fault('after_readback');status='COMMITTED'
+  except Exception as ex:status='UNKNOWN_AFTER_REPLACE' if attempted else 'FAILED_BEFORE_REPLACE';error=type(ex).__name__+': '+str(ex)
+  finally:
+-  if tmp is not None and tmp.exists():tmp.unlink()  # only our temporary, frozen candidate remains retained
+- result={'kind':'EXCEPTION_RECEIPT','mode':ctx.mode,'target':str(ctx.root/'README.md'),'status':status,'error':error,'replace_attempted':attempted,'before_sha256':sha(old),'frozen_after_sha256':sha(candidate),'observed_after_sha256':sha((ctx.root/'README.md').read_bytes()),'request_original_sha256':sha(raw),'exception_intent_sha256':intent_hash(raw),'actual_observed_at':datetime.now().astimezone().isoformat(),'producer':'one-time exception module, NOT native apply','runtime_or_user_acceptance':False}
+- _write_new(out,canonical(result));return result
++  if tmp is not None and os.path.lexists(tmp):
++   try:
++    _real(tmp);ts=tmp.lstat()
++    require(stat.S_ISREG(ts.st_mode) and (ts.st_dev,ts.st_ino)==tmp_identity and tmp.read_bytes()==candidate,'temporary ownership/content changed; retained')
++    tmp.unlink()  # only the unchanged file created by this attempt, never a substituted path
++   except Exception as ex:cleanup_error=type(ex).__name__+': '+str(ex)
++ observed=None;observation_error=None
++ try:observed=sha(_registry_bytes(ctx))
++ except Exception as ex:observation_error=type(ex).__name__+': '+str(ex)
++ if attempted and status=='COMMITTED' and observed!=sha(candidate):
++  status='UNKNOWN_AFTER_REPLACE';error=error or 'final observation unavailable or drifted; no rollback'
++ result={'kind':'EXCEPTION_RECEIPT','mode':ctx.mode,'target':str(ctx.root/'README.md'),'status':status,'error':error,'cleanup_error':cleanup_error,'observation_error':observation_error,'replace_attempted':attempted,'before_sha256':sha(old),'frozen_after_sha256':sha(candidate),'observed_after_sha256':observed,'request_original_sha256':sha(raw),'exception_intent_sha256':intent_hash(raw),'actual_observed_at':datetime.now().astimezone().isoformat(),'producer':'one-time exception module, NOT native apply','runtime_or_user_acceptance':False,'attempt_start_path':str(start),'receipt_path':str(out),'read_only_reconcile_required':status!='COMMITTED'}
++ try:_write_new(out,canonical(result))
++ except Exception as ex:
++  if attempted:result['status']='UNKNOWN_AFTER_REPLACE'
++  result['receipt_error']=type(ex).__name__+': '+str(ex);result['read_only_reconcile_required']=True
++  raise OutcomeUnavailable(result) from ex
++ return result
+ if __name__=='__main__':
+  raise SystemExit('P0.2 module candidate only. No production CLI; actual phase invocation must be separately reviewed and authorized.')

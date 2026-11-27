@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-05T20:59:55.871838+08:00",
+  "subject": "FAST39-C4-EX-AUTH-DRAFT-R2",
+  "freeze_sha256": "05dc0f89933ac4e1fe274e00fcfb5694c5cce7408028c12f6870ff91132bfa56",
+  "verdict": "REQUIRES_B_EVIDENCE_BINDING_CLARIFICATION",
+  "previous_AUTH_TR01": "CLOSED_AT_DOCUMENT_LEVEL_ONLY; R2 selector/guards correct, actual source still blocked",
+  "A_selector_hash_drift": "CLOSED_AT_DOCUMENT_LEVEL_ONLY_NOT_APPROVED",
+  "B_two_structure_changes_and_single_atomic_provenance_direction": "CONDITIONALLY_SELF_CONSISTENT_BUT_EXECUTION_EVIDENCE_CONTRACT_INCOMPLETE",
+  "findings": [
+    {
+      "id": "R2-TR01",
+      "priority": "P2",
+      "scope": "B transaction evidence hash definition",
+      "problem": "request_sha256 for exceptional intent original is not precisely defined against claimed native derivation semantics. Native apply hashes canonical intent excluding whole baseline; raw artifact hash is different. Existing validators accept substituted well-shaped request digest, so schema0 is insufficient.",
+      "required_closure": "new frozen clarification/execution-contract annex explicitly defines raw request artifact hash separately from transaction intent digest, exact fields/serialization/encoding/exclusion/approval+script+base binding and recomputation, explicit exception mechanism label and honest producer; no source schema/tool or business field expansion required",
+      "source_locations": [
+        "registry-restoration-draft.json process_exception.exception_commit_explicit_additional_mutations",
+        "源登记表结构恢复与流程例外草案.md §2.1",
+        "source registry_transaction.py canonical/apply_transaction/bindings"
+      ]
+    },
+    {
+      "id": "R2-TR02",
+      "priority": "P2",
+      "scope": "B setup vs final request freeze order",
+      "problem": "sequence freezes mechanism/request before ordinary started, then consumes post-start whole-registry baseline; release_condition says frozen one-shot request before any source write. A final exact post-start baseline cannot be present in an already frozen pre-start request without defining two-stage artifacts.",
+      "required_closure": "separate pre-start authorized ordinary setup request plus immutable mechanism/intent template from post-start final exceptional intent/diff freeze; define actual successful-start receipt and new baseline binding, reviewed/approved final commit gate, and same-owner task/evidence path reuse vs foreign occupation. No source writes until this scope/order is clarified and approved.",
+      "source_locations": [
+        "registry-restoration-draft.json execution_sequence[1:4]",
+        "registry-restoration-draft.json process_exception.release_condition",
+        "源登记表结构恢复与流程例外草案.md §2.2 / §3.2-4"
+      ]
+    }
+  ],
+  "not_new_source_tool_bugs": true,
+  "remaining": [
+    "separate exact A/B approvals and CI authority; no approval from review",
+    "frozen resolution of R2-TR01/02 without editing R1/R2",
+    "actual reviewed one-shot script/request/diff/producer/hash evidence and offline fault/negative checks before writes",
+    "normal weekly report/sentinel/hash and fresh full governance0, not time waiver",
+    "actual source restoration and strict row/ownership/hash checks; candidate started/four-field grants and current pins/paths/capability"
+  ],
+  "source_governance_exit_code": 1,
+  "source_writes": 0,
+  "calls": 0,
+  "R1_R2_revised_or_approved": false
+}

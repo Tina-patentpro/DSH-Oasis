@@ -1,0 +1,50 @@
+{
+  "recordedAt": "2026-11-09T17:14:37.648918+08:00",
+  "preflightSHA256": "b2636c3c069f7513405fbd087601e79b06d2f86882caf34e6aea02925392a8ac",
+  "authorizationQuestionId": "call_46d2d45abca94b4e9a87e6f93191e289",
+  "status": "reserved-before-click",
+  "newCallsAuthorized": 1,
+  "clickLimit": 1,
+  "actualChargeAuthorizedForThisCall": true,
+  "observation": "DSH Desktop Developer Tools Network Response, actual loopback candidate/prepare, success. Selected fields transcribed, no headers.",
+  "requestPath": "/api/oasis-workbench/workflow/v340/candidate/prepare",
+  "response": {
+    "ok": true,
+    "value": {
+      "workspaceId": "11e1a348-0248-42a1-8141-bcb6306caccc",
+      "taskId": "d8d762fe-36ae-49dd-b275-b7ffff04fda7",
+      "sessionId": "session-be573ee0-ae7a-4d40-99d5-d607f6106786",
+      "expectedRevision": 82,
+      "nodeId": "Flow-2-6",
+      "sha256": "4fe735cfa3a2f8b4a47d8b844f1ce6a8b620d526fef51edf6b25c1b9e675671c",
+      "route": {
+        "provider": "deepseek-official",
+        "model": "deepseek-flash",
+        "reasoningEffort": "low"
+      },
+      "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+      "instructionSHA256": "41ae8a1bbb068df6ba98b3be0eaa128d1e53d49276dcc58d961860e4ce5aca91",
+      "businessManifestSHA256": "254a685fe95c9063be7232cb8dcb25333c1864ed9a5e670c0f62a04af3f3ccd4",
+      "businessResourceSHA256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d"
+    }
+  },
+  "businessStateSHA256": "a7b9c28c44aff3004124206112a54167cc554f22c78635201376958bc54ab268",
+  "preparedInputHash": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b",
+  "preparedSHA256": "fb01f3abfc715ef6330aa6d11e47b6909d95509a286c68d987388ccdffd0af8e",
+  "providerConfig": {
+    "baseURL": "https://api.deepseek.com/anthropic",
+    "maxTokens": 8192,
+    "retryPolicy": {
+      "mode": "normal",
+      "maxRetries": 0
+    }
+  },
+  "install": {
+    "fixedRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1",
+    "packageVersion": "0.1.0-rc.5",
+    "archiveSHA256": "e94f9136f7d93373569444180fb2351b09db52ba2851fb84411e5125a56a0bc5",
+    "bundleSHA256": "947574a6ac282eec308f16125640eb085f0148493b11ba7dd8f4be0290e4428b",
+    "controllerSHA256": "34cfa35cb3e62d004fedd13e06f7270932743e287931bb1ce1b5ee18224f982b"
+  },
+  "stop": "After one click observe only the same run. A failure or UNKNOWN does not reopen this authorization."
+}

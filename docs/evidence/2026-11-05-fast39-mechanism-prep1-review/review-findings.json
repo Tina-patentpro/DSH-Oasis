@@ -1,0 +1,60 @@
+{
+  "subject": "FAST39-RESTORE-MECHANISM-PREP-1",
+  "subject_freeze_sha256": "a363705bb08dd5f3f2808ab0618ca047fcf68626e9f1e6fc93a564362573e7ce",
+  "conclusion": "FAIL_SOURCE_READINESS_WITH_4_IMPLEMENTATION_FINDINGS",
+  "review_completed": true,
+  "independent_acceptance": false,
+  "R3_contract_issue_reopened": false,
+  "findings": [
+    {
+      "id": "MR01",
+      "severity": "P1",
+      "status": "OPEN_REPRODUCED",
+      "blocks": "source readiness of PREP1, not independent authorized CI preparation",
+      "evidence": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep1-review/probe-results.json",
+      "case": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_path_traversal-a7ba0b14",
+      "module_lines": [
+        39,
+        66
+      ]
+    },
+    {
+      "id": "MR02",
+      "severity": "P1",
+      "status": "OPEN_REPRODUCED",
+      "blocks": "source readiness of PREP1, not independent authorized CI preparation",
+      "evidence": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep1-review/probe-results.json",
+      "case": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_linked_registry-9667e1b5",
+      "module_lines": [
+        53,
+        60
+      ]
+    },
+    {
+      "id": "MR03",
+      "severity": "P2",
+      "status": "OPEN_REPRODUCED",
+      "blocks": "source readiness of PREP1, not independent authorized CI preparation",
+      "evidence": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep1-review/probe-results.json",
+      "case": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_regressed_time-4be3fea6",
+      "module_lines": [
+        147,
+        149
+      ]
+    },
+    {
+      "id": "MR04",
+      "severity": "P1",
+      "status": "OPEN_REPRODUCED",
+      "blocks": "source readiness of PREP1, not independent authorized CI preparation",
+      "evidence": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-mechanism-prep1-review/probe-results.json",
+      "case": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_postreplace_read_failure-b63b702c",
+      "module_lines": [
+        199,
+        203
+      ]
+    }
+  ],
+  "production_fixes_performed": false,
+  "frozen_mechanism_modified": false
+}

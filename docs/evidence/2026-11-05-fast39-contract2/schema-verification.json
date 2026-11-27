@@ -1,0 +1,992 @@
+{
+  "at": "2026-11-05T13:54:40.384775+08:00",
+  "reviewer": "Codex author self-review, not independent",
+  "scope": "candidate2 schema and synthetic reference assertions only; no business module execution",
+  "environment": {
+    "python": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python",
+    "python_version": "3.12.14",
+    "packages": {
+      "attrs": "26.1.0",
+      "jsonschema": "4.26.0",
+      "jsonschema-specifications": "2025.9.1",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.9.1",
+      "typing_extensions": "4.16.0"
+    },
+    "lock_path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/tools/requirements-offline-macos-arm64-py312.lock",
+    "installed_this_task": false,
+    "lock_sha256": "e5dbb3d322316065d03c28af6656ecf0b170b032706e618eb22862ca2aabb65a"
+  },
+  "schema_sha256": "cd611f65b9189ab13e296d5d898ec7af3b7c5d2b125bb729f2cba18f337b8e66",
+  "draft": "2020-12",
+  "check_schema_definitions": 20,
+  "cases": [
+    {
+      "id": "C2-001",
+      "case": "positive eligibility_request",
+      "layer": "schema",
+      "finding": "",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-002",
+      "case": "positive source_registry_internal",
+      "layer": "schema",
+      "finding": "",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-003",
+      "case": "positive quality_report",
+      "layer": "schema",
+      "finding": "",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-004",
+      "case": "positive structured_result",
+      "layer": "schema",
+      "finding": "",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-005",
+      "case": "positive evidence_record",
+      "layer": "schema",
+      "finding": "",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-006",
+      "case": "zero-claim error has no normal artifact",
+      "layer": "schema",
+      "finding": "F06",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-007",
+      "case": "reject direct technical_field",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-008",
+      "case": "reject direct background_art_TD",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-009",
+      "case": "reject direct technical_solutions",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-010",
+      "case": "reject direct beneficial_effects_TD",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-011",
+      "case": "reject direct embodiments_TD",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-012",
+      "case": "reject direct drawings_explain_TD",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-013",
+      "case": "reject nonempty/nonstring None",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-014",
+      "case": "reject nonempty/nonstring ' '",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-015",
+      "case": "reject nonempty/nonstring 12",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-016",
+      "case": "reject missing direct field",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-017",
+      "case": "reject multiple files",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-018",
+      "case": "reject packet1",
+      "layer": "schema",
+      "finding": "F01",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-019",
+      "case": "valid execution failed",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-020",
+      "case": "non-success rejects normal failed",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-021",
+      "case": "valid execution stopped",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-022",
+      "case": "non-success rejects normal stopped",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-023",
+      "case": "valid execution running",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-024",
+      "case": "non-success rejects normal running",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-025",
+      "case": "valid execution unknown",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-026",
+      "case": "non-success rejects normal unknown",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-027",
+      "case": "correlation error retains observed succeeded",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-028",
+      "case": "content error cannot erase succeeded execution",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-029",
+      "case": "execution failed cannot say succeeded",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-030",
+      "case": "no both fragments",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-031",
+      "case": "no empty fragment",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-032",
+      "case": "normal missing run id",
+      "layer": "schema",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-033",
+      "case": "single actual ID allowed",
+      "layer": "reference",
+      "finding": "F02",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-034",
+      "case": "conflicting actual IDs rejected",
+      "layer": "reference",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-035",
+      "case": "missing IDs rejected",
+      "layer": "reference",
+      "finding": "F02",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-036",
+      "case": "semantic positive with raw CRLF/nonBMP source",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-037",
+      "case": "anchor core target removed",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "ANCHOR_CHANGED"
+    },
+    {
+      "id": "C2-038",
+      "case": "original warning omitted",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "WARNING_INHERITANCE"
+    },
+    {
+      "id": "C2-039",
+      "case": "original limitation omitted",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "WARNING_INHERITANCE"
+    },
+    {
+      "id": "C2-040",
+      "case": "outline warning rewritten",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "OUTLINE_INHERITANCE"
+    },
+    {
+      "id": "C2-041",
+      "case": "duplicate conflicting disposition",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "DUPLICATE_OR_MISSING_DISPOSITION"
+    },
+    {
+      "id": "C2-042",
+      "case": "missing disposition",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "DUPLICATE_OR_MISSING_DISPOSITION"
+    },
+    {
+      "id": "C2-043",
+      "case": "plan duplicate mapping",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "PLAN_MAP"
+    },
+    {
+      "id": "C2-044",
+      "case": "normalized source hash substituted",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "SOURCE_REPLACED"
+    },
+    {
+      "id": "C2-045",
+      "case": "model output offsets wrong",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "OUTPUT_LOCATOR"
+    },
+    {
+      "id": "C2-046",
+      "case": "false complete coverage",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "COVERAGE_STATUS"
+    },
+    {
+      "id": "C2-047",
+      "case": "source semantic assessment fabricated",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "SHAPE"
+    },
+    {
+      "id": "C2-048",
+      "case": "upgraded status despite warnings",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "QUALITY_UPGRADED"
+    },
+    {
+      "id": "C2-049",
+      "case": "requirements role cannot become technical",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "ROLE"
+    },
+    {
+      "id": "C2-050",
+      "case": "manual wrapped text not reverse parsed",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "MANUAL_NOT_REPARSED"
+    },
+    {
+      "id": "C2-051",
+      "case": "duplicate common ID rejected",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "DUPLICATE_INPUT"
+    },
+    {
+      "id": "C2-052",
+      "case": "unique quote after normalization",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-053",
+      "case": "ambiguous quote gives no coordinate",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-054",
+      "case": "overlapping ambiguous quote gives no coordinate",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-055",
+      "case": "UTF16 surrogate pair boundary cannot be split",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "'utf-16-le' codec can't decode bytes in position 0-1: unexpected end of data"
+    },
+    {
+      "id": "C2-056",
+      "case": "string dependency edges / dependent plan",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-057",
+      "case": "core demoted to dependent rejected",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "GRAPH"
+    },
+    {
+      "id": "C2-058",
+      "case": "numeric edges rejected against actual ABI",
+      "layer": "schema",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-059",
+      "case": "core demoted with otherwise valid ascending graph",
+      "layer": "reference",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "CORE_DEMOTED"
+    },
+    {
+      "id": "C2-060",
+      "case": "empty core target not a complete normal anchor",
+      "layer": "schema",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-061",
+      "case": "plan path cannot claim another role",
+      "layer": "schema",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-062",
+      "case": "some supported claims with missing core stay insufficient",
+      "layer": "reference",
+      "finding": "F03/F06",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-063",
+      "case": "three headings literal missing line renderer positive",
+      "layer": "reference",
+      "finding": "F04",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-064",
+      "case": "extra second-level heading rejected",
+      "layer": "reference",
+      "finding": "F04",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "HEADINGS"
+    },
+    {
+      "id": "C2-065",
+      "case": "missing literal line rejected",
+      "layer": "reference",
+      "finding": "F04",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "MISSING_LINE"
+    },
+    {
+      "id": "C2-066",
+      "case": "outer/parsed report mismatch rejected",
+      "layer": "reference",
+      "finding": "F04",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "REPORT_MISMATCH"
+    },
+    {
+      "id": "C2-067",
+      "case": "source table escapes active markup and heading injection",
+      "layer": "renderer_reference",
+      "finding": "F04",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-068",
+      "case": "100000 UTF16 accepted",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-069",
+      "case": "100001 UTF16 rejected",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-070",
+      "case": "50000 nonBMP exactly 100000 units accepted",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-071",
+      "case": "50001 nonBMP rejected",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-072",
+      "case": "UTF8 cap inside UTF16 cap accepted",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-073",
+      "case": "UTF8 cap exceeded inside UTF16 cap rejected",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-074",
+      "case": "NUL rejected",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "NUL"
+    },
+    {
+      "id": "C2-075",
+      "case": "lone surrogate rejected",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+    },
+    {
+      "id": "C2-076",
+      "case": "512KiB JSON boundary accepted",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-077",
+      "case": "512KiB plus one rejected",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-078",
+      "case": "legacy 1MiB boundary accepted",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-079",
+      "case": "legacy 1MiB+1 rejected",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-080",
+      "case": "whole record 8MiB boundary with v340 excluded from legacy",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-081",
+      "case": "whole record 8MiB+1 rejected",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-082",
+      "case": "metadata counts inside legacy owner",
+      "layer": "capacity",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-083",
+      "case": "v340 separate owner bytes boundary 1048576",
+      "layer": "capacity_owner_spec",
+      "finding": "F05",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-084",
+      "case": "v340 separate owner over boundary 1048576",
+      "layer": "capacity_owner_spec",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-085",
+      "case": "v340 separate owner bytes boundary 2097152",
+      "layer": "capacity_owner_spec",
+      "finding": "F05",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-086",
+      "case": "v340 separate owner over boundary 2097152",
+      "layer": "capacity_owner_spec",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-087",
+      "case": "normal empty claims rejected",
+      "layer": "schema",
+      "finding": "F06",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-088",
+      "case": "normal claim_count0 rejected",
+      "layer": "schema",
+      "finding": "F06",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-089",
+      "case": "zero claim error retains successful execution",
+      "layer": "reference",
+      "finding": "F06",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-090",
+      "case": "all blocked cannot hide behind nonempty claims text",
+      "layer": "reference",
+      "finding": "F06",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "NO_SUPPORTED_CLAIM"
+    },
+    {
+      "id": "C2-091",
+      "case": "error may retain actual partial strings within evidence",
+      "layer": "schema",
+      "finding": "F05/F06",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-092",
+      "case": "hash-only cannot pretend partial raw retained",
+      "layer": "schema",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-093",
+      "case": "normal evidence cannot duplicate original output strings",
+      "layer": "schema",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-094",
+      "case": "normal evidence cannot claim validation invalid",
+      "layer": "schema",
+      "finding": "F05",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C2-095",
+      "case": "duplicate JSON keys rejected",
+      "layer": "parsing",
+      "finding": "F03",
+      "expected_valid": false,
+      "actual_valid": false,
+      "pass": true,
+      "rejection": "DUPLICATE_JSON_KEY"
+    },
+    {
+      "id": "C2-096",
+      "case": "no remote/network attempt",
+      "layer": "offline",
+      "finding": "",
+      "expected_valid": true,
+      "actual_valid": true,
+      "pass": true,
+      "rejection": null
+    }
+  ],
+  "passed": 96,
+  "failed": 0,
+  "network_attempts": [],
+  "new_generation_calls": 0,
+  "paid_calls": 0,
+  "runtime_verified": false,
+  "professional_acceptance": false
+}

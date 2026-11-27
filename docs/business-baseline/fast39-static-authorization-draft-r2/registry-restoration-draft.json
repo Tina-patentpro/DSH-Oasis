@@ -1,0 +1,144 @@
+{
+  "draft_id": "FAST39-REGISTRY-RESTORE-ONCE-DRAFT-R2",
+  "status": "DRAFT_NOT_APPROVED_NOT_EXECUTABLE",
+  "approved": false,
+  "effective": false,
+  "approval_record": null,
+  "separate_from_static_candidate_grant": true,
+  "source_observation": {
+    "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/README.md",
+    "revision": 489,
+    "sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+    "open_work_item_count": 35,
+    "observation_only_not_future_expected_baseline": true
+  },
+  "scope": "two exact README structural changes only, plus own repair lifecycle/append-only correction and necessary derived metadata explicitly declared below; no business value changes",
+  "proposed_owner_scope_id": "FAST39-REGISTRY-RESTORE-ONCE-R2",
+  "proposed_work_item_id": "FAST39-REGISTRY-RESTORE-ONCE-R2",
+  "registered_now": false,
+  "ordinary_started_approved_records": [],
+  "exact_changes": [
+    {
+      "id": "RESTORE01",
+      "observed_line": 127,
+      "before": "|---|---:|---:|---:|---|---|---|---|---|---|\n",
+      "before_sha256": "0c53399cecd5d92f67cb184f722ac9306604b51d6660eef12932dc012dc250a1",
+      "after": "|---|---:|---:|---:|---|---|---|---|---|---|---|\n",
+      "after_sha256": "3b02c29d50852512254c68330e1d61a7af9b0629fd378964bd30226ceec91409",
+      "operation": "replace exact separator once; 10 to11 columns; header and all business rows unchanged"
+    },
+    {
+      "id": "RESTORE02",
+      "observed_line": 128,
+      "before": "| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |---|\n",
+      "before_sha256": "a6660d518820fd5a1f5feb751608969650fa7c10041df0a44d9d4232a9c65ba0",
+      "relocated_after": "| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |\n",
+      "after_sha256": "a1f06544cf55383e05ecbfc0a50dd3b6d474959f75dd6fee779ead6765ac06fa",
+      "destination_section": "### 5.1 已完成工作项",
+      "destination_header": "| work_item_id | scope | base_sha256 | acceptance | work_state | completed_change_id |",
+      "insert_after": "unique existing six-column separator immediately below exact completed header",
+      "operation": "move original six raw data cells; discard only stray seventh --- fragment; preserve anomalous original as evidence"
+    }
+  ],
+  "protected_legacy_identity": {
+    "work_item_id": "REMOTE-RUN-SYNC-20260906",
+    "completed_change_id": "REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED",
+    "six_raw_cells": [
+      " `REMOTE-RUN-SYNC-20260906` ",
+      " 活动工作流远端运行记录增量归档 ",
+      " `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` ",
+      " 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 ",
+      " `closed` ",
+      " `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` "
+    ],
+    "work_state": "closed",
+    "ownership_migration": false,
+    "historical_hash_statistics_acceptance_reconciled": false
+  },
+  "process_exception": {
+    "id": "EX-REGISTRY-STRUCTURE-ONCE",
+    "grant_now": false,
+    "use_limit": "at most one successful exceptional atomic restoration commit; failures/unknown do not authorize retry or replay",
+    "exact_rules_requiring_exception": [
+      "source AGENTS shared registration: README mutations only via ordinary registry_transaction apply",
+      "source AGENTS legacy unowned records read-only and foreign rows preserved",
+      "execution standard5.3/5.4 ordinary field-patch request and metadata/transaction provenance"
+    ],
+    "not_an_ordinary_apply_request": true,
+    "mechanism": "one reviewed task-private bounded patch, under original registry_lock, exact byte-span edits on fresh original only; append truthful own correction and derive metadata/transaction record using pinned native semantics; single fsync+atomic replacement+readback; no source tool edit",
+    "ordinary_tool_retained_for": [
+      "start own repair item with empty approved_records",
+      "post-restoration own progress/completed; ordinary source candidate registration after all gates"
+    ],
+    "exception_commit_explicit_additional_mutations": [
+      "append one new correction event to own repair work item, explicitly label exceptional structural patch not native apply",
+      "registry_revision +1, actual open_work_item_count, actual last_updated_at/last_change_id, previous_registry_sha256 of real precommit bytes",
+      "append registry_transaction in existing schema with request_sha256 of actual exceptional intent, owner/task, new revision and actual base_sha256; never fabricate native apply stdout"
+    ],
+    "correction_provenance": "actual exception authorization/freezing identity, pinned tool hash, exact two transformations, evidence path; old event REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED referenced but not edited",
+    "no_intermediate_source_patch": "compose structure+correction+derived metadata in one candidate and replace once; never publish changed structure under unchanged revision; do not patch then append a normal event to hide an unrecorded intermediate",
+    "no_nested_native_apply": "ordinary start/completion run outside exceptional lock as distinct transactions; no apply call inside registry_lock, no disable/monkeypatch of source lock or validators",
+    "future_private_implementation_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2",
+    "future_evidence_directory": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution",
+    "future_request_script_hashes": null,
+    "mechanism_ready_for_execution": false,
+    "release_condition": "explicit exact exception approval plus reviewed/frozen one-shot request/script/diff/provenance and fresh gate/lock evidence before any source write; if mechanism cannot meet existing schema/validation/history invariants stop, no tool extension or alternative fallback"
+  },
+  "weekly_policy": {
+    "normal_substantive_review_required_before_repair_start": true,
+    "fresh_full_governance_exit0_required": true,
+    "time_waiver": false,
+    "CI_writes_authorized_by_this_draft": false,
+    "separate_CI_authority_required": true
+  },
+  "execution_sequence": [
+    "explicitly approve exact structure/process exception component; normal CI review completed by separately authorized owner; fresh governance0",
+    "freeze reviewed one-shot mechanism/request and evidence locations; snapshot source exact bytes/metadata/header/destination/events/grants; reject any affected drift",
+    "ordinary original apply starts only new repair work item with empty grants; save genuine request/return; no static candidate grant",
+    "reread post-start real baseline; under original registry lock verify baseline, own binding, both source spans, destination, Flow row/hash and all protected bytes",
+    "compose exact two structural changes plus own truthful correction+derived metadata in memory; strict native row/contract/registry validation and preservation proof before write; atomically replace once and read back within same lock",
+    "fresh full governance0 and exact unique row proof; original ordinary apply records actual own progress/completed, only after verified restoration, preserving legacy closed record",
+    "separate approved static component can activate only with its own started/grants and all candidate gates; structure success does not grant candidate production"
+  ],
+  "stops": [
+    {
+      "id": "RESTORE-STOP01",
+      "condition": "exact exception approval, reviewed frozen request/script/intent hash or normal weekly/governance0 evidence missing"
+    },
+    {
+      "id": "RESTORE-STOP02",
+      "condition": "source baseline, either exact byte span, destination header/separator/uniqueness, legacy six cells/event, own binding or target row drift; no automatic rebase/rekey"
+    },
+    {
+      "id": "RESTORE-STOP03",
+      "condition": "existing target/evidence/task/transaction namespace occupied, lock conflict/ownership change, symbolic link or nonlocal path; no stealing or cleanup"
+    },
+    {
+      "id": "RESTORE-STOP04",
+      "condition": "any other table/field/old event/business row/authority/CI/tool/archive content would change, or actual candidate validation fails"
+    },
+    {
+      "id": "RESTORE-STOP05",
+      "condition": "exception write committed or outcome unknown, postwrite drift or failure; retain snapshots and receipts; no rollback overwrite, second structural commit or automatic retry"
+    },
+    {
+      "id": "RESTORE-STOP06",
+      "condition": "native schema, truthful correction/metadata provenance, single atomic commit or preservation cannot be achieved by pinned mechanism; seek separately scoped revision, no workaround"
+    }
+  ],
+  "verification_required": [
+    "exact native ##4 parser and selector/header/Flow/hash guards",
+    "all14 candidate business rows unchanged; protected bytes equal after excluding two exact structure deltas and declared own event/metadata lifecycle",
+    "legacy original six raw cells preserved once at target; stray fragment removed only; original malformed row retained in evidence",
+    "all old event raw bytes and grants/owners preserved; no legacy ownership acquisition",
+    "normal weekly report/sentinel/hash and fresh full governance0; strict native registration contract plus registry checks",
+    "truthful exceptional intent/request/script/lock/atomic readback and all before/after hashes; native start/completion receipts kept distinct"
+  ],
+  "never_authorized": [
+    "CI report/sentinel refresh or time waiver",
+    "business code/YML/nodebook/assets or static candidate production",
+    "source standards/AGENTS/registry tools changes or dependency installation",
+    "ownership transfer, legacy closure/acceptance/hash/statistics changes",
+    "API/model/upload/generation/paid/deploy/Git/publish/archive actions"
+  ]
+}

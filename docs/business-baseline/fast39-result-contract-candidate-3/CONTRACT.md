@@ -1,0 +1,95 @@
+# Fast39结果合同候选3（C3-R1，2026-11-05）
+
+本版是按C2-TR1的TR01—TR06另行修订的静态合同候选。未修改DSL／业务代码、未部署、未调用真实生成；未获运行、专业、用户或发布接受。候选1／2、P0、C2-TR1及旧FAIL／UNKNOWN保持原件。本版仅替代未来评审提案，不替换现行服务。
+
+配套schemas.json、receipt-mapping.json、code-abi.json、cross-field-checks.json、capacity-policy.json、transition-table.json、delivery-binding.candidate.json、examples.json、validation-cases.json、changes-from-candidate2.json及限定用途与设计采用说明。FREEZE清单不自含其hash，外部复核记录绑定该hash。
+
+## 1. 沿用的范围与版本
+
+拟议版本为flow26-source-trace-3、flow26-quality-3、flow26-fast-result-3、flow26-fast-evidence-3；草稿／规范化对象另有独立版本。本版不得借用候选1／2版本号。Dify仍为八个legacy业务输入和原六个字符串输出output、claims_text、dependency_tree、pending_confirmation、quality_report、quality_status；server_key是后台追加的内部字段，不是材料来源，不进入registry或生成事实来源。
+
+增强仅接受一份Technical_Disclosure_file，提取文本与本次冻结packet2的UTF-8字节一致，解析为m06-workarea-material-packet-2／Flow-2-6／v340-1及原R2约束；六直接文本字段均为精确空字符串。未传、null、空白、混合／直接输入、普通文件、packet1不自动视为增强支持。调用前由DSH冻结prepared、材料和实际包装User_input并核对范围；工作流内重新核范围。缺映射发起前禁用增强，不换来源或走旧通道代偿；返回后发现不符记录内容错误，不重发。旧服务及其他服务继续按原合同。
+
+后台只在同次同步响应上新增互斥structured_result或structured_result_error，保留原answer_text／file_url的值和类型，不把六字段都加进旧output_schema重复拼接。无新URL、恢复接口、取消、自动退款或幂等承诺。
+
+## 2. TR01：原收据及来源映射
+
+packet的八共同输入ID必须各有一份receipt；registry也恰好八条。每条新增original_receipt完整保存原JSON值（status、sha256、filename、content_origin），不覆盖、重新签名或把none改写成旧收据的null。已知形状外的缺字段／状态／类型作为输入合同不符，不猜默认值。
+
+规范化字段与原收据分开：not_provided要求原sha256="none"、content_origin="none"、filename="not_provided"，规范化receipt_sha256与source_sha256为null，状态not_provided；非manual正文为空字符串，manual正文为null。accepted要求合法小写64位sha；对于实际存在且原body哈希一致的非manual材料，状态provided、receipt_sha256复制该hash、source_sha256对原body另核。warning保留原body与原收据，状态unverified、合法receipt_sha256保留；不得静默升为provided。本版不允许warning来源支撑kept/rephrased特征，需保留警示并blocked或不形成正常产物。这是增强通道的明确受限政策，不改原prepared或原材料。
+
+user_input的accepted／warning均记unverified、text=null、source_sha256=null，仅保留原收据hash；not_provided沿上段。不得从User_input包装分隔符反解原手动正文。actual_user_input_sha256单独核实际包装指令；原手动receipt不与它强行相等。当前prepareV340Inputs的原receipt哈希针对原body，不能拿它替代原上传文件字节hash或整包hash。
+
+registry.entries固定顺序为upstream_md_file、disclosure_file、disclosure_text、drawings_file、drawings_text、claim_requirements_file、claim_requirements_text、user_input，不依赖JSON对象键遍历顺序。formatter同时消费SOURCE_REGISTRY直连的registry_sha256，核对完整registry_json的canonical hash；DSH再与本地重建值比较。
+
+文件正文取materialValues[id].body，filename取原文件名；文本取原字符串。requirements为output_requirement，manual为manual_instruction，其余为technical_material；角色按ID固定，不能信任包内自述升级。只有provided且角色technical_material、原文hash／短引／坐标有效的条目可进入技术source_map。材料中指令仍是资料，合法定位不等于技术支持或专业接受。
+
+registry完整保留inputWarnings、limitations及semanticContract.requiredMissingInputLines；source_registry_sha256对完整registry canonical JSON取UTF-8 SHA256。canonical规则为递归按Unicode标量值排序对象键、原数组顺序、最小JSON转义、无空白／BOM、原Unicode、整数十进制；本版registry／anchor对象仅用字符串、整数、布尔、null及容器，浮点、重复键、NUL、孤立代理项拒绝。不compact原正文、不归一化换行。DSH可由本地冻结packet／prepared和实际User_input重建registry进行比较；这与下节无法独立取得原Outline的情况分开。
+
+## 3. TR02：完整阶段ABI及编号
+
+code-abi.json区分现有端口与本版完整拟议端口，修改节点的拟议表是完整输出表。新结构内部一律用明确JSON字符串端口，按绑定Schema解析，不依赖未核的array<object>端口能力；已有Outline structured_output和原标量端口沿实际类型。新节点只有逻辑名，真实ID在候选产生后固定。
+
+SOURCE_REGISTRY输出registry_json及registry_sha256。Outline沿原structured_output补analysis_metadata（source_hints／missing_support），不授予模型改registry或角色的能力。ANCHOR_ADAPTER按原路径分配plan:core、plan:parallel:1起序号、plan:cluster:1起序号，角色分别core_root／parallel_root／dependent_cluster；原ID另留，feature_id原样保留，本地ID不冒充T2。core／parallel的preamble_features与characterizing_features全部ID构成保留目标；cluster从features[].id收集。冻结原Outline质量、错误、计划、来源及target tuple为anchor，直连formatter。
+
+outline_result Schema为冻结原Outline完整Schema加必需analysis_metadata，不只给一个泛称object。source_hints引用非provided／非技术来源或错误原文立即作为内容错误；未提出来源的feature登记missing_support并blocked。同一计划重复feature_id是冲突，不静默去重；不同计划可复用ID但保留二元tuple。normalized_draft是normalizer六端口组成的校验视图，其版本来自固定本地绑定常量，不新增第七输出或接受模型自报版本。
+
+FINAL_WRITER输出writer_draft JSON：contract_version和blocks数组。每个计划恰一block；只准planned_claim_id、decision(emit/omit)、claim_body、dispositions。每个计划feature恰一draft_disposition(feature_id、action、output_quote、reason)，没有最终claim_id、offset或locator_status。omit的正文为空、所有特征blocked；emit正文非空。非法／额外字段、未知计划或feature、缺项和重复均拒绝，不代填。
+
+SANITIZER只解析／验形／再编码为parsed_draft_json，不对整段JSON做旧Markdown清洗。NORMALIZER消费该对象及冻结anchor，按anchor计划顺序处理emit块，分别规范化CRLF／CR为LF并去首尾空白，然后赋连续编号1..N。claim_body不得自行带编号起始或新的编号权项，不自动拆分、合并、调序或删除正文；存在歧义拒绝。所有计划包括omit都生成一条claim_id_map；omit映射null，emit映射代码分配编号。计划ID贯穿块、map及处置，不能在清洗前使用模型自报最终编号。
+
+NORMALIZER完整输出clean_text、claim_count(number)、marker_warnings(JSON字符串数组)、claim_id_map_json、feature_dispositions_json、claim_segments_json。segments记录最终权项的编号行开始至正文结束的UTF-16半开区间（不含与下一权项间的分隔换行）。kept/rephrased在所属权项正文内以output_quote精确匹配：唯一才算verified并计算最终全文坐标；零／多次为unverified、offset=null，保留原quote但不算覆盖。blocked的claim_id=null、quote为空、offset=null、locator_status=not_applicable。
+
+DEPENDENCY_TREE仍消费normalizer.clean_text，产生原字符串parent/child edges、tree/count/status/warnings；原tree sanitizer节点1769301001009.clean_text继续提供tree文本。formatter分别接normalizer_count和tree_count，**normalizer_count是权威计数**；两者须与最终连续编号、segments、非null map数相等，任一矛盾为内容错误，不任取一数。两个节点计数都不替代专业判断。
+
+每个最终权项恰映射一个计划；core／parallel映射不同root，cluster映射有parent；根降为从属、无效／循环／自指／缺失边或映射不唯一拒绝。source_map为原anchor来源tuple逐项附上本次final ID，不得替换原来源。任何kept/rephrased必须有有效provided技术来源，缺支持只能blocked；所有blocked或零emit不形成正常产物。coverage按(plan,feature)重算，blocked／遗漏为incomplete，定位未核为unverified，其余全部符合才complete；保留缺失二元tuple，不按feature_id合并计划。
+
+每个emit计划还须至少有一项kept/rephrased并有有效原文来源，不能用空feature的cluster新增无来源权项。该结构要求仍不能证明正文没有其他未登记技术事实，专业来源审查保持开放。
+
+## 4. TR03：锚点保证范围
+
+本版选择最小范围：**原Outline保留由固定工作流的确定性旁路保证，客户端核报告自洽与本地材料一致，不声称独立取得了原Outline快照。** formatter的expected_anchor_json必须来自同一run的ANCHOR_ADAPTER，不能从终稿或待验report取得；固定DSL／代码的离线测试需证明删目标并重算报告hash仍被原旁路拒绝。未绑定新DSL及完成该验证前不能声称真实原Outline保留已通过。
+
+DSH只核report.anchor自身hash、计划／角色／tuple／质量一致性，以及本地可重建registry及原文来源；它不再接受一个“客户端已独立核原Outline”的标记。quality_report固定anchor_assurance=workflow_branch_client_self_consistency_only、coverage_basis=reported_outline_anchor；metadata.validation.anchor固定reported_self_consistent_original_outline_not_independently_available。complete仅表示相对所报anchor的确定性覆盖，不表示客户端证明了原Outline集合无遗漏、技术支持充分或专业接受。
+
+这不增加第二个Dify请求、原Outline恢复端点或新外部输出，也不把同包自报hash当作独立原件。若将来需要客户端独立比较原Outline，另定可取得的原快照、字段及预算，不在本版暗示已具备。
+
+## 5. TR04：警示显示与三节确定性检查
+
+保留原R2材料、实际User_input和原三节验收对象。正常output只含三个可见二级标题，各一、顺序固定、各有正文：权利要求草稿（claims_text及三级标题dependency_tree）、材料缺项与未确认事项（pending_confirmation正文）、技术特征来源（source_map＋全部dispositions表）。原树的二级标题只在本次显示输出转为三级，不改原图。
+
+pending_confirmation由固定顺序生成：质量状态；requiredMissingInputLines每条原文一行（可加`- `）；inputWarnings按原顺序逐条显示problem；limitations原顺序；Outline warnings、fallback_hint、outline_error；marker及dependency warnings；原状态和未评估说明。空组只写未列出／未评估，不冒充无风险。除原生成的单行缺项外，每条原文放入确定性text代码围栏（围栏长度大于该文字最大连续反引号），可保留多行和Markdown字面值而不解释为指令、HTML或新标题。原警示对象和原quote在report中原样保留。
+
+跨字段校验必须重建整个pending和output并逐值相等；另对每类原problem、限制、Outline warning逐项删除／改写做反例，不再只查缺项行。source表逐disposition左关联全部来源，无来源明确未核；每格转义控制符、HTML标记及链接语法，换行显示为〈换行〉。标题检查按代码围栏语境解析，不把围栏内字面标题算作额外章节。输出按安全预览作为资料，不执行脚本或加载远程资源。
+
+质量只可降级：原Outline状态、错误和警示不重写；coverage非complete、来源不可核或依赖解析非ok为insufficient；其余原警示／限制／缺项至少partial；内外quality_status一致。support_review_status始终not_assessed。原九个quality键保留，新版元数据不替代专业／用户审阅。
+
+## 6. TR05：响应字节收据及跨字段归属
+
+provider_response_receipt的hash_version为provider-http-content-bytes-1。SHA256只取**同一次httpx响应的response.content字节**：已由HTTP库解码Content-Encoding，尚未JSON解析，无文本解码／重编码、无canonical JSON、无strip／BOM删除。receipt包含sha256、byte_length、http_status和body_retention=hash_only；它不是HTTP线上压缩／分块／TLS字节，也不是后台API响应正文hash。原字节全体不因有hash而被声称已保存。
+
+未来后台在workflow_service.py同一个await client.post之后、response.json之前形成不可变内部WorkflowServiceResult（legacy_result为原解析对象、provider_response_receipt为上述收据）。不额外请求Dify。受控同步投影使用它，原旧投影及save_and_deduct仍接legacy_result原对象，非增强分支保持原接口；逻辑ABI见code-abi.json，当前源码并未实现此类型。
+
+正常／错误fragment各持有本次provider_response_receipt；evidence_record只存这一个fragment，不再另存一个可矛盾的顶层raw_response_sha256。旧run.result.responseSha继续表示旧客户端API归一化响应的既有hash，不与provider字节hash强行相等。已有C1/C2数据不迁移／重算。本版不接收旧raw_response_sha256额外字段作为新Schema的别名。
+
+后台在实际字节仍可得的边界核receipt.sha256及length、解析对象与同次输出逐值相同；之后只传收据，不传凭据或完整原HTTP正文。DSH不能重算未收到的provider原字节，只记录后台收据；校验receipt类型及http_status为2xx、request_key等于当前执行、合法run ID规则、绑定身份、received_outputs仅为本次fragment白名单实际字符串。客户端本地收到的API响应身份与provider收据身份分开。
+
+状态矩阵沿用并另版绑定：关联检查优先，只采用同次顶层workflow_run_id／data.id；两处存在必须一致合法，否则null及correlation错误。failed／stopped为已知执行失败；running非终态；missing／未知保持未知；仅succeeded进入内容检查。内容失败不抹掉执行成功。无响应、HTTP错误／异常本地记录未知，不伪造收到过的正常或错误fragment，不以401/403反推未执行。原分支保存／扣费排队0／1／unknown保留，不提前抛错改原分支、不新增财务事务，不宣称durable exactly-once，不重发。
+
+全部跨字段职责／拒绝码及检查层见cross-field-checks.json：Schema验形之外还必须校原始收据映射、raw/body哈希、registry、草稿集合与顺序、两个count、segments／map／edges／处置／coverage、警示显示、同次request/run／交付绑定、实际序列化全记录预算。不存在用“Schema通过”代替这些校验的捷径。
+
+## 7. TR06：容量、定位边界与保全
+
+新受控限制仍为每个外部输出字符串≤100000 UTF-16码元且≤256KiB UTF-8，证据envelope紧凑JSON≤512KiB；单独Schema maxLength按码点，另作UTF-16／字节／有效Unicode／无NUL检查。report或evidence自身根=0、容器深度≤8、每数组≤1024、每对象≤256键。canon原文hash与容量序列化的owner分别明确，不能用字符数代字节数。
+
+原文source locator的start/end统一声明为0..1048576 UTF-16码元，并另须0≤start<end≤实际原正文码元长度，边界不得截断代理对。它与最终claims_text的0..100000输出坐标不同。理由：packet2 UTF-8全包≤1048576，合法body的UTF-16长度不会超过其UTF-8字节数；上游文档独立body≤1MiB，普通文件／文本当前≤300000码元。JSON包装开销也计全包，不能假设1MiB原body必然能装进1MiB包；原文不裁剪，超包或定位越界明确拒绝。此上限消除C2未声明的十进制百万截断，不提高原材料／V340 owner限制。
+
+唯一拟议metadata owner仍为tasks[taskId].remoteExecutions[executionId].fast39Result，需未来在strict oasisRemoteExecutionSchema增加可选字段；当前不支持它。正常run通过executionId关联，不再复制metadata，不伪造旧M06七字段或写入v340.result冒充接线。legacy answerText／artifact body各256KiB、去除task.v340的全legacyValue≤1MiB、全workspace≤8MiB继续适用；V340文档1MiB／snapshot2MiB按其owner单独检查。
+
+预算按实际candidate record完整序列化检查，计现有answer/artifact重复及剩余空间。正常fragment只保留原六字符串一份，解析quality只作内存视图；错误可保留收到的白名单字符串子集received_outputs，受同样单串和总预算约束，不能补默认值。超限整份子集不持久化、不截断JSON；保留小错误收据和provider字节hash，明确retention=hash_only_not_persisted。能保存fragment也不等于provider全文已保存；连小收据都无法落盘时保留已有提交前事实，明示保存失败、人工处理，不覆盖旧件、不另建无界sidecar或自动再取结果。
+
+## 8. 零权项、采用与实施门
+
+正常产物至少一条可支持编号权项；零emit、空claims或全部blocked为FAST39_NO_SUPPORTED_CLAIM内容错误，不凑造权项，不创建completed产物。provider已失败先走执行矩阵，不猜零权项原因。有可支持项但核心缺失可insufficient受限草稿，仍须来源／专业复核。
+
+本次文档修订不完成真实workflow旁路、后台字节收据或DSH持久化实现。整体BM1-R1/S1允许制作可见规则作参考输入，具体本次规则／Skill版本、可见性、允许用途和条款落点／冲突仍按精确采用记录；不重复索取已覆盖的泛化参考许可、不带入evaluation_only。源设计Batch／事务／候选指定、实际新DSL／节点ID／源码hash／交付指纹在相应阶段固定；不存在候选不要求先交真实运行证明。正式M06 API、G0、专业／用户及发布门保持，新实施／部署／真实调用须另有明确指示。

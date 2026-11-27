@@ -1,0 +1,198 @@
+ M AGENTS.md
+ M README.md
+ M docs/evidence/2026-10-23-stage5-progress-and-remaining.md
+ M docs/evidence/2026-10-26-follow-up-remaining.md
+ M docs/plans/2026-10-25-dsh-oasis-master-plan.md
+ M docs/project-current-state.md
+ M packages/oasis-professional-service/lib/client.js
+ M packages/oasis-professional-service/lib/client.js.map
+ M packages/oasis-professional-service/package.json
+ M packages/oasis-professional-service/src/client/V340GenerationPage.js
+ M packages/oasis-professional-service/src/client/workbench-store.js
+ M packages/oasis-professional-service/src/client/workspace-api-binding-controller.js
+ M packages/oasis-professional-service/src/index.js
+ M packages/oasis-professional-service/src/oasis-remote-service.js
+ M packages/oasis-professional-service/src/oasis-runtime-config.js
+ M packages/oasis-professional-service/src/v340-native-model.js
+ M packages/oasis-professional-service/src/v340-runtime-contract.js
+ M packages/oasis-professional-service/src/v340-runtime-service.js
+ M packages/oasis-professional-service/src/website-import-service.js
+ M packages/oasis-professional-service/test/helpers/m06-controlled-host-harness.mjs
+ M packages/oasis-professional-service/test/oasis-workspace-binding.test.mjs
+ M packages/oasis-professional-service/test/website-import.test.mjs
+ M packages/oasis-professional-service/test/workspace-api-binding-client.test.mjs
+?? docs/business-baseline/fast39-c4-limited-adoption-20261105/
+?? docs/business-baseline/fast39-result-contract-candidate-1/
+?? docs/business-baseline/fast39-result-contract-candidate-2/
+?? docs/business-baseline/fast39-result-contract-candidate-3/
+?? docs/business-baseline/fast39-result-contract-candidate-4/
+?? docs/business-baseline/fast39-static-authorization-draft-r1/
+?? docs/business-baseline/fast39-static-authorization-draft-r2/
+?? docs/business-baseline/fast39-static-authorization-draft-r3/
+?? docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.json
+?? docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.md
+?? docs/business-baseline/oasisintwrite-community-license-1.0-draft-r1/
+?? docs/business-baseline/v340-pdf-integration-compatibility-r1.md
+?? docs/evidence/2026-10-29-f-recovery-interruption-diagnosis.json
+?? docs/evidence/2026-10-29-flow26-controlled-profile-r2.json
+?? docs/evidence/2026-10-29-flow26-g0-admission.json
+?? docs/evidence/2026-10-29-flow26-installed-admission-r2.json
+?? docs/evidence/2026-10-29-flow26-live-service-metadata-r2.json
+?? docs/evidence/2026-10-29-flow26-remote-contract-request-r2.json
+?? docs/evidence/2026-10-29-m06-admin-access-verification.json
+?? docs/evidence/2026-10-29-m06-admin-access.json
+?? docs/evidence/2026-10-29-m06-f-execution-preflight.json
+?? docs/evidence/2026-10-29-m06-f-intake-and-interruption-return.md
+?? docs/evidence/2026-10-29-m06-f-verification.json
+?? docs/evidence/2026-10-29-m06-intake-delta.json
+?? docs/evidence/2026-10-29-m06-public-calibration-input-r2.json
+?? docs/evidence/2026-10-29-m06-public-calibration-input.json
+?? docs/evidence/2026-10-29-m06-workarea-method-binding.json
+?? docs/evidence/2026-10-29-pdf-api-minimal-preflight.json
+?? docs/evidence/2026-10-29-pdf-api-minimal-return.md
+?? docs/evidence/2026-10-29-pdf-api-minimal-verification.json
+?? docs/evidence/2026-10-29-pdf-container-minimal-return.md
+?? docs/evidence/2026-10-29-pdf-container-minimal-verification.json
+?? docs/evidence/2026-10-29-pdf-container-spike-preflight.json
+?? docs/evidence/2026-10-29-pdf-container-two-cases.json
+?? docs/evidence/2026-10-29-pdf-docx-and-flow26-g0-return.md
+?? docs/evidence/2026-10-29-pdf-docx-g0-execution-preflight.json
+?? docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-preflight.json
+?? docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-return.md
+?? docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-verification.json
+?? docs/evidence/2026-10-29-pdf-docx-g0-verification.json
+?? docs/evidence/2026-10-29-pdf-docx-provider-readiness.json
+?? docs/evidence/2026-10-29-pdf-m06-implementation-preflight.json
+?? docs/evidence/2026-10-29-pdf-m06-implementation-return.md
+?? docs/evidence/2026-10-29-pdf-m06-implementation-verification.json
+?? docs/evidence/2026-10-29-pdf-selected-parser-verification.json
+?? docs/evidence/2026-10-29-pdf-worker-isolation-verification-r2.json
+?? docs/evidence/2026-10-29-pdf-worker-isolation-verification-r3.json
+?? docs/evidence/2026-10-29-pdf-worker-isolation-verification.json
+?? docs/evidence/2026-10-29-project-summary-plan-inputs.json
+?? docs/evidence/2026-10-29-project-summary-plan-verification.json
+?? docs/evidence/2026-10-29-workarea-api-only-continuation.json
+?? docs/evidence/2026-10-29-workarea-api-only-verification.json
+?? docs/evidence/2026-10-30-flow26-workarea-consumer-mapping-r1.json
+?? docs/evidence/2026-10-30-interface-stage1-technical-review/
+?? docs/evidence/2026-10-30-m06-credential-reference-preflight.json
+?? docs/evidence/2026-10-30-m06-credential-reference-return.md
+?? docs/evidence/2026-10-30-m06-credential-reference-reuse-proposal.md
+?? docs/evidence/2026-10-30-m06-credential-reference-verification.json
+?? docs/evidence/2026-10-30-m06-fast39-authorized-calibration-r1.json
+?? docs/evidence/2026-10-30-m06-native-current-preparation.json
+?? docs/evidence/2026-10-30-m06-native-login-and-single-call-return.md
+?? docs/evidence/2026-10-30-m06-native-login-and-single-call-verification.json
+?? docs/evidence/2026-10-30-m06-native-login-resume-r2.json
+?? docs/evidence/2026-10-30-m06-native-single-call-intent-r1.json
+?? docs/evidence/2026-10-30-m06-native-single-call-result-r1.json
+?? docs/evidence/2026-10-30-m06-nofee-repair-preflight.json
+?? docs/evidence/2026-10-30-m06-nofee-repair-return.md
+?? docs/evidence/2026-10-30-m06-nofee-repair-verification.json
+?? docs/evidence/2026-10-30-m06-tasks12-authorized-resume-r1.json
+?? docs/evidence/2026-10-30-m06-tasks12-authorized-resume-return.md
+?? docs/evidence/2026-10-30-m06-tasks12-authorized-resume-verification-r1.json
+?? docs/evidence/2026-10-30-m06-tasks12-resume-preservation-final.json
+?? docs/evidence/2026-10-30-m06-tasks12-review-packet.json
+?? docs/evidence/2026-10-30-m06-workarea-tasks12-preflight.json
+?? docs/evidence/2026-10-30-m06-workarea-tasks12-return.md
+?? docs/evidence/2026-10-30-m06-workarea-tasks12-verification.json
+?? docs/evidence/2026-10-30-project-plan-inputs.json
+?? docs/evidence/2026-10-30-project-plan-verification.json
+?? docs/evidence/2026-10-30-workarea-pdf-execution-preflight.json
+?? docs/evidence/2026-10-30-workarea-pdf-integration-return.md
+?? docs/evidence/2026-10-30-workarea-pdf-verification.json
+?? docs/evidence/2026-10-31-m06-credential-reuse-preflight.json
+?? docs/evidence/2026-10-31-m06-credential-reuse-return.md
+?? docs/evidence/2026-10-31-m06-credential-reuse-verification.json
+?? docs/evidence/2026-10-31-m06-fast39-r1-calibration-return.md
+?? docs/evidence/2026-10-31-m06-fast39-r1-preflight.json
+?? docs/evidence/2026-10-31-m06-fast39-r1-verification.json
+?? docs/evidence/2026-10-31-m06-fast39-r2-calibration-return.md
+?? docs/evidence/2026-10-31-m06-fast39-r2-preflight.json
+?? docs/evidence/2026-10-31-m06-fast39-r2-verification.json
+?? docs/evidence/2026-10-31-m06-fast39-semantics-preflight.json
+?? docs/evidence/2026-10-31-m06-fast39-semantics-return.md
+?? docs/evidence/2026-10-31-m06-fast39-semantics-verification.json
+?? docs/evidence/2026-10-31-m06-public-r2-local-loop-return.md
+?? docs/evidence/2026-10-31-m06-public-r2-local-loop-verification.json
+?? docs/evidence/2026-10-31-m06-public-r2-newcall-preflight.json
+?? docs/evidence/2026-11-05-fast39-auth-r1-technical-review/
+?? docs/evidence/2026-11-05-fast39-auth-r2-draft/
+?? docs/evidence/2026-11-05-fast39-auth-r2-technical-review/
+?? docs/evidence/2026-11-05-fast39-auth-r3-draft/
+?? docs/evidence/2026-11-05-fast39-auth-r3-technical-review/
+?? docs/evidence/2026-11-05-fast39-c4-limited-adoption/
+?? docs/evidence/2026-11-05-fast39-chain-analysis.json
+?? docs/evidence/2026-11-05-fast39-chain-preflight.json
+?? docs/evidence/2026-11-05-fast39-chain-return.md
+?? docs/evidence/2026-11-05-fast39-chain-verification.json
+?? docs/evidence/2026-11-05-fast39-contract2-technical-review/
+?? docs/evidence/2026-11-05-fast39-contract2/
+?? docs/evidence/2026-11-05-fast39-contract3-technical-review/
+?? docs/evidence/2026-11-05-fast39-contract3/
+?? docs/evidence/2026-11-05-fast39-contract4-technical-review/
+?? docs/evidence/2026-11-05-fast39-contract4/
+?? docs/evidence/2026-11-05-fast39-existing-runs-backend-r2.json
+?? docs/evidence/2026-11-05-fast39-existing-runs-preflight-r2.json
+?? docs/evidence/2026-11-05-fast39-existing-runs-return-r2.md
+?? docs/evidence/2026-11-05-fast39-existing-runs-verification-r2.json
+?? docs/evidence/2026-11-05-fast39-jtti-bm1-closeout-addendum.json
+?? docs/evidence/2026-11-05-fast39-jtti-node-trace-observations.json
+?? docs/evidence/2026-11-05-fast39-jtti-retest-authorized-resume.json
+?? docs/evidence/2026-11-05-fast39-jtti-retest-metadata-return.md
+?? docs/evidence/2026-11-05-fast39-jtti-retest-metadata-verification.json
+?? docs/evidence/2026-11-05-fast39-jtti-retest-preflight.json
+?? docs/evidence/2026-11-05-fast39-jtti-retest-return.md
+?? docs/evidence/2026-11-05-fast39-jtti-retest-verification.json
+?? docs/evidence/2026-11-05-fast39-mechanism-prep1-review/
+?? docs/evidence/2026-11-05-fast39-mechanism-prep2/
+?? docs/evidence/2026-11-05-fast39-minimal-repair-plan-inputs.json
+?? docs/evidence/2026-11-05-fast39-minimal-repair-plan-verification.json
+?? docs/evidence/2026-11-05-fast39-p0-review/
+?? docs/evidence/2026-11-05-fast39-source-admission-readonly/
+?? docs/evidence/2026-11-05-fast39-static-authorization-draft/
+?? docs/evidence/2026-11-05-fast39-task0-preflight.json
+?? docs/evidence/2026-11-05-fast39-task0-r2-adoption-map.json
+?? docs/evidence/2026-11-05-fast39-task0-r2-backend-copy.json
+?? docs/evidence/2026-11-05-fast39-task0-r2-preflight.json
+?? docs/evidence/2026-11-05-fast39-task0-r2-return.md
+?? docs/evidence/2026-11-05-fast39-task0-r2-verification.json
+?? docs/evidence/2026-11-05-fast39-task0-return.md
+?? docs/evidence/2026-11-05-fast39-task0-source-binding.json
+?? docs/evidence/2026-11-05-fast39-task0-verification.json
+?? docs/evidence/2026-11-05-project-plan-inputs.json
+?? docs/evidence/2026-11-05-project-plan-verification.json
+?? docs/evidence/2026-11-05-project-progress-next-steps-inputs.json
+?? docs/evidence/2026-11-05-project-progress-next-steps-r2/
+?? docs/evidence/2026-11-05-project-progress-next-steps-verification.json
+?? docs/evidence/2026-11-06-m06-prep2-review/
+?? docs/evidence/2026-11-06-m06-release-attribution-addendum-r1/
+?? docs/evidence/2026-11-06-m06-release-scope-r1/
+?? docs/evidence/2026-11-06-m06-revision-release-prep-r1/
+?? docs/evidence/2026-11-06-oasisintwrite-license-draft-r1/
+?? docs/evidence/2026-11-06-project-summary-next-plan/
+?? docs/evidence/fast39-registry-restore-once-r2-execution/
+?? docs/plans/2026-10-29-project-summary-and-next-development-plan.md
+?? docs/plans/2026-10-30-project-completion-and-next-development-plan.md
+?? docs/plans/2026-11-05-fast39-minimal-repair-plan.md
+?? docs/plans/2026-11-05-project-progress-and-next-plan.md
+?? docs/plans/2026-11-05-project-progress-and-next-steps-r2.md
+?? docs/plans/2026-11-05-project-progress-and-next-steps.md
+?? docs/plans/2026-11-06-project-summary-and-next-plan.md
+?? packages/oasis-professional-service/src/m06-api-contract-adapter.js
+?? packages/oasis-professional-service/src/m06-workarea-host-013.js
+?? packages/oasis-professional-service/src/m06-workarea-material-packet.js
+?? packages/oasis-professional-service/src/pdf-extraction-process.js
+?? packages/oasis-professional-service/test/fixtures/m06-fast39-r1-calibration-20261031.json
+?? packages/oasis-professional-service/test/m06-api-contract-adapter.test.mjs
+?? packages/oasis-professional-service/test/m06-native-availability.test.mjs
+?? packages/oasis-professional-service/test/m06-workarea-calibration-constraints.test.mjs
+?? packages/oasis-professional-service/test/m06-workarea-host.test.mjs
+?? packages/oasis-professional-service/test/m06-workarea-material-packet.test.mjs
+?? packages/oasis-professional-service/test/pdf-extraction-process.test.mjs
+?? scripts/pdf-text-worker.py
+?? scripts/tests/test_pdf_distribution.py
+?? scripts/tests/test_pdf_text_worker.py
+?? scripts/verify-pdf-distribution.py
+?? tools/.DS_Store

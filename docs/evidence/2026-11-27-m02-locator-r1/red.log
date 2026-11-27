@@ -1,0 +1,103 @@
+✖ M02 accepts full original and emits v8 with precise source instructions (39.117958ms)
+✖ M02 accepts contiguous excerpt and emits v8 with precise source instructions (18.745167ms)
+✖ M02 accepts original newline and emits v8 with precise source instructions (16.540791ms)
+✔ M02 still rejects field name without a second dispatch (15.123ms)
+✔ M02 still rejects paraphrase without a second dispatch (14.034834ms)
+✔ M02 still rejects quoted text without a second dispatch (14.35275ms)
+✔ M02 still rejects ellipsis without a second dispatch (15.2865ms)
+✔ M02 still rejects normalized newline without a second dispatch (14.244708ms)
+✔ M02 still rejects wrong hash without a second dispatch (14.944834ms)
+✔ M02 still rejects wrong input without a second dispatch (14.821458ms)
+✔ M02 still rejects inference as fact without a second dispatch (13.870375ms)
+✖ M02 can retain unlocatable analysis in core while Host retains actual input sources (16.731667ms)
+✔ new M02 instructions preserve historical v5 receipts and their system fingerprints (1.13575ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 9
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 349.271667
+
+✖ failing tests:
+
+test at .local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:35:4
+✖ M02 accepts full original and emits v8 with precise source instructions (39.117958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'v340-native-candidate-5'
+  - 'v340-native-candidate-8'
+                           ^
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:39:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'v340-native-candidate-5',
+    expected: 'v340-native-candidate-8',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at .local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:35:4
+✖ M02 accepts contiguous excerpt and emits v8 with precise source instructions (18.745167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'v340-native-candidate-5'
+  - 'v340-native-candidate-8'
+                           ^
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:39:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'v340-native-candidate-5',
+    expected: 'v340-native-candidate-8',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at .local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:35:4
+✖ M02 accepts original newline and emits v8 with precise source instructions (16.540791ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'v340-native-candidate-5'
+  - 'v340-native-candidate-8'
+                           ^
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:39:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'v340-native-candidate-5',
+    expected: 'v340-native-candidate-8',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at .local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:65:1
+✖ M02 can retain unlocatable analysis in core while Host retains actual input sources (16.731667ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'v340-native-candidate-5'
+  - 'v340-native-candidate-8'
+                           ^
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-m02-locator-r1-20261127/package/test/m02-source-locator-r1.test.mjs:69:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'v340-native-candidate-5',
+    expected: 'v340-native-candidate-8',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

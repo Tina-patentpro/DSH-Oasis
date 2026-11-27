@@ -1,0 +1,40 @@
+✔ handoff preserves receipt and business bytes, records originals, and releases ownership (118.953334ms)
+✔ refuses mismatched expectedOldControllerSHA256 before mutation (43.6505ms)
+✔ refuses mismatched expectedNewControllerSHA256 before mutation (43.532209ms)
+✔ refuses mismatched expectedBundleSHA256 before mutation (47.485667ms)
+✔ refuses mismatched expectedCurrent before mutation (52.565708ms)
+✔ existing installed writer prevents handoff without mutation (52.473ms)
+✔ state write failure restores exact original control and installation bytes (65.737625ms)
+✔ preexisting recovery marker is never removed (40.177667ms)
+✔ rollback failure retains recovery marker and releases the installed lease (56.3745ms)
+✖ snapshot read failure releases JSON ownership before propagating the error (53.18975ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 627.649458
+
+✖ failing tests:
+
+test at scripts/tests/f-installed-controller-handoff.test.mjs:72:1
+✖ snapshot read failure releases JSON ownership before propagating the error (53.18975ms)
+  Error: Another Host owns this JSON storage root; no storage backend was opened
+      at failure (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/patches/storage-json-single-owner/ownership.mjs:5:57)
+      at acquireJsonRootOwnership (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/patches/storage-json-single-owner/ownership.mjs:30:13)
+      at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-controller-handoff.test.mjs:80:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'DSH_STORAGE_ROOT_BUSY',
+    [cause]: Error: database is locked
+        at acquireJsonRootOwnership (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/patches/storage-json-single-owner/ownership.mjs:22:8)
+        at async TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/tests/f-installed-controller-handoff.test.mjs:80:14)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+      code: 'ERR_SQLITE_ERROR',
+      errcode: 5,
+      errstr: 'database is locked'
+    }
+  }

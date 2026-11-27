@@ -1,0 +1,230 @@
+{
+  "id": "DSH-M06-REMOTE-CONTRACT-REQUEST-R2-20261029",
+  "status": "LOCAL_HANDOFF_DRAFT_NOT_SENT_NOT_ACCEPTED",
+  "scope": "Resolve the observed actual service mismatch for Flow-2-6; not a guessed frontend adapter, deployed API change or new request permission",
+  "producerRoles": [
+    "backend IC-API/IC-ACCOUNT/IC-ARTIFACT",
+    "Dify IC-WORKFLOW via existing project process"
+  ],
+  "consumerProject": "dsh-oasis",
+  "actualServiceObservation": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-live-service-metadata-r2.json",
+    "sha256": "78521d63e1cab341cfbecda8d261ab9f4c003528972578df5d8fc54d3aaede94",
+    "previousDraftSHA256": "c9f20d6aed784ab4a39f2f0ce94fefeb040b6f57e03b485d76397ba4b31aeb97",
+    "rebindingReason": "Current batch observation added CDP truncated-window limitation after packet creation; schema/service values unchanged. Earlier local unsent draft preserved.",
+    "priorLocalDraft": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-docx-g0-unblock-r2-20261029/remote-request-before-observation-scope-addendum.json"
+  },
+  "currentFast": {
+    "id": 39,
+    "inputFields": [
+      {
+        "fieldId": "technical_solutions",
+        "label": "技术方案",
+        "description": "",
+        "type": "paragraph",
+        "control": "long-text"
+      },
+      {
+        "fieldId": "technical_field",
+        "label": "技术领域",
+        "description": "",
+        "type": "paragraph",
+        "control": "long-text"
+      },
+      {
+        "fieldId": "background_art_TD",
+        "label": "背景技术",
+        "description": "",
+        "type": "paragraph",
+        "control": "long-text"
+      },
+      {
+        "fieldId": "beneficial_effects_TD",
+        "label": "有益效果",
+        "description": "",
+        "type": "paragraph",
+        "control": "long-text"
+      },
+      {
+        "fieldId": "embodiments_TD",
+        "label": "具体实施方式",
+        "description": "",
+        "type": "paragraph",
+        "control": "long-text"
+      },
+      {
+        "fieldId": "drawings_explain_TD",
+        "label": "附图说明和标记",
+        "description": "",
+        "type": "paragraph",
+        "control": "long-text"
+      },
+      {
+        "fieldId": "Technical_Disclosure_file",
+        "label": "技术交底书文件",
+        "description": "",
+        "type": "file",
+        "control": "single-file"
+      },
+      {
+        "fieldId": "User_input",
+        "label": "用户指令",
+        "description": "",
+        "type": "paragraph",
+        "control": "long-text"
+      }
+    ],
+    "outputFields": [
+      {
+        "fieldId": "output",
+        "label": "生成内容",
+        "description": "",
+        "type": "paragraph",
+        "control": "text-output"
+      }
+    ],
+    "price": 3
+  },
+  "currentBasic": {
+    "id": 46,
+    "mode": "async",
+    "outputs": [
+      {
+        "type": "paragraph",
+        "cn_name": "生成内容",
+        "en_name": "claims_text"
+      },
+      {
+        "type": "file",
+        "cn_name": "权利要求书",
+        "en_name": "claims_docx"
+      },
+      {
+        "type": "file",
+        "cn_name": "权利要求书生成报告",
+        "en_name": "report_docx"
+      }
+    ],
+    "currentSyncAdapterRejects": true
+  },
+  "commonSchemaVersion": "v340-1",
+  "commonInputs": [
+    {
+      "id": "upstream_md_file",
+      "channel": "前一工作流文件",
+      "importance": "expected",
+      "boundary": "一个由Flow-1-5生成并实际传入的累计主Markdown",
+      "handling": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件",
+      "remoteCandidate": null,
+      "unresolved": "Cumulative Markdown and inherited evidence have no established remote field.",
+      "mappingApproved": false
+    },
+    {
+      "id": "disclosure_file",
+      "channel": "用户文件",
+      "importance": "optional",
+      "boundary": "一个用户修订或替换的技术交底文件",
+      "handling": "按明确指令更新累计交底；无替换指令时作为补充并保留差异",
+      "remoteCandidate": "Technical_Disclosure_file",
+      "unresolved": "Candidate name/role only; actual file representation, capacity and coexistence are unapproved.",
+      "mappingApproved": false
+    },
+    {
+      "id": "disclosure_text",
+      "channel": "用户文本",
+      "importance": "optional",
+      "boundary": "一段用户修订或补充的技术交底文本",
+      "handling": "与文件并存时用于补充或纠正",
+      "remoteCandidate": "technical_solutions",
+      "unresolved": "Historical single-case serialization, not all-input lossless mapping approval.",
+      "mappingApproved": false
+    },
+    {
+      "id": "drawings_file",
+      "channel": "用户文件",
+      "importance": "optional",
+      "boundary": "一个用户修订附图文件或单一附图文档",
+      "handling": "用于核对结构、关系、标记和支持",
+      "remoteCandidate": null,
+      "unresolved": "No separate remote drawing file slot; do not overwrite disclosure file.",
+      "mappingApproved": false
+    },
+    {
+      "id": "drawings_text",
+      "channel": "用户文本",
+      "importance": "optional",
+      "boundary": "一段附图关系或修改说明文本",
+      "handling": "用于解释图示和更正图文关系",
+      "remoteCandidate": "drawings_explain_TD",
+      "unresolved": "Candidate semantic mapping; coexistence with file and source roles must be confirmed.",
+      "mappingApproved": false
+    },
+    {
+      "id": "claim_requirements_file",
+      "channel": "用户文件",
+      "importance": "optional",
+      "boundary": "一个权利要求范围、层级或表达要求文件",
+      "handling": "不得覆盖技术来源和申请类型限制",
+      "remoteCandidate": null,
+      "unresolved": "No remote requirements file slot.",
+      "mappingApproved": false
+    },
+    {
+      "id": "claim_requirements_text",
+      "channel": "用户文本",
+      "importance": "optional",
+      "boundary": "一段权利要求范围、层级或表达要求文本",
+      "handling": "与文件并存时作为补充或纠正",
+      "remoteCandidate": null,
+      "unresolved": "No independent field; do not silently merge into User_input.",
+      "mappingApproved": false
+    },
+    {
+      "id": "user_input",
+      "channel": "用户手动文本",
+      "importance": "optional",
+      "boundary": "一段运行指令，只表达增删改、优先级、范围或偏好",
+      "handling": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理",
+      "remoteCandidate": "User_input",
+      "unresolved": "Historical single-case serialization only; preserve as instructions distinct from technical facts.",
+      "mappingApproved": false
+    }
+  ],
+  "currentExpectedOutput": {
+    "required": [
+      "summary",
+      "core_result_markdown",
+      "updates",
+      "tables",
+      "terms_master",
+      "warnings",
+      "model_completions"
+    ],
+    "resourceSHA256": "8eeb5986504e353293ded5ed582cd516b2b731f0ba2eeb7be664d226eb3c9975",
+    "source": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-candidate-0.1.3.json"
+  },
+  "returnRequirements": [
+    "Exact actual service/workflow/schema/contract versions and exported source hashes, deployed versus candidate versus unrun explicitly separated",
+    "Each of eight fields: required/omitted/empty semantics, text and file coexistence, exact representation and any approved lossless transform; no extra common form",
+    "Actual output-to-current artifact contract or approved deterministic adapter; risks/questions/terms not assessed must remain explicit, not invented empty-success evidence",
+    "Authoritative account/origin/Workspace/folder/service/schema binding, invalidation, permission/withdrawal and late-response rules",
+    "Create/query/unknown/error/file/usage/price contracts; preserve original request identity and no unknown retries",
+    "Provide candidate first if necessary; consumer may verify independent scope without waiting for every project, formal gates remain independent"
+  ],
+  "knownWebsiteProject": {
+    "id": "302",
+    "nativeBindingAccepted": false
+  },
+  "frontendActivationAllowed": false,
+  "realRequestsCreated": 0,
+  "credentialsIncluded": false,
+  "offlineReplay": {
+    "fastSchemaAcceptedAsLegacy": true,
+    "basicRejected": "ASYNC_NOT_SUPPORTED",
+    "sevenOutputSchemaRequiredVerified": true,
+    "requests": 2,
+    "actualNetworkRequests": 0,
+    "scope": "Reconstructed public metadata passed through actual API client request sanitizer and normalizer with injected offline fetch. Direct strict normalizer correctly rejects credential property names even when empty; no product repair was needed."
+  },
+  "decision": "New M06 remote compatibility requires producer/consumer contract work; website login, transport R6, Basic file outputs or repeated Fast creation alone cannot close it."
+}

@@ -1,0 +1,12 @@
+# SDD ledger — plan: /Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/m06-rc1-business-recovery-scope-r1.md
+
+- Scope: exact one-case offline installed SDK recovery; no App/Host boot or real calls/publication.
+- Ruling: Reuse current named checkout, fixed candidate and project evidence ledger; no code feature, branch, commit, new worktree or subagent. Only a bounded evidence runner, not a product test framework.
+- Step 1: preflight complete; new root absent; old evidence/protected objects retained.
+- Step 2: official new-root offline installation and123-member identity check complete; install exit0, no App/Host boot.
+- Ruling: Initial create command exit1 after exactly one completed synthetic run. Fixed source shows initial assembly ready_with_warnings and edited revision not_recommended_for_filing; runner had applied final-version expectation too early. Retained original runner/failure/record, continued exact completed run only, asserted the limitation on V1. No product change, re-create, new request key or extra executor call. Raw initial status remains disclosed, not professional readiness.
+- Ruling: Child lease process emits a receipt envelope; continuation unwraps its result before asserting refusal/reacquisition. Original runner preserved. No extra seed or business retry was used.
+- Step 3: public edit/review/no-overwrite save complete; continue exit0, executor0; parent/input history/all original7 warnings retained, revised9 warnings and not_recommended_for_filing.
+- Step 4: independent cold SDK process exit0, exact record revision9/review/writeback restored; business bytes unchanged. Negatives exit0: cross-project/stale revision/overwrite refused, explicit current file edit distinguished from fixed reviewed version; no message sent.
+- Step 5: controller final --check exit0; busy lease refused and all later leases/providers released. New123/original123/old274 members and22 protected objects match.75 inputs and4 original navigation byte strings retained;31 new local links and coordination_structure_only check passed.
+- Final review: author self-review under project single-agent rule. This closes selected R4-01 SDK synthetic recovery only; native UI/fullF/real generation/professional-user acceptance/legal review/publication not claimed. No commit/push, sourceCI/B/A or WorkBuddy send. See verification.json for actual exit codes including retained create exit1.

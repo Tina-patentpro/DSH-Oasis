@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/node-v24.21.0-darwin-arm64/bin/node",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/macos-development-launch.mjs",
+    "--check",
+    "--native-zero-generation",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-generation-r1/admission-candidate.json"
+  ],
+  "exit_code": 1,
+  "expected": "REFUSED_UNREADY_NO_STARTUP",
+  "stdout_empty": true,
+  "root_children": [
+    "cache",
+    "evidence",
+    "home",
+    "temp",
+    "user",
+    "userdata",
+    "workspace-a",
+    "workspace-b"
+  ],
+  "all_runtime_subdirectories_empty": true,
+  "startup_lock_created": false
+}

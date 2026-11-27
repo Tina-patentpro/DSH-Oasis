@@ -1,0 +1,46 @@
+{
+  "at": "2026-11-05T22:03:32.441369+08:00",
+  "subject": "FAST39-C4-EX-AUTH-DRAFT-R3",
+  "subject_freeze_sha256": "e67f4b318209d23af0eab22f46b8c0d9b6c6d8fc744cfad218af4b695e3ea1a4",
+  "reviewer": "Codex single agent author technical re-review, not independent acceptance",
+  "active_plan": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-05-project-progress-and-next-steps-r2.md",
+  "step": "P0.1",
+  "verdict": "R2_TR01_TR02_CLOSED_AT_CONTRACT_LEVEL_IMPLEMENTATION_GATES_OPEN",
+  "items": [
+    {
+      "id": "R2-TR01",
+      "status": "CLOSED_AT_CONTRACT_LEVEL",
+      "evidence": [
+        "R3 摘要与两阶段冻结合同 §1-2/4",
+        "hash-and-freeze-contract.json request_original_sha256/exception_intent_sha256/ordinary_native_intent_sha256/cross_field_checks",
+        "exception-intent.schema.json",
+        "offline-review-checks.json"
+      ],
+      "basis": "raw bytes vs full canonical intent exact algorithms/storage/recomputation distinguished; B includes baseline and declares producer semantic exception, ordinary source wrapper unchanged; typed parsing and external real provenance required, schema alone not authority"
+    },
+    {
+      "id": "R2-TR02",
+      "status": "CLOSED_AT_CONTRACT_LEVEL",
+      "evidence": [
+        "R3 摘要与两阶段冻结合同 §3-5",
+        "registry-restoration-draft.json phase_authorization/process_exception.release_condition/stops",
+        "hash-and-freeze-contract.json freeze_phases/acyclic_order/namespace_rule",
+        "offline-review-checks.json"
+      ],
+      "basis": "F0 ordinary setup request distinct from post-confirmed-setup F1 final request/candidate, external conditional-or-final commit gate, acyclic hash ordering and phase namespace/drift rules are consistent"
+    }
+  ],
+  "new_blocking_findings": [],
+  "new_authorization_revision_required_for_these_findings": false,
+  "P0_1_result": "technical review document delivered only; not entire P0 or Task0 closed",
+  "implementation_approved": false,
+  "phase_authority_granted": false,
+  "A_production_activated": false,
+  "source_repaired": false,
+  "runtime_or_professional_user_release_accepted": false,
+  "evidence_boundary": "59 targeted synthetic memory/schema/digest/phase/dependency probes, no actual writer, F0/F1, authority/producer/IO/atomic/lock fault behavior certified",
+  "source_governance_exit_code": 1,
+  "R1_R2_R3_rewritten_or_approved": false,
+  "source_writes": 0,
+  "calls": 0
+}

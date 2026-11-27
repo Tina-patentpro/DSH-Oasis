@@ -1,0 +1,74 @@
+{
+  "at": "2026-11-05T22:54:09.318848+08:00",
+  "subject": "FAST39-RESTORE-MECHANISM-PREP-1",
+  "purpose": "targeted review reproductions, NOT fix verification or source acceptance",
+  "isolated_only": true,
+  "source_mode_invocations": 0,
+  "results": [
+    {
+      "id": "MR01",
+      "expected": "reject dot-dot escape from evidence allowlist",
+      "observed": "accepted",
+      "contract_violation_reproduced": true,
+      "isolated_case": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_path_traversal-a7ba0b14",
+      "details": {
+        "reference": {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_path_traversal-a7ba0b14/evidence/../outside-evidence.bin",
+          "sha256": "f67ac964a7d75e5aa142906a8a720ff614cb65ac36a55b88aad17dbfa3da5b60"
+        },
+        "resolved_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_path_traversal-a7ba0b14/outside-evidence.bin",
+        "resolved_within_evidence": false,
+        "read_bytes": 56
+      }
+    },
+    {
+      "id": "MR02",
+      "expected": "reject linked registry before candidate construction",
+      "observed": "candidate accepted",
+      "contract_violation_reproduced": true,
+      "isolated_case": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_linked_registry-9667e1b5",
+      "details": {
+        "registry_is_symlink": true,
+        "candidate_bytes": 914599
+      }
+    },
+    {
+      "id": "MR03",
+      "expected": "reject candidate time before captured native setup",
+      "observed": "candidate accepted",
+      "contract_violation_reproduced": true,
+      "isolated_case": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_regressed_time-4be3fea6",
+      "details": {
+        "candidate_time": "2000-01-01T00:00:00+08:00",
+        "setup_time": "2026-11-05T22:54:07+08:00",
+        "candidate_contains_old_time": true
+      }
+    },
+    {
+      "id": "MR04",
+      "expected": "retain UNKNOWN receipt with observation error/null hash",
+      "observed": "raised without outcome receipt",
+      "contract_violation_reproduced": true,
+      "isolated_case": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_postreplace_read_failure-b63b702c",
+      "details": {
+        "exception": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_postreplace_read_failure-b63b702c/root/README.md'",
+        "attempt_start_exists": true,
+        "outcome_exists": false,
+        "retained_candidate_matches": true,
+        "no_second_commit_attempt": true
+      }
+    },
+    {
+      "id": "CONTROL_VALID_GATE",
+      "expected": "accept valid isolated F1 without source writes",
+      "observed": "accepted",
+      "contract_violation_reproduced": false,
+      "isolated_case": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/trials/review_gate_positive_control-1a003ee4",
+      "details": {
+        "candidate_matches": true,
+        "source_mode": false
+      }
+    }
+  ],
+  "reproduced": 4
+}

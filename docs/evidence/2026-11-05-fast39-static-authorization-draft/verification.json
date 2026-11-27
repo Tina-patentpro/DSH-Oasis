@@ -1,0 +1,65 @@
+{
+  "at": "2026-11-05T20:18:32.330393+08:00",
+  "verdict": "PASS_DRAFT_AND_PRESERVATION",
+  "failures": [],
+  "draft_id": "FAST39-C4-EX-AUTH-DRAFT-R1",
+  "draft_freeze_sha256": "20f1a7d3184b4cb24397279caf8a7e039ad5a36168f671dbefa2fee1266347ba",
+  "approved": false,
+  "effective": false,
+  "source_business_field_grant_executability": "BLOCKED_RETAINED",
+  "native_row_probe_errors": [
+    "malformed table separator",
+    "malformed table separator"
+  ],
+  "first_rejection_location": {
+    "line": 127,
+    "error": "malformed table separator",
+    "header_columns": 11,
+    "separator_columns": 10,
+    "raw_line": "|---|---:|---:|---:|---|---|---|---|---|---|",
+    "limit": "first rejection point only; no claim a single separator repair would resolve all addressing errors"
+  },
+  "normal_weekly_review_required": true,
+  "weekly_time_waiver": false,
+  "baseline_identity_objects_checked": 7,
+  "draft_consistency_checks": {
+    "passed": 18,
+    "failed": 0
+  },
+  "preserved_existing_files": 3927,
+  "preserved_symlinks": 2,
+  "preserved_business_files": 353,
+  "input_count": 227,
+  "new_visible_files": [
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-static-authorization-draft-r1/FREEZE.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-static-authorization-draft-r1/authorization-draft.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-static-authorization-draft-r1/授权草案.md",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-static-authorization-draft/draft-checks.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-static-authorization-draft/preflight.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-static-authorization-draft/registration-feasibility.json"
+  ],
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "source_registry_or_CI_writes": 0,
+  "business_code_edits": 0,
+  "deployments": 0,
+  "new_generation_upload_API_paid_calls": 0,
+  "commits_or_pushes": 0,
+  "semantic153_and_historical245_tests_rerun": false,
+  "artifact_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-static-authorization-draft/draft-checks.json",
+      "sha256": "26ac170f12f07533e715be207aeeaa185ad209c6ff61041e19d72a17c084fbe8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-static-authorization-draft/preflight.json",
+      "sha256": "eca4f08b3c97ef1422fce9c949b7b984f135bbfbcc8b9eaf1cee66b490a90fdf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-static-authorization-draft/registration-feasibility.json",
+      "sha256": "64833321bdc0e7702583e8ecbf80b1dcbe73f41b7e0c0a6258e5a2b8bc12a916"
+    }
+  ],
+  "private_authoring_script_sha256": "06938db898db1a3673fc1aded66f139fc1116b2683b2ae795e6caf9ca12c73ca",
+  "limits": "Author draft self-check only; not approval, source admission, selector repair, workflow implementation or consumer acceptance"
+}

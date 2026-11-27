@@ -22,6 +22,7 @@ export async function fixtureHarness(options = {}) {
   } } }, { clock: () => NOW })
   let sequence = 0
   const service = createWorkbenchService({ repository, clock: () => NOW,
+    getLocalSkillSuite: options.getLocalSkillSuite,
     runIdFactory: () => `run-${++sequence}`,
     materialManager: { confirm() { throw Error('no files') }, refresh() { throw Error('no files') }, recheckAll() { throw Error('no files') } },
     ...serviceOptions,

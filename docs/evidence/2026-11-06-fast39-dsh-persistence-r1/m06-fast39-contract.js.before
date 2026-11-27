@@ -1,0 +1,98 @@
+import { z } from 'zod'
+
+// C4-R1 client schemas. Native M06 seven-field output is a different contract.
+// Conditional/cross-field rules are enforced by m06-fast39-result.js, not erased
+// through a JSON-schema converter that cannot represent them.
+export const FAST39_INPUT_IDS = Object.freeze([
+  'upstream_md_file', 'disclosure_file', 'disclosure_text', 'drawings_file',
+  'drawings_text', 'claim_requirements_file', 'claim_requirements_text', 'user_input',
+])
+export const FAST39_DIRECT_FIELDS = Object.freeze([
+  'technical_field', 'background_art_TD', 'technical_solutions',
+  'beneficial_effects_TD', 'embodiments_TD', 'drawings_explain_TD',
+])
+export const FAST39_OUTPUT_IDS = Object.freeze([
+  'output', 'claims_text', 'dependency_tree', 'pending_confirmation', 'quality_report', 'quality_status',
+])
+export const FAST39_LIMITS = Object.freeze({ outputUtf16: 100000, outputBytes: 262144,
+  evidenceBytes: 524288, packetBytes: 1048576, sourceCoordinate: 1048576,
+  depth: 8, arrayItems: 1024, objectKeys: 256 })
+
+const text = (min, max) => z.string().refine(s => {
+  const length = Array.from(s).length
+  return length >= min && length <= max
+}, `text must contain ${min}..${max} Unicode scalar values`)
+const hash = z.string().regex(/^[a-f0-9]{64}$/)
+const id = text(1, 256)
+const claimId = z.string().regex(/^[1-9][0-9]{0,3}$/)
+const planId = z.string().regex(/^plan:(core|parallel:[1-9][0-9]*|cluster:[1-9][0-9]*)$/)
+const coordinate = z.number().int().min(0).max(1048576)
+const outputCoordinate = z.number().int().min(0).max(100000)
+const status = z.enum(['ok', 'partial', 'insufficient'])
+const stringList = z.array(text(1, 8000)).max(256)
+const warningList = z.array(text(0, 8000)).max(256)
+const inputWarnings = z.array(z.record(z.string(), z.unknown())).max(256)
+const target = z.object({ planned_claim_id: planId, feature_id: id }).strict()
+const outlineQuality = z.object({ fallback_hint: text(0, 8000), status, warnings: stringList }).strict()
+const sourceShape = {
+  planned_claim_id: planId, feature_id: id, input_id: z.enum(FAST39_INPUT_IDS),
+  source_sha256: hash, start_utf16: coordinate, end_utf16: coordinate, quote: text(1, 4096),
+}
+const plannedClaim = z.object({ planned_claim_id: planId,
+  role: z.enum(['core_root', 'parallel_root', 'dependent_cluster']), original_id: id.nullable(),
+  feature_ids: z.array(id).max(256),
+}).strict()
+const anchorBasis = z.object({
+  planned_claims: z.array(plannedClaim).min(1).max(128),
+  critical_feature_targets: z.array(target).max(512),
+  outline_source_map: z.array(z.object(sourceShape).strict()).max(1024),
+  outline_quality: outlineQuality, outline_error: text(0, 8000),
+}).strict()
+const disposition = z.object({ planned_claim_id: planId, feature_id: id,
+  claim_id: claimId.nullable(), action: z.enum(['kept', 'rephrased', 'blocked_missing_support']),
+  output_quote: text(0, 4096), output_start_utf16: outputCoordinate.nullable(), output_end_utf16: outputCoordinate.nullable(),
+  locator_status: z.enum(['verified', 'unverified', 'not_applicable']), reason: text(1, 2000),
+}).strict()
+
+export const fast39QualityReportSchema = z.object({
+  outline_quality: outlineQuality, outline_error: text(0, 8000),
+  marker_warnings: warningList, dependency_warnings: warningList, dependency_parse_status: id,
+  dependency_edges: z.array(z.object({ parent: claimId, child: claimId }).strict()).max(1024),
+  claim_count: z.number().int().min(1).max(9999), quality_status: status,
+  acceptance: z.literal('draft_requires_review_not_professional_acceptance'),
+  contract_version: z.literal('flow26-quality-3'), source_trace_version: z.literal('flow26-source-trace-3'),
+  source_status: z.enum(['mapped', 'unverified']),
+  outline_anchor: z.object({ basis: anchorBasis, sha256: hash }).strict(),
+  source_map: z.array(z.object({ ...sourceShape, claim_id: claimId.nullable() }).strict()).max(1024),
+  claim_id_map: z.array(z.object({ planned_claim_id: planId, final_claim_id: claimId.nullable(), reason: text(1, 2000) }).strict()).min(1).max(128),
+  feature_dispositions: z.array(disposition).max(1024),
+  feature_coverage: z.object({ status: z.enum(['complete', 'incomplete', 'unverified']),
+    missing_core_targets: z.array(target).max(512), unverified_core_targets: z.array(target).max(512),
+  }).strict(),
+  input_warnings: inputWarnings, limitations: stringList, required_missing_input_lines: stringList,
+  support_review_status: z.literal('not_assessed'), source_registry_sha256: hash,
+  receipt_mapping_version: z.literal('flow26-receipt-map-1'),
+  anchor_assurance: z.literal('workflow_branch_client_self_consistency_only'),
+  coverage_basis: z.literal('reported_outline_anchor'),
+}).strict()
+
+export const fast39OutputsSchema = z.object({
+  output: z.string().min(1), claims_text: z.string().min(1), dependency_tree: z.string().min(1),
+  pending_confirmation: z.string().min(1), quality_report: z.string().min(1), quality_status: status,
+}).strict()
+
+const originalReceipt = z.object({ status: z.enum(['accepted', 'warning', 'not_provided']),
+  sha256: z.union([hash, z.literal('none')]), filename: text(1, 1000), content_origin: id,
+}).strict()
+export const fast39RegistrySchema = z.object({
+  version: z.literal('flow26-source-trace-3'), source_mode: z.literal('packet2'),
+  entries: z.array(z.object({ input_id: z.enum(FAST39_INPUT_IDS),
+    role: z.enum(['technical_material', 'output_requirement', 'manual_instruction']),
+    status: z.enum(['provided', 'not_provided', 'unverified']), text: text(0, 1048576).nullable(),
+    source_sha256: hash.nullable(), receipt_sha256: hash.nullable(), filename: text(1, 1000).nullable(),
+    original_receipt: originalReceipt,
+  }).strict()).length(8),
+  packet_text_sha256: hash, original_input_hash_claim: hash.nullable(), actual_user_input_sha256: hash,
+  input_warnings: inputWarnings, limitations: stringList, required_missing_input_lines: stringList,
+  receipt_mapping_version: z.literal('flow26-receipt-map-1'),
+}).strict()

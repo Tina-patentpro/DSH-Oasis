@@ -1,0 +1,238 @@
+{
+  "id": "DSH-WORKAREA-API-ONLY-CORRECTION-20261029-01",
+  "at": "2026-10-29T21:59:36.032501+08:00",
+  "executor": "Codex /root single agent",
+  "userDecision": "你不需要登录dify和后台。你只需要登录workarea后使用API",
+  "effectiveRoute": [
+    "workarea website authentication",
+    "existing professional-service catalog/detail API",
+    "existing backend create/query/file contracts as actually supported"
+  ],
+  "website": "https://app.oasisintwrite.com",
+  "backendAPIOrigin": "https://lzhxpy.oasisintwrite.com",
+  "managementConsolePrerequisitesRemoved": [
+    "backend-management website login",
+    "Dify-console login",
+    "Dify application ID or DSL export supplied by the user",
+    "new remote service registration merely because the local template is called M06"
+  ],
+  "priorCandidateTreatment": "flow26-m06-api-candidate-1 and its internal adapter remain preserved as an unselected proposal; its proposed new metadata/producer receipt is not a prerequisite for reading or consuming existing APIs. No current service is relabelled compatible without an actual lossless mapping.",
+  "contractBoundariesRetained": [
+    "same common eight-field UI and no silent dropped/merged inputs",
+    "actual endpoint/schema/account/Workspace/folder ownership binding",
+    "explicit unassessed output dimensions, review and non-overwrite save",
+    "UNKNOWN no replay or automatic source change",
+    "no automatic extraction or transfer of browser credentials to native DSH",
+    "PDF qualification/integration gates remain independent"
+  ],
+  "websiteObservation": {
+    "browser": "existing in-app browser",
+    "tabId": "4",
+    "url": "https://app.oasisintwrite.com/auth/login",
+    "status": "WAITING_FOR_WORKAREA_LOGIN",
+    "SMSFormFilled": false,
+    "passwordFormFilled": false,
+    "loginExpiryNoticeObserved": "login retained at most 1 hour; closing browser requires login again",
+    "userActionRequested": "sign in on workarea only, reply 已登录; former Dify login request withdrawn"
+  },
+  "browserCleanup": "attempted to close the two agent-created management tabs, lifecycle method unavailable; no further management interaction and no claim that the close completed; workarea handoff tab retained",
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "sha256": "6e5809942b2ac28e01c6ef1e048256b9055d0565fd682e58c5cbb7655dc72cab",
+      "priorSHA256": "6e5809942b2ac28e01c6ef1e048256b9055d0565fd682e58c5cbb7655dc72cab",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-00",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "sha256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+      "priorSHA256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-01",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "sha256": "2fb9c4c7b469c7593e0605d97ebff7915ca11bdfb92b0f9e953301d7267e1b9a",
+      "priorSHA256": "2fb9c4c7b469c7593e0605d97ebff7915ca11bdfb92b0f9e953301d7267e1b9a",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-02",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "sha256": "32f62af49b9d6c975dc4f10071efb1fbf4e8d28859a1bb451b0ef6cae0f88ff9",
+      "priorSHA256": "32f62af49b9d6c975dc4f10071efb1fbf4e8d28859a1bb451b0ef6cae0f88ff9",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-03",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "sha256": "39e79b8f13029f29aa4ab2a853eb80246fca98d83836b98cea143e18932be4b2",
+      "priorSHA256": "39e79b8f13029f29aa4ab2a853eb80246fca98d83836b98cea143e18932be4b2",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-04",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "sha256": "12ad32e7d9aeeed8453682dcb8da7d67c865b8bcb7ddbbffa19c4ab76329fa4d",
+      "priorSHA256": "12ad32e7d9aeeed8453682dcb8da7d67c865b8bcb7ddbbffa19c4ab76329fa4d",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-05",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "sha256": "5a4049f6c0355b44e4c30d0dd5cc344c7495c70d075b144e6f053c68771af761",
+      "priorSHA256": "5a4049f6c0355b44e4c30d0dd5cc344c7495c70d075b144e6f053c68771af761",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-06",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "sha256": "2f04f96b62610e80563ebbb7769726694ce3687d8d6fd4f4ba111dc8a809b67b",
+      "priorSHA256": "2f04f96b62610e80563ebbb7769726694ce3687d8d6fd4f4ba111dc8a809b67b",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-07",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-10-25-research-rules-and-migration-addendum.md",
+      "sha256": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "priorSHA256": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-08",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "sha256": "1d00b4a569bf5b044ac4f8a9c2ed90717cb8a157eb776b6f24f844a340b6faf2",
+      "priorSHA256": "1d00b4a569bf5b044ac4f8a9c2ed90717cb8a157eb776b6f24f844a340b6faf2",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-09",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-29-project-summary-and-next-development-plan.md",
+      "sha256": "2e454b1c266e282a9146a671f22644c95237dd4fd6c2d97b9d5a9f5ca79097b3",
+      "priorSHA256": "2e454b1c266e282a9146a671f22644c95237dd4fd6c2d97b9d5a9f5ca79097b3",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-10",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "sha256": "b2b2b400c884884dac66340f834cd8c5ab3bf4da1b1699d128b27375284b296d",
+      "priorSHA256": "3a345e4ff0e6f2bf66bcebea3816c3be07be4de4cd7ec376975100b7af53a88a",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-11",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "sha256": "4a5260bc1381871cad397fc83501feaee1a3e9b6bdb50ffa70b0968333b0063c",
+      "priorSHA256": "0d37823e7909f27717d95154448cf56aa65b5c1107698b3f1a9657bb03fed4be",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-12",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+      "sha256": "b0b3abeaf6827afc1a905e3a7301f992007af89435cd4bc2ac2594f42e496917",
+      "priorSHA256": "c74956563fdb1732a02ab26cde6d322c64592ed9d1ea6d0cf95080733b529e3f",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-13",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-inputs.json",
+      "sha256": "ad818dccdf5c0a16147482d6dd1614ff093c2d8073755d12cca5498716566e5a",
+      "priorSHA256": "ad818dccdf5c0a16147482d6dd1614ff093c2d8073755d12cca5498716566e5a",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-14",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-material-extraction-contract.md",
+      "sha256": "0490387f05f66c4c1a62bcede198f0f6e8ec0aceb07dd45d086c052f98620c38",
+      "priorSHA256": "0490387f05f66c4c1a62bcede198f0f6e8ec0aceb07dd45d086c052f98620c38",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-15",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-extraction-product-gates.json",
+      "sha256": "9d9fc75b45e641d9ac80012eb7b5fc30346462c92a91af5f40072ed9e9bbffd6",
+      "priorSHA256": "9d9fc75b45e641d9ac80012eb7b5fc30346462c92a91af5f40072ed9e9bbffd6",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-16",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-extraction-distribution-candidate.json",
+      "sha256": "de7838799c749fc58e1171336c063feedd2c724bfb35cab598af3dd3af0501aa",
+      "priorSHA256": "de7838799c749fc58e1171336c063feedd2c724bfb35cab598af3dd3af0501aa",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-17",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-dsh-provider-discovery.json",
+      "sha256": "3b9803cffcf97b3a5618a504bcc389c6ea901abd9c1646554760b6922cee40d4",
+      "priorSHA256": "3b9803cffcf97b3a5618a504bcc389c6ea901abd9c1646554760b6922cee40d4",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-18",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input-r2.json",
+      "sha256": "a2ae924ef88cab1514144e04b23d978d8612b421a0e8ade274ba5490cebaac7d",
+      "priorSHA256": "a2ae924ef88cab1514144e04b23d978d8612b421a0e8ade274ba5490cebaac7d",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-19",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-intake-delta.json",
+      "sha256": "d390b4f476758a9fae8a73ac89c59815286ff02d1616fd7b306df027bbdc163e",
+      "priorSHA256": "d390b4f476758a9fae8a73ac89c59815286ff02d1616fd7b306df027bbdc163e",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-20",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.json",
+      "sha256": "5dae3e9cd2b2f52562e01e4dc0dca9dca325a5ee64db933022404995d8bbde62",
+      "priorSHA256": "5dae3e9cd2b2f52562e01e4dc0dca9dca325a5ee64db933022404995d8bbde62",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-21",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.md",
+      "sha256": "4cf5500b1c61de75a291395ee5bb2c871d28087ac683465b8b9b5c661c49b4e8",
+      "priorSHA256": "4cf5500b1c61de75a291395ee5bb2c871d28087ac683465b8b9b5c661c49b4e8",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-22",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-pdf-integration-compatibility-r1.md",
+      "sha256": "add78999136933428c54596fceb7f81781af3f07ee37c4eedb9eaa697efc157a",
+      "priorSHA256": "add78999136933428c54596fceb7f81781af3f07ee37c4eedb9eaa697efc157a",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-23",
+      "scope": "current rule/DS-04/current-entry clauses; unaffected historical documents and distribution manifests identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/workarea/src/api/services/ai.service.ts",
+      "sha256": "d0d2961b585c02289348aa473a432d536a20d9e2f9a4b96742c8c73c5392f52d",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-24",
+      "scope": "createWithApi and section8.5 backend-only route"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/workarea/API接口文档-用户端.md",
+      "sha256": "85aeb856ada9a41475542c2fe91ef8289c0eda97186b57c56837eedead0e080d",
+      "snapshot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/input-25",
+      "scope": "createWithApi and section8.5 backend-only route"
+    }
+  ],
+  "coordination": "1.2.1 / overall1.3.1 / NS1-R1 / P28",
+  "plan": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-29-project-summary-and-next-development-plan.md",
+  "step": "DS-04 existing API consumer scope corrected by latest user decision",
+  "anchors": [
+    "oasis-next-steps-ns1",
+    "oasis-plan-progress-p28"
+  ],
+  "effect": "Prior admin-access facts remain historical. Dify authentication is withdrawn as a blocker for this consumer task. Only authenticated workarea access blocks current live API metadata inspection. Mapping and actual acceptance are still unverified.",
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "preservedFileCount": 52,
+  "preservationManifest": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/workarea-api-only-20261029/preservation.json",
+  "newGenerationUploadOrFeeActions": 0,
+  "remoteConfigurationSaves": 0,
+  "rawCredentialsCopied": false,
+  "sourceLockProfileOrRuntimeChanges": false,
+  "newExperimentCases": 0
+}

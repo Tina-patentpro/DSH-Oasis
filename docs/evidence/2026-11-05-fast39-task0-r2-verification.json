@@ -1,0 +1,138 @@
+{
+  "at": "2026-11-05T12:39:59.415130+08:00",
+  "executor": "Codex single agent",
+  "status": "STATIC_TASK0_PREPARATION_PACKAGE_FIXED / BUSINESS_WORKFLOW_ADOPTION_NOT_ADMITTED",
+  "commands": [
+    {
+      "command": "ssh -o BatchMode=yes -o StrictHostKeyChecking=yes qingdao python3 - : seven selected source SHA256 and PID cwd read",
+      "exit_code": 0,
+      "generation": 0,
+      "remote_writes": 0
+    },
+    {
+      "command": "python3 - : exact copy/hash/AST, producer member and consumer payload byte checks, JSON/local refs/synthetic UTF16 checks, preservation and link assertions",
+      "exit_code": 0
+    },
+    {
+      "command": "DSH-Oasis/tools/bin/python3 -B -c : existing runtime version / importlib jsonschema availability only",
+      "exit_code": 0,
+      "version": "3.14.8",
+      "jsonschema_available": false
+    }
+  ],
+  "checks": {
+    "central_and_plan_inputs_unchanged": 16,
+    "source_adoption_inputs_unchanged": 16,
+    "mapping_rows_source_hash_verified": 7,
+    "producer_manifest_members_verified": 30,
+    "consumer_payload_exact_matches": 8,
+    "prior_task0_private_artifacts_unchanged": 46,
+    "prior_task0_binding_unchanged": true,
+    "backend_exact_source_copies": 7,
+    "backend_test_path_reserved_not_created": true,
+    "future_helper_not_created": true,
+    "source_slice_contains_no_env": true,
+    "frozen_contract_members": 5,
+    "frozen_contract_readonly_files": 6,
+    "document_local_links_exist": 9,
+    "static_contract_checks": {
+      "json_duplicate_key_and_syntax": true,
+      "local_schema_refs_resolve": 6,
+      "schema_required_keys_declared": true,
+      "schema_object_unknown_fields_rejected": true,
+      "synthetic_fieldsets_exact": true,
+      "six_outputs_strings": true,
+      "raw_and_parsed_report_equal": true,
+      "quality_partial_unassessed_preserved": true,
+      "utf16_positive_nonbmp_and_crlf": true,
+      "surrogate_split_negative": true,
+      "newline_hash_negative": true,
+      "delivery_disabled_future_hashes_null": true,
+      "producer_manifest_members_unchanged": 30,
+      "source_inputs_unchanged": 16,
+      "backend_source_bytes_unchanged": 7,
+      "reserved_test_is_not_claimed_existing": true,
+      "full_json_schema_engine_run": false,
+      "business_tests_run": false
+    }
+  },
+  "repositories": [
+    {
+      "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis",
+      "head_unchanged": true,
+      "branch_unchanged": true,
+      "preexisting_files_unchanged": 156,
+      "new_git_paths": [
+        "docs/business-baseline/fast39-result-contract-candidate-1/CONTRACT.md",
+        "docs/business-baseline/fast39-result-contract-candidate-1/FREEZE.json",
+        "docs/business-baseline/fast39-result-contract-candidate-1/delivery-binding.candidate.json",
+        "docs/business-baseline/fast39-result-contract-candidate-1/schemas.json",
+        "docs/business-baseline/fast39-result-contract-candidate-1/synthetic-example.json",
+        "docs/business-baseline/fast39-result-contract-candidate-1/validation-cases.json",
+        "docs/evidence/2026-11-05-fast39-task0-r2-adoption-map.json",
+        "docs/evidence/2026-11-05-fast39-task0-r2-backend-copy.json",
+        "docs/evidence/2026-11-05-fast39-task0-r2-preflight.json",
+        "docs/evidence/2026-11-05-fast39-task0-r2-return.md"
+      ]
+    },
+    {
+      "root": "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0",
+      "head_unchanged": true,
+      "branch_unchanged": true,
+      "preexisting_files_unchanged": 73,
+      "new_git_paths": []
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-task0-r2-preflight.json",
+      "sha256": "3069e876e3374dae7e741a8afce82410656753918970ea0a755a64d8d8ff4d7a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-task0-r2-backend-copy.json",
+      "sha256": "82872565f8fad7b04f84c5b7cff3751f18718f52772aa73eb08d36b6db6badee"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-task0-r2-adoption-map.json",
+      "sha256": "caaf8806447908f319b1ba6ead06c2fb3defed31b18d3813fde63bacc8bf726c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-task0-r2-return.md",
+      "sha256": "2b9560fc45e408e27a5f9c9ff1fbcb5ae7bec312d454aea6edec0a596f9021df"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-1/FREEZE.json",
+      "sha256": "24d09287321b85944d20e4223c3df535c22a58ba4b47a15f400b34c84c616063"
+    }
+  ],
+  "private_current_readonly_receipt": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-task0-r2-20261105/backend-current-readonly-recheck.json",
+    "sha256": "43a307c99075c9a7163072423e036998871038ccda96f8abe4a72470e885454a"
+  },
+  "admission_limits": [
+    "F26V019/V012 trial receipts do not authorize engineering/Dify; exact adopted Skill/rule scope and IC-DESIGN not yet bound",
+    "No repaired DSL/backend/client artifacts; future delivery fingerprints remain null and disabled",
+    "No full JSON Schema engine validation; document syntax/refs/fieldsets/location only",
+    "Local existing Python3.9.6 and fixed3.14.8 are not production3.10.20; target runtime validation not performed"
+  ],
+  "not_executed": [
+    "business source changes",
+    "business tests",
+    "workflow implementation",
+    "model generation",
+    "paid call",
+    "upload",
+    "deploy",
+    "Git commit/push",
+    "professional/user acceptance"
+  ],
+  "counts": {
+    "business_source_byte_changes": 0,
+    "new_generation_calls": 0,
+    "paid_calls": 0,
+    "uploads": 0,
+    "deployments": 0,
+    "commits": 0,
+    "pushes": 0
+  }
+}

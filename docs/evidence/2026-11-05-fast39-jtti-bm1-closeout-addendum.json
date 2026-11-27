@@ -1,0 +1,141 @@
+{
+  "at": "2026-11-05T03:33:22.461331+00:00",
+  "discovery": "Final preservation check detected plan drift; never restored or rewrote parallel file",
+  "parallelMaster": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+    "originalSnapshot": "/Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-11-05-business-mode-bm1/before/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+    "beforeSHA256": "29d7aba8f354585a5616ca69697a220ab8fab9932ae7c9bbf45c47149e274436",
+    "afterSHA256": "0ba1c1df18a4be4dc17836c6464ec19c247ebe8719bb61a05010fa7fe98f00a1",
+    "diff": [
+      "--- before BM1",
+      "+++ current BM1",
+      "@@ -1,4 +1,6 @@",
+      " # DSH-Oasis独立总计划",
+      "+",
+      "+> 当前商业方向／优先级：[BM1（2026-11-05）](<../../../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md>)；本文件旧目标、起点和排程与BM1冲突时由本次明确接续，原状态、合同、接受与历史证据保持。",
+      " ",
+      " > **当前剩余任务起点：P30（2026-10-30）**，见[本项目接续](#oasis-plan-progress-p30)。NS1/P28及已链接后续计划中与本节冲突的旧起点按P30解释；原合同、准入、历史接受/FAIL/UNKNOWN继续有效，不恢复测试或业务。",
+      " ",
+      "@@ -285,3 +287,26 @@",
+      " 本项目后续细化见[项目进展与后续计划](2026-11-05-project-progress-and-next-plan.md)。本节承接P30与10月30日细计划，并以两项current_entry及10月31日具名证据校正起点：新版M06本地工程闭环已完成，专业/用户接受待补；Fast39 R1/R2实际校准均FAIL，正式来源与G0仍OPEN，先无费用核字段传递/材料解析，不追加付费调参。PDF仅补现有组件资格后再U1/D1，F已验安装/持久恢复子集复用，完整F与发行仍开放。",
+      " ",
+      " 本次仅总结与规划，不恢复业务实施、测试或真实调用；整体1.3.1／NS1-R1／P30、协同1.2.1及DS-01—05不变。原状态入口、源码、固定依赖、Profile及历史FAIL/UNKNOWN不改，已消费许可不续用。实际读取范围/完整字节hash见[本轮输入](../evidence/2026-11-05-project-plan-inputs.json)，文件保全和文档检查见[本轮验证](../evidence/2026-11-05-project-plan-verification.json)。旧正文保持完整字节前缀；原current_entry继续承担进度权威。",
+      "+",
+      "+",
+      "+<!-- oasis-business-mode:BM1 -->",
+      "+<a id=\"oasis-business-mode-bm1\"></a>",
+      "+## 2026-11-05 开源与服务业务模式接续（BM1，仅规划）",
+      "+",
+      "+项目ID：dsh-oasis；原工作包：DS-01—05。依据[BM1整体补充](<../../../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md>)及本聊天最新决定，接续旧NS1/P28/P30和本项目后发子计划中冲突的商业方向/优先级；其他原条件及实际进度入口保留。基础规划1.3.1、协同1.2.1不变，本修订是BM1。",
+      "+",
+      "+**BM1当前目标：** 以DSH插件优先交付可用业务Skills，保留后发收费专业服务入口；与WorkBuddy用户插件共享业务合同，后者的机制/目录/实现归属待绑定。",
+      "+",
+      "+**阶段：** Skills优先上线；收费专业能力约1—2个月、全自制开源后台替换约2—3个月为目标窗口，准确起算点/日期待确定，不默认采用此前助手提出的Skills上线日T0。近期复用阿里云青岛第三方开发版；旧按次/充值/余额暂保留降优先级。",
+      "+",
+      "+| 本项目增量 | 直接输入与责任方／复用范围 | 验收与顺序 |",
+      "+|---|---|---|",
+      "+| 首批交付与不重复工作 | 复用已交工程闭环和F限定接受、11月5日Fast39/JTTI复测记录；原记录记调用/提取通过、内容partial，来源ID/锁止件/输出投影问题已定位，原R1/R2 FAIL与正式绑定/G0 OPEN保留。不重取已得回执/提取证据，不由BM1新增调用或修复。 | 只补本次具名差异和有理由的定向验证，不重新制作已交完整成果。 |",
+      "+| 依赖与缺件 | PD提供固定Skill/来源/规则/许可；TL给适用效力与判据；实际后台给API/身份/项目/文件与费用合同。 | 缺件只阻实际消费它的功能；可独立准备并先交候选，不等其他项目整体完成。 |",
+      "+| 局部顺序 | 所选Skill准备与Host消费/发布按对应门推进；收费API后发，青岛版先承接；新旧后台配置迁移候选与本地Skills独立，不以后台整体完成、Dify或WorkBuddy双端齐备阻首发。 | 可安装/调用/更新的准确Skill与公开示例有同版证据，正式专业/用户与发布接受分别取得；APIorigin/账户改变需重新核凭据与项目归属，禁止静默转发旧认证。 |",
+      "+",
+      "+开源覆盖自有产品代码/Skills/工作流/连接器等；第三方原件/代码、客户资料和凭据另核公开范围，许可证/官方扩展机制未定时如实列缺，不由方向决定补认。连接器兼具内部效率和独立开源专业展示/Star价值，用户WorkBuddy插件机制/目录/实现归属另待绑定，不复制账户与财务系统。",
+      "+",
+      "+本轮仅文档维护，不恢复代码/业务测试、知识/Skill/工作流生产、模型/API/Dify/数据库/支付、WorkBuddy投递或GitHub发布，不安装/构建/提交/推送。原R1/EXEC-R2、来源/许可/资金/权限/Batch、专业/用户/发布门和FAIL/UNKNOWN继续有效。",
+      "+",
+      "+本次读取日期2026-11-05（Asia/Shanghai）；整体、补充、矩阵/合同、本计划绝对路径/原始完整字节SHA256、适用章节、旧→新差异与实际Git/未提交范围见[本次读取基线](<../../../docs/coordination/execution/2026-11-05-business-mode-bm1/baseline.json>)、[EXEC-R2记录](<../../../docs/coordination/execution/2026-11-05-business-mode-bm1/execution-preflight.json>)及[修订说明](<../../../docs/coordination/execution/2026-11-05-business-mode-bm1/业务决定与修订说明.md>)。本计划BM1修改后身份在verification.json登记；不是已批准业务实施或新接受，不以新hash重签旧包。"
+    ]
+  },
+  "changedInputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "beforeSHA256": "6e5809942b2ac28e01c6ef1e048256b9055d0565fd682e58c5cbb7655dc72cab",
+      "afterSHA256": "af78ffee8dba551ff9a04d5039ce9f6c97cb1880ad3604512b5238e8b7f47806",
+      "classification": "parallel BM1 documentation update",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "beforeSHA256": "2fb9c4c7b469c7593e0605d97ebff7915ca11bdfb92b0f9e953301d7267e1b9a",
+      "afterSHA256": "e1e97e8a383aa0ceb73e0ddf4099737cde267f3ee59b14100ac8603579bfa513",
+      "classification": "parallel BM1 documentation update",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "beforeSHA256": "32f62af49b9d6c975dc4f10071efb1fbf4e8d28859a1bb451b0ef6cae0f88ff9",
+      "afterSHA256": "e6e9447a2727e869cc926580e617e69dd61d5192b35dbfd8952ddb99c5eb0816",
+      "classification": "parallel BM1 documentation update",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "beforeSHA256": "ee1ec0bbe8c6de0046a75cf69af7038c3ef1d5ee3118148880bc97c1826c3fcf",
+      "afterSHA256": "309021d67cb061946cec5dafc9e52dc82f2ef8d28c41a1ef0939681b758d101a",
+      "classification": "parallel BM1 documentation update",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "beforeSHA256": "99fbb471debe2cecd0dd7961577a7a9a900b14032c8bf508158abc63efc7382d",
+      "afterSHA256": "7924803d162ffdc378e06bf7a6ff54da1f891612e10e219c1046f608d1cd211d",
+      "classification": "parallel BM1 documentation update",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "beforeSHA256": "5a4049f6c0355b44e4c30d0dd5cc344c7495c70d075b144e6f053c68771af761",
+      "afterSHA256": "c79f7074854981686a3d6dfe5fdf4c201499ad91cf9956d291f363a94780e18e",
+      "classification": "parallel BM1 documentation update",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "beforeSHA256": "2f04f96b62610e80563ebbb7769726694ce3687d8d6fd4f4ba111dc8a809b67b",
+      "afterSHA256": "d466c9caa59c332120cccb1c3407204068234ce0f7d4a3c9bd9182c20105517f",
+      "classification": "parallel BM1 documentation update",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "beforeSHA256": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+      "afterSHA256": "e2cf4f301cc46cc7c9ad7c68384ef4c01150e6c33a909562f1110e41483fd305",
+      "classification": "parallel BM1 documentation update",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/README.md",
+      "beforeSHA256": "ce7a6994d2e2537a9a09889cf385965ace88e2d7fce4931a52342b4864ce6835",
+      "afterSHA256": "ab7fccf5605df9b2ab0c59e0417ba20745d383b4f6a5ee2730ddfe624e1fde22",
+      "classification": "parallel BM1 documentation update",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "beforeSHA256": "29d7aba8f354585a5616ca69697a220ab8fab9932ae7c9bbf45c47149e274436",
+      "afterSHA256": "0ba1c1df18a4be4dc17836c6464ec19c247ebe8719bb61a05010fa7fe98f00a1",
+      "classification": "parallel BM1 documentation update",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "beforeSHA256": "34acdf7544f7700a64c3dc64692f665c40cf0c3c55ce1dba411e6f9108a93f94",
+      "afterSHA256": "66aa7d13118ce2a3ad19df18ddc534fa86a0a5728413eff70bb8274496549faa",
+      "classification": "own verified status prefix",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "beforeSHA256": "fa772c0d35fe3a18a73eba2993807bb016fe6a3d5c656f49d4f14ec3f2238ffc",
+      "afterSHA256": "041afbc713b6f3f3ce735cafd7e8847fc3946856f5dab7f15de583a410f50fec",
+      "classification": "own verified status prefix",
+      "impact": "No new calls or repair; preserve parallel directions and completed test evidence; future execution must re-read BM1"
+    }
+  ],
+  "BM1Supplement": {
+    "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+    "sha256": "4e55d3c309f42ae3f1fea611633dc1b964aaf780a5477698858c9eaa9fecf942",
+    "revision": "BM1 / 2026-11-05",
+    "readScope": "current goals, constraints, stages, DSH continuation; future directions not implementation authorization"
+  },
+  "ruling": "Current test finished under explicit user retest and unlimited budget before closeout drift; BM1 itself reuses this exact partial result and does not authorize added calls/fixes. No conflict with preserving results; no further business execution. No full central compatibility acceptance asserted."
+}

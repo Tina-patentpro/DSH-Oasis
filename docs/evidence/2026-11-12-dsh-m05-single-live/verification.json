@@ -1,0 +1,166 @@
+{
+  "requestKey": "d2374f0b-3625-46ca-b078-d360b38cd90c",
+  "authorizedFeeLimitCny": null,
+  "realModelPosts": 1,
+  "resubmissions": 0,
+  "professionalApiRequests": 0,
+  "dispatch": {
+    "at": "2026-11-12T02:54:01.166Z",
+    "requestKey": "d2374f0b-3625-46ca-b078-d360b38cd90c"
+  },
+  "wireStart": {
+    "nodeId": "Flow-1-5",
+    "requestKey": "d2374f0b-3625-46ca-b078-d360b38cd90c",
+    "runId": "v340-106a5570-735a-4451-b98d-0a8d63e73505",
+    "model": "deepseek-flash",
+    "effort": "low",
+    "maxOutputTokens": 16384,
+    "serializedBytes": 27405,
+    "systemSha256": "2974a937ee0aba3ed54e0fc2133e4e53df47acf28dd9a2001f3d6091b28e972b",
+    "inputContentSha256": "45ce7a038c9db00ef053102badc34a584aff96be4275b495ba8513b08eb17062",
+    "tools": 0,
+    "at": "2026-11-12T02:53:59.885Z",
+    "mode": "live",
+    "promptTokens": 6407,
+    "fullWireTokens": 6892,
+    "inputTokenBudget": 32000,
+    "protocolReserveTokens": 2000,
+    "conservativeInputTokens": 8892
+  },
+  "provider": {
+    "at": "2026-11-12T02:54:08.541Z",
+    "http": 200,
+    "requestId": null,
+    "messageId": "b02a0309-32a0-4834-81a9-967ce52dd37c",
+    "providerModel": "deepseek-flash",
+    "stopReason": "end_turn",
+    "messageStop": true,
+    "finalUsage": true,
+    "usage": {
+      "input_tokens": 1415,
+      "output_tokens": 996,
+      "cache_read_input_tokens": 4992,
+      "cache_creation_input_tokens": 0,
+      "streamIncomplete": true
+    }
+  },
+  "hostRun": {
+    "id": "M05",
+    "workspaceId": "3a3aa555-8418-4e83-91b4-5c865950514f",
+    "sessionId": "session-23c5b9cd-bd1b-43d2-b139-530b6e259876",
+    "taskId": "m05-single-live-d2374f0b",
+    "requestKey": "d2374f0b-3625-46ca-b078-d360b38cd90c",
+    "skillId": "patent-technical-disclosure",
+    "skillVersion": "0.3.0-rc.4",
+    "resourceSha256": "e0a38c5a124ca9d176a9b340a46639009c37a200c81321b3ea530238c3f7a918",
+    "runId": "v340-106a5570-735a-4451-b98d-0a8d63e73505",
+    "status": "completed",
+    "failureCode": null,
+    "summary": {
+      "finishKind": "stop",
+      "usage": {
+        "inputTokens": 1415,
+        "outputTokens": 996,
+        "totalTokens": 7403,
+        "cacheReadTokens": 4992
+      }
+    },
+    "candidateReceiptVersion": "v340-native-candidate-6",
+    "receiptSystemSha256": "2974a937ee0aba3ed54e0fc2133e4e53df47acf28dd9a2001f3d6091b28e972b",
+    "inputSha256": "ea17560ee18bad85a8d8adc922a5d949ba93fe0a1fc26ab0a109f690a6223649",
+    "resultSha256": "da83d800a2ac1ef4b5479d57372c1eaa99e4b95ffd2ac184ec3f74a67ec5f0e9",
+    "resultBytes": 19549,
+    "resultFile": "M05-raw-result.md",
+    "coreSha256": "0cf7d4829cc6c6b791032915665745e718733914fe84c570c33d8541d502aa22",
+    "coreLength": 859,
+    "tables": {
+      "T1": 1,
+      "T2": 4,
+      "T3": 1,
+      "T4": 0,
+      "T5": 0,
+      "T6": 0
+    },
+    "wireTerminal": true,
+    "livePostAttempt": true
+  },
+  "sourceReceiptDigests": {
+    "technical_disclosure_file": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea",
+    "drawings_text": "5ec854f4a4e04c3234abb38646f5a921e9682362f30a17d83a4c8289c16f5bd6",
+    "supplemental_data_text": "6a0ec77039689bede14bc63ffcfc6d18fe790b832f641300099108d1dd659d89",
+    "user_input": "cb0a7fccc282d04a6346de1099b94804452573c666b9bbe54ae77e5a3aaf92ab"
+  },
+  "structuredTables": {
+    "T1": [
+      {
+        "row_id": "T1-1",
+        "data": {
+          "技术对象/场景": "滑移组件的滑块移动控制",
+          "现有缺陷": "材料未记载现有技术不足",
+          "原因或机理": "待确认",
+          "改进目标": "实现滑块移动的可切换限制",
+          "指标/测量方法": "未提供",
+          "来源状态": "public-disclosure.md；source_fact"
+        }
+      }
+    ],
+    "T2": [
+      {
+        "row_id": "T2-1",
+        "data": {
+          "要素": "底座",
+          "关系": "承载导向槽与锁止件",
+          "功能": "载体",
+          "来源状态": "交底+标号1"
+        }
+      },
+      {
+        "row_id": "T2-2",
+        "data": {
+          "要素": "导向槽",
+          "关系": "设于底座，沿第一方向延伸",
+          "功能": "限定滑块方向",
+          "来源状态": "交底+标号2+访谈F1"
+        }
+      },
+      {
+        "row_id": "T2-3",
+        "data": {
+          "要素": "滑块",
+          "关系": "与导向槽配合，沿第一方向移动",
+          "功能": "被导向移动",
+          "来源状态": "交底+标号3+访谈F1"
+        }
+      },
+      {
+        "row_id": "T2-4",
+        "data": {
+          "要素": "锁止件",
+          "关系": "设于底座；与滑块接触关系未确认",
+          "功能": "允许/限制滑块移动",
+          "来源状态": "交底+标号4+访谈F2"
+        }
+      }
+    ],
+    "T3": [
+      {
+        "row_id": "T3-1",
+        "data": {
+          "效果": "限制滑块移动",
+          "机理": "锁止件处于限制态",
+          "条件": "两状态切换方式未知",
+          "证据状态": "预期，无实测"
+        }
+      }
+    ]
+  },
+  "meteredFeeCny": "0.01099768",
+  "accountDebitImmediateCny": "0.00",
+  "accountDebitObservedCny": "0.01",
+  "readOnlyBalanceObservedAt": "2026-11-12T02:57:35.342674+00:00",
+  "billingLineItemAvailable": false,
+  "reviewStatus": "not-reviewed",
+  "contentReviewNote": "正文中‘滑块沿第一方向在两状态间运动’容易把锁止件的状态写成滑块的状态。后续审阅应明确锁止件两态控制滑块是否可移动。",
+  "isolatedCredentialRemoved": true,
+  "oldPaidBatchUntouched": true
+}

@@ -1,0 +1,155 @@
+{
+  "kind": "EDITORIAL_SIDECAR_NOT_HOST_WIRE",
+  "parent": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/claims_20261031132202_9a439835.md",
+    "sha256": "e0fb29d388c9bae19be253e7bd048c31ed8ba40987adf3cdddc8d1bd354ff815",
+    "bytes": 69523
+  },
+  "warnings_preserved_without_changes": [
+    {
+      "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "未提供：upstream_md_file",
+      "affected_content": "本次输入及下游累计快照",
+      "current_handling": "保留实际材料并继续输出",
+      "model_completion": "未评估",
+      "deliverable_impact": "需人工核对",
+      "recommended_action": "核对实际输入及其来源",
+      "status": "open"
+    },
+    {
+      "warning_id": "host-Flow-2-6-professional-review",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "仅核对结构、来源和累计传递；技术语义及专业质量尚待人工审核。",
+      "affected_content": "本次输入及下游累计快照",
+      "current_handling": "保留实际材料并继续输出",
+      "model_completion": "未评估",
+      "deliverable_impact": "需人工核对",
+      "recommended_action": "核对实际输入及其来源",
+      "status": "open"
+    },
+    {
+      "warning_id": "host-Flow-2-6-m06-limited-d4fda3b7-6cf4-4191-b727-2f36827e8276",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "本版本仅核对已识别的指令来源；正文与表格、依据的一致性尚未核对，未执行结构删除。",
+      "affected_content": "本节点正文、结构表和来源",
+      "current_handling": "保留原输入、结构记录和历史，仅形成受限稿",
+      "model_completion": "未评估",
+      "deliverable_impact": "不能据此认定完整同步、结构删除或专业审阅已完成",
+      "recommended_action": "核对当前正文、相关表格与依据；完整变更另行处理",
+      "status": "open"
+    },
+    {
+      "warning_id": "m06-upstream-missing",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "未提供前序 Flow-1-5 累计主文稿，无法核对累计结构、既有权项、术语表和继承警示。",
+      "affected_content": "本轮权利要求初稿基线、T1/T2/T4 的累计承接、继承警示与下游一致性。",
+      "current_handling": "按容缺方式仅使用本轮实际收到的交底、附图文字说明和要求材料；不回读其他文件，不补造历史。",
+      "model_completion": "none",
+      "deliverable_impact": "本稿只能作为受限初稿候选，不能确认与既有累计文稿一致，也不能视为已具备完整申请文件基础。",
+      "recommended_action": "提供实际 Flow-1-5 累计主文稿并重新核对；若确认无法提供，由人工明确容缺范围和责任边界。",
+      "status": "open"
+    },
+    {
+      "warning_id": "m06-lock-implementation-missing",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "锁止件的具体结构、驱动方式、与底座的连接关系、与滑块的配合关系、材料、尺寸和载荷均未给出，锁止状态改变缺少可实施细节。",
+      "affected_content": "权利要求1的锁止件功能性限定；权利要求2的从属关系；T2的F-004；T3的效果依据；T4的支持结论。",
+      "current_handling": "仅保留交底明示的“允许移动/限制移动”状态改变关系，不补写具体锁止结构或驱动。",
+      "model_completion": "none",
+      "deliverable_impact": "权利要求1可能因功能限定过宽而支持不足或边界不清楚；当前无法形成可靠的锁止实施方式。",
+      "recommended_action": "补充锁止件的具体结构、状态切换方式、连接位置、驱动力或操作方式，以及至少一种完整实施方式。",
+      "status": "open"
+    },
+    {
+      "warning_id": "m06-drawings-text-only",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "附图材料只有文字关系说明，没有真实图像、剖面、截面形状或连接细节，不能完成视觉核验。",
+      "affected_content": "滑块与导向槽的配合关系、锁止件设置位置、空间结构和支持锚点。",
+      "current_handling": "仅把文字说明作为关系线索，不声称已完成图像核验。",
+      "model_completion": "none",
+      "deliverable_impact": "结构类权项的空间关系和支持依据不足，附图标记与具体结构无法核对。",
+      "recommended_action": "提供真实附图或补充剖面/连接细节的文字说明，并由人工核对。",
+      "status": "open"
+    },
+    {
+      "warning_id": "m06-no-prior-art",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "未提供最接近现有技术或对比文件，无法完成两部分撰写的可靠划界。",
+      "affected_content": "权利要求1前序部分与特征部分的划分、区别特征认定和范围取舍。",
+      "current_handling": "将当前独立权利要求作为暂定结构，不宣称最接近现有技术已确定。",
+      "model_completion": "none",
+      "deliverable_impact": "独立权利要求的划界和范围比较只能是暂定初稿。",
+      "recommended_action": "由用户、专利专业人员或审查员提供或确认最接近现有技术后再调整。",
+      "status": "open"
+    },
+    {
+      "warning_id": "m06-experiment-evidence-missing",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "当前材料未给出实验数据、载荷条件或锁止可靠性验证；效果依据主要是结构关系分析。",
+      "affected_content": "T3效果证据、锁止功能的效果说明和公开充分性判断。",
+      "current_handling": "按结构关系作有限初检；不把缺少实验数据当然认定为公开不充分，也不补造数据。",
+      "model_completion": "none",
+      "deliverable_impact": "锁止效果和可靠性缺少实测依据，效果说明强度有限。",
+      "recommended_action": "如需要主张锁止可靠性或载荷相关效果，补充真实实验条件、方法和数据。",
+      "status": "open"
+    },
+    {
+      "warning_id": "m06-no-old-draft",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "未提供单份旧权利要求稿，现有要求材料只表达保护取舍要求，不能作为旧稿表达比较对象。",
+      "affected_content": "旧新实质限定比较、等义或范围调整判断、受影响引用路径。",
+      "current_handling": "如实记录为无可用旧稿，未作版本比较。",
+      "model_completion": "none",
+      "deliverable_impact": "无法判断本轮初稿相对旧稿的限定变化和范围调整。",
+      "recommended_action": "如需版本比较，提供单份旧稿表达参考并指定比较要求。",
+      "status": "open"
+    },
+    {
+      "warning_id": "m06-functional-term-boundary",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "“锁止件”“释放状态”“锁止状态”目前以功能关系界定，具体边界和可验证条件未给出。",
+      "affected_content": "权利要求1的清楚性与支持；术语表；T4支持结论。",
+      "current_handling": "保留功能限定并登记待确认，不擅自改成未公开的具体结构。",
+      "model_completion": "none",
+      "deliverable_impact": "权利要求1可能被要求进一步限定或说明；产品功能表征的适用与可验证条件尚不充分。",
+      "recommended_action": "补充锁止件的结构或可验证判据，或将其下沉为从权限定并准备说明书支持。",
+      "status": "open"
+    },
+    {
+      "warning_id": "host-Flow-2-6-manual-9a439835-3122-46c3-ad6c-e714ee0df0f8",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "d4fda3b7-6cf4-4191-b727-2f36827e8276",
+      "problem": "核心正文经人工修改；累计表、来源和技术语义需要重新核对。",
+      "affected_content": "本次输入及下游累计快照",
+      "current_handling": "保留实际材料并继续输出",
+      "model_completion": "未评估",
+      "deliverable_impact": "需人工核对",
+      "recommended_action": "核对实际输入及其来源",
+      "status": "open"
+    },
+    {
+      "warning_id": "host-Flow-2-6-m06-limited-9a439835-3122-46c3-ad6c-e714ee0df0f8",
+      "first_flow": "Flow-2-6",
+      "inherited_from": "none",
+      "problem": "本版本仅核对已识别的指令来源；正文与表格、依据的一致性尚未核对，未执行结构删除。",
+      "affected_content": "本节点正文、结构表和来源",
+      "current_handling": "保留原输入、结构记录和历史，仅形成受限稿",
+      "model_completion": "未评估",
+      "deliverable_impact": "不能据此认定完整同步、结构删除或专业审阅已完成",
+      "recommended_action": "核对当前正文、相关表格与依据；完整变更另行处理",
+      "status": "open"
+    }
+  ],
+  "status": "ALL_ORIGINAL_12_OPEN_NO_RESOLUTION_OR_ACCEPTANCE"
+}

@@ -1,0 +1,196 @@
+{
+  "at": "2026-11-06T10:23:05.362140+08:00",
+  "result": "PASS",
+  "command": "python3 via zsh: exact metadata delta, notice bytes and provenance, 134-member declared census, old-input hashes, entry relations, links and state suffix checks",
+  "scope": "local notice attachment and declared files/static identity; NOT npm pack/build/install, runtime or legal/release acceptance",
+  "checks": [
+    {
+      "check": "package raw delta exactly two files entries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all other package metadata preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "private version active license unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "only planned files paths appended",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "complete raw license copied: cn-patent-drafting-MIT.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "complete raw license copied: zod-4.4.3-MIT.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all seven method fragments retained in root notice",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "notice describes limited coverage and no adoption",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "copyright originals preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "134 unique candidate paths",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no old paths removed and only three added",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "130 old members unchanged one metadata changed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "current candidate exact bytes match",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "literal declared census matches candidate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "root vs controlled entry distinction recorded accurately",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "M06 candidate container identity and status kept",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "203 protected originals unchanged",
+      "passed": true,
+      "detail": {
+        "count": 203,
+        "drift": []
+      }
+    },
+    {
+      "check": "state original exact suffix: docs/project-current-state.md",
+      "passed": true,
+      "detail": {
+        "before_bytes": 318576,
+        "sha256": "244d3ba00c059f0ea9a70287a8d2c67110539d2da395624405dbd673a510df11"
+      }
+    },
+    {
+      "check": "state original exact suffix: docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "passed": true,
+      "detail": {
+        "before_bytes": 110981,
+        "sha256": "54e730c3bd0f13f0c669bab74c4dd63547b4244e9cf564c0f8a458719ba6e9fb"
+      }
+    },
+    {
+      "check": "changed document local links resolve",
+      "passed": true,
+      "detail": {
+        "count": 15,
+        "missing": []
+      }
+    },
+    {
+      "check": "community license not added as active root or package license",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "git HEAD and branch kept",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no release or loader activation in candidate",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/package.json",
+      "bytes": 3040,
+      "sha256": "3e86b10e88a7424bb1fb74429d86bc303bfe60ce2ff41c9598c12f4da0faef0e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/THIRD-PARTY-NOTICES.md",
+      "bytes": 3491,
+      "sha256": "f7127b49ef52b5221dbcf94f8e5d8aaeb69f6cd28a7ec0f6c5b22503495c0b45"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/licenses/cn-patent-drafting-MIT.txt",
+      "bytes": 1090,
+      "sha256": "010444fa8759a89fc9b6c9d90ecbd331075f75a487fa09dc6802627f9e12c83d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/licenses/zod-4.4.3-MIT.txt",
+      "bytes": 1072,
+      "sha256": "3f1189b28e3866e0d979968d466b78f813f76827cfdca1fbb124cc0a5c8841f8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/assembly-and-validation.md",
+      "bytes": 6293,
+      "sha256": "dfc7cb37e7e908200358693252260154b8284ed3107646b494e7df7df748942f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/execution.md",
+      "bytes": 3805,
+      "sha256": "7f4b5742d66676697989ffb65f953106bd3704ec1305fc73cd4457716ccab382"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/local-package-candidate.json",
+      "bytes": 52780,
+      "sha256": "b5ba4b31da0ab61fd50c513103a1e1bb4d7f6c3ba74f7bb64d811860889d3900"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/package-files-diff.patch",
+      "bytes": 842,
+      "sha256": "b9aa146ccdb691d3f582f2fc930de0ce2619ba8364cb99eb9932ad4dfb44a591"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/preflight.json",
+      "bytes": 16667,
+      "sha256": "6d09fc4889300b1fad717ebbc1d519450c7f14887b7d3e3e0c857fe8b8893975"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/protected-baseline.json",
+      "bytes": 39944,
+      "sha256": "1a84d72981d0477cbf005e63e2935af5a0af127ca4421cb11e8c053d3db44a44"
+    }
+  ],
+  "not_performed": [
+    "model/API/Dify/upload/payment",
+    "source registry/CI",
+    "build/pack/install/Host launch",
+    "WorkBuddy send",
+    "community license adoption",
+    "git commit/push",
+    "publication"
+  ]
+}

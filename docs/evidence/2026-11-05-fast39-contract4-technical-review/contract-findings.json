@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-05T16:31:53.258087+08:00",
+  "subject": "C4-R1",
+  "subject_freeze_sha256": "a5780ad83094d1a9fdb916f9da83f8fcc52e9794da456f1321dd23b4ab5f4901",
+  "reviewer": "Codex single agent author re-review, not independent",
+  "verdict": "CONTRACT_ERRATA_CLOSED_ADOPTION_AND_DELIVERY_PENDING",
+  "new_blocking_findings": [],
+  "rechecked_items": [
+    {
+      "id": "C3-CR01",
+      "status": "CLOSED_AT_CONTRACT_LEVEL",
+      "evidence": [
+        "C4 CONTRACT.md:37",
+        "schemas.json#/$defs/draft_block",
+        "errata-rerun.json",
+        "identity-and-contract-checks.json"
+      ],
+      "reason": "exclusive five-field list includes decision_reason and distinguishes per-feature reason; unchanged Schema positive/negative and old-prose counterfactual pass"
+    },
+    {
+      "id": "C3-CR02",
+      "status": "CLOSED_AT_CONTRACT_LEVEL",
+      "evidence": [
+        "C4 CONTRACT.md:69-75",
+        "code-abi.json#/backend_boundary",
+        "errata-rerun.json",
+        "identity-and-contract-checks.json"
+      ],
+      "reason": "receipt capture precedes original JSON parse; immutable wrapper assembled after successful parse; original branches/legacy object retained, no extra call or assembly-driven reparse"
+    }
+  ],
+  "identity_conclusion": "12 inherited assets exact; C4 document identity and unchanged C3 protocols intentionally distinct; inherited disabled proposal is not new accepted delivery",
+  "implementation_accepted": false,
+  "runtime_accepted": false,
+  "historical_reviews_rewritten": false
+}

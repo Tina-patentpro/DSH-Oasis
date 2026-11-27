@@ -1,0 +1,8 @@
+{
+  "status": "FAIL_VERIFIER_SCRIPT",
+  "error": "KeyError for docs/project-current-state.md in protected-baseline lookup",
+  "reason": "The baseline scanned evidence/business-baseline/src; the state entry was instead captured as a separate preflight input and raw before copy.",
+  "resolution": "Use the already recorded preflight raw hash for this state entry; preserve the original protected-baseline and preflight unchanged.",
+  "product_files_changed_by_attempt": false,
+  "verification_result_written_by_attempt": false
+}

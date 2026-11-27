@@ -1,0 +1,473 @@
+{
+  "schema": "m06-14e-derived-output-schema/1",
+  "provenance": {
+    "kind": "READONLY_DERIVED_EXACT_EXISTING_HOST_CONTRACT_NOT_NEW_RESOURCE_OR_RUNTIME",
+    "is_new_wire": false,
+    "is_runtime_implementation": false,
+    "formal_rule_effect": null,
+    "formal_rule_effect_note": "派生件不是获得正式生效批准的规则；formally_effective 对本文件不适用，故为 null",
+    "derivation": "逐字段提取源文件 /output_schema，未增删字段、未改类型/枚举/上限/必填集",
+    "source": {
+      "path": "oiw-source:0552961f74d6f4802c06",
+      "bytes": 38799,
+      "sha256": "c48eaeb8aa1d821f4b8324e940d057978c7fc61bc4eaea4777bd3bc46d2bad4d",
+      "json_pointer": "/output_schema",
+      "kind": "READONLY_DERIVED_EXACT_EXISTING_HOST_CONTRACT_NOT_NEW_RESOURCE_OR_RUNTIME",
+      "declared_resource_sha256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761"
+    },
+    "precedence": "如本文件与源 /output_schema 不一致，以源为准，并把差异登记为待修，不得据本文件放宽约束",
+    "time_note": "本文件不写提取时间；时间不是版本，派生身份由源 path/bytes/sha256/pointer 确定"
+  },
+  "output_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "summary": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300000
+      },
+      "core_result_markdown": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300000
+      },
+      "updates": {
+        "maxItems": 256,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "content_id": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$"
+            },
+            "content_markdown": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "content_origin": {
+              "type": "string",
+              "enum": [
+                "upstream_snapshot",
+                "user_file",
+                "user_text",
+                "workflow_analysis",
+                "model_completed",
+                "human_confirmed"
+              ]
+            },
+            "source_input_id": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$"
+            },
+            "source_locator": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "source_hash": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                {
+                  "type": "string",
+                  "const": "none"
+                }
+              ]
+            },
+            "trust_status": {
+              "type": "string",
+              "enum": [
+                "source_fact",
+                "confirmed_fact",
+                "reasoned_inference",
+                "hypothesis_to_verify",
+                "excluded_from_formal_text"
+              ]
+            },
+            "last_updated_flow": {
+              "type": "string",
+              "maxLength": 32
+            },
+            "revision_reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            }
+          },
+          "required": [
+            "content_id",
+            "content_markdown",
+            "content_origin",
+            "source_input_id",
+            "source_locator",
+            "source_hash",
+            "trust_status",
+            "last_updated_flow",
+            "revision_reason"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "tables": {
+        "type": "object",
+        "properties": {
+          "T1": {
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "row_id": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$"
+                },
+                "data": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 128
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/__schema0"
+                  }
+                }
+              },
+              "required": [
+                "row_id",
+                "data"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "T2": {
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "row_id": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$"
+                },
+                "data": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 128
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/__schema0"
+                  }
+                }
+              },
+              "required": [
+                "row_id",
+                "data"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "T3": {
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "row_id": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$"
+                },
+                "data": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 128
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/__schema0"
+                  }
+                }
+              },
+              "required": [
+                "row_id",
+                "data"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "T4": {
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "row_id": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$"
+                },
+                "data": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 128
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/__schema0"
+                  }
+                }
+              },
+              "required": [
+                "row_id",
+                "data"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "T5": {
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "row_id": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$"
+                },
+                "data": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 128
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/__schema0"
+                  }
+                }
+              },
+              "required": [
+                "row_id",
+                "data"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "T6": {
+            "maxItems": 500,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "row_id": {
+                  "type": "string",
+                  "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$"
+                },
+                "data": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "maxLength": 128
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/__schema0"
+                  }
+                }
+              },
+              "required": [
+                "row_id",
+                "data"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "terms_master": {
+        "maxItems": 500,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/__schema0"
+          }
+        }
+      },
+      "warnings": {
+        "maxItems": 128,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "warning_id": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$"
+            },
+            "first_flow": {
+              "type": "string",
+              "maxLength": 32
+            },
+            "inherited_from": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "problem": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "affected_content": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "current_handling": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "model_completion": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "deliverable_impact": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "recommended_action": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "open",
+                "confirmed",
+                "resolved",
+                "accepted"
+              ]
+            }
+          },
+          "required": [
+            "warning_id",
+            "first_flow",
+            "inherited_from",
+            "problem",
+            "affected_content",
+            "current_handling",
+            "model_completion",
+            "deliverable_impact",
+            "recommended_action",
+            "status"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "model_completions": {
+        "maxItems": 256,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "content_id": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$"
+            },
+            "content_origin": {
+              "type": "string",
+              "const": "model_completed"
+            },
+            "completion_basis": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "assumptions": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "confidence": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "affected_section": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300000
+            },
+            "human_confirmation_status": {
+              "type": "string",
+              "const": "pending"
+            }
+          },
+          "required": [
+            "content_id",
+            "content_origin",
+            "completion_basis",
+            "assumptions",
+            "confidence",
+            "affected_section",
+            "human_confirmation_status"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "summary",
+      "core_result_markdown",
+      "updates",
+      "tables",
+      "terms_master",
+      "warnings",
+      "model_completions"
+    ],
+    "additionalProperties": false,
+    "$defs": {
+      "__schema0": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/__schema0"
+            }
+          },
+          {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "$ref": "#/$defs/__schema0"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

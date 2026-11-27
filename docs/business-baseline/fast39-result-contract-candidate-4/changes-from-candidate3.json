@@ -1,0 +1,45 @@
+{
+  "candidate": "C4-R1",
+  "parent": "C3-R1",
+  "substantive_errata": [
+    {
+      "id": "C3-CR01",
+      "contract_line": 37,
+      "before": "FINAL_WRITER输出writer_draft JSON：contract_version和blocks数组。每个计划恰一block；只准planned_claim_id、decision(emit/omit)、claim_body、dispositions。每个计划feature恰一draft_disposition(feature_id、action、output_quote、reason)，没有最终claim_id、offset或locator_status。omit的正文为空、所有特征blocked；emit正文非空。非法／额外字段、未知计划或feature、缺项和重复均拒绝，不代填。",
+      "after": "FINAL_WRITER输出writer_draft JSON：contract_version和blocks数组。每个计划恰一block；只准planned_claim_id、decision(emit/omit)、decision_reason（本计划emit/omit理由，区别于逐特征reason）、claim_body、dispositions。每个计划feature恰一draft_disposition(feature_id、action、output_quote、reason)，没有最终claim_id、offset或locator_status。omit的正文为空、所有特征blocked；emit正文非空。非法／额外字段、未知计划或feature、缺项和重复均拒绝，不代填。",
+      "effect": "Align exclusive five-field prose list with unchanged draft_block Schema; distinguish plan decision_reason from feature reason."
+    },
+    {
+      "id": "C3-CR02",
+      "contract_line": 71,
+      "before": "未来后台在workflow_service.py同一个await client.post之后、response.json之前形成不可变内部WorkflowServiceResult（legacy_result为原解析对象、provider_response_receipt为上述收据）。不额外请求Dify。受控同步投影使用它，原旧投影及save_and_deduct仍接legacy_result原对象，非增强分支保持原接口；逻辑ABI见code-abi.json，当前源码并未实现此类型。",
+      "after": "未来后台在workflow_service.py中，对同一个await client.post返回的响应，先在response.json之前采集并形成不可变provider_response_receipt；原JSON解析成功后，再将原解析对象legacy_result与该收据组装为不可变内部WorkflowServiceResult。不额外请求Dify，不为组装结果重复解析；原解析失败及队列分支沿原行为。受控同步投影使用它，原旧投影及save_and_deduct仍接legacy_result原对象，非增强分支保持原接口；逻辑ABI见code-abi.json，当前源码并未实现此类型。",
+      "effect": "Capture immutable receipt before JSON parsing, assemble wrapper only after successful original parse; no extra request/assembly-driven reparse; original errors/queue behavior retained."
+    }
+  ],
+  "edition_metadata_only": [
+    {
+      "contract_line": 1,
+      "before": "# Fast39结果合同候选3（C3-R1，2026-11-05）",
+      "after": "# Fast39结果合同候选4（C4-R1，2026-11-05）"
+    },
+    {
+      "contract_line": 3,
+      "before": "本版是按C2-TR1的TR01—TR06另行修订的静态合同候选。未修改DSL／业务代码、未部署、未调用真实生成；未获运行、专业、用户或发布接受。候选1／2、P0、C2-TR1及旧FAIL／UNKNOWN保持原件。本版仅替代未来评审提案，不替换现行服务。",
+      "after": "本版以候选3（C3-R1）为基线，仅按本轮复审C3-CR01／C3-CR02另版校正两处合同文字：补齐decision_reason清单，区分解析前采集字节收据与解析成功后组装结果。未修改DSL／业务代码、未部署、未调用真实生成；未获运行、专业、用户或发布接受。候选1—3、P0、历次评审及旧FAIL／UNKNOWN保持原件。本版仅供后续评审，不替换现行服务。Schema、ABI、协议版本和采用范围沿用C3-R1，不新增运行绑定；继承身份及准确来源见INHERITANCE.json。"
+    },
+    {
+      "contract_line": 5,
+      "before": "配套schemas.json、receipt-mapping.json、code-abi.json、cross-field-checks.json、capacity-policy.json、transition-table.json、delivery-binding.candidate.json、examples.json、validation-cases.json、changes-from-candidate2.json及限定用途与设计采用说明。FREEZE清单不自含其hash，外部复核记录绑定该hash。",
+      "after": "配套schemas.json、receipt-mapping.json、code-abi.json、cross-field-checks.json、capacity-policy.json、transition-table.json、delivery-binding.candidate.json、examples.json、validation-cases.json、changes-from-candidate2.json及限定用途与设计采用说明，均按C3原字节继承，原C3标识、历史变更与回执引用保留。INHERITANCE.json及changes-from-candidate3.json只登记本版来源、两处勘误和版次元数据；新离线回执另存本版证据目录。FREEZE清单不自含其hash，外部复核记录绑定该hash。"
+    }
+  ],
+  "unchanged": [
+    "all other CONTRACT paragraphs",
+    "all12 inherited files",
+    "Schema/ABI/protocol/capacity/adoption semantics",
+    "runtime source and delivery activation",
+    "C1-C3 and historical evidence"
+  ],
+  "review_basis": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract3-technical-review/contract-findings.json"
+}

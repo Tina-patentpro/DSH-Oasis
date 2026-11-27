@@ -1,0 +1,170 @@
+{
+  "recordedAt": "2026-11-08T21:00:06.682490+08:00",
+  "goal": "按计划执行直至完成",
+  "classificationPreviousGoalTurn": "progress: fresh named prerequisite evidence for R6-05/06 established no fresh CI, unchanged target, and exact remaining hard conditions",
+  "classificationCurrentGoalTurn": "no progress beyond revalidation/blocked audit; no live process to wait on",
+  "sameBlockingConditionConsecutiveGoalTurns": 3,
+  "condition": "Original one-call budget consumed with UNKNOWN; required separate-call approval has not arrived. Bounded independent preparation completed; remaining actions depend on exact authorization, qualified provider inputs or human acceptance.",
+  "requestPending": "functions.request_user_input_async: 同意追加一次独立运行 / 不追加，保留待验",
+  "originalRun": {
+    "runId": "v340-4b14edd7-b895-4db1-88af-9fde2177c1c4",
+    "requestKey": "07e23fdf-2864-4f6a-aef0-426aa49ec56e",
+    "status": "unknown",
+    "usedCalls": 1,
+    "maxCalls": 1,
+    "resultPresent": false
+  },
+  "runtime": {
+    "previousLaunchExit": 0,
+    "pid2729Absent": true,
+    "port57619NoListener": true,
+    "currentBundle": "f1efed185c033c2e6e00c8dcd97642370c73537bc4d73fa0239174ee10316144",
+    "businessSHA256": "dd4ccf256253d393f6288990b02991de6a8380e9aa5577fd10a64b44eec1ad70",
+    "verifiedWait": false
+  },
+  "requirements": [
+    {
+      "requirement": "R6-01.1 identity and exact startup",
+      "status": "PROVED",
+      "authoritativeEvidence": "native-ui-result.json; protected-after.json",
+      "remaining": ""
+    },
+    {
+      "requirement": "R6-01.2 close/reopen and disabled entries",
+      "status": "PROVED",
+      "authoritativeEvidence": "native-ui-result.json: actual CUA observations",
+      "remaining": ""
+    },
+    {
+      "requirement": "R6-01.3 normal exit/data/writer",
+      "status": "PROVED",
+      "authoritativeEvidence": "native-ui-result.json; lease-readmission.json",
+      "remaining": ""
+    },
+    {
+      "requirement": "R6-02.1 final resource/package/install/normal pairing",
+      "status": "PREPARATION_PROVED",
+      "authoritativeEvidence": "native-proxy-fix-install-result.json; native-provider-options-proof.json",
+      "remaining": "Post-fix native run not executed"
+    },
+    {
+      "requirement": "R6-02.2 selected public inputs/model/destination/one-call scope",
+      "status": "PREPARATION_PROVED_BUDGET_CONSUMED",
+      "authoritativeEvidence": "authorization-real-generation.json; input-materialization.json; real-generation-dispatch-intent.json",
+      "remaining": "Additional independent call requires new explicit authorization"
+    },
+    {
+      "requirement": "R6-02.3 exact125 delta/license/notice pairing",
+      "status": "DELTA_PROVED_SCOPE_OPEN",
+      "authoritativeEvidence": "rc1-to-rc3-release-difference.json; ../../release/m06-public-0.1.0-rc.3/member-difference-r1.json",
+      "remaining": "New/modified contribution public scope remains unaccepted"
+    },
+    {
+      "requirement": "R6-02.4 unsubmitted edit draft restart scope",
+      "status": "SCOPE_PREPARED_NOT_TESTED",
+      "authoritativeEvidence": "normal-generation-native-scope.json",
+      "remaining": "No real output to edit; no restart performed"
+    },
+    {
+      "requirement": "R6-03.1 one real generation and receipts",
+      "status": "UNKNOWN_NO_OUTPUT",
+      "authoritativeEvidence": "real-generation-original-run.json",
+      "remaining": "One confirmation consumed; provider completion and fee/usage unconfirmed; no retry"
+    },
+    {
+      "requirement": "R6-03.2 actual new result edit/review/save/open/reference/recovery",
+      "status": "NOT_EXECUTED",
+      "authoritativeEvidence": "real-generation-original-run.json: result null",
+      "remaining": "Requires valid real output; old synthetic evidence cannot substitute"
+    },
+    {
+      "requirement": "R6-03.3 professional/user acceptance of exact new hash",
+      "status": "NOT_OBTAINED",
+      "authoritativeEvidence": "../../release/m06-public-0.1.0-rc.3/first-release-checklist-r1.json RL03",
+      "remaining": "No new output; reviewer/user must judge the actual eventual output"
+    },
+    {
+      "requirement": "R6-04.1 RL01-09 final factual continuation",
+      "status": "MATERIAL_PREPARED_OPEN_GATES",
+      "authoritativeEvidence": "../../release/m06-public-0.1.0-rc.3/first-release-checklist-r1.json",
+      "remaining": "New public scope, independent legal review and new-output acceptance remain open"
+    },
+    {
+      "requirement": "R6-04.2 same-version technical facts",
+      "status": "PREPARATION_PROVED_UNSENT",
+      "authoritativeEvidence": "../../release/m06-public-0.1.0-rc.3/TECHNICAL-FACTS-R1.md",
+      "remaining": "No operational delivery/publication authorized"
+    },
+    {
+      "requirement": "R6-04.3 named release decision and event",
+      "status": "NOT_AUTHORIZED_NOT_EXECUTED",
+      "authoritativeEvidence": "../../release/m06-public-0.1.0-rc.3/first-release-checklist-r1.json RL09",
+      "remaining": "User暂不发布 remains effective"
+    },
+    {
+      "requirement": "R6-05.1 real caller/normal CI/fresh governance",
+      "status": "PREP2_IDENTITIES_PROVED_SOURCE_GATE_OPEN",
+      "authoritativeEvidence": "independent-prerequisite-refresh-r2.json Fast39",
+      "remaining": "Current CI review dated2026-10-27; exact real caller/CI/source permissions still absent"
+    },
+    {
+      "requirement": "R6-05.2 F0→setup→F1→B and separate A",
+      "status": "NOT_EXECUTED",
+      "authoritativeEvidence": "../2026-11-06-m06-prep2-review/prep2-technical-review.md",
+      "remaining": "Source-stage authorization/transaction evidence absent; generic continuation does not grant them"
+    },
+    {
+      "requirement": "R6-05.3 real DSL/schema/nodes/production stack/three-party mapping",
+      "status": "MISSING_PROVIDER_INPUT",
+      "authoritativeEvidence": "R6 plan; prior paired candidate evidence",
+      "remaining": "No selected real source candidate and qualified production dependency delivery; prior two-layer mocks cannot substitute"
+    },
+    {
+      "requirement": "R6-05.4 formal deployment/binding/one retest/G0",
+      "status": "NOT_READY",
+      "authoritativeEvidence": "R6 plan; original Fast39 partial/FAIL retained",
+      "remaining": "Actual service/deployment/account/project/schema/budget and professional/user scope required"
+    },
+    {
+      "requirement": "R6-06.1 PDF/DOCX per-format readiness",
+      "status": "PRECISE_GAPS_DELIVERED_NO_U1_D1",
+      "authoritativeEvidence": "independent-prerequisite-refresh-r2.json PDF",
+      "remaining": "Qualified runtime/distribution/profile/launcher and U1; DOCX separate; no expansion of old two-case experiment"
+    },
+    {
+      "requirement": "R6-06.2 WorkBuddy current target/import/control evidence",
+      "status": "PREREQUISITE_EVIDENCE_DELIVERED_RUNTIME_OPEN",
+      "authoritativeEvidence": "independent-prerequisite-refresh-r2.json WorkBuddy",
+      "remaining": "Official public controls do not yet establish zero-call/upload import or one-call/review/save/recovery"
+    },
+    {
+      "requirement": "R6-06.3 exact import and behavior run",
+      "status": "NOT_EXECUTED",
+      "authoritativeEvidence": "independent-prerequisite-refresh-r2.json WorkBuddy",
+      "remaining": "Cannot establish zero-call import under current zero-budget scope; behavior requires separately bounded authorization"
+    },
+    {
+      "requirement": "R6-07.1 recommend one subsequent template from actual candidates",
+      "status": "NOT_READY",
+      "authoritativeEvidence": "R6 plan section R6-07; current release facts",
+      "remaining": "Current M06 release scope not accepted; registered producer path missing; no substitute candidate guessed"
+    },
+    {
+      "requirement": "R6-07.2 producer rule/license/case contract",
+      "status": "MISSING_PROVIDER_INPUT",
+      "authoritativeEvidence": "coordination-check-final.stdout.json",
+      "remaining": "Registered patent-distillery path absent; no exact selected source delivery"
+    },
+    {
+      "requirement": "R6-07.3 independent next-template consumption/acceptance",
+      "status": "NOT_EXECUTED",
+      "authoritativeEvidence": "R6 plan section R6-07",
+      "remaining": "Follows actual selection and delivery; no full29 rollout or inferred acceptance"
+    }
+  ],
+  "completionAudit": "NOT_COMPLETE; no reduction of original R6/14-node/two-source/29-target goals",
+  "blockedAudit": "Threshold satisfied; no automatic model retry, repeated tests/builds, source transactions, hidden import or publication can discharge missing authority/evidence.",
+  "resumeAt": "After explicit additional call reply, record new bounded authorization; verify current exact f1ef/d64b binding and existing UNKNOWN, then start new independent task only under that scope. Never replay original request.",
+  "fullGoalComplete": false,
+  "newCallsTestsBuildsInstallsImportsSourceWritesOrPublications": 0
+}

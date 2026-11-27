@@ -1,0 +1,374 @@
+test_all_blocked_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_async_queue_branch_unchanged_no_provider_no_fragment (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_binding_mismatch_before_dispatch_no_queue (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_content_invalid_sixth_field_preserves_old_queue_and_success_fact (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_correlations_take_priority_even_provider_failed (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_http_parse_and_network_failures_no_fabricated_fragment_or_queue (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_legacy_file_type_and_save_string_preserved (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_output_size_unicode_and_null_rejected_without_truncation (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_queue_failure_keeps_unknown_enqueuing_no_retry (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_receipt_exact_bytes_before_one_parse_same_original_object (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_report_duplicate_keys_float_and_depth_rejected (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_six_outputs_preserved_without_legacy_projection_or_queue_change (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) ... FAIL
+test_top_or_nested_id_alone_accepted_but_uppercase_missing_or_conflict_rejected (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_unbound_and_non_enhanced_service_keep_original_interface (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_zero_claim_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract) ... ERROR
+
+======================================================================
+ERROR: test_all_blocked_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 252, in test_all_blocked_does_not_become_normal_fragment
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_async_queue_branch_unchanged_no_provider_no_fragment (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 195, in test_async_queue_branch_unchanged_no_provider_no_fragment
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_binding_mismatch_before_dispatch_no_queue (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 274, in test_binding_mismatch_before_dispatch_no_queue
+    with self.assertRaises(HandlerError) as caught: await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_content_invalid_sixth_field_preserves_old_queue_and_success_fact (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 236, in test_content_invalid_sixth_field_preserves_old_queue_and_success_fact
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_correlations_take_priority_even_provider_failed (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 203, in test_correlations_take_priority_even_provider_failed
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_http_parse_and_network_failures_no_fabricated_fragment_or_queue (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 290, in test_http_parse_and_network_failures_no_fabricated_fragment_or_queue
+    with self.assertRaises(HandlerError) as caught: await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_legacy_file_type_and_save_string_preserved (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 283, in test_legacy_file_type_and_save_string_preserved
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_output_size_unicode_and_null_rejected_without_truncation (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 260, in test_output_size_unicode_and_null_rejected_without_truncation
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_queue_failure_keeps_unknown_enqueuing_no_retry (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 300, in test_queue_failure_keeps_unknown_enqueuing_no_retry
+    with self.assertRaises(HandlerError): await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_receipt_exact_bytes_before_one_parse_same_original_object (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 162, in test_receipt_exact_bytes_before_one_parse_same_original_object
+    result = await self.workflow.run_dify_workflow(self.api, {}, '101', '', 'k', capture_response_receipt=True)
+TypeError: run_dify_workflow() got an unexpected keyword argument 'capture_response_receipt'
+
+======================================================================
+ERROR: test_report_duplicate_keys_float_and_depth_rejected (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 269, in test_report_duplicate_keys_float_and_depth_rejected
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_six_outputs_preserved_without_legacy_projection_or_queue_change (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 174, in test_six_outputs_preserved_without_legacy_projection_or_queue_change
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) (status='failed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 214, in test_status_matrix_preserves_queue_facts
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) (status='stopped')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 214, in test_status_matrix_preserves_queue_facts
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) (status='running')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 214, in test_status_matrix_preserves_queue_facts
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) (status='unexpected')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 214, in test_status_matrix_preserves_queue_facts
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) (status=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 214, in test_status_matrix_preserves_queue_facts
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_top_or_nested_id_alone_accepted_but_uppercase_missing_or_conflict_rejected (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 231, in test_top_or_nested_id_alone_accepted_but_uppercase_missing_or_conflict_rejected
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_unbound_and_non_enhanced_service_keep_original_interface (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 187, in test_unbound_and_non_enhanced_service_keep_original_interface
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+ERROR: test_zero_claim_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 244, in test_zero_claim_does_not_become_normal_fragment
+    result = await self.call()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 159, in call
+    return await self.handler(self.request, self.background, db=object(), current_user=self.user)
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py:create_category", line 95, in create_category
+TypeError: '<' not supported between instances of 'int' and 'str'
+
+======================================================================
+FAIL: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 65, in _callTestMethod
+    self._callMaybeAsync(method)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 88, in _callMaybeAsync
+    return self._asyncioTestLoop.run_until_complete(fut)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
+    return future.result()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 102, in _asyncioLoopRunner
+    ret = await awaitable
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 219, in test_status_matrix_preserves_queue_facts
+    self.assertEqual(len(self.jobs), 5)
+AssertionError: 0 != 5
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.097s
+
+FAILED (failures=1, errors=20)

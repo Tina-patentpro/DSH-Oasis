@@ -1,0 +1,182 @@
+--- R3/src/v340-runtime-contract.js
++++ R4/src/v340-runtime-contract.js
+@@ -73,6 +73,12 @@
+   sources:z.array(z.object({inputId:z.enum(['disclosure_file','disclosure_text','drawings_file','drawings_text']),sourceSha256:sha,
+    quote:z.string().min(1).max(300000).refine(v=>!v.includes('\0')),start:z.number().int().min(0).max(300000),end:z.number().int().min(1).max(300000)}).strict()).min(1).max(16)
+  }).strict()).min(2).max(16)}).strict().refine(v=>bytes(v)<=65536,'M06 structured edit exceeds byte limit')
++export const m02StructuredEditSchema=z.object({schemaVersion:z.literal(1),reason:z.string().trim().min(1).max(2000),
++ replacements:z.array(z.object({table:z.enum(['T1','T2','T3']),rowId:z.string().min(1).max(128),beforeSha256:sha,
++  data:boundedJson.pipe(z.record(z.string().max(128),z.json()).refine(v=>Object.keys(v).length<=64)),
++  sources:z.array(z.object({inputId:z.enum(['technical_analysis_material_text','technical_analysis_material_file']),sourceSha256:sha,
++   quote:z.string().min(1).max(300000).refine(v=>!v.includes('\0')),start:z.number().int().min(0).max(300000),end:z.number().int().min(1).max(300000)}).strict()).min(1).max(16)
++ }).strict()).min(3).max(16)}).strict().refine(v=>bytes(v)<=65536,'M02 structured edit exceeds byte limit')
+ export const v340DraftSchema=z.object({source:z.enum(['local-skill','oasis-api']),textInputs:entries(z.string().max(300000)),filePaths:entries(z.string().min(1).max(1024)),configuration:entries(boundedJson)}).strict()
+   .refine(v=>bytes(v)<=V340_LIMITS.snapshotBytes,'V340 draft exceeds byte limit')
+ export const v340ReadonlyPrepareSchema=z.object({workspaceId:v340Id,nodeId:z.enum(V340_NODE_IDS),confirmed:z.literal(true),textInputs:entries(z.string().max(300000)),filePaths:entries(z.string().min(1).max(1024)),configuration:entries(boundedJson)}).strict().refine(v=>bytes(v)<=V340_LIMITS.snapshotBytes)
+@@ -156,7 +162,8 @@
+     .refine(c=>c.format!=='core-markdown'||c.body===null||!c.body.includes('\0')),
+   'offline/run':z.object({...command,requestKey:v340Id,confirmed:z.literal(true)}).strict(),
+   'run/create':z.object({...command,requestKey:v340Id,candidate:v340CandidateConfirmationSchema.optional()}).strict(),
+-  'result/edit':z.object({...command,runId:v340Id,versionId:v340Id,baseSha256:sha,draftSha256:sha,requestKey:v340Id,m06Structure:m06StructuredEditSchema.optional()}).strict(),
++  'result/edit':z.object({...command,runId:v340Id,versionId:v340Id,baseSha256:sha,draftSha256:sha,requestKey:v340Id,m06Structure:m06StructuredEditSchema.optional(),m02Structure:m02StructuredEditSchema.optional()}).strict()
++    .refine(c=>c.m06Structure===undefined||c.m02Structure===undefined),
+   'result/review':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha,confirmed:z.literal(true)}).strict(),
+   'result/prepare-save':z.object({...command,runId:v340Id,versionId:v340Id,resultSha256:sha}).strict(),
+   'result/commit-save':z.object({confirmationToken:z.string().min(1).max(512)}).strict(),
+--- R3/src/v340-document.js
++++ R4/src/v340-document.js
+@@ -1,6 +1,6 @@
+ import { z } from 'zod'
+ import { getV340Node, getV340Catalog, v340Hash, freezeV340 } from './v340-catalog.js'
+-import { v340DocumentBodySchema,m06StructuredEditSchema } from './v340-runtime-contract.js'
++import { v340DocumentBodySchema,m06StructuredEditSchema,m02StructuredEditSchema } from './v340-runtime-contract.js'
+ import { correctM02BodyMetadata } from './m02-body-metadata.js'
+ 
+ const text = z.string().min(1).max(300000).refine(v => v.trim().length > 0)
+@@ -229,19 +229,46 @@
+   if(!edit.replacements.some(x=>x.table==='T2')||!edit.replacements.some(x=>x.table==='T4'))fail()
+ }
+ 
+-// Default edits retain all tables. Explicit M06 replacements retain before/after evidence.
+-export function reviseV340Document(parent,{workflowRunUid,generatedAt,body,m06Structure,prepared}){
++export const m02StructuredEditHash=value=>value===undefined?'none':v340Hash(JSON.stringify(m02StructuredEditSchema.parse(value)))
++function replaceM02Rows(snapshot,structure,prepared,uid){
++  const edit=m02StructuredEditSchema.parse(structure),seen=new Set()
++  if(snapshot.node_id!=='Flow-1-2'||prepared?.nodeId!=='Flow-1-2')fail()
++  const input=prepareV340Inputs('Flow-1-2',prepared.values)
++  if(input.inputHash!==prepared.inputHash)fail()
++  for(const change of edit.replacements){
++    const key=`${change.table}/${change.rowId}`,table=snapshot.tables[change.table]
++    const at=table.rows.findIndex(row=>row.row_id===change.rowId)
++    if(seen.has(key)||at<0||table.rows.filter(row=>row.row_id===change.rowId).length!==1||v340Hash(JSON.stringify(table.rows[at]))!==change.beforeSha256)fail()
++    seen.add(key)
++    for(const source of change.sources){
++      const value=input.values[source.inputId],receipt=input.receipts[source.inputId],text=typeof value==='string'?value:value?.body
++      if(typeof text!=='string'||receipt?.sha256!==source.sourceSha256||v340Hash(text)!==source.sourceSha256
++        ||source.end<=source.start||source.end>text.length||text.slice(source.start,source.end)!==source.quote)fail()
++    }
++    const next=rowSchema.parse({row_id:change.rowId,data:change.data})
++    snapshot.revisions.push({revision_uid:uid,node_id:snapshot.node_id,table:change.table,row_id:change.rowId,
++      before:copy(table.rows[at]),after:copy(next),reason:edit.reason,source_evidence:copy(change.sources),assessment:'content_review_revision_not_fact_confirmation'})
++    table.rows[at]=next
++  }
++  if(!['T1','T2','T3'].every(t=>edit.replacements.some(x=>x.table===t)))fail()
++}
++
++// Default edits retain tables. Explicit bounded row replacements retain before/after evidence.
++export function reviseV340Document(parent,{workflowRunUid,generatedAt,body,m06Structure,m02Structure,prepared}){
+   const core=v340DocumentBodySchema.refine(v=>v.trim().length>0).parse(body)
+   const uid=z.string().uuid().parse(workflowRunUid).toLowerCase(),snapshot=snapshotSchema.parse(copy(parent.snapshot))
+   const local=stamp(generatedAt),node=getV340Node(snapshot.node_id)
+   const limitedWarning=node.nodeId==='Flow-2-6'?makeM06LimitedWarning({workflowRunUid:uid,inheritedWarnings:snapshot.warnings}):null
+   const oldUid=snapshot.workflow_run_uid
++  if(m06Structure!==undefined&&m02Structure!==undefined)fail()
+   if(m06Structure!==undefined)replaceM06Rows(snapshot,m06Structure,prepared,uid)
++  if(m02Structure!==undefined)replaceM02Rows(snapshot,m02Structure,prepared,uid)
+   snapshot.workflow_run_uid=uid;snapshot.generated_at=`${local}+08:00`
+   snapshot.filename=`${node.filenamePrefix}_${local.replace(/[-T:]/g,'')}_${uid.replaceAll('-','').slice(0,8)}.md`
+   snapshot.manual_edit_manifest.push({source_run_uid:oldUid,source_file_sha256:parent.sha256,revision_uid:uid,
+-    edited_section:m06Structure===undefined?'核心结果':'核心结果及指定T2/T4行',before_sha256:v340Hash(snapshot.current_result.core_result_markdown),after_sha256:v340Hash(core),reason:'人工编辑；技术事实、表和来源仍需独立核对',
+-    ...(m06Structure===undefined?{}:{structured_edit_sha256:m06StructuredEditHash(m06Structure)})})
++    edited_section:m02Structure!==undefined?'核心结果及指定T1/T2/T3行':m06Structure===undefined?'核心结果':'核心结果及指定T2/T4行',before_sha256:v340Hash(snapshot.current_result.core_result_markdown),after_sha256:v340Hash(core),reason:'人工编辑；技术事实、表和来源仍需独立核对',
++    ...(m06Structure===undefined?{}:{structured_edit_sha256:m06StructuredEditHash(m06Structure)}),
++    ...(m02Structure===undefined?{}:{m02_structured_edit_sha256:m02StructuredEditHash(m02Structure)})})
+   snapshot.current_result.core_result_markdown=core
+   snapshot.contents.push({content_id:`host/${uid}/${node.nodeId}/core`,content_markdown:core,content_origin:'user_text',
+     source_input_id:'manual_edit',source_locator:'人工修订核心正文',source_hash:v340Hash(core),trust_status:'hypothesis_to_verify',
+@@ -249,6 +276,7 @@
+   snapshot.warnings.push({...warning(node.nodeId,`manual-${uid}`,'核心正文经人工修改；累计表、来源和技术语义需要重新核对。'),inherited_from:oldUid})
+   if(limitedWarning)snapshot.warnings.push(limitedWarning)
+   if(m06Structure!==undefined)snapshot.warnings.push({...warning(node.nodeId,`structured-${uid}`,'本次显式修订核心正文及指定T2/T4行，保留旧行与来源位置；语义一致性、支持及回退价值仍待专业复核。'),inherited_from:oldUid})
++  if(m02Structure!==undefined)snapshot.warnings.push({...warning(node.nodeId,`structured-${uid}`,'本次显式修订M02正文及指定T1/T2/T3行，保留旧行和原材料；内容审阅不确认根因、实测性能或申请可用性。'),inherited_from:oldUid})
+   snapshot.workflow_status='completed_with_warnings';snapshot.deliverable_status='not_recommended_for_filing'
+   const validated=snapshotSchema.parse(snapshot),document=render(validated,validated.current_result.summary,core)
+   v340DocumentBodySchema.parse(document)
+--- R3/src/v340-result-service.js
++++ R4/src/v340-result-service.js
+@@ -1,6 +1,6 @@
+ import {randomUUID} from 'node:crypto'
+ import {v340Commands,getV340Versions,getV340ResultDrafts,V340_LIMITS,V340_CONVERSATION_TEXT_LIMIT,formatV340ConversationDraft} from './v340-runtime-contract.js'
+-import {reviseV340Document,m06StructuredEditHash} from './v340-document.js'
++import {reviseV340Document,m06StructuredEditHash,m02StructuredEditHash} from './v340-document.js'
+ import {restoreV340Prepared} from './v340-input-snapshot.js'
+ import {v340Hash} from './v340-catalog.js'
+ import {hasPendingUnifiedRun} from './generation-contract.js'
+@@ -58,13 +58,14 @@
+     const draft=getV340ResultDrafts(run)[c.versionId]
+     const prior=versions.find(v=>v.editRequestKey===c.requestKey)
+     if(prior){const manifest=prior.result.snapshot.manual_edit_manifest.at(-1);if(prior.parentVersionId!==c.versionId||manifest?.after_sha256!==c.draftSha256
+-      ||(manifest?.structured_edit_sha256??'none')!==m06StructuredEditHash(c.m06Structure))fail('V340_EDIT_CONFLICT','修订请求已绑定其他内容。');return record}
++      ||(manifest?.structured_edit_sha256??'none')!==m06StructuredEditHash(c.m06Structure)
++      ||(manifest?.m02_structured_edit_sha256??'none')!==m02StructuredEditHash(c.m02Structure))fail('V340_EDIT_CONFLICT','修订请求已绑定其他内容。');return record}
+     if(draft&&draft.format!=='core-markdown')fail('V340_DRAFT_FORMAT_REQUIRED','旧草稿格式未确认，请先复制保留，并明确另起核心正文编辑。')
+     if(busy(record)||versions.length>=8||!draft||draft.baseSha256!==c.baseSha256||v340Hash(draft.body)!==c.draftSha256)fail('V340_EDIT_STALE','编辑草稿已变化或版本已达上限；原草稿保留。')
+     const uid=uuidFactory(),versionId=`revision-${uid}`,now=clock()
+     if(versions.some(v=>v.versionId===versionId))fail('V340_EDIT_CONFLICT','版本标识冲突。')
+-    const result=reviseV340Document(version.result,{workflowRunUid:uid,generatedAt:now,body:draft.body,m06Structure:c.m06Structure,
+-      ...(c.m06Structure===undefined?{}:{prepared:restoreV340Prepared(run.inputSnapshot)})})
++    const result=reviseV340Document(version.result,{workflowRunUid:uid,generatedAt:now,body:draft.body,m06Structure:c.m06Structure,m02Structure:c.m02Structure,
++      ...(c.m06Structure===undefined&&c.m02Structure===undefined?{}:{prepared:restoreV340Prepared(run.inputSnapshot)})})
+     const next=structuredClone(record),target=next.tasks[c.taskId].v340.runs[c.runId]
+     target.resultVersions=[...structuredClone(versions),{versionId,parentVersionId:c.versionId,editRequestKey:c.requestKey,result,createdAt:now,
+       review:{status:'not-reviewed',sha256:result.sha256,updatedAt:now},writebacks:[]}]
+--- R3/test/m02-structured-revision.test.mjs
++++ R4/test/m02-structured-revision.test.mjs
+@@ -0,0 +1,46 @@
++import test from 'node:test'
++import assert from 'node:assert/strict'
++import * as doc from '../src/v340-document.js'
++import {v340Commands} from '../src/v340-runtime-contract.js'
++import {v340Hash as hash} from '../src/v340-catalog.js'
++import {resultFixture} from './v340-result-fixture.mjs'
++const text='P1：调整允许移动，保持限制移动。预期未实测。'
++const output={summary:'合成测试',core_result_markdown:'待核原稿',updates:[],terms_master:[],warnings:[],model_completions:[],tables:{T1:[{row_id:'p1',data:{review:'old'}}],T2:[{row_id:'s2',data:{review:'old'}}],T3:[{row_id:'e2',data:{review:'old'}}]}}
++const setup=()=>{const prepared=doc.prepareV340Inputs('Flow-1-2',{technical_analysis_material_text:text});return {prepared,parent:doc.assembleV340Document({nodeId:'Flow-1-2',workflowRunUid:'12345678-1234-4234-8234-123456789abc',generatedAt:'2026-11-27T05:00:00.000Z',prepared,output})}}
++const patch=parent=>({schemaVersion:1,reason:'专业内容审核R4：根因降级、S2机制分开',replacements:['T1','T2','T3'].map(table=>({table,rowId:parent.snapshot.tables[table].rows[0].row_id,beforeSha256:hash(JSON.stringify(parent.snapshot.tables[table].rows[0])),data:{review:'concept_reviewed_unverified',evidence:'需求直接记载；机理假设待验证'},sources:[{inputId:'technical_analysis_material_text',sourceSha256:hash(text),quote:text,start:0,end:text.length}]}))})
++const revise=(f,p)=>doc.reviseV340Document(f.parent,{workflowRunUid:'87654321-1234-4234-8234-123456789abc',generatedAt:'2026-11-27T05:01:00.000Z',body:'R4条件性分析',m02Structure:p,prepared:f.prepared})
++test('M02 explicit original-row edits preserve before/after, facts, warnings and source history',()=>{
++ const f=setup(),before=structuredClone(f.parent),p=patch(f.parent),next=revise(f,p)
++ for(const t of ['T1','T2','T3'])assert.equal(next.snapshot.tables[t].rows[0].data.review,'concept_reviewed_unverified')
++ assert.deepEqual(f.parent,before);assert.deepEqual(next.snapshot.input_history,before.snapshot.input_history);assert.deepEqual(next.snapshot.model_completions,[])
++ assert.equal(next.snapshot.revisions.length,3);assert.equal(next.snapshot.manual_edit_manifest.at(-1).m02_structured_edit_sha256,doc.m02StructuredEditHash(p));assert.equal(next.snapshot.deliverable_status,'not_recommended_for_filing')
++ assert.equal(doc.inspectV340Document({filename:next.fileName,body:next.body,sha256:next.sha256},'Flow-1-2').status,'accepted')
++})
++for(const [label,mutate] of [
++ ['wrong original row hash',p=>p.replacements[0].beforeSha256='f'.repeat(64)],
++ ['new row',p=>p.replacements[0].rowId='invented'],
++ ['duplicate row',p=>p.replacements.push(structuredClone(p.replacements[0]))],
++ ['other table',p=>p.replacements[0].table='T4'],
++ ['instruction as source',p=>p.replacements[0].sources[0].inputId='user_input'],
++ ['wrong source hash',p=>p.replacements[0].sources[0].sourceSha256='f'.repeat(64)],
++ ['wrong quote',p=>p.replacements[0].sources[0].quote='非原文'],
++ ['wrong quote offset',p=>p.replacements[0].sources[0].start=1],
++ ['missing table',p=>p.replacements.pop()],
++])test('M02 rejects '+label+' without changing parent',()=>{const f=setup(),before=JSON.stringify(f.parent),p=patch(f.parent);mutate(p);assert.throws(()=>revise(f,p));assert.equal(JSON.stringify(f.parent),before)})
++test('M02 edit is restricted to M02 and cannot mix M06 edit intent',()=>{
++ const f=setup(),p=patch(f.parent);f.parent=structuredClone(f.parent);f.parent.snapshot.node_id='Flow-1-1';assert.throws(()=>revise(f,p))
++ assert.equal(v340Commands['result/edit'].safeParse({workspaceId:'a',taskId:'t',runId:'run',versionId:'run',expectedRevision:0,baseSha256:'a'.repeat(64),draftSha256:'b'.repeat(64),requestKey:'mix',m02Structure:p,m06Structure:{}}).success,false)
++})
++test('public result edit binds M02 row patch to idempotency and requires new review',async t=>{
++ const h=await resultFixture(t,'local-skill',{nodeId:'Flow-1-2',textInputs:{technical_analysis_material_text:text},output}),runId=h.run().runId,parent=structuredClone(h.run().result)
++ await h.service.reviewV340Result(h.command({runId,versionId:runId,resultSha256:parent.sha256,confirmed:true}))
++ await h.service.saveV340ResultDraft(h.command({runId,baseSha256:parent.sha256,body:'R4条件性分析',format:'core-markdown'}))
++ const p=patch(parent),request={runId,versionId:runId,baseSha256:parent.sha256,draftSha256:hash('R4条件性分析'),requestKey:'m02-r4',m02Structure:p}
++ const bad=structuredClone(request);bad.m02Structure.replacements[0].sources[0].quote='不存在';const before=JSON.stringify(h.record());assert.equal((await h.handler('workflow/v340/result/edit',h.command(bad))).ok,false);assert.equal(JSON.stringify(h.record()),before)
++ assert.equal((await h.handler('workflow/v340/result/edit',h.command(request))).ok,true)
++ const v=h.run().resultVersions.at(-1);assert.equal(v.review.status,'not-reviewed');assert.equal(v.result.snapshot.tables.T2.rows[0].data.review,'concept_reviewed_unverified')
++ await assert.rejects(()=>h.service.prepareV340Save(h.command({runId,versionId:v.versionId,resultSha256:v.result.sha256})),e=>e.code==='V340_REVIEW_REQUIRED')
++ const committed=JSON.stringify(h.run());assert.equal((await h.handler('workflow/v340/result/edit',h.command(request))).ok,true);assert.equal(JSON.stringify(h.run()),committed)
++ const changed=structuredClone(request);changed.m02Structure.reason='同请求其他内容';assert.equal((await h.handler('workflow/v340/result/edit',h.command(changed))).error.code,'V340_EDIT_CONFLICT')
++ assert.deepEqual(h.run().result,parent);assert.equal(h.generationCalls,1)
++})
+--- R3/test/v340-result-fixture.mjs
++++ R4/test/v340-result-fixture.mjs
+@@ -26,7 +26,7 @@
+  fixture.command=extra=>({workspaceId:'a',taskId:'new',expectedRevision:fixture.record().revision,...extra})
+  const nodeId=options.nodeId??'Flow-1-1'
+  await fixture.service.createV340Task(fixture.command({nodeId,title:'共同任务'}))
+- await fixture.service.updateV340Draft(fixture.command({draft:{source,textInputs:nodeId==='Flow-2-6'?{disclosure_text:'公开输入',user_input:'公开运行指令'}:{research_request_text:'公开输入'},filePaths:{},configuration:{}}}))
++ await fixture.service.updateV340Draft(fixture.command({draft:{source,textInputs:options.textInputs??(nodeId==='Flow-2-6'?{disclosure_text:'公开输入',user_input:'公开运行指令'}:{research_request_text:'公开输入'}),filePaths:{},configuration:{}}}))
+  await fixture.service.createV340Run(fixture.command({requestKey:'synthetic-run'}))
+  for(let n=0;n<100&&fixture.run().status==='prepared';n++)await new Promise(r=>setTimeout(r,2))
+  if(fixture.run().status!=='completed')throw Error('synthetic fixture did not finish')

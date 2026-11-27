@@ -1,6 +1,7 @@
 import {createElement as h,useEffect,useRef,useState} from 'react'
 import {getV340Versions,getV340LegacyResultDrafts,V340_CONVERSATION_TEXT_LIMIT,formatV340ConversationDraft} from '../v340-runtime-contract.js'
 import {hasPendingUnifiedRun} from '../generation-contract.js'
+import { claimsCandidateFor, localSkillUnavailableReason, PATENT_DISCLOSURE_CLAIMS_ID } from '../local-skill-suites.js'
 import {GenerationSourceSwitch} from './GenerationSourceSwitch.js'
 import {SafeMarkdownPreview} from './SafeMarkdownPreview.js'
 
@@ -57,8 +58,12 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
   try{await action(()=>actions.review?.(page.pageId,target,{workspaceId:state.workspaceId,revision:state.revision,...target}))}finally{inFlight.current=false}
  }
  const plan=operation.v340SavePlan,planMatches=plan&&target&&JSON.stringify(plan.target)===JSON.stringify(target)&&plan.revision===state.revision&&!editing
- const candidate=!recovery&&node?.m06Candidate?.skillVersion==='0.1.3'&&page.v340.nodeId==='Flow-2-6'&&draft.source==='local-skill'
- const candidatePreview=operation.v340CandidatePreview
+ const capability=claimsCandidateFor(node,state.localSkillSuite)
+ const skillUnavailable=draft.source==='local-skill'?localSkillUnavailableReason(state.localSkillSuite,Boolean(capability)):null
+ const candidate=!recovery&&capability?.requiresConfirmation===true&&page.v340.nodeId==='Flow-2-6'&&draft.source==='local-skill'
+ const external=capability?.skillId===PATENT_DISCLOSURE_CLAIMS_ID
+ const pendingPreview=operation.v340CandidatePreview
+ const candidatePreview=pendingPreview?.businessSkillId===capability?.skillId?pendingPreview:null
  return h('section',{'aria-label':'共同输入与结果','className':'oasis-v340',style:{container:'oasis-v340 / inline-size',minWidth:0,padding:16}},
   h('style',null,`.oasis-v340 *{box-sizing:border-box}.oasis-v340 .v340-panes{display:grid;grid-template-columns:minmax(0,1fr);gap:16}.oasis-v340 .v340-pane[data-visible=false]{display:none}.oasis-v340 input,.oasis-v340 textarea,.oasis-v340 select{max-width:100%;width:100%;border:1px solid #dce4df;border-radius:7px;padding:9px;color:inherit;background:var(--dsw-alias-bg-base,#fff)}.oasis-v340 button:disabled{opacity:.55;cursor:not-allowed}.oasis-v340 input:disabled,.oasis-v340 textarea:disabled,.oasis-v340 select:disabled{opacity:.65;cursor:not-allowed}@container oasis-v340 (min-width:680px){.oasis-v340 .v340-panes{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.oasis-v340 .v340-pane[data-visible=false]{display:block}.oasis-v340 .v340-tabs{display:none}}`),
   h('header',{style:{display:'flex',flexWrap:'wrap',gap:12,justifyContent:'space-between',alignItems:'center',marginBottom:14}},
@@ -75,7 +80,7 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
     node?h('p',{role:'status'},operation.v340InputDraft?'输入正在保存；失败时保留本地草稿。':'输入已保存'):null,
     operation.v340InputDraft?h('button',{type:'button',style:button,disabled:working,onClick:()=>action(()=>actions.saveDraft?.(page.pageId,operation.v340InputDraft))},'重试保存输入'):null,
     candidate?h('section',{'aria-label':'M06受控候选'},
-      h('p',null,'M06 0.1.3 受控候选；尚未取得专业与用户接受。'),
+      h('p',null,external?'中国专利 Skill · 权利要求初稿':'M06 0.1.3 受控候选；尚未取得专业与用户接受。'),
       h('button',{type:'button',style:{...button,width:'100%'},disabled:disabled||working||!!operation.v340InputDraft||!actions.prepareCandidate,
         onClick:()=>action(()=>actions.prepareCandidate?.(page.pageId))},'核对模型与材料'),
       candidatePreview?h('section',{'aria-label':'候选生成确认'},
@@ -90,7 +95,7 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
       h('p',null,'原请求尚未确认，输入和来源保持锁定；不会重新生成。'),
       h('button',{type:'button',style:button,disabled:working||!actions.reconcileCandidate,
         onClick:()=>action(()=>actions.reconcileCandidate?.(page.pageId))},'核对原请求状态')):null,
-    !candidate?h('p',{role:'status',style:{fontSize:12}},node?.sources[draft.source].reason??'新版来源尚未就绪'):null),
+    !candidate?h('p',{role:'status',style:{fontSize:12}},skillUnavailable??node?.sources[draft.source].reason??'新版来源尚未就绪'):null),
    h('section',{className:'v340-pane','data-visible':tab==='result',style:{minWidth:0}},
     h('h3',null,'生成结果'),
     h('nav',{'aria-label':'结果版本',style:{display:'flex',flexWrap:'wrap',gap:6}},
@@ -98,6 +103,8 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
       'aria-current':target?.versionId===v.versionId?'true':undefined,onClick:()=>actions.selectVersion?.(page.pageId,id,v.versionId)},`${page.v340.runOrder.length>1?`运行${page.v340.runOrder.indexOf(id)+1} · `:''}版本 ${index+1}`)))),
     !version?h('p',{role:'status'},run?.status==='unknown'?'运行状态未确认；不会自动重发。':run?.status==='prepared'?'原运行尚未完成。':run?.status==='failed'?`本次生成失败（${run.failureCode}）；未取得正文，不会自动重试。`:'暂无生成结果'):h('article',{style:{display:'grid',gap:12,marginTop:12}},
      h('small',null,`${run.source==='local-skill'?'本地 Skills':'专业 API'} · ${run.evidenceKind==='native-model-candidate'?'受控候选':'合成验收'} · ${version.review.status==='approved'?'已审核':'待审核'}`),
+     run.nativeCandidate?.businessSkillId===PATENT_DISCLOSURE_CLAIMS_ID?h('small',null,
+       '中国专利 Skill · GitHub 版本 '+run.nativeCandidate.businessSkillVersion.slice(0,7)):null,
      ...legacy.map(({key,draft})=>h('section',{key,'aria-label':'旧草稿恢复'},h('p',null,'旧草稿格式未确认，可能包含整份累计文稿。请先复制保留；原草稿保持，可另起核心正文编辑。'),
        h('textarea',{'aria-label':'旧草稿原文',readOnly:true,rows:8,value:draft.body}),
        h('small',null,'“编辑结果”从原版本核心正文开始；不会自动抽取、转换或删除旧草稿。'))),

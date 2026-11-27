@@ -1,0 +1,714 @@
+{
+  "oasisInputs": [
+    {
+      "id": "M01",
+      "nodeId": "Flow-1-1",
+      "skillId": "patent-background-research",
+      "skillVersion": "0.3.0-rc.5",
+      "manifestSha256": "5eeb3afbc41dab5f32e0e9be798f2c74f82b2d7fdb6f9f1a4ac9d2ec85503380",
+      "manifestMembersVerified": 12,
+      "fields": [
+        {
+          "field": "research_request_text",
+          "path": "scenarios.md",
+          "section": "background",
+          "rawSha256": "0d33f539fc97b506886f202aca966a8f054e0231842c80ed5d87bbf3afb808d2",
+          "inputSha256": "b5282d80a1cb73cc60bc6caa90747912cc802356a39e4fc261dc7cd5e0f58616"
+        }
+      ],
+      "inputSha256": "f14786db15793089e6f73e3bfdd083c035a4b2ad8aa27d684eae806eb397925f",
+      "upstream": "not_applicable",
+      "omittedExpectedInputs": [
+        "未提供：research_request_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M02",
+      "nodeId": "Flow-1-2",
+      "skillId": "patent-triz-analysis",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "b11a88b0d304c9cda07830a3a3d60e96b6cd91a1bbf08b21eaa48a5b194c25f5",
+      "manifestMembersVerified": 13,
+      "fields": [
+        {
+          "field": "technical_analysis_material_text",
+          "path": "scenarios.md",
+          "section": "triz",
+          "rawSha256": "0d33f539fc97b506886f202aca966a8f054e0231842c80ed5d87bbf3afb808d2",
+          "inputSha256": "ce8f972cd1ff35916f83ac006ba69c2908b49b69a79e2b94e30beec31226232a"
+        }
+      ],
+      "inputSha256": "7be065a673755b3b00c6ef4f021048840b20fc7c3b6128509b0d3294b4fdd90e",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M03",
+      "nodeId": "Flow-1-3",
+      "skillId": "patent-overview-search",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "2687876468c4d397ce6b79580d08cebb3aba6fd2b8fd3efb8da49a3fc7fe9c46",
+      "manifestMembersVerified": 13,
+      "fields": [
+        {
+          "field": "search_target_text",
+          "path": "scenarios.md",
+          "section": "search",
+          "rawSha256": "0d33f539fc97b506886f202aca966a8f054e0231842c80ed5d87bbf3afb808d2",
+          "inputSha256": "765a1b18094cf8cb02cebea346ee6d6c1b9c518b8a52fe2f6ce15fbfa91e966b"
+        }
+      ],
+      "inputSha256": "5e0c1da2c51a1441aef33a4dfec173798a81d8082481661e85105498971980d3",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M04",
+      "nodeId": "Flow-1-4",
+      "skillId": "patent-solution-selection",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "a531c9106b7fd667743a1ddf425729a6c91eb07dd81779519be33cdbf93c88af",
+      "manifestMembersVerified": 13,
+      "fields": [
+        {
+          "field": "solution_selection_basis_text",
+          "path": "scenarios.md",
+          "section": "alternatives",
+          "rawSha256": "0d33f539fc97b506886f202aca966a8f054e0231842c80ed5d87bbf3afb808d2",
+          "inputSha256": "e0bd06493e12bc158dcac688d6e1e416d4c66b86c40049d6e20a2e190a20fec3"
+        }
+      ],
+      "inputSha256": "8e88c7fec3df15653d69c75a2ea005da32265919208f9035b4e62c79e941f614",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file",
+        "未提供：application_type"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M05",
+      "nodeId": "Flow-1-5",
+      "skillId": "patent-technical-disclosure",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "6e28484256f71dd12a66120138657e546fa96b4e38381507475c8a371bdb241a",
+      "manifestMembersVerified": 13,
+      "fields": [
+        {
+          "field": "technical_disclosure_file",
+          "path": "public-disclosure.md",
+          "section": null,
+          "rawSha256": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea",
+          "inputSha256": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea"
+        },
+        {
+          "field": "drawings_text",
+          "path": "drawing-key.md",
+          "section": null,
+          "rawSha256": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f",
+          "inputSha256": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f"
+        },
+        {
+          "field": "supplemental_data_text",
+          "path": "scenarios.md",
+          "section": "feedback",
+          "rawSha256": "0d33f539fc97b506886f202aca966a8f054e0231842c80ed5d87bbf3afb808d2",
+          "inputSha256": "6a0ec77039689bede14bc63ffcfc6d18fe790b832f641300099108d1dd659d89"
+        }
+      ],
+      "inputSha256": "fded7691a41d03d37bbaef6bc3a4839f89905bb8f6332fa2c755448d14b1093e",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M06",
+      "nodeId": "Flow-2-6",
+      "skillId": "patent-claims-draft",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "dd1e766448542537a912fda31fc17b5b35efa7c442458aa5d4fffe6b926d1009",
+      "manifestMembersVerified": 13,
+      "fields": [
+        {
+          "field": "disclosure_file",
+          "path": "public-disclosure.md",
+          "section": null,
+          "rawSha256": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea",
+          "inputSha256": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea"
+        }
+      ],
+      "inputSha256": "d421732b89921793aeb5927591d46e668ce033cdd7270bfc8f55ceb41cd551df",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M07",
+      "nodeId": "Flow-2-7",
+      "skillId": "patent-specification-draft",
+      "skillVersion": "0.3.0-rc.3",
+      "manifestSha256": "e88db3d3c777668bc6475251911a735a3ef99688d9e237c8508582314172e613",
+      "manifestMembersVerified": 13,
+      "fields": [
+        {
+          "field": "claims_text",
+          "path": "claims-spec.md",
+          "section": "claims-draft",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "7410e87de00fbb20945f9147716eb8dffa074bd7526b4b917e375a24dfdb5d50"
+        },
+        {
+          "field": "disclosure_file",
+          "path": "public-disclosure.md",
+          "section": null,
+          "rawSha256": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea",
+          "inputSha256": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea"
+        },
+        {
+          "field": "drawings_text",
+          "path": "drawing-key.md",
+          "section": null,
+          "rawSha256": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f",
+          "inputSha256": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f"
+        }
+      ],
+      "inputSha256": "0a4d1adf43b667de5196dc9b23769c6c741c82a94617d567c6bf2dad26379f2e",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M08",
+      "nodeId": "Flow-3-8",
+      "skillId": "patent-fulltext-recheck",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "9d0036f4fa5daa153b8c82d48bb38e032369af33b2484bc011686a97b4e7af0a",
+      "manifestMembersVerified": 15,
+      "fields": [
+        {
+          "field": "claims_text",
+          "path": "claims-spec.md",
+          "section": "claims-draft",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "7410e87de00fbb20945f9147716eb8dffa074bd7526b4b917e375a24dfdb5d50"
+        },
+        {
+          "field": "specification_text",
+          "path": "claims-spec.md",
+          "section": "specification",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "3f52e3096a22545c9412b78fd781d5e6b7556c84995846b167e2646ec1afe221"
+        },
+        {
+          "field": "comparison_doc_1_file",
+          "path": "simulated-reference.md",
+          "section": null,
+          "rawSha256": "bcbc18e3834f1c2a880e927314a1982df2d1a073193716b04e89d956ad8b8398",
+          "inputSha256": "bcbc18e3834f1c2a880e927314a1982df2d1a073193716b04e89d956ad8b8398"
+        }
+      ],
+      "inputSha256": "d2d2bac4352f7fcb0df095b5ec032f3f6d3a44b65a13c08379e99be5816f9d71",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M09",
+      "nodeId": "Flow-3-9",
+      "skillId": "patent-drafting-plan",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "5686eed6a14eb4f0e5e3936e062e521e10d6372ba4560cb33b61a9438dd3d5b7",
+      "manifestMembersVerified": 14,
+      "fields": [
+        {
+          "field": "claims_text",
+          "path": "claims-spec.md",
+          "section": "claims-draft",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "7410e87de00fbb20945f9147716eb8dffa074bd7526b4b917e375a24dfdb5d50"
+        },
+        {
+          "field": "specification_text",
+          "path": "claims-spec.md",
+          "section": "specification",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "3f52e3096a22545c9412b78fd781d5e6b7556c84995846b167e2646ec1afe221"
+        },
+        {
+          "field": "strategy_text",
+          "path": "scenarios.md",
+          "section": "strategy",
+          "rawSha256": "0d33f539fc97b506886f202aca966a8f054e0231842c80ed5d87bbf3afb808d2",
+          "inputSha256": "d89f5d8f8662c936951fee31b2e7bf1939697190bb70d43e15333fd891833e3f"
+        }
+      ],
+      "inputSha256": "a9468c364ea4bdca414a39cef9eeb5d4768b390a3606ebf1541434948917032d",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M10",
+      "nodeId": "Flow-3-10",
+      "skillId": "patent-technical-confirmation",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "0257966f29e796c25d7acde93d7042d09ce8574ef5697ee87767023524bc0545",
+      "manifestMembersVerified": 13,
+      "fields": [
+        {
+          "field": "technical_feedback_text",
+          "path": "scenarios.md",
+          "section": "feedback",
+          "rawSha256": "0d33f539fc97b506886f202aca966a8f054e0231842c80ed5d87bbf3afb808d2",
+          "inputSha256": "6a0ec77039689bede14bc63ffcfc6d18fe790b832f641300099108d1dd659d89"
+        },
+        {
+          "field": "drawings_text",
+          "path": "drawing-key.md",
+          "section": null,
+          "rawSha256": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f",
+          "inputSha256": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f"
+        }
+      ],
+      "inputSha256": "93984582c12e94ec133aed3074be4578375c87919db04c2f2581f34c50125a66",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file",
+        "未提供：technical_feedback_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M11",
+      "nodeId": "Flow-4-11",
+      "skillId": "patent-claims-final",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "75728ab2f2200d5fd9bfe8fdb1fdd0d491ff5ce41fa41cee30428ec765e16729",
+      "manifestMembersVerified": 13,
+      "fields": [
+        {
+          "field": "claims_text",
+          "path": "claims-spec.md",
+          "section": "claims-revision",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "57fac130094fd0983cde9ef572f1c9144cf5e502cfe82ee051b2b3651db36723"
+        },
+        {
+          "field": "claims_file",
+          "path": "claims-baseline.md",
+          "section": null,
+          "rawSha256": "0923905e4a10a512da548e62eeb30184065c58c9ddcdd3bbe344fad94f1ca636",
+          "inputSha256": "0923905e4a10a512da548e62eeb30184065c58c9ddcdd3bbe344fad94f1ca636"
+        },
+        {
+          "field": "specification_text",
+          "path": "claims-spec.md",
+          "section": "specification",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "3f52e3096a22545c9412b78fd781d5e6b7556c84995846b167e2646ec1afe221"
+        },
+        {
+          "field": "confirmation_text",
+          "path": "scenarios.md",
+          "section": "feedback",
+          "rawSha256": "0d33f539fc97b506886f202aca966a8f054e0231842c80ed5d87bbf3afb808d2",
+          "inputSha256": "6a0ec77039689bede14bc63ffcfc6d18fe790b832f641300099108d1dd659d89"
+        }
+      ],
+      "inputSha256": "7d77a89005a5a3a14c87e017a5f4869812a28798336c1f5cc514fed7ee84030c",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M12",
+      "nodeId": "Flow-4-12",
+      "skillId": "patent-specification-final",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "2fbfb0c9c9ba8c25a69ea028badc98f4cc8e1e555ece61a0388ef80f473c1513",
+      "manifestMembersVerified": 13,
+      "fields": [
+        {
+          "field": "claims_text",
+          "path": "claims-spec.md",
+          "section": "claims-draft",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "7410e87de00fbb20945f9147716eb8dffa074bd7526b4b917e375a24dfdb5d50"
+        },
+        {
+          "field": "specification_text",
+          "path": "claims-spec.md",
+          "section": "specification",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "3f52e3096a22545c9412b78fd781d5e6b7556c84995846b167e2646ec1afe221"
+        },
+        {
+          "field": "disclosure_file",
+          "path": "public-disclosure.md",
+          "section": null,
+          "rawSha256": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea",
+          "inputSha256": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea"
+        },
+        {
+          "field": "drawings_text",
+          "path": "drawing-key.md",
+          "section": null,
+          "rawSha256": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f",
+          "inputSha256": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f"
+        }
+      ],
+      "inputSha256": "b5eee5e245057d94a95a017c7eba1c6cc9aaca7951cf50efbb559697f89a0943",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M13",
+      "nodeId": "Flow-5-13",
+      "skillId": "patent-final-check",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "26422a9adbd3e53f37569bf026cc103504739dcaf28bc55e09c6b5af5c12fb4e",
+      "manifestMembersVerified": 13,
+      "fields": [
+        {
+          "field": "claims_text",
+          "path": "claims-spec.md",
+          "section": "claims-draft",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "7410e87de00fbb20945f9147716eb8dffa074bd7526b4b917e375a24dfdb5d50"
+        },
+        {
+          "field": "specification_text",
+          "path": "claims-spec.md",
+          "section": "specification",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "3f52e3096a22545c9412b78fd781d5e6b7556c84995846b167e2646ec1afe221"
+        },
+        {
+          "field": "drawings_text",
+          "path": "drawing-key.md",
+          "section": null,
+          "rawSha256": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f",
+          "inputSha256": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f"
+        }
+      ],
+      "inputSha256": "0ee1cb1c38e16a4dcc666557077f005036aa9f5052cb7b7161f69ff905385f6a",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M14",
+      "nodeId": "Flow-6-14",
+      "skillId": "patent-office-action-response",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "7c08b553fd14dadb432f71d261d1d9e869f6aea44fc96840e3359f98d40e92c5",
+      "manifestMembersVerified": 15,
+      "fields": [
+        {
+          "field": "oa_notice_file",
+          "path": "simulated-office-action.md",
+          "section": null,
+          "rawSha256": "cf674036f0daeb6825e2b30d70777fd53b08c1b81b8b1d3b9079c711810da46a",
+          "inputSha256": "cf674036f0daeb6825e2b30d70777fd53b08c1b81b8b1d3b9079c711810da46a"
+        },
+        {
+          "field": "original_application_file",
+          "path": "public-disclosure.md",
+          "section": null,
+          "rawSha256": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea",
+          "inputSha256": "796f7f4d8b160ad4eb1fd4695d7b050a387daf437bba53df83dc2500299f1cea"
+        },
+        {
+          "field": "current_application_text",
+          "path": "claims-spec.md",
+          "section": "claims-draft",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "7410e87de00fbb20945f9147716eb8dffa074bd7526b4b917e375a24dfdb5d50"
+        },
+        {
+          "field": "comparison_doc_1_file",
+          "path": "simulated-reference.md",
+          "section": null,
+          "rawSha256": "bcbc18e3834f1c2a880e927314a1982df2d1a073193716b04e89d956ad8b8398",
+          "inputSha256": "bcbc18e3834f1c2a880e927314a1982df2d1a073193716b04e89d956ad8b8398"
+        }
+      ],
+      "inputSha256": "b2ada9265cd3b904d7f295d7e2004c9048ca05780dd86234e43b30d5c072086e",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file",
+        "未提供：oa_notice_text",
+        "未提供：original_application_text",
+        "未提供：current_application_file",
+        "未提供：comparison_doc_2_file",
+        "未提供：comparison_doc_3_file",
+        "未提供：comparison_doc_4_file",
+        "未提供：comparison_doc_5_file"
+      ],
+      "generationDispatched": false
+    },
+    {
+      "id": "M08-MISSING-TEXT",
+      "nodeId": "Flow-3-8",
+      "skillId": "patent-fulltext-recheck",
+      "skillVersion": "0.3.0-rc.4",
+      "manifestSha256": "9d0036f4fa5daa153b8c82d48bb38e032369af33b2484bc011686a97b4e7af0a",
+      "manifestMembersVerified": 15,
+      "fields": [
+        {
+          "field": "claims_text",
+          "path": "claims-spec.md",
+          "section": "claims-draft",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "7410e87de00fbb20945f9147716eb8dffa074bd7526b4b917e375a24dfdb5d50"
+        },
+        {
+          "field": "specification_text",
+          "path": "claims-spec.md",
+          "section": "specification",
+          "rawSha256": "39150ff075f6f8fa55391e5e3320b7d1db60aac4a3dea44d20eea88b8b3f77ce",
+          "inputSha256": "3f52e3096a22545c9412b78fd781d5e6b7556c84995846b167e2646ec1afe221"
+        }
+      ],
+      "inputSha256": "2d06d2b11f7a2da287a7a4d2e4377bebd2ee3b05b4f4f7c466374c74a4da3444",
+      "upstream": "not_provided",
+      "omittedExpectedInputs": [
+        "未提供：upstream_md_file"
+      ],
+      "generationDispatched": false
+    }
+  ],
+  "oasisIllustration": {
+    "id": "I01",
+    "status": "requires-figure-capability"
+  },
+  "chinaRouter": {
+    "skillSha256": "930effdee9c5afb2da430bb3870e60287dba5ad7f640d7a62d3a01dbd9c812a6",
+    "sourceRevision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+    "status": "source-table-and-targets-verified",
+    "classificationExecuted": false,
+    "fixtures": [
+      {
+        "probe": 1,
+        "prompt": "请把给定材料写成发明交底书。",
+        "expectedChild": "skills/patent-disclosure/SKILL.md",
+        "childHash": "fe93aa6342f689fb3f765cd1f00580b3014a3855ea3b3b45864292cd092eea82",
+        "extra": null,
+        "sourceLine": 34,
+        "triggers": "专利挖掘、交底书、查新、实用新型、外观设计；`/patent-disclosure`、`/交底书`",
+        "gate": "无",
+        "destination": "交底包",
+        "exclusions": "查新不进入检索包"
+      },
+      {
+        "probe": 2,
+        "prompt": "请做保护型 1+N 围栏。",
+        "expectedChild": "skills/patent-disclosure/SKILL.md",
+        "childHash": "fe93aa6342f689fb3f765cd1f00580b3014a3855ea3b3b45864292cd092eea82",
+        "extra": "prompts/fence",
+        "sourceLine": 35,
+        "triggers": "专利布局、专利围栏、族树、保护型1+N、做围栏",
+        "gate": "首篇交底已定稿（用户点名可强开）；须分解 → 突围 → 矩阵 → 立项说明，立项校验写入 `专利布局.md`",
+        "destination": "**交底包旁路** `prompts/fence/`",
+        "exclusions": "不进专利地图。未确认立项说明，不分件写多篇"
+      },
+      {
+        "probe": 3,
+        "prompt": "请做发明分案规划。",
+        "expectedChild": "skills/patent-application/SKILL.md",
+        "childHash": "15cf180bcc04c998b3cb46fe07e623c2a3c623d87919722b0e114da574b3f922",
+        "extra": "prompts/divisional.md",
+        "sourceLine": 36,
+        "triggers": "发明分案（含上下文中的「先做分案一」）、母案与分案规划、分案原始披露核验 — **须点名**",
+        "gate": "规划可先列材料缺口；分案四件套须同案交底目录并先核验原始申请",
+        "destination": "先走申请文件包 `prompts/divisional.md`；仅写交底时再转发明交底",
+        "exclusions": "只撰写点名的案件；缺原始支持先交规划或核对稿"
+      },
+      {
+        "probe": 4,
+        "prompt": "请按指定交底目录做申请底稿。",
+        "expectedChild": "skills/patent-application/SKILL.md",
+        "childHash": "15cf180bcc04c998b3cb46fe07e623c2a3c623d87919722b0e114da574b3f922",
+        "extra": null,
+        "sourceLine": 37,
+        "triggers": "申请文件、申请底稿、申报材料；`/申请底稿`、`/patent-apply` — **须点名**",
+        "gate": "**须指定交底目录**；缺 schema / 线稿 / 交底书则停，引导先补交底",
+        "destination": "申请文件包",
+        "exclusions": "—"
+      },
+      {
+        "probe": 5,
+        "prompt": "请一条龙制作交底和申请。",
+        "expectedChild": "skills/patent-docket/SKILL.md",
+        "childHash": "f3e981e00cadbe1e632d6cfd7088b3961d1135f2318e4f8e51c4786375f665ec",
+        "extra": null,
+        "sourceLine": 38,
+        "triggers": "交底申请一起做、从零出交底和申请、一条龙、帮写交底再出申请、按清单改、会稿、案卷；`/patent-docket` — **须点名**",
+        "gate": "状态写 `outputs/docket/`；清单缺口最多来回三轮，缺事实问人、不编",
+        "destination": "案卷包（再由它 `Read` 交底或申请入口）",
+        "exclusions": "只写交底，或只出四件套时，不进案卷"
+      },
+      {
+        "probe": 6,
+        "prompt": "请按著录字段检索国内公开公告。",
+        "expectedChild": "skills/patent-search/SKILL.md",
+        "childHash": "52d130073b67a9996739a7532266119bfb4e6beaba58f6dadfbc741642f7ce75",
+        "extra": null,
+        "sourceLine": 39,
+        "triggers": "按著录字段查公布公告、个人公开清单、以图或权要生成检索式；`/patent-search`",
+        "gate": "无",
+        "destination": "检索包",
+        "exclusions": "结果不写成交底查新"
+      },
+      {
+        "probe": 7,
+        "prompt": "请明确查美国专利。",
+        "expectedChild": "skills/patent-search/SKILL.md",
+        "childHash": "52d130073b67a9996739a7532266119bfb4e6beaba58f6dadfbc741642f7ce75",
+        "extra": null,
+        "sourceLine": 40,
+        "triggers": "海外检索、查美国 / 欧洲 / 日本 / 韩国专利、PCT 检索、「包含某国」— **须点名**",
+        "gate": "没提国家时走公布站",
+        "destination": "检索包海外旁路",
+        "exclusions": "不进交底查新；限流即停，不重试"
+      },
+      {
+        "probe": 8,
+        "prompt": "请解读公开号 US223898A。",
+        "expectedChild": "skills/patent-reader/SKILL.md",
+        "childHash": "5a5ea8d7ca0bcf38789ab5561cf9863f156d9daf6a838b0879c6075615b5752e",
+        "extra": null,
+        "sourceLine": 41,
+        "triggers": "读专利、给出公开号（含海外号）或 PDF 且目标是「读懂」；`/patent-read`、`/读专利`",
+        "gate": "无",
+        "destination": "解读包（**优先**）",
+        "exclusions": "不跑交底成文，不自动进对照表；海外号不顺带做海外检索"
+      },
+      {
+        "probe": 9,
+        "prompt": "请做权利要求对照表。",
+        "expectedChild": "skills/patent-chart/SKILL.md",
+        "childHash": "63e126866c7c0ffab2caab302d815f1eae38d372620c113491d4d2fdc6cf0ccc",
+        "extra": null,
+        "sourceLine": 42,
+        "triggers": "对照表、claim chart、无效对照、FTO 初筛、侵权对照；`/patent-chart` — **须点名**",
+        "gate": "左列须有公开号 / PDF / 权要 / `claim_features.json` / 交底 5.1；缺特征清单则派解读包",
+        "destination": "对照表包",
+        "exclusions": "不出法律意见"
+      },
+      {
+        "probe": 10,
+        "prompt": "请打开测试库的专利地图。",
+        "expectedChild": "skills/patent-map/SKILL.md",
+        "childHash": "031e6176cfcddd69a54654c8cc9618e0c47ba1b6313c7f924f3595412abc21ec",
+        "extra": null,
+        "sourceLine": 43,
+        "triggers": "专利地图、案例地图；`/专利地图`、`/patent-map` — **须点名**",
+        "gate": "需已有解读入库的 vault",
+        "destination": "专利地图包",
+        "exclusions": "不因读专利或写交底进入"
+      },
+      {
+        "probe": 11,
+        "prompt": "请根据给定的模拟审查意见草拟答复。",
+        "expectedChild": "skills/patent-oa/SKILL.md",
+        "childHash": "cafc4ad2a21ee2054f54d42fe4710e2b9f1c612fca8d767c98c99d1d91a31a9d",
+        "extra": null,
+        "sourceLine": 44,
+        "triggers": "审查意见、OA、案例入库；`/oa` — **须点名**",
+        "gate": "库薄时先引导入库",
+        "destination": "审查答复包",
+        "exclusions": "—"
+      },
+      {
+        "probe": 12,
+        "prompt": "请给出近期政策简报。",
+        "expectedChild": "skills/patent-exam-policy/SKILL.md",
+        "childHash": "6aeb3433eb49f821c049095a6f6f83135706d218deb5da00ff0b638ddd10a1ef",
+        "extra": null,
+        "sourceLine": 45,
+        "triggers": "政策简报、政策雷达；`/政策简报`、`/patent-brief`、`/patent-exam-policy`；「技能进化 / `/patent-evolve`」同一入口 — **须点名**",
+        "gate": "无",
+        "destination": "政策简报包",
+        "exclusions": "无点名不改技能文件"
+      }
+    ],
+    "negativeFixtures": [
+      {
+        "prompt": "请出申请底稿，项目里没有交底目录。",
+        "child": "patent-application",
+        "expected": "停在交底目录门"
+      },
+      {
+        "prompt": "请把这份交底资料整理为发明交底书。",
+        "child": "patent-disclosure",
+        "expected": "不自动进入申请、案卷、地图、对照表或海外检索"
+      },
+      {
+        "prompt": "请解读公开号 US223898A，只交可读笔记。",
+        "child": "patent-reader",
+        "expected": "不启动海外检索、地图或对照表"
+      }
+    ]
+  },
+  "chinaOa": {
+    "matchingToolCopies": false,
+    "toolHashes": [
+      {
+        "path": "skills/patent-chart/tools/emit_chart.py",
+        "sha256": "8b42a88b15db64ffa7c12465a5cc2a806e71db48dc3996bbf83d44437e136216"
+      },
+      {
+        "path": "skills/patent-oa/tools/emit_chart.py",
+        "sha256": "bcba5941e689fa973bfad3e59968564f1c9403709884c52a3a81d490cfda940e"
+      }
+    ]
+  },
+  "retainedReceipts": [
+    {
+      "id": "M05",
+      "requestKey": "f6369868-0451-4498-8a39-df031363ccfd",
+      "runId": "v340-74f02292-943a-464f-9e60-25337b70669f",
+      "status": "failed",
+      "oldReceiptValidated": true
+    },
+    {
+      "id": "M01",
+      "requestKey": "fb63182a-e307-4b78-a8af-81803aeb735b",
+      "runId": "v340-54f9e3cd-ac36-4c40-bb53-8ee660648815",
+      "status": "failed",
+      "oldReceiptValidated": true
+    },
+    {
+      "id": "M02",
+      "requestKey": "6c9c6dda-3a8e-4329-8769-9e19127a5427",
+      "runId": "v340-53042c43-5af3-4c86-bd86-39a63714f792",
+      "status": "failed",
+      "oldReceiptValidated": true
+    }
+  ]
+}

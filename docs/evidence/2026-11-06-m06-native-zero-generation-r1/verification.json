@@ -1,0 +1,221 @@
+{
+  "at": "2026-11-06T11:47:46.364572+08:00",
+  "executor": "Codex single agent",
+  "result": "PASS",
+  "command": "python3 via zsh: protected hash and old suffix checks, inspect actual red/green results, archive/source/extraction/pins, runtime layout and refused CLI, links/git and coordination/check.py",
+  "scope": "P1 offline implementation/preparation and original preservation only; NOT actual Desktop/Host/UI/installer, real calls, source B/A, professional/user/legal or publication acceptance",
+  "checks": [
+    {
+      "check": "pre-existing files outside declared changes retained",
+      "passed": true,
+      "detail": {
+        "count": 1022,
+        "drift": []
+      }
+    },
+    {
+      "check": "exact complete old suffix: docs/project-current-state.md",
+      "passed": true,
+      "detail": {
+        "before_sha256": "a361b67ab41a691803a5294dc29b525c2d8fdadeffb7197c7a4d89e373a848f1",
+        "after_sha256": "e2c85c3f8137ac77a1fa0156eb73c9419097c97de2671430caed64fb95c2e2ca",
+        "old_bytes": 324267
+      }
+    },
+    {
+      "check": "exact complete old suffix: docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "passed": true,
+      "detail": {
+        "before_sha256": "f9a8b74f9ba28415407271d73762019da0c72c00fb194bb63d07f5abfa893962",
+        "after_sha256": "364e2c7a1640a8e4e1c4e555f5054823ab5afa78bd0b0e454352dc9929fbfe0c",
+        "old_bytes": 114621
+      }
+    },
+    {
+      "check": "exactly three declared existing implementation files changed",
+      "passed": true,
+      "detail": [
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/macos-development-launch.mjs",
+          "old_sha256": "49b34189b8b8206e6fef25ad3ad517dd8ca27e7b349fce42b039f687f191bf6a",
+          "new_sha256": "a551a94348e2e46527e319f5f6f278f7925f0a4be995c442b4bc534a7f1d1c31"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/index.js",
+          "old_sha256": "c3b542c77108147187925b0d7a152c081e85cd7e9fe91d4361a19663ececa588",
+          "new_sha256": "0fa6c560dc3b2201be45187f6d02c82e8cf1d6e1faeda6e4e8fa25bbe88a8322"
+        },
+        {
+          "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-rpc.js",
+          "old_sha256": "f2672ba0ac2d72b922433076034d34431918786e821950d73d93b61ae2b3d5e2",
+          "new_sha256": "3359e305339d0abd7951c0923329d4f19af33f51f69e08a83e34aecad5b6f4cc"
+        }
+      ]
+    },
+    {
+      "check": "new feature failures observed before implementation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "tests-final-v2 actual exit0 and pass count",
+      "passed": true,
+      "detail": {
+        "passed": 30,
+        "exit_code": 0
+      }
+    },
+    {
+      "check": "rpc-regression actual exit0 and pass count",
+      "passed": true,
+      "detail": {
+        "passed": 18,
+        "exit_code": 0
+      }
+    },
+    {
+      "check": "archive-tests-v2 actual exit0 and pass count",
+      "passed": true,
+      "detail": {
+        "passed": 3,
+        "exit_code": 0
+      }
+    },
+    {
+      "check": "source-host-observation-v2.json refuses52 paths without business changes or calls",
+      "passed": true,
+      "detail": {
+        "rejected": 52,
+        "scope": "REGISTERED_HOST_WITH_SYNTHETIC_EXTERNAL_SERVICES_NOT_RUNNING_APP"
+      }
+    },
+    {
+      "check": "archive-host-observation-v2.json refuses52 paths without business changes or calls",
+      "passed": true,
+      "detail": {
+        "rejected": 52,
+        "scope": "REGISTERED_HOST_WITH_SYNTHETIC_EXTERNAL_SERVICES_NOT_RUNNING_APP"
+      }
+    },
+    {
+      "check": "new actual archive raw identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all134 actual archive and extracted/source bytes match",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "only Host index and RPC differ from old134 candidate",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "actual pack offline no scripts exit0 and integrity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "old c476 archive unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "22 candidate file pins match raw current bytes",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "candidate remains not ready and not real-call admission",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "existing view explicitly not new archive binding",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "new runtime only8 empty owned directories no Profile or lock",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "real candidate --check refuses before startup",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "native launch specification clean loopback and zero marker",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "client/resources/metadata unchanged from protected baseline",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "local documentation links resolve",
+      "passed": true,
+      "detail": {
+        "count": 20,
+        "missing": []
+      }
+    },
+    {
+      "check": "HEAD and branch unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "pre-existing Git entries retained",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "new Git paths belong only to this task",
+      "passed": true,
+      "detail": [
+        "?? docs/business-baseline/m06-native-zero-generation-launch-r1.md",
+        "?? packages/oasis-professional-service/test/m06-native-zero-generation.test.mjs",
+        "?? tests/macos-native-zero-generation.test.mjs",
+        "M packages/oasis-professional-service/src/workbench-rpc.js",
+        "M scripts/macos-development-launch.mjs"
+      ]
+    },
+    {
+      "check": "coordination structure only",
+      "passed": true,
+      "detail": {
+        "exit_code": 0,
+        "scope": "coordination_structure_only"
+      }
+    }
+  ],
+  "failed": [],
+  "artifacts": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-generation-r1/preflight.json",
+      "bytes": 26141,
+      "sha256": "ccd926abe114aea875253946a6933ade6b4fef000c0e4bd2e201cf0c8f6aedeb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-generation-r1/execution-return.md",
+      "bytes": 7559,
+      "sha256": "10dfafc3160f959f5440e14fff14e7235a1fef1a7fb50fdcba79ba08a21edbe1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-generation-r1/admission-candidate.json",
+      "bytes": 8820,
+      "sha256": "371a6828a2fcb8105c586700f784b7aedf332a9b49c48466dbaa85a6f9c75195"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/m06-native-zero-generation-launch-r1.md",
+      "bytes": 5852,
+      "sha256": "44955ff323f5163bf5de17b024d1f5cd8e0a98f9b4f026aea12258b540d5a049"
+    }
+  ]
+}

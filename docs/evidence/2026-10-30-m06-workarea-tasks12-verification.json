@@ -1,0 +1,648 @@
+{
+  "id": "M06-WORKAREA-TASKS12-VERIFY-20261030",
+  "at": "2026-10-30T02:14:31.652Z",
+  "executor": "single-agent author self-review",
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "sourceHash": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/package.json",
+      "sha256": "f54a459b6863ed997b46c078b36761eb7e241779eba60613745f9900a5a7f873"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/index.js",
+      "sha256": "2d06d40f265e4ad460a98afb9b5aed3a7b2b7f17b1f2da28f7a40ed46829629a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-remote-service.js",
+      "sha256": "f9bb91044a4058f14f891d0687d69dfaa8078fc5f34b2fe20cd23d8214f63383"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/oasis-runtime-config.js",
+      "sha256": "298a6b84d16de157bf12e3645f98a78b9353785a3c3104fb2e8d69c72c06b3ac"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/client/workspace-api-binding-controller.js",
+      "sha256": "988d70d3ad2598aa3739c2c942472f836887c47f744a8833587ac1530f113217"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-workarea-host-013.js",
+      "sha256": "9561a304fc30c08235857a24b3bbd816939062ebf77e9689e68f3c7d12dfc8a1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-workarea-material-packet.js",
+      "sha256": "30debfc85956a7b68e4d015d9187565c9add18adc604607a74fb04b88f84300c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/helpers/m06-controlled-host-harness.mjs",
+      "sha256": "465036a9f878555549985c402da35f660112e4c12657a9fa9d39a0fd0f37966e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/oasis-workspace-binding.test.mjs",
+      "sha256": "a96e656b5cb4b7a58f711fe7cd3de7775262063270f3d85da0d7135671a69a92"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/workspace-api-binding-client.test.mjs",
+      "sha256": "4cfaad0709b05811d589ca714be89cccc510ede4e635f4ea7acfa91c8bdd8e54"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-workarea-host.test.mjs",
+      "sha256": "a76771a4d4fd0ec9830ba27d01c439e7c10be4f0e1e33d3c4705cfda6a5081e0"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-workarea-material-packet.test.mjs",
+      "sha256": "3429208471bc81861e0b3b327eec2bfcdaf47cd519b472a8864af67389bf2fba"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/lib/client.js",
+      "sha256": "ceebb8d3db6914ac25961533402f83db1a2c7706d5c9dc836606dbb2d9ca89b5"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/lib/client.js.map",
+      "sha256": "e886412330c483dc2beb56cd9635fe6f08405d02c44fcba74ac715d9a3ce0324"
+    }
+  ],
+  "preserved": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-pdf-integration-compatibility-r1.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-recovery-interruption-diagnosis.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-controlled-profile-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-g0-admission.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-installed-admission-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-live-service-metadata-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-remote-contract-request-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-admin-access-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-admin-access.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-execution-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-intake-and-interruption-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-intake-delta.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-workarea-method-binding.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-api-minimal-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-api-minimal-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-api-minimal-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-minimal-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-minimal-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-spike-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-two-cases.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-and-flow26-g0-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-execution-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-provider-readiness.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-m06-implementation-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-m06-implementation-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-m06-implementation-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-selected-parser-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-worker-isolation-verification-r2.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-worker-isolation-verification-r3.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-worker-isolation-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-inputs.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-workarea-api-only-continuation.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-workarea-api-only-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-flow26-workarea-consumer-mapping-r1.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-project-plan-inputs.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-project-plan-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-workarea-pdf-execution-preflight.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-workarea-pdf-integration-return.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-workarea-pdf-verification.json",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-29-project-summary-and-next-development-plan.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-30-project-completion-and-next-development-plan.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-api-contract-adapter.js",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/pdf-extraction-process.js",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-api-contract-adapter.test.mjs",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/pdf-extraction-process.test.mjs",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/pdf-text-worker.py",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/test_pdf_distribution.py",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/test_pdf_text_worker.py",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/verify-pdf-distribution.py",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "same": false,
+      "prefixOnly": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+      "same": false,
+      "prefixOnly": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "same": true,
+      "prefixOnly": false
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "same": false,
+      "prefixOnly": true
+    }
+  ],
+  "tests": {
+    "files": 11,
+    "tests": 122,
+    "pass": 122,
+    "fail": 0,
+    "exitCode": 0,
+    "logPath": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-workarea-tasks12-20261030/tasks12-targeted-final.log",
+    "logSHA256": "2b6fe752df05ba5a8cc46a39f452ae4e1f6654e781d4228a3cb1434d0572572b",
+    "scope": "registered Host/fixed SDK and synthetic API unit verification; not real generation"
+  },
+  "build": {
+    "exitCode": 0,
+    "logPath": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-workarea-tasks12-20261030/native-r2/native-client-build.log",
+    "sourceBeforeLibBackup": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-workarea-tasks12-20261030/before-current-lib",
+    "offlinePnpm": "11.8.0, --offline --ignore-scripts; --lockfile-only then --frozen-lockfile; no automatic package-manager download"
+  },
+  "newCodeWhitespaceExit": 0,
+  "native": {
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2",
+    "port": 57607,
+    "appVersion": "2.0.17",
+    "dshVersion": "0.2.0-rc.2",
+    "actualUIVisited": true,
+    "modelPreview": {
+      "provider": "deepseek-official",
+      "model": "deepseek-flash"
+    },
+    "publicWorkspace": "46ebd9c0-adc0-4151-be0f-7963d162cb6b",
+    "inputHash": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b",
+    "runCount": 0,
+    "oldFCheck": "F_INSTALLED_CANDIDATE_CHECKED",
+    "firstStartup": "R1 Host guard refused; retained and exited0. R2 correct separate App/profile used without altering original installed policy",
+    "configDelta": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/home/profiles/desktop/cordis.patch.yml",
+      "beforePath": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-workarea-tasks12-20261030/native-r2/cordis-patch-before-ui.yml",
+      "beforeSHA256": "6e3e65fa85f2d7f26e16b4ae5ad16441703d9d49ae4320bbc6ed5d4bf964c888",
+      "afterSHA256": "5ef86435a378380b591d490c223beb6d9ac01d95529f0639fe4639dad358694b",
+      "observedUiActions": [
+        "skip first-use desktop settings",
+        "turn off official-model Session Log upload in this private Profile"
+      ],
+      "summary": [
+        {
+          "id": "desktop-shell",
+          "keys": [
+            "id",
+            "config"
+          ],
+          "configKeys": [
+            "mode",
+            "macosMaterial",
+            "windowsMaterial",
+            "port",
+            "openBrowser",
+            "networkExposure"
+          ]
+        },
+        {
+          "id": "desktop-updates",
+          "keys": [
+            "id",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "id": "session-telemetry-otel",
+          "keys": [
+            "id",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "id": "llm-pi-ai",
+          "keys": [
+            "id",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "id": "llm-deepseek",
+          "keys": [
+            "id",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": false
+        },
+        {
+          "id": "llm-deepseek-account",
+          "keys": [
+            "id",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "id": "session-title-llm",
+          "keys": [
+            "id",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "id": "goal-round-driver",
+          "keys": [
+            "id",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "id": "deepseek-account",
+          "keys": [
+            "id",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "id": "web-search-deepseek",
+          "keys": [
+            "id",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "id": "account-controller",
+          "keys": [
+            "id",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "id": "oasis-professional-service",
+          "keys": [
+            "id",
+            "name",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "keys": [
+            "insert"
+          ],
+          "configKeys": []
+        },
+        {
+          "id": "ui-theme",
+          "keys": [
+            "id",
+            "name",
+            "config"
+          ],
+          "configKeys": [
+            "preference"
+          ]
+        },
+        {
+          "id": "ui-conversation",
+          "keys": [
+            "id",
+            "name"
+          ],
+          "configKeys": []
+        },
+        {
+          "id": "better-sidebar",
+          "keys": [
+            "id",
+            "name",
+            "disabled"
+          ],
+          "configKeys": [],
+          "disabled": true
+        },
+        {
+          "keys": [
+            "insert"
+          ],
+          "configKeys": []
+        },
+        {
+          "id": "session-log-deepseek",
+          "keys": [
+            "id",
+            "name",
+            "config"
+          ],
+          "configKeys": [
+            "enabled"
+          ]
+        }
+      ],
+      "requiresRefreezeBeforeAnyCall": true,
+      "diff": {
+        "kind": "one explicit native settings row appended",
+        "id": "session-log-deepseek",
+        "enabled": false,
+        "originalRowsUnchanged": true
+      }
+    },
+    "initialAdmissionPreserved": true,
+    "requiresRefreezeBeforeCall": true,
+    "credentialCopied": false,
+    "credentialPrinted": false,
+    "configuredByUser": "pending reply"
+  },
+  "api": {
+    "catalogIdentityAndFolderOwnershipFix": "implemented and tested",
+    "materialPacket": {
+      "bytes": 4322,
+      "sha256": "08fc183cf6f2482151d31105cfd22dbe151908b2bba9f4aaf628ef099d540c16",
+      "semanticStatus": "PENDING_USER_DECISION_NOT_ADOPTED"
+    },
+    "nativeProjectAssociation": "pending native account and explicit project choice",
+    "uploads": 0,
+    "creates": 0,
+    "fees": 0,
+    "adminOrDifyAccess": false
+  },
+  "pendingUserInput": [
+    "private native model/workarea credentials via existing UI",
+    "one new official deepseek-flash calibration authorization",
+    "material packet semantics, proposed public project302 and at most one CNY3 Fast39 calibration"
+  ],
+  "actualLocalLoopComplete": false,
+  "actualAPIMappingAccepted": false,
+  "G0Passed": false,
+  "ordinaryHostOrOldControlledSourceAutomaticallyEnabled": false,
+  "oldFProfileChanged": false,
+  "dailyAppOrProfileChanged": false,
+  "PDFExperimentExpanded": false,
+  "resourceOrDependencyLockChanged": false,
+  "committed": false,
+  "pushed": false,
+  "published": false,
+  "outputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-m06-tasks12-review-packet.json",
+      "sha256": "73141e757cf02b7a64b86cd8a3facb09844ca870cfbff24c5238cd4d3ccae92f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-m06-native-current-preparation.json",
+      "sha256": "d70af4f85cce2acfb2ea01d7e978f8e30a1a02553e3523f22949d645613fcbfb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-m06-workarea-tasks12-return.md",
+      "sha256": "72c9e759849eb9cee8f8efcc67cb519a47c68449639c97d5dcbe69cb5a951ad6"
+    }
+  ]
+}

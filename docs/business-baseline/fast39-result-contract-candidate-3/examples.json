@@ -1,0 +1,407 @@
+{
+  "synthetic_only": true,
+  "submitted": false,
+  "eligibility_request": {
+    "packet_version": "m06-workarea-material-packet-2",
+    "node_id": "Flow-2-6",
+    "input_schema_version": "v340-1",
+    "technical_disclosure_file_count": 1,
+    "direct_fields": {
+      "technical_field": "",
+      "background_art_TD": "",
+      "technical_solutions": "",
+      "beneficial_effects_TD": "",
+      "embodiments_TD": "",
+      "drawings_explain_TD": ""
+    }
+  },
+  "source_registry_internal": {
+    "version": "flow26-source-trace-3",
+    "source_mode": "packet2",
+    "entries": [
+      {
+        "input_id": "upstream_md_file",
+        "role": "technical_material",
+        "status": "not_provided",
+        "text": "",
+        "source_sha256": null,
+        "receipt_sha256": null,
+        "filename": null,
+        "original_receipt": {
+          "status": "not_provided",
+          "sha256": "none",
+          "filename": "not_provided",
+          "content_origin": "none"
+        }
+      },
+      {
+        "input_id": "disclosure_file",
+        "role": "technical_material",
+        "status": "not_provided",
+        "text": "",
+        "source_sha256": null,
+        "receipt_sha256": null,
+        "filename": null,
+        "original_receipt": {
+          "status": "not_provided",
+          "sha256": "none",
+          "filename": "not_provided",
+          "content_origin": "none"
+        }
+      },
+      {
+        "input_id": "disclosure_text",
+        "role": "technical_material",
+        "status": "provided",
+        "text": "合成材料：构件甲。\r\n😀",
+        "source_sha256": "d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e",
+        "receipt_sha256": "d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e",
+        "filename": null,
+        "original_receipt": {
+          "status": "accepted",
+          "sha256": "d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e",
+          "filename": "文本输入",
+          "content_origin": "user_text"
+        }
+      },
+      {
+        "input_id": "drawings_file",
+        "role": "technical_material",
+        "status": "not_provided",
+        "text": "",
+        "source_sha256": null,
+        "receipt_sha256": null,
+        "filename": null,
+        "original_receipt": {
+          "status": "not_provided",
+          "sha256": "none",
+          "filename": "not_provided",
+          "content_origin": "none"
+        }
+      },
+      {
+        "input_id": "drawings_text",
+        "role": "technical_material",
+        "status": "not_provided",
+        "text": "",
+        "source_sha256": null,
+        "receipt_sha256": null,
+        "filename": null,
+        "original_receipt": {
+          "status": "not_provided",
+          "sha256": "none",
+          "filename": "not_provided",
+          "content_origin": "none"
+        }
+      },
+      {
+        "input_id": "claim_requirements_file",
+        "role": "output_requirement",
+        "status": "not_provided",
+        "text": "",
+        "source_sha256": null,
+        "receipt_sha256": null,
+        "filename": null,
+        "original_receipt": {
+          "status": "not_provided",
+          "sha256": "none",
+          "filename": "not_provided",
+          "content_origin": "none"
+        }
+      },
+      {
+        "input_id": "claim_requirements_text",
+        "role": "output_requirement",
+        "status": "not_provided",
+        "text": "",
+        "source_sha256": null,
+        "receipt_sha256": null,
+        "filename": null,
+        "original_receipt": {
+          "status": "not_provided",
+          "sha256": "none",
+          "filename": "not_provided",
+          "content_origin": "none"
+        }
+      },
+      {
+        "input_id": "user_input",
+        "role": "manual_instruction",
+        "status": "not_provided",
+        "text": null,
+        "source_sha256": null,
+        "receipt_sha256": null,
+        "filename": null,
+        "original_receipt": {
+          "status": "not_provided",
+          "sha256": "none",
+          "filename": "not_provided",
+          "content_origin": "none"
+        }
+      }
+    ],
+    "packet_text_sha256": "7fd06643ef1409ee460f9adf6a19cc7c10e86e2ef6fa8b99fdc879985575bba0",
+    "original_input_hash_claim": "3f48d11458e37cd22c904295e44cb2e10fec3d19095046a0c9197efb3c5286c7",
+    "actual_user_input_sha256": "bd339a937a049f66cee5c7ac6cb0958abf10cda717840b3f31932d3d38715e6c",
+    "input_warnings": [
+      {
+        "inputId": "upstream_md_file",
+        "problem": "未提供：前序材料",
+        "status": "missing"
+      }
+    ],
+    "limitations": [
+      "合成材料仅供Schema复核。"
+    ],
+    "required_missing_input_lines": [
+      "未提供：前序材料"
+    ],
+    "receipt_mapping_version": "flow26-receipt-map-1"
+  },
+  "quality_report": {
+    "outline_quality": {
+      "fallback_hint": "",
+      "status": "partial",
+      "warnings": [
+        "合成提示：仍须人工复核。"
+      ]
+    },
+    "outline_error": "",
+    "marker_warnings": [],
+    "dependency_warnings": [],
+    "dependency_parse_status": "ok",
+    "dependency_edges": [],
+    "claim_count": 1,
+    "quality_status": "partial",
+    "acceptance": "draft_requires_review_not_professional_acceptance",
+    "contract_version": "flow26-quality-3",
+    "source_trace_version": "flow26-source-trace-3",
+    "source_status": "mapped",
+    "outline_anchor": {
+      "basis": {
+        "planned_claims": [
+          {
+            "planned_claim_id": "plan:core",
+            "role": "core_root",
+            "original_id": null,
+            "feature_ids": [
+              "synthetic:f1"
+            ]
+          }
+        ],
+        "critical_feature_targets": [
+          {
+            "planned_claim_id": "plan:core",
+            "feature_id": "synthetic:f1"
+          }
+        ],
+        "outline_source_map": [
+          {
+            "planned_claim_id": "plan:core",
+            "feature_id": "synthetic:f1",
+            "input_id": "disclosure_text",
+            "source_sha256": "d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e",
+            "start_utf16": 5,
+            "end_utf16": 8,
+            "quote": "构件甲"
+          }
+        ],
+        "outline_quality": {
+          "fallback_hint": "",
+          "status": "partial",
+          "warnings": [
+            "合成提示：仍须人工复核。"
+          ]
+        },
+        "outline_error": ""
+      },
+      "sha256": "2ba798f542e1f97df12cbce0bb5906ff1f03cbf312adb066ba68fe4b7f05138e"
+    },
+    "source_map": [
+      {
+        "planned_claim_id": "plan:core",
+        "feature_id": "synthetic:f1",
+        "input_id": "disclosure_text",
+        "source_sha256": "d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e",
+        "start_utf16": 5,
+        "end_utf16": 8,
+        "quote": "构件甲",
+        "claim_id": "1"
+      }
+    ],
+    "claim_id_map": [
+      {
+        "planned_claim_id": "plan:core",
+        "final_claim_id": "1",
+        "reason": "合成根计划一对一"
+      }
+    ],
+    "feature_dispositions": [
+      {
+        "planned_claim_id": "plan:core",
+        "feature_id": "synthetic:f1",
+        "claim_id": "1",
+        "action": "kept",
+        "output_quote": "构件甲",
+        "output_start_utf16": 10,
+        "output_end_utf16": 13,
+        "locator_status": "verified",
+        "reason": "合成原文定位"
+      }
+    ],
+    "feature_coverage": {
+      "status": "complete",
+      "missing_core_targets": [],
+      "unverified_core_targets": []
+    },
+    "input_warnings": [
+      {
+        "inputId": "upstream_md_file",
+        "problem": "未提供：前序材料",
+        "status": "missing"
+      }
+    ],
+    "limitations": [
+      "合成材料仅供Schema复核。"
+    ],
+    "required_missing_input_lines": [
+      "未提供：前序材料"
+    ],
+    "support_review_status": "not_assessed",
+    "source_registry_sha256": "fe61361f4360d77718c4bfd5ce34f811aaa3f45d7740db1d863b7b78d5203e00",
+    "receipt_mapping_version": "flow26-receipt-map-1",
+    "anchor_assurance": "workflow_branch_client_self_consistency_only",
+    "coverage_basis": "reported_outline_anchor"
+  },
+  "structured_result": {
+    "contract_version": "flow26-fast-result-3",
+    "request_key": "synthetic-request-not-submitted",
+    "workflow_run_id": "00000000-0000-4000-8000-000000000001",
+    "provider_status": "succeeded",
+    "outputs": {
+      "output": "## 权利要求草稿\n1. 一种装置，包括构件甲。\n\n### 权利要求依赖树\n权利要求1（独立）\n\n## 材料缺项与未确认事项\n状态：partial\n输入缺项：\n- 未提供：前序材料\n原材料警示：\n```text\n未提供：前序材料\n```\n原材料限制：\n```text\n合成材料仅供Schema复核。\n```\nOutline原警示：\n```text\n合成提示：仍须人工复核。\n```\nOutline后续提示：\n未列出；不表示已无风险。\nOutline错误：\n未列出；不表示已无风险。\n编号提示：\n未列出；不表示已无风险。\n依赖提示：\n未列出；不表示已无风险。\nOutline原状态：partial\n依赖解析状态：ok\n来源技术支持与专业接受：未评估；须人工复核。\n\n## 技术特征来源\n|权项／计划|特征|input_id|正文hash|原文短引|UTF16区间|处置|\n|---|---|---|---|---|---|---|\n|1／plan:core|synthetic:f1|disclosure\\_text|d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e|构件甲|\\[5,8\\)|kept／verified|",
+      "claims_text": "1. 一种装置，包括构件甲。",
+      "dependency_tree": "### 权利要求依赖树\n权利要求1（独立）",
+      "pending_confirmation": "状态：partial\n输入缺项：\n- 未提供：前序材料\n原材料警示：\n```text\n未提供：前序材料\n```\n原材料限制：\n```text\n合成材料仅供Schema复核。\n```\nOutline原警示：\n```text\n合成提示：仍须人工复核。\n```\nOutline后续提示：\n未列出；不表示已无风险。\nOutline错误：\n未列出；不表示已无风险。\n编号提示：\n未列出；不表示已无风险。\n依赖提示：\n未列出；不表示已无风险。\nOutline原状态：partial\n依赖解析状态：ok\n来源技术支持与专业接受：未评估；须人工复核。",
+      "quality_report": "{\"acceptance\":\"draft_requires_review_not_professional_acceptance\",\"anchor_assurance\":\"workflow_branch_client_self_consistency_only\",\"claim_count\":1,\"claim_id_map\":[{\"final_claim_id\":\"1\",\"planned_claim_id\":\"plan:core\",\"reason\":\"合成根计划一对一\"}],\"contract_version\":\"flow26-quality-3\",\"coverage_basis\":\"reported_outline_anchor\",\"dependency_edges\":[],\"dependency_parse_status\":\"ok\",\"dependency_warnings\":[],\"feature_coverage\":{\"missing_core_targets\":[],\"status\":\"complete\",\"unverified_core_targets\":[]},\"feature_dispositions\":[{\"action\":\"kept\",\"claim_id\":\"1\",\"feature_id\":\"synthetic:f1\",\"locator_status\":\"verified\",\"output_end_utf16\":13,\"output_quote\":\"构件甲\",\"output_start_utf16\":10,\"planned_claim_id\":\"plan:core\",\"reason\":\"合成原文定位\"}],\"input_warnings\":[{\"inputId\":\"upstream_md_file\",\"problem\":\"未提供：前序材料\",\"status\":\"missing\"}],\"limitations\":[\"合成材料仅供Schema复核。\"],\"marker_warnings\":[],\"outline_anchor\":{\"basis\":{\"critical_feature_targets\":[{\"feature_id\":\"synthetic:f1\",\"planned_claim_id\":\"plan:core\"}],\"outline_error\":\"\",\"outline_quality\":{\"fallback_hint\":\"\",\"status\":\"partial\",\"warnings\":[\"合成提示：仍须人工复核。\"]},\"outline_source_map\":[{\"end_utf16\":8,\"feature_id\":\"synthetic:f1\",\"input_id\":\"disclosure_text\",\"planned_claim_id\":\"plan:core\",\"quote\":\"构件甲\",\"source_sha256\":\"d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e\",\"start_utf16\":5}],\"planned_claims\":[{\"feature_ids\":[\"synthetic:f1\"],\"original_id\":null,\"planned_claim_id\":\"plan:core\",\"role\":\"core_root\"}]},\"sha256\":\"2ba798f542e1f97df12cbce0bb5906ff1f03cbf312adb066ba68fe4b7f05138e\"},\"outline_error\":\"\",\"outline_quality\":{\"fallback_hint\":\"\",\"status\":\"partial\",\"warnings\":[\"合成提示：仍须人工复核。\"]},\"quality_status\":\"partial\",\"receipt_mapping_version\":\"flow26-receipt-map-1\",\"required_missing_input_lines\":[\"未提供：前序材料\"],\"source_map\":[{\"claim_id\":\"1\",\"end_utf16\":8,\"feature_id\":\"synthetic:f1\",\"input_id\":\"disclosure_text\",\"planned_claim_id\":\"plan:core\",\"quote\":\"构件甲\",\"source_sha256\":\"d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e\",\"start_utf16\":5}],\"source_registry_sha256\":\"fe61361f4360d77718c4bfd5ce34f811aaa3f45d7740db1d863b7b78d5203e00\",\"source_status\":\"mapped\",\"source_trace_version\":\"flow26-source-trace-3\",\"support_review_status\":\"not_assessed\"}",
+      "quality_status": "partial"
+    },
+    "provider_response_receipt": {
+      "hash_version": "provider-http-content-bytes-1",
+      "sha256": "72023ba6f5556ed5ef4511e61c349f064d66415cc67a11566e1776dbca512af3",
+      "byte_length": 4707,
+      "http_status": 200,
+      "body_retention": "hash_only"
+    }
+  },
+  "zero_claim_error": {
+    "contract_version": "flow26-fast-result-3",
+    "request_key": "synthetic-request-not-submitted",
+    "workflow_run_id": "00000000-0000-4000-8000-000000000001",
+    "phase": "content",
+    "provider_status": "succeeded",
+    "execution_outcome": "succeeded",
+    "code": "FAST39_NO_SUPPORTED_CLAIM",
+    "response_received": true,
+    "retention": "hash_only_not_persisted",
+    "provider_response_receipt": {
+      "hash_version": "provider-http-content-bytes-1",
+      "sha256": "881d3117becce59fa4c421b87fc5790e29106b4259c59a799a54446d86b284dc",
+      "byte_length": 313,
+      "http_status": 200,
+      "body_retention": "hash_only"
+    }
+  },
+  "evidence_record": {
+    "version": "flow26-fast-evidence-3",
+    "frozen_delivery_sha256": "036c247c822a60e4045dbf21638bbd7ddbfc4ddd7b10ff4369ca669039b0b666",
+    "original_enqueue_fact": "unknown",
+    "validation": {
+      "shape": "valid",
+      "source": "mapped",
+      "support": "not_assessed",
+      "capacity": "within_budget",
+      "anchor": "reported_self_consistent_original_outline_not_independently_available",
+      "provider_receipt": "backend_reported_bytes_not_recomputed_by_client"
+    },
+    "fragment": {
+      "structured_result": {
+        "contract_version": "flow26-fast-result-3",
+        "request_key": "synthetic-request-not-submitted",
+        "workflow_run_id": "00000000-0000-4000-8000-000000000001",
+        "provider_status": "succeeded",
+        "outputs": {
+          "output": "## 权利要求草稿\n1. 一种装置，包括构件甲。\n\n### 权利要求依赖树\n权利要求1（独立）\n\n## 材料缺项与未确认事项\n状态：partial\n输入缺项：\n- 未提供：前序材料\n原材料警示：\n```text\n未提供：前序材料\n```\n原材料限制：\n```text\n合成材料仅供Schema复核。\n```\nOutline原警示：\n```text\n合成提示：仍须人工复核。\n```\nOutline后续提示：\n未列出；不表示已无风险。\nOutline错误：\n未列出；不表示已无风险。\n编号提示：\n未列出；不表示已无风险。\n依赖提示：\n未列出；不表示已无风险。\nOutline原状态：partial\n依赖解析状态：ok\n来源技术支持与专业接受：未评估；须人工复核。\n\n## 技术特征来源\n|权项／计划|特征|input_id|正文hash|原文短引|UTF16区间|处置|\n|---|---|---|---|---|---|---|\n|1／plan:core|synthetic:f1|disclosure\\_text|d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e|构件甲|\\[5,8\\)|kept／verified|",
+          "claims_text": "1. 一种装置，包括构件甲。",
+          "dependency_tree": "### 权利要求依赖树\n权利要求1（独立）",
+          "pending_confirmation": "状态：partial\n输入缺项：\n- 未提供：前序材料\n原材料警示：\n```text\n未提供：前序材料\n```\n原材料限制：\n```text\n合成材料仅供Schema复核。\n```\nOutline原警示：\n```text\n合成提示：仍须人工复核。\n```\nOutline后续提示：\n未列出；不表示已无风险。\nOutline错误：\n未列出；不表示已无风险。\n编号提示：\n未列出；不表示已无风险。\n依赖提示：\n未列出；不表示已无风险。\nOutline原状态：partial\n依赖解析状态：ok\n来源技术支持与专业接受：未评估；须人工复核。",
+          "quality_report": "{\"acceptance\":\"draft_requires_review_not_professional_acceptance\",\"anchor_assurance\":\"workflow_branch_client_self_consistency_only\",\"claim_count\":1,\"claim_id_map\":[{\"final_claim_id\":\"1\",\"planned_claim_id\":\"plan:core\",\"reason\":\"合成根计划一对一\"}],\"contract_version\":\"flow26-quality-3\",\"coverage_basis\":\"reported_outline_anchor\",\"dependency_edges\":[],\"dependency_parse_status\":\"ok\",\"dependency_warnings\":[],\"feature_coverage\":{\"missing_core_targets\":[],\"status\":\"complete\",\"unverified_core_targets\":[]},\"feature_dispositions\":[{\"action\":\"kept\",\"claim_id\":\"1\",\"feature_id\":\"synthetic:f1\",\"locator_status\":\"verified\",\"output_end_utf16\":13,\"output_quote\":\"构件甲\",\"output_start_utf16\":10,\"planned_claim_id\":\"plan:core\",\"reason\":\"合成原文定位\"}],\"input_warnings\":[{\"inputId\":\"upstream_md_file\",\"problem\":\"未提供：前序材料\",\"status\":\"missing\"}],\"limitations\":[\"合成材料仅供Schema复核。\"],\"marker_warnings\":[],\"outline_anchor\":{\"basis\":{\"critical_feature_targets\":[{\"feature_id\":\"synthetic:f1\",\"planned_claim_id\":\"plan:core\"}],\"outline_error\":\"\",\"outline_quality\":{\"fallback_hint\":\"\",\"status\":\"partial\",\"warnings\":[\"合成提示：仍须人工复核。\"]},\"outline_source_map\":[{\"end_utf16\":8,\"feature_id\":\"synthetic:f1\",\"input_id\":\"disclosure_text\",\"planned_claim_id\":\"plan:core\",\"quote\":\"构件甲\",\"source_sha256\":\"d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e\",\"start_utf16\":5}],\"planned_claims\":[{\"feature_ids\":[\"synthetic:f1\"],\"original_id\":null,\"planned_claim_id\":\"plan:core\",\"role\":\"core_root\"}]},\"sha256\":\"2ba798f542e1f97df12cbce0bb5906ff1f03cbf312adb066ba68fe4b7f05138e\"},\"outline_error\":\"\",\"outline_quality\":{\"fallback_hint\":\"\",\"status\":\"partial\",\"warnings\":[\"合成提示：仍须人工复核。\"]},\"quality_status\":\"partial\",\"receipt_mapping_version\":\"flow26-receipt-map-1\",\"required_missing_input_lines\":[\"未提供：前序材料\"],\"source_map\":[{\"claim_id\":\"1\",\"end_utf16\":8,\"feature_id\":\"synthetic:f1\",\"input_id\":\"disclosure_text\",\"planned_claim_id\":\"plan:core\",\"quote\":\"构件甲\",\"source_sha256\":\"d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e\",\"start_utf16\":5}],\"source_registry_sha256\":\"fe61361f4360d77718c4bfd5ce34f811aaa3f45d7740db1d863b7b78d5203e00\",\"source_status\":\"mapped\",\"source_trace_version\":\"flow26-source-trace-3\",\"support_review_status\":\"not_assessed\"}",
+          "quality_status": "partial"
+        },
+        "provider_response_receipt": {
+          "hash_version": "provider-http-content-bytes-1",
+          "sha256": "72023ba6f5556ed5ef4511e61c349f064d66415cc67a11566e1776dbca512af3",
+          "byte_length": 4707,
+          "http_status": 200,
+          "body_retention": "hash_only"
+        }
+      }
+    }
+  },
+  "writer_draft": {
+    "contract_version": "flow26-writer-draft-3",
+    "blocks": [
+      {
+        "planned_claim_id": "plan:core",
+        "decision": "emit",
+        "decision_reason": "合成根计划一对一",
+        "claim_body": "一种装置，包括构件甲。",
+        "dispositions": [
+          {
+            "feature_id": "synthetic:f1",
+            "action": "kept",
+            "output_quote": "构件甲",
+            "reason": "合成原文定位"
+          }
+        ]
+      }
+    ]
+  },
+  "normalized_draft": {
+    "contract_version": "flow26-normalized-draft-3",
+    "clean_text": "1. 一种装置，包括构件甲。",
+    "claim_count": 1,
+    "marker_warnings": [],
+    "claim_id_map": [
+      {
+        "planned_claim_id": "plan:core",
+        "final_claim_id": "1",
+        "reason": "合成根计划一对一"
+      }
+    ],
+    "feature_dispositions": [
+      {
+        "planned_claim_id": "plan:core",
+        "feature_id": "synthetic:f1",
+        "claim_id": "1",
+        "action": "kept",
+        "output_quote": "构件甲",
+        "output_start_utf16": 10,
+        "output_end_utf16": 13,
+        "locator_status": "verified",
+        "reason": "合成原文定位"
+      }
+    ],
+    "claim_segments": [
+      {
+        "planned_claim_id": "plan:core",
+        "claim_id": "1",
+        "start_utf16": 0,
+        "body_start_utf16": 3,
+        "end_utf16": 14
+      }
+    ]
+  },
+  "provider_body_utf8": "{\n  \"workflow_run_id\": \"00000000-0000-4000-8000-000000000001\",\n  \"data\": {\n    \"id\": \"00000000-0000-4000-8000-000000000001\",\n    \"status\": \"succeeded\",\n    \"outputs\": {\n      \"output\": \"## 权利要求草稿\\n1. 一种装置，包括构件甲。\\n\\n### 权利要求依赖树\\n权利要求1（独立）\\n\\n## 材料缺项与未确认事项\\n状态：partial\\n输入缺项：\\n- 未提供：前序材料\\n原材料警示：\\n```text\\n未提供：前序材料\\n```\\n原材料限制：\\n```text\\n合成材料仅供Schema复核。\\n```\\nOutline原警示：\\n```text\\n合成提示：仍须人工复核。\\n```\\nOutline后续提示：\\n未列出；不表示已无风险。\\nOutline错误：\\n未列出；不表示已无风险。\\n编号提示：\\n未列出；不表示已无风险。\\n依赖提示：\\n未列出；不表示已无风险。\\nOutline原状态：partial\\n依赖解析状态：ok\\n来源技术支持与专业接受：未评估；须人工复核。\\n\\n## 技术特征来源\\n|权项／计划|特征|input_id|正文hash|原文短引|UTF16区间|处置|\\n|---|---|---|---|---|---|---|\\n|1／plan:core|synthetic:f1|disclosure\\\\_text|d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e|构件甲|\\\\[5,8\\\\)|kept／verified|\",\n      \"claims_text\": \"1. 一种装置，包括构件甲。\",\n      \"dependency_tree\": \"### 权利要求依赖树\\n权利要求1（独立）\",\n      \"pending_confirmation\": \"状态：partial\\n输入缺项：\\n- 未提供：前序材料\\n原材料警示：\\n```text\\n未提供：前序材料\\n```\\n原材料限制：\\n```text\\n合成材料仅供Schema复核。\\n```\\nOutline原警示：\\n```text\\n合成提示：仍须人工复核。\\n```\\nOutline后续提示：\\n未列出；不表示已无风险。\\nOutline错误：\\n未列出；不表示已无风险。\\n编号提示：\\n未列出；不表示已无风险。\\n依赖提示：\\n未列出；不表示已无风险。\\nOutline原状态：partial\\n依赖解析状态：ok\\n来源技术支持与专业接受：未评估；须人工复核。\",\n      \"quality_report\": \"{\\\"acceptance\\\":\\\"draft_requires_review_not_professional_acceptance\\\",\\\"anchor_assurance\\\":\\\"workflow_branch_client_self_consistency_only\\\",\\\"claim_count\\\":1,\\\"claim_id_map\\\":[{\\\"final_claim_id\\\":\\\"1\\\",\\\"planned_claim_id\\\":\\\"plan:core\\\",\\\"reason\\\":\\\"合成根计划一对一\\\"}],\\\"contract_version\\\":\\\"flow26-quality-3\\\",\\\"coverage_basis\\\":\\\"reported_outline_anchor\\\",\\\"dependency_edges\\\":[],\\\"dependency_parse_status\\\":\\\"ok\\\",\\\"dependency_warnings\\\":[],\\\"feature_coverage\\\":{\\\"missing_core_targets\\\":[],\\\"status\\\":\\\"complete\\\",\\\"unverified_core_targets\\\":[]},\\\"feature_dispositions\\\":[{\\\"action\\\":\\\"kept\\\",\\\"claim_id\\\":\\\"1\\\",\\\"feature_id\\\":\\\"synthetic:f1\\\",\\\"locator_status\\\":\\\"verified\\\",\\\"output_end_utf16\\\":13,\\\"output_quote\\\":\\\"构件甲\\\",\\\"output_start_utf16\\\":10,\\\"planned_claim_id\\\":\\\"plan:core\\\",\\\"reason\\\":\\\"合成原文定位\\\"}],\\\"input_warnings\\\":[{\\\"inputId\\\":\\\"upstream_md_file\\\",\\\"problem\\\":\\\"未提供：前序材料\\\",\\\"status\\\":\\\"missing\\\"}],\\\"limitations\\\":[\\\"合成材料仅供Schema复核。\\\"],\\\"marker_warnings\\\":[],\\\"outline_anchor\\\":{\\\"basis\\\":{\\\"critical_feature_targets\\\":[{\\\"feature_id\\\":\\\"synthetic:f1\\\",\\\"planned_claim_id\\\":\\\"plan:core\\\"}],\\\"outline_error\\\":\\\"\\\",\\\"outline_quality\\\":{\\\"fallback_hint\\\":\\\"\\\",\\\"status\\\":\\\"partial\\\",\\\"warnings\\\":[\\\"合成提示：仍须人工复核。\\\"]},\\\"outline_source_map\\\":[{\\\"end_utf16\\\":8,\\\"feature_id\\\":\\\"synthetic:f1\\\",\\\"input_id\\\":\\\"disclosure_text\\\",\\\"planned_claim_id\\\":\\\"plan:core\\\",\\\"quote\\\":\\\"构件甲\\\",\\\"source_sha256\\\":\\\"d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e\\\",\\\"start_utf16\\\":5}],\\\"planned_claims\\\":[{\\\"feature_ids\\\":[\\\"synthetic:f1\\\"],\\\"original_id\\\":null,\\\"planned_claim_id\\\":\\\"plan:core\\\",\\\"role\\\":\\\"core_root\\\"}]},\\\"sha256\\\":\\\"2ba798f542e1f97df12cbce0bb5906ff1f03cbf312adb066ba68fe4b7f05138e\\\"},\\\"outline_error\\\":\\\"\\\",\\\"outline_quality\\\":{\\\"fallback_hint\\\":\\\"\\\",\\\"status\\\":\\\"partial\\\",\\\"warnings\\\":[\\\"合成提示：仍须人工复核。\\\"]},\\\"quality_status\\\":\\\"partial\\\",\\\"receipt_mapping_version\\\":\\\"flow26-receipt-map-1\\\",\\\"required_missing_input_lines\\\":[\\\"未提供：前序材料\\\"],\\\"source_map\\\":[{\\\"claim_id\\\":\\\"1\\\",\\\"end_utf16\\\":8,\\\"feature_id\\\":\\\"synthetic:f1\\\",\\\"input_id\\\":\\\"disclosure_text\\\",\\\"planned_claim_id\\\":\\\"plan:core\\\",\\\"quote\\\":\\\"构件甲\\\",\\\"source_sha256\\\":\\\"d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e\\\",\\\"start_utf16\\\":5}],\\\"source_registry_sha256\\\":\\\"fe61361f4360d77718c4bfd5ce34f811aaa3f45d7740db1d863b7b78d5203e00\\\",\\\"source_status\\\":\\\"mapped\\\",\\\"source_trace_version\\\":\\\"flow26-source-trace-3\\\",\\\"support_review_status\\\":\\\"not_assessed\\\"}\",\n      \"quality_status\": \"partial\"\n    }\n  }\n}\n",
+  "zero_provider_body_utf8": "{\n  \"workflow_run_id\": \"00000000-0000-4000-8000-000000000001\",\n  \"data\": {\n    \"id\": \"00000000-0000-4000-8000-000000000001\",\n    \"status\": \"succeeded\",\n    \"outputs\": {\n      \"claims_text\": \"\",\n      \"quality_report\": \"{\\\"claim_count\\\":0}\",\n      \"pending_confirmation\": \"合成：无可支持权项\"\n    }\n  }\n}\n"
+}

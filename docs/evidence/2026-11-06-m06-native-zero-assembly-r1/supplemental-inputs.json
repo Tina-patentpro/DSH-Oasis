@@ -1,0 +1,42 @@
+{
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c5/index.mjs",
+      "sha256": "88c6bc7569efab14771daeb6a3e1a084a1c26ecef577db66f8505f2d9d9df56e",
+      "bytes": 1565,
+      "read_scope": "full actual provider composition boundary",
+      "reason": "NZ04 actual provider requires installed layout and lease, discovered during same bounded assembly"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c5/installed-lease.mjs",
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "bytes": 5372,
+      "read_scope": "full installed lease/path/state/gate checks",
+      "reason": "NZ04 actual provider requires installed layout and lease, discovered during same bounded assembly"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c5/ownership.mjs",
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+      "bytes": 1902,
+      "read_scope": "full SQLite ownership implementation",
+      "reason": "NZ04 actual provider requires installed layout and lease, discovered during same bounded assembly"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/f-installed-runtime.mjs",
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "bytes": 21380,
+      "read_scope": "install/check/withInstalledWriter/start composition; original broad output truncated, relevant142-245 reread",
+      "reason": "NZ04 actual provider requires installed layout and lease, discovered during same bounded assembly"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/f-installed-bundle.mjs",
+      "sha256": "edcb7bb70d2a576d75c2d42b0cec1c92f993d2e67d2a316d75478b694be7e881",
+      "bytes": 13919,
+      "read_scope": "selected actual bundle policy/projection context, not full production re-review",
+      "reason": "NZ04 actual provider requires installed layout and lease, discovered during same bounded assembly"
+    }
+  ],
+  "same_scope": true,
+  "no_original_or_daily_writes": true,
+  "ruling": "Do not weaken installed-provider contract or fabricate installation receipt; preserve successful offline assembly and isolate remaining installed writer route."
+}

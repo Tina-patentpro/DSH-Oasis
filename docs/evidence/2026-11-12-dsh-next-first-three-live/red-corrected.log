@@ -1,0 +1,55 @@
+✖ Flow-1-5 confirms, dispatches once and persists its exact Skill identity (9.065458ms)
+✖ Flow-1-1 confirms, dispatches once and persists its exact Skill identity (3.7145ms)
+✖ Flow-1-2 confirms, dispatches once and persists its exact Skill identity (3.16075ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110.457958
+
+✖ failing tests:
+
+test at test/oasis-first-batch.test.mjs:14:3
+✖ Flow-1-5 confirms, dispatches once and persists its exact Skill identity (9.065458ms)
+  Error [WorkspaceMaterialError]: 仅当前本地M06候选可核对。
+      at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/v340-runtime-service.js:14:35)
+      at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/v340-runtime-service.js:50:82
+      at Object.run (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/workspace-operation-guard.js:14:26)
+      at Object.prepareV340CandidateConfirmation (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/v340-runtime-service.js:47:34)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/test/oasis-first-batch.test.mjs:30:40)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'V340_EXECUTION_DISABLED',
+    details: {}
+  }
+
+test at test/oasis-first-batch.test.mjs:14:3
+✖ Flow-1-1 confirms, dispatches once and persists its exact Skill identity (3.7145ms)
+  Error [WorkspaceMaterialError]: 仅当前本地M06候选可核对。
+      at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/v340-runtime-service.js:14:35)
+      at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/v340-runtime-service.js:50:82
+      at Object.run (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/workspace-operation-guard.js:14:26)
+      at Object.prepareV340CandidateConfirmation (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/v340-runtime-service.js:47:34)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/test/oasis-first-batch.test.mjs:30:40)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'V340_EXECUTION_DISABLED',
+    details: {}
+  }
+
+test at test/oasis-first-batch.test.mjs:14:3
+✖ Flow-1-2 confirms, dispatches once and persists its exact Skill identity (3.16075ms)
+  Error [WorkspaceMaterialError]: 仅当前本地M06候选可核对。
+      at fail (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/v340-runtime-service.js:14:35)
+      at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/v340-runtime-service.js:50:82
+      at Object.run (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/workspace-operation-guard.js:14:26)
+      at Object.prepareV340CandidateConfirmation (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/src/v340-runtime-service.js:47:34)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.local/dsh-next-first-three-20261112/unchanged/test/oasis-first-batch.test.mjs:30:40)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'V340_EXECUTION_DISABLED',
+    details: {}
+  }

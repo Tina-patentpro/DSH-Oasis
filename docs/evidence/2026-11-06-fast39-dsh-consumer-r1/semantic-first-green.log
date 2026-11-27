@@ -1,0 +1,34 @@
+✔ C4 canonical JSON sorts scalar keys and preserves raw strings (1.307583ms)
+✔ report JSON parser rejects duplicate escaped keys and noninteger number tokens (0.774458ms)
+✔ local registry derives eight original receipts and separates manual wrapper identity (4.0315ms)
+✖ registry refuses changed packet, missing direct field, mixed input or extra document (2.023625ms)
+✔ warning receipts retain bodies without becoming usable technical sources (1.515208ms)
+✔ frozen C4 example is validated without rewriting the six strings or claiming acceptance (4.328167ms)
+✔ unknown report fields, duplicate JSON keys and forged assurance fail closed (2.454417ms)
+✔ all original warning groups must survive exact pending and output reconstruction (6.883166ms)
+✔ source and final locators cannot be forged even when strings remain bounded (5.201375ms)
+✔ counts, plan IDs and dependency graph cannot admit a fabricated or cyclic claim (3.514291ms)
+✔ output budgets count UTF16, UTF8 and escaped JSON without truncating received data (0.481541ms)
+✔ warning renderer fences hostile Markdown and escapes all source table cells (0.187542ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 172.354792
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-fast39-result.test.mjs:75:1
+✖ registry refuses changed packet, missing direct field, mixed input or extra document (2.023625ms)
+  TypeError: Cannot assign to read only property 'sha256' of object '#<Object>'
+      at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-result.test.mjs:78:116
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-result.test.mjs:79:30)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

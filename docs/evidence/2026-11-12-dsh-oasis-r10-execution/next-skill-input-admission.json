@@ -1,0 +1,120 @@
+{
+  "bindings": [
+    {
+      "id": "M08",
+      "nodeId": "Flow-3-8",
+      "skill": "patent-fulltext-recheck",
+      "version": "0.3.0-rc.4",
+      "sourceCommit": "a1c97d92e70698d518f0fdb5c7570249a622f13d",
+      "manifestSha256": "9d0036f4fa5daa153b8c82d48bb38e032369af33b2484bc011686a97b4e7af0a",
+      "verifiedPackageFiles": 15,
+      "inputSha256": "d2d2bac4352f7fcb0df095b5ec032f3f6d3a44b65a13c08379e99be5816f9d71",
+      "inputFields": {
+        "user_input": "2864069c0185e93c9a027b226cd75905d14c464ccd3d4c788f8c939cb1ef167d",
+        "claims_text": "7410e87de00fbb20945f9147716eb8dffa074bd7526b4b917e375a24dfdb5d50",
+        "specification_text": "3f52e3096a22545c9412b78fd781d5e6b7556c84995846b167e2646ec1afe221",
+        "comparison_doc_1_file": "bcbc18e3834f1c2a880e927314a1982df2d1a073193716b04e89d956ad8b8398"
+      },
+      "upstreamStatus": "not_provided",
+      "executableOnR3": false,
+      "missingText": {
+        "inputSha256": "2d06d2b11f7a2da287a7a4d2e4377bebd2ee3b05b4f4f7c466374c74a4da3444",
+        "receipt": "not_provided",
+        "outsideWorkspaceRejected": true
+      }
+    },
+    {
+      "id": "M09",
+      "nodeId": "Flow-3-9",
+      "skill": "patent-drafting-plan",
+      "version": "0.3.0-rc.4",
+      "sourceCommit": "a1c97d92e70698d518f0fdb5c7570249a622f13d",
+      "manifestSha256": "5686eed6a14eb4f0e5e3936e062e521e10d6372ba4560cb33b61a9438dd3d5b7",
+      "verifiedPackageFiles": 14,
+      "inputSha256": "a9468c364ea4bdca414a39cef9eeb5d4768b390a3606ebf1541434948917032d",
+      "inputFields": {
+        "user_input": "f1d576a8a3b0aa133c6799cc9f8f981e3fca5a63715c014ba5024d382f9c714a",
+        "claims_text": "7410e87de00fbb20945f9147716eb8dffa074bd7526b4b917e375a24dfdb5d50",
+        "specification_text": "3f52e3096a22545c9412b78fd781d5e6b7556c84995846b167e2646ec1afe221",
+        "strategy_text": "d89f5d8f8662c936951fee31b2e7bf1939697190bb70d43e15333fd891833e3f"
+      },
+      "upstreamStatus": "not_provided",
+      "executableOnR3": false
+    },
+    {
+      "id": "M10",
+      "nodeId": "Flow-3-10",
+      "skill": "patent-technical-confirmation",
+      "version": "0.3.0-rc.4",
+      "sourceCommit": "a1c97d92e70698d518f0fdb5c7570249a622f13d",
+      "manifestSha256": "0257966f29e796c25d7acde93d7042d09ce8574ef5697ee87767023524bc0545",
+      "verifiedPackageFiles": 13,
+      "inputSha256": "93984582c12e94ec133aed3074be4578375c87919db04c2f2581f34c50125a66",
+      "inputFields": {
+        "user_input": "9924376ff9eaa00b5de79c3991ff7035b00d45d4a26f3052fa78b1df9b182036",
+        "technical_feedback_text": "6a0ec77039689bede14bc63ffcfc6d18fe790b832f641300099108d1dd659d89",
+        "drawings_text": "89ece99f5676d92a3261f638c85752446fe5bfe52b858692529652c37315f98f"
+      },
+      "upstreamStatus": "not_provided",
+      "executableOnR3": false
+    }
+  ],
+  "china": [
+    {
+      "id": "CN-DISCLOSURE",
+      "skill": "patent-disclosure",
+      "revision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+      "skillSha256": "fe93aa6342f689fb3f765cd1f00580b3014a3855ea3b3b45864292cd092eea82",
+      "inputs": [
+        {
+          "path": "public-disclosure.md"
+        },
+        {
+          "path": "drawing-key.md"
+        },
+        {
+          "path": "scenarios.md",
+          "section": "feedback"
+        }
+      ],
+      "executionLayer": "source-and-input-admission"
+    },
+    {
+      "id": "CN-READER",
+      "skill": "patent-reader",
+      "revision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+      "skillSha256": "5a5ea8d7ca0bcf38789ab5561cf9863f156d9daf6a838b0879c6075615b5752e",
+      "inputs": [
+        {
+          "path": "simulated-reference.md"
+        }
+      ],
+      "executionLayer": "source-and-input-admission"
+    },
+    {
+      "id": "CN-APPLICATION",
+      "skill": "patent-application",
+      "revision": "b4bbec6f0a1c3c32a904faabeb249639c0b30d98",
+      "skillSha256": "15cf180bcc04c998b3cb46fe07e623c2a3c623d87919722b0e114da574b3f922",
+      "inputs": [
+        {
+          "path": "invention-case/滑移组件_20261112090000.md"
+        }
+      ],
+      "executionLayer": "source-and-input-admission"
+    }
+  ],
+  "handoff": {
+    "source": {
+      "status": "accepted",
+      "sha256": "670520a9a2c78e681efb5fc63c09a90f98eda6b1b825f9a60db848cb657ae70f",
+      "filename": "disclosure_20261112114918_ed3eb224.md",
+      "content_origin": "upstream_snapshot"
+    },
+    "inputSha256": "ec34ad17f5ca6dfde0f6c5bf39215a9a044ccebb824216971a96ff4063ba77ec",
+    "predecessor": "ed3eb224-abce-446c-a165-6c5d2f6f0d8b",
+    "target": "Flow-2-6"
+  },
+  "modelRequests": 0,
+  "professionalApiRequests": 0
+}

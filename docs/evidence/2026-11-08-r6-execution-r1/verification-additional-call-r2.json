@@ -1,0 +1,79 @@
+{
+  "recordedAt": "2026-11-08T21:49:57.636095+08:00",
+  "status": "ADDITIONAL_CALL_FAILED_DIAGNOSTIC_FIX_OFFLINE_VERIFIED",
+  "currentPackageVersion": "0.1.0-rc.4",
+  "archiveSHA256": "1f992c4273de2feee4f49fb928935c0f069a051f3d2f80c2c84c1f77fdf9f802",
+  "bundleSHA256": "d98eabee9d66179ce4c86493209ea8b194184c061beb4eac4dc3c4b03a4e3532",
+  "controllerSHA256": "2b8c3f4aa202b17bdae3ce50184ac60674b22d59cabed05d43a5441a018bb55c",
+  "actualInstalledMembersMatch": 125,
+  "changedBusinessMembers": 7,
+  "unchangedBusinessMembers": 118,
+  "additionalRun": {
+    "runId": "v340-410fc6f4-6382-480b-b16c-4e23cfaa5297",
+    "requestKey": "413ac7e3-fde6-436c-b2b4-ebcf24a9d395",
+    "status": "failed",
+    "failureCode": "INVALID_OUTPUT",
+    "resultPresent": false,
+    "usageKnown": false,
+    "feeKnown": false,
+    "originalDiagnosticFieldsAbsentNotRetrofitted": true
+  },
+  "originalARunStillUnknown": true,
+  "allPreExistingATasksIdentical": true,
+  "workspaceJSONBytesUnchanged": true,
+  "protectedFilesUnchanged": 46,
+  "protectedFilesChanged": [
+    "B session.v4.jsonl.zstd after native context selection; no message sent observed, per-event diff not established",
+    "authorized oasis_workbench.json"
+  ],
+  "businessSHA256": "5daa556b17d4955288553f08fc5b73732beed012e9ac8c16a724c4ff8a926860",
+  "businessAndCredentialsUnchangedDuringDiagnosticUpgrade": true,
+  "normalExit": {
+    "code": 0,
+    "signal": null,
+    "endedAtUTC": "2026-11-08T13:35:19.888Z"
+  },
+  "pid10936Absent": true,
+  "port57619NoListener": true,
+  "metadataRedCases": 3,
+  "sourceRegression": {
+    "pass": 149,
+    "exit": 0
+  },
+  "actualArchiveRegression": {
+    "pass": 102,
+    "exit": 0
+  },
+  "compiledClient": {
+    "archiveSHA256": "1f992c4273de2feee4f49fb928935c0f069a051f3d2f80c2c84c1f77fdf9f802",
+    "ownSources": 51,
+    "zodSources": 17,
+    "sourceMapMatchesArchive": true,
+    "sourceMapPaths": "local build-relative paths; publication normalization not claimed",
+    "registered": [
+      "conversation.input.right",
+      "shell.overlay",
+      "settings.section"
+    ],
+    "external": [
+      "@deepseek-ai/dsh-client-ui-primitives",
+      "react",
+      "react-dom"
+    ],
+    "rpcCount": 0,
+    "scope": "compiled registration only, not native UI acceptance"
+  },
+  "installedRecordReadProof": "diagnostic-installed-old-record-read-r2.json",
+  "localLinksVerified": 23,
+  "twoStateEntryHistoricalSuffixesIntact": true,
+  "postDiagnosticFixAppStarts": 0,
+  "postDiagnosticFixModelCalls": 0,
+  "bothOneCallGrantsConsumed": true,
+  "remainingAuthorizedModelCalls": 0,
+  "realOutputFailureRootCause": "Not identified: old implementation discarded safe failure/finish/usage summary",
+  "newOutputEditSaveRestartProfessionalUserAcceptance": "not executed/no valid output",
+  "coordinationReferenceFAIL": "Previous exact FAIL retained; no center changes or unrelated rerun",
+  "publicationWorkbuddyDeliveryCommitPush": false,
+  "fullGoalComplete": false,
+  "independentCodeReview": false
+}

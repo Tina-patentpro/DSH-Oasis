@@ -1,0 +1,54 @@
+✔ runtime projection excludes old daily-App dependency links and preserves original bytes (12.129125ms)
+✔ runtime projection refuses unbound local dependencies and external resource links before creating output (4.072834ms)
+✔ bundle builder requires an explicit reviewed source2 release and never selects latest by name (5.698833ms)
+✔ installed Sidebar binds its explicit payload entry without duplicating Desktop-owned conversation (0.763541ms)
+✔ handoff preserves receipt and business bytes, records originals, and releases ownership (303.708834ms)
+✔ refuses mismatched expectedOldControllerSHA256 before mutation (105.7735ms)
+✔ refuses mismatched expectedNewControllerSHA256 before mutation (82.6215ms)
+✔ refuses mismatched expectedBundleSHA256 before mutation (72.673666ms)
+✔ refuses mismatched expectedCurrent before mutation (74.566333ms)
+✔ existing installed writer prevents handoff without mutation (79.726417ms)
+✔ state write failure restores exact original control and installation bytes (91.1625ms)
+✔ preexisting recovery marker is never removed (60.815291ms)
+✔ rollback failure retains recovery marker and releases the installed lease (76.170583ms)
+✔ snapshot read failure releases JSON ownership before propagating the error (67.407ms)
+✔ recovery launch spec carries exclusive zero-real policy and does not launch App (186.207083ms)
+✔ recovery installation rejects budget (40.488166ms)
+✔ recovery installation rejects guard drift (41.879792ms)
+✔ recovery installation rejects mixed mode (45.5545ms)
+✔ recovery installation rejects foreign root (34.586333ms)
+✔ explicit native M06 entry admits only its fixed one-call provider configuration and retains writer ownership (199.7865ms)
+✔ native M06 preparation rejects second model request (34.908208ms)
+✔ native M06 preparation rejects API budget (45.115667ms)
+✔ native M06 preparation rejects foreign root (89.854084ms)
+✔ native M06 preparation rejects foreign endpoint (26.1955ms)
+✔ native M06 preparation rejects provider retries (39.008333ms)
+✔ native M06 preparation rejects output above scope (21.379166ms)
+✔ native M06 preparation rejects another model provider (24.913ms)
+✔ native M06 preparation rejects mixed recovery (24.363417ms)
+✔ native M06 preparation rejects guard drift (19.911834ms)
+{"root":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-NdPyjR/installed","current":"380cab8062da9b23f3117bd384124289d6e9d5ae179823d0da73ef09d427c8e7","pid":2104,"prefix":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-NdPyjR/installed/data/evidence/installed-launch-07dacaef-9f24-4460-8068-e6746ba56b91"}
+✔ installed zero spec uses sealed prepared Profile and live writer without spawning App (236.623542ms)
+✔ installed zero policy rejects nonzero budgets and incorrect guard bindings before creating root (40.821167ms)
+✔ installed zero policy rejects rehashed wrong guard before creating root (43.168792ms)
+✔ Desktop preparation failure leaves recovery refusal and releases maintenance lease (71.740958ms)
+{"root":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-Tf1IT9/installed","current":"8fb5e8ee13c6eb6c02d476a387724a7b6ff6ddecf080451b6575302ec4dab7ab","pid":2105,"prefix":"/private/var/folders/km/3w7qnmbn7_v95s271d713smh0000gn/T/f-install-unit-Tf1IT9/installed/data/evidence/installed-launch-06001519-749a-48d0-bcaf-bca10cebdf46"}
+✔ fresh installation verifies signatures, materializes only at final paths and carries standalone control (124.138042ms)
+✔ Desktop resolves client modules from the installed release rather than the data-only directory (116.935042ms)
+✔ installed same-root upgrade then explicit rollback preserve later public edits and UNKNOWN (242.157292ms)
+✔ four installed writers and maintenance refuse busy before callbacks; old current is not guessed (87.96825ms)
+✔ package drift refuses before installation and pnpm failure restores the existing current (83.800125ms)
+✔ installation data aliases and controller drift fail closed before callbacks (58.932625ms)
+✔ a correctly rehashed bundle still cannot enable model plugins or bind a component outside its payload (17.189667ms)
+✔ failure after active Profile replacement restores old bytes; failed restore leaves explicit recovery refusal (143.054542ms)
+✔ installed provider rejects missing/foreign/expired lease before constructing any backend (21.062208ms)
+✔ installed lease excludes four roles and refuses stale ownership without auto-stealing (36.503833ms)
+✔ installed provider rejects root links and descendant aliases without reading public data (15.638958ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1080.266916

@@ -1,0 +1,231 @@
+{
+  "at": "2026-11-05",
+  "kind": "C2_LIMITED_USE_AND_DESIGN_ADOPTION_PROPOSAL_NOT_IC_RECEIPT",
+  "status": "DOCUMENT_REFERENCE_AUTHORIZED / ENGINEERING_DIFY_USE_NOT_GRANTED",
+  "current_service": {
+    "app_id": "b1af2fc9-817e-5247-aeed-dd16abad8337",
+    "current_graph_semantic_sha256": "2be2019b05560cc3a7d0be3b296c0175b83fb4f49a0699326e57c53495631b75",
+    "producer_skill_receipt_for_this_app": null,
+    "status": "PROMPT_COMPARISON_NOT_HISTORICAL_ADOPTION_PROOF"
+  },
+  "selected_skill_basis": {
+    "id": "m06-claims-draft",
+    "version": "0.1.3-candidate",
+    "manifest_path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/MANIFEST.sha256.json",
+    "manifest_sha256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9",
+    "rule_map_sha256": "29bcd2aa3c23970a860694ce10671f9e69c394fcc8820771e1dc21775e147b9b",
+    "dsh_bundle_sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+    "payloads_exact": 8,
+    "qualifications_role": "operator-only; never generation context"
+  },
+  "rule_version": {
+    "version": "0.1.9",
+    "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+    "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+    "receipt": {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/F26V019精确试行验收登记-20261021/F26_V0.1.9_真实用户试行批准收据.json",
+      "bytes": 10054,
+      "sha256": "7fa56a74163ef216b5191414b1ea89e9fd80c2e16370425030c27188117b8f43",
+      "note": "approved_for_trial=true、formally_effective=false；规则创建时 pending 字段属保留历史"
+    },
+    "formally_effective": false,
+    "runtime_authorized_by_rule_receipt": false
+  },
+  "library_current_not_silently_adopted": {
+    "version": "0.1.12",
+    "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.12.md",
+    "sha256": "c8c4691db030af30c3ee7c275502cb679c7a3aea8ea0ec601994efc4e6b5b7ac",
+    "receipt": {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/F26规则调整计划-20261030/执行与验收提交/精确试行验收登记/F26_V0.1.12_真实用户试行验收.json",
+      "bytes": 2032,
+      "sha256": "3638464c87dcfc84527fca2ed2bcb5af436887366c49e9b03ea6a5ecd15284c4"
+    },
+    "scope": "phase6 manuscript trial only; engineering/Dify false",
+    "formally_effective": false
+  },
+  "engineering_constraints_authority": [
+    "latest user no-business-edit/no-deploy/no-generation instructions",
+    "existing frozen R2 no-fabrication/source-role/missing-warning constraints",
+    "original minimal repair plan F1/F2/B1/S1, not permission to execute"
+  ],
+  "proposed_reuse": [
+    {
+      "id": "SRC-01",
+      "source_clause": "R03 / §1.3 L74-80",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "source_sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "skill_locus": "SKILL §3.6, ref05 §3.7.1–3.7.3",
+      "principle": "稳定feature_id与缺失/冲突登记；缺T2不强制停止",
+      "current_node_ids": [
+        "1770000100005",
+        "1770000100003",
+        "1764588108416"
+      ],
+      "current_observation": "six-field semantic/merge loses original input IDs; Outline lacks source_map",
+      "proposed_adaptation": "F1 source_registry side branch + explicit source_map/critical_feature_ids; inherited IDs kept; new Outline-local IDs labeled workflow-analysis rather than inherited T2",
+      "verification": "candidate2 document/schema probes; future runtime/professional validation separate",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval",
+      "scope_decision": "LIMITED_CLAUSE_REFERENCE_CANDIDATE_ONLY",
+      "candidate2_disposition": "SELECTED_LIMITED_DESIGN_REFERENCE_ONLY",
+      "candidate2_design_binding": "packet2 + six exact empty direct fields; SOURCE_REGISTRY; preserve original feature IDs, path-derived plan IDs are workflow-local"
+    },
+    {
+      "id": "SRC-02",
+      "source_clause": "R06 / §1.6 L179-185",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "source_sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "skill_locus": "ref05 §3.6–3.7",
+      "principle": "逐特征实际input_id、原文hash和定位；来源不等充分支持",
+      "current_node_ids": [
+        "1764588108416",
+        "1769301001101"
+      ],
+      "current_observation": "six named semantic fields are provenance labels only, no raw locator contract",
+      "proposed_adaptation": "F1/F2 source_map UTF16 original quote; support review remains unassessed",
+      "verification": "candidate2 document/schema probes; future runtime/professional validation separate",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval",
+      "scope_decision": "LIMITED_CLAUSE_REFERENCE_CANDIDATE_ONLY",
+      "candidate2_disposition": "SELECTED_LIMITED_DESIGN_REFERENCE_ONLY",
+      "candidate2_design_binding": "raw input role/hash/UTF16 quote; source_hints -> frozen outline_source_map -> final_source_map; no semantic acceptance"
+    },
+    {
+      "id": "CORE-01",
+      "source_clause": "R04a / §1.4.1 L100-106",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "source_sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "skill_locus": "SKILL S1 OP-N01-B; ref02 §B.3",
+      "principle": "移出限定须理由与关系影响；不能只剩目标",
+      "current_node_ids": [
+        "1728183992412",
+        "1769301001008",
+        "1769301001100",
+        "1769301001101"
+      ],
+      "current_observation": "final prompt allows delete/narrow on insufficient support; runtime removed lock member",
+      "proposed_adaptation": "F2 feature dispositions + critical coverage, missing => insufficient, no fabricated implementation",
+      "verification": "candidate2 document/schema probes; future runtime/professional validation separate",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval",
+      "scope_decision": "LIMITED_CLAUSE_REFERENCE_CANDIDATE_ONLY",
+      "candidate2_disposition": "SELECTED_LIMITED_DESIGN_REFERENCE_ONLY",
+      "candidate2_design_binding": "immutable outline_anchor/core_root and parallel_root targets, one-to-one claim_id_map, unique final quote locator and tuple coverage"
+    },
+    {
+      "id": "FACT-01",
+      "source_clause": "R11/R12 / §3.3 L292-295",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "source_sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "skill_locus": "SKILL §5/6; ref04 support rules",
+      "principle": "不编造技术事实，不以警示抵消必要关系缺失",
+      "current_node_ids": [
+        "1770000100005",
+        "1728183992412",
+        "1769301001101"
+      ],
+      "current_observation": "no fabrication instruction exists; actual semantic/professional sufficiency not proven",
+      "proposed_adaptation": "retain existing non-fabrication constraints; technical support review never computed from hashes",
+      "verification": "candidate2 document/schema probes; future runtime/professional validation separate",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval",
+      "scope_decision": "LIMITED_CLAUSE_REFERENCE_CANDIDATE_ONLY",
+      "candidate2_disposition": "SELECTED_LIMITED_DESIGN_REFERENCE_ONLY",
+      "candidate2_design_binding": "only valid original technical-source locators can accompany kept/rephrased; semantic support remains not_assessed"
+    },
+    {
+      "id": "WARN-01",
+      "source_clause": "R11/R12 / §3.3 L298-300",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "source_sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0",
+      "skill_locus": "ref05 §3.5, §3.7 branchC",
+      "principle": "缺项/警示/旧状态保留；不足可受限草稿，不无限重试",
+      "current_node_ids": [
+        "1769301001101",
+        "1727495950805"
+      ],
+      "current_observation": "current formatter preserves Outline warnings and partial, lacks critical coverage",
+      "proposed_adaptation": "preserve existing quality keys/warnings byte values; add versioned coverage metadata; no new LLM calls",
+      "verification": "candidate2 document/schema probes; future runtime/professional validation separate",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval",
+      "scope_decision": "LIMITED_CLAUSE_REFERENCE_CANDIDATE_ONLY",
+      "candidate2_disposition": "SELECTED_LIMITED_DESIGN_REFERENCE_ONLY",
+      "candidate2_design_binding": "exact original warning objects/limitations/missing lines; three-section renderer; zero-claim error, no invented normal artifact"
+    },
+    {
+      "id": "WIRE-01",
+      "source_clause": "M06-production-wire-contract R01, NOT F26 rule",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/docs/delivery/project-completion-execution-20261026/m06-production-wire-contract-R01.json",
+      "source_sha256": "c48eaeb8aa1d821f4b8324e940d057978c7fc61bc4eaea4777bd3bc46d2bad4d",
+      "skill_locus": "ref05 §3, output-schema.json",
+      "principle": "M06八输入七字段及五章累计合同",
+      "current_node_ids": [
+        "current Dify Start/End vs DSH M06 adapter"
+      ],
+      "current_observation": "Dify uses eight legacy inputs and six string outputs, not M06 seven-field contract",
+      "proposed_adaptation": "NOT_ADOPTED_AS_DIFY_WIRE; new contract is bounded Fast39 transport, never fabricate old M06 seven fields",
+      "verification": "candidate2 document/schema probes; future runtime/professional validation separate",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval",
+      "scope_decision": "EXCLUDED_WIRE_NOT_DIFY_CONTRACT",
+      "candidate2_disposition": "EXCLUDED",
+      "candidate2_design_binding": "EXCLUDED: do not map Fast39 six strings into old M06 seven fields"
+    },
+    {
+      "id": "V012-01",
+      "source_clause": "V0.1.12 R04d-TIME/PRED, R04a-COST, R04b/e-VALUE, R07-CURRENT",
+      "source_path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.12.md",
+      "source_sha256": "c8c4691db030af30c3ee7c275502cb679c7a3aea8ea0ec601994efc4e6b5b7ac",
+      "skill_locus": "no replacement in0.1.3",
+      "principle": "current stage6 manuscript-trial changes",
+      "current_node_ids": [
+        "all business nodes"
+      ],
+      "current_observation": "current candidate is0.1.3 based onV019; noV012 adoption evidence",
+      "proposed_adaptation": "REFERENCE_ONLY_SCOPE_BLOCKED_FOR_DIFY; no silent rule upgrade or whole-rule conformance claim",
+      "verification": "candidate2 document/schema probes; future runtime/professional validation separate",
+      "current_service_historical_adoption": "UNPROVEN",
+      "new_node_changes_implemented": false,
+      "adoption_scope": "read-only comparison/design candidate only; not runtime rule adoption approval",
+      "scope_decision": "EXCLUDED_V012_NOT_REBOUND",
+      "candidate2_disposition": "EXCLUDED",
+      "candidate2_design_binding": "EXCLUDED: no V012 engineering/Dify adoption or resource upgrade"
+    }
+  ],
+  "not_claimed": [
+    "fullF26 compliance",
+    "M06 seven-field wire adoption by Fast39",
+    "V012 engineering or Dify trial scope",
+    "historical app Skill adoption",
+    "sourceT2 closure from workflow-local feature IDs",
+    "professional support/necessity judgment by code"
+  ],
+  "historical_receipt_recovery_required_to_start_new_version": false,
+  "historical_policy": "Old app adoption remains unproven; a future new version can bind exact selected Skill/rule scope instead of inventing historical receipt",
+  "future_selected_input_eligibility_proposal": "FIXED: packet2 and six exact-empty direct fields only; see CONTRACT.md section1",
+  "production_admission": {
+    "producer_rule_scope": "not bound for engineering/Dify",
+    "design_current_candidate": "undesignated",
+    "design_batch_governance": "original conditions not waived by P0",
+    "contract_candidate1": "retained historical REQUIRES_REVISION",
+    "runtime_calls": "not permitted by this task",
+    "contract_candidate2": "static document candidate; offline verification in separate evidence, not implementation acceptance"
+  },
+  "evaluation_answers_copied": false,
+  "new_generation_calls": 0,
+  "paid_calls": 0,
+  "candidate": "fast39-result-contract-candidate-2/C2-R1",
+  "authority_split": {
+    "current_user_request": "document revision, limited-use/design explanation and existing offline Schema checks only",
+    "source_rule_engineering_dify": "not approved by manuscript trial receipt or this task",
+    "source_design_batch_and_candidate": "not started; registry untouched",
+    "runtime_and_deploy": "not authorized this task"
+  }
+}

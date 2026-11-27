@@ -1,12 +1,14 @@
 import { createElement, useState, useEffect } from 'react'
 import { generationUnavailableReason, hasPendingUnifiedRun } from '../generation-contract.js'
 import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
+import { localSkillUnavailableReason, LOCAL_SKILL_SUITE_UNAVAILABLE, LOCAL_SKILL_SUITE_UNAVAILABLE_REASON, PATENT_DISCLOSURE_CLAIMS_ID } from '../local-skill-suites.js'
 import { GenerationSourceSwitch } from './GenerationSourceSwitch.js'
 import { WorkflowForm, validateWorkflowFormValues } from './WorkflowForm.js'
 import { UnifiedResultPanel } from './UnifiedResultPanel.js'
 
 function generationErrorMessage(code) {
   const messages = {
+    [LOCAL_SKILL_SUITE_UNAVAILABLE]: LOCAL_SKILL_SUITE_UNAVAILABLE_REASON,
     WORKSPACE_OPERATION_BUSY: '当前项目正在导入、解除关联或准备生成，请等待原操作结束后重新确认；不会自动重试。',
     AUTH_REQUIRED: '请在 DSH 设置 → 绿洲工作台登录账户；如已提交生成，请先查看原运行，不要重复提交。',
     REMOTE_ACCOUNT_UNVERIFIED: '账户身份未能核实，已阻止提交；请检查登录状态并提供此错误码，不要清空任务或重复生成。',
@@ -50,7 +52,7 @@ const css = `
 }
 `
 
-export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus, operation, fixtureEnabled = false, apiExecutionAvailable = false, apiConfigurationReady = true, localGenerationEnabled = false, localGenerationKind = null, markdownRenderer,
+export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus, operation, fixtureEnabled = false, apiExecutionAvailable = false, apiConfigurationReady = true, localGenerationEnabled = false, localGenerationKind = null, localSkillSuite, markdownRenderer,
   onRenamePage = () => {}, onUpdateForm = () => {}, onSetGenerationSource = () => {}, onGenerate = () => {},
   onSelectClaimsUpstream = () => {},
   onObserveUnified = () => {}, onStopUnified = () => {}, ...resultActions }) {
@@ -59,12 +61,14 @@ export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus,
   const [preview, setPreview] = useState(false)
   const [upstreamPath, setUpstreamPath] = useState(page.generation.upstream?.relativePath ?? '')
   const source = page.generation.source
-  const local = localGenerationEnabled && source === 'local-skill'
+  const supportsPatentDisclosure = page.workflowVersion === '2' && localGenerationKind === 'native-model'
+  const skillUnavailable = source === 'local-skill' ? localSkillUnavailableReason(localSkillSuite, supportsPatentDisclosure) : null
+  const local = localGenerationEnabled && source === 'local-skill' && !skillUnavailable
   const real = local && localGenerationKind === 'native-model'
   const api = source === 'oasis-api' && apiExecutionAvailable && !fixtureEnabled
   const confirmation = api ? operation.apiPreview : operation.localModelPreview
   const [confirmed, setConfirmed] = useState(false)
-  useEffect(() => { setConfirmed(false) }, [confirmation?.sha256, confirmation?.confirmationToken, source])
+  useEffect(() => { setConfirmed(false) }, [confirmation?.sha256, confirmation?.confirmationToken, source, localSkillSuite])
   const locked = !['ready', 'saving'].includes(syncStatus) || operation.activeOperation !== null
     || operation.generationUncertain || hasPendingUnifiedRun(page)
     || page.remoteExecutionOrder.some(id => isOasisRemoteExecutionUnresolved(page.remoteExecutions[id]))
@@ -72,12 +76,12 @@ export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus,
   const validation = validateWorkflowFormValues(workflow, page.formValues)
   const pendingApi = Object.values(page.remoteExecutions).find(e => e.unifiedClaims && isOasisRemoteExecutionUnresolved(e))
   const latestApi = [...page.remoteExecutionOrder].reverse().map(id => page.remoteExecutions[id]).find(e => e.unifiedClaims)
-  const reason = (real || api) && page.workflowVersion !== '2' ? '请新建权利要求任务，历史任务仅供查看'
+  const reason = skillUnavailable ?? ((real || api) && page.workflowVersion !== '2' ? '请新建权利要求任务，历史任务仅供查看'
     : api && !apiConfigurationReady ? '请先在 DSH 设置 → 绿洲工作台登录账户'
     : api && (page.generation.upstream || page.inputRefs.length) ? '当前 API 映射不支持上游/文件引用；请先取消选择，不会静默忽略材料'
     : !fixtureEnabled && !local && !api ? generationUnavailableReason(source)
     : operation.generationUncertain ? '结果未确认，请查看原运行'
-      : hasPendingUnifiedRun(page) || pendingApi ? '原运行未决，请查看状态；不会自动重发' : !validation.valid ? '请填写必填材料' : null
+      : hasPendingUnifiedRun(page) || pendingApi ? '原运行未决，请查看状态；不会自动重发' : !validation.valid ? '请填写必填材料' : null)
   const pending = Object.values(page.runs).find(run => hasPendingUnifiedRun({ runs: { run } }))
   useEffect(() => {
     if (pending?.mode !== 'dsh-local' || pending.status !== 'prepared' || operation.activeOperation !== null || operation.error || syncStatus !== 'ready') return
@@ -96,7 +100,7 @@ export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus,
           } }),
         createElement('div', { title: workspaceId, style: { fontSize: 11, overflowWrap: 'anywhere', color: 'var(--dsw-alias-text-secondary, #66706b)' } }, `项目：${workspaceId}`)),
       createElement(GenerationSourceSwitch, { value: source, disabled: locked, onChange: value => onSetGenerationSource(page.pageId, value) }),
-      createElement('div', { className: 'generation-notice', role: 'status' }, real ? '本地 Skills · 使用 DSH 模型' : local ? '原生离线验收 · 无真实调用' : fixtureEnabled ? '合成验收 · 无真实调用' : api ? '专业 API · 逐次确认上传与费用' : source === 'local-skill' ? '本地 Skills · 模型服务暂不可用' : '专业 API · 待绑定'),
+      createElement('div', { className: 'generation-notice', role: 'status' }, skillUnavailable ? '本地 Skills · 所选套件暂不可用' : real ? '本地 Skills · 使用 DSH 模型' : local ? '原生离线验收 · 无真实调用' : fixtureEnabled ? '合成验收 · 无真实调用' : api ? '专业 API · 逐次确认上传与费用' : source === 'local-skill' ? '本地 Skills · 模型服务暂不可用' : '专业 API · 待绑定'),
       createElement('div', { className: 'generation-views', 'aria-label': '输入与结果视图' },
         ...[['input', '输入'], ['result', '结果']].map(([id, label]) => createElement('button', {
           key: id, type: 'button', 'aria-pressed': view === id, onClick: () => setView(id),
@@ -128,7 +132,7 @@ export function UnifiedGenerationPage({ page, workflow, workspaceId, syncStatus,
               onClick: () => { setConfirmed(false); onGenerate(page.pageId, true) } }, '确认上传并生成')) : null,
           real && confirmation ? createElement('div', { role: 'group', 'aria-label': '本次模型调用确认', style: { fontSize: 12, marginBottom: 8, overflowWrap: 'anywhere' } },
             createElement('div', null, `模型：${confirmation.route.provider} / ${confirmation.route.model}${confirmation.route.reasoningEffort ? ` / ${confirmation.route.reasoningEffort}` : ''}`),
-            createElement('div', null, `发送四选项卡文本${confirmation.upstreamIncluded ? '及已选择的上游全文' : '（未选上游文稿）'}，共 ${confirmation.characterCount} 字符${confirmation.skill ? `，另含内置 Skill ${confirmation.skill.id}/${confirmation.skill.version}` : ''}。`),
+            createElement('div', null, `发送四选项卡文本${confirmation.upstreamIncluded ? '及已选择的上游全文' : '（未选上游文稿）'}，共 ${confirmation.characterCount} 字符${confirmation.skill ? `，另含 ${confirmation.skill.id === PATENT_DISCLOSURE_CLAIMS_ID ? '中国专利 Skill' : '内置 Skill'} ${confirmation.skill.id}/${confirmation.skill.version}` : ''}。`),
             createElement('label', null, createElement('input', { type: 'checkbox', checked: confirmed, disabled: locked,
               onChange: event => setConfirmed(event.currentTarget.checked) }), '我确认向上述模型发送材料和 Skill；云端模型可能产生费用，金额由 DSH 模型配置决定。'),
             createElement('button', { type: 'button', disabled: locked || !confirmed || reason !== null,

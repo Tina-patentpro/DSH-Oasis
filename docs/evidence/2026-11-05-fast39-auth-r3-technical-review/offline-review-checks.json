@@ -1,0 +1,354 @@
+{
+  "at": "2026-11-05T21:58:34.566954+08:00",
+  "verdict": "PASS_TARGETED_CONTRACT_PROBES",
+  "check_count": 59,
+  "checks": [
+    {
+      "id": "existing_engine_4_26_0",
+      "pass": true
+    },
+    {
+      "id": "frozen_schema_self_valid",
+      "pass": true
+    },
+    {
+      "id": "schema_top_fields_match_contract",
+      "pass": true
+    },
+    {
+      "id": "all_fields_in_exception_digest_no_exclusions",
+      "pass": true
+    },
+    {
+      "id": "raw_and_intent_distinct",
+      "pass": true
+    },
+    {
+      "id": "JSON_key_order_does_not_change_intent",
+      "pass": true
+    },
+    {
+      "id": "formatting_changes_raw_not_intent",
+      "pass": true
+    },
+    {
+      "id": "terminal_whitespace_changes_raw_not_intent",
+      "pass": true
+    },
+    {
+      "id": "physical_CRLF_whitespace_changes_raw_not_intent",
+      "pass": true
+    },
+    {
+      "id": "Unicode_escapes_same_intent_distinct_raw",
+      "pass": true
+    },
+    {
+      "id": "Unicode_not_normalized",
+      "pass": true
+    },
+    {
+      "id": "baseline_revision_is_in_intent_digest",
+      "pass": true
+    },
+    {
+      "id": "baseline_hash_is_in_intent_digest",
+      "pass": true
+    },
+    {
+      "id": "approval_input_is_in_intent_digest",
+      "pass": true
+    },
+    {
+      "id": "mechanism_input_is_in_intent_digest",
+      "pass": true
+    },
+    {
+      "id": "protection_input_is_in_intent_digest",
+      "pass": true
+    },
+    {
+      "id": "self_raw_hash_rejected",
+      "pass": true
+    },
+    {
+      "id": "self_intent_hash_rejected",
+      "pass": true
+    },
+    {
+      "id": "candidate_after_hash_rejected",
+      "pass": true
+    },
+    {
+      "id": "future_gate_hash_rejected",
+      "pass": true
+    },
+    {
+      "id": "wrong_setup_base_rejected",
+      "pass": true
+    },
+    {
+      "id": "unfilled_null_rejected",
+      "pass": true
+    },
+    {
+      "id": "wrong_operations_rejected",
+      "pass": true
+    },
+    {
+      "id": "duplicate_keys_rejected",
+      "pass": true
+    },
+    {
+      "id": "BOM_rejected",
+      "pass": true
+    },
+    {
+      "id": "float_rejected",
+      "pass": true
+    },
+    {
+      "id": "NaN_rejected",
+      "pass": true
+    },
+    {
+      "id": "isolated_surrogate_rejected",
+      "pass": true
+    },
+    {
+      "id": "same_intent_is_not_permission_to_reformat",
+      "pass": true
+    },
+    {
+      "id": "ordinary_wrapper_excludes_expected_baseline",
+      "pass": true
+    },
+    {
+      "id": "native_canonical_helper_can_encode_full_exception_I",
+      "pass": true
+    },
+    {
+      "id": "exception_cannot_be_ordinary_apply_request_shape",
+      "pass": true
+    },
+    {
+      "id": "six_field_schema_can_hold_exception_digest_without_authenticating_it",
+      "pass": true
+    },
+    {
+      "id": "synthetic_reference_is_not_real_execution_evidence",
+      "pass": true
+    },
+    {
+      "id": "conditional_before_F1",
+      "pass": true
+    },
+    {
+      "id": "conditional_complete_specimen",
+      "pass": true
+    },
+    {
+      "id": "setup_only_no_commit",
+      "pass": true
+    },
+    {
+      "id": "separate_final_complete_specimen",
+      "pass": true
+    },
+    {
+      "id": "checks_without_setup_authority",
+      "pass": true
+    },
+    {
+      "id": "unknown_setup",
+      "pass": true
+    },
+    {
+      "id": "drift_or_governance_failure",
+      "pass": true
+    },
+    {
+      "id": "unknown_mode",
+      "pass": true
+    },
+    {
+      "id": "both_real_phase_grants_still_false",
+      "pass": true
+    },
+    {
+      "id": "B_does_not_grant_A_or_C",
+      "pass": true
+    },
+    {
+      "id": "future_mechanism_and_requests_not_created",
+      "pass": true
+    },
+    {
+      "id": "F0_does_not_require_unknown_final_request",
+      "pass": true
+    },
+    {
+      "id": "F1_has_actual_postsetup_base",
+      "pass": true
+    },
+    {
+      "id": "namespace_changes_phase_without_ownership_expansion",
+      "pass": true
+    },
+    {
+      "id": "F1_no_rebase_or_lock_wait",
+      "pass": true
+    },
+    {
+      "id": "contract_dependency_graph_is_acyclic",
+      "pass": true
+    },
+    {
+      "id": "F0_hash_of_later_approval_creates_rejected_cycle",
+      "pass": true
+    },
+    {
+      "id": "request_own_digest_creates_rejected_cycle",
+      "pass": true
+    },
+    {
+      "id": "request_full_after_hash_creates_rejected_cycle",
+      "pass": true
+    },
+    {
+      "id": "request_gate_hash_creates_rejected_cycle",
+      "pass": true
+    },
+    {
+      "id": "request_future_receipt_hash_creates_rejected_cycle",
+      "pass": true
+    },
+    {
+      "id": "frozen_inputs_do_not_approve_execution",
+      "pass": true
+    },
+    {
+      "id": "normal_weekly_no_time_waiver",
+      "pass": true
+    },
+    {
+      "id": "source_actual_addressability_still_blocked",
+      "pass": true
+    },
+    {
+      "id": "source_unchanged",
+      "pass": true
+    }
+  ],
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "executable": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python",
+    "jsonschema": "4.26.0",
+    "no_install": true
+  },
+  "digest_examples_specimen_only": {
+    "raw_pretty_sha256": "bb6feba0a0e1f40b6c68c473a101325d4875a9dd4e267b81bbb634a36ee3313c",
+    "canonical_full_intent_sha256": "7324718d8675bd3a16f90806d8b08d7c66a180cfd31cf039f7e477dace383802",
+    "same_intent_compact_raw_sha256": "7324718d8675bd3a16f90806d8b08d7c66a180cfd31cf039f7e477dace383802"
+  },
+  "dependency_edges_specimen_only": [
+    [
+      "R3",
+      "script_template"
+    ],
+    [
+      "script_template",
+      "ordinary_setup_request"
+    ],
+    [
+      "ordinary_setup_request",
+      "F0"
+    ],
+    [
+      "F0",
+      "pre_setup_authorization"
+    ],
+    [
+      "pre_setup_authorization",
+      "setup_proof"
+    ],
+    [
+      "setup_proof",
+      "upstream_protection_governance"
+    ],
+    [
+      "upstream_protection_governance",
+      "final_request"
+    ],
+    [
+      "pre_setup_authorization",
+      "final_request"
+    ],
+    [
+      "script_template",
+      "final_request"
+    ],
+    [
+      "final_request",
+      "digests"
+    ],
+    [
+      "digests",
+      "candidate_diff"
+    ],
+    [
+      "candidate_diff",
+      "F1"
+    ],
+    [
+      "F1",
+      "gate_or_final_approval"
+    ],
+    [
+      "gate_or_final_approval",
+      "actual_receipt"
+    ]
+  ],
+  "phase_cases_specimen_only": [
+    {
+      "id": "conditional_before_F1",
+      "expected": false
+    },
+    {
+      "id": "conditional_complete_specimen",
+      "expected": true
+    },
+    {
+      "id": "setup_only_no_commit",
+      "expected": false
+    },
+    {
+      "id": "separate_final_complete_specimen",
+      "expected": true
+    },
+    {
+      "id": "checks_without_setup_authority",
+      "expected": false
+    },
+    {
+      "id": "unknown_setup",
+      "expected": false
+    },
+    {
+      "id": "drift_or_governance_failure",
+      "expected": false
+    },
+    {
+      "id": "unknown_mode",
+      "expected": false
+    }
+  ],
+  "native_schema_coverage": "memory-only old record digest replacement accepted; does not authenticate producer, authority, external hashes or atomic execution",
+  "native_tool_sha256": "05a18deb923f9f7fa3b0f106bfcfab8dbcab5d1005a1b5fcee937e0c369ef780",
+  "source_sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+  "source_actual_selector_error": "malformed table separator",
+  "scope": "author targeted document/schema/digest/finite phase/dependency re-review; all operand paths/hashes/receipts/permissions are synthetic in memory, not real F0/F1 or source repair artifacts",
+  "native_apply_or_lock_invocations": 0,
+  "actual_request_or_writer_created": false,
+  "source_writes": 0
+}

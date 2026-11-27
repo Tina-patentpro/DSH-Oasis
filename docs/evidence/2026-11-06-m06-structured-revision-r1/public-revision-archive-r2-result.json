@@ -1,0 +1,89 @@
+{
+  "scope": "PUBLIC_SERVICE_RPC_ON_COPIED_PUBLIC_SAMPLE_RECORD_NOT_APP_RUNTIME",
+  "entry": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/structured-revision-review-20261106-r2/package",
+  "scratch": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2",
+  "workspace": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2/workspace",
+  "sourceRecord": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/home/storages/oasis_workbench.json",
+    "sha256": "322a0b97136cac2c2920949648e6a305cd82110f5b0f74da1485bdccab4eed11"
+  },
+  "parent": {
+    "versionId": "revision-9a439835-3122-46c3-ad6c-e714ee0df0f8",
+    "sha256": "e0fb29d388c9bae19be253e7bd048c31ed8ba40987adf3cdddc8d1bd354ff815",
+    "reviewPreserved": true
+  },
+  "revision": {
+    "versionId": "revision-02fe3575-6140-4eb0-b6e7-2b2e3d14a76a",
+    "sha256": "18250e4cd496d52f0f0459782ca2305dd2fdcaf646794ecdfbbbbf63c814237c",
+    "fileName": "claims_20261106140131_02fe3575.md",
+    "savedFile": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-structured-revision-20261106-r1/archive-r2/workspace/claims_20261106140131_02fe3575.md",
+    "writeback": {
+      "writebackId": "writeback-06036117-c9be-4661-b2a1-b9c2c0625235",
+      "artifactId": "sha256:18250e4cd496d52f0f0459782ca2305dd2fdcaf646794ecdfbbbbf63c814237c",
+      "relativeDirectory": ".",
+      "files": [
+        {
+          "relativePath": "claims_20261106140131_02fe3575.md",
+          "sha256": "18250e4cd496d52f0f0459782ca2305dd2fdcaf646794ecdfbbbbf63c814237c",
+          "mediaType": "text/markdown"
+        },
+        {
+          "relativePath": "claims_20261106140131_02fe3575.oasis.json",
+          "sha256": "686f706b493a2373f1867c031825e163b9878632afeebaa2d84e731ab68c9cc8",
+          "mediaType": "application/json"
+        }
+      ],
+      "reviewStatus": "approved",
+      "committedAt": "2026-11-06T06:01:32.010Z"
+    },
+    "engineeringReview": "approved exact hash; not professional/user acceptance",
+    "inheritedWarningCount": 12,
+    "totalWarnings": 15,
+    "changedRows": 4
+  },
+  "steps": [
+    {
+      "endpoint": "result/draft",
+      "ok": true
+    },
+    {
+      "endpoint": "result/edit",
+      "ok": true
+    },
+    {
+      "endpoint": "result/prepare-save",
+      "ok": false,
+      "error": "V340_REVIEW_REQUIRED"
+    },
+    {
+      "endpoint": "result/review",
+      "ok": true
+    },
+    {
+      "endpoint": "result/prepare-save",
+      "ok": true
+    },
+    {
+      "endpoint": "result/commit-save",
+      "ok": true
+    },
+    {
+      "endpoint": "result/conversation-draft",
+      "ok": true
+    },
+    {
+      "endpoint": "result/saved-file",
+      "ok": true
+    }
+  ],
+  "sourceInputSnapshotPreserved": true,
+  "otherTablesPreserved": true,
+  "parentFilePreserved": true,
+  "reopenExact": true,
+  "generationCalls": 0,
+  "networkAttempts": 0,
+  "applicationStarted": false,
+  "conversationSent": false,
+  "professionalAcceptance": "PENDING",
+  "userAcceptance": "PENDING"
+}

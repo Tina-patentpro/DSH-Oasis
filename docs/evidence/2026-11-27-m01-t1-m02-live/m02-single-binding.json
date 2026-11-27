@@ -1,0 +1,42 @@
+{
+  "caseId": "M02",
+  "nodeId": "Flow-1-2",
+  "newRequestKey": "f708cee5-c27a-4a40-bffc-2ee2cfb5f1b1",
+  "requestKey": "f708cee5-c27a-4a40-bffc-2ee2cfb5f1b1",
+  "skillId": "patent-triz-analysis",
+  "skillVersion": "0.3.0-rc.4",
+  "candidateReceiptVersion": "v340-native-candidate-5",
+  "businessResourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+  "promptSha256": "7e41d6d356ab218d85dc87f1ff67911cd9bb0fc5778d4f2b21e4cc14b4954009",
+  "inputContentSha256": "dcf6813e946c304228f4d4a9265826424bc51d663c4a5f016a16e0f329c4b019",
+  "preparedSha256": "33b47e2135ef748d93d50f2ce9ae4c6e429da077e8e4e75abcae3b73c25b9e1c",
+  "inputTokenCeiling": 32000,
+  "outputTokenCeiling": 16384,
+  "destination": "https://api.deepseek.com/anthropic/v1/messages",
+  "model": "deepseek-flash",
+  "effort": "low",
+  "tools": 0,
+  "maxCalls": 1,
+  "retries": 0,
+  "feeLimitCny": null,
+  "mode": "frozen-independent-P1-case",
+  "predecessor": "M01 T1 离线出口已完成，本次 M02 复用原冻结独立 P1 材料。",
+  "hostAsarSha256": "d2d2ea35fec61f109d726265b8311e279201814724e1f2814e542131b4b7aa6b",
+  "clientSha256": "2dc6837e3cccbf348382fc4a6a662af6df38265fe01244b2eca5f96876c54c7f",
+  "candidateSource": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-next-field-diagnostics-20261112/package",
+  "baselineWireSha256": "79694c371f9191318cf00c28ad7bfdbb490affca5e168cb7af9a22985b7c4cb1",
+  "pricingUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "pricingCheckedAt": "2026-11-27T12:08:24.587482+08:00",
+  "cnyPerMillion": {
+    "peak": {
+      "input": 2,
+      "cacheRead": 0.04,
+      "output": 8
+    },
+    "offpeak": {
+      "input": 1,
+      "cacheRead": 0.02,
+      "output": 4
+    }
+  }
+}

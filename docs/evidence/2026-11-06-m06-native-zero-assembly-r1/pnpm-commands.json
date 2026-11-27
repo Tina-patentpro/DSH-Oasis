@@ -1,0 +1,102 @@
+[
+  {
+    "scope": "installation",
+    "phase": "lock-only",
+    "command": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/pnpm",
+      "install",
+      "--offline",
+      "--ignore-scripts",
+      "--store-dir",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-native-zero-assembly-20261106-r1/pnpm-store",
+      "--config.manage-package-manager-versions=false",
+      "--config.auto-install-peers=false",
+      "--config.node-linker=isolated",
+      "--config.enable-global-virtual-store=false",
+      "--lockfile-only"
+    ],
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation",
+    "linker": "isolated",
+    "exit_code": 0,
+    "duration_seconds": 0.473688458,
+    "lock_before": null,
+    "lock_after": "4ab97f3dfeea7038a14562a02f35418bbb5697bc41de793d78867c09f9507ff6",
+    "stdout_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/installation-lock-only.stdout.txt",
+    "stderr_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/installation-lock-only.stderr.txt"
+  },
+  {
+    "scope": "installation",
+    "phase": "frozen-links",
+    "command": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/pnpm",
+      "install",
+      "--offline",
+      "--ignore-scripts",
+      "--store-dir",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-native-zero-assembly-20261106-r1/pnpm-store",
+      "--config.manage-package-manager-versions=false",
+      "--config.auto-install-peers=false",
+      "--config.node-linker=isolated",
+      "--config.enable-global-virtual-store=false",
+      "--frozen-lockfile"
+    ],
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation",
+    "linker": "isolated",
+    "exit_code": 0,
+    "duration_seconds": 0.388906375,
+    "lock_before": "4ab97f3dfeea7038a14562a02f35418bbb5697bc41de793d78867c09f9507ff6",
+    "lock_after": "4ab97f3dfeea7038a14562a02f35418bbb5697bc41de793d78867c09f9507ff6",
+    "stdout_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/installation-frozen-links.stdout.txt",
+    "stderr_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/installation-frozen-links.stderr.txt"
+  },
+  {
+    "scope": "profile",
+    "phase": "lock-only",
+    "command": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/pnpm",
+      "install",
+      "--offline",
+      "--ignore-scripts",
+      "--store-dir",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-native-zero-assembly-20261106-r1/pnpm-store",
+      "--config.manage-package-manager-versions=false",
+      "--config.auto-install-peers=false",
+      "--config.node-linker=hoisted",
+      "--config.enable-global-virtual-store=false",
+      "--lockfile-only"
+    ],
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/home/profiles/desktop",
+    "linker": "hoisted",
+    "exit_code": 0,
+    "duration_seconds": 0.19272295900000003,
+    "lock_before": null,
+    "lock_after": "b4c9de92923e98202b3425c3988c8a5e8bf6f4341d3aa19b20d99fda9b9887ed",
+    "stdout_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/profile-lock-only.stdout.txt",
+    "stderr_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/profile-lock-only.stderr.txt"
+  },
+  {
+    "scope": "profile",
+    "phase": "frozen-links",
+    "command": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/bin/pnpm",
+      "install",
+      "--offline",
+      "--ignore-scripts",
+      "--store-dir",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-native-zero-assembly-20261106-r1/pnpm-store",
+      "--config.manage-package-manager-versions=false",
+      "--config.auto-install-peers=false",
+      "--config.node-linker=hoisted",
+      "--config.enable-global-virtual-store=false",
+      "--frozen-lockfile"
+    ],
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/home/profiles/desktop",
+    "linker": "hoisted",
+    "exit_code": 0,
+    "duration_seconds": 0.1951522080000001,
+    "lock_before": "b4c9de92923e98202b3425c3988c8a5e8bf6f4341d3aa19b20d99fda9b9887ed",
+    "lock_after": "b4c9de92923e98202b3425c3988c8a5e8bf6f4341d3aa19b20d99fda9b9887ed",
+    "stdout_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/profile-frozen-links.stdout.txt",
+    "stderr_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/profile-frozen-links.stderr.txt"
+  }
+]

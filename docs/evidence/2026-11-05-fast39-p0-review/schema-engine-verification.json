@@ -1,0 +1,206 @@
+{
+  "at": "2026-11-05T13:18:38.404884+08:00",
+  "status": "META_SCHEMA_AND_15_SHAPE_PROBES_PASS / BUSINESS_SEMANTICS_NOT_PASSED",
+  "python": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python",
+  "python_version": "3.12.14",
+  "python_sha256": "811e2679c20fd2c7413f7c5ca28ce903065eea8dadb8660f1b9379a28959a480",
+  "jsonschema_version": "4.26.0",
+  "jsonschema_module": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/lib/python3.12/site-packages/jsonschema/__init__.py",
+  "jsonschema_module_sha256": "a7e470e134bfd0e3c76482722260d6b1d5a099de823d61cc5cbabb06e4314c67",
+  "source_environment_metadata": {
+    "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/reports/WD-OFFLINE-DEPENDENCIES-PATHS-20261027-02/依赖与环境.json",
+    "sha256": "956a84f9191098d9581a99c032ea316c2d482730633336f3dce79c8aee9383f6"
+  },
+  "lock": {
+    "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/tools/requirements-offline-macos-arm64-py312.lock",
+    "sha256": "e5dbb3d322316065d03c28af6656ecf0b170b032706e618eb22862ca2aabb65a"
+  },
+  "six_package_versions_match_registered_env": {
+    "attrs": "26.1.0",
+    "jsonschema": "4.26.0",
+    "jsonschema-specifications": "2025.9.1",
+    "referencing": "0.37.0",
+    "rpds-py": "2026.9.1",
+    "typing_extensions": "4.16.0"
+  },
+  "schema_sha256": "5c5bec6db36e18f3477089ff8a6bcc73cbda253b9196527b498b045fe0b9731c",
+  "meta_schema_check": "Draft202012Validator.check_schema exit0",
+  "root_and_local_defs_network_policy": "explicit registry deny + socket guard; no remote refs",
+  "network_attempts": [],
+  "remote_schema_requests": [],
+  "probes": [
+    {
+      "id": "S01",
+      "name": "synthetic outer baseline",
+      "schema_def": "structured_result",
+      "expected_schema_valid": true,
+      "actual_schema_valid": true,
+      "error_paths": [],
+      "boundary": "Shape only; synthetic text semantic equivalence not evaluated"
+    },
+    {
+      "id": "S02",
+      "name": "parsed quality baseline",
+      "schema_def": "quality_report",
+      "expected_schema_valid": true,
+      "actual_schema_valid": true,
+      "error_paths": [],
+      "boundary": "Does not establish core set or technical support completeness"
+    },
+    {
+      "id": "S03",
+      "name": "wrong version",
+      "schema_def": "structured_result",
+      "expected_schema_valid": false,
+      "actual_schema_valid": false,
+      "error_paths": [
+        [
+          "contract_version"
+        ]
+      ],
+      "boundary": "Structural rejection"
+    },
+    {
+      "id": "S04",
+      "name": "missing run id",
+      "schema_def": "structured_result",
+      "expected_schema_valid": false,
+      "actual_schema_valid": false,
+      "error_paths": [
+        []
+      ],
+      "boundary": "Structural rejection"
+    },
+    {
+      "id": "S05",
+      "name": "unknown field",
+      "schema_def": "structured_result",
+      "expected_schema_valid": false,
+      "actual_schema_valid": false,
+      "error_paths": [
+        []
+      ],
+      "boundary": "Structural rejection"
+    },
+    {
+      "id": "S06",
+      "name": "quality report wrong wire type",
+      "schema_def": "structured_result",
+      "expected_schema_valid": false,
+      "actual_schema_valid": false,
+      "error_paths": [
+        [
+          "outputs",
+          "quality_report"
+        ]
+      ],
+      "boundary": "Six strings remain required"
+    },
+    {
+      "id": "S07",
+      "name": "blocked with fake retained quote",
+      "schema_def": "feature_disposition",
+      "expected_schema_valid": false,
+      "actual_schema_valid": false,
+      "error_paths": [
+        [
+          "output_quote"
+        ],
+        [
+          "output_start_utf16"
+        ],
+        [
+          "output_end_utf16"
+        ]
+      ],
+      "boundary": "Conditional shape enforced"
+    },
+    {
+      "id": "S08",
+      "name": "blocked without output locator",
+      "schema_def": "feature_disposition",
+      "expected_schema_valid": true,
+      "actual_schema_valid": true,
+      "error_paths": [],
+      "boundary": "Content/coverage status must still be checked separately"
+    },
+    {
+      "id": "S09",
+      "name": "both result and error",
+      "schema_def": "enhanced_fragment",
+      "expected_schema_valid": false,
+      "actual_schema_valid": false,
+      "error_paths": [
+        []
+      ],
+      "boundary": "Mutually exclusive structural branches"
+    },
+    {
+      "id": "S10",
+      "name": "error-only enhancement",
+      "schema_def": "enhanced_fragment",
+      "expected_schema_valid": true,
+      "actual_schema_valid": true,
+      "error_paths": [],
+      "boundary": "Not evidence of provider execution terminal state"
+    },
+    {
+      "id": "S11",
+      "name": "opaque invalid inner JSON",
+      "schema_def": "structured_result",
+      "expected_schema_valid": true,
+      "actual_schema_valid": true,
+      "error_paths": [],
+      "boundary": "Expected layering: mandatory separate JSON parse must reject; not a schema-engine defect"
+    },
+    {
+      "id": "S12",
+      "name": "reversed source interval",
+      "schema_def": "final_source_item",
+      "expected_schema_valid": true,
+      "actual_schema_valid": true,
+      "error_paths": [],
+      "boundary": "Mandatory cross-field UTF16 locator validator must reject; outside JSON Schema shape"
+    },
+    {
+      "id": "S13",
+      "name": "100001 BMP text",
+      "schema_def": "structured_result",
+      "expected_schema_valid": false,
+      "actual_schema_valid": false,
+      "error_paths": [
+        [
+          "outputs",
+          "claims_text"
+        ]
+      ],
+      "boundary": "Confirms candidate new limit; source path capacity policy remains F05"
+    },
+    {
+      "id": "S14",
+      "name": "codepoint vs UTF16 boundary",
+      "schema_def": "structured_result",
+      "expected_schema_valid": true,
+      "actual_schema_valid": true,
+      "error_paths": [],
+      "boundary": "100002 UTF16 code units; mandatory normative UTF16 cap must reject separately"
+    },
+    {
+      "id": "S15",
+      "name": "zero claim report",
+      "schema_def": "quality_report",
+      "expected_schema_valid": false,
+      "actual_schema_valid": false,
+      "error_paths": [
+        [
+          "claim_count"
+        ]
+      ],
+      "boundary": "Confirms F06 needs an explicit no-supported-claim exit decision"
+    }
+  ],
+  "installed_packages": 0,
+  "business_code_executed": false,
+  "new_generation_calls": 0,
+  "paid_calls": 0
+}

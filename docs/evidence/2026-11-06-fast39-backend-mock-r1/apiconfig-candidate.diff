@@ -1,0 +1,58 @@
+--- /Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/api/v1/apiconfig.py
++++ /Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/candidate-r1/source/app/api/v1/apiconfig.py
+@@ -25,6 +25,10 @@
+ import json
+ import httpx
+ import io
++from app.services.fast39_result import (
++    WorkflowServiceResult, get_fast39_delivery_context,
++    validate_fast39_delivery_context, assemble_fast39_fragment,
++)
+ router = APIRouter(prefix="/apicategories", tags=["Categories"])
+ 
+ 
+@@ -113,16 +117,27 @@
+             "file_url": ""
+         }
+ 
++    # No client-provided flag can select the inactive C4 binding.
++    fast39_context = get_fast39_delivery_context(api_info, request, current_user)
++    if fast39_context is not None:
++        try:
++            validate_fast39_delivery_context(fast39_context, api_info, request, current_user)
++        except ValueError:
++            raise HTTPException(status_code=409, detail="FAST39_BINDING_MISMATCH")
++
+     # 3. 调用工作流（传入已有的 api_info）
+     try:
+         logger.info(f"[Workflow] 开始执行同步任务 - user_id: {current_user.id}, api_id: {api_info.id}, api_name: {api_info.name}")
+-        result = await run_dify_workflow(
++        capture_options = {"capture_response_receipt": True} if fast39_context is not None else {}
++        service_result = await run_dify_workflow(
+             api_info=api_info,
+             inputs=request.inputs,  # ← 就是前端传的 inputs
+             user_id=current_user.id,
+             api_process=request.api_process,
+             key=task_key,
++            **capture_options,
+         )
++        result = service_result.legacy_result if isinstance(service_result, WorkflowServiceResult) else service_result
+         logger.info(f"[Workflow] 任务执行成功 - user_id: {current_user.id}, result: {result}")
+         # 添加后台任务（注意：只传简单类型，不要传 db 或对象！）
+         # sc = api_info.output_schema[0]["en_name"]
+@@ -160,10 +175,14 @@
+             file_url = file_urlstr,
+         )
+         logger.info(f"[Workflow] 任务完成 - user_id: {current_user.id}, api_id: {api_info.id}, answer_length: {len(answer_text)}, file_count: {len(file_url)}")
+-        return {
++        response = {
+             "answer_text":answer_text,
+             "file_url":file_url
+         }  # 直接返回 Dify 的响应
++        # The original save/deduct task is already enqueued with the same object.
++        if fast39_context is not None and isinstance(service_result, WorkflowServiceResult):
++            response.update(assemble_fast39_fragment(service_result, task_key))
++        return response
+     except Exception as e:
+         logger.error(f"[Workflow] 任务执行失败 - user_id: {current_user.id}, api_id: {api_info.id}, error: {str(e)}", exc_info=True)
+         raise HTTPException(status_code=500, detail=f"工作流执行失败: {str(e)}")

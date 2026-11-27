@@ -1,0 +1,110 @@
+{
+  "id": "DSH-PDF-TWO-CASE-SPIKE-20261029",
+  "at": "2026-10-29T20:08:23.281576+08:00",
+  "scope": "user-simplified public PDF and native-memory OOM only; not full format/profile/sandbox qualification",
+  "imageDigest": "sha256:7e1ff0cb5e83403d186374ef035979dd27cf42ce90337cea6847e8eec86dc73e",
+  "imageId": "sha256:7e1ff0cb5e83403d186374ef035979dd27cf42ce90337cea6847e8eec86dc73e",
+  "architecture": "arm64",
+  "parserVersion": "pypdf6.10.0",
+  "pythonVersion": "3.12.13",
+  "containerRuntimeSource": "local import of verified Alpine VM public runtime files; not a pulled publisher container image",
+  "publicPDF": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/stage5-d0-material-extraction-20261023/fixtures/text-two-pages.pdf",
+  "publicPDFSHA256": "77f4ec7d9c27c1510991b38fd45edc692e9ab3d81d71199cf3d2f639ce21d415",
+  "cases": [
+    {
+      "case": "text",
+      "name": "oiw-pdf-text-20e65f45",
+      "containerId": "0177a9e00ac5e45cbd3a4e05e94609217ae6c6c4f51fded23f543c26d5b7dfb2",
+      "exitCode": 0,
+      "secondsIncludingSSHAndDocker": 0.541143042,
+      "stdout": "{\"pages\": 2, \"rawSHA256\": \"77f4ec7d9c27c1510991b38fd45edc692e9ab3d81d71199cf3d2f639ce21d415\", \"body\": \"D0 public synthetic valve - page 1\\n公开合成阀体：壳体与弹簧。\", \"textSHA256\": \"f8d850701bf5e3201bab7c688dea0807f7d341981b29b32dfbe03ffe9e671ecf\", \"textUTF16\": 48, \"python\": \"3.12.13\"}\n",
+      "stderr": "",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-29T12:08:22.627627209Z",
+        "FinishedAt": "2026-10-29T12:08:23.039038274Z"
+      },
+      "constraints": {
+        "Memory": 268435456,
+        "MemorySwap": 268435456,
+        "NetworkMode": "none",
+        "ReadonlyRootfs": true,
+        "PidsLimit": 1,
+        "Binds": null,
+        "CapDrop": [
+          "ALL"
+        ],
+        "SecurityOpt": [
+          "no-new-privileges"
+        ],
+        "Tmpfs": {
+          "/tmp": "rw,noexec,nosuid,size=8388608,mode=1777"
+        }
+      },
+      "mounts": []
+    },
+    {
+      "case": "memory",
+      "name": "oiw-pdf-memory-24e5dee5",
+      "containerId": "310922ab3b3970cdcf9967be057dfbca376728a928cbcb7609b7ed84bd5a2402",
+      "exitCode": 137,
+      "secondsIncludingSSHAndDocker": 0.15261187499999995,
+      "stdout": "",
+      "stderr": "",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": true,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 137,
+        "Error": "",
+        "StartedAt": "2026-10-29T12:08:23.139000062Z",
+        "FinishedAt": "2026-10-29T12:08:23.228011814Z"
+      },
+      "constraints": {
+        "Memory": 268435456,
+        "MemorySwap": 268435456,
+        "NetworkMode": "none",
+        "ReadonlyRootfs": true,
+        "PidsLimit": 1,
+        "Binds": null,
+        "CapDrop": [
+          "ALL"
+        ],
+        "SecurityOpt": [
+          "no-new-privileges"
+        ],
+        "Tmpfs": {
+          "/tmp": "rw,noexec,nosuid,size=8388608,mode=1777"
+        }
+      },
+      "mounts": []
+    }
+  ],
+  "result": "PASS_TWO_CASES",
+  "colimaDefaultStartupPassed": false,
+  "actualVM": "pinned Lima2.2.1 official Alpine3.23.4 low-space subpath",
+  "U1Passed": false,
+  "D1Enabled": false,
+  "modelOrBusinessAPICalls": 0,
+  "untested": [
+    "full PDF profile/object/xref/decode bounds",
+    "strict runtime-file read allowlist",
+    "strict no-exec syscall enforcement",
+    "separate hostile stdout/stderr and cancellation/reclaim cases",
+    "DOCX",
+    "product Host/old/new encoding",
+    "Flow-2-6 real dual-source generation and quality"
+  ]
+}

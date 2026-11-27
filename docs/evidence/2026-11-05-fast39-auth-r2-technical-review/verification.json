@@ -1,0 +1,96 @@
+{
+  "at": "2026-11-05T21:03:15.643057+08:00",
+  "verdict": "PASS_REVIEW_EVIDENCE_AND_PRESERVATION",
+  "failures": [],
+  "review_verdict": "REQUIRES_B_EVIDENCE_BINDING_CLARIFICATION",
+  "findings": [
+    {
+      "id": "R2-TR01",
+      "priority": "P2"
+    },
+    {
+      "id": "R2-TR02",
+      "priority": "P2"
+    }
+  ],
+  "prior_AUTH_TR01": "closed at R2 document level only; actual source blocked",
+  "author_review_not_independent_acceptance": true,
+  "native_memory_observation_checks": 36,
+  "selector_cases": 9,
+  "preserved_existing_files": 3952,
+  "preserved_symlinks": 2,
+  "preserved_business_files": 364,
+  "inputs_unchanged": 252,
+  "R1_R2_preserved_not_revised_or_approved": true,
+  "R2_freeze_sha256": "05dc0f89933ac4e1fe274e00fcfb5694c5cce7408028c12f6870ff91132bfa56",
+  "source_sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+  "source_addressability": "BLOCKED malformed table separator; memory repaired variant only",
+  "source_governance_exit_code": 1,
+  "weekly_time_waiver": false,
+  "source_writes": 0,
+  "business_code_edits": 0,
+  "CI_writes": 0,
+  "native_apply_or_registry_lock_invocations": 0,
+  "deployments": 0,
+  "new_API_model_upload_generation_paid_calls": 0,
+  "Git_commits_or_pushes": 0,
+  "actual_exception_request_or_writer_created": false,
+  "full245_or_C4_153_checks_rerun": false,
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "new_git_visible_files_before_verification": [
+    "docs/evidence/2026-11-05-fast39-auth-r2-technical-review/authorization-review.json",
+    "docs/evidence/2026-11-05-fast39-auth-r2-technical-review/governance-rerun.json",
+    "docs/evidence/2026-11-05-fast39-auth-r2-technical-review/native-helper-probes.json",
+    "docs/evidence/2026-11-05-fast39-auth-r2-technical-review/ownership-observation.json",
+    "docs/evidence/2026-11-05-fast39-auth-r2-technical-review/preflight.json",
+    "docs/evidence/2026-11-05-fast39-auth-r2-technical-review/技术复审与实施前置.md"
+  ],
+  "evidence_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r2-technical-review/authorization-review.json",
+      "sha256": "0d53836b8073a827656f715dd0277a1baa31e31fb3bd40386ed44b75bbc5248c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r2-technical-review/governance-rerun.json",
+      "sha256": "3e5a1019d2e693cdddd25b2f164a778552c00872c8a6d5ef3669add20b3a2ec4"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r2-technical-review/native-helper-probes.json",
+      "sha256": "468fa953ac87f47734fb8c55d9e9b2e189bac0855a3366a3c47a84fe59840081"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r2-technical-review/ownership-observation.json",
+      "sha256": "1f43df391559fb19b80b40ff9e193d15de5460aaf042f43e2f03f46874dd5a18"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r2-technical-review/preflight.json",
+      "sha256": "cbf75f874e468bbba05694640165040ed5885462dfe302f35a28d76c76bce469"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r2-technical-review/技术复审与实施前置.md",
+      "sha256": "d16032b782b4629dbdb52b086a5ea1c4bc17a10f73e8620950218a7285c113a5"
+    }
+  ],
+  "private_review_script_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-auth-r2-review-20261105/review.py",
+      "sha256": "32e312c4a94e823e78dcc6a61826860c8eff96df4fe9eb57091fc6597150da9c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-auth-r2-review-20261105/verify.py",
+      "sha256": "29edb3b2b44aad7a4666341ff14e49bc330e968525bed7eca31ae7c8c832e072"
+    }
+  ],
+  "commands": [
+    {
+      "command": "tools/bin/python3 -B .local/fast39-auth-r2-review-20261105/review.py",
+      "exit_code": 0,
+      "scope": "pure helper/string-memory probes; governance child exit1 retained"
+    },
+    {
+      "command": "tools/bin/python3 -B .local/fast39-auth-r2-review-20261105/verify.py",
+      "exit_code": 0
+    }
+  ]
+}

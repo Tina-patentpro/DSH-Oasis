@@ -1,0 +1,41 @@
+test_forged_change_id_not_native_setup_proof (__main__.RestoreTests.test_forged_change_id_not_native_setup_proof) ... FAIL
+test_forged_new_artifact_not_native_setup_proof (__main__.RestoreTests.test_forged_new_artifact_not_native_setup_proof) ... FAIL
+test_forged_open_count_not_native_setup_proof (__main__.RestoreTests.test_forged_open_count_not_native_setup_proof) ... FAIL
+
+======================================================================
+FAIL: test_forged_change_id_not_native_setup_proof (__main__.RestoreTests.test_forged_change_id_not_native_setup_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/test_restore_once.py", line 123, in test_forged_change_id_not_native_setup_proof
+    self.forged_setup(lambda b:b.replace(('- change_id: REG-TXN-'+self.setup_request['transaction_id']).encode(),b'- change_id: FORGED-CHANGE-ID',1))
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/test_restore_once.py", line 121, in forged_setup
+    with self.assertRaises(self.m.Refused):self.m.assemble(self.m.canonical(self.intent),self.ctx,datetime.datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(),str(self.ev/'outcome.json'))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refused not raised
+
+======================================================================
+FAIL: test_forged_new_artifact_not_native_setup_proof (__main__.RestoreTests.test_forged_new_artifact_not_native_setup_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/test_restore_once.py", line 125, in test_forged_new_artifact_not_native_setup_proof
+    self.forged_setup(lambda b:b'- new_artifact: FORGED-PRODUCER-PROSE'.join(b.rsplit(b'- new_artifact: scoped registration changes only',1)))
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/test_restore_once.py", line 121, in forged_setup
+    with self.assertRaises(self.m.Refused):self.m.assemble(self.m.canonical(self.intent),self.ctx,datetime.datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(),str(self.ev/'outcome.json'))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refused not raised
+
+======================================================================
+FAIL: test_forged_open_count_not_native_setup_proof (__main__.RestoreTests.test_forged_open_count_not_native_setup_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/test_restore_once.py", line 127, in test_forged_open_count_not_native_setup_proof
+    self.forged_setup(lambda b:b.replace(b'open_work_item_count: 36',b'open_work_item_count: 999',1))
+  File "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2/test_restore_once.py", line 121, in forged_setup
+    with self.assertRaises(self.m.Refused):self.m.assemble(self.m.canonical(self.intent),self.ctx,datetime.datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(),str(self.ev/'outcome.json'))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Refused not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.220s
+
+FAILED (failures=3)

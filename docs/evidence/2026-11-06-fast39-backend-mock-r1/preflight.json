@@ -1,0 +1,258 @@
+{
+  "time": "2026-11-06T15:57:54.809667+08:00",
+  "executor": "Codex single agent",
+  "projects": [
+    "dsh-oasis",
+    "backend"
+  ],
+  "step": "R1 task4 / R2 P5 backend isolated mock",
+  "authorization": "active goal按计划推进直至完成; local mocks only; no App, real calls, DB, source CI/B/A, commit/push/release",
+  "versions": "coordination1.2.2; overall1.3.1/NS1-R1; BM1-R1/S1/S2-R1/G1; originalR1task4 and R2P5",
+  "current_followup": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+  "anchors": [
+    "oasis-public-channels-bm1-r1-s2-r1",
+    "bm1-public-channels-s2-r1"
+  ],
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "sha256": "b2714a423740de7719fd8c82f4c226c82d5e13959dfbc1d5e2381222a25ab061",
+      "previous_sha256": "b2714a423740de7719fd8c82f4c226c82d5e13959dfbc1d5e2381222a25ab061",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "sha256": "431c8844b039e1c8e528531ee93d89f2b8346146084a5898bc53f06bde280e8b",
+      "previous_sha256": "431c8844b039e1c8e528531ee93d89f2b8346146084a5898bc53f06bde280e8b",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "sha256": "6ef28151f632bba8fa0454b80cca199e148163b47057be7a33fed0cf45fb3804",
+      "previous_sha256": "6ef28151f632bba8fa0454b80cca199e148163b47057be7a33fed0cf45fb3804",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "sha256": "20a3ccb56d96d75f2fe0f762dd46103e778975356384b80ecb2578775cf66f45",
+      "previous_sha256": "20a3ccb56d96d75f2fe0f762dd46103e778975356384b80ecb2578775cf66f45",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "sha256": "cac383be1f64cff69b95a28e535c6b748d986b338d62b0404ae0bcaa5a5e2e7d",
+      "previous_sha256": "cac383be1f64cff69b95a28e535c6b748d986b338d62b0404ae0bcaa5a5e2e7d",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "sha256": "702c46ec3558046698aa796f7afe7e18bbb24699da80d4a598d68ecc7a69b24c",
+      "previous_sha256": "702c46ec3558046698aa796f7afe7e18bbb24699da80d4a598d68ecc7a69b24c",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "previous_sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "previous_sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "sha256": "2f0b4c780db2b558db9351c225f65b62edc55e2510aac39847c2142de0a27642",
+      "previous_sha256": "2f0b4c780db2b558db9351c225f65b62edc55e2510aac39847c2142de0a27642",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "sha256": "491bf078a9a722930e7b180beb128ab16d1306e666a9af9dd70f09923a755506",
+      "previous_sha256": "491bf078a9a722930e7b180beb128ab16d1306e666a9af9dd70f09923a755506",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-06-project-summary-and-next-plan.md",
+      "sha256": "8bc17d3ccef81a52ee1943bffd9eef24e382c4d90abdcdeb6fb56e2e423a4a2a",
+      "previous_sha256": "8bc17d3ccef81a52ee1943bffd9eef24e382c4d90abdcdeb6fb56e2e423a4a2a",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-06-project-summary-and-next-plan-r2.md",
+      "sha256": "38ea73e8f23300679b09e73afe74830576254e370937d45df6c13815f6c46694",
+      "previous_sha256": "38ea73e8f23300679b09e73afe74830576254e370937d45df6c13815f6c46694",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "sha256": "adb89953f82880404d9b17593e110c5a1680d2d818a978ac843f5d3d3f898dad",
+      "previous_sha256": "92cb441b882a8063725b025364e833c4b3df0b1f0ac84c9205c66f2adc93cce4",
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "sha256": "7f13864fdb61ae1c6f6123270fb6e9b7bdc5f48c12a5052bcc323e200f47a443",
+      "previous_sha256": "8caf042c60a2fd8b0b8265bb649902433550bc006e34e0c51a44331b295311a5",
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/AGENTS.md",
+      "sha256": "c1e3d1f36483a22e5e21be2b95384f8b01150e441f66d9baecb3a8d3fc1f4cd9",
+      "previous_sha256": null,
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/README.md",
+      "sha256": "4d55d9ee827b65d17c621548af3b6abb843380bc6f31328377c9fd0d47cc468b",
+      "previous_sha256": null,
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+      "sha256": "a4dd22381c169c1c2553a0c678578ead64988277f00fb37070b78c5291a446aa",
+      "previous_sha256": null,
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利业务Skills清单.md",
+      "sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "previous_sha256": null,
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/CONTRACT.md",
+      "sha256": "88537f878856d304c6c34f909f286274b3e1ddcd34658e75c749f2840850f2b9",
+      "previous_sha256": "88537f878856d304c6c34f909f286274b3e1ddcd34658e75c749f2840850f2b9",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/FREEZE.json",
+      "sha256": "a5780ad83094d1a9fdb916f9da83f8fcc52e9794da456f1321dd23b4ab5f4901",
+      "previous_sha256": "a5780ad83094d1a9fdb916f9da83f8fcc52e9794da456f1321dd23b4ab5f4901",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/INHERITANCE.json",
+      "sha256": "10f00fc27c082f2ef7d065cc9b7eb9cd7f7c7637b683fce377fd543ea06cf336",
+      "previous_sha256": "10f00fc27c082f2ef7d065cc9b7eb9cd7f7c7637b683fce377fd543ea06cf336",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/adoption-scope.json",
+      "sha256": "15ce84cfdcdcd6cc19383aa0ab33845aec92e261efc91e0ff68ae84ed466ef8a",
+      "previous_sha256": null,
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/capacity-policy.json",
+      "sha256": "afdeddaaf46e375b88908215b48ce4d2799c8c0c55e784d3049d1693d3b3e3da",
+      "previous_sha256": "afdeddaaf46e375b88908215b48ce4d2799c8c0c55e784d3049d1693d3b3e3da",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/changes-from-candidate2.json",
+      "sha256": "6e7a1125e3b1eab12f5d6893b3c9ff5ca97c7e92534e189a2e82bd8536bfde26",
+      "previous_sha256": null,
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/changes-from-candidate3.json",
+      "sha256": "88fd6f015e84c1a404f7a00545217b6ea83b0d36cc457eb19d7d7b3129632c25",
+      "previous_sha256": null,
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/code-abi.json",
+      "sha256": "630b529db34c2de4f88454b11bd9ef1dd0a3e61b4de27021287f8c573f102a10",
+      "previous_sha256": "630b529db34c2de4f88454b11bd9ef1dd0a3e61b4de27021287f8c573f102a10",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/cross-field-checks.json",
+      "sha256": "5dc49acfb66e3fb814859c1cba718577d9bd7ca17c777be3b1907dcb01e8d4a0",
+      "previous_sha256": "5dc49acfb66e3fb814859c1cba718577d9bd7ca17c777be3b1907dcb01e8d4a0",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/delivery-binding.candidate.json",
+      "sha256": "b0467600f7b449e0cba6c128b12fd8ba6644e9a6d5598070b27ba331f9d9e2d2",
+      "previous_sha256": "b0467600f7b449e0cba6c128b12fd8ba6644e9a6d5598070b27ba331f9d9e2d2",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/examples.json",
+      "sha256": "99ed17eb6e2212510b586bdeb53928f4fed52d94c3fdb5874b7ade216a91ebdf",
+      "previous_sha256": "99ed17eb6e2212510b586bdeb53928f4fed52d94c3fdb5874b7ade216a91ebdf",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/receipt-mapping.json",
+      "sha256": "acc5d842685abf2c19697c90f6caefa7eac2a0e55dd1b901b651e9cdc199c890",
+      "previous_sha256": "acc5d842685abf2c19697c90f6caefa7eac2a0e55dd1b901b651e9cdc199c890",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/schemas.json",
+      "sha256": "4c525a5b1ddacd387efe2e2cbd3483e15c0063edd519042fa2af3692aafd5992",
+      "previous_sha256": "4c525a5b1ddacd387efe2e2cbd3483e15c0063edd519042fa2af3692aafd5992",
+      "difference": "same raw bytes",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/transition-table.json",
+      "sha256": "f29bf3fcadb301922c28dacc28428f8aa55beef994076d7de16e28fec2bb1605",
+      "previous_sha256": null,
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/validation-cases.json",
+      "sha256": "d8d29101d2f7fd8954015099f524756bef4b1174fa0a097136292ebbb2654e2b",
+      "previous_sha256": null,
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/限定用途与设计采用说明.md",
+      "sha256": "d034f9cdca157bb2f1b88a86543f5217506c9580cee667a60d29b452f1a47273",
+      "previous_sha256": null,
+      "difference": "new/changed; same scoped authorization, not new acceptance",
+      "read_scope": "current-turn targeted reads; inherited full reads only where summary explicitly records; C4 schemas selectively parsed, other frozen members identity only"
+    }
+  ],
+  "impact": "independent backend boundary mock can continue; production activation remains disabled; original Task0 and2675-member backend candidate not modified",
+  "target_python": "Task0 seven-file source lacks runtime/version manifest; host3.9.6 only, deployment compatibility unverified"
+}

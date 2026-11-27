@@ -1,0 +1,1117 @@
+{
+  "version": "C3-R1",
+  "kind": "LOGICAL_ABI_NOT_IMPLEMENTATION",
+  "nodes": [
+    {
+      "logical_node": "SOURCE_REGISTRY",
+      "actual_node_id": null,
+      "inputs": {
+        "packet_text": {
+          "selector": [
+            "1770000100002",
+            "text"
+          ],
+          "wire_type": "string"
+        },
+        "User_input": {
+          "selector": [
+            "1727493066060",
+            "User_input"
+          ],
+          "wire_type": "string"
+        },
+        "document": {
+          "selector": [
+            "1727493066060",
+            "Technical_Disclosure_file"
+          ],
+          "wire_type": "file"
+        },
+        "direct_fields": {
+          "selectors": {
+            "technical_field": [
+              "1727493066060",
+              "technical_field"
+            ],
+            "background_art_TD": [
+              "1727493066060",
+              "background_art_TD"
+            ],
+            "technical_solutions": [
+              "1727493066060",
+              "technical_solutions"
+            ],
+            "beneficial_effects_TD": [
+              "1727493066060",
+              "beneficial_effects_TD"
+            ],
+            "embodiments_TD": [
+              "1727493066060",
+              "embodiments_TD"
+            ],
+            "drawings_explain_TD": [
+              "1727493066060",
+              "drawings_explain_TD"
+            ]
+          },
+          "wire_type": "six strings, exact empty"
+        }
+      },
+      "outputs": {
+        "registry_json": {
+          "wire_type": "string(JSON)",
+          "decoded_schema": "source_registry_internal"
+        },
+        "registry_sha256": {
+          "wire_type": "string(sha256)"
+        }
+      },
+      "output_table_semantics": "complete proposed surface; existing name retained only if listed"
+    },
+    {
+      "logical_node": "OUTLINE",
+      "actual_node_id": "1764588108416",
+      "inputs": {
+        "registry_json": {
+          "selector": [
+            "SOURCE_REGISTRY",
+            "registry_json"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "source_registry_internal"
+        },
+        "existing_semantic_inputs": {
+          "selectors": {
+            "technical_field": [
+              "1770000100003",
+              "technical_field"
+            ],
+            "background_art_TD": [
+              "1770000100003",
+              "background_art_TD"
+            ],
+            "technical_solutions": [
+              "1770000100003",
+              "technical_solutions"
+            ],
+            "beneficial_effects_TD": [
+              "1770000100003",
+              "beneficial_effects_TD"
+            ],
+            "embodiments_TD": [
+              "1770000100003",
+              "embodiments_TD"
+            ],
+            "drawings_explain_TD": [
+              "1770000100003",
+              "drawings_explain_TD"
+            ]
+          },
+          "type": "six existing string outputs"
+        },
+        "User_input": {
+          "selector": [
+            "1727493066060",
+            "User_input"
+          ],
+          "wire_type": "string"
+        }
+      },
+      "outputs": {
+        "structured_output": {
+          "wire_type": "object(existing Outline plus analysis_metadata: outline_analysis_metadata)",
+          "decoded_schema": "outline_result"
+        }
+      },
+      "output_table_semantics": "complete proposed surface; existing name retained only if listed"
+    },
+    {
+      "logical_node": "ANCHOR_ADAPTER",
+      "actual_node_id": null,
+      "inputs": {
+        "outline": {
+          "selector": [
+            "1764588108416",
+            "structured_output"
+          ],
+          "wire_type": "object",
+          "decoded_schema": "outline_result"
+        },
+        "registry_json": {
+          "selector": [
+            "SOURCE_REGISTRY",
+            "registry_json"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "source_registry_internal"
+        }
+      },
+      "outputs": {
+        "outline_anchor_json": {
+          "wire_type": "string(JSON)",
+          "decoded_schema": "outline_anchor"
+        }
+      },
+      "output_table_semantics": "complete proposed surface; existing name retained only if listed"
+    },
+    {
+      "logical_node": "FINAL_WRITER",
+      "actual_node_id": "1728183992412",
+      "inputs": {
+        "outline_anchor_json": {
+          "selector": [
+            "ANCHOR_ADAPTER",
+            "outline_anchor_json"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "outline_anchor"
+        },
+        "existing_context": {
+          "selectors": [
+            [
+              "1764588108416",
+              "structured_output",
+              "core_independent_claim"
+            ],
+            [
+              "1764588108416",
+              "structured_output",
+              "elementary_features"
+            ],
+            [
+              "1764588108416",
+              "structured_output",
+              "error"
+            ],
+            [
+              "1764588108416",
+              "structured_output",
+              "implementation_elements"
+            ],
+            [
+              "1764588108416",
+              "structured_output",
+              "outline_quality"
+            ],
+            [
+              "1764588108416",
+              "structured_output",
+              "parallel_independent_claims"
+            ],
+            [
+              "1764588108416",
+              "structured_output",
+              "preferred_ranges"
+            ],
+            [
+              "1764588108416",
+              "structured_output",
+              "sub_claim_clusters"
+            ],
+            [
+              "1764588108416",
+              "structured_output",
+              "tech_element_table"
+            ],
+            [
+              "1764588108416",
+              "structured_output",
+              "variations"
+            ],
+            [
+              "1769301001005",
+              "clean_text"
+            ],
+            [
+              "1769301001006",
+              "clean_text"
+            ],
+            [
+              "1769301001007",
+              "clean_text"
+            ],
+            [
+              "1769301001007",
+              "high_priority_issue_count"
+            ],
+            [
+              "1769301001007",
+              "must_close_instructions"
+            ],
+            [
+              "1769301001007",
+              "priority_parse_status"
+            ],
+            [
+              "1770000100003",
+              "background_art_TD"
+            ],
+            [
+              "1770000100003",
+              "beneficial_effects_TD"
+            ],
+            [
+              "1770000100003",
+              "drawings_explain_TD"
+            ],
+            [
+              "1770000100003",
+              "embodiments_TD"
+            ],
+            [
+              "1770000100003",
+              "technical_solutions"
+            ]
+          ],
+          "type": "existing exact prompt references copied from frozen graph; new Outline anchor is separate"
+        }
+      },
+      "outputs": {
+        "text": {
+          "wire_type": "string(JSON)",
+          "decoded_schema": "writer_draft"
+        }
+      },
+      "output_table_semantics": "complete proposed surface; existing name retained only if listed"
+    },
+    {
+      "logical_node": "SANITIZER",
+      "actual_node_id": "1769301001008",
+      "inputs": {
+        "draft": {
+          "selector": [
+            "1728183992412",
+            "text"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "writer_draft"
+        }
+      },
+      "outputs": {
+        "parsed_draft_json": {
+          "wire_type": "string(JSON)",
+          "decoded_schema": "writer_draft"
+        }
+      },
+      "output_table_semantics": "complete proposed surface; existing name retained only if listed"
+    },
+    {
+      "logical_node": "NORMALIZER",
+      "actual_node_id": "1769301001100",
+      "inputs": {
+        "parsed_draft_json": {
+          "selector": [
+            "1769301001008",
+            "parsed_draft_json"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "writer_draft"
+        },
+        "outline_anchor_json": {
+          "selector": [
+            "ANCHOR_ADAPTER",
+            "outline_anchor_json"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "outline_anchor"
+        }
+      },
+      "outputs": {
+        "clean_text": {
+          "wire_type": "string"
+        },
+        "claim_count": {
+          "wire_type": "number(integer)"
+        },
+        "marker_warnings": {
+          "wire_type": "string(JSON)",
+          "decoded_schema": "warning_strings"
+        },
+        "claim_id_map_json": {
+          "wire_type": "string(JSON)",
+          "decoded_schema": "claim_id_mappings"
+        },
+        "feature_dispositions_json": {
+          "wire_type": "string(JSON)",
+          "decoded_schema": "feature_dispositions"
+        },
+        "claim_segments_json": {
+          "wire_type": "string(JSON)",
+          "decoded_schema": "claim_segments"
+        }
+      },
+      "output_table_semantics": "complete proposed surface; existing name retained only if listed",
+      "validation_view": "normalized_draft is assembled from the six outputs; its contract_version is the fixed local C3 normalizer binding constant, not a model field or seventh output"
+    },
+    {
+      "logical_node": "DEPENDENCY_TREE",
+      "actual_node_id": "1769151800001",
+      "inputs": {
+        "claims_text": {
+          "selector": [
+            "1769301001100",
+            "clean_text"
+          ],
+          "wire_type": "string"
+        }
+      },
+      "outputs": {
+        "claim_count": {
+          "wire_type": "number"
+        },
+        "clean_text": {
+          "wire_type": "string"
+        },
+        "dependency_edges": {
+          "wire_type": "string"
+        },
+        "dependency_parse_status": {
+          "wire_type": "string"
+        },
+        "dependency_warnings": {
+          "wire_type": "string"
+        },
+        "root_claims": {
+          "wire_type": "string"
+        },
+        "tree_text": {
+          "wire_type": "string"
+        }
+      },
+      "output_table_semantics": "complete proposed surface; existing name retained only if listed"
+    },
+    {
+      "logical_node": "TREE_SANITIZER",
+      "actual_node_id": "1769301001009",
+      "inputs": {
+        "input": {
+          "selector": [
+            "1769151800001",
+            "tree_text"
+          ],
+          "wire_type": "string"
+        }
+      },
+      "outputs": {
+        "clean_text": {
+          "wire_type": "string"
+        },
+        "had_sanitization": {
+          "wire_type": "boolean"
+        },
+        "is_effectively_empty": {
+          "wire_type": "boolean"
+        },
+        "removed_patterns": {
+          "wire_type": "string"
+        }
+      },
+      "output_table_semantics": "complete proposed surface; existing name retained only if listed"
+    },
+    {
+      "logical_node": "FINAL_FORMATTER",
+      "actual_node_id": "1769301001101",
+      "inputs": {
+        "claims_text": {
+          "selector": [
+            "1769301001100",
+            "clean_text"
+          ],
+          "wire_type": "string"
+        },
+        "normalizer_count": {
+          "selector": [
+            "1769301001100",
+            "claim_count"
+          ],
+          "wire_type": "number(integer)"
+        },
+        "tree_count": {
+          "selector": [
+            "1769151800001",
+            "claim_count"
+          ],
+          "wire_type": "number(integer)"
+        },
+        "marker_warnings": {
+          "selector": [
+            "1769301001100",
+            "marker_warnings"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "warning_strings"
+        },
+        "claim_id_map_json": {
+          "selector": [
+            "1769301001100",
+            "claim_id_map_json"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "claim_id_mappings"
+        },
+        "feature_dispositions_json": {
+          "selector": [
+            "1769301001100",
+            "feature_dispositions_json"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "feature_dispositions"
+        },
+        "claim_segments_json": {
+          "selector": [
+            "1769301001100",
+            "claim_segments_json"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "claim_segments"
+        },
+        "expected_anchor_json": {
+          "selector": [
+            "ANCHOR_ADAPTER",
+            "outline_anchor_json"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "outline_anchor"
+        },
+        "registry_json": {
+          "selector": [
+            "SOURCE_REGISTRY",
+            "registry_json"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "source_registry_internal"
+        },
+        "tree_text": {
+          "selector": [
+            "1769301001009",
+            "clean_text"
+          ],
+          "wire_type": "string"
+        },
+        "dependency_edges": {
+          "selector": [
+            "1769151800001",
+            "dependency_edges"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "dependency_edges"
+        },
+        "dependency_parse_status": {
+          "selector": [
+            "1769151800001",
+            "dependency_parse_status"
+          ],
+          "wire_type": "string"
+        },
+        "dependency_warnings": {
+          "selector": [
+            "1769151800001",
+            "dependency_warnings"
+          ],
+          "wire_type": "string(JSON)",
+          "decoded_schema": "warning_strings"
+        },
+        "expected_registry_sha256": {
+          "selector": [
+            "SOURCE_REGISTRY",
+            "registry_sha256"
+          ],
+          "wire_type": "string(sha256)"
+        }
+      },
+      "outputs": {
+        "output": {
+          "wire_type": "string"
+        },
+        "claims_text": {
+          "wire_type": "string"
+        },
+        "dependency_tree": {
+          "wire_type": "string"
+        },
+        "pending_confirmation": {
+          "wire_type": "string"
+        },
+        "quality_report": {
+          "wire_type": "string"
+        },
+        "quality_status": {
+          "wire_type": "string"
+        }
+      },
+      "output_table_semantics": "complete proposed surface; existing name retained only if listed"
+    }
+  ],
+  "current_saved_ports": {
+    "1727493066060": {
+      "variables": [
+        {
+          "max_length": 10000,
+          "required": false,
+          "type": "paragraph",
+          "variable": "User_input"
+        },
+        {
+          "max_length": 128000,
+          "required": false,
+          "type": "paragraph",
+          "variable": "technical_field"
+        },
+        {
+          "max_length": 128000,
+          "required": false,
+          "type": "paragraph",
+          "variable": "background_art_TD"
+        },
+        {
+          "max_length": 128000,
+          "required": false,
+          "type": "paragraph",
+          "variable": "technical_solutions"
+        },
+        {
+          "max_length": 128000,
+          "required": false,
+          "type": "paragraph",
+          "variable": "beneficial_effects_TD"
+        },
+        {
+          "max_length": 128000,
+          "required": false,
+          "type": "paragraph",
+          "variable": "embodiments_TD"
+        },
+        {
+          "max_length": 128000,
+          "required": false,
+          "type": "paragraph",
+          "variable": "drawings_explain_TD"
+        },
+        {
+          "max_length": 10,
+          "required": false,
+          "type": "file",
+          "variable": "Technical_Disclosure_file"
+        },
+        {
+          "max_length": 48,
+          "required": true,
+          "type": "text-input",
+          "variable": "server_key"
+        }
+      ],
+      "outputs": null,
+      "prompt_refs": []
+    },
+    "1728183992412": {
+      "variables": [],
+      "outputs": null,
+      "prompt_refs": [
+        "1764588108416.structured_output.core_independent_claim",
+        "1764588108416.structured_output.elementary_features",
+        "1764588108416.structured_output.error",
+        "1764588108416.structured_output.implementation_elements",
+        "1764588108416.structured_output.outline_quality",
+        "1764588108416.structured_output.parallel_independent_claims",
+        "1764588108416.structured_output.preferred_ranges",
+        "1764588108416.structured_output.sub_claim_clusters",
+        "1764588108416.structured_output.tech_element_table",
+        "1764588108416.structured_output.variations",
+        "1769301001005.clean_text",
+        "1769301001006.clean_text",
+        "1769301001007.clean_text",
+        "1769301001007.high_priority_issue_count",
+        "1769301001007.must_close_instructions",
+        "1769301001007.priority_parse_status",
+        "1770000100003.background_art_TD",
+        "1770000100003.beneficial_effects_TD",
+        "1770000100003.drawings_explain_TD",
+        "1770000100003.embodiments_TD",
+        "1770000100003.technical_solutions"
+      ]
+    },
+    "1764588108416": {
+      "variables": null,
+      "outputs": null,
+      "prompt_refs": [
+        "1727493066060.User_input",
+        "1770000100003.background_art_TD",
+        "1770000100003.beneficial_effects_TD",
+        "1770000100003.drawings_explain_TD",
+        "1770000100003.embodiments_TD",
+        "1770000100003.technical_field",
+        "1770000100003.technical_solutions"
+      ]
+    },
+    "1769151800001": {
+      "variables": [
+        {
+          "value_selector": [
+            "1769301001100",
+            "clean_text"
+          ],
+          "value_type": "string",
+          "variable": "claims_text"
+        }
+      ],
+      "outputs": {
+        "claim_count": {
+          "children": null,
+          "type": "number"
+        },
+        "clean_text": {
+          "children": null,
+          "type": "string"
+        },
+        "dependency_edges": {
+          "children": null,
+          "type": "string"
+        },
+        "dependency_parse_status": {
+          "children": null,
+          "type": "string"
+        },
+        "dependency_warnings": {
+          "children": null,
+          "type": "string"
+        },
+        "root_claims": {
+          "children": null,
+          "type": "string"
+        },
+        "tree_text": {
+          "children": null,
+          "type": "string"
+        }
+      },
+      "prompt_refs": []
+    },
+    "1769301001008": {
+      "variables": [
+        {
+          "value_selector": [
+            "1728183992412",
+            "text"
+          ],
+          "value_type": "string",
+          "variable": "input"
+        }
+      ],
+      "outputs": {
+        "clean_text": {
+          "children": null,
+          "type": "string"
+        },
+        "had_sanitization": {
+          "children": null,
+          "type": "boolean"
+        },
+        "is_effectively_empty": {
+          "children": null,
+          "type": "boolean"
+        },
+        "removed_patterns": {
+          "children": null,
+          "type": "string"
+        }
+      },
+      "prompt_refs": []
+    },
+    "1769301001009": {
+      "variables": [
+        {
+          "value_selector": [
+            "1769151800001",
+            "clean_text"
+          ],
+          "value_type": "string",
+          "variable": "input"
+        }
+      ],
+      "outputs": {
+        "clean_text": {
+          "children": null,
+          "type": "string"
+        },
+        "had_sanitization": {
+          "children": null,
+          "type": "boolean"
+        },
+        "is_effectively_empty": {
+          "children": null,
+          "type": "boolean"
+        },
+        "removed_patterns": {
+          "children": null,
+          "type": "string"
+        }
+      },
+      "prompt_refs": []
+    },
+    "1769301001100": {
+      "variables": [
+        {
+          "value_selector": [
+            "1769301001008",
+            "clean_text"
+          ],
+          "value_type": "string",
+          "variable": "input"
+        },
+        {
+          "value_selector": [
+            "1770000100003",
+            "technical_solutions"
+          ],
+          "value_type": "string",
+          "variable": "technical_solutions"
+        },
+        {
+          "value_selector": [
+            "1770000100003",
+            "drawings_explain_TD"
+          ],
+          "value_type": "string",
+          "variable": "drawings_explain_TD"
+        },
+        {
+          "value_selector": [
+            "1770000100003",
+            "embodiments_TD"
+          ],
+          "value_type": "string",
+          "variable": "embodiments_TD"
+        }
+      ],
+      "outputs": {
+        "claim_count": {
+          "children": null,
+          "type": "number"
+        },
+        "clean_text": {
+          "children": null,
+          "type": "string"
+        },
+        "inserted_markers": {
+          "children": null,
+          "type": "string"
+        },
+        "marker_warnings": {
+          "children": null,
+          "type": "string"
+        }
+      },
+      "prompt_refs": []
+    },
+    "1769301001101": {
+      "variables": [
+        {
+          "value_selector": [
+            "1769301001100",
+            "clean_text"
+          ],
+          "value_type": "string",
+          "variable": "claims_text"
+        },
+        {
+          "value_selector": [
+            "1769301001009",
+            "clean_text"
+          ],
+          "value_type": "string",
+          "variable": "tree_text"
+        },
+        {
+          "value_selector": [
+            "1764588108416",
+            "structured_output",
+            "outline_quality"
+          ],
+          "value_type": "object",
+          "variable": "outline_quality"
+        },
+        {
+          "value_selector": [
+            "1764588108416",
+            "structured_output",
+            "error"
+          ],
+          "value_type": "string",
+          "variable": "outline_error"
+        },
+        {
+          "value_selector": [
+            "1769301001100",
+            "marker_warnings"
+          ],
+          "value_type": "string",
+          "variable": "marker_warnings"
+        },
+        {
+          "value_selector": [
+            "1769151800001",
+            "dependency_warnings"
+          ],
+          "value_type": "string",
+          "variable": "dependency_warnings"
+        },
+        {
+          "value_selector": [
+            "1769151800001",
+            "dependency_parse_status"
+          ],
+          "value_type": "string",
+          "variable": "dependency_parse_status"
+        },
+        {
+          "value_selector": [
+            "1769301001100",
+            "claim_count"
+          ],
+          "value_type": "number",
+          "variable": "claim_count"
+        },
+        {
+          "value_selector": [
+            "1769151800001",
+            "dependency_edges"
+          ],
+          "value_type": "string",
+          "variable": "dependency_edges"
+        }
+      ],
+      "outputs": {
+        "claims_text": {
+          "children": null,
+          "type": "string"
+        },
+        "dependency_tree": {
+          "children": null,
+          "type": "string"
+        },
+        "output": {
+          "children": null,
+          "type": "string"
+        },
+        "pending_confirmation": {
+          "children": null,
+          "type": "string"
+        },
+        "quality_report": {
+          "children": null,
+          "type": "string"
+        },
+        "quality_status": {
+          "children": null,
+          "type": "string"
+        }
+      },
+      "prompt_refs": []
+    },
+    "1770000100002": {
+      "variables": null,
+      "outputs": null,
+      "prompt_refs": []
+    },
+    "1770000100003": {
+      "variables": [
+        {
+          "value_selector": [
+            "1727493066060",
+            "technical_field"
+          ],
+          "value_type": "string",
+          "variable": "technical_field"
+        },
+        {
+          "value_selector": [
+            "1727493066060",
+            "background_art_TD"
+          ],
+          "value_type": "string",
+          "variable": "background_art_TD"
+        },
+        {
+          "value_selector": [
+            "1727493066060",
+            "technical_solutions"
+          ],
+          "value_type": "string",
+          "variable": "technical_solutions"
+        },
+        {
+          "value_selector": [
+            "1727493066060",
+            "beneficial_effects_TD"
+          ],
+          "value_type": "string",
+          "variable": "beneficial_effects_TD"
+        },
+        {
+          "value_selector": [
+            "1727493066060",
+            "embodiments_TD"
+          ],
+          "value_type": "string",
+          "variable": "embodiments_TD"
+        },
+        {
+          "value_selector": [
+            "1727493066060",
+            "drawings_explain_TD"
+          ],
+          "value_type": "string",
+          "variable": "drawings_explain_TD"
+        },
+        {
+          "value_selector": [
+            "1770000100004",
+            "technical_field_by_title"
+          ],
+          "value_type": "string",
+          "variable": "technical_field_by_title"
+        },
+        {
+          "value_selector": [
+            "1770000100004",
+            "background_art_by_title"
+          ],
+          "value_type": "string",
+          "variable": "background_art_by_title"
+        },
+        {
+          "value_selector": [
+            "1770000100004",
+            "technical_solutions_by_title"
+          ],
+          "value_type": "string",
+          "variable": "technical_solutions_by_title"
+        },
+        {
+          "value_selector": [
+            "1770000100004",
+            "beneficial_effects_by_title"
+          ],
+          "value_type": "string",
+          "variable": "beneficial_effects_by_title"
+        },
+        {
+          "value_selector": [
+            "1770000100004",
+            "embodiments_by_title"
+          ],
+          "value_type": "string",
+          "variable": "embodiments_by_title"
+        },
+        {
+          "value_selector": [
+            "1770000100004",
+            "drawings_explain_by_title"
+          ],
+          "value_type": "string",
+          "variable": "drawings_explain_by_title"
+        },
+        {
+          "value_selector": [
+            "1770000100005",
+            "structured_output",
+            "technical_field_by_semantic"
+          ],
+          "value_type": "string",
+          "variable": "technical_field_by_semantic"
+        },
+        {
+          "value_selector": [
+            "1770000100005",
+            "structured_output",
+            "background_art_by_semantic"
+          ],
+          "value_type": "string",
+          "variable": "background_art_by_semantic"
+        },
+        {
+          "value_selector": [
+            "1770000100005",
+            "structured_output",
+            "technical_solutions_by_semantic"
+          ],
+          "value_type": "string",
+          "variable": "technical_solutions_by_semantic"
+        },
+        {
+          "value_selector": [
+            "1770000100005",
+            "structured_output",
+            "beneficial_effects_by_semantic"
+          ],
+          "value_type": "string",
+          "variable": "beneficial_effects_by_semantic"
+        },
+        {
+          "value_selector": [
+            "1770000100005",
+            "structured_output",
+            "embodiments_by_semantic"
+          ],
+          "value_type": "string",
+          "variable": "embodiments_by_semantic"
+        },
+        {
+          "value_selector": [
+            "1770000100005",
+            "structured_output",
+            "drawings_explain_by_semantic"
+          ],
+          "value_type": "string",
+          "variable": "drawings_explain_by_semantic"
+        }
+      ],
+      "outputs": {
+        "background_art_TD": {
+          "children": null,
+          "type": "string"
+        },
+        "beneficial_effects_TD": {
+          "children": null,
+          "type": "string"
+        },
+        "drawings_explain_TD": {
+          "children": null,
+          "type": "string"
+        },
+        "embodiments_TD": {
+          "children": null,
+          "type": "string"
+        },
+        "technical_field": {
+          "children": null,
+          "type": "string"
+        },
+        "technical_solutions": {
+          "children": null,
+          "type": "string"
+        }
+      },
+      "prompt_refs": []
+    }
+  },
+  "all_new_structures_wire": "explicit JSON strings; decode once per consumer and validate named schema",
+  "count_authority": "NORMALIZER.claim_count; tree_count/final numbering/map/segments must equal or content error",
+  "client_anchor_contract": "rebuild local registry; validate reported anchor self-consistency only; no independent original Outline channel",
+  "workflow_anchor_contract": "FINAL_FORMATTER.expected_anchor_json must come from same-run ANCHOR_ADAPTER, never final writer/report",
+  "backend_boundary": {
+    "owner_file": "app/services/workflow_service.py",
+    "capture_point": "same response.content bytes after await post, before json decode or old >=400 branch escapes",
+    "logical_type": "WorkflowServiceResult",
+    "fields": {
+      "legacy_result": "unchanged response.json object on ordinary successful parsing",
+      "provider_response_receipt": "object provider_response_receipt for 2xx enhanced response"
+    },
+    "legacy_finance_input": "save_and_deduct receives legacy_result unchanged, not the wrapper",
+    "new_requests": 0,
+    "new_finance_tasks": 0,
+    "not_implemented": true
+  },
+  "new_actual_node_ids_unallocated": true,
+  "binding_after_hashes_unavailable_until_candidate_produced": true
+}

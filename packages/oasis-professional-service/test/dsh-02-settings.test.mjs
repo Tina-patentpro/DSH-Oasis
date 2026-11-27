@@ -41,3 +41,52 @@ test('product settings share ConfigForms owner without disposing the shared form
   controller.dispose()
   assert.equal(unsubscribe, 1)
 })
+
+test('the installed generation entry owns the suite setting instead of the package-name entry', async () => {
+  const namespace = 'oasis-professional-service-m06-native-generation'
+  let saved = {}, listener
+  const form = {
+    getSnapshot: () => ({ status: 'ready', mode: 'host', writable: true, value: saved }),
+    subscribe(fn) { listener = fn; return () => {} },
+    async set(key, value) { saved = { ...saved, [key]: value }; listener(); return true },
+  }
+  const absent = { getSnapshot: () => ({ status: 'unavailable' }), subscribe: () => () => {} }
+  const controller = createProductSettings({ remote: {
+    getV340Catalog: async () => ({ settingsNamespace: namespace }),
+    accountStatus: async () => ({ authenticated: false, available: false, writable: false,
+      accountId: null, revision: null, retryAfterSeconds: 0 }),
+  } })
+  try {
+    controller.bind({ configForms: { get: id => id === namespace ? form : absent },
+      remote: { $host: { isLoopback: true } },
+      connection: { isLoopback: true, generation: { getSnapshot: () => 1, subscribe: () => () => {} } } })
+    await controller.refresh()
+    assert.equal(controller.getSnapshot().localSkillSuite, 'oasis')
+    assert.equal(await controller.saveLocalSkillSuite('patent-disclosure'), true)
+    assert.deepEqual(saved, { localSkillSuite: 'patent-disclosure' })
+  } finally { controller.dispose() }
+})
+
+test('a protected installed profile stores the suite through the managed Host preference', async () => {
+  let suite = 'oasis'
+  const protectedForm = {
+    getSnapshot: () => ({ status: 'ready', mode: 'host', writable: true, value: {} }),
+    subscribe: () => () => {},
+    set: async () => { assert.fail('protected configuration must not be edited') },
+  }
+  const controller = createProductSettings({ remote: {
+    getV340Catalog: async () => ({ managedSkillSuite: true, settingsNamespace: 'oasis-professional-service-m06-native-generation' }),
+    getLocalSkillSuite: async () => ({ suite }),
+    setLocalSkillSuite: async next => ({ suite: suite = next }),
+    accountStatus: async () => ({ authenticated: false, available: false, writable: false,
+      accountId: null, revision: null, retryAfterSeconds: 0 }),
+  } })
+  try {
+    controller.bind({ configForms: { get: () => protectedForm }, remote: { $host: { isLoopback: true } },
+      connection: { isLoopback: true, generation: { getSnapshot: () => 1, subscribe: () => () => {} } } })
+    await controller.refresh()
+    assert.equal(await controller.saveLocalSkillSuite('patent-disclosure'), true)
+    await controller.refresh()
+    assert.equal(controller.getSnapshot().localSkillSuite, 'patent-disclosure')
+  } finally { controller.dispose() }
+})

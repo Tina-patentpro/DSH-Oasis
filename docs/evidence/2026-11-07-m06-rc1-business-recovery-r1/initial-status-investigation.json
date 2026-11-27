@@ -1,0 +1,23 @@
+{
+  "initialCreateExitCode": 1,
+  "runId": "v340-18c30218-54f7-4d73-a0fb-18ccca8b6ae7",
+  "requestKey": "rc1-recovery-synthetic-once-r1",
+  "syntheticInitialExecutions": 1,
+  "runCompleted": true,
+  "businessSHA256AfterFailure": "7b0eddefede354fda943ebc81c8a07115ac0e670f31cdc4ae39b1043339da128",
+  "initialDeliverableStatus": "ready_with_warnings",
+  "initialWarningIds": [
+    "host-Flow-2-6-missing-upstream_md_file",
+    "host-Flow-2-6-professional-review",
+    "host-Flow-2-6-m06-limited-18c30218-54f7-4d73-a0fb-18ccca8b6ae7",
+    "host-Flow-2-6-missing-table-T1",
+    "host-Flow-2-6-missing-table-T2",
+    "host-Flow-2-6-missing-table-T3",
+    "host-Flow-2-6-missing-table-T4"
+  ],
+  "rootCause": "Runner asserted the final edited-revision limitation on the raw synthetic assembled initial result. assembleV340Document calculates ready_with_warnings from open warnings; reviseV340Document explicitly sets not_recommended_for_filing. This case has no native candidate executor/admission; no native/prompts/real-generation acceptance can be inferred.",
+  "source": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-rc1-business-recovery-offline-20261107-r1/releases/061d3e6eb6dafb6183f0f1b3e85255010ddc741360913db997f93b17df701c9c/components/c3/src/v340-document.js",
+  "sourceSHA256": "09c1da8418912488afd390d4b8266edd5987d7b079498094adbf095f5b47610f",
+  "correction": "Keep the original plan/case, failure logs and initial state. Continue ONLY the existing completed run via public APIs; assert final edited revision not_recommended_for_filing, preserve initial status/warnings and disclose scope. No creation call or executor call in continuation.",
+  "beforeContinuationWriterLocksAbsent": true
+}

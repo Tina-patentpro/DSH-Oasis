@@ -16,14 +16,16 @@ const endpoints = Object.freeze([
   'artifact/conversation-draft','artifact/saved-file','artifact/prepare-writeback','artifact/commit-writeback',
 ])
 
-export function registerWorkbenchRoutes(connection, handler, {m06Candidate013=false,nativeBusinessRecovery=null}={}) {
+export function registerWorkbenchRoutes(connection, handler, {m06Candidate013=false,nativeBusinessRecovery=null,managedSkillSuite=false}={}) {
   if (typeof connection?.fetch?.register !== 'function' || typeof handler !== 'function') {
     throw new TypeError('DSH exact Fetch registration and business handler are required')
   }
   const disposers = []
   try {
     if(nativeBusinessRecovery&&!m06Candidate013)throw new TypeError('Native recovery requires controlled routes')
-    const selected=nativeBusinessRecovery?nativeBusinessRecoveryEndpoints:m06Candidate013===true?[...endpoints,'workflow/v340/candidate/prepare','workflow/v340/candidate/run']:endpoints
+    const selected=nativeBusinessRecovery?nativeBusinessRecoveryEndpoints:m06Candidate013===true
+      ? [...endpoints, 'workflow/v340/candidate/prepare', 'workflow/v340/candidate/run',
+        ...(managedSkillSuite ? ['skill-suite/get', 'skill-suite/set'] : [])] : endpoints
     for (const endpoint of selected) {
       const method = 'oasis-workbench/' + endpoint
       const path = '/api/' + method

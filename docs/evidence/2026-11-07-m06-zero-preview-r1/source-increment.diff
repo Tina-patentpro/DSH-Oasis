@@ -1,0 +1,418 @@
+--- before/src/client/FunctionCenter.js
++++ src/client/FunctionCenter.js
+@@ -13,6 +13,7 @@
+   const [category, setCategory] = useState('patent')
+   const [notice, setNotice] = useState(null)
+   const ready = state.catalogStatus === 'ready'
++  const zero=state.v340Catalog?.nativeZeroGeneration===true
+   const tasks = category === 'patent'
+     ? [{ id: 'patent-claims', title: '权利要求书生成' }, { id: 'patent-description', title: '说明书生成' }, { id: 'patent-check', title: '申请文件检查' }]
+     : category === 'rd' ? [{ id: 'technical-rd', title: '技术研发辅助' }] : []
+@@ -20,7 +21,8 @@
+     createElement('header', { style: { display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'center' } },
+       createElement('h3', { style: { margin: 0, fontSize: 19 } }, '功能中心'),
+       createElement('small', { style: { color: '#307560', fontSize: 10 } }, 'BETTER SIDEBAR × OASIS')),
+-    onImport ? createElement('button', { type: 'button', onClick: onImport, style: button }, '从网站导入') : null,
++    zero?createElement('p',{role:'note'},'零生成验收：仅开放M06只读预览，不创建任务、不登录、不上传或扣费。'):null,
++    onImport ? createElement('button', { type: 'button', disabled:zero, onClick: onImport, style: button }, '从网站导入') : null,
+     createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 8 } },
+       ...NATIVE_TOOLS.map(tool => createElement('button', { key: tool.id, type: 'button', style: button,
+         disabled: nativeAvailability[tool.id] !== true, title: nativeAvailability[tool.id] === true ? undefined : '原生功能不可用或已在侧边卡片设置中关闭',
+@@ -32,7 +34,7 @@
+         style: { ...button, borderRadius: 18, padding: '7px 12px', background: category === id ? '#90bfff' : button.background, color: category === id ? '#fff' : 'inherit' },
+       }, label))),
+     createElement('div', { style: { display: 'grid', gap: 8 } }, ...tasks.map(task => {
+-      const supported = ready && state.workflows.some(w => w.workflowId === task.id && w.executionMode === 'unified-text')
++      const supported = !zero && ready && state.workflows.some(w => w.workflowId === task.id && w.executionMode === 'unified-text')
+       return createElement('button', { key: task.id, type: 'button', disabled: !supported,
+         'data-testid': supported ? `oasis-workflow-${task.id}` : undefined,
+         onClick: () => onSelect(task.id), style: { ...button, display: 'flex', justifyContent: 'space-between', textAlign: 'left', opacity: supported ? 1 : .55 } },
+@@ -40,12 +42,12 @@
+     })),
+     onSelectV340&&state.v340Catalog?createElement('section',{'aria-label':'专利工作流',style:{display:'grid',gap:8}},
+       ...state.v340Catalog.nodes.filter(node=>category==='rd'?node.nodeId.startsWith('Flow-1-'):category==='patent'?!node.nodeId.startsWith('Flow-1-'):false)
+-        .map(node=>createElement('button',{key:node.nodeId,type:'button',disabled:state.v340Creating===true,style:{...button,textAlign:'left'},
+-          onClick:()=>onSelectV340(node.nodeId)},node.title,createElement('small',{style:{display:'block',marginTop:4}},'输入与结果 · 生成待接入')))):null,
++        .map(node=>createElement('button',{key:node.nodeId,type:'button',disabled:state.v340Creating===true||zero&&node.nodeId!=='Flow-2-6',style:{...button,textAlign:'left'},
++          onClick:()=>onSelectV340(node.nodeId)},node.title,createElement('small',{style:{display:'block',marginTop:4}},zero?(node.nodeId==='Flow-2-6'?'只读预览':'零生成模式未开放'):'输入与结果 · 生成待接入')))):null,
+     state.v340CreateError?createElement('p',{role:'alert'},state.v340CreateError):null,
+     state.v340CatalogStatus==='error'?createElement('section',{role:'alert'},createElement('p',null,state.v340CatalogError),
+       createElement('button',{type:'button',style:button,disabled:!onRetryV340Catalog,onClick:()=>{void onRetryV340Catalog?.().catch(()=>{})}},'重试新版目录')):null,
+-    onResumeV340&&state.closedV340Tabs?.length?createElement('section',{'aria-label':'已保留任务'},createElement('small',null,'已关闭的任务页，记录仍保留'),
++    !zero&&onResumeV340&&state.closedV340Tabs?.length?createElement('section',{'aria-label':'已保留任务'},createElement('small',null,'已关闭的任务页，记录仍保留'),
+       ...state.pages.filter(p=>state.closedV340Tabs.includes(p.pageId)).map(p=>createElement('button',{key:p.pageId,type:'button',style:button,onClick:()=>onResumeV340(p.pageId)},`重新打开 ${p.title}`))):null,
+     !ready ? createElement('div', { role: state.catalogStatus === 'error' ? 'alert' : 'status' },
+       state.catalogStatus === 'error' ? '工作流目录读取失败' : '正在读取工作流目录…') : null,
+--- before/src/client/OasisAccountSettings.js
++++ src/client/OasisAccountSettings.js
+@@ -20,6 +20,7 @@
+   return h('section', { 'aria-label': '绿洲账户', style: { display: 'grid', gap: 10 } },
+     h('h3', null, '绿洲账户'),
+     h('p', null, '专业 API 使用网站账户登录；本地 Skills 不需要登录。服务地址随版本维护，无需配置。'),
++    snapshot.nativeZeroGeneration ? h('p',{role:'status'},'零生成验收未开放登录或刷新账户；不会读取凭据或发起账户请求。') :
+     !snapshot.connected || snapshot.credentialStatus !== 'ready' ? h('p', { role: 'status' }, '登录服务尚未就绪，请检查本机 Host 连接或刷新状态。')
+       : !snapshot.credentialWritable ? h('p', { role: 'status' }, '当前模式未开放账户登录或凭据不可写；本地 Skills 不受影响。') : null,
+     snapshot.credentialConfigured ? h('div', null,
+@@ -38,7 +39,7 @@
+         autoComplete: mode === 'sms' ? 'one-time-code' : 'current-password', maxLength: mode === 'sms' ? 8 : 256, disabled })),
+       h('small', null, '点击发送或登录，仅将对应登录信息发送到绿洲网站服务；不上传项目材料、不生成内容。'),
+       h('button', { type: 'submit', disabled }, '登录')),
+-    h('button', { type: 'button', disabled: !snapshot.connected || snapshot.busy, onClick: () => { clear(); void controller.refresh() } }, '刷新登录状态'),
++    h('button', { type: 'button', disabled: !snapshot.connected || snapshot.busy || snapshot.nativeZeroGeneration, onClick: () => { clear(); void controller.refresh() } }, '刷新登录状态'),
+     snapshot.error ? h('div', { role: 'alert' }, snapshot.error) : null,
+     snapshot.notice ? h('div', { role: 'status' }, snapshot.notice) : null)
+ }
+--- before/src/client/OasisWorkbenchSurface.js
++++ src/client/OasisWorkbenchSurface.js
+@@ -5,6 +5,7 @@
+ import { PanelChrome } from './PanelChrome.js'
+ import { PanelPages } from './PanelPages.js'
+ import { WebsiteImportDialog } from './WebsiteImportDialog.js'
++import {selectV340Entry} from './v340-zero-preview.js'
+ 
+ const noConfiguration = Object.freeze({ canSubmit: true })
+ const getNoConfiguration = () => noConfiguration
+@@ -71,11 +72,10 @@
+   await Promise.all([
+     store.hydrateWorkspace(workspaceId),
+     store.loadWorkflowCatalog(workspaceId),
+-    typeof store.loadProfessionalBootstrap === 'function'
+-      ? store.loadProfessionalBootstrap(workspaceId).catch(() => null)
+-      : Promise.resolve(null),
+   ])
+   const current = store.getWorkspaceState(workspaceId)
++  if(current.v340Catalog?.nativeZeroGeneration===true){store.setLocalPanelMode(workspaceId,'hidden');return true}
++  if(typeof store.loadProfessionalBootstrap==='function')await store.loadProfessionalBootstrap(workspaceId).catch(()=>null)
+   if (current.panelMode === 'hidden') return true
+   if (['ready', 'saving'].includes(current.syncStatus)) {
+     store.setPanelMode(workspaceId, 'hidden')
+@@ -94,10 +94,8 @@
+   await Promise.all([
+     store.hydrateWorkspace(workspaceId),
+     store.loadWorkflowCatalog(workspaceId),
+-    typeof store.loadProfessionalBootstrap === 'function'
+-      ? store.loadProfessionalBootstrap(workspaceId).catch(() => null)
+-      : Promise.resolve(null),
+   ])
++  if(store.getWorkspaceState(workspaceId).v340Catalog?.nativeZeroGeneration!==true&&typeof store.loadProfessionalBootstrap==='function')await store.loadProfessionalBootstrap(workspaceId).catch(()=>null)
+   return true
+ }
+ 
+@@ -152,12 +150,15 @@
+ }) {
+   const [center, setCenter] = useState(false)
+   const [importWorkspace, setImportWorkspace] = useState(null)
++  const [previewWorkspace,setPreviewWorkspace]=useState(null)
+   const state = useSyncExternalStore(
+     store.subscribe,
+     () => store.peekWorkspaceState(workspaceId),
+     () => store.peekWorkspaceState(workspaceId),
+   )
+   const panelRef = useRef(null)
++  const nativeZeroGeneration=state.v340Catalog?.nativeZeroGeneration===true
++  useEffect(()=>{setPreviewWorkspace(null)},[workspaceId,state.v340Catalog])
+   useSyncExternalStore(store.conversationDrafts?.subscribe ?? noSubscribe,
+     store.conversationDrafts?.getSnapshot ?? zero, store.conversationDrafts?.getSnapshot ?? zero)
+   const conversationUnavailableReason = store.conversationDrafts?.unavailableReason(workspaceId) ?? (store.conversationDrafts ? null : '当前对话输入接口不可用')
+@@ -237,7 +238,7 @@
+     style: sectionStyle(hostMode, layout, effectiveMode),
+   },
+   createElement('style', null, reducedMotionCss),
+-  importWorkspace === workspaceId && store.websiteImportRemote && store.connectionSettings ? createElement(WebsiteImportDialog, {
++  !nativeZeroGeneration && importWorkspace === workspaceId && store.websiteImportRemote && store.connectionSettings ? createElement(WebsiteImportDialog, {
+     key: workspaceId, workspaceId, remote: store.websiteImportRemote, accountController: store.connectionSettings,
+     onClose: () => setImportWorkspace(null),
+     onOpenFiles: coordinator?.nativeAvailability(workspaceId)?.editor ? () => { setImportWorkspace(null); coordinator.openNativeTool(workspaceId, 'editor') } : undefined,
+@@ -251,22 +252,26 @@
+       layoutStatus: hostMode === 'embedded' ? 'better-sidebar-owned' : layout.status,
+     },
+     titleRef,
+-    onOpenFunctionCenter: () => setCenter(true),
++    onOpenFunctionCenter: () => {setPreviewWorkspace(null);setCenter(true)},
+     showFunctionCenter: center || state.pages.find(page => page.pageId === state.activePageId)?.view === 'chooser',
+     onActivatePage: (pageId) => { setCenter(false); void actions.activatePage(pageId).catch(() => {}) },
+     onClosePage: (pageId) => { void actions.closePage(pageId).catch(() => {}) },
+     onCreatePage: () => { setCenter(false); store.createPage(workspaceId) },
+-    onHide: () => { if (hostMode === 'standalone') void actions.hidePanel().catch(() => {}) },
++    onHide: () => { if (hostMode === 'standalone') {if(nativeZeroGeneration)store.setLocalPanelMode(workspaceId,'hidden');else void actions.hidePanel().catch(() => {})} },
+     onToggleExpanded: () => {
+-      if (hostMode === 'standalone') {
++      if (hostMode === 'standalone' && !nativeZeroGeneration) {
+         store.setPanelMode(workspaceId, state.panelMode === 'expanded' ? 'normal' : 'expanded')
+       }
+     },
+   }),
+   createElement(PanelPages, {
++    zeroPreview:previewWorkspace===workspaceId,
++    onCloseZeroPreview:()=>{setPreviewWorkspace(null);setCenter(true)},
++    prepareZeroPreview:(command,signal)=>store.prepareV340ZeroPreview(workspaceId,command,signal),
+     v340Actions:{
+       retryCatalog:()=>store.loadV340Catalog(workspaceId),
+-      create:nodeId=>{void store.createV340Task(workspaceId,nodeId).then(()=>setCenter(false)).catch(()=>{})},
++      create:nodeId=>{try{void Promise.resolve(selectV340Entry({catalog:state.v340Catalog,nodeId,
++        openPreview:()=>setPreviewWorkspace(workspaceId),createTask:id=>store.createV340Task(workspaceId,id)})).then(()=>setCenter(false)).catch(()=>{})}catch{}},
+       resume:pageId=>{store.activatePage(workspaceId,pageId);setCenter(false)},
+       discardLocal:(pageId,expected)=>store.discardV340LocalDrafts(workspaceId,pageId,expected),
+       saveDraft:(pageId,draft)=>store.saveV340Draft(workspaceId,pageId,draft),
+--- before/src/client/PanelChrome.js
++++ src/client/PanelChrome.js
+@@ -95,7 +95,8 @@
+   const autoExpanded = state.panelMode === 'normal' && effectiveExpanded
+   const operationInFlight = Object.values(state.pageOperations ?? {})
+     .some((operation) => operation.activeOperation !== null)
+-  const canPersist = ['ready', 'saving'].includes(state.syncStatus) && !operationInFlight
++  const canView = ['ready', 'saving'].includes(state.syncStatus) && !operationInFlight
++  const canPersist = canView && state.v340Catalog?.nativeZeroGeneration!==true
+ 
+   function moveTab(event, pageId) {
+     if (!canPersist) return
+@@ -175,7 +176,7 @@
+       overflowX: 'auto',
+     },
+   },
+-  onOpenFunctionCenter ? createElement('button', { type: 'button', onClick: onOpenFunctionCenter, disabled: !canPersist,
++  onOpenFunctionCenter ? createElement('button', { type: 'button', onClick: onOpenFunctionCenter, disabled: !canView,
+     'aria-pressed': showFunctionCenter, style: { ...iconButtonStyle, width: 'auto', padding: '6px 8px', flexShrink: 0 } }, '功能中心') : null,
+   ...state.pages.map((page) => createElement('div', {
+     key: page.pageId,
+--- before/src/client/PanelPages.js
++++ src/client/PanelPages.js
+@@ -8,6 +8,7 @@
+ import { UnifiedGenerationPage } from './UnifiedGenerationPage.js'
+ import { FunctionCenter } from './FunctionCenter.js'
+ import {V340GenerationPage} from './V340GenerationPage.js'
++import {V340ZeroPreview} from './V340ZeroPreview.js'
+ 
+ const surfaceStyle = {
+   border: '1px solid var(--dsw-alias-border-l2, #dfe2e0)',
+@@ -77,6 +78,7 @@
+   showFunctionCenter = false, nativeAvailability = {}, onOpenNative = () => false, onImport,
+   effectiveMode = 'normal',
+   v340Actions={},
++  zeroPreview=false,prepareZeroPreview,onCloseZeroPreview,
+   onSelectWorkflow,
+   onRenamePage,
+   onReload,
+@@ -113,6 +115,10 @@
+     return createElement(SyncRecoveryNotice, { state, onReload, onDiscardResultEditDraft, onDiscardV340Drafts:v340Actions.discardLocal })
+   }
+ 
++  if(state.v340Catalog?.nativeZeroGeneration===true){
++    if(zeroPreview)return createElement(V340ZeroPreview,{key:state.workspaceId,workspaceId:state.workspaceId,catalog:state.v340Catalog,prepare:prepareZeroPreview,onClose:onCloseZeroPreview})
++    return createElement(FunctionCenter,{state,onSelectV340:v340Actions.create,onRetryV340Catalog:v340Actions.retryCatalog,nativeAvailability,onOpenNative,onImport})
++  }
+   const page = state.pages.find((item) => item.pageId === state.activePageId)
+   if (!page&&showFunctionCenter)return createElement(FunctionCenter,{state,onSelectV340:v340Actions.create,onResumeV340:v340Actions.resume,onRetryV340Catalog:v340Actions.retryCatalog,onSelect:id=>onSelectWorkflow(null,id),nativeAvailability,onOpenNative,onImport})
+   if (!page) return createElement('div', { style: { padding: 20, color: '#66706b' } }, '请新建任务页。',
+--- before/src/client/V340GenerationPage.js
++++ src/client/V340GenerationPage.js
+@@ -12,6 +12,20 @@
+  response_requirements:'答复要求',search_material:'检索材料',search_target:'检索目标',solution_selection_basis:'方案筛选依据',strategy:'撰写策略',
+  supplemental_data:'补充数据',technical_analysis_material:'技术分析材料',technical_feedback:'技术反馈'}
+ function label(field){const base=field.id.replace(/_(?:file|text)$/,'');return labels[base]??(/^comparison_doc_/.test(base)?`对比文件${base.split('_').at(-1)}`:field.boundary)}
++
++export function V340InputFields({node,draft,disabled=false,onChange,idPrefix='preview',onError=()=>{}}){
++ return (node?.inputs??[]).map(field=>{
++     const file=field.id.endsWith('_file'),config=field.channel==='配置',channel=file?'filePaths':config?'configuration':'textInputs'
++     const value=draft[channel][field.id]??'',name=`${label(field)}${file?'文件':field.id.endsWith('_text')?'文本':''}`
++     return h('label',{key:field.id,style:{display:'grid',gap:5,marginBottom:12,fontSize:13}},name,
++      field.id==='application_type'?h('select',{'aria-label':name,value,disabled,onChange:e=>onChange(channel,field.id,e.target.value)},h('option',{value:''},'未指定'),...[['invention','发明'],['utility_model','实用新型'],['undetermined','待确定']].map(([id,title])=>h('option',{key:id,value:id},title))):
++      config?h('input',{'aria-label':name,defaultValue:typeof value==='object'?JSON.stringify(value):value,key:`${idPrefix}-${field.id}`,disabled,
++       onBlur:e=>{try{onChange(channel,field.id,e.target.value===''?'':JSON.parse(e.target.value))}catch{onError('配置格式不正确，输入保留；请修正后保存。')}}}):
++      h(file?'input':'textarea',{'aria-label':name,value,disabled,maxLength:file?1024:300000,rows:file?undefined:4,
++       placeholder:file?'当前项目内的相对路径（.md / .txt）':undefined,onChange:e=>onChange(channel,field.id,e.target.value)}),
++      h('small',{style:{color:'var(--dsw-alias-text-secondary,#66706b)'}},field.id==='user_input'?'仅填写本次增删改、范围或偏好。':file?'一次选择一个当前项目文件；运行前按明确路径读取正文。':field.importance==='expected'?'建议提供，缺失将产生警示。':'可选补充'))
++    })
++}
+ 
+ export function V340GenerationPage({page,state,node,operation={},actions={},markdownRenderer,savedFileUnavailableReason='安全文件预览不可用'}){
+  const draft=operation.v340InputDraft??page.v340.draft
+@@ -55,17 +69,7 @@
+     h('h3',null,node?.title??'当前任务'),
+     !node?h('section',{role:'alert'},h('p',null,state.v340CatalogError??'新版目录尚不可用，输入草稿仍保留。'),
+       h('button',{type:'button',style:button,disabled:!actions.retryCatalog||state.v340CatalogStatus==='loading',onClick:()=>action(()=>actions.retryCatalog?.())},'重试新版目录')):null,
+-    ...(node?.inputs??[]).map(field=>{
+-     const file=field.id.endsWith('_file'),config=field.channel==='配置',channel=file?'filePaths':config?'configuration':'textInputs'
+-     const value=draft[channel][field.id]??'',name=`${label(field)}${file?'文件':field.id.endsWith('_text')?'文本':''}`
+-     return h('label',{key:field.id,style:{display:'grid',gap:5,marginBottom:12,fontSize:13}},name,
+-      field.id==='application_type'?h('select',{'aria-label':name,value,disabled,onChange:e=>update(channel,field.id,e.target.value)},h('option',{value:''},'未指定'),...[['invention','发明'],['utility_model','实用新型'],['undetermined','待确定']].map(([id,title])=>h('option',{key:id,value:id},title))):
+-      config?h('input',{'aria-label':name,defaultValue:typeof value==='object'?JSON.stringify(value):value,key:`${page.pageId}-${field.id}`,disabled,
+-       onBlur:e=>{try{update(channel,field.id,e.target.value===''?'':JSON.parse(e.target.value))}catch{setError('配置格式不正确，输入保留；请修正后保存。')}}}):
+-      h(file?'input':'textarea',{'aria-label':name,value,disabled,maxLength:file?1024:300000,rows:file?undefined:4,
+-       placeholder:file?'当前项目内的相对路径（.md / .txt）':undefined,onChange:e=>update(channel,field.id,e.target.value)}),
+-      h('small',{style:{color:'var(--dsw-alias-text-secondary,#66706b)'}},field.id==='user_input'?'仅填写本次增删改、范围或偏好。':file?'一次选择一个当前项目文件；运行前按明确路径读取正文。':field.importance==='expected'?'建议提供，缺失将产生警示。':'可选补充'))
+-    }),
++    h(V340InputFields,{node,draft,disabled,onChange:update,onError:setError,idPrefix:page.pageId}),
+     node?h('p',{role:'status'},operation.v340InputDraft?'输入正在保存；失败时保留本地草稿。':'输入已保存'):null,
+     operation.v340InputDraft?h('button',{type:'button',style:button,disabled:working,onClick:()=>action(()=>actions.saveDraft?.(page.pageId,operation.v340InputDraft))},'重试保存输入'):null,
+     candidate?h('section',{'aria-label':'M06受控候选'},
+--- before/src/client/WorkbenchEntry.js
++++ src/client/WorkbenchEntry.js
+@@ -6,6 +6,12 @@
+ const STANDALONE_HOST_SNAPSHOT = Object.freeze({ mode: 'standalone' })
+ const subscribeStandaloneHost = () => () => {}
+ const getStandaloneHostSnapshot = () => STANDALONE_HOST_SNAPSHOT
++
++export function openStandaloneWorkbench({store,workspaceId}) {
++  // Resolve the trusted Host mode before openPanel can enqueue a persisted action.
++  if(store.websiteImportRemote===null||store.peekWorkspaceState?.(workspaceId)?.v340CatalogStatus==='ready')return store.openPanel(workspaceId)
++  return store.loadV340Catalog(workspaceId).then(()=>store.openPanel(workspaceId))
++}
+ 
+ function useLivePanelHostSnapshot(coordinator) {
+   return useSyncExternalStore(
+@@ -56,7 +62,7 @@
+       return
+     }
+     if (coordinator && coordinator.getSnapshot().mode !== 'standalone') return
+-    store.openPanel(workspaceId)
++    void Promise.resolve(openStandaloneWorkbench({store,workspaceId})).catch(() => {})
+   }
+ 
+   const hostMode = hostSnapshot.mode
+--- before/src/client/product-settings.js
++++ src/client/product-settings.js
+@@ -5,7 +5,7 @@
+   defaultGenerationSource: 'local-skill', outputDirectoryPrefix: '',
+   credentialStatus: 'unavailable', credentialStored: false, credentialConfigured: false, credentialWritable: false,
+   accountId: null, accountRevision: null, retryAfterSeconds: 0,
+-  busy: false, restartRequired: false, canSubmit: false, error: null, notice: null })
++  busy: false, restartRequired: false, canSubmit: false, error: null, notice: null, nativeZeroGeneration:false })
+ 
+ export function createProductSettings({ remote, onInvalidated = () => {} }) {
+   let snapshot = Object.freeze(initial())
+@@ -35,9 +35,16 @@
+   }
+   async function refresh() {
+     readSettings()
+-    if (!snapshot.connected) return false
++    if (!snapshot.connected || snapshot.nativeZeroGeneration) return false
+     const current = generation, id = ++readId
+     try {
++      if(typeof remote.getV340Catalog==='function'){
++        const catalog=await remote.getV340Catalog()
++        if(disposed||current!==generation||id!==readId)return false
++        if(catalog.nativeZeroGeneration===true){
++          publish({nativeZeroGeneration:true,credentialStatus:'unavailable',credentialConfigured:false,credentialStored:false,credentialWritable:false,accountId:null,accountRevision:null});return false
++        }
++      }
+       const value = await remote.accountStatus()
+       if (disposed || current !== generation || id !== readId) return false
+       receive(value)
+@@ -91,7 +98,7 @@
+           : services.settingsScope.bind({ namespace: 'oasis-professional-service' })
+         const onHost = () => {
+           generation++; readId++
+-          publish({ connected: connection.generation.getSnapshot() != null, credentialConfigured: false, credentialWritable: false })
++          publish({ connected: connection.generation.getSnapshot() != null, credentialConfigured: false, credentialWritable: false, nativeZeroGeneration:false })
+           invalidate(); void refresh()
+         }
+         disposers.push(scope.subscribe(() => { readSettings(); invalidate() }), connection.generation.subscribe(onHost))
+--- before/src/client/workbench-remote.js
++++ src/client/workbench-remote.js
+@@ -17,7 +17,7 @@
+ } from '../workbench-contract.js'
+ import { claimsApiPreparationSchema, claimsApiPreviewSchema, workspaceBindingReadSchema, workspaceBindingSavedSchema } from '../claims-api-execution-contract.js'
+ import { accountStatusSchema } from '../oasis-account-contract.js'
+-import {v340Commands,v340CatalogResponseSchema,v340CandidatePreviewSchema} from '../v340-runtime-contract.js'
++import {v340Commands,v340CatalogResponseSchema,v340CandidatePreviewSchema,v340ReadonlyPrepareSchema,v340ReadonlyPreparedSchema} from '../v340-runtime-contract.js'
+ 
+ const CHANNEL = '/oasis-workbench'
+ 
+@@ -63,6 +63,12 @@
+ 
+   return Object.freeze({
+     async getV340Catalog(signal){return unwrap(await call(CHANNEL,'workflow/v340/catalog',{},signal),v340CatalogResponseSchema)},
++    async prepareV340(payload,signal){
++      const input=v340ReadonlyPrepareSchema.parse(payload)
++      const result=unwrap(await call(CHANNEL,'workflow/v340/prepare',input,signal),v340ReadonlyPreparedSchema)
++      if(result.workspaceId!==input.workspaceId||result.nodeId!==input.nodeId||result.prepared.nodeId!==input.nodeId)throw new WorkbenchRemoteError('malformed-response','只读准备身份不一致',{})
++      return result
++    },
+     async prepareV340Candidate(payload,signal){
+       const input=v340Commands['candidate/prepare'].parse(payload)
+       const result=unwrap(await call(CHANNEL,'workflow/v340/candidate/prepare',input,signal),v340CandidatePreviewSchema)
+--- before/src/client/workbench-store.js
++++ src/client/workbench-store.js
+@@ -204,6 +204,7 @@
+         catalogPromise: null,
+         professionalPromise: null,
+         professionalGeneration: 0,
++        zeroPreviewEpoch: 0,
+         drainPromise: null,
+         pendingActions: [],
+         pendingDraft: null,
+@@ -777,6 +778,7 @@
+         }
+       }
+       for(const id of removedIds){
++        runtimeFor(id).zeroPreviewEpoch += 1
+         const state=getCurrent(id),pageOperations=Object.fromEntries(Object.entries(state.pageOperations).map(([pageId,op])=>[pageId,
+           {...op,v340CandidatePreview:null,v340CandidateScope:null,v340CandidateEpoch:(op.v340CandidateEpoch??0)+1}]))
+         setState(id,stateWith(state,{pageOperations}))
+@@ -803,6 +805,16 @@
+ 
+     hydrateWorkspace,
+ 
++    async prepareV340ZeroPreview(workspaceId,command,signal){
++      assertOpen();assertKnown(workspaceId)
++      const current=getCurrent(workspaceId),catalog=current.v340Catalog,runtime=runtimeFor(workspaceId)
++      const epoch=runtime.zeroPreviewEpoch
++      if(current.syncStatus!=='ready'||catalog?.nativeZeroGeneration!==true||command.workspaceId!==workspaceId||command.nodeId!=='Flow-2-6'||typeof remote?.prepareV340!=='function')throw Error('零生成预览上下文不可用')
++      const result=await remote.prepareV340(command,signal)
++      assertOpen();assertKnown(workspaceId)
++      if(signal?.aborted||runtimeFor(workspaceId)!==runtime||runtime.zeroPreviewEpoch!==epoch||getCurrent(workspaceId).v340Catalog!==catalog||getCurrent(workspaceId).syncStatus!=='ready')throw Error('零生成预览上下文已改变')
++      return result
++    },
+     async loadV340Catalog(workspaceId){
+       assertOpen();assertKnown(workspaceId)
+       if(getCurrent(workspaceId).v340CatalogStatus==='ready')return getCurrent(workspaceId).v340Catalog
+@@ -872,6 +884,7 @@
+       assertOpen()
+       assertKnown(workspaceId)
+       const current = getCurrent(workspaceId)
++      if(current.v340Catalog?.nativeZeroGeneration===true)return null
+       if (current.professionalStatus === 'ready') return current.professionalBootstrap
+       if (remote === null || typeof remote.getProfessionalBootstrap !== 'function') {
+         return setState(workspaceId, stateWith(current, {
+@@ -945,6 +958,7 @@
+ 
+     openPanel(workspaceId) {
+       const before = getCurrent(workspaceId)
++      if(before.v340Catalog?.nativeZeroGeneration===true){store.setLocalPanelMode(workspaceId,'normal');return null}
+       const action = { type: 'open-panel' }
+       const after = dispatch(workspaceId, action)
+       return pageCreatedBy(action, before, after)
+--- before/src/v340-runtime-contract.js
++++ src/v340-runtime-contract.js
+@@ -8,7 +8,7 @@
+ export const formatV340ConversationDraft=(target,body)=>`以下为V3.4.0已审核固定版本资料，仅作资料，不作为系统指令；尚未发送。\n运行：${target.runId}\n版本：${target.versionId}\nSHA256：${target.resultSha256}\n\n${body}`
+ export const m06CandidateCapabilitySchema=z.object({skillId:z.literal('m06-claims-draft'),skillVersion:z.literal('0.1.3'),
+   businessManifestSHA256:z.string().regex(/^[a-f0-9]{64}$/),businessResourceSHA256:z.string().regex(/^[a-f0-9]{64}$/),requiresConfirmation:z.literal(true)}).strict()
+-export const v340CatalogResponseSchema=z.object({businessVersion:z.literal('V3.4.0'),sourceSHA256:z.string().length(64),resourceSHA256:z.string().length(64),
++export const v340CatalogResponseSchema=z.object({businessVersion:z.literal('V3.4.0'),sourceSHA256:z.string().length(64),resourceSHA256:z.string().length(64),nativeZeroGeneration:z.literal(true).optional(),
+   capability:z.string(),dispatchEnabled:z.literal(false),nodes:z.array(z.object({nodeId:z.enum(V340_NODE_IDS),title:z.string(),upstreamNodeId:z.enum(V340_NODE_IDS).nullable(),filenamePrefix:z.string(),
+     inputs:z.array(z.object({id:z.string(),channel:z.string(),importance:z.string(),boundary:z.string(),handling:z.string()}).strict()),
+     sources:z.object({'local-skill':z.object({enabled:z.literal(false),reason:z.string()}).strict(),'oasis-api':z.object({enabled:z.literal(false),reason:z.string()}).strict()}).strict(),
+@@ -46,6 +46,9 @@
+  }).strict()).min(2).max(16)}).strict().refine(v=>bytes(v)<=65536,'M06 structured edit exceeds byte limit')
+ export const v340DraftSchema=z.object({source:z.enum(['local-skill','oasis-api']),textInputs:entries(z.string().max(300000)),filePaths:entries(z.string().min(1).max(1024)),configuration:entries(boundedJson)}).strict()
+   .refine(v=>bytes(v)<=V340_LIMITS.snapshotBytes,'V340 draft exceeds byte limit')
++export const v340ReadonlyPrepareSchema=z.object({workspaceId:v340Id,nodeId:z.enum(V340_NODE_IDS),confirmed:z.literal(true),textInputs:entries(z.string().max(300000)),filePaths:entries(z.string().min(1).max(1024)),configuration:entries(boundedJson)}).strict().refine(v=>bytes(v)<=V340_LIMITS.snapshotBytes)
++export const v340ReadonlyPreparedSchema=z.object({evidenceKind:z.literal('input-preparation'),dispatchEnabled:z.literal(false),businessVersion:z.literal('V3.4.0'),workspaceId:v340Id,nodeId:z.enum(V340_NODE_IDS),
++ sources:boundedJson,prepared:boundedJson.pipe(z.object({nodeId:z.enum(V340_NODE_IDS),values:z.record(z.string(),z.json()),receipts:z.record(z.string(),z.json()),warnings:z.array(z.json()),upstream:z.json().nullable(),inputHash:sha}).strict())}).strict()
+ const resultSchema=z.object({body:v340DocumentBodySchema,fileName:z.string().min(1).max(255),sha256:sha,snapshot:boundedJson}).strict()
+ const savedFile=z.object({relativePath:z.string().min(1).max(1024),sha256:sha,mediaType:z.enum(['text/markdown','application/json'])}).strict()
+ export const v340SavedRecordSchema=z.object({writebackId:v340Id,artifactId:z.string().regex(/^sha256:[a-f0-9]{64}$/),relativeDirectory:z.literal('.'),
+--- before/src/workbench-rpc.js
++++ src/workbench-rpc.js
+@@ -221,7 +221,8 @@
+     if (endpoint === 'workflow/v340/catalog') {
+       const parsed = parsePayload(z.object({}).strict(), payload)
+       if (!parsed.success) return parsed
+-      return { ok: true, value: service.getV340Catalog() }
++      const catalog=service.getV340Catalog()
++      return { ok: true, value: nativeZeroGeneration?{...catalog,nativeZeroGeneration:true}:catalog }
+     }
+     if(m06Candidate013===true&&['workflow/v340/candidate/prepare','workflow/v340/candidate/run'].includes(endpoint)){
+       const action=endpoint.slice('workflow/v340/'.length),parsed=v340Commands[action].safeParse(payload)

@@ -106,3 +106,37 @@ test('the already frozen 0.1.2 v3 record remains readable with its original reso
   assert.equal(run.nativeCandidate.businessSkillVersion, '0.1.2')
   assert.equal(run.nativeCandidate.systemSHA256, 'd3d69530111925d8b42cda4d165dc74ebdbd813659c5ff7880938623f1c0de2c')
 })
+
+test('the selected GitHub suite binds a different confirmation and dispatches its pinned claim resources once', async t => {
+  const h = await setupNative(t); await h.service.closeV340Runtime()
+  let suite = 'oasis'
+  const executor = api.createM06BusinessNativeCandidate013({
+    ctx: h.ctx, native: { BlockAssembler: Assembler, createUserMessage: v => ({ role: 'user', ...v }) },
+    getLocalSkillSuite: () => suite,
+  })
+  const service = createV340RuntimeService({ repository: h.repository, preparation: h.preparation, executor, clock: () => NOW })
+  try {
+    const command = h.command({ sessionId: 's', confirmed: true })
+    const oasis = await service.prepareV340CandidateConfirmation(command)
+    assert.equal(oasis.businessSkillId, 'm06-claims-draft')
+    suite = 'patent-disclosure'
+    const external = await service.prepareV340CandidateConfirmation(command)
+    assert.equal(external.businessSkillId, 'patent-disclosure-claims')
+    assert.equal(external.businessSkillVersion, 'b4bbec6f0a1c3c32a904faabeb249639c0b30d98')
+    assert.notEqual(external.sha256, oasis.sha256)
+    const create = preview => service.createV340Run(h.command({ requestKey: 'claims-source-switch',
+      candidate: { sessionId: 's', confirmed: true, sha256: preview.sha256 } }))
+    await assert.rejects(create(oasis))
+    assert.equal(h.seen.prepare, 0)
+    await create(external)
+    suite = 'oasis'
+    const run = await h.settle()
+    assert.equal(run.status, 'completed')
+    assert.equal(run.nativeCandidate.businessSkillId, 'patent-disclosure-claims')
+    assert.equal(run.nativeCandidate.systemSHA256, hash(h.seen.options.system))
+    assert.match(h.seen.options.system, /先有 .application_plan.yaml. 的 .claim_tree./)
+    assert.match(h.seen.options.system, /不要.*重新自行判断必要性/)
+    assert.equal(h.seen.stream, 1)
+    parseStoredWorkbenchRecord('w', structuredClone(h.repository.get('w')))
+  } finally { await service.closeV340Runtime() }
+})

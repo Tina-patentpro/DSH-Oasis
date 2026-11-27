@@ -1,0 +1,389 @@
+{
+  "at": "2026-10-30T14:28:50.453Z",
+  "timezone": "Asia/Shanghai",
+  "stage": "final no-fee repair closeout",
+  "allOriginalSnapshotsIntact": true,
+  "originalRun": {
+    "runId": "v340-1e49d8b0-1f88-4b09-9730-29dd97b50ded",
+    "requestKey": "24b815ee-922c-4d91-b83f-44bc04301340",
+    "status": "failed",
+    "failureCode": "EXECUTION_FAILED",
+    "canonicalRecordUnchanged": true,
+    "runCount": 1,
+    "workspaceRevision": 12,
+    "result": null
+  },
+  "materials": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/public-disclosure.md",
+      "sha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/public-drawing-description.md",
+      "sha256": "ab849c6061d733042d52bcd392a622ebea896b1310d8055b13b85dbb23453805"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/public-requirements.md",
+      "sha256": "513c5e1910dabfb610f5eac9ccef02b90a07a66872f94add48bb4127ebb3daa2"
+    }
+  ],
+  "project302": {
+    "accountId": 33,
+    "folderId": 302,
+    "nativeSave": "actual UI success; zero files selected",
+    "journal": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-live-20261030-r2/workspace-a/.oasis-import-d7c05517-d927-41fd-b952-44c2e19b209d.jsonl",
+    "sha256": "bac3da1446936ed31de71461697ceacc00ac68cf743096b9a6e08921b2029961",
+    "restart": "actual UI current association retained; six projects read",
+    "evidence": "project302-restart-ax.txt"
+  },
+  "pinsUnchangedSinceReviewedRestart": true,
+  "modelCallsThisBatch": 0,
+  "remoteCreatesThisBatch": 0,
+  "uploadsThisBatch": 0,
+  "originalRequestRetried": false,
+  "tests": {
+    "count": 292,
+    "passed": 292,
+    "failed": 0,
+    "exitCode": 0,
+    "log": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/final-targeted.log",
+    "files": 16
+  },
+  "clientBuild": {
+    "exitCode": 0,
+    "log": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/client-build.log"
+  },
+  "modelCredential": {
+    "metadataOnly": true,
+    "configured": false,
+    "secretResolved": false,
+    "actualStreamCalled": false,
+    "source": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/native-sdk-no-fee-probe-r2.json"
+  },
+  "nativeModelCheck": "UI blocked before confirmation; no new run",
+  "dailyProfileChanged": false,
+  "difyOrAdminAccessed": false,
+  "releaseOrG0Accepted": false,
+  "id": "M06-NOFEE-REPAIR-VERIFICATION-R1",
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "preservation": {
+    "snapshotCount": 98,
+    "allSnapshotsIntact": true,
+    "unchangedFiles": 93,
+    "differences": [
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+        "before": "6088b42c31a0a628f085541fe91a05d3598c9e3c19aa37e6cb982dd980f8199a",
+        "after": "b8feef9638329da4dad9145a33f3605b753ac8593670cb0ef6c2bcd31527faa6",
+        "kind": "prefix only; all old bytes retained"
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+        "before": "7d8daf112b5462d105fec4e31cea5ece308d198f2bec56756d45c96a14c0ef59",
+        "after": "357feff3a33c95cb6499fe85a499d51bc03ac0c45d598b7477a87c6edb1b4bdb",
+        "kind": "prefix only; all old bytes retained"
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+        "before": "f4b71eda3417b167961aabbdc112b03ec3db15caf1aa3eaa1c70bf60b0f9d6ce",
+        "after": "e14542a407f055afde7655b32310b2e6f85d06347bf4a34424ca2a4472b8af98",
+        "kind": "prefix only; all old bytes retained"
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/lib/client.js",
+        "before": "ceebb8d3db6914ac25961533402f83db1a2c7706d5c9dc836606dbb2d9ca89b5",
+        "after": "1313a03e656cb74fcb32435a313968abc6b16f755d3f14c5c6af0219aa2b797f",
+        "kind": "reviewed client rebuild"
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/lib/client.js.map",
+        "before": "e886412330c483dc2beb56cd9635fe6f08405d02c44fcba74ac715d9a3ce0324",
+        "after": "5581abe5e3af54d37802bd4f63bf59aef9a249eee56d7e22f99a239c9f12641c",
+        "kind": "reviewed client rebuild"
+      }
+    ]
+  },
+  "governingInputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "before": "6e5809942b2ac28e01c6ef1e048256b9055d0565fd682e58c5cbb7655dc72cab",
+      "after": "6e5809942b2ac28e01c6ef1e048256b9055d0565fd682e58c5cbb7655dc72cab",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "before": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+      "after": "328dee86fde65a92608987d61e899fdc917c31597ddf7b5b69acb2291beb1964",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "before": "2fb9c4c7b469c7593e0605d97ebff7915ca11bdfb92b0f9e953301d7267e1b9a",
+      "after": "2fb9c4c7b469c7593e0605d97ebff7915ca11bdfb92b0f9e953301d7267e1b9a",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "before": "32f62af49b9d6c975dc4f10071efb1fbf4e8d28859a1bb451b0ef6cae0f88ff9",
+      "after": "32f62af49b9d6c975dc4f10071efb1fbf4e8d28859a1bb451b0ef6cae0f88ff9",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "before": "ee1ec0bbe8c6de0046a75cf69af7038c3ef1d5ee3118148880bc97c1826c3fcf",
+      "after": "ee1ec0bbe8c6de0046a75cf69af7038c3ef1d5ee3118148880bc97c1826c3fcf",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "before": "99fbb471debe2cecd0dd7961577a7a9a900b14032c8bf508158abc63efc7382d",
+      "after": "99fbb471debe2cecd0dd7961577a7a9a900b14032c8bf508158abc63efc7382d",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "before": "5a4049f6c0355b44e4c30d0dd5cc344c7495c70d075b144e6f053c68771af761",
+      "after": "5a4049f6c0355b44e4c30d0dd5cc344c7495c70d075b144e6f053c68771af761",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "before": "2f04f96b62610e80563ebbb7769726694ce3687d8d6fd4f4ba111dc8a809b67b",
+      "after": "2f04f96b62610e80563ebbb7769726694ce3687d8d6fd4f4ba111dc8a809b67b",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-10-25-research-rules-and-migration-addendum.md",
+      "before": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "after": "5e49f5ed6b30b6f44bb1c91c8daf808040af7648bef34bd3769568aebb5af42c",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "before": "c0657d2dcf3c55b6decdbce6790750b21e738be82dce8f393a5f312a8b4a573e",
+      "after": "c0657d2dcf3c55b6decdbce6790750b21e738be82dce8f393a5f312a8b4a573e",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-29-project-summary-and-next-development-plan.md",
+      "before": "2e454b1c266e282a9146a671f22644c95237dd4fd6c2d97b9d5a9f5ca79097b3",
+      "after": "2e454b1c266e282a9146a671f22644c95237dd4fd6c2d97b9d5a9f5ca79097b3",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "before": "f4b71eda3417b167961aabbdc112b03ec3db15caf1aa3eaa1c70bf60b0f9d6ce",
+      "after": "e14542a407f055afde7655b32310b2e6f85d06347bf4a34424ca2a4472b8af98",
+      "scope": "same-scope current-entry prefix"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "before": "6088b42c31a0a628f085541fe91a05d3598c9e3c19aa37e6cb982dd980f8199a",
+      "after": "b8feef9638329da4dad9145a33f3605b753ac8593670cb0ef6c2bcd31527faa6",
+      "scope": "same-scope current-entry prefix"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+      "before": "7d8daf112b5462d105fec4e31cea5ece308d198f2bec56756d45c96a14c0ef59",
+      "after": "357feff3a33c95cb6499fe85a499d51bc03ac0c45d598b7477a87c6edb1b4bdb",
+      "scope": "same-scope current-entry prefix"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-inputs.json",
+      "before": "ad818dccdf5c0a16147482d6dd1614ff093c2d8073755d12cca5498716566e5a",
+      "after": "ad818dccdf5c0a16147482d6dd1614ff093c2d8073755d12cca5498716566e5a",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-material-extraction-contract.md",
+      "before": "0490387f05f66c4c1a62bcede198f0f6e8ec0aceb07dd45d086c052f98620c38",
+      "after": "0490387f05f66c4c1a62bcede198f0f6e8ec0aceb07dd45d086c052f98620c38",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-extraction-product-gates.json",
+      "before": "9d9fc75b45e641d9ac80012eb7b5fc30346462c92a91af5f40072ed9e9bbffd6",
+      "after": "9d9fc75b45e641d9ac80012eb7b5fc30346462c92a91af5f40072ed9e9bbffd6",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-extraction-distribution-candidate.json",
+      "before": "de7838799c749fc58e1171336c063feedd2c724bfb35cab598af3dd3af0501aa",
+      "after": "de7838799c749fc58e1171336c063feedd2c724bfb35cab598af3dd3af0501aa",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-dsh-provider-discovery.json",
+      "before": "3b9803cffcf97b3a5618a504bcc389c6ea901abd9c1646554760b6922cee40d4",
+      "after": "3b9803cffcf97b3a5618a504bcc389c6ea901abd9c1646554760b6922cee40d4",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input-r2.json",
+      "before": "a2ae924ef88cab1514144e04b23d978d8612b421a0e8ade274ba5490cebaac7d",
+      "after": "a2ae924ef88cab1514144e04b23d978d8612b421a0e8ade274ba5490cebaac7d",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-intake-delta.json",
+      "before": "d390b4f476758a9fae8a73ac89c59815286ff02d1616fd7b306df027bbdc163e",
+      "after": "d390b4f476758a9fae8a73ac89c59815286ff02d1616fd7b306df027bbdc163e",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.json",
+      "before": "5dae3e9cd2b2f52562e01e4dc0dca9dca325a5ee64db933022404995d8bbde62",
+      "after": "5dae3e9cd2b2f52562e01e4dc0dca9dca325a5ee64db933022404995d8bbde62",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.md",
+      "before": "4cf5500b1c61de75a291395ee5bb2c871d28087ac683465b8b9b5c661c49b4e8",
+      "after": "4cf5500b1c61de75a291395ee5bb2c871d28087ac683465b8b9b5c661c49b4e8",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-pdf-integration-compatibility-r1.md",
+      "before": "add78999136933428c54596fceb7f81781af3f07ee37c4eedb9eaa697efc157a",
+      "after": "add78999136933428c54596fceb7f81781af3f07ee37c4eedb9eaa697efc157a",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-workarea-pdf-integration-return.md",
+      "before": "848490c559bb6e7eeab062eb0189232f5c733965a18486b39c929ab5fc0e95d7",
+      "after": "848490c559bb6e7eeab062eb0189232f5c733965a18486b39c929ab5fc0e95d7",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-workarea-pdf-verification.json",
+      "before": "7f447cba322b70df51ec4d6d2baef5691623f7902de76f8d90481158b2655086",
+      "after": "7f447cba322b70df51ec4d6d2baef5691623f7902de76f8d90481158b2655086",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-30-flow26-workarea-consumer-mapping-r1.json",
+      "before": "b88951d3a21b1c5d903777e03419cf9cae0a75de15ce1ea17b7e5a1223ddd832",
+      "after": "b88951d3a21b1c5d903777e03419cf9cae0a75de15ce1ea17b7e5a1223ddd832",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-user-recovery-A01-repair-return.md",
+      "before": "1e9d33993ac30e0133717b6f5b7c7541dc921f425c3807e00bd200730c4f1ef0",
+      "after": "1e9d33993ac30e0133717b6f5b7c7541dc921f425c3807e00bd200730c4f1ef0",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-user-recovery-A01-repair-independent-audit.md",
+      "before": "da6da0899713e8532d257a918821a8465416204e6e716be679df470289ac53de",
+      "after": "da6da0899713e8532d257a918821a8465416204e6e716be679df470289ac53de",
+      "scope": "unchanged"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-30-project-completion-and-next-development-plan.md",
+      "before": "5c236ae5612eea3600f8e9eb80639e358e2d87c19f9daabbffae77d7ccd3c581",
+      "after": "5c236ae5612eea3600f8e9eb80639e358e2d87c19f9daabbffae77d7ccd3c581",
+      "scope": "unchanged"
+    }
+  ],
+  "whitespace": {
+    "scope": "five modified business sources, rebuilt client and three current entries",
+    "exitCode": 0
+  },
+  "currentEntryLinksValidated": true,
+  "originalBilling": "not inferred from historical generic failure",
+  "remaining": [
+    "usable native credential reference plus separately scoped new local call",
+    "actual review/save/chat text closure",
+    "Fast39 restricted calibration",
+    "formal dual source and professional/user acceptance; G0 open"
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/canonical-profile-repair.json",
+      "sha256": "a34264282e84193b0921ee28baa4376f37a5ec9bea5d0ecf9031fdd98e7d2183"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/settings-name-contract-proof.json",
+      "sha256": "fee55e06e49a7ef6076db3b475bd7abfc8759cfa50f67fa83629af2ae8dd87b3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/native-sdk-no-fee-probe-r2.json",
+      "sha256": "4024e3877057241c57eb1232e8877f8ef4345c5e6a57d1a86a454d40429f3fd7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/native-settings-r7-call-1.json",
+      "sha256": "5c5fd3a599a4147826f64460ce768fe2c639172e21ffdbd2e8905e2cce86ddd7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/project302-saved-settings-delta.json",
+      "sha256": "7e3f2f624a13739c78a76408ae3dddd7b1c480671cb66aba9157e45a0caf91b1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/restart-run/native-candidate.json",
+      "sha256": "78e659608d9f42e4ca2a19e709d2cce58305d347120b4cdc4e11906bcfdec463"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/restart-run/native-start.json",
+      "sha256": "c0cbdcb14558965798d692d8c71029087502256d63bf73b5a48231542eced94a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/final-targeted.log",
+      "sha256": "3fce1d26972cca3a368a79ff1bb8b3f2d37fc424bdc16bd79e6cdfb00d2386ea"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/client-build.log",
+      "sha256": "6bebd749fcca8a237b9744e96eb6c9815622d51b5e4cee1c0265efba16e2ef8f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/original-run.json",
+      "sha256": "50fada0fd4e875d0c4e2100691b3d691fcfe217b0da7c45cc85865a9bd565bce"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/native-model-preflight-blocked.png",
+      "sha256": "ba136731c593280b8d9ae644e038721e7330d4d979f718864cd5182d8c523b57"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/project302-saved.png",
+      "sha256": "a1dcfeeb256e3e2b1afc94d77f87a72dc2e22043ac26c6152389b3f0b0adcfea"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/project302-restart.png",
+      "sha256": "ae821da958b75342de4ff83fc740cb8225922da7afba2763f73433b00192c7e3"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/project302-restart-ax.txt",
+      "sha256": "5348a3b1e12e5e2ec6f9412b252731a8286138f3f86a8933f097d0c96b3f5dc1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/original-failed-ui.png",
+      "sha256": "bd16876e4b2f05be245b9feeb8b4bae662702f2d9b87bf91d4e4f1dd22bd8dc7"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-nofee-repair-20261030/original-failed-ui-ax.txt",
+      "sha256": "ed564afc644dfcdb31dded784e817e2d2be408bdccd0184617240af26f6dc806"
+    }
+  ],
+  "beforeCloseoutPreservation": {
+    "preservedDirtyFileCount": 98,
+    "unchangedExistingDirtyCount": 96,
+    "reviewedChangedExistingDirty": [
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/lib/client.js",
+        "before": "ceebb8d3db6914ac25961533402f83db1a2c7706d5c9dc836606dbb2d9ca89b5",
+        "after": "1313a03e656cb74fcb32435a313968abc6b16f755d3f14c5c6af0219aa2b797f"
+      },
+      {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/lib/client.js.map",
+        "before": "e886412330c483dc2beb56cd9635fe6f08405d02c44fcba74ac715d9a3ce0324",
+        "after": "5581abe5e3af54d37802bd4f63bf59aef9a249eee56d7e22f99a239c9f12641c"
+      }
+    ]
+  },
+  "finalExistingDirtyUnchangedCount": 93,
+  "fixedSdkChanged": false,
+  "temporaryProbeMounted": false,
+  "committed": false,
+  "pushed": false,
+  "released": false
+}

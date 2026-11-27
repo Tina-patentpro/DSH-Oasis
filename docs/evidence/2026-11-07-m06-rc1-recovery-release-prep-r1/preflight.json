@@ -1,0 +1,553 @@
+{
+  "recordedAt": "2026-11-07T19:37:39.302189+08:00",
+  "executor": "Codex single agent",
+  "projectId": "dsh-oasis",
+  "scope": "R4-01 minimum offline recovery design and R4-02 release technical facts only",
+  "authorization": "按R4计划继续推进，先完成同版业务稿恢复的最小离线方案和123成员首发技术事实清单，暂不启动应用、真实调用或发布。",
+  "plan": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-07-project-summary-and-next-plan-r4.md",
+  "planSHA256": "73a90c727768533a24a91749cecf33a823e14c5030c622e8b2fa592490ba3e48",
+  "coordination": "1.2.2",
+  "overallRevision": "1.3.1/NS1-R1 + applicable BM1-R1/S1/S2-R1/G1/GH1",
+  "currentFollowup": {
+    "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+    "date": "2026-11-05",
+    "revision": "BM1-R1/S2-R1",
+    "path": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+    "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+    "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+    "addendum_anchor": "bm1-public-channels-s2-r1",
+    "previous_followup_id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2",
+    "affected_projects": [
+      "dsh-oasis",
+      "workarea",
+      "backend",
+      "knowledge",
+      "patent-distillery",
+      "test-library",
+      "workbuddy-bridge",
+      "dify",
+      "dify-design",
+      "five-step-method"
+    ],
+    "affected_workstreams": [
+      "landing-page",
+      "wechat-official-account"
+    ],
+    "scope": "bounded_S2_document_audit_repairs_only",
+    "business_execution_started": false,
+    "supersedes": "S2 ambiguous scope/publishing phases and entry metadata only; original S2 bytes, roles, S1, business states and source gates retained"
+  },
+  "projectFollowup": {
+    "id": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+    "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+    "anchor": "oasis-public-channels-bm1-r1-s2-r1",
+    "revision": "BM1-R1/S2-R1",
+    "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+    "addendum_anchor": "bm1-public-channels-s2-r1",
+    "status": "planning_only",
+    "supersedes_only": "channel collaboration scope; original roles S1 and gates retained"
+  },
+  "relevantContractIds": [
+    "IC-RULES",
+    "IC-SKILL",
+    "IC-API",
+    "IC-ACCOUNT",
+    "IC-ACCOUNT-ENTRY",
+    "IC-ARTIFACT"
+  ],
+  "sourceRelation": "registry contract path is authoritative; independent index contracts is role dictionary; BM1 base and roles anchor are explicit continuation, not byte-equal objects",
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "sha256": "b915facac470e75cbe13c1e32adf94f125ae687b4cc808989c8a5818bee2c66c",
+      "previousRecordedSHA256": "b915facac470e75cbe13c1e32adf94f125ae687b4cc808989c8a5818bee2c66c",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "root full text reread; project user-supplied rules and local current supplements"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "sha256": "c8a0bce2cf7ffecbda9caf763b5dc9d6cb2ed248e06a429b8262a3feb8bd5867",
+      "previousRecordedSHA256": "c8a0bce2cf7ffecbda9caf763b5dc9d6cb2ed248e06a429b8262a3feb8bd5867",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "sha256": "f17fb97acbd53c93ab89597a18fb535e2a61cda8c7d3a9a3d08cbbf5758a6306",
+      "previousRecordedSHA256": "f17fb97acbd53c93ab89597a18fb535e2a61cda8c7d3a9a3d08cbbf5758a6306",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "parsed project identity, current entries, dependencies and current references"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "sha256": "c2004116283f42ef6488e3b336696ac5f118a3bdf98ff66f4690b511d2729cbd",
+      "previousRecordedSHA256": "c2004116283f42ef6488e3b336696ac5f118a3bdf98ff66f4690b511d2729cbd",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "parsed overall/project followups, role and contract projections"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "sha256": "f84e52d45336b2e9316699e9db5813af5fd351f4fbbb97007a6fc1d023811cff",
+      "previousRecordedSHA256": "f84e52d45336b2e9316699e9db5813af5fd351f4fbbb97007a6fc1d023811cff",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "base requirements, NS1/R1 anti-loop, BM1/S1/S2-R1/G1/GH1 sections"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "sha256": "1b9b3d272f42a9391cde70a98243ca6015c2aad34b39283d50a7a0a039112a76",
+      "previousRecordedSHA256": "1b9b3d272f42a9391cde70a98243ca6015c2aad34b39283d50a7a0a039112a76",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "BM1 stages and dsh-oasis row, delivery, roles, S1/S2-R1 and GH1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "previousRecordedSHA256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "contract identity and relevant full sections/supplements"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "previousRecordedSHA256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "DSH relevant IC-RULES/SKILL/API/ACCOUNT/ACCOUNT-ENTRY/ARTIFACT and acceptance constraints"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "sha256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "previousRecordedSHA256": "0d77317680cb86a8465aed464ca2c33db7b58e52c645e9d86a66effafdc03159",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "root full text reread; project user-supplied rules and local current supplements"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "sha256": "c88db9241fa3555e7360a96ce11f821c9c9cd8cb3f7406cd508c2deee61c664d",
+      "previousRecordedSHA256": "0c8388de9525d9731421c4195b099e7d314ca2295e595b95f2582204ee51c930",
+      "approvedR4NavigationSHA256": "c88db9241fa3555e7360a96ce11f821c9c9cd8cb3f7406cd508c2deee61c664d",
+      "changedFromR4Read": true,
+      "scope": "current prefix through R3-07 plus targeted PREP2/Fast39/format entries"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "sha256": "b3bd08e551ade94c61fbba1fe33dacbd471104a2c462b6bb657b715fa8a26b33",
+      "previousRecordedSHA256": "f3aeb88b8215d52d8d4b024d6a20dce7e2ab781611f056be7ead7fa7eaf2e624",
+      "approvedR4NavigationSHA256": "b3bd08e551ade94c61fbba1fe33dacbd471104a2c462b6bb657b715fa8a26b33",
+      "changedFromR4Read": true,
+      "scope": "current native/install/build prefixes"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "sha256": "9d9c896b39a393e25a163a530ddecc178468c9fa2af5ec35634d5aad2094f787",
+      "previousRecordedSHA256": "5f18565edd95931fa5290c859b0e28981f42a827423cb73376edcd0b75bca45a",
+      "approvedR4NavigationSHA256": "9d9c896b39a393e25a163a530ddecc178468c9fa2af5ec35634d5aad2094f787",
+      "changedFromR4Read": true,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-07-project-summary-and-remediation-plan-r3.md",
+      "sha256": "5fd36e94c5cb288486eb34ecce57889aa1f2498b21da24d956393e6dc56d7d4f",
+      "previousRecordedSHA256": "5fd36e94c5cb288486eb34ecce57889aa1f2498b21da24d956393e6dc56d7d4f",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/m06-zero-preview-ui-proposal-r1.md",
+      "sha256": "a0e50fbc5670bb110d6a2b24a823123de7a60e8aa54e96fa8488dbbc2d30f950",
+      "previousRecordedSHA256": "a0e50fbc5670bb110d6a2b24a823123de7a60e8aa54e96fa8488dbbc2d30f950",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/m06-native-zero-generation-launch-r1.md",
+      "sha256": "44955ff323f5163bf5de17b024d1f5cd8e0a98f9b4f026aea12258b540d5a049",
+      "previousRecordedSHA256": "44955ff323f5163bf5de17b024d1f5cd8e0a98f9b4f026aea12258b540d5a049",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-zero-preview-r1/execution-return.md",
+      "sha256": "a589a4944a73f4d01b2ab8bd79f32356bb06f5a43f64725d628e4767e33dbf97",
+      "previousRecordedSHA256": "a589a4944a73f4d01b2ab8bd79f32356bb06f5a43f64725d628e4767e33dbf97",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-zero-preview-r1/verification.json",
+      "sha256": "05882545c0faee4fc99b34ee6b6d59b732e26609d042a1ac7ea4d831af1ba12d",
+      "previousRecordedSHA256": "05882545c0faee4fc99b34ee6b6d59b732e26609d042a1ac7ea4d831af1ba12d",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-p4-installed-update-r1/update-spec.json",
+      "sha256": "3cfbd48edff2669b5a724be357cfe26ecf676bfc85b32249336f1d82f843f599",
+      "previousRecordedSHA256": "3cfbd48edff2669b5a724be357cfe26ecf676bfc85b32249336f1d82f843f599",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-p4-installed-update-20261106-r1/bundle/bundle.json",
+      "sha256": "1c5baba6844b1b9e28e3cfd0c0a8913cf68bb1857f317d68096851c0eefe4bef",
+      "previousRecordedSHA256": "1c5baba6844b1b9e28e3cfd0c0a8913cf68bb1857f317d68096851c0eefe4bef",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/oasisintwrite-community-license-1.0-adoption-inputs-r1.md",
+      "sha256": "cb61ead7903680dd5cf9834529617529a06655b19efa49dfec3170a7f5e909fa",
+      "previousRecordedSHA256": "cb61ead7903680dd5cf9834529617529a06655b19efa49dfec3170a7f5e909fa",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/oasisintwrite-community-license-1.0-draft-r1/LICENSE-DRAFT.zh-CN.md",
+      "sha256": "4836d54671e55e2ec36450d7f8a4f6ce0a49cc8364375b3ef4b69a8557513100",
+      "previousRecordedSHA256": "4836d54671e55e2ec36450d7f8a4f6ce0a49cc8364375b3ef4b69a8557513100",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/oasisintwrite-community-license-1.0-draft-r1/scope-and-review.md",
+      "sha256": "0c101b6fcfd0665ce458754429a998e9363676341e6a9256d9b7f446eea96651",
+      "previousRecordedSHA256": "0c101b6fcfd0665ce458754429a998e9363676341e6a9256d9b7f446eea96651",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-p4-installed-update-r1/release-file-disposition.json",
+      "sha256": "7a3a590a0d13ab8f6987c3d0835e8783f8cf2fdf0d69558b8166bd0d79f20431",
+      "previousRecordedSHA256": "7a3a590a0d13ab8f6987c3d0835e8783f8cf2fdf0d69558b8166bd0d79f20431",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-p4-installed-update-r1/release-readiness.md",
+      "sha256": "9fb268814803d810972bb2642581943c29a786ec1dbd4d1dd582a1c76f3a75a0",
+      "previousRecordedSHA256": "9fb268814803d810972bb2642581943c29a786ec1dbd4d1dd582a1c76f3a75a0",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-release-scope-r1/embedded-scope.json",
+      "sha256": "f6bf017301750453d4d63e9b570bd0890c47a9dff31fa242fa8de24f16f03550",
+      "previousRecordedSHA256": "f6bf017301750453d4d63e9b570bd0890c47a9dff31fa242fa8de24f16f03550",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-zero-preview-native-r1/verification.json",
+      "sha256": "5e7940d4a352559b98b441fe71caab88d1675ffaafe48a208709e2b1ecc3c463",
+      "previousRecordedSHA256": "5e7940d4a352559b98b441fe71caab88d1675ffaafe48a208709e2b1ecc3c463",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-first-release-r1/ADOPTION-STATUS.md",
+      "sha256": "83108086519c9af9a8a9f65f23be3df1857df3505f7de874c7b2e0da3b6520a0",
+      "previousRecordedSHA256": "83108086519c9af9a8a9f65f23be3df1857df3505f7de874c7b2e0da3b6520a0",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-license-adoption-r1/authorization.json",
+      "sha256": "4abb5dd2bfac53f42dadc949c2aa5bc35b7d6f37d1b5780be197946d67d3ceb5",
+      "previousRecordedSHA256": "4abb5dd2bfac53f42dadc949c2aa5bc35b7d6f37d1b5780be197946d67d3ceb5",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-first-release-r1/public-review/PROJECTION-MAP.json",
+      "sha256": "fd7cb176ed4f5546d110b97be70dfefd872bbf73ba0aeaf7846e51d9ca193b1f",
+      "previousRecordedSHA256": "fd7cb176ed4f5546d110b97be70dfefd872bbf73ba0aeaf7846e51d9ca193b1f",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/package.json",
+      "sha256": "3e86b10e88a7424bb1fb74429d86bc303bfe60ce2ff41c9598c12f4da0faef0e",
+      "previousRecordedSHA256": "3e86b10e88a7424bb1fb74429d86bc303bfe60ce2ff41c9598c12f4da0faef0e",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/tsdown.config.mjs",
+      "sha256": "4b69a79d07507a2c8714cfbe973b5c4574a17a55b4687ebdaa9ec9e2ff6f7b61",
+      "previousRecordedSHA256": "4b69a79d07507a2c8714cfbe973b5c4574a17a55b4687ebdaa9ec9e2ff6f7b61",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/pnpm-lock.yaml",
+      "sha256": "903575be3f84c6b60e716a7ef7980efdb6f024af4e62982319261d1db27a18f9",
+      "previousRecordedSHA256": "903575be3f84c6b60e716a7ef7980efdb6f024af4e62982319261d1db27a18f9",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.1/release-manifest.json",
+      "sha256": "7155d348c145deb21fdee6efb0565cb13c1409b58a9ab7377e87fa356a159d58",
+      "previousRecordedSHA256": "7155d348c145deb21fdee6efb0565cb13c1409b58a9ab7377e87fa356a159d58",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.1/RELEASE.md",
+      "sha256": "642a39dd5816e4ab96d5118ecfb000de7d49939a8cd8788a06c4274070384812",
+      "previousRecordedSHA256": "642a39dd5816e4ab96d5118ecfb000de7d49939a8cd8788a06c4274070384812",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-public-build-r1/verification.json",
+      "sha256": "b643d95c5ea03e36ebe5e7337a58c3c5ba98262212fc5312b65da4b174efc50b",
+      "previousRecordedSHA256": "b643d95c5ea03e36ebe5e7337a58c3c5ba98262212fc5312b65da4b174efc50b",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-zero-preview-installed-r1/installation-spec.json",
+      "sha256": "5d1b90ba5ec432f5234627db35fa174167280d099d630a178b62f20aafb86613",
+      "previousRecordedSHA256": "5d1b90ba5ec432f5234627db35fa174167280d099d630a178b62f20aafb86613",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-zero-preview-installed-20261107-r1/bundle/bundle.json",
+      "sha256": "7aca55e9d5ccf7be21d20a3a33a7a02cbac256b7e725e69bca913ae03d624af5",
+      "previousRecordedSHA256": "7aca55e9d5ccf7be21d20a3a33a7a02cbac256b7e725e69bca913ae03d624af5",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-zero-preview-installed-20261107-r1/bundle/payload/controller/scripts/f-installed-runtime.mjs",
+      "sha256": "73a568deaa95f77e3805e52acfcc7a6e38ffaec5869c913be388d366c01ff2c7",
+      "previousRecordedSHA256": "73a568deaa95f77e3805e52acfcc7a6e38ffaec5869c913be388d366c01ff2c7",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.1/installation-r1.json",
+      "sha256": "1c91f4889b80f99a85040482ff751701d8da2cb5fd8933eb19749495a3a56727",
+      "previousRecordedSHA256": "1c91f4889b80f99a85040482ff751701d8da2cb5fd8933eb19749495a3a56727",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-public-installed-r1/verification.json",
+      "sha256": "90b6903991bb746a34bdfa52517d9fc6b6e9f9c4cd43dda0d26566f6eb3243ca",
+      "previousRecordedSHA256": "90b6903991bb746a34bdfa52517d9fc6b6e9f9c4cd43dda0d26566f6eb3243ca",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/m06-native-zero-generation-launch-r1.md",
+      "sha256": "44955ff323f5163bf5de17b024d1f5cd8e0a98f9b4f026aea12258b540d5a049",
+      "previousRecordedSHA256": "44955ff323f5163bf5de17b024d1f5cd8e0a98f9b4f026aea12258b540d5a049",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/m06-zero-preview-ui-proposal-r1.md",
+      "sha256": "a0e50fbc5670bb110d6a2b24a823123de7a60e8aa54e96fa8488dbbc2d30f950",
+      "previousRecordedSHA256": "a0e50fbc5670bb110d6a2b24a823123de7a60e8aa54e96fa8488dbbc2d30f950",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-07-github-operations-workstream-plan.md",
+      "sha256": "e5aaf28eec713b0d1a1cc9e591c7170b6e366d3747257bd8219500036bb47e8f",
+      "previousRecordedSHA256": "e5aaf28eec713b0d1a1cc9e591c7170b6e366d3747257bd8219500036bb47e8f",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "GH1 tasks, roles and public operation gates"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-rc1-native-r1/verification.json",
+      "sha256": "50e0624cf4092fd181b6c859460f43ad7f69b3a8e64bf3c3b45e645e3b7cec21",
+      "previousRecordedSHA256": "50e0624cf4092fd181b6c859460f43ad7f69b3a8e64bf3c3b45e645e3b7cec21",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-rc1-native-r1/execution-return.md",
+      "sha256": "5b0620a1102fa9c88fc753c4a839f1fdb315e97a43c5e4fed0a26735af48026a",
+      "previousRecordedSHA256": "5b0620a1102fa9c88fc753c4a839f1fdb315e97a43c5e4fed0a26735af48026a",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-public-0.1.0-rc.1/native-acceptance-r1.json",
+      "sha256": "0373d225030f022120153850d73984466e52dfc3ee2cd689ea029c041cde9f1c",
+      "previousRecordedSHA256": "0373d225030f022120153850d73984466e52dfc3ee2cd689ea029c041cde9f1c",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/release/m06-first-release-r1/RELEASE-CHECKLIST.md",
+      "sha256": "053b353a9707ee706812c7be381361356226e4f09aad54d080934b33eeeba4c6",
+      "previousRecordedSHA256": "053b353a9707ee706812c7be381361356226e4f09aad54d080934b33eeeba4c6",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-prep2-review/prep2-technical-review.md",
+      "sha256": "33c806c4cb7a335b53e86397f387d9266494a56ba627e7a015e6196b7639d4fb",
+      "previousRecordedSHA256": "33c806c4cb7a335b53e86397f387d9266494a56ba627e7a015e6196b7639d4fb",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-plan-completion-audit-r1/completion-audit.md",
+      "sha256": "f502069daa8682dd925537d3e581dd1850097f97d788f96e3c42f77c9ddc1cf1",
+      "previousRecordedSHA256": "f502069daa8682dd925537d3e581dd1850097f97d788f96e3c42f77c9ddc1cf1",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/ADOPTION.md",
+      "sha256": "5178d376ffcf19e7b2d29db936df86c146e017802f47409c165b80afeade033a",
+      "previousRecordedSHA256": "5178d376ffcf19e7b2d29db936df86c146e017802f47409c165b80afeade033a",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-workbuddy-user-entry/consumption-contract.md",
+      "sha256": "fc71230f5b656cc4cc1fd811ee7c4ec1f5d75ce2d5bf2afcd6e5ea10b7282b8e",
+      "previousRecordedSHA256": "fc71230f5b656cc4cc1fd811ee7c4ec1f5d75ce2d5bf2afcd6e5ea10b7282b8e",
+      "approvedR4NavigationSHA256": null,
+      "changedFromR4Read": false,
+      "scope": "identity-only unless content review listed below"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-07-project-summary-and-next-plan-r4.md",
+      "sha256": "73a90c727768533a24a91749cecf33a823e14c5030c622e8b2fa592490ba3e48",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-public-installed-r1/installed-member-inspection.json",
+      "sha256": "68c9ca15a545540aaa9b81106c01a15d0de2f07bde08fdef78ab7ea519b6d4dd",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-07-m06-rc1-native-r1/lease-readmission.mjs",
+      "sha256": "20e020231bcfce0ad3d1bcca605371fa704976bdec08521dbb22c7558aa66a8e",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-service.js",
+      "sha256": "8d84093b50cd47536ddee2c350d5a3dbaccea680626fb43ec1bef2b5afa6f2fd",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js",
+      "sha256": "dd70348151a5dd0ad7997521e834d79b79df02245314928e798a0aba98dc867f",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/workbench-rpc.js",
+      "sha256": "06b01bbde0d3e33f5de3c514bbc857734bdbccd79bfad6d7a5535773dd66b795",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-runtime-service.js",
+      "sha256": "5b54455ed7d781bb175474b2b8c0ba826502a6c0806390788659072d394ed387",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-result-service.js",
+      "sha256": "8ed3ba5663ed24c3ccb3cbd3cba1baa4c276ab1405a3eed43671ffa61e2ae601",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-document.js",
+      "sha256": "09c1da8418912488afd390d4b8266edd5987d7b079498094adbf095f5b47610f",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/writeback-service.js",
+      "sha256": "c9ca00cc93cfc2b58acb9552b64c574ca191bdbf0b0f0d724c294a22e84e23c8",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/v340-runtime-contract.js",
+      "sha256": "8e9f56e8883e8c8483744033eb670d3ceda95360f37d168f1903456a532af8ff",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-results.test.mjs",
+      "sha256": "f5e6a3cf662c8f93128d98b9d364bfb0c8c8d0dfdd293a718289c2473700e0da",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/v340-result-fixture.mjs",
+      "sha256": "e387c6e08a7d0f2a8dd5a0ff5395b71eefac1dc5820e349900b70a64ad1cb0bb",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-structured-revision.test.mjs",
+      "sha256": "d86046f9e5b7655f65438ae5b85ebd88017a19d0cffd0e9de93c762952f33a97",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/f-installed-runtime.mjs",
+      "sha256": "73a568deaa95f77e3805e52acfcc7a6e38ffaec5869c913be388d366c01ff2c7",
+      "scope": "R4 full plan; contracts, exact existing interfaces and selected tests read statically; no product imports or execution"
+    }
+  ],
+  "contentActuallyReviewedThisTurn": [
+    "root AGENTS full; charter full; registry and applicable independent-index fields",
+    "overall NS1/R1 anti-repeat, BM1 priority, roles/S1/S2-R1/GH1 related sections",
+    "BM1 roles/test-asset roles/public channels and GH1; M06 target row",
+    "project R4 full, master latest R4 and relevant DS constraints, two current-entry prefixes",
+    "IC-RULES/SKILL/API/ACCOUNT/ARTIFACT fields and relevant contract sections",
+    "exact public manifest/installation/native receipts and selected existing source/test interfaces"
+  ],
+  "limits": "No source CI/production/remote or historical full review inferred; same-byte identity checks do not claim runtime compatibility."
+}

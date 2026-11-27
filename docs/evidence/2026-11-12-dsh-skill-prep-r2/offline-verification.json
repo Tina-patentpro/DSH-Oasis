@@ -1,0 +1,370 @@
+{
+  "at": "2026-11-12T09:27:19.773650+08:00",
+  "candidate": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-next-skill-prep-r2-20261112/package",
+  "candidateSourceFiles": [
+    {
+      "file": "src/local-run-summary.js",
+      "before": "76ae7704f8a3346c59782a3038973346eeeff672ad4fe69c9fefa4316061a2c3",
+      "after": "0684cdf2186305d5934a46e934b20d2364ec1e5362ba6bb0a74caa4eb4fda17c"
+    },
+    {
+      "file": "src/v340-document.js",
+      "before": "09c1da8418912488afd390d4b8266edd5987d7b079498094adbf095f5b47610f",
+      "after": "c40d0612300373801a3e565d0401afe88d67878f78df82c5663ffcbb52f4779a"
+    },
+    {
+      "file": "src/v340-native-contract.js",
+      "before": "afc388dccff9c4621b088bc881fdae14104132951502b9845a54d68a9ceb23b3",
+      "after": "f39da4d479e32c13fb5af187afa7d1edfc70e6373d1e0ab6b326780ff3f69267"
+    },
+    {
+      "file": "src/v340-native-model.js",
+      "before": "8a90761c3abc39d86f130d7dca17bc69cac82f62046de971bafe67954eef18db",
+      "after": "d326ca34a80507d6bbddbe33b24fb8e0eae11a1319e888a9622b2d867fa0e6df"
+    },
+    {
+      "file": "src/v340-runtime-service.js",
+      "before": "479d4255386cbdff36dde48e527921f09729c0d8162c99ee4673570a189179c1",
+      "after": "94239bf98e97222b7e08f8c0c16b39e9fb9d6cc97bbf0efc18f373977c78af2e"
+    },
+    {
+      "file": "test/oasis-first-batch.test.mjs",
+      "before": "4d67eeead921b4a09225d688b198cdbd832be33b80d24d02a69e864c477fd93c",
+      "after": "b7075f0b9974384fb956aba56cf3187c8505abb28975e302d75054c9d45e665e"
+    }
+  ],
+  "candidatePatchSha256": "e9e78255b638f270f84ac381a9218bb25e36c66cb0ac2bada6bdf5ccc9a9704e",
+  "candidateClientSha256": "9e658a361d14c55dcfd8da6edba531b2ae92667404250029480674dad4ba2cea",
+  "harness": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-next-skill-prep-r2-20261112/run-host.cjs",
+      "sha256": "bad655f80d254a6f895ba70014cf575ea991e659fdd76faa3511f010d960dac2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-next-skill-prep-r2-20261112/wire-guard.cjs",
+      "sha256": "8e30adeafc3f83a4391998da089d1a4d27209b8311481b702da767e6d6c988a9"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-next-skill-prep-r2-20261112/verify-materials.mjs",
+      "sha256": "457ba2fca02b9b558072ba505c49a1415a3309142f17b0711d1873e7700d06ed"
+    }
+  ],
+  "regression": {
+    "passed": 213,
+    "failed": 0
+  },
+  "offlineRuns": [
+    {
+      "id": "M05",
+      "workspaceId": "473e9371-af32-4770-a939-175a7649801e",
+      "sessionId": "session-c6b71919-79d3-4c61-9c91-50b82e18f0a4",
+      "taskId": "batch-M05",
+      "requestKey": "08b77db9-03ca-4a55-9b98-2f2f7347e594",
+      "skillId": "patent-technical-disclosure",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "e0a38c5a124ca9d176a9b340a46639009c37a200c81321b3ea530238c3f7a918",
+      "runId": "v340-a7367ca4-3c7e-4730-b416-350080167da1",
+      "status": "completed",
+      "failureCode": null,
+      "summary": {
+        "finishKind": "stop",
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-6",
+      "inputSha256": "7ccd7ea1a1e7aadf9ce3dfea85441775cf7c1461d702c8847798ba13ea3160be",
+      "disclosureTableRows": {
+        "T1": 1,
+        "T2": 4,
+        "T3": 1
+      },
+      "resultSha256": "6aa4c0fd39c732f0f2b0096ad8cdcdcc6c7b82df51175be61b937a388706cbbf",
+      "resultBytes": 11881,
+      "writebackId": "writeback-f11c1bc6-336a-4844-bc3b-2d3f8702d59c",
+      "reviewedAndSaved": true,
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M01",
+      "workspaceId": "99a9ccdc-60f9-441a-8783-0871fece73ba",
+      "sessionId": "session-075df7fe-a5dc-4fce-8bd4-178374870fb0",
+      "taskId": "batch-M01",
+      "requestKey": "40aa1a35-71b8-42f3-b75f-926700084dd0",
+      "skillId": "patent-background-research",
+      "skillVersion": "0.3.0-rc.5",
+      "resourceSha256": "f774c3aaa9ff8cfe977b8f12b4f0cad5588bb6130e48a28214576ccd817850d0",
+      "runId": "v340-acc9d667-4bc4-426a-931d-6cd9eb0e7540",
+      "status": "completed",
+      "failureCode": null,
+      "summary": {
+        "finishKind": "stop",
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-5",
+      "inputSha256": "1ad0dc494b6a564f466c7ae6c71b27b0cd15d9d1085802e2b98239a9a7e4eeac",
+      "resultSha256": "b37c88cb2966f91633dc51769a2423ea7663f0de23e205ac30e3a0ecb7ff4850",
+      "resultBytes": 9156,
+      "writebackId": "writeback-21c3503b-fd3e-4fb8-bb46-c52476b75fde",
+      "reviewedAndSaved": true,
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M02",
+      "workspaceId": "51b95e6a-f05f-4968-8539-c6ff24e8aea8",
+      "sessionId": "session-b1330f84-72e8-4665-890c-794409e37778",
+      "taskId": "batch-M02",
+      "requestKey": "0db242c9-9e54-4e0c-97fa-1317d8e442b0",
+      "skillId": "patent-triz-analysis",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+      "runId": "v340-35db4f23-97a5-431d-a9b1-72115734102f",
+      "status": "completed",
+      "failureCode": null,
+      "summary": {
+        "finishKind": "stop",
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-5",
+      "inputSha256": "8ab4c187fcf5903f04004c4fe07121b61953353a31f77ae59a576776edf822b0",
+      "resultSha256": "568a2757a5137dd484725eb1a39891989900d0655716686e0eab77347cca3764",
+      "resultBytes": 11251,
+      "writebackId": "writeback-9afb132a-41a4-43ac-aa1d-06de4ab756a4",
+      "reviewedAndSaved": true,
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M01-reject",
+      "workspaceId": "88d281dd-b2c9-4445-a7f4-4cff4482fd01",
+      "sessionId": "session-f56cd406-bb8c-4cbc-a6b8-62b8cb3c8683",
+      "taskId": "batch-M01-reject",
+      "requestKey": "ecbe4e4c-6650-4863-b5b6-fbe28aa5f67c",
+      "skillId": "patent-background-research",
+      "skillVersion": "0.3.0-rc.5",
+      "resourceSha256": "f774c3aaa9ff8cfe977b8f12b4f0cad5588bb6130e48a28214576ccd817850d0",
+      "runId": "v340-94e355aa-2f10-470c-ab02-bdc6cc6ec5a6",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-assembly",
+        "finishKind": "stop",
+        "assemblyIssue": {
+          "code": "source-receipt-mismatch",
+          "field": "updates",
+          "index": 0
+        },
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-5",
+      "inputSha256": "e5c159f6096ba5b6c7601d0df64f93c03543dddb923945dd95cd92d2d16fc5f7",
+      "wireTerminal": true,
+      "livePostAttempt": false
+    },
+    {
+      "id": "M02-reject",
+      "workspaceId": "9783e6e8-54d2-49ef-b195-8bebdc21d036",
+      "sessionId": "session-bb078ca1-c1d9-4a52-8cb4-b43e04537df6",
+      "taskId": "batch-M02-reject",
+      "requestKey": "05d36075-7ca3-4c88-92d9-fabd1cf3fd7a",
+      "skillId": "patent-triz-analysis",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+      "runId": "v340-07c886f2-f3ff-4432-90bb-d0f2378fd490",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-assembly",
+        "finishKind": "stop",
+        "assemblyIssue": {
+          "code": "duplicate-table-row",
+          "field": "tables.T1",
+          "index": 1
+        },
+        "usage": {
+          "inputTokens": 512,
+          "outputTokens": 63,
+          "totalTokens": 575
+        }
+      },
+      "receiptVersion": "v340-native-candidate-5",
+      "inputSha256": "52f05fb76e7a3c50142e6e605e6a52fafff9182f574fc7694b51225ef7268eea",
+      "wireTerminal": true,
+      "livePostAttempt": false
+    }
+  ],
+  "restartRecovery": [
+    {
+      "id": "M05",
+      "runId": "v340-a7367ca4-3c7e-4730-b416-350080167da1",
+      "recovered": true
+    },
+    {
+      "id": "M01",
+      "runId": "v340-acc9d667-4bc4-426a-931d-6cd9eb0e7540",
+      "recovered": true
+    },
+    {
+      "id": "M02",
+      "runId": "v340-35db4f23-97a5-431d-a9b1-72115734102f",
+      "recovered": true
+    },
+    {
+      "id": "M01-reject",
+      "runId": "v340-94e355aa-2f10-470c-ab02-bdc6cc6ec5a6",
+      "recovered": true,
+      "status": "failed",
+      "assemblyIssue": {
+        "code": "source-receipt-mismatch",
+        "field": "updates",
+        "index": 0
+      }
+    },
+    {
+      "id": "M02-reject",
+      "runId": "v340-07c886f2-f3ff-4432-90bb-d0f2378fd490",
+      "recovered": true,
+      "status": "failed",
+      "assemblyIssue": {
+        "code": "duplicate-table-row",
+        "field": "tables.T1",
+        "index": 1
+      }
+    }
+  ],
+  "modelWire": {
+    "M05": {
+      "nodeId": "Flow-1-5",
+      "requestKey": "08b77db9-03ca-4a55-9b98-2f2f7347e594",
+      "runId": "v340-a7367ca4-3c7e-4730-b416-350080167da1",
+      "model": "deepseek-flash",
+      "effort": "low",
+      "maxOutputTokens": 16384,
+      "serializedBytes": 27390,
+      "systemSha256": "2974a937ee0aba3ed54e0fc2133e4e53df47acf28dd9a2001f3d6091b28e972b",
+      "inputContentSha256": "45ce7a038c9db00ef053102badc34a584aff96be4275b495ba8513b08eb17062",
+      "tools": 0,
+      "at": "2026-11-12T01:25:05.017Z",
+      "mode": "offline",
+      "promptTokens": 6395,
+      "fullWireTokens": 6880,
+      "inputTokenBudget": 32000,
+      "protocolReserveTokens": 2000,
+      "conservativeInputTokens": 8880
+    },
+    "M01": {
+      "nodeId": "Flow-1-1",
+      "requestKey": "40aa1a35-71b8-42f3-b75f-926700084dd0",
+      "runId": "v340-acc9d667-4bc4-426a-931d-6cd9eb0e7540",
+      "model": "deepseek-flash",
+      "effort": "low",
+      "maxOutputTokens": 16384,
+      "serializedBytes": 27197,
+      "systemSha256": "997a8e1fe68a5f6d398a23cb03a73fdcd605a494ebecac2f88272bb2409f6123",
+      "inputContentSha256": "9c3dbf1b59a52c8aa9d48d6fd714e9e0dc66769067a476c73097ae80357b3bf5",
+      "tools": 0,
+      "at": "2026-11-12T01:25:05.706Z",
+      "mode": "offline",
+      "promptTokens": 6346,
+      "fullWireTokens": 7174,
+      "inputTokenBudget": 32000,
+      "protocolReserveTokens": 2000,
+      "conservativeInputTokens": 9174
+    },
+    "M02": {
+      "nodeId": "Flow-1-2",
+      "requestKey": "0db242c9-9e54-4e0c-97fa-1317d8e442b0",
+      "runId": "v340-35db4f23-97a5-431d-a9b1-72115734102f",
+      "model": "deepseek-flash",
+      "effort": "low",
+      "maxOutputTokens": 16384,
+      "serializedBytes": 31503,
+      "systemSha256": "7e41d6d356ab218d85dc87f1ff67911cd9bb0fc5778d4f2b21e4cc14b4954009",
+      "inputContentSha256": "dcf6813e946c304228f4d4a9265826424bc51d663c4a5f016a16e0f329c4b019",
+      "tools": 0,
+      "at": "2026-11-12T01:25:06.339Z",
+      "mode": "offline",
+      "promptTokens": 7418,
+      "fullWireTokens": 8325,
+      "inputTokenBudget": 32000,
+      "protocolReserveTokens": 2000,
+      "conservativeInputTokens": 10325
+    },
+    "M01-reject": {
+      "nodeId": "Flow-1-1",
+      "requestKey": "ecbe4e4c-6650-4863-b5b6-fbe28aa5f67c",
+      "runId": "v340-94e355aa-2f10-470c-ab02-bdc6cc6ec5a6",
+      "model": "deepseek-flash",
+      "effort": "low",
+      "maxOutputTokens": 16384,
+      "serializedBytes": 27204,
+      "systemSha256": "997a8e1fe68a5f6d398a23cb03a73fdcd605a494ebecac2f88272bb2409f6123",
+      "inputContentSha256": "9c3dbf1b59a52c8aa9d48d6fd714e9e0dc66769067a476c73097ae80357b3bf5",
+      "tools": 0,
+      "at": "2026-11-12T01:25:06.988Z",
+      "mode": "offline",
+      "promptTokens": 6349,
+      "fullWireTokens": 7177,
+      "inputTokenBudget": 32000,
+      "protocolReserveTokens": 2000,
+      "conservativeInputTokens": 9177
+    },
+    "M02-reject": {
+      "nodeId": "Flow-1-2",
+      "requestKey": "05d36075-7ca3-4c88-92d9-fabd1cf3fd7a",
+      "runId": "v340-07c886f2-f3ff-4432-90bb-d0f2378fd490",
+      "model": "deepseek-flash",
+      "effort": "low",
+      "maxOutputTokens": 16384,
+      "serializedBytes": 31510,
+      "systemSha256": "7e41d6d356ab218d85dc87f1ff67911cd9bb0fc5778d4f2b21e4cc14b4954009",
+      "inputContentSha256": "dcf6813e946c304228f4d4a9265826424bc51d663c4a5f016a16e0f329c4b019",
+      "tools": 0,
+      "at": "2026-11-12T01:25:07.589Z",
+      "mode": "offline",
+      "promptTokens": 7416,
+      "fullWireTokens": 8323,
+      "inputTokenBudget": 32000,
+      "protocolReserveTokens": 2000,
+      "conservativeInputTokens": 10323
+    }
+  },
+  "previousM05Wire": {
+    "nodeId": "Flow-1-5",
+    "requestKey": "aade327a-8de5-4e14-a50c-20745225fcfb",
+    "runId": "v340-448cc5c2-bea6-4caa-9f5f-240fffcb7120",
+    "model": "deepseek-flash",
+    "effort": "low",
+    "maxOutputTokens": 16384,
+    "serializedBytes": 33873,
+    "systemSha256": "63075feb073bf91939823d7bef6bb758b300493d0540aeeb62bc99814401104a",
+    "inputContentSha256": "45ce7a038c9db00ef053102badc34a584aff96be4275b495ba8513b08eb17062",
+    "tools": 0,
+    "at": "2026-11-11T23:38:56.439Z",
+    "mode": "offline",
+    "promptTokens": 8060,
+    "fullWireTokens": 9057,
+    "inputTokenBudget": 32000,
+    "protocolReserveTokens": 2000,
+    "conservativeInputTokens": 11057
+  },
+  "realRequests": 0,
+  "newCostCny": "0.00",
+  "governanceAndPriorEvidenceUnchanged": true
+}

@@ -1,0 +1,61 @@
+--- producer saved rev483
+
++++ current rev485
+
+@@ -5,6 +5,6 @@
+
+ registry_schema_version: 1.0.0
+-registry_revision: 483
+-last_updated_at: 2026-11-05T12:24:22+08:00
+-last_change_id: REG-TXN-coord-bm1-roles-20261105-completed
+-previous_registry_sha256: c0f74fcca76ced2e57436ff325904ba42087a938a39d4eda117b8a41f3485d62
++registry_revision: 485
++last_updated_at: 2026-11-05T14:26:01+08:00
++last_change_id: REG-TXN-coord-bm1-r1-test-assets-s1-completed
++previous_registry_sha256: 768e29795f1a65ad27867ed7c6906f0d28e67a158c788e9b9cc5d4336a943a6a
+ open_work_item_count: 35
+@@ -275,2 +275,3 @@
+
+ |---|---|---|---|---|
++| `COORD-BM1-R1-TEST-ASSETS-20261105-S1` | BM1-R1 S1 rule input and sample test article uses documentation only | `closed` | Exact rule and sample purposes; evaluation isolation; Codex development and WorkBuddy content roles; foreign registry rows and history preserved | Related contract input or ownership drift; archive or business asset impact; source changes outside own document scope |
+ | `COORD-BM1-ROLES-20261105-R1` | BM1-R1 executor role and planning README AGENTS documentation only | `closed` | Roles match Codex development and WorkBuddy content duties; preserve foreign rows and events; static coordination checks only | Related input or ownership drift, archive/history impact, actual workflow changes |
+@@ -8913 +8914,38 @@
+
+ - registry_transaction: {"base_sha256":"c0f74fcca76ced2e57436ff325904ba42087a938a39d4eda117b8a41f3485d62","owner_scope_id":"COORD-BM1-ROLES-20261105-R1","request_sha256":"1559ae80889c513996f6df884b16bceccf659181e222114882ddbd02e2d4239a","revision":483,"transaction_id":"coord-bm1-roles-20261105-completed","work_item_id":"COORD-BM1-ROLES-20261105-R1"}
++
++
++### REG-TXN-coord-bm1-r1-test-assets-s1-start
++
++- change_id: REG-TXN-coord-bm1-r1-test-assets-s1-start
++- work_item_id: COORD-BM1-R1-TEST-ASSETS-20261105-S1
++- event: started
++- scope: User-authorized BM1-R1 S1 overall master README AGENTS clarification only
++- summary: Rules as Skill and Dify creation input; samples for development tests and article material; evaluation-only isolated; no business execution
++- verification: Root R1 EXEC-R2 and source standards read; original bytes and raw SHA256 frozen; static registration only
++- evidence_path: /Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-11-05-bm1-r1-test-assets-s1/execution-preflight.json
++- remaining_gaps: Document update and limited verification pending; no source batch runtime acceptance or publication authorization
++- actor: Codex root single agent
++- timestamp: 2026-11-05T14:18:36+08:00
++- base_artifact/base_hash: README revision483 / b04ce91d7feaa0e2441f12804d942f08564c06b678fddde5ca198cce3ad88f52
++- new_artifact: scoped registration changes only
++- owner_scope_id: COORD-BM1-R1-TEST-ASSETS-20261105-S1
++- approved_records: []
++- registry_transaction: {"base_sha256":"b04ce91d7feaa0e2441f12804d942f08564c06b678fddde5ca198cce3ad88f52","owner_scope_id":"COORD-BM1-R1-TEST-ASSETS-20261105-S1","request_sha256":"22bb019de50337b55bac093307f3367f9997ea1af878bdd363404706929c7134","revision":484,"transaction_id":"coord-bm1-r1-test-assets-s1-start","work_item_id":"COORD-BM1-R1-TEST-ASSETS-20261105-S1"}
++
++
++### REG-TXN-coord-bm1-r1-test-assets-s1-completed
++
++- change_id: REG-TXN-coord-bm1-r1-test-assets-s1-completed
++- work_item_id: COORD-BM1-R1-TEST-ASSETS-20261105-S1
++- event: completed
++- scope: User-authorized BM1-R1 S1 overall ten master plans README AGENTS and own document registration only
++- summary: Rules as creation inputs; samples as development tests and article material; evaluation answers isolated; Codex development and WorkBuddy writing roles retained
++- verification: STATIC_ONLY: bounded document identity use-role link checks PASS; old table lines and 490 historical events preserved; center structure PASS; no business tests
++- evidence_path: /Users/tinadong7036/Documents/开发项目/docs/coordination/execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md
++- remaining_gaps: No asset selected reclassified tested or published; original Batch CI and professional user release gates retained; other sessions loading unverified
++- actor: Codex root single agent
++- timestamp: 2026-11-05T14:26:01+08:00
++- base_artifact/base_hash: README revision484 / 768e29795f1a65ad27867ed7c6906f0d28e67a158c788e9b9cc5d4336a943a6a
++- new_artifact: scoped registration changes only
++- owner_scope_id: COORD-BM1-R1-TEST-ASSETS-20261105-S1
++- registry_transaction: {"base_sha256":"768e29795f1a65ad27867ed7c6906f0d28e67a158c788e9b9cc5d4336a943a6a","owner_scope_id":"COORD-BM1-R1-TEST-ASSETS-20261105-S1","request_sha256":"28a9bce5625563aa6a54440e67ad4491d9dd86f8c119c141764f00eebc7a867d","revision":485,"transaction_id":"coord-bm1-r1-test-assets-s1-completed","work_item_id":"COORD-BM1-R1-TEST-ASSETS-20261105-S1"}

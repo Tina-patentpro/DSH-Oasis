@@ -1,0 +1,90 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
+import { createHash } from 'node:crypto'
+import * as doc from '../src/v340-document.js'
+import { resultFixture } from './v340-result-fixture.mjs'
+
+const sha = value => createHash('sha256').update(value).digest('hex')
+const material = '公开输入'
+const output = { summary: '公开合成', core_result_markdown: '导向卡滞是待验证假设，需测量操作力。',
+  updates: [], tables: {}, terms_master: [], warnings: [], model_completions: [] }
+function setup() {
+  const prepared = doc.prepareV340Inputs('Flow-1-1', { research_request_text: material })
+  const parent = doc.assembleV340Document({ nodeId: 'Flow-1-1', workflowRunUid: '12345678-1234-4234-8234-123456789abc',
+    generatedAt: '2026-11-27T01:00:00.000Z', prepared, output })
+  return { prepared, parent }
+}
+function patch(parent) {
+  const core = parent.snapshot.current_result.core_result_markdown
+  return { schemaVersion: 1, reason: '把已生成正文的问题登记为 T1，保留待验证状态', rows: [{
+    rowId: 'P1', data: { tp_id: 'P1', '技术对象/场景': '导向过程', '现有缺陷': '可能卡滞，未实测',
+      '原因或机理': '待验证假设', '改进目标': '运动顺畅', '指标/测量方法': '测操作力，阈值待确认',
+      '来源状态': { source_input_id: 'research_request_text', source_hash: sha(material), source_locator: material,
+        content_origin: 'workflow_analysis', trust_status: 'hypothesis_to_verify' } },
+    coreEvidence: { sourceSha256: sha(core), quote: core, start: 0, end: core.length },
+  }] }
+}
+function revise(f, edit) {
+  return doc.reviseV340Document(f.parent, { workflowRunUid: '87654321-1234-4234-8234-123456789abc',
+    generatedAt: '2026-11-27T01:10:00.000Z', body: f.parent.snapshot.current_result.core_result_markdown,
+    m01Structure: edit, prepared: f.prepared })
+}
+test('M01 table-only repair carries all T1 columns, original prose, provenance and explicit structural warning resolution', () => {
+  const f = setup(), before = structuredClone(f.parent), next = revise(f, patch(f.parent))
+  assert.equal(next.snapshot.tables.T1.status, 'generated')
+  assert.equal(next.snapshot.tables.T1.rows.length, 1)
+  assert.deepEqual(next.snapshot.tables.T1.rows[0].data, patch(f.parent).rows[0].data)
+  assert.deepEqual(f.parent, before)
+  assert.equal(next.snapshot.current_result.core_result_markdown, before.snapshot.current_result.core_result_markdown)
+  assert.equal(next.snapshot.warnings.find(w => w.warning_id.endsWith('missing-table-T1')).status, 'resolved')
+  for (const warning of before.snapshot.warnings.filter(w => !w.warning_id.endsWith('missing-table-T1')))
+    assert.deepEqual(next.snapshot.warnings.find(w => w.warning_id === warning.warning_id), warning)
+  assert.equal(next.snapshot.manual_edit_manifest.at(-1).m01_structured_edit_sha256, doc.m01StructuredEditHash(patch(f.parent)))
+  assert.equal(next.snapshot.deliverable_status, 'not_recommended_for_filing')
+  assert.equal(doc.inspectV340Document({ filename: next.fileName, body: next.body, sha256: next.sha256 }, 'Flow-1-1').status, 'accepted')
+})
+for (const [name, change] of [
+  ['duplicate rows', p => p.rows.push(structuredClone(p.rows[0]))],
+  ['wrong input hash', p => p.rows[0].data['来源状态'].source_hash = 'f'.repeat(64)],
+  ['fabricated locator', p => p.rows[0].data['来源状态'].source_locator = '源中不存在'],
+  ['instruction input', p => p.rows[0].data['来源状态'].source_input_id = 'user_input'],
+  ['fact promotion', p => p.rows[0].data['来源状态'].trust_status = 'confirmed_fact'],
+  ['unmatched stable ID', p => p.rows[0].data.tp_id = 'P2'],
+  ['wrong core locator', p => p.rows[0].coreEvidence.start = 1],
+  ['missing required column', p => delete p.rows[0].data['指标/测量方法']],
+]) test('M01 rejects ' + name, () => {
+  const f = setup(), p = patch(f.parent), before = JSON.stringify(f.parent)
+  change(p)
+  assert.throws(() => revise(f, p))
+  assert.equal(JSON.stringify(f.parent), before)
+})
+test('M01 table repair cannot overwrite existing rows or another node', () => {
+  const f = setup()
+  const next = revise(f, patch(f.parent))
+  assert.throws(() => revise({ ...f, parent: next }, patch(next)))
+  const other = structuredClone(f.parent); other.snapshot.node_id = 'Flow-1-2'
+  assert.throws(() => revise({ ...f, parent: other }, patch(other)))
+})
+test('M01 public RPC binds table payload to edit idempotency and review/save barrier', async t => {
+  const h = await resultFixture(t, 'local-skill', { output }), runId = h.run().runId, original = structuredClone(h.run().result)
+  const p = patch(original), core = original.snapshot.current_result.core_result_markdown
+  await h.service.saveV340ResultDraft(h.command({ runId, baseSha256: original.sha256, body: core, format: 'core-markdown' }))
+  const request = { runId, versionId: runId, baseSha256: original.sha256, draftSha256: sha(core), requestKey: 't1-single', m01Structure: p }
+  const response = await h.handler('workflow/v340/result/edit', h.command(request))
+  assert.equal(response.ok, true, JSON.stringify(response))
+  const version = h.run().resultVersions.at(-1)
+  assert.equal(version.review.status, 'not-reviewed')
+  assert.equal(version.result.snapshot.tables.T1.rows.length, 1)
+  await assert.rejects(h.service.prepareV340Save(h.command({ runId, versionId: version.versionId,
+    resultSha256: version.result.sha256 })), e => e.code === 'V340_REVIEW_REQUIRED')
+  const snapshot = JSON.stringify(h.run())
+  assert.equal((await h.handler('workflow/v340/result/edit', h.command(request))).ok, true)
+  assert.equal(JSON.stringify(h.run()), snapshot)
+  const conflict = structuredClone(request); conflict.m01Structure.rows[0].data['改进目标'] = '另一个目标'
+  const rejected = await h.handler('workflow/v340/result/edit', h.command(conflict))
+  assert.equal(rejected.error.code, 'V340_EDIT_CONFLICT')
+  assert.deepEqual(h.run().result, original)
+  assert.equal(h.generationCalls, 1)
+})

@@ -1,0 +1,1416 @@
+{
+  "at": "2026-11-05T16:17:11.667928+08:00",
+  "document_candidate": "C4-R1",
+  "inherited_probe_source_sha256": "3a91debbb209e53e44cfed87adb49b6b638741d33a95360c2153d98cacdc619a",
+  "scope": "C4 inherited C3 Schema + synthetic deterministic document reference probes, actual R2 receipt metadata only; no business module execution",
+  "reviewer": "Codex author self-review, not independent",
+  "python": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python",
+  "python_version": "3.12.14",
+  "packages": {
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0",
+    "attrs": "26.1.0",
+    "jsonschema-specifications": "2025.9.1",
+    "rpds-py": "2026.9.1",
+    "typing_extensions": "4.16.0"
+  },
+  "schema_sha256": "4c525a5b1ddacd387efe2e2cbd3483e15c0063edd519042fa2af3692aafd5992",
+  "schema_definitions_checked": 33,
+  "cases": [
+    {
+      "id": "C3-001",
+      "case": "positive eligibility_request",
+      "group": "shape",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-002",
+      "case": "positive source_registry_internal",
+      "group": "shape",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-003",
+      "case": "positive quality_report",
+      "group": "shape",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-004",
+      "case": "positive writer_draft",
+      "group": "shape",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-005",
+      "case": "positive normalized_draft",
+      "group": "shape",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-006",
+      "case": "positive structured_result",
+      "group": "shape",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-007",
+      "case": "positive evidence_record",
+      "group": "shape",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-008",
+      "case": "all actual R2 receipts map losslessly",
+      "group": "TR01",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-009",
+      "case": "all synthetic receipts map",
+      "group": "TR01",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-010",
+      "case": "receipt matrix accepted",
+      "group": "TR01",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-011",
+      "case": "receipt matrix warning",
+      "group": "TR01",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-012",
+      "case": "receipt matrix not_provided",
+      "group": "TR01",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-013",
+      "case": "none copied into normalized hash",
+      "group": "TR01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "REGISTRY_SHAPE"
+    },
+    {
+      "id": "C3-014",
+      "case": "accepted hash none",
+      "group": "TR01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "REGISTRY_SHAPE"
+    },
+    {
+      "id": "C3-015",
+      "case": "accepted changed to warning silently promoted",
+      "group": "TR01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "REGISTRY_SHAPE"
+    },
+    {
+      "id": "C3-016",
+      "case": "invalid original status",
+      "group": "TR01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "REGISTRY_SHAPE"
+    },
+    {
+      "id": "C3-017",
+      "case": "original body changed",
+      "group": "TR01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "BODY_HASH"
+    },
+    {
+      "id": "C3-018",
+      "case": "manual reversed body",
+      "group": "TR01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "REGISTRY_SHAPE"
+    },
+    {
+      "id": "C3-019",
+      "case": "requirement elevated to technical",
+      "group": "TR01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "ROLE"
+    },
+    {
+      "id": "C3-020",
+      "case": "original none sentinel must not be overwritten",
+      "group": "TR01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "REGISTRY_SHAPE"
+    },
+    {
+      "id": "C3-021",
+      "case": "registry entry array has fixed common ID order",
+      "group": "TR01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "COMMON_ID_ORDER"
+    },
+    {
+      "id": "C3-022",
+      "case": "packet object key iteration order cannot change registry",
+      "group": "TR01",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-023",
+      "case": "complete ABI producer consumer resolution",
+      "group": "TR02",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-024",
+      "case": "full Outline schema equals frozen base plus explicit metadata",
+      "group": "TR02",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-025",
+      "case": "normalizer view has explicit original warning and count outputs",
+      "group": "TR02",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-026",
+      "case": "old missing marker output now caught",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "UNDECLARED_PRODUCER_PORT 1769301001100.marker_warnings"
+    },
+    {
+      "id": "C3-027",
+      "case": "count authority selector cannot be swapped",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "COUNT_AUTHORITY"
+    },
+    {
+      "id": "C3-028",
+      "case": "draft normalizes to complete published fixture",
+      "group": "TR02",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-029",
+      "case": "complete stage cross checks positive",
+      "group": "TR02",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-030",
+      "case": "tree count mismatch",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "COUNT_MISMATCH"
+    },
+    {
+      "id": "C3-031",
+      "case": "segment boundary mismatch",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "SEGMENT_COORDINATES"
+    },
+    {
+      "id": "C3-032",
+      "case": "duplicate block",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "DRAFT_PLAN_SET"
+    },
+    {
+      "id": "C3-033",
+      "case": "unknown plan",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "DRAFT_PLAN_SET"
+    },
+    {
+      "id": "C3-034",
+      "case": "duplicate feature",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "DRAFT_FEATURE_SET"
+    },
+    {
+      "id": "C3-035",
+      "case": "model supplied final offsets",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "DRAFT_SHAPE"
+    },
+    {
+      "id": "C3-036",
+      "case": "embedded numbering",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "DRAFT_EMBEDDED_NUMBERING"
+    },
+    {
+      "id": "C3-037",
+      "case": "CRLF normalization records warning",
+      "group": "TR02",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-038",
+      "case": "ambiguous output quote never gets guessed offset",
+      "group": "TR02",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-039",
+      "case": "all omitted no normal artifact",
+      "group": "F06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "NO_SUPPORTED_CLAIM"
+    },
+    {
+      "id": "C3-040",
+      "case": "client declares self consistency only",
+      "group": "TR03",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-041",
+      "case": "independent anchor badge rejected",
+      "group": "TR03",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-042",
+      "case": "formatter must consume branch anchor",
+      "group": "TR03",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "ANCHOR_BRANCH_OWNER"
+    },
+    {
+      "id": "C3-043",
+      "case": "changed target cannot pass original workflow anchor",
+      "group": "TR03",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "ANCHOR_CHANGED"
+    },
+    {
+      "id": "C3-044",
+      "case": "local registry digest mismatch rejected",
+      "group": "TR03",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "REGISTRY_BINDING"
+    },
+    {
+      "id": "C3-045",
+      "case": "all warning categories exact renderer positive",
+      "group": "TR04",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-046",
+      "case": "display delete problem",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-047",
+      "case": "display rewrite problem",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-048",
+      "case": "display delete limitation",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-049",
+      "case": "display rewrite limitation",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-050",
+      "case": "display delete Outline warning",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-051",
+      "case": "display rewrite Outline warning",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-052",
+      "case": "display delete missing input",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-053",
+      "case": "display rewrite missing input",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-054",
+      "case": "fenced literal headings and code controls remain data",
+      "group": "TR04",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-055",
+      "case": "raw byte receipt matches same parsed response",
+      "group": "TR05",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-056",
+      "case": "canonical parsed JSON is not original raw receipt",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PROVIDER_BYTE_RECEIPT"
+    },
+    {
+      "id": "C3-057",
+      "case": "added trailing newline changes byte receipt",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PROVIDER_BYTE_RECEIPT"
+    },
+    {
+      "id": "C3-058",
+      "case": "added BOM changes byte receipt",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PROVIDER_BYTE_RECEIPT"
+    },
+    {
+      "id": "C3-059",
+      "case": "wrong request key rejected",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "REQUEST_KEY"
+    },
+    {
+      "id": "C3-060",
+      "case": "wrong run rejected",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "RUN_ID"
+    },
+    {
+      "id": "C3-061",
+      "case": "altered output projection rejected",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "SAME_RESPONSE_PROJECTION"
+    },
+    {
+      "id": "C3-062",
+      "case": "receipt SHA and byte length inconsistency rejected",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PROVIDER_BYTE_RECEIPT"
+    },
+    {
+      "id": "C3-063",
+      "case": "non2xx not admitted as enhanced receipt",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-064",
+      "case": "old top duplicate raw SHA field rejected",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-065",
+      "case": "raw body SHA not stored as retained whole body",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-066",
+      "case": "declared original coordinate (1000010, 1000013)",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-067",
+      "case": "declared original coordinate (1048575, 1048576)",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-068",
+      "case": "declared original coordinate (1048575, 1048577)",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-069",
+      "case": "long original actual UTF16 location beyond decimal million valid",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-070",
+      "case": "actual original length still enforced",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "SPAN"
+    },
+    {
+      "id": "C3-071",
+      "case": "surrogate pair cannot be split",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "'utf-16-le' codec can't decode bytes in position 0-1: unexpected end of data"
+    },
+    {
+      "id": "C3-072",
+      "case": "100000 units",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-073",
+      "case": "100001 units",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-074",
+      "case": "50000 nonBMP",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-075",
+      "case": "50001 nonBMP",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-076",
+      "case": "UTF8 cap",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-077",
+      "case": "UTF8 over",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-078",
+      "case": "NUL",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "NUL"
+    },
+    {
+      "id": "C3-079",
+      "case": "lone surrogate",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "'utf-8' codec can't encode character '\\ud800' in position 0: surrogates not allowed"
+    },
+    {
+      "id": "C3-080",
+      "case": "512KiB envelope boundary",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-081",
+      "case": "512KiB envelope over",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-082",
+      "case": "legacy1MiB",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-083",
+      "case": "legacy1MiB+1",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-084",
+      "case": "whole8MiB",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-085",
+      "case": "whole8MiB+1",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-086",
+      "case": "hash-only error cannot retain partial raw outputs",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-087",
+      "case": "zero claim error same raw receipt shape",
+      "group": "F06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-088",
+      "case": "non-success cannot be normal failed",
+      "group": "F02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-089",
+      "case": "non-success cannot be normal stopped",
+      "group": "F02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-090",
+      "case": "non-success cannot be normal running",
+      "group": "F02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-091",
+      "case": "non-success cannot be normal unknown",
+      "group": "F02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-092",
+      "case": "six exact empty: technical_field",
+      "group": "F01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-093",
+      "case": "six exact empty: background_art_TD",
+      "group": "F01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-094",
+      "case": "six exact empty: technical_solutions",
+      "group": "F01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-095",
+      "case": "six exact empty: beneficial_effects_TD",
+      "group": "F01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-096",
+      "case": "six exact empty: embodiments_TD",
+      "group": "F01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-097",
+      "case": "six exact empty: drawings_explain_TD",
+      "group": "F01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-098",
+      "case": "direct nonempty shape None",
+      "group": "F01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-099",
+      "case": "direct nonempty shape ' '",
+      "group": "F01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-100",
+      "case": "missing direct field not defaulted",
+      "group": "F01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-101",
+      "case": "multiple file scope excluded",
+      "group": "F01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-102",
+      "case": "manual original receipt accepted stays nontechnical/unverified",
+      "group": "TR01",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-103",
+      "case": "manual original receipt warning stays nontechnical/unverified",
+      "group": "TR01",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-104",
+      "case": "warning receipt cannot support a kept technical feature",
+      "group": "TR01",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "SOURCE_ROLE"
+    },
+    {
+      "id": "C3-105",
+      "case": "two-plan normalization counts graph maps and segments agree",
+      "group": "TR02",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-106",
+      "case": "draft block order cannot change assigned final numbering",
+      "group": "TR02",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-107",
+      "case": "graph self-reference rejected",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "GRAPH"
+    },
+    {
+      "id": "C3-108",
+      "case": "graph numeric IDs rejected",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "SHAPE"
+    },
+    {
+      "id": "C3-109",
+      "case": "report duplicate disposition rejected",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "NORMALIZED_REPORT_MISMATCH"
+    },
+    {
+      "id": "C3-110",
+      "case": "report source substitution rejected",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "SOURCE_REPLACED"
+    },
+    {
+      "id": "C3-111",
+      "case": "output coordinates cannot be model guessed",
+      "group": "TR02",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "OUTPUT_LOCATOR"
+    },
+    {
+      "id": "C3-112",
+      "case": "original two-target limited draft remains insufficient",
+      "group": "TR03",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-113",
+      "case": "removed target with recomputed self hash rejected by original workflow branch",
+      "group": "TR03",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "ANCHOR_CHANGED"
+    },
+    {
+      "id": "C3-114",
+      "case": "same report self consistency cannot assert original-target proof",
+      "group": "TR03",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-115",
+      "case": "distinct all-warning category renderer positive",
+      "group": "TR04",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-116",
+      "case": "distinct problem delete",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-117",
+      "case": "distinct problem rewrite",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-118",
+      "case": "distinct limitation delete",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-119",
+      "case": "distinct limitation rewrite",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-120",
+      "case": "distinct outline warning delete",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-121",
+      "case": "distinct outline warning rewrite",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-122",
+      "case": "distinct fallback delete",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-123",
+      "case": "distinct fallback rewrite",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-124",
+      "case": "distinct outline error delete",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-125",
+      "case": "distinct outline error rewrite",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-126",
+      "case": "distinct marker delete",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-127",
+      "case": "distinct marker rewrite",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-128",
+      "case": "distinct dependency delete",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-129",
+      "case": "distinct dependency rewrite",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PENDING_ALL_CATEGORIES"
+    },
+    {
+      "id": "C3-130",
+      "case": "extra visible heading rejected",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "RENDER_MISMATCH"
+    },
+    {
+      "id": "C3-131",
+      "case": "outer status contradicts parsed report",
+      "group": "TR04",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "QUALITY_MISMATCH"
+    },
+    {
+      "id": "C3-132",
+      "case": "duplicate JSON keys rejected even when raw receipt matches",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "DUPLICATE_JSON_KEY"
+    },
+    {
+      "id": "C3-133",
+      "case": "BOM can be parsed only with its own exact receipt",
+      "group": "TR05",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-134",
+      "case": "stale C2 raw SHA alias rejected in fragment",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-135",
+      "case": "complete normal evidence same provider body",
+      "group": "TR05",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-136",
+      "case": "received execution error from same body failed",
+      "group": "F02/TR05",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-137",
+      "case": "execution status forged to pending rejected",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PROVIDER_STATUS_FROM_SAME_BODY"
+    },
+    {
+      "id": "C3-138",
+      "case": "received execution error from same body stopped",
+      "group": "F02/TR05",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-139",
+      "case": "received execution error from same body running",
+      "group": "F02/TR05",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-140",
+      "case": "received execution error from same body unknown",
+      "group": "F02/TR05",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-141",
+      "case": "error partial evidence preserves actual string subset",
+      "group": "TR05",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-142",
+      "case": "error partial evidence cannot fabricate missing fields",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PARTIAL_OUTPUT_NOT_FROM_SAME_BODY"
+    },
+    {
+      "id": "C3-143",
+      "case": "error partial evidence cannot rewrite raw field",
+      "group": "TR05",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "PARTIAL_OUTPUT_NOT_FROM_SAME_BODY"
+    },
+    {
+      "id": "C3-144",
+      "case": "normal zero claims string rejected",
+      "group": "F06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-145",
+      "case": "depth8",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-146",
+      "case": "depth9",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "DEPTH"
+    },
+    {
+      "id": "C3-147",
+      "case": "array1024",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-148",
+      "case": "array1025",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "CONTAINER"
+    },
+    {
+      "id": "C3-149",
+      "case": "keys256",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-150",
+      "case": "keys257",
+      "group": "TR06",
+      "expected_accept": false,
+      "observed_accept": false,
+      "pass": true,
+      "rejection": "CONTAINER"
+    },
+    {
+      "id": "C3-151",
+      "case": "packet budget includes JSON wrapper, no truncation",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-152",
+      "case": "individually bounded strings can fail aggregate after JSON escaping",
+      "group": "TR06",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    },
+    {
+      "id": "C3-153",
+      "case": "no remote or network attempts",
+      "group": "offline",
+      "expected_accept": true,
+      "observed_accept": true,
+      "pass": true,
+      "rejection": null
+    }
+  ],
+  "passed": 153,
+  "failed": 0,
+  "network_attempts": [],
+  "actual_R2_receipt_source_sha256": "ea2f8c0c03a4ca7cde4760906dd6bf0a736b6a5f1b15774f41bb3c8130251a79",
+  "new_generation_calls": 0,
+  "paid_calls": 0,
+  "environment_installs": 0,
+  "limitations": [
+    "reference helpers are document probes, not actual new Code nodes/backend/DSH implementation",
+    "client independent original Outline proof deliberately not claimed",
+    "provider full raw body not persisted by runtime here",
+    "source near1MiB locator shape probe is not a complete eligible prepared dispatch case"
+  ],
+  "environment_lock": {
+    "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/tools/requirements-offline-macos-arm64-py312.lock",
+    "sha256": "e5dbb3d322316065d03c28af6656ecf0b170b032706e618eb22862ca2aabb65a"
+  },
+  "loaded_reference_helper_sha256": "d38db0941a0981a288b7eb7a4cd8a8cd1f50709252fdfb7450a717826d17116d"
+}

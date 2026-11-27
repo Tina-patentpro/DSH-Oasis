@@ -1,0 +1,39 @@
+--- /Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/source/app/services/workflow_service.py
++++ /Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/candidate-r1/source/app/services/workflow_service.py
+@@ -1,7 +1,8 @@
+ # services/workflow_service.py
+ import httpx
+-from typing import Any, Dict
++from typing import Any, Dict, Union
+ from app.utils.redis_client import redis_client
++from app.services.fast39_result import WorkflowServiceResult, capture_provider_receipt
+ 
+ 
+ async def run_dify_workflow(
+@@ -10,7 +11,9 @@
+     user_id: str,
+     api_process:str,
+     key:str,
+-) -> Dict[str, Any]:
++    *,
++    capture_response_receipt: bool = False,
++) -> Union[Dict[str, Any], WorkflowServiceResult]:
+     """
+     异步调用 Dify 工作流
+     :param api_info: 已查询到的 API 配置对象（含 credentials 和 api_key）
+@@ -48,12 +51,15 @@
+         async with httpx.AsyncClient(verify=False, timeout=1800.0) as client:
+             response = await client.post(url, json=payload, headers=headers)
+ 
++        receipt = capture_provider_receipt(response) if capture_response_receipt else None
+         if response.status_code >= 400:
+             error_detail = response.text
+             raise Exception(f"Dify API returned {response.status_code}: {error_detail}")
+ 
+         result = response.json()
+ 
++        if receipt is not None:
++            return WorkflowServiceResult(result, receipt)
+         return result
+ 
+     except httpx.RequestError as e:

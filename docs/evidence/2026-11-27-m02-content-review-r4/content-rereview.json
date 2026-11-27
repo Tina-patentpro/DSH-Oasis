@@ -1,0 +1,75 @@
+{
+  "at": "2026-11-27T13:06:39.308463+08:00",
+  "reviewer": "Codex",
+  "sourceVersionId": "revision-89f6e6d5-0358-4979-bb23-6ef533572810",
+  "sourceSha256": "25f354e3b355306c36900a8cb0d96397879e422d607035a04ab06a81eeedbf73",
+  "initialVerdict": "NEEDS_REVISION",
+  "issues": [
+    {
+      "id": "R4-01",
+      "problem": "需求被当作已发生缺陷/根因",
+      "correctionLocation": "核心结论1，正文1—2，T1-P1",
+      "rereviewStatus": "resolved_in_conditional_analysis",
+      "remainingBoundary": "实际工程条件与实测待确认"
+    },
+    {
+      "id": "R4-02",
+      "problem": "TRIZ矛盾未说明建模前提",
+      "correctionLocation": "核心结论2，正文3",
+      "rereviewStatus": "resolved_in_conditional_analysis",
+      "remainingBoundary": "实际工程条件与实测待确认"
+    },
+    {
+      "id": "R4-03",
+      "problem": "S1推荐与释放前提相矛盾",
+      "correctionLocation": "正文4、7，T2-S1-F1/F2、T3-S1",
+      "rereviewStatus": "resolved_in_conditional_analysis",
+      "remainingBoundary": "实际工程条件与实测待确认"
+    },
+    {
+      "id": "R4-04",
+      "problem": "楔紧接合、反驱与滑块保持混写",
+      "correctionLocation": "正文5 S2-A，T2-S2-F1、T3-S2",
+      "rereviewStatus": "resolved_in_conditional_analysis",
+      "remainingBoundary": "实际工程条件与实测待确认"
+    },
+    {
+      "id": "R4-05",
+      "problem": "过中心、楔紧及形锁合混写",
+      "correctionLocation": "正文5 S2-B，T2-S2-F1、T3-S2",
+      "rereviewStatus": "resolved_in_conditional_analysis",
+      "remainingBoundary": "实际工程条件与实测待确认"
+    },
+    {
+      "id": "R4-06",
+      "problem": "弹性定位被当作承载形锁合",
+      "correctionLocation": "正文6 S3，T2-S3-F1、T3-S3",
+      "rereviewStatus": "resolved_in_conditional_analysis",
+      "remainingBoundary": "实际工程条件与实测待确认"
+    },
+    {
+      "id": "R4-07",
+      "problem": "S4重复性及释放方式过度概括",
+      "correctionLocation": "正文6 S4，T2-S4-F1",
+      "rereviewStatus": "resolved_in_conditional_analysis",
+      "remainingBoundary": "实际工程条件与实测待确认"
+    },
+    {
+      "id": "R4-08",
+      "problem": "T3需求行混入未记载机理，正文与表格需同步",
+      "correctionLocation": "正文8，T3-P1-QUAL及全部10原行",
+      "rereviewStatus": "resolved_in_conditional_analysis",
+      "remainingBoundary": "实际工程条件与实测待确认"
+    }
+  ],
+  "rereviewVerdict": "CONDITIONAL_PASS_FOR_SYNTHETIC_CONCEPT_ANALYSIS",
+  "coreSha256": "b599bc4372b9af511ccf310c2e5139fbacaee98e039f9719e0793553a673bcb9",
+  "patchFileSha256": "ce3c4d34a7af2a61c34febaeae3fe735f6396f824e787fe17eced60ce81fe78f",
+  "rowsRevised": 10,
+  "newModelRequests": 0,
+  "newFeesCny": 0,
+  "independentHumanReviewer": false,
+  "humanQualifiedProfessionalAcceptance": false,
+  "userAccepted": false,
+  "scope": "对本合成案例的技术逻辑、机理区分及条件完整性进行内容审核和再审；不确认真实根因、性能或申请可用性"
+}

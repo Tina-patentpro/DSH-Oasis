@@ -1,0 +1,49 @@
+✖ recovery client resumes through narrow selection and cannot schedule broad saves or new runs (45.8165ms)
+✔ recovery UI exposes retained tasks but freezes input and candidate generation (15.763458ms)
+✔ recovery settings detect mode before reading account state or credentials (0.415584ms)
+✔ recovery loader requires actual installed lease, trusted policy and paired source guards (16.9815ms)
+✔ dedicated recovery Host entry fails closed without installation and never probes model or credentials (0.265167ms)
+✖ package consumers can resolve the dedicated recovery entry without credential injection (0.196959ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 161.433
+
+✖ failing tests:
+
+test at test/m06-native-business-recovery-client.test.mjs:15:1
+✖ recovery client resumes through narrow selection and cannot schedule broad saves or new runs (45.8165ms)
+  AssertionError [ERR_ASSERTION]: closed retained task can be reopened
+  
+  null !== 'new'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs:36:9)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 'new',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/m06-native-business-recovery-installation.test.mjs:42:1
+✖ package consumers can resolve the dedicated recovery entry without credential injection (0.196959ms)
+  Error [ERR_PACKAGE_PATH_NOT_EXPORTED]: Package subpath './m06-native-business-recovery' is not defined by "exports" in /Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/package.json imported from /Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-native-business-recovery-installation.test.mjs
+      at exportsNotFound (node:internal/modules/esm/resolve:315:10)
+      at packageExportsResolve (node:internal/modules/esm/resolve:663:9)
+      at packageResolve (node:internal/modules/esm/resolve:792:12)
+      at moduleResolve (node:internal/modules/esm/resolve:873:18)
+      at defaultResolve (node:internal/modules/esm/resolve:1006:11)
+      at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)
+      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)
+      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)
+      at #resolve (node:internal/modules/esm/loader:687:17)
+      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35) {
+    code: 'ERR_PACKAGE_PATH_NOT_EXPORTED'
+  }

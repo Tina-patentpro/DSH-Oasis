@@ -1,0 +1,11 @@
+{
+  "userText": "按计划继续推进，直接在现有开发专用安装上更新至rc.3，完成同版核对，保留旧版本和业务数据，暂不启动应用、真实调用或发布。",
+  "allowed": "update user-identified existing development installation, preserve old versions and business data, same-version offline verification",
+  "prohibited": [
+    "new isolated installation",
+    "App/Host start",
+    "real model/API/upload/fees",
+    "send/publish"
+  ],
+  "targetBinding": "required: desktop2.0.18/runtime0.2.1-rc.2 vs existing rc.2 business root2.0.17/runtime0.2.0-rc.2; no guess or downgrade"
+}

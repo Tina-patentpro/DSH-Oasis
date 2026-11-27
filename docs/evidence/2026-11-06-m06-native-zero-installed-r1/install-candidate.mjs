@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import {dirname,join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {installFBundle} from '../../../scripts/f-installed-runtime.mjs';
+const folder=dirname(fileURLToPath(import.meta.url));
+const spec=JSON.parse(fs.readFileSync(join(folder,'install-spec.json')));
+const startedAt=new Date().toISOString();
+const result=await installFBundle(spec);
+fs.writeFileSync(join(folder,'installation-result.json'),JSON.stringify({startedAt,endedAt:new Date().toISOString(),...result},null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify(result));

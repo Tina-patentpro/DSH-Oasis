@@ -1,0 +1,892 @@
+--- before:/Users/tinadong7036/Documents/开发项目/AGENTS.md
+
++++ current:/Users/tinadong7036/Documents/开发项目/AGENTS.md
+
+@@ -1,3 +1,5 @@
+
+ # 开发项目目录约定
++
++> 当前测试集资产用途：[BM1-R1／S1](<docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)；规则用于Skills/Dify制作输入，样例用于开发测试及公众号/网站素材，评价答案保持隔离。
+ 
+ > 当前执行分工以 [BM1-R1](<docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>) 为准：WorkBuddy采集与内容运营，Codex全部开发及Skills/工作流制作；旧阶段目标和历史证据保持。
+@@ -124,2 +126,17 @@
+
+ 
+ 读取入口：[BM1整体职责补充](<docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>)／[简洁总计划](<docs/coordination/plans/2026-11-05-overall-plan-brief-bm1-r1.md>)；准确读取/原始完整字节hash、差异及修改前证据见[本轮记录](<docs/coordination/execution/2026-11-05-bm1-roles-r1/修订说明.md>)。每次规划/开始或恢复执行仍按R1/EXEC-R2解析登记当前followup，不仅凭本链接或旧摘要。本轮仅文档和必要治理结构核验，不制作产品、不采集发文、不投递、不部署/收费、不安装/构建/提交/推送/发布。
++
++
++<!-- oasis-test-assets:BM1-R1-S1 -->
++<a id="oasis-test-assets-bm1-r1-s1"></a>
++## 测试集规则与样例用途补充（BM1-R1／S1，2026-11-05）
++
++用途补充接续BM1-R1；协同仍1.2.2，原角色和业务阶段不变。详见[整体用途补充](<docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)。
++
++- 测试集规则中适用且制作可见的部分，作为Codex制作Skills和Dify工作流的信息输入与规则基础，记录准确版本/原始SHA256、效力/用途、采用落点、条件及例外；不将全部规则自动生效或全部样例自动纳入生成。
++- 样例用于各项目开发过程中的适配测试，也作为WorkBuddy撰写公众号、网站推文的素材；Codex负责全部开发、测试及技术事实校核，WorkBuddy负责选材、撰稿和按实际范围发布。样例/测试结果/已发布文章分别留证。
++- 制作可见规则与题面、评价专用答案/评分材料、可公开宣传素材分开。evaluation_only答案不进入Skill正文/提示词、Dify生成上下文或对外素材；宣传仅引用可公开部分或有来源的演示派生稿，不改原可见性/原件/收据，不把已暴露答案的评价称独立盲测。
++- 每次规划或开始/恢复执行，按R1/EXEC-R2从登记解析本S1及相关合同；用原任务/交接记录绑定所选规则/样例/用途和派生关系，记录版本/hash及差异。未选样例不要求先全库盘点，原准入/Batch/来源/许可/接受门继续。
++- 本次仅文档维护，不选择/制作新规则或样例，不运行产品/业务测试、调用模型/API/Dify/数据库/支付、投递WorkBuddy、撰写或发布推文；原FAIL/UNKNOWN、冻结与接受保持。
++
++实际读取/完整原始字节hash、差异及修改前原件见[本轮修订记录](<docs/coordination/execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md>)；这些文档不证明其他会话已经加载新要求。
+
+--- before:/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md
+
++++ current:/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md
+
+@@ -1,3 +1,5 @@
+
+ # 绿洲项目统一协同约定
++
++> 当前测试集资产用途：[BM1-R1／S1](<plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)；规则用于Skills/Dify制作输入，样例用于开发测试及公众号/网站素材，评价答案保持隔离。
+ 
+ > 当前执行分工以 [BM1-R1](<plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>) 为准：WorkBuddy采集与内容运营，Codex全部开发及Skills/工作流制作；旧阶段目标和历史证据保持。
+@@ -189,2 +191,17 @@
+
+ 
+ 读取入口：[BM1整体职责补充](<plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>)／[简洁总计划](<plans/2026-11-05-overall-plan-brief-bm1-r1.md>)；准确读取/原始完整字节hash、差异及修改前证据见[本轮记录](<execution/2026-11-05-bm1-roles-r1/修订说明.md>)。每次规划/开始或恢复执行仍按R1/EXEC-R2解析登记当前followup，不仅凭本链接或旧摘要。本轮仅文档和必要治理结构核验，不制作产品、不采集发文、不投递、不部署/收费、不安装/构建/提交/推送/发布。
++
++
++<!-- oasis-test-assets:BM1-R1-S1 -->
++<a id="oasis-test-assets-bm1-r1-s1"></a>
++## 测试集规则与样例用途补充（BM1-R1／S1，2026-11-05）
++
++用途补充接续BM1-R1；协同仍1.2.2，原角色和业务阶段不变。详见[整体用途补充](<plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)。
++
++- 测试集规则中适用且制作可见的部分，作为Codex制作Skills和Dify工作流的信息输入与规则基础，记录准确版本/原始SHA256、效力/用途、采用落点、条件及例外；不将全部规则自动生效或全部样例自动纳入生成。
++- 样例用于各项目开发过程中的适配测试，也作为WorkBuddy撰写公众号、网站推文的素材；Codex负责全部开发、测试及技术事实校核，WorkBuddy负责选材、撰稿和按实际范围发布。样例/测试结果/已发布文章分别留证。
++- 制作可见规则与题面、评价专用答案/评分材料、可公开宣传素材分开。evaluation_only答案不进入Skill正文/提示词、Dify生成上下文或对外素材；宣传仅引用可公开部分或有来源的演示派生稿，不改原可见性/原件/收据，不把已暴露答案的评价称独立盲测。
++- 复用原规则、样例、验收与测试证据，仅在选用时沿原记录补用途/映射和真实缺件；规则/素材可先交，测试与宣传不互等完成，不新增素材库、发布系统或第二套业务状态台账。
++- 本次仅文档维护，不选择/制作新规则或样例，不运行产品/业务测试、调用模型/API/Dify/数据库/支付、投递WorkBuddy、撰写或发布推文；原FAIL/UNKNOWN、冻结与接受保持。
++
++实际读取/完整原始字节hash、差异及修改前原件见[本轮修订记录](<execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md>)；这些文档不证明其他会话已经加载新要求。
+
+--- before:/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json
+
++++ current:/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json
+
+@@ -73,5 +73,6 @@
+
+       "master_plan": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+       "plan_status": "planning_only",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -115,5 +116,6 @@
+
+       "master_plan": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+       "plan_status": "planning_only",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -161,5 +163,6 @@
+
+       "master_plan": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+       "plan_status": "planning_only",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -203,5 +206,6 @@
+
+       "master_plan": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+       "plan_status": "planning_only",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -250,5 +254,6 @@
+
+       "master_plan": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+       "plan_status": "planning_only",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -306,5 +311,6 @@
+
+       "master_plan": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+       "plan_status": "planning_only",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -343,5 +349,6 @@
+
+       "master_plan": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+       "plan_status": "planning_only",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -386,5 +393,6 @@
+
+       "master_plan": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+       "plan_status": "planning_only",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -443,5 +451,6 @@
+
+         "2、工作流设计/1、专利工作流/Flow-1-3-概要专利检索"
+       ],
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -491,5 +500,6 @@
+
+       "master_plan": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+       "plan_status": "planning_only",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     }
+   ],
+@@ -648,5 +658,6 @@
+
+       "article_writing_and_publishing": "WorkBuddy",
+       "github_explanatory_writing": "WorkBuddy"
+-    }
++    },
++    "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+   },
+   "planned_components": [
+@@ -672,4 +683,18 @@
+
+     "article_writing_and_publishing": "WorkBuddy",
+     "github_explanatory_writing": "WorkBuddy"
++  },
++  "test_asset_use_reference": {
++    "id": "TEST-ASSETS-20261105-BM1-R1-S1",
++    "revision": "BM1-R1/S1",
++    "date": "2026-11-05",
++    "path": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++    "anchor": "bm1-test-assets-s1",
++    "plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
++    "plan_anchor": "oasis-test-assets-bm1-r1-s1",
++    "scope": "rule_production_inputs_sample_development_tests_and_public_account_website_material",
++    "execution_roles_unchanged": true,
++    "evaluation_only_isolated": true,
++    "no_asset_reclassification_or_publication": true,
++    "evidence": "docs/coordination/execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md"
+   }
+ }
+
+--- before:/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json
+
++++ current:/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json
+
+@@ -247,12 +247,12 @@
+
+         "revision": "R1",
+         "current_followup": {
+-          "id": "BUSINESS-ROLES-20261105-BM1-R1",
++          "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+           "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+-          "anchor": "oasis-business-roles-bm1-r1",
+-          "revision": "BM1-R1",
++          "anchor": "oasis-test-assets-bm1-r1-s1",
++          "revision": "BM1-R1/S1",
+           "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+-          "addendum_anchor": "bm1-roles-r1",
++          "addendum_anchor": "bm1-test-assets-s1",
+           "status": "planning_only",
+-          "supersedes_only": "executor roles; original stages/gates/progress retained"
++          "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+         },
+         "historical_current_followups": [
+@@ -274,9 +274,20 @@
+
+             "status": "planning_only",
+             "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
++          },
++          {
++            "id": "BUSINESS-ROLES-20261105-BM1-R1",
++            "path": "DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
++            "anchor": "oasis-business-roles-bm1-r1",
++            "revision": "BM1-R1",
++            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++            "addendum_anchor": "bm1-roles-r1",
++            "status": "planning_only",
++            "supersedes_only": "executor roles; original stages/gates/progress retained"
+           }
+         ]
+       },
+       "historical_goal_before_bm1": "交付以DSH为主要作业入口的专业客户端，支持版本化本地业务Skills和经后台提供的Dify专业服务，复用原生文件、模型与会话能力。",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -352,12 +363,12 @@
+
+         "revision": "R1",
+         "current_followup": {
+-          "id": "BUSINESS-ROLES-20261105-BM1-R1",
++          "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+           "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
+-          "anchor": "oasis-business-roles-bm1-r1",
+-          "revision": "BM1-R1",
++          "anchor": "oasis-test-assets-bm1-r1-s1",
++          "revision": "BM1-R1/S1",
+           "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+-          "addendum_anchor": "bm1-roles-r1",
++          "addendum_anchor": "bm1-test-assets-s1",
+           "status": "planning_only",
+-          "supersedes_only": "executor roles; original stages/gates/progress retained"
++          "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+         },
+         "historical_current_followups": [
+@@ -379,9 +390,20 @@
+
+             "status": "planning_only",
+             "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
++          },
++          {
++            "id": "BUSINESS-ROLES-20261105-BM1-R1",
++            "path": "workarea/docs/plans/2026-10-25-workarea-master-plan.md",
++            "anchor": "oasis-business-roles-bm1-r1",
++            "revision": "BM1-R1",
++            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++            "addendum_anchor": "bm1-roles-r1",
++            "status": "planning_only",
++            "supersedes_only": "executor roles; original stages/gates/progress retained"
+           }
+         ]
+       },
+       "historical_goal_before_bm1": "交付独立Web专业工作区，并完整承担用户账户管理和财务服务体验，与共享后台及DSH账户/财务入口兼容。",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -466,12 +488,12 @@
+
+         "revision": "R1",
+         "current_followup": {
+-          "id": "BUSINESS-ROLES-20261105-BM1-R1",
++          "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+           "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
+-          "anchor": "oasis-business-roles-bm1-r1",
+-          "revision": "BM1-R1",
++          "anchor": "oasis-test-assets-bm1-r1-s1",
++          "revision": "BM1-R1/S1",
+           "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+-          "addendum_anchor": "bm1-roles-r1",
++          "addendum_anchor": "bm1-test-assets-s1",
+           "status": "planning_only",
+-          "supersedes_only": "executor roles; original stages/gates/progress retained"
++          "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+         },
+         "historical_current_followups": [
+@@ -493,9 +515,20 @@
+
+             "status": "planning_only",
+             "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
++          },
++          {
++            "id": "BUSINESS-ROLES-20261105-BM1-R1",
++            "path": "绿洲慧写-后台4.0/docs/superpowers/plans/2026-10-25-backend-master-plan.md",
++            "anchor": "oasis-business-roles-bm1-r1",
++            "revision": "BM1-R1",
++            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++            "addendum_anchor": "bm1-roles-r1",
++            "status": "planning_only",
++            "supersedes_only": "executor roles; original stages/gates/progress retained"
+           }
+         ]
+       },
+       "historical_goal_before_bm1": "以数据库和API交付共享业务后台，衔接Dify，维护身份/权限/项目/任务/文件/资金事实，并保留既定R1用户—资金—任务管理闭环。",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -556,12 +589,12 @@
+
+         "revision": "R1",
+         "current_followup": {
+-          "id": "BUSINESS-ROLES-20261105-BM1-R1",
++          "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+           "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
+-          "anchor": "oasis-business-roles-bm1-r1",
+-          "revision": "BM1-R1",
++          "anchor": "oasis-test-assets-bm1-r1-s1",
++          "revision": "BM1-R1/S1",
+           "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+-          "addendum_anchor": "bm1-roles-r1",
++          "addendum_anchor": "bm1-test-assets-s1",
+           "status": "planning_only",
+-          "supersedes_only": "executor roles; original stages/gates/progress retained"
++          "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+         },
+         "historical_current_followups": [
+@@ -581,9 +614,20 @@
+
+             "status": "planning_only",
+             "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
++          },
++          {
++            "id": "BUSINESS-ROLES-20261105-BM1-R1",
++            "path": "专利知识库/3、过程文件/项目管理/2026-10-25-knowledge-master-plan.md",
++            "anchor": "oasis-business-roles-bm1-r1",
++            "revision": "BM1-R1",
++            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++            "addendum_anchor": "bm1-roles-r1",
++            "status": "planning_only",
++            "supersedes_only": "executor roles; original stages/gates/progress retained"
+           }
+         ]
+       },
+       "historical_goal_before_bm1": "在WorkBuddy中持续收集、整理和维护29项目标及T01所需的可追溯知识资产，按指定用途交付可消费知识包；原一期F0/T01配套工具作为独立未来路线保留，不因此启动实现。",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -651,12 +695,12 @@
+
+         "revision": "R1",
+         "current_followup": {
+-          "id": "BUSINESS-ROLES-20261105-BM1-R1",
++          "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+           "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
+-          "anchor": "oasis-business-roles-bm1-r1",
+-          "revision": "BM1-R1",
++          "anchor": "oasis-test-assets-bm1-r1-s1",
++          "revision": "BM1-R1/S1",
+           "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+-          "addendum_anchor": "bm1-roles-r1",
++          "addendum_anchor": "bm1-test-assets-s1",
+           "status": "planning_only",
+-          "supersedes_only": "executor roles; original stages/gates/progress retained"
++          "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+         },
+         "historical_current_followups": [
+@@ -676,9 +720,20 @@
+
+             "status": "planning_only",
+             "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
++          },
++          {
++            "id": "BUSINESS-ROLES-20261105-BM1-R1",
++            "path": "专利知识库/patent-distillery/docs/superpowers/plans/2026-10-25-distillery-master-plan.md",
++            "anchor": "oasis-business-roles-bm1-r1",
++            "revision": "BM1-R1",
++            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++            "addendum_anchor": "bm1-roles-r1",
++            "status": "planning_only",
++            "supersedes_only": "executor roles; original stages/gates/progress retained"
+           }
+         ]
+       },
+       "historical_goal_before_bm1": "在WorkBuddy中将具名知识与规则蒸馏成版本化业务Skills，分别交付DSH消费资源和Dify编排依据。",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -764,12 +819,12 @@
+
+         "revision": "R1",
+         "current_followup": {
+-          "id": "BUSINESS-ROLES-20261105-BM1-R1",
++          "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+           "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
+-          "anchor": "oasis-business-roles-bm1-r1",
+-          "revision": "BM1-R1",
++          "anchor": "oasis-test-assets-bm1-r1-s1",
++          "revision": "BM1-R1/S1",
+           "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+-          "addendum_anchor": "bm1-roles-r1",
++          "addendum_anchor": "bm1-test-assets-s1",
+           "status": "planning_only",
+-          "supersedes_only": "executor roles; original stages/gates/progress retained"
++          "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+         },
+         "historical_current_followups": [
+@@ -789,9 +844,20 @@
+
+             "status": "planning_only",
+             "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
++          },
++          {
++            "id": "BUSINESS-ROLES-20261105-BM1-R1",
++            "path": "测试集库/docs/superpowers/plans/2026-10-25-test-library-master-plan.md",
++            "anchor": "oasis-business-roles-bm1-r1",
++            "revision": "BM1-R1",
++            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++            "addendum_anchor": "bm1-roles-r1",
++            "status": "planning_only",
++            "supersedes_only": "executor roles; original stages/gates/progress retained"
+           }
+         ]
+       },
+       "historical_goal_before_bm1": "交付可复用规则、参考文稿与Skills/Dify测试基础设施，准确区分文稿建设和工程运行两条工作线。",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -832,12 +898,12 @@
+
+         "revision": "R1",
+         "current_followup": {
+-          "id": "BUSINESS-ROLES-20261105-BM1-R1",
++          "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+           "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
+-          "anchor": "oasis-business-roles-bm1-r1",
+-          "revision": "BM1-R1",
++          "anchor": "oasis-test-assets-bm1-r1-s1",
++          "revision": "BM1-R1/S1",
+           "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+-          "addendum_anchor": "bm1-roles-r1",
++          "addendum_anchor": "bm1-test-assets-s1",
+           "status": "planning_only",
+-          "supersedes_only": "executor roles; original stages/gates/progress retained"
++          "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+         },
+         "historical_current_followups": [
+@@ -859,9 +925,20 @@
+
+             "status": "planning_only",
+             "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
++          },
++          {
++            "id": "BUSINESS-ROLES-20261105-BM1-R1",
++            "path": "workbuddy连接器/workbuddy-session-bridge/docs/superpowers/plans/2026-10-25-bridge-master-plan.md",
++            "anchor": "oasis-business-roles-bm1-r1",
++            "revision": "BM1-R1",
++            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++            "addendum_anchor": "bm1-roles-r1",
++            "status": "planning_only",
++            "supersedes_only": "executor roles; original stages/gates/progress retained"
+           }
+         ]
+       },
+       "historical_goal_before_bm1": "交付Codex与WorkBuddy之间可核对的任务投递、定向取件、执行返回与产物复核通道。",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -939,12 +1016,12 @@
+
+         "revision": "R1",
+         "current_followup": {
+-          "id": "BUSINESS-ROLES-20261105-BM1-R1",
++          "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+           "path": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
+-          "anchor": "oasis-business-roles-bm1-r1",
+-          "revision": "BM1-R1",
++          "anchor": "oasis-test-assets-bm1-r1-s1",
++          "revision": "BM1-R1/S1",
+           "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+-          "addendum_anchor": "bm1-roles-r1",
++          "addendum_anchor": "bm1-test-assets-s1",
+           "status": "planning_only",
+-          "supersedes_only": "executor roles; original stages/gates/progress retained"
++          "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+         },
+         "historical_current_followups": [
+@@ -957,9 +1034,20 @@
+
+             "status": "planning_only",
+             "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
++          },
++          {
++            "id": "BUSINESS-ROLES-20261105-BM1-R1",
++            "path": "docs/coordination/plans/2026-10-25-dify-workflows-master-plan.md",
++            "anchor": "oasis-business-roles-bm1-r1",
++            "revision": "BM1-R1",
++            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++            "addendum_anchor": "bm1-roles-r1",
++            "status": "planning_only",
++            "supersedes_only": "executor roles; original stages/gates/progress retained"
+           }
+         ]
+       },
+       "historical_goal_before_bm1": "消费固定本地设计及业务Skill/规则，在获准Dify实例导入、配置、独立验证并向后台交付版本化专业能力。",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -1033,12 +1121,12 @@
+
+         "revision": "R1",
+         "current_followup": {
+-          "id": "BUSINESS-ROLES-20261105-BM1-R1",
++          "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+           "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
+-          "anchor": "oasis-business-roles-bm1-r1",
+-          "revision": "BM1-R1",
++          "anchor": "oasis-test-assets-bm1-r1-s1",
++          "revision": "BM1-R1/S1",
+           "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+-          "addendum_anchor": "bm1-roles-r1",
++          "addendum_anchor": "bm1-test-assets-s1",
+           "status": "planning_only",
+-          "supersedes_only": "executor roles; original stages/gates/progress retained"
++          "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+         },
+         "historical_current_followups": [
+@@ -1058,9 +1146,20 @@
+
+             "status": "planning_only",
+             "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
++          },
++          {
++            "id": "BUSINESS-ROLES-20261105-BM1-R1",
++            "path": "docs/coordination/plans/2026-10-25-dify-design-master-plan.md",
++            "anchor": "oasis-business-roles-bm1-r1",
++            "revision": "BM1-R1",
++            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++            "addendum_anchor": "bm1-roles-r1",
++            "status": "planning_only",
++            "supersedes_only": "executor roles; original stages/gates/progress retained"
+           }
+         ]
+       },
+       "historical_goal_before_bm1": "交付以固定业务Skills和测试集库规则为基础、可追溯的本地工作流设计包，与外部Dify实例及后台合同兼容。",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     },
+     {
+@@ -1120,12 +1219,12 @@
+
+         "revision": "R1",
+         "current_followup": {
+-          "id": "BUSINESS-ROLES-20261105-BM1-R1",
++          "id": "TEST-ASSETS-20261105-BM1-R1-S1",
+           "path": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
+-          "anchor": "oasis-business-roles-bm1-r1",
+-          "revision": "BM1-R1",
++          "anchor": "oasis-test-assets-bm1-r1-s1",
++          "revision": "BM1-R1/S1",
+           "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+-          "addendum_anchor": "bm1-roles-r1",
++          "addendum_anchor": "bm1-test-assets-s1",
+           "status": "planning_only",
+-          "supersedes_only": "executor roles; original stages/gates/progress retained"
++          "supersedes_only": "asset uses; roles, stages, original gates and progress retained"
+         },
+         "historical_current_followups": [
+@@ -1138,9 +1237,20 @@
+
+             "status": "planning_only",
+             "supersedes_only": "conflicting business priorities; actual current progress and original gates retained"
++          },
++          {
++            "id": "BUSINESS-ROLES-20261105-BM1-R1",
++            "path": "1、绿洲慧写五步法/docs/plans/2026-10-25-five-step-method-master-plan.md",
++            "anchor": "oasis-business-roles-bm1-r1",
++            "revision": "BM1-R1",
++            "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++            "addendum_anchor": "bm1-roles-r1",
++            "status": "planning_only",
++            "supersedes_only": "executor roles; original stages/gates/progress retained"
+           }
+         ]
+       },
+       "historical_goal_before_bm1": "维护可追溯的绿洲五步法和技术要素表原件、术语及培训资料，按用途为知识、规则与工作流设计提供经审阅来源。",
+-      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1"
++      "business_mode_ref": "BUSINESS-ROLES-20261105-BM1-R1",
++      "test_asset_use_ref": "TEST-ASSETS-20261105-BM1-R1-S1"
+     }
+   ],
+@@ -1308,7 +1418,32 @@
+
+         "business_execution_started": false,
+         "supersedes": "old executor roles only; BM1 stage targets, original gates/progress retained"
++      },
++      {
++        "id": "TEST-ASSETS-20261105-BM1-R1-S1",
++        "date": "2026-11-05",
++        "revision": "BM1-R1/S1",
++        "path": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
++        "anchor": "oasis-test-assets-bm1-r1-s1",
++        "addendum": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++        "addendum_anchor": "bm1-test-assets-s1",
++        "previous_followup_id": "BUSINESS-ROLES-20261105-BM1-R1",
++        "affected_projects": [
++          "dsh-oasis",
++          "workarea",
++          "backend",
++          "knowledge",
++          "patent-distillery",
++          "test-library",
++          "workbuddy-bridge",
++          "dify",
++          "dify-design",
++          "five-step-method"
++        ],
++        "scope": "test_asset_use_documentation_only_roles_and_business_gates_retained",
++        "business_execution_started": false,
++        "supersedes": "only incomplete asset-use descriptions; BM1-R1 roles, BM1 stages, original contracts/progress/evidence retained"
+       }
+     ],
+-    "current_followup": "BUSINESS-ROLES-20261105-BM1-R1"
++    "current_followup": "TEST-ASSETS-20261105-BM1-R1-S1"
+   },
+   "interface_standard_references": {
+@@ -1640,4 +1775,18 @@
+
+     "article_writing_and_publishing": "WorkBuddy",
+     "github_explanatory_writing": "WorkBuddy"
++  },
++  "test_asset_use_reference": {
++    "id": "TEST-ASSETS-20261105-BM1-R1-S1",
++    "revision": "BM1-R1/S1",
++    "date": "2026-11-05",
++    "path": "docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
++    "anchor": "bm1-test-assets-s1",
++    "plan": "docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
++    "plan_anchor": "oasis-test-assets-bm1-r1-s1",
++    "scope": "rule_production_inputs_sample_development_tests_and_public_account_website_material",
++    "execution_roles_unchanged": true,
++    "evaluation_only_isolated": true,
++    "no_asset_reclassification_or_publication": true,
++    "evidence": "docs/coordination/execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md"
+   }
+ }
+
+--- before:/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md
+
++++ current:/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md
+
+@@ -1,3 +1,5 @@
+
+ # 各项目独立总计划与兼容协调计划
++
++> 当前测试集资产用途：[BM1-R1／S1](<../../coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)；规则用于Skills/Dify制作输入，样例用于开发测试及公众号/网站素材，评价答案保持隔离。
+ 
+ > 当前执行分工以 [BM1-R1](<../../coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>) 为准：WorkBuddy采集与内容运营，Codex全部开发及Skills/工作流制作；旧阶段目标和历史证据保持。
+@@ -267,2 +269,17 @@
+
+ 
+ 读取入口：[BM1整体职责补充](<../../coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>)／[简洁总计划](<../../coordination/plans/2026-11-05-overall-plan-brief-bm1-r1.md>)；准确读取/原始完整字节hash、差异及修改前证据见[本轮记录](<../../coordination/execution/2026-11-05-bm1-roles-r1/修订说明.md>)。每次规划/开始或恢复执行仍按R1/EXEC-R2解析登记当前followup，不仅凭本链接或旧摘要。本轮仅文档和必要治理结构核验，不制作产品、不采集发文、不投递、不部署/收费、不安装/构建/提交/推送/发布。
++
++
++<!-- oasis-test-assets:BM1-R1-S1 -->
++<a id="oasis-test-assets-bm1-r1-s1"></a>
++## 测试集规则与样例用途补充（BM1-R1／S1，2026-11-05）
++
++用途补充接续BM1-R1；协同仍1.2.2，原角色和业务阶段不变。详见[整体用途补充](<../../coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)。
++
++- 测试集规则中适用且制作可见的部分，作为Codex制作Skills和Dify工作流的信息输入与规则基础，记录准确版本/原始SHA256、效力/用途、采用落点、条件及例外；不将全部规则自动生效或全部样例自动纳入生成。
++- 样例用于各项目开发过程中的适配测试，也作为WorkBuddy撰写公众号、网站推文的素材；Codex负责全部开发、测试及技术事实校核，WorkBuddy负责选材、撰稿和按实际范围发布。样例/测试结果/已发布文章分别留证。
++- 制作可见规则与题面、评价专用答案/评分材料、可公开宣传素材分开。evaluation_only答案不进入Skill正文/提示词、Dify生成上下文或对外素材；宣传仅引用可公开部分或有来源的演示派生稿，不改原可见性/原件/收据，不把已暴露答案的评价称独立盲测。
++- 复用原规则、样例、验收与测试证据，仅在选用时沿原记录补用途/映射和真实缺件；规则/素材可先交，测试与宣传不互等完成，不新增素材库、发布系统或第二套业务状态台账。
++- 本次仅文档维护，不选择/制作新规则或样例，不运行产品/业务测试、调用模型/API/Dify/数据库/支付、投递WorkBuddy、撰写或发布推文；原FAIL/UNKNOWN、冻结与接受保持。
++
++实际读取/完整原始字节hash、差异及修改前原件见[本轮修订记录](<../../coordination/execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md>)；这些文档不证明其他会话已经加载新要求。
+
+--- before:/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md
+
++++ current:/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md
+
+@@ -1,3 +1,5 @@
+
+ # 绿洲慧写开源与服务业务模式调整补充计划（BM1）
++
++> 当前测试集资产用途：[BM1-R1／S1](<2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)；规则用于Skills/Dify制作输入，样例用于开发测试及公众号/网站素材，评价答案保持隔离。
+ 
+ > 当前执行分工以 [BM1-R1](<2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>) 为准：WorkBuddy采集与内容运营，Codex全部开发及Skills/工作流制作；旧阶段目标和历史证据保持。
+@@ -140,2 +142,42 @@
+
+ 
+ 详见[简洁总计划](<2026-11-05-overall-plan-brief-bm1-r1.md>)和[修订说明](<../execution/2026-11-05-bm1-roles-r1/修订说明.md>)。原BM1全文/hash在本次before保留，原验证不重签；协同1.2.2只表示职责文档修订，不代表产品升级/会话加载或业务接受。
++
++
++<!-- oasis-test-assets:BM1-R1-S1 -->
++<a id="bm1-test-assets-s1"></a>
++## 10. 测试集规则与样例用途补充（BM1-R1／S1）
++
++补充ID：TEST-ASSETS-20261105-BM1-R1-S1；2026-11-05，Asia/Shanghai。依据用户本次明确决定。S1接续§9执行分工；基础规划1.3.1／NS1-R1与P28/P30适用部分、BM1阶段及BM1-R1角色保持，协同仍1.2.2。本次澄清既有资产用途，不改变提供/消费职责归属或26条必要关系。
++
++### 三种用途与评价隔离
++
++| 资产与用途 | 提供/执行及原合同 | 使用时的准确出口 |
++|---|---|---|
++| 制作可见规则→Skills、Dify制作输入 | TL交适用规则，Codex在PD/WD/DF制作；复用IC-RULES、IC-SKILL、IC-DESIGN | 规则ID/版本/hash、效力/试用用途、正文内容/条件例外→Skill位置→节点/变量/提示词/Schema及检查映射；不适用/冲突/缺件逐项列出，不只作事后评分 |
++| 样例→开发过程测试 | Codex按各项目合同选择题面/夹具/参考，评价侧按原范围消费答案；沿TL及各工程现有测试机制 | 样例ID/版本/hash、输入与评价角色、目标代码/Skill/工作流/Host版本、测试类型、实测或未运行、结果与限制分别绑定；固定原件、运行夹具和负例分开，不裁剪原件掩盖容量 |
++| 样例→公众号/网站推文素材 | WorkBuddy选材、撰稿及按实际范围发布；Codex给同版技术事实和准确性校核；沿已有交接记录 | 原样例身份→可公开片段/演示派生稿→文稿主张与证据映射；草稿/技术校核/实际发布分别记录，真实发布后才有URL/文章ID/时间，不将素材存在写成已发布 |
++
++样例不是整体改作生成输入或自动公开。制作可见规则/题面、evaluation_only答案与评分材料、拟公开素材分开；原评价专用答案/隐藏判据不得进入Skill正文/references/assets、工作流提示词/生成上下文、公开示例包或推文。宣传使用允许公开的部分或有准确来源的演示派生稿，原可见性、冻结、接受与权利边界不改；已暴露答案的评价不得仍宣称独立盲测，具体影响按原测试合同说明，不自动重建测试集。
++
++### 各项目适用与执行顺序
++
++- **dsh-oasis：** Codex按所选业务Skill的规则采用范围与目标Host合同复用样例做开发测试，固定Skill/规则/输入/结果版本；本地Skills与远程专业服务分别验证。测试材料不自动变成首发包或产品生成输入，宣传只引用同版已核事实，不新增模板或调用。
++- **workarea：** Codex按网站UI、API、账户与财务合同选择适配样例或合成/脱敏夹具，WorkBuddy选取可公开样例撰写网站及公众号推文；网站发布技术由Codex维护。沿已有网站能力和实际发布渠道办理，不新建重复网站、内容库或账户账务事实。
++- **backend：** Codex按API、任务、文件、身份与资金合同选用适配样例/合成夹具验证后台兼容，测试集文稿不代后台接口、数据库或账务验收。只向WorkBuddy提供可公开的同版技术事实；本轮不运行数据库、支付或真实服务。
++- **knowledge：** WorkBuddy可结合既有知识库与测试集可公开样例选材、撰写公众号和网站推文；Codex提供规则用途与技术事实。直接引用测试集原入口和素材身份，不把样例改成权威知识、强制复制入源库或重采集同一素材；原知识来源/专业采用门保持。
++- **patent-distillery：** Codex在PD-01/02按适用范围直接消费测试集库的制作可见规则，记录规则到Skill正文/references/assets/输入输出约束的落点、版本/hash与例外，无须先把规则复制入知识库。样例用于PD-03及开发测试；评价专用答案不进入Skill/提示词/生成输入，制作不等待同一候选先测试通过。
++- **test-library：** Codex在原TL-01/02/05交规则的制作可见部分、用途/效力与映射依据，供Skills及Dify制作；维护样例对开发测试与宣传选材的不同用途说明。WorkBuddy负责公众号/网站推文，Codex给同版技术事实；不新增案例生产、强制公开所有样例、重新验收文稿或另建素材状态库。
++- **workbuddy-bridge：** 连接器只衔接实际获准的素材/文稿任务与返回身份，不承担专利规则制作；公开样例交接可沿已有文档/人工辅助方式准备，不以真实连接器闭环为前置。既有协议fake示例与专利业务样例分开，复用已审成果，不为本补充启动CLI、队列、测试或重派UNKNOWN。
++- **dify：** Codex按固定Skill和测试集制作可见规则制作/适配工作流，记录规则到实际节点、提示词、变量、Schema/输出检查的映射；样例供获准的开发/回归测试，实例证据单独取得。评价答案不进生成输入，宣传运行效果须绑定同一实例/版本真实证据，不由样例存在补认运行。
++- **dify-design：** Codex按固定Skill及独立测试集库的制作可见规则制作本地设计，并将规则落实到节点/提示词/变量/Schema及检查位置；样例只按本地设计合同与原Batch准入用于开发测试。直接引用独立库，不复制案例库或把评价答案写进节点；原唯一README、事务和存档排除保持。
++- **five-step-method：** 可按具体用途引用测试样例解释方法或核对映射；Codex负责技术映射与开发测试，WorkBuddy负责基于可公开样例撰写公众号/网站内容。示例展示不使方法自动成为正式规则，不改方法原件、培训成果、原专业接受或14节点顺序。
++
++制作可见规则可先交，既有样例可按用途独立复用；Codex制作与开发测试、WorkBuddy素材草拟可各按自身范围推进。测试对象需要固定候选，但规则交付不等待同一候选通过测试；素材草拟不等待全库/平台/连接器运行，实际发布才消费相应公开范围与校核证据。通过、接受、收费与上线各按原门，不因S1自动放行。
++
++不新增45工作包之外的平行任务、案例/素材状态库、公众号平台或发布系统，不把样例必须复制入知识库、全17例完成、全部规则生效、Star或WorkBuddy取件设为共同前置。首批Skills、收费能力约1—2个月、自制后台替换约2—3个月及起算点待定保持。
++
++### 文档验收与范围
++
++本次验收仅核：整体/十master/README/AGENTS与登记接续一致；制作输入、测试和素材用途明确；评价答案不越域；Codex与WorkBuddy分工一致；版本/hash/差异与历史字节可回读。原规则效力、样例/文稿接受、真实运行、专业/用户/发布状态仍在原入口，不在本节复制台账。未选择具体案例/规则或启动生产、测试、调用、投递、发文、安装/构建/提交/推送/发布。
++
++本轮完整证据见[修订记录](<../execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md>)。未来规划/执行从登记当前followup定位本S1，并记录父文件完整字节hash及本锚点；不可把旧BM1-R1摘要、同版副本或历史审计当本次已读。
+
+--- before:/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md
+
++++ current:/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md
+
+@@ -1,3 +1,5 @@
+
+ # 各项目共享兼容矩阵
++
++> 当前测试集资产用途：[BM1-R1／S1](<../plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)；规则用于Skills/Dify制作输入，样例用于开发测试及公众号/网站素材，评价答案保持隔离。
+ 
+ > 当前执行分工以 [BM1-R1](<../plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>) 为准：WorkBuddy采集与内容运营，Codex全部开发及Skills/工作流制作；旧阶段目标和历史证据保持。
+@@ -207,2 +209,25 @@
+
+ 
+ 读取入口：[BM1整体职责补充](<../plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>)／[简洁总计划](<../plans/2026-11-05-overall-plan-brief-bm1-r1.md>)；准确读取/原始完整字节hash、差异及修改前证据见[本轮记录](<../execution/2026-11-05-bm1-roles-r1/修订说明.md>)。每次规划/开始或恢复执行仍按R1/EXEC-R2解析登记当前followup，不仅凭本链接或旧摘要。本轮仅文档和必要治理结构核验，不制作产品、不采集发文、不投递、不部署/收费、不安装/构建/提交/推送/发布。
++
++
++<!-- oasis-test-assets:BM1-R1-S1 -->
++<a id="oasis-test-assets-bm1-r1-s1"></a>
++## 测试集规则与样例用途补充（BM1-R1／S1，2026-11-05）
++
++用途补充接续BM1-R1；协同仍1.2.2，原角色和业务阶段不变。详见[整体用途补充](<../plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)。
++
++- 测试集规则中适用且制作可见的部分，作为Codex制作Skills和Dify工作流的信息输入与规则基础，记录准确版本/原始SHA256、效力/用途、采用落点、条件及例外；不将全部规则自动生效或全部样例自动纳入生成。
++- 样例用于各项目开发过程中的适配测试，也作为WorkBuddy撰写公众号、网站推文的素材；Codex负责全部开发、测试及技术事实校核，WorkBuddy负责选材、撰稿和按实际范围发布。样例/测试结果/已发布文章分别留证。
++- 制作可见规则与题面、评价专用答案/评分材料、可公开宣传素材分开。evaluation_only答案不进入Skill正文/提示词、Dify生成上下文或对外素材；宣传仅引用可公开部分或有来源的演示派生稿，不改原可见性/原件/收据，不把已暴露答案的评价称独立盲测。
++- 复用原规则、样例、验收与测试证据，仅在选用时沿原记录补用途/映射和真实缺件；规则/素材可先交，测试与宣传不互等完成，不新增素材库、发布系统或第二套业务状态台账。
++- 本次仅文档维护，不选择/制作新规则或样例，不运行产品/业务测试、调用模型/API/Dify/数据库/支付、投递WorkBuddy、撰写或发布推文；原FAIL/UNKNOWN、冻结与接受保持。
++
++实际读取/完整原始字节hash、差异及修改前原件见[本轮修订记录](<../execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md>)；这些文档不证明其他会话已经加载新要求。
++
++### 用途兼容核对
++
++| 用途 | 复用合同与准确检查 | 独立推进边界 |
++|---|---|---|
++| 制作输入 | IC-RULES→IC-SKILL／IC-DESIGN，固定规则内容、用途/效力和采用位置；evaluation_only隔离 | 规则/规格可先交，不要求候选先测试通过或规则全部正式生效 |
++| 开发测试 | 原测试输入/受测包与IC-ARTIFACT结果，分别绑定题面、评价材料、夹具和真实结果 | 按各工程目标选择适配材料；Skills、Dify、后台、前端的通过不相互推定 |
++| 推文素材 | 复用IC-ARTIFACT及原文稿交接，绑定样例→公开派生稿→主张/证据→实际发布 | 文稿可先准备，发布消费自己的校核/公开范围；不反向阻开发，不让连接器变成专利规则生产方 |
+
+--- before:/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md
+
++++ current:/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md
+
+@@ -1,3 +1,5 @@
+
+ # 跨项目交付合同
++
++> 当前测试集资产用途：[BM1-R1／S1](<plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)；规则用于Skills/Dify制作输入，样例用于开发测试及公众号/网站素材，评价答案保持隔离。
+ 
+ > 当前执行分工以 [BM1-R1](<plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>) 为准：WorkBuddy采集与内容运营，Codex全部开发及Skills/工作流制作；旧阶段目标和历史证据保持。
+@@ -130,2 +132,23 @@
+
+ 
+ 读取入口：[BM1整体职责补充](<plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>)／[简洁总计划](<plans/2026-11-05-overall-plan-brief-bm1-r1.md>)；准确读取/原始完整字节hash、差异及修改前证据见[本轮记录](<execution/2026-11-05-bm1-roles-r1/修订说明.md>)。每次规划/开始或恢复执行仍按R1/EXEC-R2解析登记当前followup，不仅凭本链接或旧摘要。本轮仅文档和必要治理结构核验，不制作产品、不采集发文、不投递、不部署/收费、不安装/构建/提交/推送/发布。
++
++
++<!-- oasis-test-assets:BM1-R1-S1 -->
++<a id="oasis-test-assets-bm1-r1-s1"></a>
++## 测试集规则与样例用途补充（BM1-R1／S1，2026-11-05）
++
++用途补充接续BM1-R1；协同仍1.2.2，原角色和业务阶段不变。详见[整体用途补充](<plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)。
++
++- 测试集规则中适用且制作可见的部分，作为Codex制作Skills和Dify工作流的信息输入与规则基础，记录准确版本/原始SHA256、效力/用途、采用落点、条件及例外；不将全部规则自动生效或全部样例自动纳入生成。
++- 样例用于各项目开发过程中的适配测试，也作为WorkBuddy撰写公众号、网站推文的素材；Codex负责全部开发、测试及技术事实校核，WorkBuddy负责选材、撰稿和按实际范围发布。样例/测试结果/已发布文章分别留证。
++- 制作可见规则与题面、评价专用答案/评分材料、可公开宣传素材分开。evaluation_only答案不进入Skill正文/提示词、Dify生成上下文或对外素材；宣传仅引用可公开部分或有来源的演示派生稿，不改原可见性/原件/收据，不把已暴露答案的评价称独立盲测。
++- 复用原规则、样例、验收与测试证据，仅在选用时沿原记录补用途/映射和真实缺件；规则/素材可先交，测试与宣传不互等完成，不新增素材库、发布系统或第二套业务状态台账。
++- 本次仅文档维护，不选择/制作新规则或样例，不运行产品/业务测试、调用模型/API/Dify/数据库/支付、投递WorkBuddy、撰写或发布推文；原FAIL/UNKNOWN、冻结与接受保持。
++
++实际读取/完整原始字节hash、差异及修改前原件见[本轮修订记录](<execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md>)；这些文档不证明其他会话已经加载新要求。
++
++### 既有交付记录的用途补充
++
++制作输入沿IC-RULES→IC-SKILL／IC-DESIGN，测试仍沿原样例/受测包及结果记录；公众号/网站素材沿原IC-ARTIFACT/交接记录关联。只在实际选用时补：来源ID、绝对路径、版本/UID及原始hash、输入/评价/宣传角色、允许用途与公开范围、所选片段/派生稿身份、技术事实/文稿主张映射、返回与实际采纳/发布范围。复用原字段或sidecar，不新增HTTP协议、合同类别或并行业务台账。
++
++规则和样例的提供、制作方采用、测试结果、WorkBuddy成稿、Codex技术校核及实际发布分别成立；任一完成不替代其他接受。不因素材用途改旧expected hash、参考答案角色或已冻结规则/样例/收据。
+
+--- before:/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md
+
++++ current:/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md
+
+@@ -1,3 +1,5 @@
+
+ # AGENTS.md — 绿洲统一专业工作台项目规则
++
++> 当前测试集资产用途：[BM1-R1／S1](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)；规则用于Skills/Dify制作输入，样例用于开发测试及公众号/网站素材，评价答案保持隔离。
+ 
+ > 当前执行分工以 [BM1-R1](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>) 为准：WorkBuddy采集与内容运营，Codex全部开发及Skills/工作流制作；旧阶段目标和历史证据保持。
+@@ -232,2 +234,18 @@
+
+ 
+ 读取入口：[BM1整体职责补充](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>)／[简洁总计划](<../docs/coordination/plans/2026-11-05-overall-plan-brief-bm1-r1.md>)；准确读取/原始完整字节hash、差异及修改前证据见[本轮记录](<../docs/coordination/execution/2026-11-05-bm1-roles-r1/修订说明.md>)。每次规划/开始或恢复执行仍按R1/EXEC-R2解析登记当前followup，不仅凭本链接或旧摘要。本轮仅文档和必要治理结构核验，不制作产品、不采集发文、不投递、不部署/收费、不安装/构建/提交/推送/发布。
++
++
++<!-- oasis-test-assets:BM1-R1-S1 -->
++<a id="oasis-test-assets-bm1-r1-s1"></a>
++## 测试集规则与样例用途补充（BM1-R1／S1，2026-11-05）
++
++用途补充接续BM1-R1；协同仍1.2.2，原角色和业务阶段不变。详见[整体用途补充](<../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)。
++
++- 测试集规则中适用且制作可见的部分，作为Codex制作Skills和Dify工作流的信息输入与规则基础，记录准确版本/原始SHA256、效力/用途、采用落点、条件及例外；不将全部规则自动生效或全部样例自动纳入生成。
++- 样例用于各项目开发过程中的适配测试，也作为WorkBuddy撰写公众号、网站推文的素材；Codex负责全部开发、测试及技术事实校核，WorkBuddy负责选材、撰稿和按实际范围发布。样例/测试结果/已发布文章分别留证。
++- 制作可见规则与题面、评价专用答案/评分材料、可公开宣传素材分开。evaluation_only答案不进入Skill正文/提示词、Dify生成上下文或对外素材；宣传仅引用可公开部分或有来源的演示派生稿，不改原可见性/原件/收据，不把已暴露答案的评价称独立盲测。
++- 每次规划或开始/恢复执行，按R1/EXEC-R2从登记解析本S1及相关合同；用原任务/交接记录绑定所选规则/样例/用途和派生关系，记录版本/hash及差异。未选样例不要求先全库盘点，原准入/Batch/来源/许可/接受门继续。
++- 本项目适用：Codex按所选业务Skill的规则采用范围与目标Host合同复用样例做开发测试，固定Skill/规则/输入/结果版本；本地Skills与远程专业服务分别验证。测试材料不自动变成首发包或产品生成输入，宣传只引用同版已核事实，不新增模板或调用。
++- 本次仅文档维护，不选择/制作新规则或样例，不运行产品/业务测试、调用模型/API/Dify/数据库/支付、投递WorkBuddy、撰写或发布推文；原FAIL/UNKNOWN、冻结与接受保持。
++
++实际读取/完整原始字节hash、差异及修改前原件见[本轮修订记录](<../docs/coordination/execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md>)；这些文档不证明其他会话已经加载新要求。
+
+--- before:/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md
+
++++ current:/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md
+
+@@ -1,3 +1,5 @@
+
+ # DSH-Oasis独立总计划
++
++> 当前测试集资产用途：[BM1-R1／S1](<../../../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)；规则用于Skills/Dify制作输入，样例用于开发测试及公众号/网站素材，评价答案保持隔离。
+ 
+ > 当前执行分工以 [BM1-R1](<../../../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>) 为准：WorkBuddy采集与内容运营，Codex全部开发及Skills/工作流制作；旧阶段目标和历史证据保持。
+@@ -330,2 +332,18 @@
+
+ 
+ 读取入口：[BM1整体职责补充](<../../../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-roles-r1>)／[简洁总计划](<../../../docs/coordination/plans/2026-11-05-overall-plan-brief-bm1-r1.md>)；准确读取/原始完整字节hash、差异及修改前证据见[本轮记录](<../../../docs/coordination/execution/2026-11-05-bm1-roles-r1/修订说明.md>)。每次规划/开始或恢复执行仍按R1/EXEC-R2解析登记当前followup，不仅凭本链接或旧摘要。本轮仅文档和必要治理结构核验，不制作产品、不采集发文、不投递、不部署/收费、不安装/构建/提交/推送/发布。
++
++
++<!-- oasis-test-assets:BM1-R1-S1 -->
++<a id="oasis-test-assets-bm1-r1-s1"></a>
++## 测试集规则与样例用途补充（BM1-R1／S1，2026-11-05）
++
++用途补充接续BM1-R1；协同仍1.2.2，原角色和业务阶段不变。详见[整体用途补充](<../../../docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md#bm1-test-assets-s1>)。
++
++- 测试集规则中适用且制作可见的部分，作为Codex制作Skills和Dify工作流的信息输入与规则基础，记录准确版本/原始SHA256、效力/用途、采用落点、条件及例外；不将全部规则自动生效或全部样例自动纳入生成。
++- 样例用于各项目开发过程中的适配测试，也作为WorkBuddy撰写公众号、网站推文的素材；Codex负责全部开发、测试及技术事实校核，WorkBuddy负责选材、撰稿和按实际范围发布。样例/测试结果/已发布文章分别留证。
++- 制作可见规则与题面、评价专用答案/评分材料、可公开宣传素材分开。evaluation_only答案不进入Skill正文/提示词、Dify生成上下文或对外素材；宣传仅引用可公开部分或有来源的演示派生稿，不改原可见性/原件/收据，不把已暴露答案的评价称独立盲测。
++- 复用原规则、样例、验收与测试证据，仅在选用时沿原记录补用途/映射和真实缺件；规则/素材可先交，测试与宣传不互等完成，不新增素材库、发布系统或第二套业务状态台账。
++- 本项目适用：Codex按所选业务Skill的规则采用范围与目标Host合同复用样例做开发测试，固定Skill/规则/输入/结果版本；本地Skills与远程专业服务分别验证。测试材料不自动变成首发包或产品生成输入，宣传只引用同版已核事实，不新增模板或调用。
++- 本次仅文档维护，不选择/制作新规则或样例，不运行产品/业务测试、调用模型/API/Dify/数据库/支付、投递WorkBuddy、撰写或发布推文；原FAIL/UNKNOWN、冻结与接受保持。
++
++实际读取/完整原始字节hash、差异及修改前原件见[本轮修订记录](<../../../docs/coordination/execution/2026-11-05-bm1-r1-test-assets-s1/修订说明.md>)；这些文档不证明其他会话已经加载新要求。

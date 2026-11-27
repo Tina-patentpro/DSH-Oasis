@@ -1,0 +1,48 @@
+✔ Flow-2-6 disabled native candidate is an explicit internal factory (0.426709ms)
+✔ candidate admission and consumed single-call budget are durable before the native seam (43.264ms)
+✔ missing confirmation cannot prepare a call (3.413917ms)
+✔ wrong confirmation cannot prepare a call (4.486708ms)
+✔ unconfirmed cannot prepare a call (1.9125ms)
+✔ confirmation invalidates after model changes (2.078833ms)
+✔ confirmation invalidates after input changes (2.438667ms)
+✔ confirmation invalidates after revision changes (2.928167ms)
+✔ confirmation invalidates after membership changes (1.846583ms)
+✔ a model change while prepareCall is pending prevents stream dispatch (9.968666ms)
+✔ strict output refuses URL-only (9.252666ms)
+✔ strict output refuses extra identity (8.978375ms)
+✔ strict output refuses missing required metadata (9.355083ms)
+✔ stream disconnection is unknown and repeated/new request keys never redispatch (12.847667ms)
+✔ explicit provider rejection before dispatch remains failed, without retry (11.249917ms)
+✔ stop preserves unknown and ignores late noncooperative success (7.789458ms)
+✔ close preserves unknown and ignores late noncooperative success (6.878333ms)
+✔ timeout after preparation is unknown and never retried (35.925542ms)
+✔ storage failure never reaches prepareCall (2.241208ms)
+✔ candidate evidence and input corruption are rejected instead of relabeling old data (21.7605ms)
+✔ default workbench rejects candidate generation and catalog stays disabled (1.653875ms)
+✔ completed candidate uses the common edit, re-review, root Markdown save and fixed draft path (66.553208ms)
+✔ compact long input is restored at the actual candidate seam without rereading or truncation (1151.349709ms)
+✔ M06 R1 rejected instruction output stays failed without redispatch (11.705333ms)
+✔ a selected material changed after confirmation is rejected before native preparation (3.918375ms)
+✔ executor-local mutation cannot change the authoritative frozen preparation (8.746542ms)
+✔ other-node is outside this candidate and never dispatches (1.483375ms)
+✔ api-source is outside this candidate and never dispatches (1.321208ms)
+✔ a reopened prepared candidate is observed as unknown and never replayed (8.391125ms)
+✔ candidate context: explicit reasoning-effort change after confirmation starts no call (1.885917ms)
+✔ candidate context: cwd context loss during pending prepare prevents stream dispatch (9.919042ms)
+✔ candidate context: removal of membership during pending prepare prevents stream dispatch (9.361167ms)
+✔ candidate context: malformed JSON safe failure includes no raw payload (9.888333ms)
+✔ candidate retains only safe execution metadata through token limit and cold reread (9.777375ms)
+✔ candidate retains only safe execution metadata through invalid JSON and cold reread (9.697208ms)
+✔ candidate retains only safe execution metadata through valid result and cold reread (11.62925ms)
+✔ candidate context: unicode oversized streamed response is rejected without partial document (10.302459ms)
+✔ candidate context: duplicate request after model change returns old candidate without another call (17.303667ms)
+✔ candidate context: changed actual prepare config explicit effort cannot dispatch (8.099792ms)
+✔ candidate context: after durable admission context loss starts no prepareCall (7.905084ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1703.946917

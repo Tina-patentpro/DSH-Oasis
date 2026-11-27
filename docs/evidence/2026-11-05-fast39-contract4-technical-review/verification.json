@@ -1,0 +1,106 @@
+{
+  "at": "2026-11-05T16:32:33.568625+08:00",
+  "verdict": "PASS",
+  "failures": [],
+  "subject": "C4-R1",
+  "freeze_sha256": "a5780ad83094d1a9fdb916f9da83f8fcc52e9794da456f1321dd23b4ab5f4901",
+  "inputs_preserved": 105,
+  "existing_ordinary_files_preserved": 3898,
+  "symlinks_preserved": 2,
+  "business_files_preserved": 353,
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "new_git_visible_files": [
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/contract-findings.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/errata-rerun.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/identity-and-contract-checks.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/preflight.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/remaining-gates.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/schema-rerun.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/技术复审与实施前缺件.md"
+  ],
+  "commands": [
+    {
+      "shell": "zsh",
+      "command": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python -B .local/fast39-contract4-review-20261105/rerun_schema.py",
+      "exit_code": 0
+    },
+    {
+      "shell": "zsh",
+      "command": "/Users/tinadong7036/Documents/Codex/运行环境/workflow-design-governance-py312-20261027/bin/python -B .local/fast39-contract4-review-20261105/rerun_errata.py",
+      "exit_code": 0
+    },
+    {
+      "shell": "zsh",
+      "command": "python3 -B .local/fast39-contract4-review-20261105/review_identity.py",
+      "exit_code": 0
+    }
+  ],
+  "results": {
+    "schema-rerun.json": {
+      "passed": 153,
+      "failed": 0
+    },
+    "errata-rerun.json": {
+      "passed": 11,
+      "failed": 0
+    },
+    "identity-and-contract-checks.json": {
+      "passed": 11,
+      "failed": 0
+    }
+  },
+  "schema_definitions": 33,
+  "generation_calls": 0,
+  "paid_calls": 0,
+  "production_access": 0,
+  "network_attempts": [],
+  "business_source_changes": 0,
+  "deployments": 0,
+  "commits_or_pushes": 0,
+  "review_scope": "author contract re-review only; no actual producer/consumer acceptance or runtime validation",
+  "evidence_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/contract-findings.json",
+      "sha256": "e0eec7b9250ca76851bfaabbef9b80fe0b4685a154724a77f0fb79035372ee18"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/errata-rerun.json",
+      "sha256": "351ae2200369e3b5c83d0ac79356a5e6cf39e4319224fd601114e2b431de4bd1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/identity-and-contract-checks.json",
+      "sha256": "81c9b6f85047ecbc24010020553c0df64023fcf88bbeb2bf16a8731dc5d5b42b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/preflight.json",
+      "sha256": "ddc4cba503453673fab432f2053d19de0e7ea85185a44239140040af80d67d62"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/remaining-gates.json",
+      "sha256": "55491fa4d6904e904807dc922bb90d1e38b6d6c644465cd45c9e9361f3efb28c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/schema-rerun.json",
+      "sha256": "35b45df393af6e297929f2a46f7b76b7c95b7e677e8b694fb3b3bbdd08315701"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-contract4-technical-review/技术复审与实施前缺件.md",
+      "sha256": "4b64d6cae6762c106ff3dbcbbe552be8b7c1b859e12490051489f8bc8c4020be"
+    }
+  ],
+  "probe_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-contract4-review-20261105/rerun_errata.py",
+      "sha256": "288ea3ee69e90f71abd265d032be5f361e5b77e2b426f0795412bb77342c61fb"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-contract4-review-20261105/rerun_schema.py",
+      "sha256": "0cd706a3f5c550afc5e0d9dc6e10db93ec2a5c2e361aa4f32af079cf1f18a9ba"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-contract4-review-20261105/review_identity.py",
+      "sha256": "920ad3652a5404cb851387d34e2946e13cfdd7ef0813b8ff2234c00d0f5e126e"
+    }
+  ]
+}

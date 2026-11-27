@@ -1,0 +1,205 @@
+✖ strict existing execution owner admits C4 error evidence and refuses contradictory status, key or duplicate owner (10.4595ms)
+✖ real transport → C4 consumer → repository → serialized reopen preserves six outputs and old response hash meaning (17.506542ms)
+✖ default unactivated consumer refuses before credentials; exact frozen scope and current ownership are mandatory (2.365458ms)
+✖ pending, content failure and missing response preserve execution truth without creating runs (3.007625ms)
+✖ same receipt is idempotent and conflicting late receipt cannot replace the original owner (1.91525ms)
+✖ full serialized legacy headroom selects a small hash-only error instead of truncating or creating an artifact (2.341125ms)
+✖ if even the small receipt cannot fit, preserve exact pre-dispatch bytes and require manual handling (1.524334ms)
+✖ revision conflict and actual disk failure cannot overwrite or silently retry a received result (1.598083ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 173.045292
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:11:1
+✖ strict existing execution owner admits C4 error evidence and refuses contradictory status, key or duplicate owner (10.4595ms)
+  ZodError: [
+    {
+      "expected": "object",
+      "code": "invalid_type",
+      "path": [
+        "tasks",
+        "task-a",
+        "generation"
+      ],
+      "message": "Invalid input: expected object, received undefined"
+    }
+  ]
+      at parseWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:173:56)
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:250:12)
+      at #read (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:139:9)
+      at OasisWorkbenchRepository.get (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:177:22)
+      at h.record (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:78:33)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:12:74)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:24:1
+✖ real transport → C4 consumer → repository → serialized reopen preserves six outputs and old response hash meaning (17.506542ms)
+  ZodError: [
+    {
+      "expected": "object",
+      "code": "invalid_type",
+      "path": [
+        "tasks",
+        "task-a",
+        "generation"
+      ],
+      "message": "Invalid input: expected object, received undefined"
+    }
+  ]
+      at parseWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:173:56)
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:250:12)
+      at #read (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:139:9)
+      at OasisWorkbenchRepository.get (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:177:22)
+      at h.command (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:77:36)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:27:84)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:42:1
+✖ default unactivated consumer refuses before credentials; exact frozen scope and current ownership are mandatory (2.365458ms)
+  ZodError: [
+    {
+      "expected": "object",
+      "code": "invalid_type",
+      "path": [
+        "tasks",
+        "task-a",
+        "generation"
+      ],
+      "message": "Invalid input: expected object, received undefined"
+    }
+  ]
+      at parseWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:173:56)
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:250:12)
+      at #read (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:139:9)
+      at OasisWorkbenchRepository.get (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:177:22)
+      at h.command (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:77:36)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:46:66)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:59:1
+✖ pending, content failure and missing response preserve execution truth without creating runs (3.007625ms)
+  ZodError: [
+    {
+      "expected": "object",
+      "code": "invalid_type",
+      "path": [
+        "tasks",
+        "task-a",
+        "generation"
+      ],
+      "message": "Invalid input: expected object, received undefined"
+    }
+  ]
+      at parseWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:173:56)
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:250:12)
+      at #read (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:139:9)
+      at OasisWorkbenchRepository.get (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:177:22)
+      at h.record (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:78:33)
+      at h.execution (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:79:25)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:63:22)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:75:1
+✖ same receipt is idempotent and conflicting late receipt cannot replace the original owner (1.91525ms)
+  ZodError: [
+    {
+      "expected": "object",
+      "code": "invalid_type",
+      "path": [
+        "tasks",
+        "task-a",
+        "generation"
+      ],
+      "message": "Invalid input: expected object, received undefined"
+    }
+  ]
+      at parseWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:173:56)
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:250:12)
+      at #read (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:139:9)
+      at OasisWorkbenchRepository.get (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:177:22)
+      at h.command (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:77:36)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:77:42)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:86:1
+✖ full serialized legacy headroom selects a small hash-only error instead of truncating or creating an artifact (2.341125ms)
+  ZodError: [
+    {
+      "expected": "object",
+      "code": "invalid_type",
+      "path": [
+        "tasks",
+        "task-a",
+        "generation"
+      ],
+      "message": "Invalid input: expected object, received undefined"
+    }
+  ]
+      at parseWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:173:56)
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:250:12)
+      at #read (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:139:9)
+      at OasisWorkbenchRepository.get (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:177:22)
+      at h.record (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:78:33)
+      at h.pad (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:80:64)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:88:11)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:100:1
+✖ if even the small receipt cannot fit, preserve exact pre-dispatch bytes and require manual handling (1.524334ms)
+  ZodError: [
+    {
+      "expected": "object",
+      "code": "invalid_type",
+      "path": [
+        "tasks",
+        "task-a",
+        "generation"
+      ],
+      "message": "Invalid input: expected object, received undefined"
+    }
+  ]
+      at parseWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:173:56)
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:250:12)
+      at #read (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:139:9)
+      at OasisWorkbenchRepository.get (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:177:22)
+      at h.record (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:78:33)
+      at h.pad (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:80:64)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:102:11)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:109:1
+✖ revision conflict and actual disk failure cannot overwrite or silently retry a received result (1.598083ms)
+  ZodError: [
+    {
+      "expected": "object",
+      "code": "invalid_type",
+      "path": [
+        "tasks",
+        "task-a",
+        "generation"
+      ],
+      "message": "Invalid input: expected object, received undefined"
+    }
+  ]
+      at parseWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:173:56)
+      at parseStoredWorkbenchRecord (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-domain.js:250:12)
+      at #read (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:139:9)
+      at OasisWorkbenchRepository.get (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/src/workbench-repository.js:177:22)
+      at h.command (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-storage-fixture.mjs:77:36)
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:111:21)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

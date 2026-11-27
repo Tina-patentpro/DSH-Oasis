@@ -1,0 +1,77 @@
+{
+  "at": "2026-11-05T20:36:10.370988+08:00",
+  "verdict": "PASS_REVIEW_AND_PRESERVATION",
+  "failures": [],
+  "review_verdict": "REQUIRES_NARROW_REGISTRY_BINDING_REVISION",
+  "reviewer": "author self-review, not independent acceptance",
+  "P1_findings": 1,
+  "source_governance_exit_code": 1,
+  "source_governance_status": "FAIL_STALE_WEEKLY_RETAINED",
+  "row_addressability_on_actual_source": "BLOCKED_RETAINED",
+  "source_data_repair_implemented": false,
+  "R1_revised_or_approved": false,
+  "weekly_time_waiver": false,
+  "preserved_existing_files": 3934,
+  "preserved_business_files": 353,
+  "preserved_symlinks": 2,
+  "input_count": 234,
+  "source_sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+  "R1_freeze_sha256": "20f1a7d3184b4cb24397279caf8a7e039ad5a36168f671dbefa2fee1266347ba",
+  "in_memory_cases": 5,
+  "source_write_count": 0,
+  "business_code_edits": 0,
+  "new_API_model_upload_generation_paid_calls": 0,
+  "deployments": 0,
+  "Git_commits_or_pushes": 0,
+  "full245_or_C4_153_tests_rerun": false,
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "new_files": [
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/authorization-review.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/governance-rerun.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/history-identity.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/preflight.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/registry-root-cause.json",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/技术复审与最小修复授权边界.md"
+  ],
+  "commands": [
+    {
+      "shell": "zsh",
+      "command": "tools/bin/python3 -B .local/fast39-auth-r1-review-20261105/diagnose_registry.py",
+      "exit_code": 0
+    },
+    {
+      "shell": "zsh",
+      "command": "tools/bin/python3 -B ../2、工作流设计/tools/validate_workflow_governance.py --root ../2、工作流设计",
+      "exit_code": 1,
+      "canonical_argv_in": "governance-rerun.json"
+    }
+  ],
+  "evidence_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/authorization-review.json",
+      "sha256": "9212b191d777ab4ea9aec85084b1b369162b653dd345a3c916cb4379e9de7a74"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/governance-rerun.json",
+      "sha256": "6c7cb75b3d707b1ce03caf9798571f8393f1bb7ae469c1e3d2ddbfc165dd0b00"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/history-identity.json",
+      "sha256": "fde3b600af7355ce5171194570974b9a163117d34d7ffa677be4a8be2d1e80cf"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/preflight.json",
+      "sha256": "1004b27a3e45af5fa3eced6dba2b8f11fdf1e8b50a302fdb96a7e9d52186db25"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/registry-root-cause.json",
+      "sha256": "1418e00be7a087528d4b8474779b0de2e7e336e4f90324e6732e8e767c47a90c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-05-fast39-auth-r1-technical-review/技术复审与最小修复授权边界.md",
+      "sha256": "faa420d2a1ae436e59b676aa28e1b59c40a68b5ead5f33303146488f69283fa2"
+    }
+  ],
+  "diagnostic_script_sha256": "303184326566ccf1f3bd506c2775da33af0bf5181703c8731f5dc34128495e43"
+}

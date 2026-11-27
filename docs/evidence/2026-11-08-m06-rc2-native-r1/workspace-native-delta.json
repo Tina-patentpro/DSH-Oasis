@@ -1,0 +1,29 @@
+{
+  "beforeSHA256": "5eaa97fce63924bae929db94ec20a44fe7ff452e4840aa110d2ab1249eb708b4",
+  "afterSHA256": "4106acb78abd607d3fab5a96d26eda2a86c38902614f60335751cfa2efeff419",
+  "identityAndOtherFieldsUnchanged": true,
+  "changes": [
+    {
+      "workspaceId": "e74001f3-dfd7-42e6-a5d3-6c05a4d527a6",
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/workspace-a",
+      "oldSessionIds": [],
+      "newSessionIds": [
+        "session-ef67605d-1651-4194-a181-54ff103e710f"
+      ],
+      "oldUpdatedAt": "2026-11-08T04:29:17.288Z",
+      "newUpdatedAt": "2026-11-08T06:43:13.277Z"
+    },
+    {
+      "workspaceId": "11e1a348-0248-42a1-8141-bcb6306caccc",
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/workspace-b",
+      "oldSessionIds": [],
+      "newSessionIds": [
+        "session-be573ee0-ae7a-4d40-99d5-d607f6106786"
+      ],
+      "oldUpdatedAt": "2026-11-08T04:29:17.315Z",
+      "newUpdatedAt": "2026-11-08T06:42:48.592Z"
+    }
+  ],
+  "cause": "DSH first new conversation defaulted to B; choosing approved A created another conversation. Public read handles found only preset/sandbox/approval/seed metadata, no user/assistant/tool/model events. Registry original snapshot retained, no rollback/deletion.",
+  "verifierCorrection": "initial byte-unchanged and zero-total-events expectations were incorrect; both FAIL logs retained. Exact native session metadata deltas and event types now checked; no new App startup or business operation repeated."
+}

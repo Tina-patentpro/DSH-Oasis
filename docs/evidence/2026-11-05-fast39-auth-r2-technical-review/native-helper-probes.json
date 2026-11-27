@@ -1,0 +1,217 @@
+{
+  "at": "2026-11-05T20:59:54.609289+08:00",
+  "checks": [
+    {
+      "id": "frozen_member_authorization-draft.json",
+      "pass": true
+    },
+    {
+      "id": "frozen_member_授权草案.md",
+      "pass": true
+    },
+    {
+      "id": "frozen_member_registry-restoration-draft.json",
+      "pass": true
+    },
+    {
+      "id": "frozen_member_源登记表结构恢复与流程例外草案.md",
+      "pass": true
+    },
+    {
+      "id": "frozen_member_R1至R2变更说明.md",
+      "pass": true
+    },
+    {
+      "id": "both_drafts_inactive",
+      "pass": true
+    },
+    {
+      "id": "exact_four_field_grant",
+      "pass": true
+    },
+    {
+      "id": "actual_source_still_blocked",
+      "pass": true
+    },
+    {
+      "id": "exact_before_RESTORE01",
+      "pass": true
+    },
+    {
+      "id": "exact_before_RESTORE02",
+      "pass": true
+    },
+    {
+      "id": "single_destination",
+      "pass": true
+    },
+    {
+      "id": "restored_memory_selects_exact_original_row",
+      "pass": true
+    },
+    {
+      "id": "wrong_row_hash_rejected",
+      "pass": true
+    },
+    {
+      "id": "changed_raw_whitespace_rejected",
+      "pass": true
+    },
+    {
+      "id": "changed_locator_rejected",
+      "pass": true
+    },
+    {
+      "id": "changed_flow_rejected",
+      "pass": true
+    },
+    {
+      "id": "duplicate_selector_rejected",
+      "pass": true
+    },
+    {
+      "id": "changed_header_rejected",
+      "pass": true
+    },
+    {
+      "id": "hypothetical_own_update_old_hash_rejected",
+      "pass": true
+    },
+    {
+      "id": "hypothetical_own_update_new_hash_math_only",
+      "pass": true
+    },
+    {
+      "id": "R2_demands_receipt_before_advancing_hash",
+      "pass": true
+    },
+    {
+      "id": "original_events_preserved_in_structure_memory",
+      "pass": true
+    },
+    {
+      "id": "only_two_memory_data_deltas",
+      "pass": true
+    },
+    {
+      "id": "empty_grants_for_separate_repair",
+      "pass": true
+    },
+    {
+      "id": "legacy_migration_not_ownership",
+      "pass": true
+    },
+    {
+      "id": "candidate_states_unchanged",
+      "pass": true
+    },
+    {
+      "id": "no_weekly_time_waiver",
+      "pass": true
+    },
+    {
+      "id": "one_shot_mechanism_not_ready",
+      "pass": true
+    },
+    {
+      "id": "no_planned_execution_paths_created",
+      "pass": true
+    },
+    {
+      "id": "native_registration_original_valid",
+      "pass": true
+    },
+    {
+      "id": "native_registry_original_valid",
+      "pass": true
+    },
+    {
+      "id": "digest_substitution_is_not_caught_by_schema",
+      "pass": true
+    },
+    {
+      "id": "latest_revision_mismatch_is_rejected",
+      "pass": true
+    },
+    {
+      "id": "raw_original_hash_differs_from_native_intent",
+      "pass": true
+    },
+    {
+      "id": "native_intent_excludes_whole_baseline",
+      "pass": true
+    },
+    {
+      "id": "source_unchanged_after_all_memory_probes",
+      "pass": true
+    }
+  ],
+  "check_count": 36,
+  "selector_cases": [
+    {
+      "id": "restored_memory_selects_exact_original_row",
+      "allowed": true,
+      "expected": true
+    },
+    {
+      "id": "wrong_row_hash_rejected",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "changed_raw_whitespace_rejected",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "changed_locator_rejected",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "changed_flow_rejected",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "duplicate_selector_rejected",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "changed_header_rejected",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "hypothetical_own_update_old_hash_rejected",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "hypothetical_own_update_new_hash_math_only",
+      "allowed": true,
+      "expected": true
+    }
+  ],
+  "native_tool_sha256": "05a18deb923f9f7fa3b0f106bfcfab8dbcab5d1005a1b5fcee937e0c369ef780",
+  "source_sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+  "actual_source_selector_error": "malformed table separator",
+  "schema_evidence_limit": {
+    "original_contract_errors": [],
+    "tampered_request_digest_contract_errors": [],
+    "tampered_request_digest_registry_errors": [],
+    "interpretation": "memory-only deliberate counterexample: existing validators check hash shape/binding, do not recompute external request or prove producer/approval/atomic write; this is coverage limit, not source repair or a new tool bug"
+  },
+  "hash_semantics_probe": {
+    "specimen_only_not_executable": true,
+    "raw_pretty_sha256": "f41fc53ce2ec5ca39c7826b0ee9b884b1a2e2131f52f591398f7203c17244c53",
+    "raw_compact_sha256": "b90a07d4e21329fd32f3d8b83bb6e6feae382a02b102c7b798bbe9b6317eb504",
+    "native_intent_sha256": "c0cced958d2615977a88476fa4da9e46fcb16f86a47cafa7a577496230129be8",
+    "native_intent_sha256_after_baseline_only_change": "c0cced958d2615977a88476fa4da9e46fcb16f86a47cafa7a577496230129be8",
+    "native_rule": "SHA256(UTF8(json.dumps(request excluding expected_revision/expected_sha256, ensure_ascii=False, sort_keys=True, separators=(comma,colon))))",
+    "R2_exception_rule": "says actual exceptional intent original plus pinned native semantics, but no explicit canonical field set/serialization/raw-vs-intent mapping"
+  },
+  "no_counterfactual_text_persisted_as_source": true,
+  "scope": "native pure helpers on strings only; no apply, registry_lock, exception mechanism implementation, receipts or source writes"
+}

@@ -1,0 +1,131 @@
+{
+  "at": "2026-11-05T14:24:59.365262+08:00",
+  "reviewer": "Codex single agent, author technical self-review, not independent",
+  "subject": "fast39-result-contract-candidate-2/C2-R1",
+  "subject_freeze_sha256": "8c4ea72c51cd380815682292e3c8cd9473224fccf423dbe6b4d812b6214e643d",
+  "verdict": "REQUIRES_REVISION_NOT_CONTRACT_CLOSED",
+  "counts": {
+    "P1": 3,
+    "P2": 3
+  },
+  "findings": [
+    {
+      "id": "TR01",
+      "priority": "P1",
+      "original_ids": [
+        "F01"
+      ],
+      "title": "真实收据哨兵与状态映射缺口",
+      "category": "CONTRACT_INPUT_MAPPING_GAP",
+      "release_condition": "explicit none/accepted/warning/not_provided mapping; preserve original receipt identity; actual R2 metadata cases",
+      "implementation_performed": false
+    },
+    {
+      "id": "TR02",
+      "priority": "P1",
+      "original_ids": [
+        "F03"
+      ],
+      "title": "拟议端口、count权威及草稿阶段形状不完整",
+      "category": "CONTRACT_ABI_GAP",
+      "release_condition": "complete retained/new ports and staged JSON shapes; count agreement; selector resolution",
+      "implementation_performed": false
+    },
+    {
+      "id": "TR03",
+      "priority": "P1",
+      "original_ids": [
+        "F03"
+      ],
+      "title": "客户端原Outline anchor依据未交付",
+      "category": "CONTRACT_AUTHORITY_HANDOFF_GAP",
+      "release_condition": "choose and state client self-consistency vs independently obtainable original snapshot proof; no extra Dify call",
+      "implementation_performed": false
+    },
+    {
+      "id": "TR04",
+      "priority": "P2",
+      "original_ids": [
+        "F04"
+      ],
+      "title": "显示警示继承检查覆盖不足",
+      "category": "VERIFICATION_COVERAGE_GAP",
+      "release_condition": "negative cases for original warning problem/Outline warnings/limitations in pending and output",
+      "implementation_performed": false
+    },
+    {
+      "id": "TR05",
+      "priority": "P2",
+      "original_ids": [
+        "F02",
+        "F05"
+      ],
+      "title": "响应摘要字节身份与内外一致性未冻结",
+      "category": "CROSS_FIELD_SPECIFICATION_GAP",
+      "release_condition": "define exact hashed bytes/owner/canonicalization and record/error hash equality checks",
+      "implementation_performed": false
+    },
+    {
+      "id": "TR06",
+      "priority": "P2",
+      "original_ids": [
+        "F05"
+      ],
+      "title": "source locator十进制百万上限未列容量表",
+      "category": "CAPACITY_EDGE_SPECIFICATION_GAP",
+      "release_condition": "state effective source location range and upstream body relation; conditional edge; no truncation",
+      "implementation_performed": false
+    }
+  ],
+  "original_findings": [
+    {
+      "id": "F01",
+      "contract_status": "PARTIAL_OPEN",
+      "new_findings": [
+        "TR01"
+      ]
+    },
+    {
+      "id": "F02",
+      "contract_status": "CLOSED_STATE_MATRIX_LIMITED_SCOPE",
+      "supplementary": [
+        "TR05"
+      ]
+    },
+    {
+      "id": "F03",
+      "contract_status": "OPEN",
+      "new_findings": [
+        "TR02",
+        "TR03"
+      ]
+    },
+    {
+      "id": "F04",
+      "contract_status": "CLOSED_FORMAT_POLICY_VERIFICATION_GAP",
+      "supplementary": [
+        "TR04"
+      ]
+    },
+    {
+      "id": "F05",
+      "contract_status": "MAIN_CAPACITY_POLICY_CLOSED_SOURCE_RANGE_PARTIAL",
+      "supplementary": [
+        "TR05",
+        "TR06"
+      ]
+    },
+    {
+      "id": "F06",
+      "contract_status": "CLOSED_ZERO_CLAIM_BOUNDARY_ONLY",
+      "new_findings": []
+    }
+  ],
+  "not_findings": [
+    "new logical node IDs may remain null until candidate production",
+    "new DSL/backend/client hashes do not need to exist to revise or review this static contract",
+    "Schema need not encode all cross-field semantic checks; layered validators are appropriate",
+    "source quote/hash matches do not prove technical support or professional acceptance",
+    "offline96 result remains true within its tested scope, not global acceptance"
+  ]
+}

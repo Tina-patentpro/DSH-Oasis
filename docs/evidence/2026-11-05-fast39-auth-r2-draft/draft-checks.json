@@ -1,0 +1,263 @@
+{
+  "at": "2026-11-05T20:48:49.978858+08:00",
+  "status": "PASS_DOCUMENT_AND_IN_MEMORY_CHECKS",
+  "checks": [
+    {
+      "id": "drafts_not_approved_or_effective",
+      "pass": true
+    },
+    {
+      "id": "R1_exact_freeze_bound",
+      "pass": true
+    },
+    {
+      "id": "retained_baseline",
+      "pass": true
+    },
+    {
+      "id": "retained_file_allowlist",
+      "pass": true
+    },
+    {
+      "id": "retained_restricted_profile",
+      "pass": true
+    },
+    {
+      "id": "retained_logical_change_allowlist",
+      "pass": true
+    },
+    {
+      "id": "retained_graph_boundary",
+      "pass": true
+    },
+    {
+      "id": "retained_conditional_exception",
+      "pass": true
+    },
+    {
+      "id": "retained_private_assembly_only",
+      "pass": true
+    },
+    {
+      "id": "retained_weekly_policy",
+      "pass": true
+    },
+    {
+      "id": "exact_unique_selector_proposal",
+      "pass": true
+    },
+    {
+      "id": "only_four_fields",
+      "pass": true
+    },
+    {
+      "id": "native_grant_schema_accepts",
+      "pass": true
+    },
+    {
+      "id": "actual_source_remains_blocked",
+      "pass": true
+    },
+    {
+      "id": "separator_exact_unique",
+      "pass": true
+    },
+    {
+      "id": "legacy_exact_unique",
+      "pass": true
+    },
+    {
+      "id": "completed_header_unique",
+      "pass": true
+    },
+    {
+      "id": "memory_unique_native_selection",
+      "pass": true
+    },
+    {
+      "id": "exact_header_and_raw_hash",
+      "pass": true
+    },
+    {
+      "id": "original_row_only_in_memory",
+      "pass": true
+    },
+    {
+      "id": "wrong_expected_hash_stops",
+      "pass": true
+    },
+    {
+      "id": "row_whitespace_drift_stops",
+      "pass": true
+    },
+    {
+      "id": "Flow_drift_stops",
+      "pass": true
+    },
+    {
+      "id": "locator_drift_stops",
+      "pass": true
+    },
+    {
+      "id": "duplicate_selector_stops",
+      "pass": true
+    },
+    {
+      "id": "header_drift_stops",
+      "pass": true
+    },
+    {
+      "id": "own_success_postrow_rejects_old_hash",
+      "pass": true
+    },
+    {
+      "id": "own_success_postrow_hash_requires_external_confirmed_receipt",
+      "pass": true
+    },
+    {
+      "id": "own_postrow_test_is_hypothetical_not_transaction_receipt",
+      "pass": true
+    },
+    {
+      "id": "no_current_business_section_grant",
+      "pass": true
+    },
+    {
+      "id": "memory_old_contract_checks_empty",
+      "pass": true
+    },
+    {
+      "id": "memory_all_old_events_preserved",
+      "pass": true
+    },
+    {
+      "id": "memory_only_two_data_changes",
+      "pass": true
+    },
+    {
+      "id": "memory_legacy_six_cells_and_closed_preserved",
+      "pass": true
+    },
+    {
+      "id": "exception_no_normal_apply_claim",
+      "pass": true
+    },
+    {
+      "id": "ordinary_repair_grants_empty",
+      "pass": true
+    },
+    {
+      "id": "no_time_waiver",
+      "pass": true
+    },
+    {
+      "id": "static_stops_preserved",
+      "pass": true
+    },
+    {
+      "id": "restore_stops_present",
+      "pass": true
+    },
+    {
+      "id": "future_path_unoccupied_flow-2-6-权利要求初稿-V0.1.0.yml",
+      "pass": true
+    },
+    {
+      "id": "future_path_unoccupied_flow-2-6-V0.1.0-code.py",
+      "pass": true
+    },
+    {
+      "id": "future_path_unoccupied_flow-2-6-V0.1.0-prompts.md",
+      "pass": true
+    },
+    {
+      "id": "future_path_unoccupied_flow-2-6-V0.1.0-schema.json",
+      "pass": true
+    },
+    {
+      "id": "future_path_unoccupied_范围与输入.json",
+      "pass": true
+    },
+    {
+      "id": "future_path_unoccupied_候选清单.json",
+      "pass": true
+    },
+    {
+      "id": "future_path_unoccupied_静态核验.json",
+      "pass": true
+    },
+    {
+      "id": "future_path_unoccupied_静态交付说明.md",
+      "pass": true
+    },
+    {
+      "id": "future_namespace_unoccupied_fast39-c4-static-source-r1",
+      "pass": true
+    },
+    {
+      "id": "future_namespace_unoccupied_fast39-registry-restore-once-r2",
+      "pass": true
+    },
+    {
+      "id": "future_namespace_unoccupied_fast39-registry-restore-once-r2-execution",
+      "pass": true
+    },
+    {
+      "id": "source_unchanged_after_memory_checks",
+      "pass": true
+    }
+  ],
+  "check_count": 51,
+  "guard_cases": [
+    {
+      "id": "original_row_only_in_memory",
+      "allowed": true,
+      "expected": true
+    },
+    {
+      "id": "wrong_expected_hash_stops",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "row_whitespace_drift_stops",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "Flow_drift_stops",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "locator_drift_stops",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "duplicate_selector_stops",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "header_drift_stops",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "own_success_postrow_rejects_old_hash",
+      "allowed": false,
+      "expected": false
+    },
+    {
+      "id": "own_success_postrow_hash_requires_external_confirmed_receipt",
+      "allowed": true,
+      "expected": true
+    }
+  ],
+  "actual_source_selector_error": "malformed table separator",
+  "native_tool_sha256": "05a18deb923f9f7fa3b0f106bfcfab8dbcab5d1005a1b5fcee937e0c369ef780",
+  "scope": "native pure helper/string-memory diagnostics only; no source apply or repair. Postrow hash test is hypothetical, not a success receipt; exception atomic mechanism not implemented/tested.",
+  "source_writes": 0,
+  "calls": 0
+}

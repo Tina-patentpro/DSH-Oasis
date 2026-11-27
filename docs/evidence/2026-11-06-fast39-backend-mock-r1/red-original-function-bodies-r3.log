@@ -1,0 +1,181 @@
+test_all_blocked_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_async_queue_branch_unchanged_no_provider_no_fragment (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_binding_mismatch_before_dispatch_no_queue (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_content_invalid_sixth_field_preserves_old_queue_and_success_fact (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_correlations_take_priority_even_provider_failed (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_http_parse_and_network_failures_no_fabricated_fragment_or_queue (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_legacy_file_type_and_save_string_preserved (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_output_size_unicode_and_null_rejected_without_truncation (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_queue_failure_keeps_unknown_enqueuing_no_retry (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_receipt_exact_bytes_before_one_parse_same_original_object (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_report_duplicate_keys_float_and_depth_rejected (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_six_outputs_preserved_without_legacy_projection_or_queue_change (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_top_or_nested_id_alone_accepted_but_uppercase_missing_or_conflict_rejected (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_unbound_and_non_enhanced_service_keep_original_interface (test_fast39_result_contract.Fast39Contract) ... ERROR
+test_zero_claim_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract) ... ERROR
+
+======================================================================
+ERROR: test_all_blocked_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_async_queue_branch_unchanged_no_provider_no_fragment (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_binding_mismatch_before_dispatch_no_queue (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_content_invalid_sixth_field_preserves_old_queue_and_success_fact (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_correlations_take_priority_even_provider_failed (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_http_parse_and_network_failures_no_fabricated_fragment_or_queue (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_legacy_file_type_and_save_string_preserved (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_output_size_unicode_and_null_rejected_without_truncation (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_queue_failure_keeps_unknown_enqueuing_no_retry (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_receipt_exact_bytes_before_one_parse_same_original_object (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_report_duplicate_keys_float_and_depth_rejected (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_six_outputs_preserved_without_legacy_projection_or_queue_change (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_status_matrix_preserves_queue_facts (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_top_or_nested_id_alone_accepted_but_uppercase_missing_or_conflict_rejected (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_unbound_and_non_enhanced_service_keep_original_interface (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+======================================================================
+ERROR: test_zero_claim_does_not_become_normal_fragment (test_fast39_result_contract.Fast39Contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/unittest/async_case.py", line 61, in _callSetUp
+    self.setUp()
+  File "/Users/tinadong7036/Documents/开发项目/绿洲慧写-后台4.0/.local/fast39-shared-api-task0-20261105/tests/test_fast39_result_contract.py", line 121, in setUp
+    self.api = types.SimpleNamespace(id=9876, name='synthetic', is_async=0, price=Decimal('1.20'),
+UnboundLocalError: local variable 'Decimal' referenced before assignment
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.051s
+
+FAILED (errors=16)

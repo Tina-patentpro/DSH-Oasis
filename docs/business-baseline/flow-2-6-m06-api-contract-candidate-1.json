@@ -1,0 +1,396 @@
+{
+  "contractVersion": "flow26-m06-api-candidate-1",
+  "status": "CONSUMER_PROPOSAL_NOT_ACCEPTED_NOT_DEPLOYED",
+  "activationAllowed": false,
+  "nodeId": "Flow-2-6",
+  "inputSchemaVersion": "v340-1",
+  "businessVersion": "V3.4.0",
+  "resource": {
+    "path": "packages/oasis-professional-service/src/m06-business-candidate-0.1.3.json",
+    "sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca",
+    "skillId": "m06-claims-draft",
+    "skillVersion": "0.1.3",
+    "producerManifestSHA256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9"
+  },
+  "transport": {
+    "origin": "https://lzhxpy.oasisintwrite.com",
+    "method": "POST",
+    "path": "/api/apicategories/create",
+    "outerKeys": [
+      "id",
+      "key",
+      "inputs",
+      "api_process",
+      "folder_id"
+    ],
+    "workflowType": "Workflow",
+    "isAsync": 0,
+    "wireEncoding": "prepared-text-v1",
+    "inputMetadataType": "paragraph",
+    "outputMetadata": [
+      {
+        "id": "m06_output_json",
+        "type": "paragraph",
+        "projection": "data.answer_text"
+      }
+    ],
+    "maxSerializedRequestUTF8Bytes": 2097152,
+    "requestLimitImplemented": false
+  },
+  "inputOrder": [
+    "upstream_md_file",
+    "disclosure_file",
+    "disclosure_text",
+    "drawings_file",
+    "drawings_text",
+    "claim_requirements_file",
+    "claim_requirements_text",
+    "user_input"
+  ],
+  "mappings": [
+    {
+      "commonInputId": "upstream_md_file",
+      "wireInputKey": "upstream_md_file",
+      "importance": "expected",
+      "required": false,
+      "encoding": "JSON.stringify({filename,body,sha256})",
+      "omittedWhen": "not_provided in authoritative prepared.receipts",
+      "coexistence": "retain every independently provided file/text; never merge or overwrite",
+      "semantics": "以该文件的实际内容和哈希为本次权威基线；校验内部`workflow_run_uid`、文件名和来源节点；缺失或结构异常时继续输出并登记警示，不回读更早节点文件",
+      "producerAccepted": false
+    },
+    {
+      "commonInputId": "disclosure_file",
+      "wireInputKey": "disclosure_file",
+      "importance": "optional",
+      "required": false,
+      "encoding": "JSON.stringify({filename,body,sha256})",
+      "omittedWhen": "not_provided in authoritative prepared.receipts",
+      "coexistence": "retain every independently provided file/text; never merge or overwrite",
+      "semantics": "按明确指令更新累计交底；无替换指令时作为补充并保留差异",
+      "producerAccepted": false
+    },
+    {
+      "commonInputId": "disclosure_text",
+      "wireInputKey": "disclosure_text",
+      "importance": "optional",
+      "required": false,
+      "encoding": "identity-string",
+      "omittedWhen": "not_provided in authoritative prepared.receipts",
+      "coexistence": "retain every independently provided file/text; never merge or overwrite",
+      "semantics": "与文件并存时用于补充或纠正",
+      "producerAccepted": false
+    },
+    {
+      "commonInputId": "drawings_file",
+      "wireInputKey": "drawings_file",
+      "importance": "optional",
+      "required": false,
+      "encoding": "JSON.stringify({filename,body,sha256})",
+      "omittedWhen": "not_provided in authoritative prepared.receipts",
+      "coexistence": "retain every independently provided file/text; never merge or overwrite",
+      "semantics": "用于核对结构、关系、标记和支持",
+      "producerAccepted": false
+    },
+    {
+      "commonInputId": "drawings_text",
+      "wireInputKey": "drawings_text",
+      "importance": "optional",
+      "required": false,
+      "encoding": "identity-string",
+      "omittedWhen": "not_provided in authoritative prepared.receipts",
+      "coexistence": "retain every independently provided file/text; never merge or overwrite",
+      "semantics": "用于解释图示和更正图文关系",
+      "producerAccepted": false
+    },
+    {
+      "commonInputId": "claim_requirements_file",
+      "wireInputKey": "claim_requirements_file",
+      "importance": "optional",
+      "required": false,
+      "encoding": "JSON.stringify({filename,body,sha256})",
+      "omittedWhen": "not_provided in authoritative prepared.receipts",
+      "coexistence": "retain every independently provided file/text; never merge or overwrite",
+      "semantics": "不得覆盖技术来源和申请类型限制",
+      "producerAccepted": false
+    },
+    {
+      "commonInputId": "claim_requirements_text",
+      "wireInputKey": "claim_requirements_text",
+      "importance": "optional",
+      "required": false,
+      "encoding": "identity-string",
+      "omittedWhen": "not_provided in authoritative prepared.receipts",
+      "coexistence": "retain every independently provided file/text; never merge or overwrite",
+      "semantics": "与文件并存时作为补充或纠正",
+      "producerAccepted": false
+    },
+    {
+      "commonInputId": "user_input",
+      "wireInputKey": "user_input",
+      "importance": "optional",
+      "required": false,
+      "encoding": "identity-string",
+      "omittedWhen": "not_provided in authoritative prepared.receipts",
+      "coexistence": "retain every independently provided file/text; never merge or overwrite",
+      "semantics": "不得作为文件通道或被模型自动生成；与技术材料冲突时记录冲突并按明确指令处理",
+      "producerAccepted": false
+    }
+  ],
+  "inputValuesSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "upstream_md_file": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "filename",
+          "body",
+          "sha256"
+        ],
+        "properties": {
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "pattern": "^[^\\\\/\\u0000\\r\\n]+$"
+          },
+          "body": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      },
+      "disclosure_file": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "filename",
+          "body",
+          "sha256"
+        ],
+        "properties": {
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "pattern": "^[^\\\\/\\u0000\\r\\n]+$"
+          },
+          "body": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      },
+      "disclosure_text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300000
+      },
+      "drawings_file": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "filename",
+          "body",
+          "sha256"
+        ],
+        "properties": {
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "pattern": "^[^\\\\/\\u0000\\r\\n]+$"
+          },
+          "body": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      },
+      "drawings_text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300000
+      },
+      "claim_requirements_file": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "filename",
+          "body",
+          "sha256"
+        ],
+        "properties": {
+          "filename": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "pattern": "^[^\\\\/\\u0000\\r\\n]+$"
+          },
+          "body": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      },
+      "claim_requirements_text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300000
+      },
+      "user_input": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300000
+      }
+    }
+  },
+  "wireInputsSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "upstream_md_file": {
+        "type": "string",
+        "minLength": 1
+      },
+      "disclosure_file": {
+        "type": "string",
+        "minLength": 1
+      },
+      "disclosure_text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300000
+      },
+      "drawings_file": {
+        "type": "string",
+        "minLength": 1
+      },
+      "drawings_text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300000
+      },
+      "claim_requirements_file": {
+        "type": "string",
+        "minLength": 1
+      },
+      "claim_requirements_text": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300000
+      },
+      "user_input": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300000
+      }
+    }
+  },
+  "semanticValidation": {
+    "authority": "Host Workspace/material preparation before serialization; server account/folder authorization separately",
+    "fileSHA256": "SHA256(UTF8(body))",
+    "plainTextUTF16Max": 300000,
+    "plainTextUTF8BytesMax": 1048576,
+    "upstreamMarkdownUTF8BytesMax": 1048576,
+    "totalBodyUTF8BytesMax": 2097152,
+    "inputSnapshotUTF8BytesMax": 2097152,
+    "normalization": "No extra transformation after authoritative preparation. Reject NUL/unpaired surrogates; never trim/truncate.",
+    "emptyText": "omitted by common preparation",
+    "emptyFileBody": "retain explicit file value and existing warning/quality rules",
+    "missingUpstream": "expected warning; do not force required",
+    "inputHash": "preserve prepareV340Inputs output; not an ownership credential and not the HTTP-body hash",
+    "httpBodySHA256": "separate SHA256 over exact frozen JSON UTF8 bytes"
+  },
+  "output": {
+    "required": [
+      "summary",
+      "core_result_markdown",
+      "updates",
+      "tables",
+      "terms_master",
+      "warnings",
+      "model_completions"
+    ],
+    "wire": "data.answer_text is one strict JSON object serialized once; data.key echoes original key",
+    "files": "file_url omitted or empty; no DOCX dependency",
+    "schemaSource": {
+      "bundleResourcePath": "references/output-schema.json",
+      "resourceSHA256": "8eeb5986504e353293ded5ed582cd516b2b731f0ba2eeb7be664d226eb3c9975",
+      "jsonPointer": "/output_schema"
+    },
+    "hostValidator": "src/v340-document.js#parseV340ModelOutput",
+    "hostJSONSchemaSHA256": "58a891b4018084f5dd5431c954ef082903630ac441e65b430e1ed66ae128e3f2",
+    "validation": "resource nested schema AND current Host runtime refinements AND provenance/cumulative-document checks",
+    "missingAssessment": "explicitly unassessed; empty arrays are not a no-risk assessment; retain Host input warnings",
+    "maxInputSnapshotOrDocumentLimitsUnchanged": true
+  },
+  "bindingRequired": [
+    "workspaceId",
+    "workspacePath",
+    "environmentKind",
+    "apiBaseOrigin",
+    "accountId",
+    "folderId",
+    "apiId",
+    "catalogEntryId",
+    "apiEndpoint",
+    "apiProcess",
+    "schemaHash",
+    "contractSHA256",
+    "mappingSHA256",
+    "producerManifestSHA256",
+    "difyApplicationId",
+    "difyWorkflowVersion",
+    "difyDSL_SHA256"
+  ],
+  "deployment": {
+    "apiId": null,
+    "apiEndpoint": null,
+    "apiProcess": null,
+    "folderId": null,
+    "difyApplicationId": null,
+    "difyWorkflowVersion": null,
+    "difyDSL_SHA256": null,
+    "producerAcceptance": null,
+    "price": null,
+    "currency": null,
+    "namedReviewer": null
+  },
+  "legacyCompatibility": {
+    "service39": "observed legacy schema/output incompatible; do not bind",
+    "service46": "observed asynchronous schema/output incompatible; do not bind",
+    "nativeV1V2V3": "unchanged; no migration/re-sign/retry",
+    "newPDFExtraction": "not supported by this prepared-text-v1 schema; require accepted versioned evidence encoding without stripping extraction",
+    "newPDFNativeCandidateReservation": "v340-native-candidate-4, not implemented"
+  },
+  "unknownAndFees": {
+    "unknown": "preserve original key/id/input/binding/response; no new create, source switch, cancellation or refund inference",
+    "observation": "only existing proven observation; queryprocess is not proven synchronous recovery",
+    "price": "authoritative new service quote required; do not reuse Fast39/Basic46 price or old consumed budget",
+    "usage": "missing is unknown, never zero"
+  },
+  "ownerRoles": {
+    "consumer": "dsh-oasis",
+    "apiAndOwnership": "backend IC-API/IC-ACCOUNT",
+    "workflow": "Dify IC-WORKFLOW",
+    "namedOwnersAssigned": false
+  },
+  "proofScope": "Versioned candidate and offline checks only; zero real create/upload/model calls; no producer acceptance, real Host run, professional/user acceptance or release"
+}

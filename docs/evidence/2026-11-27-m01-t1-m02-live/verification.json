@@ -1,0 +1,119 @@
+{
+  "at": "2026-11-27T12:13:15.853618+08:00",
+  "requestKey": "f708cee5-c27a-4a40-bffc-2ee2cfb5f1b1",
+  "runId": "v340-0db733e8-94f3-479c-9985-957f867db48e",
+  "submittedAtBeijing": "2026-11-27T12:09:16.568000+08:00",
+  "newModelPosts": 1,
+  "resubmissions": 0,
+  "professionalApiRequests": 0,
+  "host": {
+    "status": "failed",
+    "failureCode": "INVALID_OUTPUT",
+    "summary": {
+      "failureStage": "result-assembly",
+      "finishKind": "stop",
+      "assemblyIssue": {
+        "code": "source-receipt-mismatch",
+        "field": "updates",
+        "index": 0
+      },
+      "fieldIssue": {
+        "code": "source-locator-mismatch",
+        "path": [
+          "updates",
+          0,
+          "source_locator"
+        ]
+      },
+      "usage": {
+        "inputTokens": 7425,
+        "outputTokens": 14936,
+        "totalTokens": 22361,
+        "cacheReadTokens": 0
+      }
+    },
+    "documentStatus": null,
+    "deliverableStatus": null,
+    "reviewStatus": "not-reviewed",
+    "resultSha256": null
+  },
+  "provider": {
+    "at": "2026-11-27T04:11:08.606Z",
+    "http": 200,
+    "requestId": null,
+    "messageId": "23c50a92-8992-478d-aaea-4eba3bc4935d",
+    "providerModel": "deepseek-flash",
+    "stopReason": "end_turn",
+    "messageStop": true,
+    "finalUsage": true,
+    "usage": {
+      "input_tokens": 7425,
+      "output_tokens": 14936,
+      "cache_read_input_tokens": 0,
+      "cache_creation_input_tokens": 0,
+      "streamIncomplete": true
+    }
+  },
+  "wire": {
+    "nodeId": "Flow-1-2",
+    "requestKey": "f708cee5-c27a-4a40-bffc-2ee2cfb5f1b1",
+    "runId": "v340-0db733e8-94f3-479c-9985-957f867db48e",
+    "model": "deepseek-flash",
+    "effort": "low",
+    "maxOutputTokens": 16384,
+    "serializedBytes": 31513,
+    "systemSha256": "7e41d6d356ab218d85dc87f1ff67911cd9bb0fc5778d4f2b21e4cc14b4954009",
+    "inputContentSha256": "dcf6813e946c304228f4d4a9265826424bc51d663c4a5f016a16e0f329c4b019",
+    "tools": 0,
+    "at": "2026-11-27T04:09:15.275Z",
+    "mode": "live",
+    "promptTokens": 7425,
+    "fullWireTokens": 8332,
+    "inputTokenBudget": 32000,
+    "protocolReserveTokens": 2000,
+    "conservativeInputTokens": 10332
+  },
+  "pricePeriod": "offpeak",
+  "cnyPerMillion": {
+    "input": 1,
+    "cacheRead": 0.02,
+    "output": 4
+  },
+  "meteredFeeCny": "0.067169",
+  "balanceObservations": [
+    {
+      "at": "2026-11-27T04:11:31.258788+00:00",
+      "http": 200,
+      "observedDebitCny": "0.00"
+    },
+    {
+      "at": "2026-11-27T04:12:28.130563+00:00",
+      "http": 200,
+      "observedDebitCny": "0.00"
+    },
+    {
+      "at": "2026-11-27T04:13:05.259405+00:00",
+      "http": 200,
+      "observedDebitCny": "0.00"
+    }
+  ],
+  "observedDebitCny": "0.00",
+  "itemizedSettlementAvailable": false,
+  "isolatedCredentialRemoved": true,
+  "artifacts": {},
+  "tableRows": {},
+  "tableStatus": {},
+  "sourceChecks": [],
+  "warnings": [],
+  "m01": {
+    "sourceStorageUnchanged": true,
+    "newRevision": "revision-96a2519e-687c-437a-86a6-075284c09547",
+    "t1Rows": 9,
+    "coreUnchanged": true,
+    "derivedSha256": "bb0bd38cdc7862261101dd9013d1b362c42f4a57154fb8b25477338d5479eb7c",
+    "offlineTestsPassed": 41,
+    "coldPreviewMatches": true,
+    "modelPosts": 0,
+    "costCny": "0.00"
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "contract_id": "FAST39-EXCEPTION-HASH-FREEZE-1",
+  "status": "DRAFT_NOT_APPROVED_NOT_EXECUTABLE",
+  "approved": false,
+  "effective": false,
+  "addresses": [
+    "R2-TR01",
+    "R2-TR02"
+  ],
+  "final_intent_schema": "exception-intent.schema.json",
+  "final_intent_top_fields": [
+    "kind",
+    "intent_version",
+    "transaction_id",
+    "owner_scope_id",
+    "work_item_id",
+    "approval_bindings",
+    "mechanism",
+    "baseline",
+    "setup_receipt",
+    "operations",
+    "protected",
+    "governance"
+  ],
+  "request_original_sha256": {
+    "input": "complete immutable request file raw bytes B, including actual whitespace and final newline if any",
+    "algorithm": "SHA-256",
+    "output": "lowercase hexadecimal64",
+    "normalize": false,
+    "storage": "F1 external manifest and commit gate/receipt; never self-field inside request"
+  },
+  "strict_json_parse": {
+    "encoding": "UTF-8 strict, no BOM",
+    "duplicate_keys": "reject at all nesting levels",
+    "non_finite_numbers": "reject",
+    "float_numbers": "reject; integer fields only, bool is not integer",
+    "unicode": "no normalization; unpaired surrogates rejected by strict UTF-8 encoding",
+    "unknown_or_unfilled_final_fields": "reject by frozen schema; no placeholders/nulls in final intent"
+  },
+  "exception_intent_sha256": {
+    "input": "entire parsed final request object I, every top-level and nested schema field including baseline/approval/script/setup/operations/protected/governance",
+    "excluded_fields": [],
+    "canonicalizer": {
+      "implementation": "Python stdlib json.dumps",
+      "ensure_ascii": false,
+      "sort_keys": true,
+      "separators": [
+        ",",
+        ":"
+      ],
+      "allow_nan": false,
+      "encode": "UTF-8 strict",
+      "terminal_newline": false,
+      "array_order": "preserve; do not sort arrays"
+    },
+    "algorithm": "SHA-256",
+    "output": "lowercase hexadecimal64",
+    "storage": "exception registry_transaction.request_sha256 and F1 manifest/gate/receipt"
+  },
+  "ordinary_native_intent_sha256": {
+    "scope": "ordinary setup/progress/completed only; unchanged source algorithm",
+    "excluded_fields": [
+      "expected_revision",
+      "expected_sha256"
+    ],
+    "canonicalizer": "original registry_transaction.canonical then UTF-8 then SHA256",
+    "exception_request_must_never_be_sent_to_native_apply": true
+  },
+  "explicit_exception_digest_difference": "B digest includes the complete final intent/baseline, unlike native ordinary intent. This hash-producer difference is an explicit part of the one-time authorization, not a change to source tools, registry6-field shape or global schema/semantics values.",
+  "cross_field_checks": [
+    "baseline.revision equals setup_receipt.post_setup_revision and actual confirmed native started after revision",
+    "baseline.sha256 equals setup_receipt.post_setup_sha256, native started actual after file and locked current complete README",
+    "setup native request raw hash and ordinary intent hash recomputed, actual event/owner/empty grants/own row and return verified; idempotent/current hash alone not sufficient",
+    "all referenced input files real local nonlinked under approved scope, exact raw hashes and existing real approval/capability/fresh governance verified",
+    "operations equal exact two approved transforms; all old events/owners/14 business rows and target hash preserved",
+    "raw request hash AND exception intent hash must match F1/gate independently; same intent does not permit reformatting frozen original",
+    "transaction ID unused; event ID is REG-TXN- plus exactly that ID; base_sha256 is actual locked baseline.sha256; new revision is actual baseline.revision+1",
+    "candidate prepared outside source has truthful preparation timestamp, pending postwrite verification; under native lock reproduction must equal frozen candidate full bytes/hash, no nested apply",
+    "exception request top shape cannot carry its own raw hash/intent digest/final after README hash/gate or postcommit receipt hash; upstream refs cannot depend on downstream hashes"
+  ],
+  "freeze_phases": [
+    {
+      "phase": "F0_PRE_SETUP",
+      "source_action": "ordinary started only after exact B_SETUP grant",
+      "freeze": [
+        "R3 bundle identity",
+        "actual script/template/native-tool identities and bounded materialization rule",
+        "complete native setup request raw+native intent hashes and pre-setup baseline",
+        "planned commit mode and exact scope"
+      ],
+      "must_not_require": [
+        "unknown post-start baseline",
+        "future final exception request or its hashes"
+      ],
+      "authority": "external authorization binds F0 after F0 frozen; F0 does not include that future authorization hash"
+    },
+    {
+      "phase": "F1_POST_SETUP",
+      "source_action": "none while materializing/freezing/checking final objects",
+      "requires": [
+        "confirmed native setup and exact only-own setup delta",
+        "fresh actual post-setup complete baseline and owner/empty grants",
+        "schema-valid final exception request, both digests",
+        "full private candidate bytes/diff/hash and protection proof; native candidate checks",
+        "fresh normal CI/governance0 evidence"
+      ],
+      "authority": "one explicit B authorization may cover setup plus conditional commit, pinned F0/script/template/rule; absent explicit conditional coverage requires separate exact final commit approval"
+    },
+    {
+      "phase": "B_COMMIT_GATE",
+      "source_action": "at most one exceptional atomic structure+correction+metadata commit",
+      "requires": [
+        "external gate binds frozen F1 exact raw request/intent/candidate/diff/baseline and actual authority",
+        "re-read and independently recompute both digests and all source/approval/script identities",
+        "under original registry lock verify/reproduce exact frozen candidate bytes from locked original, then fsync/atomic replace/readback"
+      ],
+      "never": [
+        "rebase frozen F1",
+        "treat unrelated drift as own setup",
+        "wait for approval holding source lock",
+        "retry after failed/unknown outcome or silently replace transaction ID"
+      ]
+    },
+    {
+      "phase": "POST_COMMIT",
+      "source_action": "ordinary own progress/completed only on actual verified outcome under B lifecycle scope",
+      "requires": [
+        "separate truthful exception receipt with actual before/after hashes and lock/replace/readback outcome",
+        "fresh source full governance0 and strict unique selector/row/history checks"
+      ],
+      "unknown": "read only reconcile existing attempt; no inferred success, rollback overwrite or automatic retry"
+    }
+  ],
+  "acyclic_order": [
+    "R3 bundle -> actual mechanism/template/setup request -> F0 manifest -> pre-setup authorization -> native setup proof",
+    "post-setup preservation/governance inputs plus earlier objects -> final request -> raw+intent digests -> private candidate/diff -> F1 manifest -> external commit gate/optional final approval -> actual exception receipt"
+  ],
+  "cycle_rule": "No upstream artifact may contain the final digest of a downstream artifact; file paths/IDs may be fixed in advance, future hashes/actual outcomes must not be invented.",
+  "namespace_rule": {
+    "pre_setup": "README must already exist as exact real local source; task/transaction IDs and future exclusive artifact names unused",
+    "post_setup": "own started row/evidence namespace must exist with same owner/empty grants and pinned hashes; read verified own files or create distinct new evidence files exclusively",
+    "commit": "same existing source must match final baseline; exception transaction/event ID unused; foreign/unknown occupancy, links or drift stop",
+    "postcommit": "existing transaction is reconciled read-only, never treated as a new commit opportunity"
+  },
+  "future_bindings_now": null,
+  "actual_setup_or_final_request_created": false,
+  "actual_source_writer_created": false
+}

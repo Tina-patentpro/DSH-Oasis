@@ -1,0 +1,84 @@
+{
+  "id": "M06-NATIVE-ZERO-ASSEMBLY-20261106-R1",
+  "created_at": "2026-11-06T12:12:30.282944+08:00",
+  "policy": "native-zero-generation-private-profile-v1",
+  "runtime_ready": false,
+  "scope": "ACTUAL_DESKTOP_OFFLINE_ASSEMBLY_PARTIAL_NOT_INSTALLED_WRITER_READY",
+  "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1",
+  "node": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/tools/node-v24.21.0-darwin-arm64/bin/node",
+  "native_zero_generation": {
+    "protocol": 1,
+    "budget": {
+      "model": 0,
+      "api": 0,
+      "upload": 0,
+      "payment": 0
+    },
+    "guardedFiles": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/native-zero-review-20261106-r1/package/src/index.js",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/native-zero-review-20261106-r1/package/src/workbench-rpc.js"
+    ]
+  },
+  "archive": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-native-zero-generation-20261106-r1/oasis-professional-service-0.0.1.tgz",
+  "archive_sha256": "c07f2120a42e1a9d8110901eb35ed314eb5dd7225b1b35234c5b8d770fb03494",
+  "controlled_plugin_id": "oasis-professional-service-m06-controlled-013",
+  "host_entry": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/native-zero-review-20261106-r1/package/src/m06-controlled-host-013.js",
+  "client_entry": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/native-zero-review-20261106-r1/package/lib/client.js",
+  "proposed_port": 57619,
+  "port_binding_verified": true,
+  "daily_or_old_profile_writes": false,
+  "credentials_copied": false,
+  "actual_app_started": false,
+  "real_calls": 0,
+  "published": false,
+  "previous_candidate": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-generation-r1/admission-candidate.json",
+  "app": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app",
+  "profile": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/home/profiles/desktop",
+  "installation": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation",
+  "actual_listener_verified": false,
+  "readiness": {
+    "NZ01_profile_materialized": true,
+    "NZ02_actual_app_anchor_and_host_client_paired": true,
+    "NZ03_effective_loopback_port_configured": true,
+    "NZ04_installed_writer_admission": false
+  },
+  "blockers": [
+    {
+      "id": "NZ04-INSTALLED-WRITER-LAYOUT",
+      "detail": "Actual fixed storage provider refuses without installed writer lease. Current ordinary native-zero launcher uses root/home; provider requires root/data/home/storages plus genuine installation state/current receipt and installed writer lease. Reuse f-installed-runtime assembly/lease path in a separate new candidate; do not forge installation.json, bypass provider or mark runtime_ready=true."
+    }
+  ],
+  "resolved_storage_root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/home/storages",
+  "original_profile_written": false,
+  "app_started": false,
+  "files": {
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/macos-development-launch.mjs": "a551a94348e2e46527e319f5f6f278f7925f0a4be995c442b4bc534a7f1d1c31",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-native-zero-generation-20261106-r1/oasis-professional-service-0.0.1.tgz": "c07f2120a42e1a9d8110901eb35ed314eb5dd7225b1b35234c5b8d770fb03494",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/native-zero-review-20261106-r1/package/src/m06-controlled-host-013.js": "45baef11f2765d7400df5b85b9e036be2fc0a4949758c7f67560f1e18f74bfd0",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/native-zero-review-20261106-r1/package/lib/client.js": "1313a03e656cb74fcb32435a313968abc6b16f755d3f14c5c6af0219aa2b797f",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/native-zero-review-20261106-r1/package/src/index.js": "0fa6c560dc3b2201be45187f6d02c82e8cf1d6e1faeda6e4e8fa25bbe88a8322",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/.dsh-test/native-zero-review-20261106-r1/package/src/workbench-rpc.js": "3359e305339d0abd7951c0923329d4f19af33f51f69e08a83e34aecad5b6f4cc",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app/Contents/Resources/app/package.json": "fcb69ac13f56d9c4b0da6a47c77802b54d58afbd2303e4b5c425c764cfb052c2",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app/Contents/MacOS/DSH Desktop": "9e580f6963b278693275e84b47215396e66b063c8fa2a404d8e6927540d5ee18",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app/Contents/Info.plist": "d5ef97c4061b7482d3dce3a4abd48ff8c0a1c98a9cb5e2dc07dd59dd79c8cdc6",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/package.json": "a4ebcb1672b5c0c11c78bd30c62575fe06d8c1b2d134c3c97d3419f6f960f761",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/pnpm-lock.yaml": "4ab97f3dfeea7038a14562a02f35418bbb5697bc41de793d78867c09f9507ff6",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/home/profiles/desktop/package.json": "0e0d5be0540afc23dfeb349023d5f6857e43d6c29f0f86853ded22b96ba2f8b8",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/home/profiles/desktop/pnpm-lock.yaml": "b4c9de92923e98202b3425c3988c8a5e8bf6f4341d3aa19b20d99fda9b9887ed",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/home/profiles/desktop/pnpm-workspace.yaml": "ae7c5b68e2f157528e62885804e69e88583897b775e03c86fcbe52feaf498aba",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/home/profiles/desktop/cordis.patch.yml": "1a4ea946dd52d379e33dbaf840a0428a817d593cd81c67a6dafd93e996e1694b",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app/Contents/Resources/app/lib/main.js": "3288ee564df4f5aeabcc3b220fa2ded5c46599842fd40ff88f288e7d1034d551",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app/Contents/Resources/app/lib/profile.js": "0315853a9cc1c0be44bdf8b755afb7cd48024c0c0359a8d51167562d17cbb3a2",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app/Contents/Resources/app/lib/profile-hhId3Pkk.js": "139ca46c0c2603cbf8ba0db418292cf39d68e762691c368403065777bf833b01",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app/Contents/Resources/app/lib/profile-context-CyJJyl1O.js": "9c90ac3f5be09abcf9510a89bc7f15aaae9c0070ae5d1c5a8da30ea867edd9d1",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app/Contents/Resources/app/lib/host-process-entry.js": "df5da200954703926d74d639e754ab8efe02ee9cccb5bea1bbbf52eda4ee7416",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app/Contents/Resources/app/lib/package-overlay-Ca250500.js": "9b10333c51d7e54b4da541a9041489c3f8ade5e1a37092e5e45dc18d09d5972e",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-zero-generation-20261106-r1/installation/App/DSH Desktop.app/Contents/Resources/app/lib/module-resolution-CTTB3FAS.js": "22cc4c6562c767fd6508bdabd54a77d7e531618d2d55eda81042b50a595b8e52",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/desktop-preparation-result.json": "96a133d27df07215659a0ef6862884a50f98a3f9fabf3246de06a8106d51af13",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/app-copy-verification.json": "bcee89fa22b36d9f34ea77364fdaf9a0c4aca2c59b94d8fde4193ae241801b6a",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/storage-owner-result.json": "67b6a1224b91419d57e63088cbdf0bc947df2365b8511788f0e20cbd681018ca",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c5/index.mjs": "88c6bc7569efab14771daeb6a3e1a084a1c26ecef577db66f8505f2d9d9df56e",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c5/installed-lease.mjs": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+    "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/f-user-recovery-A01-r2-20261029/public R3 A01 R2 ' root/releases/f926b6857e23fbbcdb5dbd18ba2b26d0afe12b38452b6701c201021e493d9dd1/components/c5/ownership.mjs": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab"
+  }
+}

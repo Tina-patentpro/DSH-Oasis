@@ -52,7 +52,7 @@ test('result-contract failure keeps bounded execution summary and legacy records
     }
   } finally { await h.service.closeLocalGeneration(); await h.repository.close() }
 })
-async function harness() {
+async function harness(getLocalSkillSuite) {
   let calls = 0
   const context = { sessionId, route: { provider: 'test-provider', model: 'test-model' } }
   const runtime = { enabled: true, evidenceKind: 'native-model', loadClaimsV2Skill: loadClaimsSkill,
@@ -60,7 +60,7 @@ async function harness() {
       calls++
       return { status: 'completed', body: JSON.stringify(publicClaimsV2Output(input.formValues)) }
     } } }
-  const h = await fixtureHarness({ claimsV2: true, localGeneration: runtime })
+  const h = await fixtureHarness({ claimsV2: true, localGeneration: runtime, getLocalSkillSuite })
   return { ...h, runtime, context, calls: () => calls, command: extra => h.command({ sessionId, ...extra }) }
 }
 test('real generation is default OFF and rejects non-boolean configuration', () => {
@@ -154,5 +154,31 @@ test('real path requires matching explicit confirmation, never dispatches during
     assert.match(run.result.artifact.body, /原生模型/)
     assert.doesNotMatch(run.result.artifact.body, /结果为离线合成|公开替身\/合成验收/)
     assert.equal(h.calls(), 1)
+  } finally { await h.service.closeLocalGeneration(); await h.repository.close() }
+})
+
+test('the standard claims route streams the selected GitHub instructions and preserves provenance on the result', async () => {
+  let suite = 'oasis', sent
+  const h = await harness(() => suite)
+  const adapter = h.runtime.adapter.generate
+  h.runtime.adapter.generate = input => { sent = input; return adapter(input) }
+  try {
+    const oasis = await h.service.prepareLocalRun(h.command())
+    assert.equal(oasis.skill.id, 'flow-2-6')
+    suite = 'patent-disclosure'
+    const external = await h.service.prepareLocalRun(h.command())
+    assert.equal(external.skill.id, 'patent-disclosure-claims')
+    await assert.rejects(h.service.createLocalRun(h.command({ confirmation: { sha256: oasis.sha256, confirmed: true } })),
+      { code: 'GENERATION_CONFIRMATION_STALE' })
+    assert.equal(h.calls(), 0)
+    await h.service.createLocalRun(h.command({ confirmation: { sha256: external.sha256, confirmed: true } }))
+    for (let i = 0; i < 100 && h.state().tasks['task-a'].runs['run-1'].status === 'prepared'; i++) await new Promise(r => setTimeout(r, 5))
+    const record = h.state(), run = record.tasks['task-a'].runs['run-1']
+    assert.equal(h.calls(), 1)
+    assert.equal(run.status, 'completed')
+    assert.match(sent.instruction.body, /先有 .application_plan.yaml. 的 .claim_tree./)
+    assert.equal(run.contextSnapshot.skillProvenance.skillId, 'patent-disclosure-claims')
+    assert.match(run.result.artifact.body, /中国专利 Skill/)
+    parseStoredWorkbenchRecord('workspace-a', structuredClone(record))
   } finally { await h.service.closeLocalGeneration(); await h.repository.close() }
 })

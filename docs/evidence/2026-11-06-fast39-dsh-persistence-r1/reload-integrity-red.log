@@ -1,0 +1,38 @@
+✔ strict existing execution owner admits C4 error evidence and refuses contradictory status, key or duplicate owner (12.796583ms)
+✔ real transport → C4 consumer → repository → serialized reopen preserves six outputs and old response hash meaning (33.865542ms)
+✔ default unactivated consumer refuses before credentials; exact frozen scope and current ownership are mandatory (5.290958ms)
+✔ pending, content failure and missing response preserve execution truth without creating runs (12.466417ms)
+✔ same receipt is idempotent and conflicting late receipt cannot replace the original owner (11.269125ms)
+✔ full serialized legacy headroom selects a small hash-only error instead of truncating or creating an artifact (100.624416ms)
+✔ if even the small receipt cannot fit, preserve exact pre-dispatch bytes and require manual handling (53.953667ms)
+✔ revision conflict and actual disk failure cannot overwrite or silently retry a received result (4.889875ms)
+✖ serialized normal evidence rechecks its reported anchor hash and original result projection (6.423708ms)
+✔ sealed pending receipt is preserved through continue/stop and later legacy results are not queried (6.501417ms)
+✔ captured context cannot be changed by caller edits and ownership is rechecked after awaits (8.417792ms)
+✔ a parallel revision committed while authority is checked is preserved without result overwrite (3.034917ms)
+✔ foreign response keys, legacy body conflicts and invalid receipt status do not mutate original storage (5.824041ms)
+✔ whole workspace byte overflow is classified before schema parsing so bounded receipt fallback remains possible (4.480083ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 471.424584
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:119:1
+✖ serialized normal evidence rechecks its reported anchor hash and original result projection (6.423708ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-persistence.test.mjs:127:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

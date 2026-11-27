@@ -1,0 +1,43 @@
+{
+  "kind": "OFFLINE_DOCUMENT_AND_SCHEMA_SPEC_NOT_BUSINESS_TESTS",
+  "groups": {
+    "F01": [
+      "eligible packet2",
+      "each direct-field mutation",
+      "null/whitespace/missing",
+      "multiple files/packet1"
+    ],
+    "F02": [
+      "succeeded normal",
+      "failed/stopped/running/unknown",
+      "missing/conflicting IDs",
+      "content error retains succeeded",
+      "fragment mutual exclusion"
+    ],
+    "F03": [
+      "anchor/hash/target roles",
+      "source exact quote/UTF16/CRLF/nonBMP",
+      "original warnings inherited",
+      "duplicate/conflicting dispositions",
+      "core demotion/mapping collision",
+      "post-normalization unique vs ambiguous output quote"
+    ],
+    "F04": [
+      "three headings exactly",
+      "literal missing input lines",
+      "renderer equality/source table"
+    ],
+    "F05": [
+      "100000/100001 UTF16",
+      "256KiB/512KiB UTF8",
+      "legacy1MiB/full8MiB aggregate",
+      "v3401MiB/2MiB owner boundary",
+      "no false full-raw retention"
+    ],
+    "F06": [
+      "normal rejects claim_count0/empty claims",
+      "zero claim error permits no normal artifact"
+    ]
+  },
+  "actual_probe_results": "../../evidence/2026-11-05-fast39-contract2/schema-verification.json"
+}

@@ -1,0 +1,216 @@
+{
+  "cases": [
+    {
+      "id": "M05",
+      "workspaceId": "77497443-998b-47f5-ae28-6c501c070371",
+      "sessionId": "session-1c9903ea-c3c6-4853-9ad8-dc10b4e0510f",
+      "taskId": "batch-M05",
+      "requestKey": "f6369868-0451-4498-8a39-df031363ccfd",
+      "skillId": "patent-technical-disclosure",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "e0a38c5a124ca9d176a9b340a46639009c37a200c81321b3ea530238c3f7a918",
+      "runId": "v340-74f02292-943a-464f-9e60-25337b70669f",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "stream",
+        "finishKind": "max-tokens",
+        "usage": {
+          "inputTokens": 8045,
+          "outputTokens": 16384,
+          "totalTokens": 24429,
+          "cacheReadTokens": 0
+        }
+      },
+      "inputSha256": "9a5f1937cee0ac960ab55e3c156764477dac5e4a16ffd59172168acd4029af62",
+      "wireTerminal": true,
+      "livePostAttempt": true,
+      "wireStart": {
+        "nodeId": "Flow-1-5",
+        "requestKey": "f6369868-0451-4498-8a39-df031363ccfd",
+        "runId": "v340-74f02292-943a-464f-9e60-25337b70669f",
+        "model": "deepseek-flash",
+        "effort": "low",
+        "maxOutputTokens": 16384,
+        "serializedBytes": 33873,
+        "systemSha256": "63075feb073bf91939823d7bef6bb758b300493d0540aeeb62bc99814401104a",
+        "inputContentSha256": "45ce7a038c9db00ef053102badc34a584aff96be4275b495ba8513b08eb17062",
+        "tools": 0,
+        "at": "2026-11-11T23:41:01.929Z",
+        "mode": "live",
+        "promptTokens": 8045,
+        "fullWireTokens": 9042,
+        "inputTokenBudget": 32000,
+        "protocolReserveTokens": 2000,
+        "conservativeInputTokens": 11042
+      },
+      "originalPostAt": "2026-11-11T23:41:03.020Z",
+      "wireEnd": {
+        "at": "2026-11-11T23:42:28.551Z",
+        "http": 200,
+        "requestId": null,
+        "stopReason": "max_tokens",
+        "usage": {
+          "input_tokens": 8045,
+          "output_tokens": 16384,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0,
+          "streamIncomplete": true
+        }
+      },
+      "immediateAccountDebitObservedCny": "0.00",
+      "feeFromMeteredUsageCny": "0.073581"
+    },
+    {
+      "id": "M01",
+      "workspaceId": "feb10071-cfdd-4cf7-a391-a034652e3190",
+      "sessionId": "session-30b223dd-d3b0-4d2b-adbb-370557124b6b",
+      "taskId": "batch-M01",
+      "requestKey": "fb63182a-e307-4b78-a8af-81803aeb735b",
+      "skillId": "patent-background-research",
+      "skillVersion": "0.3.0-rc.5",
+      "resourceSha256": "f774c3aaa9ff8cfe977b8f12b4f0cad5588bb6130e48a28214576ccd817850d0",
+      "runId": "v340-54f9e3cd-ac36-4c40-bb53-8ee660648815",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-assembly",
+        "finishKind": "stop",
+        "usage": {
+          "inputTokens": 6337,
+          "outputTokens": 12263,
+          "totalTokens": 18600,
+          "cacheReadTokens": 0
+        }
+      },
+      "inputSha256": "e4699e2b73f6006ff89b0d5f0c6141db1c83b9dc45d1c2d4a0a755b0dea00194",
+      "wireTerminal": true,
+      "livePostAttempt": true,
+      "wireStart": {
+        "nodeId": "Flow-1-1",
+        "requestKey": "fb63182a-e307-4b78-a8af-81803aeb735b",
+        "runId": "v340-54f9e3cd-ac36-4c40-bb53-8ee660648815",
+        "model": "deepseek-flash",
+        "effort": "low",
+        "maxOutputTokens": 16384,
+        "serializedBytes": 27197,
+        "systemSha256": "997a8e1fe68a5f6d398a23cb03a73fdcd605a494ebecac2f88272bb2409f6123",
+        "inputContentSha256": "9c3dbf1b59a52c8aa9d48d6fd714e9e0dc66769067a476c73097ae80357b3bf5",
+        "tools": 0,
+        "at": "2026-11-11T23:42:28.679Z",
+        "mode": "live",
+        "promptTokens": 6337,
+        "fullWireTokens": 7165,
+        "inputTokenBudget": 32000,
+        "protocolReserveTokens": 2000,
+        "conservativeInputTokens": 9165
+      },
+      "originalPostAt": "2026-11-11T23:42:29.296Z",
+      "wireEnd": {
+        "at": "2026-11-11T23:43:52.186Z",
+        "http": 200,
+        "requestId": null,
+        "stopReason": "end_turn",
+        "usage": {
+          "input_tokens": 6337,
+          "output_tokens": 12263,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0,
+          "streamIncomplete": true
+        }
+      },
+      "immediateAccountDebitObservedCny": "0.00",
+      "feeFromMeteredUsageCny": "0.055389"
+    },
+    {
+      "id": "M02",
+      "workspaceId": "8f80ada0-8f9f-40c7-ac4c-d653b63a314b",
+      "sessionId": "session-39cb3ad1-10f6-44cc-9db6-9b692c977bb6",
+      "taskId": "batch-M02",
+      "requestKey": "6c9c6dda-3a8e-4329-8769-9e19127a5427",
+      "skillId": "patent-triz-analysis",
+      "skillVersion": "0.3.0-rc.4",
+      "resourceSha256": "444f9dafb3528753387e0fdbbf2b81d955da92f59a71c4a096ef697744028d33",
+      "runId": "v340-53042c43-5af3-4c86-bd86-39a63714f792",
+      "status": "failed",
+      "failureCode": "INVALID_OUTPUT",
+      "summary": {
+        "failureStage": "result-assembly",
+        "finishKind": "stop",
+        "usage": {
+          "inputTokens": 7419,
+          "outputTokens": 15512,
+          "totalTokens": 22931,
+          "cacheReadTokens": 0
+        }
+      },
+      "inputSha256": "265672f75fee6e7bbf520e7bcedd22539615e3f4167c0f01f27b54e5ed9d78aa",
+      "wireTerminal": true,
+      "livePostAttempt": true,
+      "wireStart": {
+        "nodeId": "Flow-1-2",
+        "requestKey": "6c9c6dda-3a8e-4329-8769-9e19127a5427",
+        "runId": "v340-53042c43-5af3-4c86-bd86-39a63714f792",
+        "model": "deepseek-flash",
+        "effort": "low",
+        "maxOutputTokens": 16384,
+        "serializedBytes": 31503,
+        "systemSha256": "7e41d6d356ab218d85dc87f1ff67911cd9bb0fc5778d4f2b21e4cc14b4954009",
+        "inputContentSha256": "dcf6813e946c304228f4d4a9265826424bc51d663c4a5f016a16e0f329c4b019",
+        "tools": 0,
+        "at": "2026-11-11T23:43:52.471Z",
+        "mode": "live",
+        "promptTokens": 7419,
+        "fullWireTokens": 8326,
+        "inputTokenBudget": 32000,
+        "protocolReserveTokens": 2000,
+        "conservativeInputTokens": 10326
+      },
+      "originalPostAt": "2026-11-11T23:43:53.386Z",
+      "wireEnd": {
+        "at": "2026-11-11T23:45:21.935Z",
+        "http": 200,
+        "requestId": null,
+        "stopReason": "end_turn",
+        "usage": {
+          "input_tokens": 7419,
+          "output_tokens": 15512,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0,
+          "streamIncomplete": true
+        }
+      },
+      "immediateAccountDebitObservedCny": "0.08",
+      "feeFromMeteredUsageCny": "0.069467"
+    }
+  ],
+  "realGenerationPosts": 3,
+  "resubmissions": 0,
+  "totalFeeFromMeteredUsageCny": "0.198437",
+  "immediateBatchAccountDebitObservedCny": "0.08",
+  "followupBatchAccountDebitObservedCny": "0.20",
+  "balanceFollowupReadAt": "2026-11-11T23:48:36.108927+00:00",
+  "balanceFollowupHttp": 200,
+  "balanceFollowupObservations": [
+    {
+      "at": "2026-11-11T23:45:52.969984+00:00",
+      "http": 200,
+      "observedDebitCny": "0.08"
+    },
+    {
+      "at": "2026-11-11T23:47:14.395930+00:00",
+      "http": 200,
+      "observedDebitCny": "0.13"
+    },
+    {
+      "at": "2026-11-11T23:48:36.108927+00:00",
+      "http": 200,
+      "observedDebitCny": "0.20"
+    }
+  ],
+  "settlementLineItemsAvailable": false,
+  "priceBasis": "DeepSeek Flash CNY off-peak: uncached input 1, cached input 0.02, output 4 per million tokens.",
+  "officialPrices": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing/",
+  "officialUsage": "https://api-docs.deepseek.com/zh-cn/guides/anthropic_api/",
+  "isolatedCredentialRemoved": true
+}

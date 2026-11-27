@@ -1,0 +1,75 @@
+{
+  "at": "2026-11-27T12:57:48.129052+08:00",
+  "originalRequestKey": "eb6bee3f-e23c-4333-b51f-554ebe6f94a7",
+  "originalRunId": "v340-10b9e02f-3991-47b5-a503-24f829e9b2e0",
+  "newModelRequests": 0,
+  "newProfessionalApiRequests": 0,
+  "newFeesCny": "0",
+  "outbound": [
+    {
+      "phase": "draft",
+      "blockedAttempts": 0,
+      "remoteTransports": 0
+    },
+    {
+      "phase": "edit-save",
+      "blockedAttempts": 0,
+      "remoteTransports": 0
+    },
+    {
+      "phase": "recover",
+      "blockedAttempts": 0,
+      "remoteTransports": 0
+    }
+  ],
+  "tests": {
+    "passed": 100,
+    "failed": 0,
+    "metadataTests": 10,
+    "initialFailuresPreserved": [
+      "red.log",
+      "green.log",
+      "fenced-example-red.log"
+    ]
+  },
+  "buildExitCode": 0,
+  "candidate": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-m02-metadata-r3-20261127/package",
+  "candidatePromptReceiptVersion": "v340-native-candidate-10",
+  "candidateSourceHashes": {
+    "src/m02-body-metadata.js": "42459ce9a7adf7192ebaa70c562bf1f5027c4b8a92ee2d951fb64ef9812fa32c",
+    "src/v340-native-contract.js": "dc70a0966f54389f3311f0d0c5657eddc577321d6136c816bfdd664e9e1d11e3",
+    "src/v340-native-model.js": "d24b9401787e996b27a3654325df5dc3c9b90900b562bccef1e44394d8d2a24d",
+    "src/v340-runtime-service.js": "4bdb2bc281cf17128f41f27b9a63779ae7d22ce07444a86a627dfd02beab6678",
+    "src/v340-document.js": "34b44364427ff6d6856b9aa21f13f445f29caa69c3ba0590876f18d64fa2ef00",
+    "test/m02-body-metadata-r3.test.mjs": "afc42d0dea86fa707d4733be334a149bcd137d131c30e8741cc58b2ffc2ee2b5",
+    "test/m02-completion-pair-r2.test.mjs": "ac3acfbe5cf399e1b79ba17afdee468aac8a35906c9135a173a792683fa55d21",
+    "test/m02-source-locator-r1.test.mjs": "83558b429c211f3a130313936059eb89c4123ccd14f0fb0d6fde942615967656",
+    "test/oasis-first-batch.test.mjs": "def9be1ed2608df447282a2f3aef9ebd5b768aa90d0ec3505610acf5dfcc59ca",
+    "lib/client.js": "ba82e17d15c6b52bcb7e53025c4a1ddf05540135719ac3cdae7b17e8ced1ff8e",
+    "lib/client.js.map": "d1ed8da6439bae5c3a0e9c4319dace7d02341695490d855acf70ee91e6976cf9"
+  },
+  "editedOriginalGenerationReceiptVersion": "v340-native-candidate-9",
+  "revisionId": "revision-89f6e6d5-0358-4979-bb23-6ef533572810",
+  "originalSha256": "3adb93e6473ad4f87ad20de8ee1512aec344c55f476ac72cf93dd904b2383b6a",
+  "revisedSha256": "25f354e3b355306c36900a8cb0d96397879e422d607035a04ab06a81eeedbf73",
+  "revisedCoreSha256": "190e7801772b20f7f26bc02213e4206c9d71014f56d8e14ee23c2a354581dc1b",
+  "savedPath": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/dsh-m02-pair-r2-20261127/live/workspaces/M02/triz_analysis_report_20261127125610_89f6e6d5.md",
+  "draftRecovered": true,
+  "reviewedAndSaved": true,
+  "savedReopenMatches": true,
+  "tablesSourcesAndOriginalRetained": true,
+  "rejectionChecks": {
+    "staleEdit": "V340_EDIT_STALE",
+    "unreviewedSave": "V340_REVIEW_REQUIRED",
+    "wrongHashReview": "V340_RESULT_STALE",
+    "consumedToken": "WRITEBACK_TOKEN_USED"
+  },
+  "engineeringReview": "approved for this fixed revision in isolated Host",
+  "professionalAccepted": false,
+  "userAccepted": false,
+  "reviewScope": "metadata, source/pair integrity, table retention and persistence; no professional content approval",
+  "candidateRealGenerationVerified": false,
+  "nativeHostOnly": true,
+  "dailyProfileChanged": false,
+  "pushedOrReleased": false
+}

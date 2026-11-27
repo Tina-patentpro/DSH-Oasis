@@ -1,0 +1,261 @@
+{
+  "at": "2026-11-05T14:22:08.280219+08:00",
+  "scope": "document/Schema and synthetic reference checks only, no business module execution",
+  "source_probe_sha256": "d38db0941a0981a288b7eb7a4cd8a8cd1f50709252fdfb7450a717826d17116d",
+  "cases": [
+    {
+      "id": "R2-01",
+      "case": "formatter consumes undeclared proposed normalizer outputs",
+      "evidence": {
+        "consumed_ports": [
+          "clean_text",
+          "claim_id_map",
+          "dispositions",
+          "marker_warnings",
+          "claim_count"
+        ],
+        "proposed_normalizer_outputs": [
+          "dispositions",
+          "claim_id_map",
+          "clean_text"
+        ],
+        "missing_in_proposed_table": [
+          "claim_count",
+          "marker_warnings"
+        ],
+        "existing_saved_outputs": [
+          "claim_count",
+          "clean_text",
+          "inserted_markers",
+          "marker_warnings"
+        ]
+      },
+      "classification": "CONTRACT_ABI_GAP"
+    },
+    {
+      "id": "R2-02",
+      "case": "writer/sanitizer draft stage has no named object schema",
+      "evidence": {
+        "writer_output": {
+          "draft": "string(JSON claims_text, feature_dispositions, claim_id_map)"
+        },
+        "sanitizer_output": {
+          "parsed_draft": "object"
+        },
+        "schema_definitions": [
+          "eligibility_request",
+          "outline_source_item",
+          "final_source_item",
+          "target",
+          "outline_source_hint",
+          "outline_analysis_metadata",
+          "planned_claim",
+          "anchor_basis",
+          "outline_anchor",
+          "claim_id_mapping",
+          "feature_disposition",
+          "feature_coverage",
+          "source_registry_internal",
+          "quality_report",
+          "outputs",
+          "structured_result",
+          "structured_result_error",
+          "enhanced_fragment",
+          "evidence_record",
+          "received_outputs"
+        ],
+        "final_disposition_requires_post_normalization_fields": [
+          "planned_claim_id",
+          "feature_id",
+          "claim_id",
+          "action",
+          "output_quote",
+          "output_start_utf16",
+          "output_end_utf16",
+          "locator_status",
+          "reason"
+        ],
+        "gap": "No draft-root schema/required keys and pre/post-normalization disposition type boundary"
+      },
+      "classification": "CONTRACT_ABI_GAP"
+    },
+    {
+      "id": "R2-03",
+      "case": "claim_count source differs between prose and logical ABI",
+      "evidence": {
+        "CONTRACT_line_27": "dependency node original edges/count/status",
+        "ABI_formatter_claim_count": [
+          "1769301001100",
+          "claim_count"
+        ],
+        "dependency_count_port": "number(integer)"
+      },
+      "classification": "CONTRACT_ABI_GAP"
+    },
+    {
+      "id": "R2-04",
+      "case": "actual R2 receipt sentinels/statuses have no complete registry mapping",
+      "evidence": {
+        "packet_sha256": "ea2f8c0c03a4ca7cde4760906dd6bf0a736b6a5f1b15774f41bb3c8130251a79",
+        "checks": [
+          {
+            "input_id": "upstream_md_file",
+            "original_status": "not_provided",
+            "original_sha256_is_none_sentinel": true,
+            "literal_hash_copy_schema_accepts": false,
+            "literal_hash_and_status_copy_schema_accepts": false
+          },
+          {
+            "input_id": "disclosure_text",
+            "original_status": "accepted",
+            "original_sha256_is_none_sentinel": false,
+            "literal_hash_copy_schema_accepts": true,
+            "literal_hash_and_status_copy_schema_accepts": false
+          }
+        ],
+        "specified_hash_mapping": "receipts[id].sha256 unchanged; absent receipt hash stays null",
+        "registry_status_enum": {
+          "type": "string",
+          "enum": [
+            "provided",
+            "not_provided",
+            "unverified"
+          ]
+        },
+        "note": "R2 has sha256=none for missing input; contract says receipt hash unchanged, but registry only accepts null or 64-hex. accepted/warning to provided/unverified mapping also needs explicit policy."
+      },
+      "classification": "CONTRACT_INPUT_MAPPING_GAP"
+    },
+    {
+      "id": "R2-05",
+      "case": "self-supplied anchor cannot prove original Outline targets",
+      "evidence": {
+        "two_target_baseline_valid": true,
+        "erased_target_report_self_check_accepts": true,
+        "original_independent_anchor_rejects": true,
+        "external_output_names": [
+          "output",
+          "claims_text",
+          "dependency_tree",
+          "pending_confirmation",
+          "quality_report",
+          "quality_status"
+        ],
+        "client_original_anchor_selector_in_ABI": null,
+        "note": "Workflow branch contract exists; client expected_anchor acquisition is unspecified. Does not demonstrate a deployed vulnerability."
+      },
+      "classification": "CONTRACT_AUTHORITY_HANDOFF_GAP"
+    },
+    {
+      "id": "R2-06",
+      "case": "existing probes omit display inheritance check: Outline warning",
+      "evidence": {
+        "removed_literal": "合成提示：仍须人工复核。",
+        "original_structured_warning_unchanged": true,
+        "previous_reference_checks_accept": true,
+        "contract_requires_rejection": true
+      },
+      "classification": "VERIFICATION_COVERAGE_GAP_NOT_NEW_FORMAT_POLICY"
+    },
+    {
+      "id": "R2-07",
+      "case": "existing probes omit display inheritance check: material limitation",
+      "evidence": {
+        "removed_literal": "合成材料仅供Schema复核。",
+        "original_structured_warning_unchanged": true,
+        "previous_reference_checks_accept": true,
+        "contract_requires_rejection": true
+      },
+      "classification": "VERIFICATION_COVERAGE_GAP_NOT_NEW_FORMAT_POLICY"
+    },
+    {
+      "id": "R2-08",
+      "case": "two response-hash fields can disagree at shape layer",
+      "evidence": {
+        "schema_accepts": true,
+        "outer_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "error_sha256": "58837a097481e48a2d8ede85f0aa30391f2b899c15ab5650e81d8128781d89e8",
+        "note": "Cross-layer equality/which exact bytes are hashed must be specified and checked; not a claim that JSON Schema alone must implement cross-field semantics."
+      },
+      "classification": "CROSS_FIELD_SPECIFICATION_OR_VERIFICATION_GAP"
+    },
+    {
+      "id": "R2-09",
+      "case": "capacity layering",
+      "evidence": [
+        {
+          "case": "depth8",
+          "accepted": true,
+          "expected": true,
+          "pass": true
+        },
+        {
+          "case": "depth9",
+          "accepted": false,
+          "expected": false,
+          "pass": true
+        },
+        {
+          "case": "array1024",
+          "accepted": true,
+          "expected": true,
+          "pass": true
+        },
+        {
+          "case": "array1025",
+          "accepted": false,
+          "expected": false,
+          "pass": true
+        },
+        {
+          "case": "keys256",
+          "accepted": true,
+          "expected": true,
+          "pass": true
+        },
+        {
+          "case": "keys257",
+          "accepted": false,
+          "expected": false,
+          "pass": true
+        },
+        {
+          "case": "individually bounded strings still exceed 512KiB aggregate after escaping",
+          "each_output_within_cap": true,
+          "record_bytes": 603161,
+          "aggregate_accepts": false,
+          "pass": true
+        }
+      ],
+      "classification": "SPECIFICATION_CONSISTENT_OFFLINE_ONLY"
+    },
+    {
+      "id": "R2-10",
+      "case": "source locator maxima are outside the published capacity table",
+      "evidence": {
+        "source_start_maximum": 1000000,
+        "source_end_maximum": 1000000,
+        "registered_upstream_body_utf8_limit": 1048576,
+        "registry_text_codepoint_maximum": 1048576,
+        "shape_accepts_source_location_past_decimal_million": false,
+        "note": "Conditional edge for upstream document body (ordinary text/file inputs are 300000 UTF16); does not claim this synthetic locator is a complete eligible prepared input. Policy must state effective source-locator range and failure/no truncation, or align bounds."
+      },
+      "classification": "CAPACITY_EDGE_SPECIFICATION_GAP"
+    },
+    {
+      "id": "R2-11",
+      "case": "fresh synthetic fixture layered positive",
+      "evidence": {
+        "source_semantics": true,
+        "output_checks": true,
+        "record_schema": true,
+        "record_capacity": true
+      },
+      "classification": "POSITIVE_CONTROL"
+    }
+  ],
+  "network_attempts": [],
+  "new_generation_calls": 0,
+  "paid_calls": 0,
+  "note": "Counterexamples are retained findings, not repaired here. Prior96 checks remain passing within their tested scope."
+}

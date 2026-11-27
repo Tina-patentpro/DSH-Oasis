@@ -1,0 +1,15 @@
+file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.dsh-test/m06-p4-unknown-update-20261106-r1/releases/db673f66ad8a0a84b93f421faf923dce4d0fbfa823d5317e2d8c51691c2989d3/App/DSH%20Desktop.app/Contents/Resources/app/node_modules/@deepseek-ai/dsh-storage-json/lib/index.js:591
+	for (const table of descriptor.tables) if (!UNIT_NAME_RE.test(table)) throw new StorageError("malformed-medium", `invalid table name '${table}' in unit '${descriptor.name}'`);
+	                               ^
+
+TypeError: descriptor.tables is not iterable
+    at validateDescriptor (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.dsh-test/m06-p4-unknown-update-20261106-r1/releases/db673f66ad8a0a84b93f421faf923dce4d0fbfa823d5317e2d8c51691c2989d3/App/DSH%20Desktop.app/Contents/Resources/app/node_modules/@deepseek-ai/dsh-storage-json/lib/index.js:591:33)
+    at Object.open (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.dsh-test/m06-p4-unknown-update-20261106-r1/releases/db673f66ad8a0a84b93f421faf923dce4d0fbfa823d5317e2d8c51691c2989d3/App/DSH%20Desktop.app/Contents/Resources/app/node_modules/@deepseek-ai/dsh-storage-json/lib/index.js:563:3)
+    at Object.open (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.dsh-test/m06-p4-unknown-update-20261106-r1/releases/db673f66ad8a0a84b93f421faf923dce4d0fbfa823d5317e2d8c51691c2989d3/components/c5/index.mjs:16:56)
+    at Object.open (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/docs/evidence/2026-11-06-m06-p4-installed-update-r1/exercise-installed-update.mjs:33:79)
+    at openOasisWorkbenchRepository (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/.dsh-test/m06-p4-unknown-update-20261106-r1/releases/db673f66ad8a0a84b93f421faf923dce4d0fbfa823d5317e2d8c51691c2989d3/components/c3/src/workbench-repository.js:224:38)
+    at file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/docs/evidence/2026-11-06-m06-p4-installed-update-r1/exercise-installed-update.mjs:33:21
+    at async Module.withInstalledWriter (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/scripts/f-installed-runtime.mjs:178:51)
+    at async file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/docs/evidence/2026-11-06-m06-p4-installed-update-r1/exercise-installed-update.mjs:70:1
+
+Node.js v24.21.0

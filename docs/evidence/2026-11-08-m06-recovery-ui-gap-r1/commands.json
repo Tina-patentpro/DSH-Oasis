@@ -1,0 +1,105 @@
+[
+  {
+    "argv": [
+      "tools/bin/node",
+      "--test",
+      "packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs"
+    ],
+    "stage": "RED",
+    "exitCode": 1,
+    "log": "client-red.log"
+  },
+  {
+    "argv": [
+      "tools/bin/node",
+      "--test",
+      "packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs",
+      "packages/oasis-professional-service/test/panel-keyboard.test.mjs",
+      "packages/oasis-professional-service/test/panel-local-loop-ui.test.mjs",
+      "packages/oasis-professional-service/test/client-panel-contract.test.mjs",
+      "packages/oasis-professional-service/test/v340-zero-preview.test.mjs"
+    ],
+    "stage": "source GREEN",
+    "passed": 46,
+    "exitCode": 0,
+    "log": "client-green.log"
+  },
+  {
+    "argv": [
+      "../../tools/bin/node",
+      "--import",
+      "../../docs/evidence/2026-11-08-m06-recovery-ui-gap-r1/archive-source-loader.mjs",
+      "--test",
+      "test/m06-native-business-recovery-client.test.mjs",
+      "test/panel-keyboard.test.mjs",
+      "test/panel-local-loop-ui.test.mjs",
+      "test/client-panel-contract.test.mjs",
+      "test/v340-zero-preview.test.mjs",
+      "test/v340-client.test.mjs",
+      "test/panel-persistence-ui.test.mjs",
+      "test/panel-portal-contract.test.mjs",
+      "test/panel-host-coordinator.test.mjs",
+      "test/m06-native-zero-generation.test.mjs"
+    ],
+    "cwd": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service",
+    "stage": "actual archive GREEN",
+    "passed": 69,
+    "exitCode": 0,
+    "log": "affected-archive.log"
+  },
+  {
+    "argv": [
+      "python3",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-m06-recovery-ui-gap-r1/prepare-candidate.py"
+    ],
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "python3",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-m06-recovery-ui-gap-r1/prepare-bundle.py"
+    ],
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "tools/bin/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-m06-recovery-ui-gap-r1/compiled-client-smoke.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "stage": "full bundle verifyFBundle plus verifySignedInstallationApp, no install/start",
+    "argv": [
+      "tools/bin/node",
+      "--input-type=module",
+      "-"
+    ],
+    "exitCode": 0,
+    "result": "bundle-verify-result.json"
+  },
+  {
+    "argv": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "--check",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1"
+    ],
+    "exitCode": 0,
+    "log": "rc2-installation-check.log"
+  },
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "docs/project-current-state.md",
+      "packages/oasis-professional-service/src/client/PanelChrome.js",
+      "packages/oasis-professional-service/src/client/PanelPages.js",
+      "packages/oasis-professional-service/test/m06-native-business-recovery-client.test.mjs"
+    ],
+    "exitCode": 0
+  }
+]

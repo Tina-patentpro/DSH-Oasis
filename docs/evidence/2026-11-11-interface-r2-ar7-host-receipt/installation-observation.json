@@ -1,0 +1,243 @@
+{
+  "start": "2026-11-11T12:37:12.521377+08:00",
+  "end": "2026-11-11T12:37:17.918804+08:00",
+  "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1",
+  "installation": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/installation.json",
+    "sha256": "9a7085ec31ebdc08fe066a4ace4da848519505c80f1848b8cf8893abf282deab",
+    "bytes": 2225
+  },
+  "bundle": "2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4",
+  "release_receipt": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/receipt.json",
+    "sha256": "f931563d873baf8b63407912baf3f04e187c1f18e2fc569093a0af63939a4466",
+    "bytes": 6863203
+  },
+  "checkpoint": 3,
+  "release_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4",
+  "profile": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/profiles/desktop",
+  "profile_template": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/profile-template.json",
+    "sha256": "cbdd4bc04ea52b22094aedbdc7cd9f8af25c2db240e3ce7914d4641fffb6ce91",
+    "bytes": 4251
+  },
+  "profile_state": {
+    "profile-selection": {
+      "identity": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/userdata/profile-selection/state.json",
+        "sha256": "0cba813c06a0b07a51c85da63d2b64413197e23bce1c3a9ad4c44b25b67efb3a",
+        "bytes": 42
+      },
+      "fields": {
+        "version": 2,
+        "active": "desktop"
+      }
+    },
+    "desktop-market": {
+      "identity": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/userdata/desktop-market/state.json",
+        "sha256": "6cee5cbc8ebc171e6b5b39874103600ea1731baca87f01a16271325bb89d17af",
+        "bytes": 61
+      },
+      "fields": {
+        "version": 1,
+        "requested": "disabled",
+        "legacyDefaulted": false
+      }
+    }
+  },
+  "components": [
+    {
+      "component": "@deepseek-ai/dsh-client-ui-primitives",
+      "version": "0.2.0-rc.2.oasis-mac.1",
+      "manifest": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c0/package.json",
+        "sha256": "fefbbc47685b5a390fc539dcae46d995007a2b7b11aa2f54ea042302ccc8b7d9",
+        "bytes": 2222
+      },
+      "profile_link": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/profiles/desktop/node_modules/@deepseek-ai/dsh-client-ui-primitives",
+      "resolves": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c0",
+      "expected": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c0",
+      "matches": true
+    },
+    {
+      "component": "@deepseek-ai/dsh-web-frontend",
+      "version": "0.2.0-rc.2.oasis-mac.1",
+      "manifest": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c1/package.json",
+        "sha256": "2d37feff4e90d97cdc1e6d1cf4716c64ee3c2b65717b04a913d60b760471eec3",
+        "bytes": 2638
+      },
+      "profile_link": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/profiles/desktop/node_modules/@deepseek-ai/dsh-web-frontend",
+      "resolves": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c1",
+      "expected": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c1",
+      "matches": true
+    },
+    {
+      "component": "dsh-better-sidebar",
+      "version": "0.24.1",
+      "manifest": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c2/package.json",
+        "sha256": "8e3dc194e13128258f71d1f837160095141d5579b35adfb2b0a328e2df2032c5",
+        "bytes": 7791
+      },
+      "profile_link": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/profiles/desktop/node_modules/dsh-better-sidebar",
+      "resolves": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c2",
+      "expected": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c2",
+      "matches": true
+    },
+    {
+      "component": "oasis-professional-service",
+      "version": "0.1.0-rc.5",
+      "manifest": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c3/package.json",
+        "sha256": "640915d483a2479ad41dbe551cab4f97d7308a7d75e17f3da349243c9b3fc19c",
+        "bytes": 3105
+      },
+      "profile_link": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/profiles/desktop/node_modules/oasis-professional-service",
+      "resolves": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c3",
+      "expected": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c3",
+      "matches": true
+    },
+    {
+      "component": "dsh-desktop-host-file-path-bridge",
+      "version": "0.0.1",
+      "manifest": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c4/package.json",
+        "sha256": "2f5f1d7d4a1b72c04b43fe86d9d768dbdf3e6d2884de5ad13532d6c70921a791",
+        "bytes": 795
+      },
+      "profile_link": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/profiles/desktop/node_modules/dsh-desktop-host-file-path-bridge",
+      "resolves": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c4",
+      "expected": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c4",
+      "matches": true
+    },
+    {
+      "component": "dsh-storage-json-single-owner",
+      "version": "0.0.1.oasis-installed.1",
+      "manifest": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c5/package.json",
+        "sha256": "9c8b488e3900be05da1eb1b6caa1655a4bf3082c9cb8c619621947b57b82874d",
+        "bytes": 1312
+      },
+      "profile_link": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/profiles/desktop/node_modules/dsh-storage-json-single-owner",
+      "resolves": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c5",
+      "expected": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c5",
+      "matches": true
+    },
+    {
+      "component": "@deepseek-ai/dsh-client-ui-conversation",
+      "version": "0.2.0-rc.2.oasis-draft.3",
+      "manifest": {
+        "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c6/package.json",
+        "sha256": "adc56c9c76ed82f2bbecebb7d61c3bad9b43c1686a261197bea95989a589440f",
+        "bytes": 1824
+      },
+      "profile_link": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/profiles/desktop/node_modules/@deepseek-ai/dsh-client-ui-conversation",
+      "resolves": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c6",
+      "expected": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/components/c6",
+      "matches": true
+    }
+  ],
+  "controls": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "sha256": "8338fec253a916eb780a8fc739f6d973ba22475772db98698543758a408ad405",
+      "bytes": 30687,
+      "matches_registered": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/patches/storage-json-single-owner/installed-lease.mjs",
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "bytes": 5372,
+      "matches_registered": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/patches/storage-json-single-owner/ownership.mjs",
+      "sha256": "a20aab2a54f321ca4947d8a9f6210e1c568f80b05c7921f481a97690fcbbedab",
+      "bytes": 1902,
+      "matches_registered": true
+    }
+  ],
+  "node": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+    "sha256": "e4b5a3af0e05c75de2eae013904145f40fe7fc2a6e6f17510128bf45cca4e79b",
+    "bytes": 122129232,
+    "matches_registered": true
+  },
+  "app": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/2339cca5a2711bf7851443af5ec144312c0eff84372094e8b6f456e91dedf0e4/App/DSH Desktop.app/Contents/Info.plist",
+    "sha256": "d5ef97c4061b7482d3dce3a4abd48ff8c0a1c98a9cb5e2dc07dd59dd79c8cdc6",
+    "bytes": 3907,
+    "version": "2.0.17"
+  },
+  "comparison": {
+    "program_entries": 27814,
+    "program_diff": [],
+    "active_profile_entries": 16,
+    "active_profile_diff": [],
+    "snapshot_entries": 16,
+    "snapshot_diff": []
+  },
+  "historical_difference": {
+    "bundle": "a25f1a190803aaccc3f614b607b2d1502458999d41221f5751969e93b3a62e2b",
+    "receipt": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/releases/a25f1a190803aaccc3f614b607b2d1502458999d41221f5751969e93b3a62e2b/receipt.json",
+      "sha256": "0a8c3c4f9a9724e1ab3c4e55491413eaeb0350cc2e12ee5a11cf9650b3502234",
+      "bytes": 6862063
+    },
+    "program_diff": [
+      "components/c3/THIRD-PARTY-NOTICES.md",
+      "components/c3/lib/client.js",
+      "components/c3/lib/client.js.map",
+      "components/c3/licenses/patent-disclosure-skill-MIT.txt",
+      "components/c3/src/claims-v2-result.js",
+      "components/c3/src/client/OasisSettingsSection.js",
+      "components/c3/src/client/OasisWorkbenchSurface.js",
+      "components/c3/src/client/PanelPages.js",
+      "components/c3/src/client/UnifiedGenerationPage.js",
+      "components/c3/src/client/V340GenerationPage.js",
+      "components/c3/src/client/product-settings.js",
+      "components/c3/src/client/workbench-remote.js",
+      "components/c3/src/client/workbench-store.js",
+      "components/c3/src/index.js",
+      "components/c3/src/installed-skill-preference.js",
+      "components/c3/src/local-generation-service.js",
+      "components/c3/src/local-skill-preference-contract.js",
+      "components/c3/src/local-skill-suites.js",
+      "components/c3/src/oasis-runtime-config.js",
+      "components/c3/src/patent-disclosure-claims-resources.json",
+      "components/c3/src/patent-disclosure-claims.js",
+      "components/c3/src/v340-native-contract.js",
+      "components/c3/src/v340-native-model.js",
+      "components/c3/src/v340-runtime-contract.js",
+      "components/c3/src/workbench-connection.js",
+      "components/c3/src/workbench-contract.js",
+      "components/c3/src/workbench-rpc.js",
+      "components/c3/src/workbench-service.js",
+      "components/c3/src/writeback-service.js",
+      "node_modules/.modules.yaml",
+      "node_modules/.pnpm-workspace-state-v1.json",
+      "profile-template.json"
+    ],
+    "profile_diff": [
+      "cordis.patch.yml",
+      "node_modules/.modules.yaml",
+      "node_modules/.package-map.json",
+      "node_modules/.pnpm-workspace-state-v1.json",
+      "node_modules/.pnpm/lock.yaml",
+      "node_modules/@deepseek-ai/dsh-client-ui-conversation",
+      "node_modules/@deepseek-ai/dsh-client-ui-primitives",
+      "node_modules/@deepseek-ai/dsh-web-frontend",
+      "node_modules/dsh-better-sidebar",
+      "node_modules/dsh-desktop-host-file-path-bridge",
+      "node_modules/dsh-storage-json-single-owner",
+      "node_modules/oasis-professional-service",
+      "package.json",
+      "pnpm-lock.yaml"
+    ]
+  },
+  "process_executable_observation": [],
+  "scope": "Read-only receipt member, mode, symlink and profile identity comparison. No controller or app execution; not a codesign or runtime admission result.",
+  "prior_verification_attempt": "exit 1: Python lacked hashlib.file_digest; no file written; repeated with streaming sha256"
+}

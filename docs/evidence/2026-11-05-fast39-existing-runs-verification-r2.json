@@ -1,0 +1,82 @@
+{
+  "time": "2026-11-05T08:39:02.400693+08:00",
+  "verification_status": "PASS_EVIDENCE_IDENTITY_AND_PRESERVATION_ONLY",
+  "investigation_status": "EXISTING_SERVER_RECEIPTS_VERIFIED_NODE_TRACE_ACCESS_BLOCKED",
+  "preflight_sha256": "2a5f424311965c3543e4f2d7e3d458ff548c722ae0616ba6070a9ee396a980b1",
+  "backend_evidence_sha256": "1b7e32d68776339b1fa64c76f6a3b6ea53dcd58f910211d9dfa7072cf0f5b792",
+  "report_sha256": "e93bf387b0125a5fed33a1ee8b91362b37580737670d7ada0d442c3284c35e12",
+  "preexisting_files": 135,
+  "unchanged_except_three_preserved_status_prefixes": 132,
+  "status_prefixes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "before_image": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-existing-runs-20261105/before/project-current-state.md",
+      "before_sha256": "fa2c609970c4aba4cfb7d1c763f6d5e8fc4cf6bfe7ffba6c4381113acc9e8ecc",
+      "prefix_bytes": 1060
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "before_image": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-existing-runs-20261105/before/2026-10-23-stage5-progress-and-remaining.md",
+      "before_sha256": "09107566a087d4186b519749bc537e4306fe04d31dfea2e1e67a9c424b02c281",
+      "prefix_bytes": 1051
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+      "before_image": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-existing-runs-20261105/before/2026-10-26-follow-up-remaining.md",
+      "before_sha256": "247958e910e959a2e6a0c24b8a3fc49579638e7cf60cb227485612258899d933",
+      "prefix_bytes": 1051
+    }
+  ],
+  "unexpected_changes": [],
+  "input_drift": [],
+  "comparisons": [
+    {
+      "revision": "r1",
+      "recordId": 5341,
+      "runId": "360f4bab-92a2-4829-bfb9-0fb9b7166270",
+      "canonicalMatchesObservedRemote": true,
+      "storedInputsMatchFrozenRequestPlusServerKey": true,
+      "storedOutputMatchesLocalMinusKnownPrefix": true,
+      "outputKeys": [
+        "output"
+      ]
+    },
+    {
+      "revision": "r2",
+      "recordId": 5342,
+      "runId": "290ddaa9-9cbe-4def-a617-b34e624ebd0a",
+      "canonicalMatchesObservedRemote": true,
+      "storedInputsMatchFrozenRequestPlusServerKey": true,
+      "storedOutputMatchesLocalMinusKnownPrefix": true,
+      "outputKeys": [
+        "output"
+      ]
+    }
+  ],
+  "link_count": 7,
+  "missing_links": [],
+  "head_unchanged": true,
+  "prior_investigation_originals_unchanged": true,
+  "code_or_fixed_dependencies_changed": false,
+  "business_tests_build_generation_upload_create_fee_actions": 0,
+  "read_only_network_actions_occurred": true,
+  "ssh_attempts": [
+    {
+      "alias": "tokyo",
+      "command": "ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=8 tokyo docker-ps-read-only",
+      "exit_code": 255,
+      "observed_error": "connect to host 8.216.36.193 port 22: Operation timed out",
+      "remote_command_executed": false
+    },
+    {
+      "alias": "jtti",
+      "command": "ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=8 jtti docker-ps-read-only",
+      "exit_code": 255,
+      "observed_error": "Permission denied (publickey,password)",
+      "remote_command_executed": false
+    }
+  ],
+  "node_extractor_or_llm_trace_obtained": false,
+  "unique_root_cause_confirmed": false,
+  "independent_review": false
+}

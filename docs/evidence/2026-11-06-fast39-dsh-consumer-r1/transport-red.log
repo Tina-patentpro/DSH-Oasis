@@ -1,0 +1,311 @@
+✖ create transport keeps six exact output strings and provider receipt alongside legacy projection (6.114458ms)
+✖ received error-only enhanced response is not erased into an unresolved legacy receipt (33.147167ms)
+✖ mutually present fragments are rejected instead of silently choosing one (0.250083ms)
+✖ existing completed progress transport forwards the same fragment without inventing a recovery endpoint (0.695084ms)
+✔ old responses keep the same normalized interface and do not gain synthesized enhancement (0.730333ms)
+✖ C4 enhanced response cannot complete through an unbound legacy path or cause another create (16.94825ms)
+✔ S6 new execution and result bind the authenticated account into input integrity (4.972333ms)
+✔ S6 different account cannot continue an existing operation or observe its ledger (5.014333ms)
+✔ S6 legacy unbound execution remains readable without silently acquiring the current account (1.665709ms)
+✔ S6 an old request key cannot be rebound to another authenticated account (1.405ms)
+✔ S6 refuses a new execution with invalid authenticated account id undefined (0.761709ms)
+✔ S6 refuses a new execution with invalid authenticated account id 101 (0.68025ms)
+✔ S6 refuses a new execution with invalid authenticated account id -1 (0.88225ms)
+✔ S6 refuses a new execution with invalid authenticated account id 1.5 (0.7285ms)
+✔ S6 refuses a new execution with invalid authenticated account id 9007199254740992 (0.794167ms)
+✔ explicit production mode persists into execution and result and blocks mode changes (3.609ms)
+✔ 5A create authentication failure never resubmits after continue, stop or storage reload (7.074ms)
+✔ 5A polling authentication failure preserves submission through credential recovery and reload (4.436ms)
+✔ 5A pre-dispatch missing credentials permits exactly one first create after configuration (3.039708ms)
+✔ F3 rejects malformed nonmatching normalized ledger items before claiming a miss (2.953083ms)
+✔ F3 refuses duplicate link candidates rather than selecting the first transaction type (2.827417ms)
+✔ F2 refuses cross-environment observation without reading a foreign ledger or changing state (3.350458ms)
+✔ F2 refuses cross-environment continuation before any remote call (0.738666ms)
+✔ F4 preserves the create anchor and fails a conflicting query ID (2.990042ms)
+✔ F4 query IDs never supply an absent create anchor (3.261167ms)
+✔ F4 a historical ID without provenance remains readable but is not an observation anchor (2.792958ms)
+✔ F4 a wrong create key cannot store a record ID before rejection (2.098458ms)
+✔ publishes a safe non-production bootstrap and schema-hashed service detail (0.35125ms)
+✔ persists a prepared execution before upload and completes through one create call (2.847292ms)
+✔ observes running water on demand without persisting it or claiming settlement (2.482708ms)
+✔ distinguishes a current-page miss from an unverifiable execution without querying twice (4.334625ms)
+✔ never repeats an uncertain create and reconciles only through the original key (3.653208ms)
+✔ shares one continuation job so concurrent callers cannot duplicate upload or create (2.46775ms)
+✔ fails closed when the Host receives a completed result for another request key (3.083875ms)
+✔ marks an uncertain upload failed and never uploads it again for the same execution (1.534167ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 30
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 261.47525
+
+✖ failing tests:
+
+test at packages/oasis-professional-service/test/m06-fast39-transport.test.mjs:19:1
+✖ create transport keeps six exact output strings and provider receipt alongside legacy projection (6.114458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   structured_result: {
+  -     contract_version: 'flow26-fast-result-3',
+  -     outputs: {
+  -       claims_text: '1. 一种装置，包括构件甲。',
+  -       dependency_tree: '### 权利要求依赖树\n权利要求1（独立）',
+  -       output: '## 权利要求草稿\n' +
+  -         '1. 一种装置，包括构件甲。\n' +
+  -         '\n' +
+  -         '### 权利要求依赖树\n' +
+  -         '权利要求1（独立）\n' +
+  -         '\n' +
+  -         '## 材料缺项与未确认事项\n' +
+  -         '状态：partial\n' +
+  -         '输入缺项：\n' +
+  -         '- 未提供：前序材料\n' +
+  -         '原材料警示：\n' +
+  -         '```text\n' +
+  -         '未提供：前序材料\n' +
+  -         '```\n' +
+  -         '原材料限制：\n' +
+  -         '```text\n' +
+  -         '合成材料仅供Schema复核。\n' +
+  -         '```\n' +
+  -         'Outline原警示：\n' +
+  -         '```text\n' +
+  -         '合成提示：仍须人工复核。\n' +
+  -         '```\n' +
+  -         'Outline后续提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         'Outline错误：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         '编号提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         '依赖提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         'Outline原状态：partial\n' +
+  -         '依赖解析状态：ok\n' +
+  -         '来源技术支持与专业接受：未评估；须人工复核。\n' +
+  -         '\n' +
+  -         '## 技术特征来源\n' +
+  -         '|权项／计划|特征|input_id|正文hash|原文短引|UTF16区间|处置|\n' +
+  -         '|---|---|---|---|---|---|---|\n' +
+  -         '|1／plan:core|synthetic:f1|disclosure\\_text|d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e|构件甲|\\[5,8\\)|kept／verified|',
+  -       pending_confirmation: '状态：partial\n' +
+  -         '输入缺项：\n' +
+  -         '- 未提供：前序材料\n' +
+  -         '原材料警示：\n' +
+  -         '```text\n' +
+  -         '未提供：前序材料\n' +
+  -         '```\n' +
+  -         '原材料限制：\n' +
+  -         '```text\n' +
+  -         '合成材料仅供Schema复核。\n' +
+  -         '```\n' +
+  -         'Outline原警示：\n' +
+  -         '```text\n' +
+  -         '合成提示：仍须人工复核。\n' +
+  -         '```\n' +
+  -         'Outline后续提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         'Outline错误：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         '编号提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         '依赖提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         'Outline原状态：partial\n' +
+  -         '依赖解析状态：ok\n' +
+  -         '来源技术支持与专业接受：未评估；须人工复核。',
+  -       quality_report: '{"acceptance":"draft_requires_review_not_professional_acceptance","anchor_assurance":"workflow_branch_client_self_consistency_only","claim_count":1,"claim_id_map":[{"final_claim_id":"1","planned_claim_id":"plan:core","reason":"合成根计划一对一"}],"contract_version":"flow26-quality-3","coverage_basis":"reported_outline_anchor","dependency_edges":[],"dependency_parse_status":"ok","dependency_warnings":[],"feature_coverage":{"missing_core_targets":[],"status":"complete","unverified_core_targets":[]},"feature_dispositions":[{"action":"kept","claim_id":"1","feature_id":"synthetic:f1","locator_status":"verified","output_end_utf16":13,"output_quote":"构件甲","output_start_utf16":10,"planned_claim_id":"plan:core","reason":"合成原文定位"}],"input_warnings":[{"inputId":"upstream_md_file","problem":"未提供：前序材料","status":"missing"}],"limitations":["合成材料仅供Schema复核。"],"marker_warnings":[],"outline_anchor":{"basis":{"critical_feature_targets":[{"feature_id":"synthetic:f1","planned_claim_id":"plan:core"}],"outline_error":"","outline_quality":{"fallback_hint":"","status":"partial","warnings":["合成提示：仍须人工复核。"]},"outline_source_map":[{"end_utf16":8,"feature_id":"synthetic:f1","input_id":"disclosure_text","planned_claim_id":"plan:core","quote":"构件甲","source_sha256":"d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e","start_utf16":5}],"planned_claims":[{"feature_ids":["synthetic:f1"],"original_id":null,"planned_claim_id":"plan:core","role":"core_root"}]},"sha256":"2ba798f542e1f97df12cbce0bb5906ff1f03cbf312adb066ba68fe4b7f05138e"},"outline_error":"","outline_quality":{"fallback_hint":"","status":"partial","warnings":["合成提示：仍须人工复核。"]},"quality_status":"partial","receipt_mapping_version":"flow26-receipt-map-1","required_missing_input_lines":["未提供：前序材料"],"source_map":[{"claim_id":"1","end_utf16":8,"feature_id":"synthetic:f1","input_id":"disclosure_text","planned_claim_id":"plan:core","quote":"构件甲","source_sha256":"d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e","start_utf16":5}],"source_registry_sha256":"fe61361f4360d77718c4bfd5ce34f811aaa3f45d7740db1d863b7b78d5203e00","source_status":"mapped","source_trace_version":"flow26-source-trace-3","support_review_status":"not_assessed"}',
+  -       quality_status: 'partial'
+  -     },
+  -     provider_response_receipt: {
+  -       body_retention: 'hash_only',
+  -       byte_length: 4707,
+  -       hash_version: 'provider-http-content-bytes-1',
+  -       http_status: 200,
+  -       sha256: '72023ba6f5556ed5ef4511e61c349f064d66415cc67a11566e1776dbca512af3'
+  -     },
+  -     provider_status: 'succeeded',
+  -     request_key: 'synthetic-request-not-submitted',
+  -     workflow_run_id: '00000000-0000-4000-8000-000000000001'
+  -   }
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-transport.test.mjs:23:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { structured_result: { contract_version: 'flow26-fast-result-3', request_key: 'synthetic-request-not-submitted', workflow_run_id: '00000000-0000-4000-8000-000000000001', provider_status: 'succeeded', outputs: [Object], provider_response_receipt: [Object] } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/m06-fast39-transport.test.mjs:34:1
+✖ received error-only enhanced response is not erased into an unresolved legacy receipt (33.147167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-transport.test.mjs:38:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/m06-fast39-transport.test.mjs:45:1
+✖ mutually present fragments are rejected instead of silently choosing one (0.250083ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-transport.test.mjs:46:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'INVALID_RESPONSE' },
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/m06-fast39-transport.test.mjs:50:1
+✖ existing completed progress transport forwards the same fragment without inventing a recovery endpoint (0.695084ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   structured_result: {
+  -     contract_version: 'flow26-fast-result-3',
+  -     outputs: {
+  -       claims_text: '1. 一种装置，包括构件甲。',
+  -       dependency_tree: '### 权利要求依赖树\n权利要求1（独立）',
+  -       output: '## 权利要求草稿\n' +
+  -         '1. 一种装置，包括构件甲。\n' +
+  -         '\n' +
+  -         '### 权利要求依赖树\n' +
+  -         '权利要求1（独立）\n' +
+  -         '\n' +
+  -         '## 材料缺项与未确认事项\n' +
+  -         '状态：partial\n' +
+  -         '输入缺项：\n' +
+  -         '- 未提供：前序材料\n' +
+  -         '原材料警示：\n' +
+  -         '```text\n' +
+  -         '未提供：前序材料\n' +
+  -         '```\n' +
+  -         '原材料限制：\n' +
+  -         '```text\n' +
+  -         '合成材料仅供Schema复核。\n' +
+  -         '```\n' +
+  -         'Outline原警示：\n' +
+  -         '```text\n' +
+  -         '合成提示：仍须人工复核。\n' +
+  -         '```\n' +
+  -         'Outline后续提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         'Outline错误：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         '编号提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         '依赖提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         'Outline原状态：partial\n' +
+  -         '依赖解析状态：ok\n' +
+  -         '来源技术支持与专业接受：未评估；须人工复核。\n' +
+  -         '\n' +
+  -         '## 技术特征来源\n' +
+  -         '|权项／计划|特征|input_id|正文hash|原文短引|UTF16区间|处置|\n' +
+  -         '|---|---|---|---|---|---|---|\n' +
+  -         '|1／plan:core|synthetic:f1|disclosure\\_text|d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e|构件甲|\\[5,8\\)|kept／verified|',
+  -       pending_confirmation: '状态：partial\n' +
+  -         '输入缺项：\n' +
+  -         '- 未提供：前序材料\n' +
+  -         '原材料警示：\n' +
+  -         '```text\n' +
+  -         '未提供：前序材料\n' +
+  -         '```\n' +
+  -         '原材料限制：\n' +
+  -         '```text\n' +
+  -         '合成材料仅供Schema复核。\n' +
+  -         '```\n' +
+  -         'Outline原警示：\n' +
+  -         '```text\n' +
+  -         '合成提示：仍须人工复核。\n' +
+  -         '```\n' +
+  -         'Outline后续提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         'Outline错误：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         '编号提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         '依赖提示：\n' +
+  -         '未列出；不表示已无风险。\n' +
+  -         'Outline原状态：partial\n' +
+  -         '依赖解析状态：ok\n' +
+  -         '来源技术支持与专业接受：未评估；须人工复核。',
+  -       quality_report: '{"acceptance":"draft_requires_review_not_professional_acceptance","anchor_assurance":"workflow_branch_client_self_consistency_only","claim_count":1,"claim_id_map":[{"final_claim_id":"1","planned_claim_id":"plan:core","reason":"合成根计划一对一"}],"contract_version":"flow26-quality-3","coverage_basis":"reported_outline_anchor","dependency_edges":[],"dependency_parse_status":"ok","dependency_warnings":[],"feature_coverage":{"missing_core_targets":[],"status":"complete","unverified_core_targets":[]},"feature_dispositions":[{"action":"kept","claim_id":"1","feature_id":"synthetic:f1","locator_status":"verified","output_end_utf16":13,"output_quote":"构件甲","output_start_utf16":10,"planned_claim_id":"plan:core","reason":"合成原文定位"}],"input_warnings":[{"inputId":"upstream_md_file","problem":"未提供：前序材料","status":"missing"}],"limitations":["合成材料仅供Schema复核。"],"marker_warnings":[],"outline_anchor":{"basis":{"critical_feature_targets":[{"feature_id":"synthetic:f1","planned_claim_id":"plan:core"}],"outline_error":"","outline_quality":{"fallback_hint":"","status":"partial","warnings":["合成提示：仍须人工复核。"]},"outline_source_map":[{"end_utf16":8,"feature_id":"synthetic:f1","input_id":"disclosure_text","planned_claim_id":"plan:core","quote":"构件甲","source_sha256":"d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e","start_utf16":5}],"planned_claims":[{"feature_ids":["synthetic:f1"],"original_id":null,"planned_claim_id":"plan:core","role":"core_root"}]},"sha256":"2ba798f542e1f97df12cbce0bb5906ff1f03cbf312adb066ba68fe4b7f05138e"},"outline_error":"","outline_quality":{"fallback_hint":"","status":"partial","warnings":["合成提示：仍须人工复核。"]},"quality_status":"partial","receipt_mapping_version":"flow26-receipt-map-1","required_missing_input_lines":["未提供：前序材料"],"source_map":[{"claim_id":"1","end_utf16":8,"feature_id":"synthetic:f1","input_id":"disclosure_text","planned_claim_id":"plan:core","quote":"构件甲","source_sha256":"d948f5cf07dc04fa2570d91b455d41606d8601174bc92ecd44704a755f1aa01e","start_utf16":5}],"source_registry_sha256":"fe61361f4360d77718c4bfd5ce34f811aaa3f45d7740db1d863b7b78d5203e00","source_status":"mapped","source_trace_version":"flow26-source-trace-3","support_review_status":"not_assessed"}',
+  -       quality_status: 'partial'
+  -     },
+  -     provider_response_receipt: {
+  -       body_retention: 'hash_only',
+  -       byte_length: 4707,
+  -       hash_version: 'provider-http-content-bytes-1',
+  -       http_status: 200,
+  -       sha256: '72023ba6f5556ed5ef4511e61c349f064d66415cc67a11566e1776dbca512af3'
+  -     },
+  -     provider_status: 'succeeded',
+  -     request_key: 'synthetic-request-not-submitted',
+  -     workflow_run_id: '00000000-0000-4000-8000-000000000001'
+  -   }
+  - }
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/m06-fast39-transport.test.mjs:52:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { structured_result: { contract_version: 'flow26-fast-result-3', request_key: 'synthetic-request-not-submitted', workflow_run_id: '00000000-0000-4000-8000-000000000001', provider_status: 'succeeded', outputs: [Object], provider_response_receipt: [Object] } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at packages/oasis-professional-service/test/oasis-remote-service.test.mjs:144:1
+✖ C4 enhanced response cannot complete through an unbound legacy path or cause another create (16.94825ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'completed'
+  - 'submission-unknown'
+  
+      at TestContext.<anonymous> (file:///Users/tinadong7036/Documents/%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE/DSH-Oasis/packages/oasis-professional-service/test/oasis-remote-service.test.mjs:156:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'completed',
+    expected: 'submission-unknown',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,105 @@
+[
+  {
+    "stage": "first",
+    "argv": [
+      "/usr/bin/env",
+      "-i",
+      "PATH=/usr/bin:/bin:/usr/sbin:/sbin",
+      "HOME=/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/user",
+      "LANG=en_US.UTF-8",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "--start",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1"
+    ],
+    "shell": "zsh non-login",
+    "execSessionId": 36758,
+    "pid": 68310,
+    "exitCode": 0,
+    "signal": null,
+    "exitMethod": "native App menu Exit DSH Desktop"
+  },
+  {
+    "stage": "second",
+    "argv": [
+      "/usr/bin/env",
+      "-i",
+      "PATH=/usr/bin:/bin:/usr/sbin:/sbin",
+      "HOME=/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/user",
+      "LANG=en_US.UTF-8",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "--start",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1"
+    ],
+    "shell": "zsh non-login",
+    "execSessionId": 76991,
+    "pid": 69081,
+    "exitCode": 0,
+    "signal": null,
+    "exitMethod": "native App menu Exit DSH Desktop"
+  },
+  {
+    "stage": "controller before",
+    "argv": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "--check",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1"
+    ],
+    "exitCode": 0,
+    "log": "controller-check-before.log"
+  },
+  {
+    "stage": "controller between",
+    "argv": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "--check",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1"
+    ],
+    "exitCode": 0,
+    "log": "controller-check-between.log"
+  },
+  {
+    "stage": "controller after",
+    "argv": [
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/node",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/control/scripts/f-installed-runtime.mjs",
+      "--check",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1"
+    ],
+    "exitCode": 0,
+    "log": "controller-check-after.log"
+  },
+  {
+    "stage": "native facts read-only assertions",
+    "argv": [
+      "python3",
+      "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-08-m06-rc2-native-r1/verify-native-facts.py"
+    ],
+    "exitCode": 0,
+    "log": "verify-native-facts.log"
+  },
+  {
+    "stage": "whitespace",
+    "argv": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "docs/project-current-state.md",
+      "docs/evidence/2026-10-23-stage5-progress-and-remaining.md"
+    ],
+    "exitCode": 0
+  },
+  {
+    "stage": "active writer negative / final readmission / session read-only API",
+    "exitCode": 0,
+    "results": [
+      "active-writer-refusal.json",
+      "lease-readmission.json",
+      "native-session-observation.json"
+    ]
+  }
+]

@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "reason": "MC01回退待论证；MC02回填原有延伸属性并对照T2/T4；MC03逐项材料出处，非充分支持接受",
+  "replacements": [
+    {
+      "table": "T2",
+      "rowId": "t2-f002",
+      "beforeSha256": "18c9546e5ed0501b06c5751f12c8166bd753569f354f545d59c311f3c78b3ce5",
+      "data": {
+        "solution_id": "S-001",
+        "macro_id": "M-001",
+        "feature_id": "F-002",
+        "关联tp_id": "TP-001",
+        "元实体": "导向槽",
+        "元关系": "沿同一方向延伸，并与滑块配合",
+        "元手段": "在底座上形成导向槽",
+        "元功能": "限定滑块的移动方向",
+        "元效果": "滑块可沿槽移动",
+        "必要性": "必要（当前整体方案）",
+        "来源状态": "交底和附图文字说明明示；截面形状、端部结构未给出",
+        "锚点": "T2/t2-f002；交底：导向槽沿同一方向延伸；附图文字：底座包含导向槽",
+        "本次权项去向": "权1明写沿同一方向延伸；不推导直线、截面、端部或角度"
+      },
+      "sources": [
+        {
+          "inputId": "disclosure_file",
+          "sourceSha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+          "quote": "沿同一方向延伸的导向槽",
+          "start": 21,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "table": "T2",
+      "rowId": "t2-f003",
+      "beforeSha256": "425078ffaf6197cf61c56b016b5bdedec607d9888d0de8c4b9b754f9b4d7419e",
+      "data": {
+        "solution_id": "S-001",
+        "macro_id": "M-001",
+        "feature_id": "F-003",
+        "关联tp_id": "TP-001",
+        "元实体": "滑块",
+        "元关系": "与导向槽配合并可沿槽移动；位于导向槽中",
+        "元手段": "将滑块置于导向槽中",
+        "元功能": "沿导向槽移动",
+        "元效果": "实现滑动",
+        "必要性": "必要（当前整体方案）",
+        "来源状态": "交底和附图文字说明明示；具体形状、材料、驱动方式未给出",
+        "锚点": "T2/t2-f003；交底：滑块与导向槽配合并可沿槽移动；附图文字：滑块位于导向槽中",
+        "本次权项去向": "配合并沿槽移动在权1；位于槽中暂留权2，实质新增限定和回退价值待论证"
+      },
+      "sources": [
+        {
+          "inputId": "disclosure_file",
+          "sourceSha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+          "quote": "滑块与导向槽配合并可沿槽移动",
+          "start": 33,
+          "end": 47
+        },
+        {
+          "inputId": "drawings_file",
+          "sourceSha256": "ab849c6061d733042d52bcd392a622ebea896b1310d8055b13b85dbb23453805",
+          "quote": "滑块位于导向槽中",
+          "start": 27,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "table": "T4",
+      "rowId": "t4-claim1",
+      "beforeSha256": "b947f00e8f0b92ba7ad1db6e2f688f8ba0b04ad40ec78af39f7849f083a6d9ca",
+      "data": {
+        "权项号/特征序号": "权利要求1",
+        "feature_id": "F-001,F-002,F-003,F-004",
+        "说明书支持": "待 Flow-2-7 建立；当前仅有交底和附图文字说明",
+        "技术作用": "形成底座—导向槽—滑块—锁止件的滑动与选择性锁止关系",
+        "概括层级": "功能层级概括：锁止件能够在释放状态与锁止状态之间改变",
+        "支持结论": "文字出处已定位；锁止具体实现、功能概括及充分支持仍待补，不等于未来说明书已经支持",
+        "追踪": "F-001→T2/t2-f001；F-002→T2/t2-f002；F-003→T2/t2-f003；F-004→T2/t2-f004；F-004具体结构缺失",
+        "本次正文对应": "权1已明写导向槽沿同一方向延伸，保留F-001—004原关系",
+        "来源定位": [
+          {
+            "inputId": "disclosure_file",
+            "sourceSha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+            "quote": "底座上设有沿同一方向延伸的导向槽",
+            "start": 16,
+            "end": 32
+          },
+          {
+            "inputId": "disclosure_file",
+            "sourceSha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+            "quote": "沿同一方向延伸的导向槽",
+            "start": 21,
+            "end": 32
+          },
+          {
+            "inputId": "disclosure_file",
+            "sourceSha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+            "quote": "滑块与导向槽配合并可沿槽移动",
+            "start": 33,
+            "end": 47
+          },
+          {
+            "inputId": "disclosure_file",
+            "sourceSha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+            "quote": "底座上设有锁止件，锁止件能够在允许滑块移动的状态与限制滑块移动的状态之间改变",
+            "start": 48,
+            "end": 86
+          }
+        ]
+      },
+      "sources": [
+        {
+          "inputId": "disclosure_file",
+          "sourceSha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+          "quote": "底座上设有沿同一方向延伸的导向槽",
+          "start": 16,
+          "end": 32
+        },
+        {
+          "inputId": "disclosure_file",
+          "sourceSha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+          "quote": "沿同一方向延伸的导向槽",
+          "start": 21,
+          "end": 32
+        },
+        {
+          "inputId": "disclosure_file",
+          "sourceSha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+          "quote": "滑块与导向槽配合并可沿槽移动",
+          "start": 33,
+          "end": 47
+        },
+        {
+          "inputId": "disclosure_file",
+          "sourceSha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+          "quote": "底座上设有锁止件，锁止件能够在允许滑块移动的状态与限制滑块移动的状态之间改变",
+          "start": 48,
+          "end": 86
+        }
+      ]
+    },
+    {
+      "table": "T4",
+      "rowId": "t4-claim2",
+      "beforeSha256": "a296ba0a9ddbd537f18dde9718c3fde3593913ecbec41df8125d8be64a59ea67",
+      "data": {
+        "权项号/特征序号": "权利要求2",
+        "feature_id": "F-003",
+        "说明书支持": "待 Flow-2-7 建立；附图文字说明载明滑块位于导向槽中",
+        "技术作用": "位置文字暂留；相对权1的实质进一步限定及回退价值待论证",
+        "概括层级": "位置表达，实质收窄未证",
+        "支持结论": "drawings_file文字出处已定位；未核真实图像，支持充分性及范围影响待论证",
+        "追踪": "F-003→T2/t2-f003",
+        "来源定位": [
+          {
+            "inputId": "drawings_file",
+            "sourceSha256": "ab849c6061d733042d52bcd392a622ebea896b1310d8055b13b85dbb23453805",
+            "quote": "滑块位于导向槽中",
+            "start": 27,
+            "end": 35
+          }
+        ]
+      },
+      "sources": [
+        {
+          "inputId": "drawings_file",
+          "sourceSha256": "ab849c6061d733042d52bcd392a622ebea896b1310d8055b13b85dbb23453805",
+          "quote": "滑块位于导向槽中",
+          "start": 27,
+          "end": 35
+        }
+      ]
+    }
+  ]
+}

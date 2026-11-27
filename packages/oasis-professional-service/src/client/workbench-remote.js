@@ -19,6 +19,9 @@ import { claimsApiPreparationSchema, claimsApiPreviewSchema, workspaceBindingRea
 import { accountStatusSchema } from '../oasis-account-contract.js'
 import {v340Commands,v340CatalogResponseSchema,v340CandidatePreviewSchema,v340ReadonlyPrepareSchema,v340ReadonlyPreparedSchema} from '../v340-runtime-contract.js'
 
+import { isCurrentClaimsCandidate } from '../local-skill-suites.js'
+import { localSkillPreferenceSchema } from '../local-skill-preference-contract.js'
+
 const CHANNEL = '/oasis-workbench'
 
 export class WorkbenchRemoteError extends Error {
@@ -62,6 +65,13 @@ export function createWorkbenchRemote(connection) {
   }
 
   return Object.freeze({
+    async getLocalSkillSuite() {
+      return unwrap(await call(CHANNEL, 'skill-suite/get', {}), localSkillPreferenceSchema)
+    },
+    async setLocalSkillSuite(suite) {
+      const value = localSkillPreferenceSchema.parse({ suite })
+      return unwrap(await call(CHANNEL, 'skill-suite/set', value), localSkillPreferenceSchema)
+    },
     async getV340Catalog(signal){return unwrap(await call(CHANNEL,'workflow/v340/catalog',{},signal),v340CatalogResponseSchema)},
     async prepareV340(payload,signal){
       const input=v340ReadonlyPrepareSchema.parse(payload)
@@ -81,7 +91,7 @@ export function createWorkbenchRemote(connection) {
       if(result.current.workspaceId!==input.workspaceId)throw new WorkbenchRemoteError('malformed-response','候选项目身份不一致',{})
       if(result.committed){
         const run=Object.values(result.current.tasks[input.taskId]?.v340?.runs??{}).find(r=>r.requestKey===input.requestKey)
-        if(!run||run.nodeId!=='Flow-2-6'||run.source!=='local-skill'||run.nativeCandidate?.businessSkillVersion!=='0.1.3'
+        if(!run||run.nodeId!=='Flow-2-6'||run.source!=='local-skill'||!isCurrentClaimsCandidate(run.nativeCandidate)
           ||run.nativeCandidate.sessionId!==input.candidate.sessionId||run.nativeCandidate.confirmationSHA256!==input.candidate.sha256)
           throw new WorkbenchRemoteError('malformed-response','候选运行身份不一致，请核对原请求',{})
       }

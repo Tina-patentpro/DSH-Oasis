@@ -1,0 +1,392 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fast39 one-time exception intent version1 document contract",
+  "description": "Final exception intent only. Not ordinary apply. Schema alone does not prove authority, byte identity or cross-field provenance.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "fast39_registry_structure_exception"
+    },
+    "intent_version": {
+      "const": 1
+    },
+    "transaction_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]{1,120}$"
+    },
+    "owner_scope_id": {
+      "const": "FAST39-REGISTRY-RESTORE-ONCE-R2"
+    },
+    "work_item_id": {
+      "const": "FAST39-REGISTRY-RESTORE-ONCE-R2"
+    },
+    "approval_bindings": {
+      "type": "object",
+      "properties": {
+        "r3_freeze": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "pre_setup_authorization": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "pre_setup_grant_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commit_mode": {
+          "enum": [
+            "preapproved_conditional",
+            "separate_approval_required"
+          ]
+        }
+      },
+      "required": [
+        "r3_freeze",
+        "pre_setup_authorization",
+        "pre_setup_grant_id",
+        "commit_mode"
+      ],
+      "additionalProperties": false
+    },
+    "mechanism": {
+      "type": "object",
+      "properties": {
+        "script": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "intent_template": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "native_registry_tool": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "script",
+        "intent_template",
+        "native_registry_tool"
+      ],
+      "additionalProperties": false
+    },
+    "baseline": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "const": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/README.md"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "path",
+        "revision",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "setup_receipt": {
+      "type": "object",
+      "properties": {
+        "request_original": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "native_intent_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "return_original": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^REG-TXN-[A-Za-z0-9_.-]{1,120}$"
+        },
+        "post_setup_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "post_setup_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "own_work_row_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "request_original",
+        "native_intent_sha256",
+        "return_original",
+        "event_id",
+        "post_setup_revision",
+        "post_setup_sha256",
+        "own_work_row_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "operations": {
+      "const": [
+        {
+          "id": "RESTORE01",
+          "observed_line": 127,
+          "before": "|---|---:|---:|---:|---|---|---|---|---|---|\n",
+          "before_sha256": "0c53399cecd5d92f67cb184f722ac9306604b51d6660eef12932dc012dc250a1",
+          "after": "|---|---:|---:|---:|---|---|---|---|---|---|---|\n",
+          "after_sha256": "3b02c29d50852512254c68330e1d61a7af9b0629fd378964bd30226ceec91409",
+          "operation": "replace exact separator once; 10 to11 columns; header and all business rows unchanged"
+        },
+        {
+          "id": "RESTORE02",
+          "observed_line": 128,
+          "before": "| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |---|\n",
+          "before_sha256": "a6660d518820fd5a1f5feb751608969650fa7c10041df0a44d9d4232a9c65ba0",
+          "relocated_after": "| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |\n",
+          "after_sha256": "a1f06544cf55383e05ecbfc0a50dd3b6d474959f75dd6fee779ead6765ac06fa",
+          "destination_section": "### 5.1 已完成工作项",
+          "destination_header": "| work_item_id | scope | base_sha256 | acceptance | work_state | completed_change_id |",
+          "insert_after": "unique existing six-column separator immediately below exact completed header",
+          "operation": "move original six raw data cells; discard only stray seventh --- fragment; preserve anomalous original as evidence"
+        }
+      ]
+    },
+    "protected": {
+      "type": "object",
+      "properties": {
+        "target_flow": {
+          "const": "2-6"
+        },
+        "locator_column": {
+          "const": "运行记录"
+        },
+        "locator_value": {
+          "const": "10157"
+        },
+        "target_raw_row_sha256": {
+          "const": "1aaad85ea856242ec6eabc5b84e768bf31841e6cf116ed9d86ae50f124d341ab"
+        },
+        "exact_candidate_header": {
+          "const": "| Flow | YML | Nodebook | 运行记录 | asset_state | current_candidate_yml | contract_state | work_state | evidence_status | latest_change_id | 下一动作 |"
+        },
+        "preservation_manifest": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "target_flow",
+        "locator_column",
+        "locator_value",
+        "target_raw_row_sha256",
+        "exact_candidate_header",
+        "preservation_manifest"
+      ],
+      "additionalProperties": false
+    },
+    "governance": {
+      "type": "object",
+      "properties": {
+        "weekly_report": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "sentinel": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "precommit_governance_receipt": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/Users/tinadong7036/Documents/"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "weekly_report",
+        "sentinel",
+        "precommit_governance_receipt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "kind",
+    "intent_version",
+    "transaction_id",
+    "owner_scope_id",
+    "work_item_id",
+    "approval_bindings",
+    "mechanism",
+    "baseline",
+    "setup_receipt",
+    "operations",
+    "protected",
+    "governance"
+  ],
+  "additionalProperties": false
+}

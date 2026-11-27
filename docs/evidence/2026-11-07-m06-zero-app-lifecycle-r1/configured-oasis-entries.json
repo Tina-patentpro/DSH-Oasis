@@ -1,0 +1,33 @@
+{
+  "source": "frozen profile-template.json; active Profile identity verified by controller",
+  "entries": [
+    {
+      "id": "oasis-professional-service",
+      "name": "oasis-professional-service",
+      "disabled": true
+    },
+    {
+      "id": "oasis-professional-service-m06-controlled-013",
+      "name": "@OASIS_RELEASE_ROOT@/components/c3/src/m06-controlled-host-013.js"
+    },
+    {
+      "id": "oasis-installed-better-sidebar",
+      "name": "@OASIS_RELEASE_ROOT@/components/c2/lib/index.js"
+    }
+  ],
+  "native_zero_policy": {
+    "schemaVersion": 1,
+    "policy": "m06-native-zero-generation-installed-v1",
+    "archiveSHA256": "6f2f16e771cb56bf5514b35de87bbf0903d6bd4faabad36cfef4f4ac327504bb",
+    "budget": {
+      "model": 0,
+      "api": 0,
+      "upload": 0,
+      "payment": 0
+    },
+    "guardedFiles": {
+      "src/index.js": "0fa6c560dc3b2201be45187f6d02c82e8cf1d6e1faeda6e4e8fa25bbe88a8322",
+      "src/workbench-rpc.js": "3359e305339d0abd7951c0923329d4f19af33f51f69e08a83e34aecad5b6f4cc"
+    }
+  }
+}

@@ -1,0 +1,465 @@
+{
+  "record_id": "FAST39-C4-LA-20261105-R1",
+  "at": "2026-11-05T18:37:35.802162+08:00",
+  "kind": "USER_CONFIRMED_LIMITED_DESIGN_ADOPTION_NOT_RUNTIME_RECEIPT",
+  "authority": {
+    "source": "direct current user instruction in this conversation",
+    "text": "按本轮复审结论，以Fast39合同候选4作为后续实施基线，先补齐规则／Skill及共享行为的限定采用确认，明确源设计准入、候选指定和后续交付绑定的解除条件；保留历史证据，暂不修改业务代码、不部署，也不新增生成或付费调用。",
+    "recorder": "Codex root single agent",
+    "effect": "C4 future implementation baseline and selected rule/Skill/shared behavior design adoption only",
+    "implementation_authorized_now": false,
+    "deploy_or_real_call_authorized_now": false
+  },
+  "baseline": {
+    "candidate": "C4-R1",
+    "contract": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/CONTRACT.md",
+      "bytes": 19407,
+      "sha256": "88537f878856d304c6c34f909f286274b3e1ddcd34658e75c749f2840850f2b9"
+    },
+    "freeze": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/FREEZE.json",
+      "bytes": 2876,
+      "sha256": "a5780ad83094d1a9fdb916f9da83f8fcc52e9794da456f1321dd23b4ab5f4901"
+    },
+    "inheritance": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-result-contract-candidate-4/INHERITANCE.json",
+      "bytes": 5585,
+      "sha256": "10f00fc27c082f2ef7d065cc9b7eb9cd7f7c7637b683fce377fd543ea06cf336"
+    },
+    "parent_C3_preserved": true,
+    "protocol_versions": [
+      "flow26-source-trace-3",
+      "flow26-quality-3",
+      "flow26-fast-result-3",
+      "flow26-fast-evidence-3"
+    ]
+  },
+  "adoption_state": {
+    "BASELINE-ADOPTION": "CLOSED_FOR_FUTURE_IMPLEMENTATION_BASELINE",
+    "EXACT-RULE-SKILL-ADOPTION": "CLOSED_AT_SELECTED_DESIGN_SCOPE",
+    "SHARED-BEHAVIOR-ADOPTION": "CLOSED_AT_SHARED_DESIGN_SCOPE",
+    "actual_source_production": "NOT_AUTHORIZED_NOT_STARTED",
+    "actual_host_or_service_adoption": "NOT_CLAIMED",
+    "legacy_service_historical_adoption": "UNPROVEN"
+  },
+  "skill": {
+    "id": "m06-claims-draft",
+    "version": "0.1.3-candidate",
+    "manifest": {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/MANIFEST.sha256.json",
+      "bytes": 7543,
+      "sha256": "7ec58d41d870b122f763657ab983ad0a45d9f266a466983775b8d066dc8c63b9"
+    },
+    "rule_map": {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/rule-adoption-map.json",
+      "bytes": 18455,
+      "sha256": "29bcd2aa3c23970a860694ce10671f9e69c394fcc8820771e1dc21775e147b9b"
+    },
+    "consumer_bundle": {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-business-candidate-0.1.3.json",
+      "bytes": 179486,
+      "sha256": "26ec83ae26f26783fb4b56abf7b1ac75081214770d0cefaaf2ca0fd0ec56deca"
+    },
+    "payloads": [
+      {
+        "path": "business-skill/SKILL.md",
+        "class": "payload",
+        "bytes": 49106,
+        "sha256": "ad3d7c00243d70d2368f281c6834a5fb6381558df8989e33bdae3a42f3aa75b5"
+      },
+      {
+        "path": "business-skill/THIRD-PARTY-NOTICE.md",
+        "class": "payload",
+        "bytes": 6972,
+        "sha256": "4006dd520582d4c70b4ed616083265ad0d1c10811807539b1baac7d75ad98764"
+      },
+      {
+        "path": "business-skill/references/01-official-basis.md",
+        "class": "payload",
+        "bytes": 19703,
+        "sha256": "f68c7976880494d1ce94c5017af72c07fedc006b64eab441671eb29919759319"
+      },
+      {
+        "path": "business-skill/references/02-n01-feature-and-independent-claim.md",
+        "class": "payload",
+        "bytes": 14244,
+        "sha256": "c2ca0d0e43b3987b2f1919988757f511b4ed2fd41e9a049f75d77a3506c012ea"
+      },
+      {
+        "path": "business-skill/references/03-n02-claim-graph-and-fallback.md",
+        "class": "payload",
+        "bytes": 11334,
+        "sha256": "57f8764d627d19a0c5248bae14952331df27e034a23873df5da7cdf3248d8919"
+      },
+      {
+        "path": "business-skill/references/04-n03-support-terms-parameters.md",
+        "class": "payload",
+        "bytes": 17527,
+        "sha256": "5ff11fbab081577d7bc96b1ce267d010eb54f493e95ecb90a6290ffee3e98040"
+      },
+      {
+        "path": "business-skill/references/05-source-and-output-contract.md",
+        "class": "payload",
+        "bytes": 28729,
+        "sha256": "eb3efa3fb2e28415ee8ae49859e83909c1eb89b94648062b226dd3590de58fd9"
+      },
+      {
+        "path": "business-skill/references/output-schema.json",
+        "class": "payload",
+        "bytes": 13594,
+        "sha256": "8eeb5986504e353293ded5ed582cd516b2b731f0ba2eeb7be664d226eb3c9975"
+      }
+    ],
+    "qualifications_operator_only": [
+      {
+        "path": "operator/source-audit-R27.md",
+        "role": "operator-only-not-generation",
+        "bytes": 8896,
+        "sha256": "28e6a5d4fcce6c40568789940013841acdba187fba808dd388bc8bac36311405"
+      },
+      {
+        "path": "operator/history-qualification-R01.json",
+        "role": "operator-only-not-generation",
+        "bytes": 3869,
+        "sha256": "d64461fc51bba766cf1f6175f8af72c017dde74ee2f9a660665038854c371288"
+      }
+    ],
+    "scope": "selected content/design principles only; no full native M06 wire/registration/Host deployment adoption",
+    "license_notice_preservation": {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利知识库/patent-distillery/candidates/m06-v340-range1-candidate-0.1.3/business-skill/THIRD-PARTY-NOTICE.md",
+      "bytes": 6972,
+      "sha256": "4006dd520582d4c70b4ed616083265ad0d1c10811807539b1baac7d75ad98764"
+    }
+  },
+  "rule_scope": {
+    "selected": {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+      "bytes": 77079,
+      "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0"
+    },
+    "original_trial_receipt": {
+      "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/mac-validation-20261013/案例梯次验收/阶段06/F26V019精确试行验收登记-20261021/F26_V0.1.9_真实用户试行批准收据.json",
+      "bytes": 10054,
+      "sha256": "7fa56a74163ef216b5191414b1ea89e9fd80c2e16370425030c27188117b8f43"
+    },
+    "original_receipt_effect": {
+      "approval_scope": "F26 rule document trial only",
+      "formally_effective": false,
+      "engineering_validation": "not_executed",
+      "Dify": "not_executed",
+      "runtime_consistency_validation": "not_verified"
+    },
+    "new_effect": "separate project-specific limited design adoption under current user instruction and retained S1; no retroactive expansion of original receipt or formal effectiveness",
+    "selected_clauses": [
+      {
+        "id": "SRC-01",
+        "decision": "ADOPTED_LIMITED_DESIGN_BASELINE",
+        "source_clause": "R03 / §1.3 L74-80",
+        "source_rule": {
+          "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+          "bytes": 77079,
+          "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0"
+        },
+        "source_text_visibility": "production-visible normative clause only; evaluation-only answers excluded",
+        "source_skill_locus": "SKILL §3.6, ref05 §3.7.1–3.7.3",
+        "principle": "稳定feature_id与缺失/冲突登记；缺T2不强制停止",
+        "logical_nodes": [
+          "SOURCE_REGISTRY",
+          "OUTLINE",
+          "ANCHOR_ADAPTER"
+        ],
+        "schema_definitions": [
+          "original_receipt",
+          "source_registry_internal",
+          "outline_analysis_metadata",
+          "outline_anchor"
+        ],
+        "variables_and_design_obligation": "registry_json/registry_sha256; Outline source_hints/missing_support; stable feature_id and plan/feature tuple; workflow-local IDs never claim inherited T2",
+        "current_legacy_node_ids_observation_only": [
+          "1770000100005",
+          "1770000100003",
+          "1764588108416"
+        ],
+        "actual_new_node_binding": "pending after candidate production",
+        "future_verification": "offline static code/node/cross-field compatibility evidence then separately authorized same-version runtime/professional/consumer evidence"
+      },
+      {
+        "id": "SRC-02",
+        "decision": "ADOPTED_LIMITED_DESIGN_BASELINE",
+        "source_clause": "R06 / §1.6 L179-185",
+        "source_rule": {
+          "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+          "bytes": 77079,
+          "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0"
+        },
+        "source_text_visibility": "production-visible normative clause only; evaluation-only answers excluded",
+        "source_skill_locus": "ref05 §3.6–3.7",
+        "principle": "逐特征实际input_id、原文hash和定位；来源不等充分支持",
+        "logical_nodes": [
+          "SOURCE_REGISTRY",
+          "ANCHOR_ADAPTER",
+          "FINAL_FORMATTER"
+        ],
+        "schema_definitions": [
+          "outline_source_item",
+          "final_source_item",
+          "source_registry_internal"
+        ],
+        "variables_and_design_obligation": "actual input_id, original text hash/UTF16 quote and locator; source role and status retained; source existence is not support sufficiency",
+        "current_legacy_node_ids_observation_only": [
+          "1764588108416",
+          "1769301001101"
+        ],
+        "actual_new_node_binding": "pending after candidate production",
+        "future_verification": "offline static code/node/cross-field compatibility evidence then separately authorized same-version runtime/professional/consumer evidence"
+      },
+      {
+        "id": "CORE-01",
+        "decision": "ADOPTED_LIMITED_DESIGN_BASELINE",
+        "source_clause": "R04a / §1.4.1 L100-106",
+        "source_rule": {
+          "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+          "bytes": 77079,
+          "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0"
+        },
+        "source_text_visibility": "production-visible normative clause only; evaluation-only answers excluded",
+        "source_skill_locus": "SKILL S1 OP-N01-B; ref02 §B.3",
+        "principle": "移出限定须理由与关系影响；不能只剩目标",
+        "logical_nodes": [
+          "ANCHOR_ADAPTER",
+          "FINAL_WRITER",
+          "NORMALIZER",
+          "FINAL_FORMATTER"
+        ],
+        "schema_definitions": [
+          "draft_block",
+          "draft_disposition",
+          "feature_disposition",
+          "feature_coverage",
+          "claim_id_mapping"
+        ],
+        "variables_and_design_obligation": "decision_reason + per-feature reason; frozen core/parallel target tuples, complete claim map and final locator; missing core downgrades, no fabricated lock mechanism",
+        "current_legacy_node_ids_observation_only": [
+          "1728183992412",
+          "1769301001008",
+          "1769301001100",
+          "1769301001101"
+        ],
+        "actual_new_node_binding": "pending after candidate production",
+        "future_verification": "offline static code/node/cross-field compatibility evidence then separately authorized same-version runtime/professional/consumer evidence"
+      },
+      {
+        "id": "FACT-01",
+        "decision": "ADOPTED_LIMITED_DESIGN_BASELINE",
+        "source_clause": "R11/R12 / §3.3 L292-295",
+        "source_rule": {
+          "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+          "bytes": 77079,
+          "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0"
+        },
+        "source_text_visibility": "production-visible normative clause only; evaluation-only answers excluded",
+        "source_skill_locus": "SKILL §5/6; ref04 support rules",
+        "principle": "不编造技术事实，不以警示抵消必要关系缺失",
+        "logical_nodes": [
+          "OUTLINE",
+          "FINAL_WRITER",
+          "FINAL_FORMATTER"
+        ],
+        "schema_definitions": [
+          "outline_source_hint",
+          "quality_report",
+          "structured_result",
+          "structured_result_error"
+        ],
+        "variables_and_design_obligation": "only actual technical-source locators; no invented entities/experiments; support_review_status not_assessed; no-supported-claim error is not a missing-T2 blanket stop",
+        "current_legacy_node_ids_observation_only": [
+          "1770000100005",
+          "1728183992412",
+          "1769301001101"
+        ],
+        "actual_new_node_binding": "pending after candidate production",
+        "future_verification": "offline static code/node/cross-field compatibility evidence then separately authorized same-version runtime/professional/consumer evidence"
+      },
+      {
+        "id": "WARN-01",
+        "decision": "ADOPTED_LIMITED_DESIGN_BASELINE",
+        "source_clause": "R11/R12 / §3.3 L298-300",
+        "source_rule": {
+          "path": "/Users/tinadong7036/Documents/开发项目/测试集库/测试集库支持/工作流设计/standards/F-2-6权利要求初稿生成物标准_CLAIMS_DRAFT_STANDARD_V0.1.9.md",
+          "bytes": 77079,
+          "sha256": "391b39a1c4e69a0108deb365a9ff96ea31dfae336663aab56faa279121ffd5a0"
+        },
+        "source_text_visibility": "production-visible normative clause only; evaluation-only answers excluded",
+        "source_skill_locus": "ref05 §3.5, §3.7 branchC",
+        "principle": "缺项/警示/旧状态保留；不足可受限草稿，不无限重试",
+        "logical_nodes": [
+          "DEPENDENCY_TREE",
+          "TREE_SANITIZER",
+          "FINAL_FORMATTER"
+        ],
+        "schema_definitions": [
+          "quality_report",
+          "outputs",
+          "structured_result_error"
+        ],
+        "variables_and_design_obligation": "original missing/warning/limitation texts and statuses retained; deterministic pending/output projection and downgrade; no resurrection/retry/fee or professional-pass inference",
+        "current_legacy_node_ids_observation_only": [
+          "1769301001101",
+          "1727495950805"
+        ],
+        "actual_new_node_binding": "pending after candidate production",
+        "future_verification": "offline static code/node/cross-field compatibility evidence then separately authorized same-version runtime/professional/consumer evidence"
+      }
+    ],
+    "excluded": [
+      {
+        "id": "WIRE-01",
+        "reason": "native M06 eight-input/seven-field/five-chapter wire is not Fast39 wire; its native no-schema-change constraints remain with unchanged M06 resource"
+      },
+      {
+        "id": "V012-01",
+        "reason": "not selected; no silent V0.1.12 upgrade or whole-rule compliance"
+      }
+    ]
+  },
+  "adaptations": [
+    {
+      "id": "ADAPT01",
+      "decision": "selected principle reuse, not full M06 execution",
+      "boundary": "missing T2 is not a blanket stop; workflow-local planned IDs do not close original T2. C4 requires original-source support for emitted claims and uses explicit zero-supported-claim error; no invented structures or automatic T2 rebuilding."
+    },
+    {
+      "id": "ADAPT02",
+      "decision": "retain narrower frozen R2 no-fabrication constraint",
+      "boundary": "source rule exploration allowance does not authorize unmarked or supported-looking fabricated facts. Technical sufficiency remains human/professional review; source/coverage hashes are not that judgment."
+    },
+    {
+      "id": "ADAPT03",
+      "decision": "wire split and scope isolation",
+      "boundary": "do not feed M06 qualifications/metadata/evaluation answers into generation or impose M06 seven-field/five-chapter output on Fast39. C4 deterministic protocol checks are engineering design, not an asserted F26 professional scoring engine."
+    }
+  ],
+  "shared_behavior": [
+    {
+      "id": "SB01",
+      "owners": [
+        "workflow",
+        "backend",
+        "DSH"
+      ],
+      "topic": "eligibility + wire",
+      "decision": "ADOPTED_LIMITED_SHARED_DESIGN_BEHAVIOR",
+      "obligation": "Only packet2 with one Technical_Disclosure_file and six exact-empty direct strings; original eight legacy business inputs/six output strings; server_key internal. Missing mapping disables enhanced source, never silent fallback.",
+      "schema_definitions": [
+        "eligibility_request",
+        "outputs"
+      ],
+      "runtime_implemented": false,
+      "implementation_acceptance": "pending same-version implementation/test evidence; no independent owner signature asserted"
+    },
+    {
+      "id": "SB02",
+      "owners": [
+        "workflow",
+        "DSH"
+      ],
+      "topic": "receipt and anchor assurance",
+      "decision": "ADOPTED_LIMITED_SHARED_DESIGN_BEHAVIOR",
+      "obligation": "Immutable registry and exact receipt mapping; workflow original Outline branch, client self-consistency/local registry checks only; complete is coverage relative to reported anchor, never independent Outline/professional proof.",
+      "schema_definitions": [
+        "source_registry_internal",
+        "outline_anchor",
+        "quality_report"
+      ],
+      "runtime_implemented": false,
+      "implementation_acceptance": "pending same-version implementation/test evidence; no independent owner signature asserted"
+    },
+    {
+      "id": "SB03",
+      "owners": [
+        "workflow",
+        "backend",
+        "DSH"
+      ],
+      "topic": "writer ABI and quality/warnings",
+      "decision": "ADOPTED_LIMITED_SHARED_DESIGN_BEHAVIOR",
+      "obligation": "Five block fields including decision_reason, per-feature dispositions, deterministic normalization/numbering and exact quote locators; preserve all warning originals, three-section safe projection, downgrade-only and support_review_status not_assessed. Zero supported claims is a content error; supported restricted draft can remain insufficient.",
+      "schema_definitions": [
+        "writer_draft",
+        "normalized_draft",
+        "feature_coverage",
+        "outputs"
+      ],
+      "runtime_implemented": false,
+      "implementation_acceptance": "pending same-version implementation/test evidence; no independent owner signature asserted"
+    },
+    {
+      "id": "SB04",
+      "owners": [
+        "backend",
+        "DSH"
+      ],
+      "topic": "provider byte receipt and wrapper sequence",
+      "decision": "ADOPTED_LIMITED_SHARED_DESIGN_BEHAVIOR",
+      "obligation": "Hash same HTTPx response.content after content decoding and before JSON parsing; capture immutable receipt, then assemble WorkflowServiceResult after original successful parse. No extra request or assembly-driven reparse. DSH records provider receipt without claiming it can rehash absent provider bytes.",
+      "schema_definitions": [
+        "provider_response_receipt",
+        "evidence_record"
+      ],
+      "runtime_implemented": false,
+      "implementation_acceptance": "pending same-version implementation/test evidence; no independent owner signature asserted"
+    },
+    {
+      "id": "SB05",
+      "owners": [
+        "backend",
+        "DSH",
+        "workarea legacy consumer"
+      ],
+      "topic": "legacy projection, finance, queue and errors",
+      "decision": "ADOPTED_LIMITED_SHARED_DESIGN_BEHAVIOR",
+      "obligation": "Old consumers/save_and_deduct receive unchanged legacy_result; non-enhanced projection/interface, queue and original parse failures preserved. No added save/charge/request. Unknown does not imply cancellation/refund or permit retry; no new queue recovery endpoint or durability claim.",
+      "schema_definitions": [
+        "structured_result",
+        "structured_result_error"
+      ],
+      "runtime_implemented": false,
+      "implementation_acceptance": "pending same-version implementation/test evidence; no independent owner signature asserted"
+    },
+    {
+      "id": "SB06",
+      "owners": [
+        "DSH",
+        "backend"
+      ],
+      "topic": "capacity and persistence",
+      "decision": "ADOPTED_LIMITED_SHARED_DESIGN_BEHAVIOR",
+      "obligation": "Adopt exact C4 capacity-policy.json: per-output100000 UTF16/256KiB, evidence512KiB; all old owner limits and whole actual serialized record/headroom still apply. Source locator<=1048576 and actual scalar bounds; never truncate original packet. Overflow keeps bounded hash-only receipt if it fits; otherwise preserve pre-dispatch facts, report save failure/manual handling, no unbounded sidecar/retry.",
+      "schema_definitions": [
+        "evidence_record",
+        "received_outputs"
+      ],
+      "runtime_implemented": false,
+      "implementation_acceptance": "pending same-version implementation/test evidence; no independent owner signature asserted"
+    },
+    {
+      "id": "SB07",
+      "owners": [
+        "DSH",
+        "backend",
+        "workflow"
+      ],
+      "topic": "ownership, artifacts and activation",
+      "decision": "ADOPTED_LIMITED_SHARED_DESIGN_BEHAVIOR",
+      "obligation": "Optional fast39Result under existing remoteExecutions owner only after future strict-schema change; current source not implemented. Bind exact contract/service delivery and workspace/account/folder before activation, no cross-project reuse by hash alone. Same review/save/reference rules and safe preview; no automatic chat sending or generation.",
+      "schema_definitions": [
+        "evidence_record",
+        "structured_result"
+      ],
+      "runtime_implemented": false,
+      "implementation_acceptance": "pending same-version implementation/test evidence; no independent owner signature asserted"
+    }
+  ],
+  "scope_limit": "design adoption by explicit project decision; no fabricated independent provider/consumer signatures, implementation acceptance or formal business acceptance"
+}

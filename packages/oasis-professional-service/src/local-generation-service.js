@@ -7,12 +7,15 @@ import { WorkspaceMaterialError } from './workspace-materials.js'
 import { missingUpstream } from './claims-v2-result.js'
 import { normalizeLocalExecutionSummary } from './local-run-summary.js'
 import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
+import { DEFAULT_LOCAL_SKILL_SUITE, PATENT_DISCLOSURE_SUITE, LOCAL_SKILL_SUITE_UNAVAILABLE, localSkillUnavailableReason } from './local-skill-suites.js'
+import { loadPatentDisclosureClaimsBundle } from './patent-disclosure-claims.js'
 
 const fail = (code, message) => { throw new WorkspaceMaterialError(code, message) }
 const safeCodes = new Set(['GENERATION_FAILED', 'ABORTED', 'TIMED_OUT', 'INVALID_OUTPUT', 'INVALID_INPUT', 'MODEL_UNAVAILABLE', 'MODEL_LIMITED'])
 
 // Owns only this Host's admitted calls; the repository remains the durable state owner.
-export function createLocalGenerationService({ repository, runtime, clock, runIdFactory, upstream, workspaceOperations = createWorkspaceOperationGuard() }) {
+export function createLocalGenerationService({ repository, runtime, clock, runIdFactory, upstream,
+  getLocalSkillSuite = () => DEFAULT_LOCAL_SKILL_SUITE, workspaceOperations = createWorkspaceOperationGuard() }) {
   const active = new Map()
   const keyFor = (workspaceId, runId) => JSON.stringify([workspaceId, runId])
   const enabled = () => runtime?.enabled === true && ['native-offline', 'native-model'].includes(runtime.evidenceKind)
@@ -26,13 +29,19 @@ export function createLocalGenerationService({ repository, runtime, clock, runId
     if (!enabled() || closing) fail('GENERATION_NOT_ENABLED', '本地生成未启用或模型能力不可用。')
     if (runtime.evidenceKind === 'native-model' && task.workflowVersion !== '2') fail('GENERATION_NOT_ENABLED', '真实生成仅支持新版权利要求任务。')
     if (task.generation.source !== 'local-skill') fail('GENERATION_NOT_ENABLED', '此入口只接受本地来源；不会切换来源。')
+    const suite = getLocalSkillSuite()
+    const unavailable = localSkillUnavailableReason(suite, runtime.evidenceKind === 'native-model' && task.workflowVersion === '2')
+    if (unavailable) fail(LOCAL_SKILL_SUITE_UNAVAILABLE, unavailable)
+    const external = suite === PATENT_DISCLOSURE_SUITE
     let context, bundle
     try { context = runtime.resolveContext({ workspaceId, sessionId }) }
     catch { fail('GENERATION_CONTEXT_UNAVAILABLE', '当前项目、会话或模型不可用；未开始生成。') }
     if (!context || context.sessionId !== sessionId) fail('GENERATION_CONTEXT_UNAVAILABLE', '当前会话不可用；未开始生成。')
-    try { if (task.workflowVersion === '2') bundle = await runtime.loadClaimsV2Skill() }
+    try {
+      if (task.workflowVersion === '2') bundle = external ? loadPatentDisclosureClaimsBundle() : await runtime.loadClaimsV2Skill()
+    }
     catch { fail('BUILTIN_SKILL_UNAVAILABLE', '内置 Skill 资源不可用；未开始生成。') }
-    if (runtime.evidenceKind === 'native-model' && (bundle?.provenance.skillId !== 'flow-2-6' || bundle?.provenance.skillVersion !== '0.2.2')) {
+    if (runtime.evidenceKind === 'native-model' && !external && (bundle?.provenance.skillId !== 'flow-2-6' || bundle?.provenance.skillVersion !== '0.2.2')) {
       fail('BUILTIN_SKILL_UNAVAILABLE', '正式内置 Skill 不可用；未开始生成。')
     }
     const instruction = structuredClone(bundle?.instruction ?? runtime.instruction)
@@ -45,6 +54,7 @@ export function createLocalGenerationService({ repository, runtime, clock, runId
       ...(task.workflowVersion === '2' ? { compositionVersion: '2' } : {}),
       inputSnapshot: { formValues: validateWorkflowForm(task.workflowId, task.workflowVersion, task.formValues), inputRefs: [], capturedAt: clock(),
         ...(task.workflowVersion === '2' ? { upstreamSnapshot: upstream ? await upstream.capture(workspaceId, task) : missingUpstream } : {}) } }
+    if (getLocalSkillSuite() !== suite) fail('GENERATION_CONFIRMATION_STALE', 'Skills 套件已变更，请重新核对模型与材料。')
     snapshot.inputSnapshot.sha256 = unifiedInputSha256(snapshot)
     return { snapshot, instruction, context }
   }

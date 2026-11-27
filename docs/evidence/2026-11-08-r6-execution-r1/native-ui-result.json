@@ -1,0 +1,58 @@
+{
+  "recordedAt": "2026-11-08T20:17:15.131620+08:00",
+  "status": "R6_01_NATIVE_UI_AND_DATA_PASSED",
+  "finding": "UI-RC2-01",
+  "UIFindingStatus": "FIXED_NATIVE_RETEST_PASSED",
+  "source": "Actual CUA native AX and screenshot in this chat; observations are executor summary, not exported full AX audit",
+  "observations": [
+    "Existing A/task restored on launch; create task disabled.",
+    "Closed last task view; FunctionCenter displayed, create and website import disabled.",
+    "Retained task reopened; same version3 synthetic reviewed result and existing filename displayed.",
+    "Did not click forbidden controls, edit, review, save, or send the retained conversation draft.",
+    "Exited using native DSH Desktop menu."
+  ],
+  "startup": {
+    "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1",
+    "current": "f03100c7f31b5100e886374e61aac07132421a5107365cfc2baa38996bec58bc",
+    "pid": 85036,
+    "launcherPid": 85016,
+    "startedAtUTC": "2026-11-08T12:16:01.783Z"
+  },
+  "exit": {
+    "code": 0,
+    "signal": null,
+    "endedAtUTC": "2026-11-08T12:16:42.270Z"
+  },
+  "execSessionId": 56009,
+  "startCount": 1,
+  "restartCount": 0,
+  "normalExitCount": 1,
+  "newBusinessRuns": 0,
+  "realModelAPIUploadPayment": 0,
+  "dataFiles": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/installation.json",
+      "before": "75a39ed693b44b9c7f1db0a9d7e04133ae298d5e48faf84294980d548b84b7be",
+      "after": "75a39ed693b44b9c7f1db0a9d7e04133ae298d5e48faf84294980d548b84b7be",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/storages/oasis_workbench.json",
+      "before": "ea5d5e2f294e5d19f269684438b23993e2f95b6caf4c4ef45115d189c6becca8",
+      "after": "ea5d5e2f294e5d19f269684438b23993e2f95b6caf4c4ef45115d189c6becca8",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/home/storages/workspace.json",
+      "before": "4106acb78abd607d3fab5a96d26eda2a86c38902614f60335751cfa2efeff419",
+      "after": "4106acb78abd607d3fab5a96d26eda2a86c38902614f60335751cfa2efeff419",
+      "unchanged": true
+    }
+  ],
+  "protectedFiles": 48,
+  "protectedChanges": [],
+  "targetPIDLive": false,
+  "targetPortListening": false,
+  "modelSelectorObserved": "deepseek-official/deepseek-flash (UI selection only; provider disabled in current recovery mode)",
+  "professionalUserOrReleaseAcceptance": false
+}

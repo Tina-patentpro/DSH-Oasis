@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "runId": "v340-4b14edd7-b895-4db1-88af-9fde2177c1c4",
+  "workflowRunUid": "4b14edd7-b895-4db1-88af-9fde2177c1c4",
+  "requestKey": "07e23fdf-2864-4f6a-aef0-426aa49ec56e",
+  "workspaceId": "e74001f3-dfd7-42e6-a5d3-6c05a4d527a6",
+  "taskId": "7284985b-45d7-4e6a-af97-72761ca1bcb1",
+  "nodeId": "Flow-2-6",
+  "source": "local-skill",
+  "evidenceKind": "native-model-candidate",
+  "nativeCandidate": {
+    "version": "v340-native-candidate-3",
+    "executionScope": "injected-only",
+    "dispatchEnabled": false,
+    "realCallVerified": false,
+    "sessionId": "session-ef67605d-1651-4194-a181-54ff103e710f",
+    "route": {
+      "provider": "deepseek-official",
+      "model": "deepseek-flash"
+    },
+    "inputSHA256": "d92ae9918507099e8c7cd55ed0130a052f9dd03b3fb940b627f79b877a95e1fd",
+    "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+    "instructionSHA256": "41ae8a1bbb068df6ba98b3be0eaa128d1e53d49276dcc58d961860e4ce5aca91",
+    "systemSHA256": "7d998e25aa7dc05470e4bf16d7f58e9dd0165d226ba32a30a695b1b39e191d00",
+    "preparedSHA256": "fb01f3abfc715ef6330aa6d11e47b6909d95509a286c68d987388ccdffd0af8e",
+    "requestSHA256": "6466b8bf6d4ef6aef1b87760911dc3d16ddfe231b74075dfaab0fb16856ecf00",
+    "confirmationSHA256": "a1d943cee1dec35c2c6877df97383f832c06e12a25b6a96f11aa074f17f5a3d5",
+    "confirmedRevision": 113,
+    "budget": {
+      "maxCalls": 1,
+      "usedCalls": 1
+    },
+    "admissionSHA256": "2de8b8ff9828e6b421c57e23387141fac8046c90bebe05befaac75aa7b52fa7d",
+    "nodeId": "Flow-2-6",
+    "workspaceRoot": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-native-business-recovery-20261108-r1/data/workspace-a",
+    "contextSHA256": "8193ca2dc0fb3449e783f93807e296803046192cd78a3d005441b48ecf112ea1",
+    "businessSkillId": "m06-claims-draft",
+    "businessSkillVersion": "0.1.3",
+    "businessManifestSHA256": "254a685fe95c9063be7232cb8dcb25333c1864ed9a5e670c0f62a04af3f3ccd4",
+    "businessResourceSHA256": "e06aa1523338af87b255cbdcb428ae7e693765791820dedc94f69a26ddc37f1d"
+  },
+  "inputSchemaVersion": "v340-1",
+  "inputSnapshot": {
+    "workspaceId": "e74001f3-dfd7-42e6-a5d3-6c05a4d527a6",
+    "taskId": "7284985b-45d7-4e6a-af97-72761ca1bcb1",
+    "runId": "v340-4b14edd7-b895-4db1-88af-9fde2177c1c4",
+    "workflowRunUid": "4b14edd7-b895-4db1-88af-9fde2177c1c4",
+    "requestKey": "07e23fdf-2864-4f6a-aef0-426aa49ec56e",
+    "capturedAt": "2026-11-08T12:44:01.391Z",
+    "nodeId": "Flow-2-6",
+    "source": "local-skill",
+    "resourceSHA256": "6858c8edee9de850d60e927a9fdc8bd3bfbfe4a8785ee50c79fd62337787e761",
+    "draft": {
+      "source": "local-skill",
+      "textInputs": {
+        "disclosure_text": "本轮公开补充：滑块沿导向槽移动。没有给出锁止状态改变的详细实现。",
+        "drawings_text": "附图材料仅为文字说明，未提供真实图像，不能声称完成视觉核验。",
+        "claim_requirements_text": "优先保留源已给的基本关系，并在说明中指出锁止实现的缺项和保护取舍。",
+        "user_input": "缺少前序Flow-1-5累计文稿。按当前允许的容缺合同处理，不读取其他文件、不补造历史或实验结论。"
+      },
+      "filePaths": {
+        "disclosure_file": "public-disclosure.md",
+        "drawings_file": "public-drawing-description.md",
+        "claim_requirements_file": "public-requirements.md"
+      },
+      "configuration": {}
+    },
+    "prepared": {
+      "nodeId": "Flow-2-6",
+      "values": {
+        "disclosure_file": {
+          "filename": "public-disclosure.md",
+          "body": "公开自编机械交底，仅为校准样本。底座上设有沿同一方向延伸的导向槽，滑块与导向槽配合并可沿槽移动。底座上设有锁止件，锁止件能够在允许滑块移动的状态与限制滑块移动的状态之间改变。未给出锁止件的具体结构、材料、尺寸、驱动方式、载荷及实验数据。不得把这些未给信息写成已确认事实。\n",
+          "sha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe"
+        },
+        "disclosure_text": "本轮公开补充：滑块沿导向槽移动。没有给出锁止状态改变的详细实现。",
+        "drawings_file": {
+          "filename": "public-drawing-description.md",
+          "body": "只有文字关系说明，没有图片。文字示意：底座包含导向槽，滑块位于导向槽中；锁止件设置在底座上并与滑块的移动限制相关。没有给出空间剖面、截面形状或连接细节。\n",
+          "sha256": "ab849c6061d733042d52bcd392a622ebea896b1310d8055b13b85dbb23453805"
+        },
+        "drawings_text": "附图材料仅为文字说明，未提供真实图像，不能声称完成视觉核验。",
+        "claim_requirements_file": {
+          "filename": "public-requirements.md",
+          "body": "本轮拟比较装置方向的保护取舍。不要预设材料、尺寸或权项数量；对关键关系不足的地方保留具体缺项。不要把要求或用户指令当作技术来源。\n",
+          "sha256": "513c5e1910dabfb610f5eac9ccef02b90a07a66872f94add48bb4127ebb3daa2"
+        },
+        "claim_requirements_text": "优先保留源已给的基本关系，并在说明中指出锁止实现的缺项和保护取舍。",
+        "user_input": "缺少前序Flow-1-5累计文稿。按当前允许的容缺合同处理，不读取其他文件、不补造历史或实验结论。"
+      },
+      "receipts": {
+        "upstream_md_file": {
+          "status": "not_provided",
+          "sha256": "none",
+          "content_origin": "none",
+          "filename": "not_provided"
+        },
+        "disclosure_file": {
+          "status": "accepted",
+          "sha256": "c39ce23e93402d09144cfc40317c1101ea8b5d30e399cddb6482167470952cbe",
+          "filename": "public-disclosure.md",
+          "content_origin": "user_file"
+        },
+        "disclosure_text": {
+          "status": "accepted",
+          "sha256": "9965136736ccef508d2ddabd083cf7385259f9481184085d6713b31c90786015",
+          "filename": "文本输入",
+          "content_origin": "user_text"
+        },
+        "drawings_file": {
+          "status": "accepted",
+          "sha256": "ab849c6061d733042d52bcd392a622ebea896b1310d8055b13b85dbb23453805",
+          "filename": "public-drawing-description.md",
+          "content_origin": "user_file"
+        },
+        "drawings_text": {
+          "status": "accepted",
+          "sha256": "29f534954ebf820a69c772090761c000f92136a557b585492b26b23db4d832ff",
+          "filename": "文本输入",
+          "content_origin": "user_text"
+        },
+        "claim_requirements_file": {
+          "status": "accepted",
+          "sha256": "513c5e1910dabfb610f5eac9ccef02b90a07a66872f94add48bb4127ebb3daa2",
+          "filename": "public-requirements.md",
+          "content_origin": "user_file"
+        },
+        "claim_requirements_text": {
+          "status": "accepted",
+          "sha256": "58a1cd3a8eccab80a5c55aa2a576bcf670ab58317405aaed7d81fe1231f4b84d",
+          "filename": "文本输入",
+          "content_origin": "user_text"
+        },
+        "user_input": {
+          "status": "accepted",
+          "sha256": "54c0ee36f6482c3056605fc91ea32c4f783502693f4e42e6c780f1b2eec1716d",
+          "filename": "文本输入",
+          "content_origin": "user_text"
+        }
+      },
+      "warnings": [
+        {
+          "warning_id": "host-Flow-2-6-missing-upstream_md_file",
+          "first_flow": "Flow-2-6",
+          "inherited_from": "none",
+          "problem": "未提供：upstream_md_file",
+          "affected_content": "本次输入及下游累计快照",
+          "current_handling": "保留实际材料并继续输出",
+          "model_completion": "未评估",
+          "deliverable_impact": "需人工核对",
+          "recommended_action": "核对实际输入及其来源",
+          "status": "open"
+        }
+      ],
+      "upstream": null,
+      "inputHash": "a34ae147caa04a87705e2b809bc2e42aa339b5c29e72f47c7e7ee0d1ea05764b"
+    }
+  },
+  "inputSha256": "d92ae9918507099e8c7cd55ed0130a052f9dd03b3fb940b627f79b877a95e1fd",
+  "status": "unknown",
+  "failureCode": "EXECUTION_UNCONFIRMED",
+  "result": null,
+  "resultDraft": null,
+  "reviewStatus": "not-reviewed",
+  "createdAt": "2026-11-08T12:44:01.391Z",
+  "completedAt": "2026-11-08T12:44:01.544Z"
+}

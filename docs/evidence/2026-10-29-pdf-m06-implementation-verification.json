@@ -1,0 +1,367 @@
+{
+  "id": "DSH-PDF-M06-IMPLEMENTATION-VERIFICATION-20261029-01",
+  "at": "2026-10-29T21:32:31.065299+08:00",
+  "status": "IMPLEMENTED_COMPONENTS_NOT_ACTIVATED",
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "headUnchanged": true,
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "testRuns": [
+    {
+      "name": "api-and-affected",
+      "argv": [
+        "tools/bin/node",
+        "--test",
+        "packages/oasis-professional-service/test/m06-api-contract-adapter.test.mjs",
+        "packages/oasis-professional-service/test/oasis-api-contract.test.mjs",
+        "packages/oasis-professional-service/test/oasis-workspace-binding.test.mjs",
+        "packages/oasis-professional-service/test/v340-preparation.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-m06-implementation-20261029/api-and-affected-verified-final.log",
+      "logSHA256": "6965065bb2e459903dee3c3da8af6a98738fce4c395cabb07f0a043aa85a9825",
+      "outputTail": "✔ Workbench service and RPC expose versioned read-only preparation without altering old task state (1.003792ms)\nℹ tests 42\nℹ suites 0\nℹ pass 42\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 155.335916"
+    },
+    {
+      "name": "pdf",
+      "argv": [
+        "/Users/tinadong7036/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "scripts/tests/test_pdf_text_worker.py"
+      ],
+      "exitCode": 0,
+      "log": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-m06-implementation-20261029/pdf-verified-final.log",
+      "logSHA256": "b9ba6442c95876138526fec949f1e813b286c0ffcc021435d55eb5d2b50dd6ed",
+      "outputTail": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.047s\n\nOK"
+    },
+    {
+      "name": "distribution",
+      "argv": [
+        "python3",
+        "-B",
+        "scripts/tests/test_pdf_distribution.py"
+      ],
+      "exitCode": 0,
+      "log": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/pdf-m06-implementation-20261029/distribution-verified-final.log",
+      "logSHA256": "cbe4b84d897ac017db0552ccb3a31855ff0fb172bc344c967c4c4c92eb19e624",
+      "outputTail": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.004s\n\nOK"
+    }
+  ],
+  "affectedJSTests": 42,
+  "pdfComponentTests": 6,
+  "distributionTests": 2,
+  "sameContainerCases": 2,
+  "containerResult": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-worker-isolation-verification-r3.json",
+  "finalWorkerMatchesContainerEvidence": true,
+  "VMState": "Stopped",
+  "gitDiffCheckExitCode": 0,
+  "priorFilesPreserved": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "status": "prefix-only-historical-bytes-preserved",
+      "beforeSHA256": "9a67cf57ce909d5785760184203dcd15df17915f199512e5d1431b0abe4d74ce",
+      "afterSHA256": "0d37823e7909f27717d95154448cf56aa65b5c1107698b3f1a9657bb03fed4be"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-26-follow-up-remaining.md",
+      "status": "prefix-only-historical-bytes-preserved",
+      "beforeSHA256": "7df51a95bbdf1edfd05f1d5839b26b8528cd87ea29ca42be806520f3299e4c5c",
+      "afterSHA256": "c74956563fdb1732a02ab26cde6d322c64592ed9d1ea6d0cf95080733b529e3f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "status": "byte-identical",
+      "beforeSHA256": "1d00b4a569bf5b044ac4f8a9c2ed90717cb8a157eb776b6f24f844a340b6faf2",
+      "afterSHA256": "1d00b4a569bf5b044ac4f8a9c2ed90717cb8a157eb776b6f24f844a340b6faf2"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "status": "prefix-only-historical-bytes-preserved",
+      "beforeSHA256": "e54fc35e4c18c0633340b349fc5ff8637e0c1ab4ba4d0c8c16f25b565b96c1d3",
+      "afterSHA256": "3a345e4ff0e6f2bf66bcebea3816c3be07be4de4cd7ec376975100b7af53a88a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.json",
+      "status": "byte-identical",
+      "beforeSHA256": "5dae3e9cd2b2f52562e01e4dc0dca9dca325a5ee64db933022404995d8bbde62",
+      "afterSHA256": "5dae3e9cd2b2f52562e01e4dc0dca9dca325a5ee64db933022404995d8bbde62"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/flow-2-6-m06-api-contract-candidate-1.md",
+      "status": "byte-identical",
+      "beforeSHA256": "4cf5500b1c61de75a291395ee5bb2c871d28087ac683465b8b9b5c661c49b4e8",
+      "afterSHA256": "4cf5500b1c61de75a291395ee5bb2c871d28087ac683465b8b9b5c661c49b4e8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/v340-pdf-integration-compatibility-r1.md",
+      "status": "byte-identical",
+      "beforeSHA256": "add78999136933428c54596fceb7f81781af3f07ee37c4eedb9eaa697efc157a",
+      "afterSHA256": "add78999136933428c54596fceb7f81781af3f07ee37c4eedb9eaa697efc157a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-f-recovery-interruption-diagnosis.json",
+      "status": "byte-identical",
+      "beforeSHA256": "218dbc56fe04ae12f4a7685037a4230e430de94e88a13a422705ae85bd411f9f",
+      "afterSHA256": "218dbc56fe04ae12f4a7685037a4230e430de94e88a13a422705ae85bd411f9f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-controlled-profile-r2.json",
+      "status": "byte-identical",
+      "beforeSHA256": "37d03bbe61d8d8061f88a277a9c425ac736cbf109c37cfb16f4aa7f0fb104a42",
+      "afterSHA256": "37d03bbe61d8d8061f88a277a9c425ac736cbf109c37cfb16f4aa7f0fb104a42"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-g0-admission.json",
+      "status": "byte-identical",
+      "beforeSHA256": "90b78a32adfc6534b534925f7c637ec733988365af09896283fd0f1f864aca81",
+      "afterSHA256": "90b78a32adfc6534b534925f7c637ec733988365af09896283fd0f1f864aca81"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-installed-admission-r2.json",
+      "status": "byte-identical",
+      "beforeSHA256": "7d502fbd2b382880a3614f4740da759d3c4d94d6788bebccc2f6b91ef5f58288",
+      "afterSHA256": "7d502fbd2b382880a3614f4740da759d3c4d94d6788bebccc2f6b91ef5f58288"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-live-service-metadata-r2.json",
+      "status": "byte-identical",
+      "beforeSHA256": "78521d63e1cab341cfbecda8d261ab9f4c003528972578df5d8fc54d3aaede94",
+      "afterSHA256": "78521d63e1cab341cfbecda8d261ab9f4c003528972578df5d8fc54d3aaede94"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-flow26-remote-contract-request-r2.json",
+      "status": "byte-identical",
+      "beforeSHA256": "0a99c59b2ffbd1c5487b638a98fddd938985080f7d053fe5d804ef9378455155",
+      "afterSHA256": "0a99c59b2ffbd1c5487b638a98fddd938985080f7d053fe5d804ef9378455155"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-execution-preflight.json",
+      "status": "byte-identical",
+      "beforeSHA256": "457fbc03b746b014571af64ea6c9253a9033d3bbd0749f5b3ed9544158660a13",
+      "afterSHA256": "457fbc03b746b014571af64ea6c9253a9033d3bbd0749f5b3ed9544158660a13"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-intake-and-interruption-return.md",
+      "status": "byte-identical",
+      "beforeSHA256": "dbbb73395d465f6f3de10954ddebc37c57f5ca124490a4b51a40de99f320229a",
+      "afterSHA256": "dbbb73395d465f6f3de10954ddebc37c57f5ca124490a4b51a40de99f320229a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-f-verification.json",
+      "status": "byte-identical",
+      "beforeSHA256": "f1173d3aedb20f6033129f516e60d070a82becde255348c42ab2d0906f364931",
+      "afterSHA256": "f1173d3aedb20f6033129f516e60d070a82becde255348c42ab2d0906f364931"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-intake-delta.json",
+      "status": "byte-identical",
+      "beforeSHA256": "d390b4f476758a9fae8a73ac89c59815286ff02d1616fd7b306df027bbdc163e",
+      "afterSHA256": "d390b4f476758a9fae8a73ac89c59815286ff02d1616fd7b306df027bbdc163e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input-r2.json",
+      "status": "byte-identical",
+      "beforeSHA256": "a2ae924ef88cab1514144e04b23d978d8612b421a0e8ade274ba5490cebaac7d",
+      "afterSHA256": "a2ae924ef88cab1514144e04b23d978d8612b421a0e8ade274ba5490cebaac7d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-public-calibration-input.json",
+      "status": "byte-identical",
+      "beforeSHA256": "56e9cfe23bf33ffaf2d954816ca59379929b2a40c7435670548e94c7db6d3b85",
+      "afterSHA256": "56e9cfe23bf33ffaf2d954816ca59379929b2a40c7435670548e94c7db6d3b85"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-api-minimal-preflight.json",
+      "status": "byte-identical",
+      "beforeSHA256": "07407be3a1bf7ddf6505a2faba5a05ef68d3aeb19eea13d8ed16bc19cc762697",
+      "afterSHA256": "07407be3a1bf7ddf6505a2faba5a05ef68d3aeb19eea13d8ed16bc19cc762697"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-api-minimal-return.md",
+      "status": "byte-identical",
+      "beforeSHA256": "c07766247d0f4b4aa917619a92e37623f13c4e9f2f92072d15f8db0a437be315",
+      "afterSHA256": "c07766247d0f4b4aa917619a92e37623f13c4e9f2f92072d15f8db0a437be315"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-api-minimal-verification.json",
+      "status": "byte-identical",
+      "beforeSHA256": "f15776ef2ec8ec5ec831fff8ca629968f5db9a2b8e9803e033b7a418364bd090",
+      "afterSHA256": "f15776ef2ec8ec5ec831fff8ca629968f5db9a2b8e9803e033b7a418364bd090"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-minimal-return.md",
+      "status": "byte-identical",
+      "beforeSHA256": "f1094f62ba92b6c3fb7e3773fc9b3ba35ee708ab93d4a5581c7a1abe7493af3a",
+      "afterSHA256": "f1094f62ba92b6c3fb7e3773fc9b3ba35ee708ab93d4a5581c7a1abe7493af3a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-minimal-verification.json",
+      "status": "byte-identical",
+      "beforeSHA256": "049a0893c7b4e16e069d5560c4b870ba564dc8f556c25a2c3f63c305a1140895",
+      "afterSHA256": "049a0893c7b4e16e069d5560c4b870ba564dc8f556c25a2c3f63c305a1140895"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-spike-preflight.json",
+      "status": "byte-identical",
+      "beforeSHA256": "75ff2987eec56e9370a95688630fadd133fb507ef7b29d7b1bbae1de0ffc1e71",
+      "afterSHA256": "75ff2987eec56e9370a95688630fadd133fb507ef7b29d7b1bbae1de0ffc1e71"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-container-two-cases.json",
+      "status": "byte-identical",
+      "beforeSHA256": "651472572af9322c3ccb420ba1bf8bec5e5b507e47da5b84afe499a5cc23b1b1",
+      "afterSHA256": "651472572af9322c3ccb420ba1bf8bec5e5b507e47da5b84afe499a5cc23b1b1"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-and-flow26-g0-return.md",
+      "status": "byte-identical",
+      "beforeSHA256": "7922a999a8460af4b36d3335eba51cbf353ffdec498a3391285aecc73c376a4f",
+      "afterSHA256": "7922a999a8460af4b36d3335eba51cbf353ffdec498a3391285aecc73c376a4f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-execution-preflight.json",
+      "status": "byte-identical",
+      "beforeSHA256": "a4844c5745eaf5697f21cc5d269563553f7daff6e99a6c9e9c05114e1a9d698c",
+      "afterSHA256": "a4844c5745eaf5697f21cc5d269563553f7daff6e99a6c9e9c05114e1a9d698c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-preflight.json",
+      "status": "byte-identical",
+      "beforeSHA256": "a23f090575ecb365aa2fa49b4a2f791882ada18ca14ff7068c15fc5f90739e6c",
+      "afterSHA256": "a23f090575ecb365aa2fa49b4a2f791882ada18ca14ff7068c15fc5f90739e6c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-return.md",
+      "status": "byte-identical",
+      "beforeSHA256": "6e4afe51682e90e9436f3bf2ba4dec61cb0cd065e898910e42f283083ad3100f",
+      "afterSHA256": "6e4afe51682e90e9436f3bf2ba4dec61cb0cd065e898910e42f283083ad3100f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-unblock-r2-verification.json",
+      "status": "byte-identical",
+      "beforeSHA256": "5d1195d391afbf24da9238bdceecda2edd6f3101d584e36f945042dcc9aa906b",
+      "afterSHA256": "5d1195d391afbf24da9238bdceecda2edd6f3101d584e36f945042dcc9aa906b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-g0-verification.json",
+      "status": "byte-identical",
+      "beforeSHA256": "564068e2ee0d86f6bfbf420818f1c2faf737abee6a1398265bf2ce287b71292e",
+      "afterSHA256": "564068e2ee0d86f6bfbf420818f1c2faf737abee6a1398265bf2ce287b71292e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-docx-provider-readiness.json",
+      "status": "byte-identical",
+      "beforeSHA256": "404b16bc163f3e3e34f77d0195c470a3cb3e29814cf3fc873527c1d2fb65865b",
+      "afterSHA256": "404b16bc163f3e3e34f77d0195c470a3cb3e29814cf3fc873527c1d2fb65865b"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-inputs.json",
+      "status": "byte-identical",
+      "beforeSHA256": "ad818dccdf5c0a16147482d6dd1614ff093c2d8073755d12cca5498716566e5a",
+      "afterSHA256": "ad818dccdf5c0a16147482d6dd1614ff093c2d8073755d12cca5498716566e5a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-project-summary-plan-verification.json",
+      "status": "byte-identical",
+      "beforeSHA256": "e5f49e893cc03b00e77b63d63fc25ad88654f37c922b91cd6c6217cdaf40875c",
+      "afterSHA256": "e5f49e893cc03b00e77b63d63fc25ad88654f37c922b91cd6c6217cdaf40875c"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-29-project-summary-and-next-development-plan.md",
+      "status": "byte-identical",
+      "beforeSHA256": "2e454b1c266e282a9146a671f22644c95237dd4fd6c2d97b9d5a9f5ca79097b3",
+      "afterSHA256": "2e454b1c266e282a9146a671f22644c95237dd4fd6c2d97b9d5a9f5ca79097b3"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/src/m06-api-contract-adapter.js",
+      "bytes": 5492,
+      "sha256": "a573330085904be3b95af5b4115a348587999830c09c659812c24d3ee6953abc"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/test/m06-api-contract-adapter.test.mjs",
+      "bytes": 6517,
+      "sha256": "57ef1b1186dc22104a450903bc40d850e3f22fb297a21b61a80250ce004d8925"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/pdf-text-worker.py",
+      "bytes": 13885,
+      "sha256": "50b9e939092b77b7c865563de6549cda68853c12fc7a8309ca7a33d733aa61e5"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/verify-pdf-distribution.py",
+      "bytes": 3103,
+      "sha256": "96cf0e24becda8cf0b75fbd67cb87bffe09038a6f3924628c9021b897707d073"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/test_pdf_text_worker.py",
+      "bytes": 3169,
+      "sha256": "ad5d4afd61ecc376c7e150ebed9eb48575c7d545f32d8740dfcd746eea07e863"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/tests/test_pdf_distribution.py",
+      "bytes": 1398,
+      "sha256": "a3f91636685a473ef8eec092641c0129dfe9ee018ea22af0f70c879ebf146d1f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-m06-implementation-preflight.json",
+      "bytes": 27355,
+      "sha256": "e49d9a11598f2af31e5fc12d184f8ed48dafb07c04a5aae223846affdee6e194"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-selected-parser-verification.json",
+      "bytes": 11936,
+      "sha256": "70e028c06204519abf15af694364636d370f7b7b488a982c9b33a1104337227e"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-worker-isolation-verification.json",
+      "bytes": 4316,
+      "sha256": "a69c6a1f074270e8d2e82cf20dfa046936ee1c0cb96a3c34a2b5f28f4dac9562"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-worker-isolation-verification-r2.json",
+      "bytes": 4418,
+      "sha256": "ebac234d99c454ecd297ba710cef153f4949454bdac47d077477d0eade1a0d7a"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-worker-isolation-verification-r3.json",
+      "bytes": 4641,
+      "sha256": "d4c09f7888c8796cef588f17fa7a512f06cfd974dec51e75aa244d6be7823e27"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-m06-workarea-method-binding.json",
+      "bytes": 3564,
+      "sha256": "8e769988233b0d1236125713a6c0e89655a51cb3898b11b0d7c251f2a5ca16b8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-29-pdf-m06-implementation-return.md",
+      "bytes": 7600,
+      "sha256": "630ff4e942ebad857071710929376e538e4b3dd7721d095ceeafe0037d2b5705"
+    }
+  ],
+  "fixedCombinationLockResourcePinAndProfileChanged": false,
+  "productSourceScope": "one new internal M06 contract adapter; default Host/RPC/source flags/preparation/version schemas untouched",
+  "newRuntimeOrDependenciesInstalled": false,
+  "actualBusinessGenerationOrUploadRequests": 0,
+  "fees": 0,
+  "commitsPushesReleases": 0,
+  "newM06ActualBindingResolved": false,
+  "sourceMethodResolvedFromWorkarea": true,
+  "formalU1D1G0Accepted": false,
+  "remaining": [
+    "full selected runtime/launcher distribution closure and notices",
+    "complete declared PDF profile/resource qualification",
+    "Host extraction/v4/document integration after qualification",
+    "actual backend/Dify service/application/DSL/schema/accepted binding",
+    "persisted API confirmation/request/UNKNOWN and actual authorized consumption"
+  ],
+  "review": "single-agent author separate self-review; no independent, producer, professional or user acceptance",
+  "reviewRulings": [
+    "exact backend service/schema explicitly associated with workflow delivery; hash format is not producer approval",
+    "missing request key and mismatched PDF page tree rejected with failure-first regressions",
+    "same two container cases rechecked after worker corrections; previous evidence retained",
+    "workarea resolves the source method, not an actual M06 binding; no direct Dify",
+    "kernel alarm armed and protected; expiry/hostile-output/cancel matrix unrun"
+  ],
+  "verificationHelperCorrection": "first report helper checked its own output link before writing; corrected output-order check, no product or test changes"
+}

@@ -1,0 +1,115 @@
+{
+  "at": "2026-11-05T22:45:54.488447+08:00",
+  "verdict": "PASS_P0_2_PREPARATION_AND_PRESERVATION",
+  "failures": [],
+  "phase": "P0.2 mechanism preparation candidate only",
+  "preparation_freeze_sha256": "a363705bb08dd5f3f2808ab0618ca047fcf68626e9f1e6fc93a564362573e7ce",
+  "final_isolated_tests": 20,
+  "TDD_red_before_code": "17 missing mechanism failures",
+  "hardening_red_before_fix": "3 exact setup metadata/count forgery failures",
+  "final_green_exit": 0,
+  "author_implementation_and_self_check_not_independent_acceptance": true,
+  "source_mode_tested": false,
+  "production_ready": false,
+  "preserved_existing_files": 3983,
+  "preserved_symlinks": 2,
+  "preserved_business_files": 364,
+  "inputs_unchanged": 283,
+  "R1_R2_R3_and_history_preserved": true,
+  "live_source_sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+  "live_source_registry_writes": 0,
+  "live_source_native_apply_or_commit_invocations": 0,
+  "isolated_native_setup_commit_lifecycle_tests_executed": true,
+  "isolated_outcome_counts": {
+    "COMMITTED": 12,
+    "FAILED_BEFORE_REPLACE": 9,
+    "UNKNOWN_AFTER_REPLACE": 6
+  },
+  "normal_CI_review_performed": false,
+  "live_governance_exit": 1,
+  "weekly_time_waiver": false,
+  "business_code_edits": 0,
+  "CI_writes": 0,
+  "real_F0_setup_F1_or_source_authority_created": false,
+  "model_API_upload_generation_paid_calls": 0,
+  "deployments": 0,
+  "Git_commits_or_pushes": 0,
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "remaining": [
+    "actual preparation package/invocation technical review and user-decision provenance",
+    "normal source CI under valid write authority and fresh governance0",
+    "real complete F0 plus explicit B_SETUP/conditional-or-final commit scope",
+    "real setup -> frozen F1 -> external commit gate -> single source action/afterchecks; no automatic retry",
+    "separate A/source workflow/backend/DSH/runtime/acceptance/release gates"
+  ],
+  "new_git_visible_files_before_verification": [
+    "docs/evidence/fast39-registry-restore-once-r2-execution/PREPARATION-FREEZE.json",
+    "docs/evidence/fast39-registry-restore-once-r2-execution/governance-readonly.json",
+    "docs/evidence/fast39-registry-restore-once-r2-execution/isolated-trial-inventory.json",
+    "docs/evidence/fast39-registry-restore-once-r2-execution/preflight.json",
+    "docs/evidence/fast39-registry-restore-once-r2-execution/test-results.json",
+    "docs/evidence/fast39-registry-restore-once-r2-execution/tests-green-attempt-1.log",
+    "docs/evidence/fast39-registry-restore-once-r2-execution/tests-green-final.log",
+    "docs/evidence/fast39-registry-restore-once-r2-execution/tests-red-exact-setup.log",
+    "docs/evidence/fast39-registry-restore-once-r2-execution/tests-red-hardening.log",
+    "docs/evidence/fast39-registry-restore-once-r2-execution/tests-red.log",
+    "docs/evidence/fast39-registry-restore-once-r2-execution/机制准备与隔离核验.md"
+  ],
+  "evidence_hashes": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/PREPARATION-FREEZE.json",
+      "sha256": "a363705bb08dd5f3f2808ab0618ca047fcf68626e9f1e6fc93a564362573e7ce"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/governance-readonly.json",
+      "sha256": "bc5ebd5786fb92ffb44316c6c8be8610830a1e556b0b116117c8321217f762df"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/isolated-trial-inventory.json",
+      "sha256": "527c52f8b21dbdcccfb9194095b0ed932c20bfdaa1c0b301a5cfb41a7b01d647"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/preflight.json",
+      "sha256": "a8eaa60e46a3d0f6c1b51094cc6a9dca7a2bc0dffdc01303f743df87cf32ef50"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/test-results.json",
+      "sha256": "f9543fc3f148c56dfd0fff337d4d29f514aeb71d3019d0e5d2c4f13859223a7d"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/tests-green-attempt-1.log",
+      "sha256": "e8c5b2ebf8780c42411a616f642c5ffb99c80f29e671cb91e8983727558b2bf5"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/tests-green-final.log",
+      "sha256": "5c91151827cfb76b3b5a2008f68e1d20deaa9787543ce2243eb98e94d693452f"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/tests-red-exact-setup.log",
+      "sha256": "05ec0e0857c4dda609599183d79ceda71eb66d3085db443a09faf6fb2e3a1a12"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/tests-red-hardening.log",
+      "sha256": "c6259efbf02c8e049e8a6db76fc379ce1fe03f76e6a327b4adebfb3082f35d41"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/tests-red.log",
+      "sha256": "06d41f8c9945d08319e38536588f19728d1137521414e8ab4b8772f6fc7b97d8"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution/机制准备与隔离核验.md",
+      "sha256": "def087a81efe052aad29ad4a9036e8453baae179a8abbe335ddd14eebdd672ce"
+    }
+  ],
+  "private_control_scripts": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-p0-2-20261105/finalize.py",
+      "sha256": "8ab04a588b2f25f1f2ea0b6900517adb704756916a15ebc934b2d75ee8d6b966"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-p0-2-20261105/prepare.py",
+      "sha256": "9aa433c86f38c03b6c64706223b1df70e2f4eb091ed7b325bb9196ba6c4a1ee6"
+    }
+  ]
+}

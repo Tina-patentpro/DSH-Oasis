@@ -1,0 +1,94 @@
+{
+  "at": "2026-11-05T20:32:21.976685+08:00",
+  "subject": "FAST39-C4-EX-AUTH-DRAFT-R1",
+  "subject_freeze_sha256": "20f1a7d3184b4cb24397279caf8a7e039ad5a36168f671dbefa2fee1266347ba",
+  "reviewer": "Codex single agent author review, not independent",
+  "verdict": "REQUIRES_NARROW_REGISTRY_BINDING_REVISION",
+  "scope_reviews": [
+    {
+      "item": "Batch exception",
+      "status": "DESIGN_SCOPE_CLOSED",
+      "basis": "one exact local static profile only, Batch1-3 exits untouched, no calls/deploy/other flows"
+    },
+    {
+      "item": "profile registration semantics",
+      "status": "DESIGN_SCOPE_CLOSED",
+      "basis": "own root work item/event identifies reviewed proposal; native current candidate and complete V3.4.0 remain unclaimed"
+    },
+    {
+      "item": "four-field set",
+      "status": "FIELD_SET_CLOSED_EXACT_SELECTOR_OPEN",
+      "basis": "YML/Nodebook/latest_change_id/下一动作 sufficient for counts and scoped note; no field expansion needed"
+    },
+    {
+      "item": "STOP01-STOP11 and weekly gate",
+      "status": "DESIGN_GATE_CLOSED_NOT_DISCHARGED",
+      "basis": "explicit approval, normal substantive weekly+fresh0, native row/owner/hash, path/scope/race/static failures all stop; no time waiver"
+    }
+  ],
+  "findings": [
+    {
+      "id": "AUTH-TR01",
+      "priority": "P1",
+      "title": "R1 proposed Flow selector remains ambiguous after source table-shape restoration",
+      "locations": [
+        "authorization-draft.json#/registry_proposal/proposed_approved_records/0",
+        "授权草案.md §4.2-4.3"
+      ],
+      "evidence": "registry-root-cause.json cases C/D: exact ##4 Flow2-6 has2 matches; existing immutable-for-this-task 运行记录10157 gives1 target after in-memory shape correction",
+      "required_revision": "retain4 fields; separately version R2 exact unique binding and mandatory Flow/header/raw-hash/unchanged-locator guards; do not substitute under frozen R1",
+      "runtime_or_source_approval": false
+    }
+  ],
+  "source_data_repairs_required": [
+    {
+      "id": "REG01",
+      "source_line": 127,
+      "scope": "only restore11-column candidate separator, keep11-column header and all candidate data unchanged"
+    },
+    {
+      "id": "REG02",
+      "source_line": 128,
+      "scope": "preserve original raw row in evidence; relocate six legacy data cells to existing ###5.1 completed table, removing only extraneous seventh separator fragment; no semantic rewrite, ownership adoption, original event edit or deletion"
+    }
+  ],
+  "native_tool_authority_limits": {
+    "header_or_row_relocation": "not expressible as ordinary approved business cell changes",
+    "legacy_work_history_grant_probe": [
+      {
+        "operation": "grant mutation of legacy completed row under ##5",
+        "outcome": "REJECTED",
+        "error": "work/history cannot be granted as business rows"
+      }
+    ],
+    "conclusion": "R1 candidate scope cannot perform this repair. Need separate exact source-governance structural restoration authorization/process exception, or a broader separately authorized tool capability change; prefer no tool code change."
+  },
+  "required_authorizations": [
+    {
+      "id": "GOV-STRUCT-RESTORE",
+      "scope": "one-time exact README structural restoration of these2 locations plus preservation and own new repair lifecycle/correction metadata; explicit authorization for relocating an unowned historical record and any exceptional patch mechanism outside normal cell-change interface",
+      "not_authorized_now": true
+    },
+    {
+      "id": "AUTH-DRAFT-R2",
+      "scope": "new reviewable exact selector binding, same4 business fields, C4/LA/source-profile/node/file/stop limits retained; R1 frozen evidence retained",
+      "not_implementation_authorization": true
+    },
+    {
+      "id": "NORMAL-CI",
+      "scope": "source-owner normal substantive weekly review and matching report/sentinel/hash; fresh full source governance0 required before candidate production; no time waiver",
+      "not_run_here": true
+    }
+  ],
+  "repair_verification_requirements": [
+    "all untouched source bytes and all old event blocks unchanged",
+    "six legacy cells preserved and closed record appears once under5.1; no new legacy ownership",
+    "native business rows parse and exact approved selector is unique; other Flow/type/header/hash or count change rejects",
+    "four-field restriction and no native-current-candidate/hash-column grant",
+    "source-owned exact lifecycle and actual repair provenance, no fabricated transaction evidence",
+    "normal weekly and fresh governance0 separately; no structural counterfactual accepted as live source repair"
+  ],
+  "source_registry_writes": 0,
+  "business_code_edits": 0,
+  "new_generation_or_paid_calls": 0
+}

@@ -1,0 +1,150 @@
+{
+  "task": "M06 P2 installed layout and writer continuation only",
+  "time": "2026-11-06T13:30:53.349247+08:00",
+  "timezone": "Asia/Shanghai",
+  "executor": "Codex single agent",
+  "project": "dsh-oasis",
+  "authorization": "current explicit user request: complete same-version installed data layout/writer zero-generation; no application start, real call or release",
+  "versions": "coordination1.2.2; overall1.3.1/NS1-R1 + applicable P28/P30 + BM1-R1/S1/S2-R1/G1; project R2 P1/P2",
+  "current_followup": "PUBLIC-CHANNELS-20261105-BM1-R1-S2-R1",
+  "head": "7972fea810436c0a62e2a5192d60808d1292eb5a",
+  "branch": "codex/pdf-m06-minimal-20261029",
+  "inputs": [
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/AGENTS.md",
+      "read_scope": "full",
+      "sha256": "b2714a423740de7719fd8c82f4c226c82d5e13959dfbc1d5e2381222a25ab061",
+      "previous_sha256": "b2714a423740de7719fd8c82f4c226c82d5e13959dfbc1d5e2381222a25ab061",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/README.md",
+      "read_scope": "full",
+      "sha256": "431c8844b039e1c8e528531ee93d89f2b8346146084a5898bc53f06bde280e8b",
+      "previous_sha256": "431c8844b039e1c8e528531ee93d89f2b8346146084a5898bc53f06bde280e8b",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/projects.json",
+      "read_scope": "parsed; roots and dsh-oasis",
+      "sha256": "6ef28151f632bba8fa0454b80cca199e148163b47057be7a33fed0cf45fb3804",
+      "previous_sha256": "6ef28151f632bba8fa0454b80cca199e148163b47057be7a33fed0cf45fb3804",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/independent-plans.json",
+      "read_scope": "parsed; selected current followup and project_id=dsh-oasis",
+      "sha256": "20a3ccb56d96d75f2fe0f762dd46103e778975356384b80ecb2578775cf66f45",
+      "previous_sha256": "20a3ccb56d96d75f2fe0f762dd46103e778975356384b80ecb2578775cf66f45",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/superpowers/plans/2026-10-25-independent-projects-and-compatibility.md",
+      "read_scope": "1-35,53-89,133-151,198-231; BM1 onward partially output-truncated; master/BM1 applicable scopes separately read",
+      "sha256": "cac383be1f64cff69b95a28e535c6b748d986b338d62b0404ae0bcaa5a5e2e7d",
+      "previous_sha256": "cac383be1f64cff69b95a28e535c6b748d986b338d62b0404ae0bcaa5a5e2e7d",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/compatibility/2026-10-25-project-compatibility.md",
+      "read_scope": "19-85,184-257 portions visible; no full-read claim",
+      "sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "previous_sha256": "a136e61999cdd6f0b196e07ca95cbdf7e591204562c32fc588816d50cf13751c",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/CONTRACTS.md",
+      "read_scope": "19-62,107-175",
+      "sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "previous_sha256": "12193ba8eb42f54c1f6146c82ed7c500aa87ce046e81e815650712725666c6f3",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/docs/coordination/plans/2026-11-05-open-source-business-mode-bm1.md",
+      "read_scope": "1-85;149-245 mostly visible, output truncation recorded",
+      "sha256": "702c46ec3558046698aa796f7afe7e18bbb24699da80d4a598d68ecc7a69b24c",
+      "previous_sha256": "702c46ec3558046698aa796f7afe7e18bbb24699da80d4a598d68ecc7a69b24c",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/专利业务Skills清单.md",
+      "read_scope": "full; M06 only",
+      "sha256": "1bdc284f4b60890965c2fc06e9afda99d0a54448230c569fbf0ccc57000ae941",
+      "previous_sha256": null,
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/AGENTS.md",
+      "read_scope": "user-provided plus physical final55lines",
+      "sha256": "2f0b4c780db2b558db9351c225f65b62edc55e2510aac39847c2142de0a27642",
+      "previous_sha256": "2f0b4c780db2b558db9351c225f65b62edc55e2510aac39847c2142de0a27642",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-10-25-dsh-oasis-master-plan.md",
+      "read_scope": "46-113,299-382 plus heading identity",
+      "sha256": "491bf078a9a722930e7b180beb128ab16d1306e666a9af9dd70f09923a755506",
+      "previous_sha256": "491bf078a9a722930e7b180beb128ab16d1306e666a9af9dd70f09923a755506",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/plans/2026-11-06-project-summary-and-next-plan-r2.md",
+      "read_scope": "full",
+      "sha256": "38ea73e8f23300679b09e73afe74830576254e370937d45df6c13815f6c46694",
+      "previous_sha256": "38ea73e8f23300679b09e73afe74830576254e370937d45df6c13815f6c46694",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/m06-native-zero-generation-launch-r1.md",
+      "read_scope": "full",
+      "sha256": "44955ff323f5163bf5de17b024d1f5cd8e0a98f9b4f026aea12258b540d5a049",
+      "previous_sha256": "44955ff323f5163bf5de17b024d1f5cd8e0a98f9b4f026aea12258b540d5a049",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/project-current-state.md",
+      "read_scope": "1-35",
+      "sha256": "934e5cd1fd99e098798f972710b4f6506febbf6736165cd66864e68168b45ca9",
+      "previous_sha256": "e2c85c3f8137ac77a1fa0156eb73c9419097c97de2671430caed64fb95c2e2ca",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-10-23-stage5-progress-and-remaining.md",
+      "read_scope": "1-25",
+      "sha256": "a28f3db87438698dc15eca133b010cbfe989837fc4dcefa5327f34d8486ae5bf",
+      "previous_sha256": "364e2c7a1640a8e4e1c4e555f5054823ab5afa78bd0b0e454352dc9929fbfe0c",
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/f-installed-runtime.mjs",
+      "read_scope": "1-250",
+      "sha256": "31eab06e52103868f8a60bf4d19e0238fcfcaa1b29ad7a164c8afc9dedfd4ed5",
+      "previous_sha256": null,
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/scripts/f-installed-bundle.mjs",
+      "read_scope": "full",
+      "sha256": "edcb7bb70d2a576d75c2d42b0cec1c92f993d2e67d2a316d75478b694be7e881",
+      "previous_sha256": null,
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/patches/storage-json-single-owner/installed-lease.mjs",
+      "read_scope": "full",
+      "sha256": "90529eaf2be95ad04da4a73289ce12c7893a85f08220edef844d33ee74eeafe7",
+      "previous_sha256": null,
+      "version": "see source; no invented revision"
+    },
+    {
+      "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-native-zero-assembly-r1/check-assembly.mjs",
+      "read_scope": "full",
+      "sha256": "509b4886d64a95eba32896fa735b1273d2f2ffd8e360af21db1ac09c70ad02e6",
+      "previous_sha256": null,
+      "version": "see source; no invented revision"
+    }
+  ],
+  "decision": "continue within current bounded offline authorization; no missing real credentials needed",
+  "delta": "new absent installed root/data via actual F controller, new bundle with same c07f archive/versions; old root/home candidate remains unready and unchanged; minimal pre-seal preparer and live-lease zero spec; historical license/fail/unknown/acceptance untouched",
+  "unverified": "Host/UI/runtime, signature acceptance of outer distribution, professional/user acceptance and release; unrelated sections/history not read"
+}

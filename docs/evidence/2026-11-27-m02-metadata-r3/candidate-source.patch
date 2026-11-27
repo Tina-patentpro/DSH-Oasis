@@ -1,0 +1,227 @@
+--- R2/src/m02-body-metadata.js
++++ R3/src/m02-body-metadata.js
+@@ -0,0 +1,30 @@
++// Host-owned metadata only. Technical prose and quoted materials retain their bytes.
++export function correctM02BodyMetadata(core,{receiptVersion,updates,modelCompletions}) {
++  if(typeof core!=='string'||!['v340-native-candidate-9','v340-native-candidate-10'].includes(receiptVersion)
++    ||!Array.isArray(updates)||!Array.isArray(modelCompletions))throw Error('M02_METADATA_INVALID')
++  const a=updates.filter(x=>x.content_origin==='model_completed').map(x=>x.content_id)
++  const b=modelCompletions.map(x=>x.content_id)
++  if(new Set(a).size!==a.length||new Set(b).size!==b.length||a.length!==b.length
++    ||a.some(id=>!b.includes(id))||modelCompletions.some(x=>x.human_confirmation_status!=='pending'))throw Error('M02_METADATA_PAIR_INVALID')
++  const lines=core.split('\n'),metadata=[
++    `- 合同与版本：Host 原始生成凭证 ${receiptVersion}；正文元信息修订 R3。`,
++    `- 交付状态：本次${a.length?'模型补齐待确认':'未产生模型补齐'}（登记 ${b.length} 条，更新 ${a.length} 条）；分析建议仍待专业审核。`,
++  ]
++  let fence=null,start=-1,end=lines.length
++  for(let i=0;i<lines.length;i++){
++    const marker=lines[i].match(/^\s{0,3}(`{3,}|~{3,})/)
++    if(marker){if(!fence)fence={char:marker[1][0],size:marker[1].length};else if(marker[1][0]===fence.char&&marker[1].length>=fence.size)fence=null;continue}
++    if(fence)continue
++    if(start<0&&lines[i]==='## 文档信息'){start=i;continue}
++    if(start>=0&&/^## /.test(lines[i])){end=i;break}
++  }
++  if(start<0)return `## 文档信息\n\n${metadata.join('\n')}\n\n${core}`
++  fence=null
++  const section=lines.slice(start+1,end).filter(line=>{
++    const marker=line.match(/^\s{0,3}(`{3,}|~{3,})/)
++    if(marker){if(!fence)fence={char:marker[1][0],size:marker[1].length};else if(marker[1][0]===fence.char&&marker[1].length>=fence.size)fence=null;return true}
++    return fence||!/^\s*- (合同与版本|交付状态)：/.test(line)
++  })
++  while(section.length&&section.at(-1)==='')section.pop()
++  return [...lines.slice(0,start+1),...section,...metadata,'',...lines.slice(end)].join('\n')
++}
+--- R2/src/v340-native-contract.js
++++ R3/src/v340-native-contract.js
+@@ -48,4 +48,6 @@
+     nodeId: z.literal('Flow-1-2') }).strict().refine(textBatchBindingMatches),
+   legacyCandidateSchema.extend({ ...textBatchFields, version: z.literal('v340-native-candidate-9'),
+     nodeId: z.literal('Flow-1-2') }).strict().refine(textBatchBindingMatches),
++  legacyCandidateSchema.extend({ ...textBatchFields, version: z.literal('v340-native-candidate-10'),
++    nodeId: z.literal('Flow-1-2') }).strict().refine(textBatchBindingMatches),
+ ])
+--- R2/src/v340-native-model.js
++++ R3/src/v340-native-model.js
+@@ -22,7 +22,8 @@
+ const secondTextBatch = 'oasis-text-second-batch'
+ const m02SourceLocator = 'oasis-text-m02-source-locator-r1'
+ const m02CompletionPairs = 'oasis-text-m02-completion-pairs-r2'
+-const isTextBatch = business => [OASIS_TEXT_BATCH, conciseDisclosure, secondTextBatch, m02SourceLocator, m02CompletionPairs].includes(business)
++const m02BodyMetadata = 'oasis-text-m02-body-metadata-r3'
++const isTextBatch = business => [OASIS_TEXT_BATCH, conciseDisclosure, secondTextBatch, m02SourceLocator, m02CompletionPairs, m02BodyMetadata].includes(business)
+ function instructionFor(nodeId,business=false){
+   const original=instructions.get(nodeId)
+   if(!business)return original
+@@ -51,10 +52,12 @@
+   +(isTextBatch(business) ? textBatchOutput
+     : business && business !== PATENT_DISCLOSURE_SUITE ? '\n\n内部M06消费凭证版本为3；模型输出仍沿既有七字段，不输出凭证身份。' : '')
+   +(business===secondTextBatch?'\n'+secondTextInstructions[nodeId]:'')
+-  +(business===conciseDisclosure?conciseDisclosureOutput:legacy?legacyFormat:format)
++  +(business===conciseDisclosure?conciseDisclosureOutput:legacy?legacyFormat:business===m02BodyMetadata?format.replace('Host响应合同 v340-native-candidate-2','Host响应合同 v340-native-candidate-10'):format)
+   +(business===m02SourceLocator?m02SourceLocatorOutput:'')
+   +(business===m02CompletionPairs?m02SourceLocatorOutput.replace('修订 R1','修订 R2').replace('v340-native-candidate-8','v340-native-candidate-9')+m02CompletionPairsOutput:'')
++  +(business===m02BodyMetadata?m02SourceLocatorOutput.replace('修订 R1','修订 R3').replace('v340-native-candidate-8','v340-native-candidate-10')+m02CompletionPairsOutput+'\n\nM02 正文元信息修订 R3：原始生成凭证为 v340-native-candidate-10；Host 根据实际凭证和本次双向配对数量写入文档信息中的版本与补齐状态。无补齐时写本次未产生模型补齐，不填写 model_completed_pending_confirmation。非空配对保持待确认，分析建议无论是否登记均待专业审核；不把工程审核表述为专业或用户接受。':'')
+ const receiptVersionFor = (business, legacy = false) => {
++  if (business === m02BodyMetadata) return 'v340-native-candidate-10'
+   if (business === m02CompletionPairs) return 'v340-native-candidate-9'
+   if (business === m02SourceLocator) return 'v340-native-candidate-8'
+   if (business === secondTextBatch) return 'v340-native-candidate-7'
+@@ -121,7 +124,8 @@
+   const c=v340NativeCandidateSchema.parse(run.nativeCandidate)
+   if(run.evidenceKind!=='native-model-candidate'||run.source!=='local-skill'
+     ||c.version!=='v340-native-candidate-1'&&c.nodeId!==run.nodeId)fail()
+-  const business = c.version === 'v340-native-candidate-9' ? m02CompletionPairs
++  const business = c.version === 'v340-native-candidate-10' ? m02BodyMetadata
++    : c.version === 'v340-native-candidate-9' ? m02CompletionPairs
+     : c.version === 'v340-native-candidate-8' ? m02SourceLocator
+     : c.version === 'v340-native-candidate-7' ? secondTextBatch
+     : c.version === 'v340-native-candidate-6' ? conciseDisclosure
+@@ -220,7 +224,7 @@
+   if(textBatch)for(const nodeId of Object.keys(TEXT_BATCH_BINDINGS)){
+     const { provenance } = loadOasisTextSkillInstruction(nodeId)
+     const business=Object.hasOwn(SECOND_TEXT_BATCH_BINDINGS,nodeId)?secondTextBatch
+-      :nodeId==='Flow-1-5'?conciseDisclosure:nodeId==='Flow-1-2'?m02CompletionPairs:OASIS_TEXT_BATCH
++      :nodeId==='Flow-1-5'?conciseDisclosure:nodeId==='Flow-1-2'?m02BodyMetadata:OASIS_TEXT_BATCH
+     textExecutors.set(nodeId,createNativeCandidate({...options,nodeId,business,timeoutMs:240000}))
+     textCandidates[nodeId]=Object.freeze({skillId:provenance.skillId,skillVersion:provenance.skillVersion,
+       businessManifestSHA256:provenance.producerManifestSHA256,businessResourceSHA256:provenance.businessResourceSHA256,requiresConfirmation:true})
+@@ -267,7 +271,7 @@
+       if (input.candidateRun?.nativeCandidate?.version === 'v340-native-candidate-4') {
+         return external?.generate(input) ?? { status: 'failed', code: 'INVALID_INPUT' }
+       }
+-      if(['v340-native-candidate-5','v340-native-candidate-6','v340-native-candidate-7','v340-native-candidate-8','v340-native-candidate-9'].includes(input.candidateRun?.nativeCandidate?.version))
++      if(['v340-native-candidate-5','v340-native-candidate-6','v340-native-candidate-7','v340-native-candidate-8','v340-native-candidate-9','v340-native-candidate-10'].includes(input.candidateRun?.nativeCandidate?.version))
+         return textExecutors.get(input.nodeId)?.generate(input)??{status:'failed',code:'INVALID_INPUT'}
+       return oasis.generate(input)
+     },
+--- R2/src/v340-runtime-service.js
++++ R3/src/v340-runtime-service.js
+@@ -134,7 +134,7 @@
+             if(response?.status==='completed'){
+               delete executionSummary.failureStage
+               delete executionSummary.fieldIssue
+-              try{change={status:'completed',failureCode:null,result:assembleV340Document({nodeId:admitted.nodeId,workflowRunUid:admitted.workflowRunUid,generatedAt:admitted.createdAt,prepared,output:response.output}),executionSummary}}
++              try{change={status:'completed',failureCode:null,result:assembleV340Document({nodeId:admitted.nodeId,workflowRunUid:admitted.workflowRunUid,generatedAt:admitted.createdAt,prepared,output:response.output,nativeReceiptVersion:admitted.nativeCandidate?.version}),executionSummary}}
+               catch(error){
+                 const issue=error instanceof V340AssemblyIssue?assemblyIssueSchema.safeParse(error.issue):null
+                 const field=error instanceof V340AssemblyIssue?fieldIssueSchema.safeParse(error.fieldIssue):null
+--- R2/src/v340-document.js
++++ R3/src/v340-document.js
+@@ -1,6 +1,7 @@
+ import { z } from 'zod'
+ import { getV340Node, getV340Catalog, v340Hash, freezeV340 } from './v340-catalog.js'
+ import { v340DocumentBodySchema,m06StructuredEditSchema } from './v340-runtime-contract.js'
++import { correctM02BodyMetadata } from './m02-body-metadata.js'
+ 
+ const text = z.string().min(1).max(300000).refine(v => v.trim().length > 0)
+ const id = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9_.:/-]{0,127}$/)
+@@ -254,7 +255,7 @@
+   return freezeV340({body:document,fileName:validated.filename,sha256:v340Hash(document),snapshot:validated})
+ }
+ 
+-export function assembleV340Document({ nodeId, workflowRunUid, generatedAt, prepared, output }) {
++export function assembleV340Document({ nodeId, workflowRunUid, generatedAt, prepared, output, nativeReceiptVersion }) {
+   const node = getV340Node(nodeId)
+   const input = prepareV340Inputs(nodeId, prepared.values)
+   if (prepared.nodeId !== nodeId || prepared.inputHash !== input.inputHash) fail()
+@@ -346,6 +347,11 @@
+     if (warningIds.has(entry.warning_id)) rejectOutput('invalid-warning', 'warnings', index, 'warning_id')
+     snapshot.warnings.push(copy(entry)); warningIds.add(entry.warning_id)
+   }
++  // Only new M02 receipts project Host metadata, after all strict source/pair checks.
++  // Historical results and other nodes retain their original bytes and semantics.
++  if(nodeId==='Flow-1-2'&&nativeReceiptVersion==='v340-native-candidate-10')
++    model.core_result_markdown=correctM02BodyMetadata(model.core_result_markdown,{
++      receiptVersion:nativeReceiptVersion,updates:model.updates,modelCompletions:model.model_completions})
+   // Retain actual inputs and every node's complete prose independently of model-proposed updates.
+   // Downstream cannot lose them by returning an empty update list.
+   const retain = (contentId, body, origin, sourceInput, sourceHash, sourceLocator) => {
+--- R2/test/m02-body-metadata-r3.test.mjs
++++ R3/test/m02-body-metadata-r3.test.mjs
+@@ -0,0 +1,38 @@
++import test from 'node:test'
++import assert from 'node:assert/strict'
++import {readFile} from 'node:fs/promises'
++import {correctM02BodyMetadata} from '../src/m02-body-metadata.js'
++import {assertV340NativeCandidate} from '../src/v340-native-model.js'
++const old='## 文档信息\n\n- 节点：M02\n- 合同与版本：v340-native-candidate-2。\n- 交付状态：model_completed_pending_confirmation。\n\n## 核心结果\n\nP1 定性预期未实测。\n```text\n- 交付状态：源材料保留\n```\n'
++const options=count=>({receiptVersion:'v340-native-candidate-9',updates:Array.from({length:count},(_,i)=>({content_id:'c'+i,content_origin:'model_completed'})),modelCompletions:Array.from({length:count},(_,i)=>({content_id:'c'+i,human_confirmation_status:'pending'}))})
++for(const count of [0,1,2])test(`metadata derives ${count} pairs from actual arrays`,()=>{
++ const value=correctM02BodyMetadata(old,options(count))
++ assert.match(value,/Host 原始生成凭证 v340-native-candidate-9/)
++ assert.doesNotMatch(value,/candidate-2|model_completed_pending_confirmation/)
++ assert.match(value,new RegExp(`登记 ${count} 条，更新 ${count} 条`))
++ assert.match(value,count?/模型补齐待确认/:/未产生模型补齐/)
++ assert.equal(value.slice(value.indexOf('## 核心结果')),old.slice(old.indexOf('## 核心结果')))
++ assert.equal(correctM02BodyMetadata(value,options(count)),value)
++})
++test('metadata missing section is inserted without replacing prose',()=>{
++ const core='## 核心结果\n保留\n';const value=correctM02BodyMetadata(core,options(0));assert(value.endsWith(core));assert.match(value,/未产生模型补齐/)
++})
++test('metadata skips fenced source headings and preserves source quotes',()=>{
++ const core='```text\n## 文档信息\n- 交付状态：原材料\n```\n\n## 核心结果\n保留';const value=correctM02BodyMetadata(core,options(0));assert(value.endsWith(core))
++})
++test('metadata refuses unbound receipt versions',()=>assert.throws(()=>correctM02BodyMetadata(old,{...options(0),receiptVersion:'v340-native-candidate-2'})))
++test('metadata cannot present mismatched or duplicate pairs as valid',()=>{
++ for(const patch of [{updates:[]},{modelCompletions:[]},{modelCompletions:[...options(1).modelCompletions,...options(1).modelCompletions]},{modelCompletions:[{content_id:'other',human_confirmation_status:'pending'}]},{modelCompletions:[{content_id:'c0',human_confirmation_status:'confirmed'}]}])assert.throws(()=>correctM02BodyMetadata(old,{...options(1),...patch}))
++})
++test('source rows do not count as supplements',()=>{
++ const value=correctM02BodyMetadata(old,{...options(0),updates:[{content_id:'source',content_origin:'user_text'}]});assert.match(value,/未产生模型补齐/)
++})
++test('original v9 live receipt retains original prompt identity',async()=>{
++ const all=JSON.parse(await readFile(new URL('../../../../.local/dsh-m02-pair-r2-20261127/live/dsh-home/storages/oasis_workbench.json',import.meta.url),'utf8'))
++ const find=v=>{if(v&&typeof v==='object'){if(v.requestKey==='eb6bee3f-e23c-4333-b51f-554ebe6f94a7'&&v.inputSnapshot)return v;for(const x of Object.values(v)){const found=find(x);if(found)return found}}}
++ const run=find(all);assert.equal(assertV340NativeCandidate(run).version,'v340-native-candidate-9');assert.equal(run.nativeCandidate.systemSHA256,'8949dce7026b04d7ecc363caca54782e02d65be3093af1a8a6697964b7edad36')
++})
++test('metadata replacement retains fenced examples inside the information section',()=>{
++ const core='## 文档信息\n- 合同与版本：旧值\n```text\n- 交付状态：源材料逐字保留\n```\n- 交付状态：旧值\n\n## 核心结果\n保留\n'
++ const value=correctM02BodyMetadata(core,options(0));assert.match(value,/```text\n- 交付状态：源材料逐字保留\n```/);assert.doesNotMatch(value,/：旧值/)
++})
+--- R2/test/m02-completion-pair-r2.test.mjs
++++ R3/test/m02-completion-pair-r2.test.mjs
+@@ -48,7 +48,10 @@
+  value.model_completions.reverse()
+  const {h,run}=await execute(t,value)
+  assert.equal(run.status,'completed')
+- assert.equal(run.nativeCandidate.version,'v340-native-candidate-9')
++ assert.equal(run.nativeCandidate.version,'v340-native-candidate-10')
++ assert.doesNotMatch(h.seen.options.system,/Host响应合同 v340-native-candidate-2/)
++ assert.match(run.result.snapshot.current_result.core_result_markdown,/Host 原始生成凭证 v340-native-candidate-10/)
++ assert.match(run.result.snapshot.current_result.core_result_markdown,new RegExp('登记 '+count+' 条，更新 '+count+' 条'))
+  assert.match(h.seen.options.system,/双向一一对应/)
+  assert.match(h.seen.options.system,/集合必须完全相同/)
+  assert.match(h.seen.options.system,/human_confirmation_status.*pending/)
+--- R2/test/m02-source-locator-r1.test.mjs
++++ R3/test/m02-source-locator-r1.test.mjs
+@@ -36,7 +36,7 @@
+  const value=output();value.updates[0].source_locator=locator
+  const {h,run}=await execute(t,value)
+  assert.equal(run.status,'completed')
+- assert.equal(run.nativeCandidate.version,'v340-native-candidate-9')
++ assert.equal(run.nativeCandidate.version,'v340-native-candidate-10')
+  assert.match(h.seen.options.system,/逐字连续原文/)
+  assert.match(h.seen.options.system,/不添加引号/)
+  assert.match(h.seen.options.system,/receipts\[source_input_id\]\.sha256/)
+@@ -66,8 +66,9 @@
+  const value=output();value.updates=[]
+  const {h,run}=await execute(t,value)
+  assert.equal(run.status,'completed')
+- assert.equal(run.nativeCandidate.version,'v340-native-candidate-9')
+- assert.equal(run.result.snapshot.current_result.core_result_markdown,value.core_result_markdown)
++ assert.equal(run.nativeCandidate.version,'v340-native-candidate-10')
++ assert.ok(run.result.snapshot.current_result.core_result_markdown.endsWith(value.core_result_markdown))
++ assert.match(run.result.snapshot.current_result.core_result_markdown,/未产生模型补齐/)
+  const retained=run.result.snapshot.contents.find(c=>c.content_id.startsWith('host/')&&c.source_input_id==='technical_analysis_material_text')
+  assert(retained)
+  assert.equal(retained.source_hash,v340Hash(material))
+--- R2/test/oasis-first-batch.test.mjs
++++ R3/test/oasis-first-batch.test.mjs
+@@ -60,7 +60,7 @@
+     await service.createV340Run(runCommand())
+     const result = await h.settle()
+     assert.equal(result.status, 'completed')
+-    assert.equal(result.nativeCandidate.version, nodeId === 'Flow-1-5' ? 'v340-native-candidate-6' : nodeId === 'Flow-1-2' ? 'v340-native-candidate-9' : 'v340-native-candidate-5')
++    assert.equal(result.nativeCandidate.version, nodeId === 'Flow-1-5' ? 'v340-native-candidate-6' : nodeId === 'Flow-1-2' ? 'v340-native-candidate-10' : 'v340-native-candidate-5')
+     assert.equal(model.assertV340NativeCandidate(result).businessSkillId, skillId)
+     assert.equal(JSON.parse(h.seen.options.messages[0].content[0].text).values[field], material)
+     assert.equal(h.seen.options.maxTokens, 16384)

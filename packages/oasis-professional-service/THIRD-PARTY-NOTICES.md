@@ -32,6 +32,14 @@ The M06 business candidate uses the following seven named method fragments throu
 
 The full original fragment hashes, adoption positions and conditions remain in the `THIRD-PARTY-NOTICE.md` resource embedded in [src/m06-business-candidate-0.1.3.json](src/m06-business-candidate-0.1.3.json). Its complete MIT text and scope statements remain intact. This package-level notice supplements that resource notice rather than replacing it or broadening its coverage.
 
+## patent-disclosure-skill: claim strategy and drafting
+
+Copyright (c) 2026 handsomestWei.
+
+License: MIT. The original license is included in [licenses/patent-disclosure-skill-MIT.txt](licenses/patent-disclosure-skill-MIT.txt).
+
+The claims adapter includes two unmodified text resources from commit [b4bbec6f0a1c3c32a904faabeb249639c0b30d98](https://github.com/handsomestWei/patent-disclosure-skill/tree/b4bbec6f0a1c3c32a904faabeb249639c0b30d98). Their paths and hashes are recorded in [src/patent-disclosure-claims-resources.json](src/patent-disclosure-claims-resources.json). Oasis adds the DSH input and output instructions. The adapter uses the drafting resources for a claims draft only.
+
 ## Scope that remains separate
 
 The MIT notices above do not grant rights in host software, other libraries, trademarks, official/reference materials, customer inputs, evaluation materials or inventions described in any document. Previously excluded source carriers remain excluded. Existing source/history qualifications, candidate status and professional/user acceptance limits remain applicable.

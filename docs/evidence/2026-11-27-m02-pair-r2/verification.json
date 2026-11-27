@@ -1,0 +1,121 @@
+{
+  "at": "2026-11-27T12:45:38.654126+08:00",
+  "requestKey": "eb6bee3f-e23c-4333-b51f-554ebe6f94a7",
+  "runId": "v340-10b9e02f-3991-47b5-a503-24f829e9b2e0",
+  "submittedAtBeijing": "2026-11-27T12:43:38.130000+08:00",
+  "candidateReceiptVersion": "v340-native-candidate-9",
+  "modelPosts": 1,
+  "resubmissions": 0,
+  "professionalApiRequests": 0,
+  "host": {
+    "status": "completed",
+    "failureCode": null,
+    "summary": {
+      "finishKind": "stop",
+      "usage": {
+        "inputTokens": 1241,
+        "outputTokens": 16183,
+        "totalTokens": 24208,
+        "cacheReadTokens": 6784
+      }
+    },
+    "documentStatus": "completed_with_warnings",
+    "deliverableStatus": "ready_with_warnings",
+    "reviewStatus": "not-reviewed",
+    "resultSha256": "3adb93e6473ad4f87ad20de8ee1512aec344c55f476ac72cf93dd904b2383b6a"
+  },
+  "provider": {
+    "at": "2026-11-27T04:45:06.391Z",
+    "http": 200,
+    "requestId": null,
+    "messageId": "2908615c-5b68-49e1-9787-cef23e932105",
+    "providerModel": "deepseek-flash",
+    "stopReason": "end_turn",
+    "messageStop": true,
+    "finalUsage": true,
+    "usage": {
+      "input_tokens": 1241,
+      "output_tokens": 16183,
+      "cache_read_input_tokens": 6784,
+      "cache_creation_input_tokens": 0,
+      "streamIncomplete": true
+    }
+  },
+  "meteredFeeCny": "0.06610868",
+  "pricePeriod": "offpeak",
+  "cnyPerMillion": {
+    "input": 1,
+    "cacheRead": 0.02,
+    "output": 4
+  },
+  "balanceObservations": [
+    {
+      "at": "2026-11-27T04:45:37.437800+00:00",
+      "http": 200,
+      "observedDebitCny": "0.00"
+    }
+  ],
+  "observedDebitCny": "0.00",
+  "itemizedSettlementAvailable": false,
+  "isolatedCredentialRemoved": true,
+  "artifacts": {
+    "M02-R2完整结果.md": {
+      "sha256": "3adb93e6473ad4f87ad20de8ee1512aec344c55f476ac72cf93dd904b2383b6a",
+      "bytes": 69771
+    },
+    "M02-R2 TRIZ分析正文.md": {
+      "sha256": "54b2be6fd071a1cdd94f65bbf73e0faf05c486db53c7f645253310a63fcc2068",
+      "bytes": 15569
+    }
+  },
+  "coreCharacters": 6339,
+  "tableRows": {
+    "T1": 1,
+    "T2": 5,
+    "T3": 4,
+    "T4": 0,
+    "T5": 0,
+    "T6": 0
+  },
+  "tableStatus": {
+    "T1": "generated",
+    "T2": "generated",
+    "T3": "generated",
+    "T4": "not_yet_generated",
+    "T5": "not_yet_generated",
+    "T6": "not_yet_generated"
+  },
+  "sourceChecks": [
+    {
+      "content_id": "p1-source-statement",
+      "source_input_id": "technical_analysis_material_text",
+      "trust_status": "source_fact",
+      "exactLocator": true,
+      "exactHash": true
+    },
+    {
+      "content_id": "p1-task-instruction",
+      "source_input_id": "user_input",
+      "trust_status": "source_fact",
+      "exactLocator": true,
+      "exactHash": true
+    }
+  ],
+  "completionPairChecks": {
+    "updateIds": [],
+    "registrationIds": [],
+    "uniqueUpdates": true,
+    "uniqueRegistrations": true,
+    "equalIdSets": true,
+    "allPending": true,
+    "supplementTrustStatuses": {}
+  },
+  "warningIds": [
+    "host-Flow-1-2-missing-upstream_md_file",
+    "host-Flow-1-2-professional-review",
+    "W-P1-QUANT",
+    "W-CANDIDATE-UNVERIFIED",
+    "W-SYNTHETIC-TEST"
+  ],
+  "historicalFilesUnchanged": true
+}

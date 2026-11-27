@@ -1,0 +1,105 @@
+{
+  "root": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.dsh-test/m06-public-installed-20261107-r1",
+  "base": {
+    "bundle": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-zero-preview-installed-20261107-r1/bundle",
+    "expectedSHA256": "7aca55e9d5ccf7be21d20a3a33a7a02cbac256b7e725e69bca913ae03d624af5"
+  },
+  "target": {
+    "bundle": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-installed-20261107-r1/bundle",
+    "expectedSHA256": "061d3e6eb6dafb6183f0f1b3e85255010ddc741360913db997f93b17df701c9c"
+  },
+  "archive": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/m06-public-release-20261107-r1/oasis-professional-service-0.1.0-rc.1.tgz",
+  "archiveSHA256": "a7cf9a5dd59db1da2c7fe34fb4eac413c3dbb0d2baad7ab88147c7bfaab63bc3",
+  "businessVersion": "0.1.0-rc.1",
+  "versions": {
+    "desktop": "2.0.17",
+    "dsh": "0.2.0-rc.2",
+    "cordis": "4.0.4",
+    "sidebar": "0.24.1",
+    "node": "24.21.0",
+    "pnpm": "11.8.0"
+  },
+  "checkpoint": 3,
+  "old_zero_policy": {
+    "schemaVersion": 1,
+    "policy": "m06-native-zero-generation-installed-v1",
+    "archiveSHA256": "5160c4e910018e71cdd3f46452a2cc80b1cab6aab810bd4ae23dc5b5a7a89785",
+    "budget": {
+      "model": 0,
+      "api": 0,
+      "upload": 0,
+      "payment": 0
+    },
+    "guardedFiles": {
+      "src/index.js": "0fa6c560dc3b2201be45187f6d02c82e8cf1d6e1faeda6e4e8fa25bbe88a8322",
+      "src/workbench-rpc.js": "06b01bbde0d3e33f5de3c514bbc857734bdbccd79bfad6d7a5535773dd66b795"
+    }
+  },
+  "new_zero_policy": {
+    "schemaVersion": 1,
+    "policy": "m06-native-zero-generation-installed-v1",
+    "archiveSHA256": "a7cf9a5dd59db1da2c7fe34fb4eac413c3dbb0d2baad7ab88147c7bfaab63bc3",
+    "budget": {
+      "model": 0,
+      "api": 0,
+      "upload": 0,
+      "payment": 0
+    },
+    "guardedFiles": {
+      "src/index.js": "0fa6c560dc3b2201be45187f6d02c82e8cf1d6e1faeda6e4e8fa25bbe88a8322",
+      "src/workbench-rpc.js": "06b01bbde0d3e33f5de3c514bbc857734bdbccd79bfad6d7a5535773dd66b795"
+    }
+  },
+  "AppStartAuthorized": false,
+  "controllerAdaptationPending": false,
+  "controllerAdaptation": {
+    "revision": "rc1-version-table-r1",
+    "baseSHA256": "73a568deaa95f77e3805e52acfcc7a6e38ffaec5869c913be388d366c01ff2c7",
+    "derivedSHA256": "83017595aea900498bfd4c884bb37a69322cc982ceaaf9785d8658f14e71ec4c",
+    "change": "Only oasis-professional-service version literal 0.0.1 -> 0.1.0-rc.1; guard and fixed host policies unchanged"
+  },
+  "modified": [
+    "components/c3/THIRD-PARTY-NOTICES.md",
+    "components/c3/lib/client.js.map",
+    "components/c3/package.json",
+    "components/c3/src/m06-api-contract-adapter.js",
+    "components/c3/src/v340-native-model.js",
+    "controller/scripts/f-installed-runtime.mjs",
+    "profile-template.json"
+  ],
+  "added": [
+    "components/c3/LICENSE",
+    "components/c3/LICENSE-ADOPTION.md",
+    "components/c3/PUBLIC-RELEASE.json",
+    "components/c3/src/m06-business-public-r1.json",
+    "components/c3/src/m06-public-manifest-r1.json",
+    "components/c3/src/m06-public-resources-r1.js"
+  ],
+  "removed": [
+    "components/c3/docs/api/oasis-professional-service-baseline.json",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.0/SKILL.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.0/assets/claims-output-template.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.0/manifest.json",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.0/references/drafting-rules.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.0/references/special-domain-boundary.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.1/SKILL.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.1/assets/claims-output-template.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.1/manifest.json",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.1/references/drafting-rules.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.1/references/special-domain-boundary.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.2/SKILL.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.2/assets/claims-output-template.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.2/manifest.json",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.2/references/drafting-rules.md",
+    "components/c3/src/builtin-skills/flow-2-6/0.2.2/references/special-domain-boundary.md",
+    "components/c3/src/m06-business-candidate-0.1.2.json",
+    "components/c3/src/m06-business-candidate-0.1.3.json",
+    "components/c3/src/public-claims-v2/SKILL.md",
+    "components/c3/src/public-claims-v2/assets/claims-output-template.md",
+    "components/c3/src/public-claims-v2/manifest.json",
+    "components/c3/src/public-claims-v2/references/drafting-rules.md",
+    "components/c3/src/public-claims-v2/references/special-domain-boundary.md"
+  ],
+  "unchangedFiles": 27158,
+  "unchangedLinks": 14
+}

@@ -1,0 +1,161 @@
+{
+  "draft_id": "FAST39-REGISTRY-RESTORE-ONCE-DRAFT-R3",
+  "status": "DRAFT_NOT_APPROVED_NOT_EXECUTABLE",
+  "approved": false,
+  "effective": false,
+  "approval_record": null,
+  "separate_from_static_candidate_grant": true,
+  "source_observation": {
+    "path": "/Users/tinadong7036/Documents/开发项目/2、工作流设计/README.md",
+    "revision": 489,
+    "sha256": "0fa3199aceafb6042e7f573a8dbaef521386fa9f2e9fc8f8684695c141f7ce52",
+    "open_work_item_count": 35,
+    "observation_only_not_future_expected_baseline": true
+  },
+  "scope": "two exact README structural changes only, plus own repair lifecycle/append-only correction and necessary derived metadata explicitly declared below; no business value changes",
+  "proposed_owner_scope_id": "FAST39-REGISTRY-RESTORE-ONCE-R2",
+  "proposed_work_item_id": "FAST39-REGISTRY-RESTORE-ONCE-R2",
+  "registered_now": false,
+  "ordinary_started_approved_records": [],
+  "exact_changes": [
+    {
+      "id": "RESTORE01",
+      "observed_line": 127,
+      "before": "|---|---:|---:|---:|---|---|---|---|---|---|\n",
+      "before_sha256": "0c53399cecd5d92f67cb184f722ac9306604b51d6660eef12932dc012dc250a1",
+      "after": "|---|---:|---:|---:|---|---|---|---|---|---|---|\n",
+      "after_sha256": "3b02c29d50852512254c68330e1d61a7af9b0629fd378964bd30226ceec91409",
+      "operation": "replace exact separator once; 10 to11 columns; header and all business rows unchanged"
+    },
+    {
+      "id": "RESTORE02",
+      "observed_line": 128,
+      "before": "| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |---|\n",
+      "before_sha256": "a6660d518820fd5a1f5feb751608969650fa7c10041df0a44d9d4232a9c65ba0",
+      "relocated_after": "| `REMOTE-RUN-SYNC-20260906` | 活动工作流远端运行记录增量归档 | `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` | 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 | `closed` | `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` |\n",
+      "after_sha256": "a1f06544cf55383e05ecbfc0a50dd3b6d474959f75dd6fee779ead6765ac06fa",
+      "destination_section": "### 5.1 已完成工作项",
+      "destination_header": "| work_item_id | scope | base_sha256 | acceptance | work_state | completed_change_id |",
+      "insert_after": "unique existing six-column separator immediately below exact completed header",
+      "operation": "move original six raw data cells; discard only stray seventh --- fragment; preserve anomalous original as evidence"
+    }
+  ],
+  "protected_legacy_identity": {
+    "work_item_id": "REMOTE-RUN-SYNC-20260906",
+    "completed_change_id": "REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED",
+    "six_raw_cells": [
+      " `REMOTE-RUN-SYNC-20260906` ",
+      " 活动工作流远端运行记录增量归档 ",
+      " `a4eecf5eabd2474037baa62ea282abe95cadd340620f0a9ef9035f36bcf508ac` ",
+      " 277条远端运行全部映射；原有2条；新增275条、3906条节点执行、86条应用日志；差集0；50209个既有文件哈希不变；治理门禁exit0 ",
+      " `closed` ",
+      " `REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED` "
+    ],
+    "work_state": "closed",
+    "ownership_migration": false,
+    "historical_hash_statistics_acceptance_reconciled": false
+  },
+  "process_exception": {
+    "id": "EX-REGISTRY-STRUCTURE-ONCE",
+    "grant_now": false,
+    "use_limit": "at most one successful exceptional atomic restoration commit; failures/unknown do not authorize retry or replay",
+    "exact_rules_requiring_exception": [
+      "source AGENTS shared registration: README mutations only via ordinary registry_transaction apply",
+      "source AGENTS legacy unowned records read-only and foreign rows preserved",
+      "execution standard5.3/5.4 ordinary field-patch request and metadata/transaction provenance"
+    ],
+    "not_an_ordinary_apply_request": true,
+    "mechanism": "reviewed fixed task-private mechanism; F0 ordinary setup then F1 final exception/candidate freeze, external commit gate; original registry_lock verifies/reproduces frozen full candidate and performs at most one atomic commit; native lock/metadata/validation semantics retained except explicitly specified B complete-intent digest rule",
+    "ordinary_tool_retained_for": [
+      "start own repair item with empty approved_records",
+      "post-restoration own progress/completed; ordinary source candidate registration after all gates"
+    ],
+    "exception_commit_explicit_additional_mutations": [
+      "append one new correction event to own repair work item, explicitly label exceptional structural patch not native apply",
+      "registry_revision +1, actual open_work_item_count, actual last_updated_at/last_change_id, previous_registry_sha256 of real precommit bytes",
+      "append existing6-field registry_transaction with request_sha256=complete exception intent digest under FAST39-EXCEPTION-HASH-FREEZE-1, actual owner/task/revision/base; declare exceptional producer/hash contract in own correction/evidence; no native apply stdout fabrication",
+      "timestamp is real candidate-preparation time captured for this attempt, not invented write-success time; verification explicitly marks postwrite pending until separate receipt"
+    ],
+    "correction_provenance": "actual exception authorization/freezing identity, pinned tool hash, exact two transformations, evidence path; old event REG-20260906172947-REMOTE-RUN-SYNC-COMPLETED referenced but not edited",
+    "no_intermediate_source_patch": "F1 candidate includes structure+truthful correction+derived metadata; locked reproduction must equal F1 full bytes; single atomic replacement, never publish changed structure under unchanged revision",
+    "no_nested_native_apply": "ordinary start/completion run outside exceptional lock as distinct transactions; no apply call inside registry_lock, no disable/monkeypatch of source lock or validators",
+    "future_private_implementation_path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/.local/fast39-registry-restore-once-r2",
+    "future_evidence_directory": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/fast39-registry-restore-once-r2-execution",
+    "future_request_script_hashes": null,
+    "mechanism_ready_for_execution": false,
+    "release_condition": "before B_SETUP: frozen F0 mechanism/template/native setup request and explicit setup grant plus normal CI/governance0; after confirmed own setup: freeze F1 final exception request/both digests/candidate/diff on actual post-start baseline; before B_COMMIT: external gate and explicit conditional coverage or separate final approval, fresh checks and original lock; no final request is required before ordinary setup",
+    "hash_producer_difference_explicitly_requires_authorization": true
+  },
+  "weekly_policy": {
+    "normal_substantive_review_required_before_repair_start": true,
+    "fresh_full_governance_exit0_required": true,
+    "time_waiver": false,
+    "CI_writes_authorized_by_this_draft": false,
+    "separate_CI_authority_required": true
+  },
+  "execution_sequence": [
+    "F0_PRE_SETUP: ordinary started only after exact B_SETUP grant",
+    "F1_POST_SETUP: none while materializing/freezing/checking final objects",
+    "B_COMMIT_GATE: at most one exceptional atomic structure+correction+metadata commit",
+    "POST_COMMIT: ordinary own progress/completed only on actual verified outcome under B lifecycle scope"
+  ],
+  "stops": [
+    {
+      "id": "RESTORE-STOP01",
+      "condition": "phase-specific F0/setup approval or F1 final digests/candidate/external commit gate/conditional-or-final authority missing; normal CI/governance0 missing"
+    },
+    {
+      "id": "RESTORE-STOP02",
+      "condition": "only confirmed own setup may materialize approved F0 into F1; any other baseline/local bytes/header/legacy/owner/target drift stops. Frozen F1 never rebased or rekeyed"
+    },
+    {
+      "id": "RESTORE-STOP03",
+      "condition": "phase-specific unexpected/foreign task or evidence occupancy, reused new transaction ID, links or source hash mismatch; source itself and confirmed same-owner setup row must already exist, verified own evidence read-only/exclusive new append only; no stealing/overwrite"
+    },
+    {
+      "id": "RESTORE-STOP04",
+      "condition": "any other table/field/old event/business row/authority/CI/tool/archive content would change, or actual candidate validation fails"
+    },
+    {
+      "id": "RESTORE-STOP05",
+      "condition": "exception write committed or outcome unknown, postwrite drift or failure; retain snapshots and receipts; no rollback overwrite, second structural commit or automatic retry"
+    },
+    {
+      "id": "RESTORE-STOP06",
+      "condition": "native schema, truthful correction/metadata provenance, single atomic commit or preservation cannot be achieved by pinned mechanism; seek separately scoped revision, no workaround"
+    }
+  ],
+  "verification_required": [
+    "exact native ##4 parser and selector/header/Flow/hash guards",
+    "all14 candidate business rows unchanged; protected bytes equal after excluding two exact structure deltas and declared own event/metadata lifecycle",
+    "legacy original six raw cells preserved once at target; stray fragment removed only; original malformed row retained in evidence",
+    "all old event raw bytes and grants/owners preserved; no legacy ownership acquisition",
+    "normal weekly report/sentinel/hash and fresh full governance0; strict native registration contract plus registry checks",
+    "truthful exceptional intent/request/script/lock/atomic readback and all before/after hashes; native start/completion receipts kept distinct",
+    "recompute raw request and whole exception intent digest independently, cross-field/provenance/acyclic chain and explicit hash producer checked; schema0 insufficient",
+    "F0 setup request vs F1 final request separate; staged namespace and actual only-own setup delta verified; external gate bound after F1, no recursive hash approval chain"
+  ],
+  "never_authorized": [
+    "CI report/sentinel refresh or time waiver",
+    "business code/YML/nodebook/assets or static candidate production",
+    "source standards/AGENTS/registry tools changes or dependency installation",
+    "ownership transfer, legacy closure/acceptance/hash/statistics changes",
+    "API/model/upload/generation/paid/deploy/Git/publish/archive actions"
+  ],
+  "previous_draft": {
+    "path": "/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/business-baseline/fast39-static-authorization-draft-r2/registry-restoration-draft.json",
+    "sha256": "b2daee55779c8908ccf13073b02656054041e784fe0765fe2fb5fda674d804c6"
+  },
+  "hash_and_freeze_contract": "hash-and-freeze-contract.json",
+  "phase_authorization": {
+    "current_grants": {
+      "B_SETUP": false,
+      "B_COMMIT": false
+    },
+    "B_SETUP": "ordinary own started with empty grants only, after exact F0 approval; not structure recovery",
+    "B_COMMIT": "conditional grant must explicitly accept R3 scope/hash rule and pinned F0 mechanism/template/materialization; otherwise obtain exact final F1 approval. No inference from generic continue/setup-only approval or review pass",
+    "one_authorization_can_cover_both": true,
+    "outside_B": "A static candidate and C normal CI still separately authorized; no model/API/paid/deploy permission",
+    "prior_future_identity_retained": "owner/task and future private/evidence paths ending R2 retained intentionally as same uncreated repair task; authorization revision now R3"
+  }
+}

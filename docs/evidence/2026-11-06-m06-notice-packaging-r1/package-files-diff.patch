@@ -1,0 +1,15 @@
+diff --git a/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/before/packages/oasis-professional-service/package.json b/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/package.json
+index 6bd03e6..0842b0b 100644
+--- a/Users/tinadong7036/Documents/开发项目/DSH-Oasis/docs/evidence/2026-11-06-m06-notice-packaging-r1/before/packages/oasis-professional-service/package.json
++++ b/Users/tinadong7036/Documents/开发项目/DSH-Oasis/packages/oasis-professional-service/package.json
+@@ -19,7 +19,9 @@
+     "src",
+     "lib",
+     "docs/api/oasis-professional-service-baseline.json",
+-    "cordis.patch.yml"
++    "cordis.patch.yml",
++    "THIRD-PARTY-NOTICES.md",
++    "licenses"
+   ],
+   "scripts": {
+     "build": "tsdown --config tsdown.config.mjs",
