@@ -29,6 +29,22 @@ const MEDIA_TYPES = Object.freeze({
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
+  '.html': 'text/html',
+  '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  '.xls': 'application/vnd.ms-excel',
+  '.doc': 'application/msword',
+  '.csv': 'text/csv',
+  '.eml': 'message/rfc822',
+  '.msg': 'application/vnd.ms-outlook',
+  '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  '.ppt': 'application/vnd.ms-powerpoint',
+  '.xml': 'application/xml',
+  '.epub': 'application/epub+zip',
+  '.webp': 'image/webp',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.markdown': 'text/markdown',
+  '.json': 'application/json',
 })
 
 const RESERVED_WINDOWS_STEM = /^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])$/i

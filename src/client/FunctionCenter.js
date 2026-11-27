@@ -1,4 +1,5 @@
 import { createElement, useState } from 'react'
+import { PATENT_DRAWING_DESCRIPTION_TOOL_ID, v340ProfessionalService } from '../v340-professional-services.js'
 
 export const NATIVE_TOOLS = Object.freeze([
   { id: 'editor', title: '文件', icon: '▱' },
@@ -18,7 +19,9 @@ export function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = 
   const recovery=!!state.v340Catalog?.nativeBusinessRecovery
   const tasks = category === 'patent'
     ? [{ id: 'patent-claims', title: '权利要求书生成' }, { id: 'patent-description', title: '说明书生成' }, { id: 'patent-check', title: '申请文件检查' }]
-    : category === 'rd' ? [{ id: 'technical-rd', title: '技术研发辅助' }] : []
+    : category === 'rd' ? [{ id: 'technical-rd', title: '技术研发辅助' }]
+      : (state.workflows ?? []).filter(workflow => workflow.workflowId === PATENT_DRAWING_DESCRIPTION_TOOL_ID)
+        .map(workflow => ({ id: workflow.workflowId, title: workflow.title, professional: true }))
   return createElement('section', { 'aria-label': '功能中心', style: { padding: 20, display: 'grid', gap: 18 } },
     createElement('header', { style: { display: 'flex', justifyContent: 'space-between', gap: 8, alignItems: 'center' } },
       createElement('h3', { style: { margin: 0, fontSize: 19 } }, '功能中心'),
@@ -37,16 +40,17 @@ export function FunctionCenter({ state, nativeAvailability = {}, onOpenNative = 
         style: { ...button, borderRadius: 18, padding: '7px 12px', background: category === id ? '#90bfff' : button.background, color: category === id ? '#fff' : 'inherit' },
       }, label))),
     createElement('div', { style: { display: 'grid', gap: 8 } }, ...tasks.map(task => {
-      const supported = !offline && !recovery && !zero && ready && state.workflows.some(w => w.workflowId === task.id && w.executionMode === 'unified-text')
+      const supported = !offline && !recovery && !zero && ready && state.workflows.some(workflow =>
+        workflow.workflowId === task.id && workflow.executionMode === (task.professional ? 'professional-api' : 'unified-text'))
       return createElement('button', { key: task.id, type: 'button', disabled: !supported,
         'data-testid': supported ? `oasis-workflow-${task.id}` : undefined,
         onClick: () => onSelect(task.id), style: { ...button, display: 'flex', justifyContent: 'space-between', textAlign: 'left', opacity: supported ? 1 : .55 } },
-        task.title, createElement('small', null, supported ? '打开 →' : '待接入'))
+        task.title, createElement('small', null, supported ? (task.professional ? '专业 API' : '打开 →') : '待接入'))
     })),
     onSelectV340&&state.v340Catalog?createElement('section',{'aria-label':'专利工作流',style:{display:'grid',gap:8}},
       ...state.v340Catalog.nodes.filter(node=>category==='rd'?node.nodeId.startsWith('Flow-1-'):category==='patent'?!node.nodeId.startsWith('Flow-1-'):false)
         .map(node=>createElement('button',{key:node.nodeId,type:'button',disabled:recovery||state.v340Creating===true||zero&&node.nodeId!=='Flow-2-6',style:{...button,textAlign:'left'},
-          onClick:()=>onSelectV340(node.nodeId)},node.title,createElement('small',{style:{display:'block',marginTop:4}},zero?(node.nodeId==='Flow-2-6'?'只读预览':'零生成模式未开放'):offline&&node.nodeId==='Flow-2-6'?'本地 Skills 与专业 API 离线验证':'输入与结果 · 生成待接入')))):null,
+          onClick:()=>onSelectV340(node.nodeId)},node.title,createElement('small',{style:{display:'block',marginTop:4}},zero?(node.nodeId==='Flow-2-6'?'只读预览':'零生成模式未开放'):offline&&node.nodeId==='Flow-2-6'?'本地 Skills 与专业 API 离线验证':state.v340Catalog.nodeProfessionalApi && v340ProfessionalService(node.nodeId) ? '专业 API' : '输入与结果 · 生成待接入')))):null,
     state.v340CreateError?createElement('p',{role:'alert'},state.v340CreateError):null,
     state.v340CatalogStatus==='error'?createElement('section',{role:'alert'},createElement('p',null,state.v340CatalogError),
       createElement('button',{type:'button',style:button,disabled:!onRetryV340Catalog,onClick:()=>{void onRetryV340Catalog?.().catch(()=>{})}},'重试新版目录')):null,

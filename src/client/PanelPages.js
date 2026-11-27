@@ -1,4 +1,6 @@
 import { createElement, useState } from 'react'
+import { isOasisRemoteExecutionUnresolved } from '../workbench-contract.js'
+import { matchesV340ProfessionalCatalog, PATENT_DRAWING_DESCRIPTION_TOOL_ID, professionalServiceForTask, v340ProfessionalMaterialPolicy } from '../v340-professional-services.js'
 
 import { MaterialReferences } from './MaterialReferences.js'
 import { ProfessionalServicePanel } from './ProfessionalServicePanel.js'
@@ -154,9 +156,54 @@ export function PanelPages({
       onResumeV340:v340Actions.resume,
       onRetryV340Catalog:v340Actions.retryCatalog,
     })
-  } else if(page.v340){
-    content=createElement(V340GenerationPage,{key:`${state.workspaceId}/${page.pageId}`,page,state,
-      node:state.v340Catalog?.nodes.find(n=>n.nodeId===page.v340.nodeId),operation:state.pageOperations[page.pageId]??{},actions:v340Actions,markdownRenderer,savedFileUnavailableReason})
+  } else if (page.v340 || page.workflowId === PATENT_DRAWING_DESCRIPTION_TOOL_ID) {
+    const nodeService = state.v340Catalog?.nodeProfessionalApi && professionalServiceForTask(page)
+    const operation = { activeOperation: null, materialPath: '', priceConfirmed: false, externalTransferConfirmed: false,
+      reviewNote: '', writebackDirectory: '', ...state.pageOperations[page.pageId] }
+    const bootstrap = state.professionalBootstrap
+    const professionalState = { ...state, professionalBootstrap: bootstrap && {
+      ...bootstrap, services: bootstrap.services.filter(entry => matchesV340ProfessionalCatalog(nodeService, entry)),
+    } }
+    const hasUnresolved = Object.values(page.remoteExecutions).some(isOasisRemoteExecutionUnresolved)
+    const disabled = operation.activeOperation !== null || hasUnresolved || state.syncStatus !== 'ready'
+    const professionalView = nodeService ? createElement('div', { style: { display: 'grid', gap: 14 } },
+      operation.professionalDetail?.inputFields.some(field => ['single-file', 'multi-file'].includes(field.control))
+        ? createElement(MaterialReferences, {
+          page, operation, disabled, forProfessionalApi: true, workflow: { materialPolicy: v340ProfessionalMaterialPolicy },
+          onMaterialDraft: (path, confirmed) => onMaterialDraft(page.pageId, path, confirmed),
+          onAdd: () => onAddMaterial(page.pageId),
+          onRefresh: id => onRefreshMaterial(page.pageId, id),
+          onRemove: (id, confirmed) => onRemoveMaterial(page.pageId, id, confirmed),
+        }) : null,
+      createElement(ProfessionalServicePanel, {
+        state: professionalState, page, operation, scoped: true,
+        onSelectService: endpoint => onSelectProfessionalService(page.pageId, endpoint),
+        onUpdateField: (id, value) => onUpdateProfessionalField(page.pageId, id, value),
+        onSelectFolder: id => onSelectProfessionalFolder(page.pageId, id),
+        onConfirm: value => onProfessionalConfirm(page.pageId, value),
+        onStart: () => onStartProfessional(page.pageId),
+        onContinue: id => onContinueProfessional(page.pageId, id),
+        onStop: id => onStopProfessional(page.pageId, id),
+        onObserveRunningWater: id => onObserveRunningWater(page.pageId, id),
+      }),
+      createElement(RunPreview, {
+        page, operation, remoteOnly: true, validation: { valid: true }, syncStatus: state.syncStatus,
+        onActivateRun: id => onActivateRun(page.pageId, id),
+        onReviewNote: note => onReviewNote(page.pageId, note),
+        onReview: (status, note) => onReview(page.pageId, page.activeRunId, status, note),
+      }),
+      createElement(WritebackPanel, {
+        run: activeRun(page), operation, disabled,
+        onDraft: (directory, confirmed) => onWritebackDraft(page.pageId, directory, confirmed),
+        onPrepare: () => onPrepareWriteback(page.pageId, page.activeRunId),
+        onConfirm: confirmed => onWritebackConfirm(page.pageId, confirmed),
+        onCommit: () => onCommitWriteback(page.pageId),
+      })) : null
+    content = page.v340 ? createElement(V340GenerationPage, {
+      key: `${state.workspaceId}/${page.pageId}`, page, state,
+      node: state.v340Catalog?.nodes.find(node => node.nodeId === page.v340.nodeId),
+      operation, actions: v340Actions, markdownRenderer, savedFileUnavailableReason, professionalView, hasUnresolved,
+    }) : professionalView ?? createElement('p', { role: 'status' }, '当前 DSH 配置尚未启用此专业服务。')
   } else {
     const workflow = state.workflows.find((item) => (
       item.workflowId === page.workflowId && item.workflowVersion === page.workflowVersion

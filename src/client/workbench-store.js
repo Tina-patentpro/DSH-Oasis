@@ -1,3 +1,4 @@
+import { matchesV340ProfessionalCatalog, professionalServiceForTask } from '../v340-professional-services.js'
 import {
   createInitialWorkspaceState,
   recordToWorkspaceState,
@@ -1224,29 +1225,41 @@ export function createWorkbenchStore({
       assertKnown(workspaceId)
       assertProfessionalConfiguration()
       const configurationGeneration = professionalConfigurationGeneration
-      pageFor(workspaceId, pageId)
+      const page = pageFor(workspaceId, pageId)
+      const nodeService = professionalServiceForTask(page)
       const bootstrap = getCurrent(workspaceId).professionalBootstrap
       if (!bootstrap?.remoteEnabled || !bootstrap.credentialConfigured) {
         throw new Error('Professional service runtime is not ready')
       }
-      const service = bootstrap.services.find((item) => item.apiEndpoint === apiEndpoint)
+      const service = bootstrap.services.find(item => item.apiEndpoint === apiEndpoint
+        && (!page.v340 && !nodeService || matchesV340ProfessionalCatalog(nodeService, item)))
       if (!service) throw new Error('unknown professional service')
       const existingFolderId = pageFor(workspaceId, pageId).professionalDraft?.folderId
       const folderId = bootstrap.folders.some((item) => item.id === existingFolderId)
         ? existingFolderId
-        : bootstrap.folders[0]?.id
+        : nodeService ? 0 : bootstrap.folders[0]?.id
       if (!Number.isSafeInteger(folderId)) throw new Error('Professional service requires an available project folder')
-      const detail = await remote.getProfessionalDetail(apiEndpoint, controller.signal)
-      assertProfessionalConfiguration(configurationGeneration)
-      if (detail.id !== service.apiId || detail.name !== service.apiEndpoint) {
-        throw new Error('Professional service detail mismatch')
-      }
-      const next = dispatch(workspaceId, { type: 'select-professional-service', pageId, detail, folderId })
+      const previous = operationFor(getCurrent(workspaceId), pageId)
+      if (previous.activeOperation !== null) throw new Error('Another page operation is already in progress')
       updatePageOperation(workspaceId, pageId, {
-        professionalDetail: detail, priceConfirmed: false, externalTransferConfirmed: false,
-        error: null, errorCode: null, feedback: null,
+        activeOperation: 'professional-detail', professionalDetail: null, priceConfirmed: false,
+        externalTransferConfirmed: false, error: null, errorCode: null,
       })
-      return next
+      try {
+        const detail = await remote.getProfessionalDetail(apiEndpoint, controller.signal)
+        assertProfessionalConfiguration(configurationGeneration)
+        if (detail.name !== service.apiEndpoint || detail.id !== (nodeService?.detailId ?? service.apiId)) {
+          throw new Error('Professional service detail mismatch')
+        }
+        const next = dispatch(workspaceId, { type: 'select-professional-service', pageId, detail, folderId })
+        updatePageOperation(workspaceId, pageId, { activeOperation: null, professionalDetail: detail, feedback: null })
+        return next
+      } catch (error) {
+        if (!closing && !disposed && knownWorkspaceIds.has(workspaceId)) {
+          updatePageOperation(workspaceId, pageId, { activeOperation: null, error: null, errorCode: 'PROFESSIONAL_DETAIL_UNAVAILABLE' })
+        }
+        throw error
+      }
     },
 
     updateProfessionalFormValue(workspaceId, pageId, fieldId, value) {

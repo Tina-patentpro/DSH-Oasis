@@ -73,7 +73,7 @@ export function createV340RuntimeService({repository,preparation,executor,clock=
       const {workspaceId,taskId,expectedRevision,draft}=parse('task/draft',input)
       return repository.mutate(workspaceId,expectedRevision,record=>{
         const task=taskFor(record,taskId)
-        if(hasPendingUnifiedRun(task))fail('V340_RUN_UNRESOLVED','当前任务有未决运行，输入及来源保持锁定。')
+        if(hasPendingUnifiedRun(task)||Object.values(task.remoteExecutions).some(isOasisRemoteExecutionUnresolved))fail('V340_RUN_UNRESOLVED','当前任务有未决运行，输入及来源保持锁定。')
         try{validateV340Draft(task.v340.nodeId,draft)}catch{fail('V340_INVALID_INPUT','新版输入通道或配置无效。')}
         const next=structuredClone(record);next.tasks[taskId].v340.draft=draft;next.tasks[taskId].updatedAt=clock();return next
       })

@@ -1,3 +1,4 @@
+import { PATENT_DRAWING_DESCRIPTION_TOOL_ID, professionalServiceForTask } from './v340-professional-services.js'
 import { z } from 'zod'
 import { PATENT_DISCLOSURE_CLAIMS_ID, PATENT_DISCLOSURE_CLAIMS_VERSION } from './local-skill-suites.js'
 import { claimsApiSnapshotSchema } from './claims-api-execution-contract.js'
@@ -87,7 +88,7 @@ export const workflowDefinitionSchema = z.object({
   workType: workTypeSchema,
   title: z.string().min(1).max(200),
   description: z.string().min(1).max(1000),
-  executionMode: z.enum(['local-mock', 'unified-text']),
+  executionMode: z.enum(['local-mock', 'unified-text', 'professional-api']),
   materialPolicy: z.object({
     acceptedExtensions: z.array(z.string().regex(/^\.[a-z0-9]+$/)).max(32),
     maxFiles: z.number().int().positive().max(256),
@@ -399,7 +400,8 @@ const oasisServiceFieldSchema = z.object({
   label: z.string().min(1).max(200),
   description: z.string().max(4000),
   type: identifierSchema,
-  control: z.enum(['short-text', 'long-text', 'single-file', 'text-output', 'file-output']),
+  control: z.enum(['short-text', 'long-text', 'single-file', 'multi-file', 'text-output', 'file-output']),
+  required: z.literal(true).optional(),
 }).strict()
 
 export const oasisProfessionalBootstrapSchema = z.object({
@@ -424,10 +426,10 @@ export const workspaceBindingOptionsSchema = oasisProfessionalBootstrapSchema.ex
 export const oasisProfessionalDetailSchema = z.object({
   id: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
   name: identifierSchema,
-  apiType: z.literal('Workflow'),
+  apiType: z.enum(['Workflow', 'LLM']),
   price: z.number().nonnegative().finite(),
   modelName: z.string().max(200),
-  executionMode: z.literal('sync'),
+  executionMode: z.enum(['sync', 'async']),
   inputFields: z.array(oasisServiceFieldSchema).max(128),
   outputFields: z.array(oasisServiceFieldSchema).max(128),
   schemaHash: sha256Schema,
@@ -507,6 +509,7 @@ export const oasisRemoteExecutionSchema = z.object({
     apiEndpoint: identifierSchema,
     apiProcess: z.string().max(4000),
     schemaHash: sha256Schema,
+    executionMode: z.literal('async').optional(),
   }).strict(),
   folderSnapshot: z.object({
     folderId: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
@@ -892,10 +895,13 @@ const workbenchTaskV3Schema = z.object({
     executionRequestKeys.add(execution.requestKey)
     const uploadedFields = new Set()
     for (const [index, upload] of execution.uploadedFiles.entries()) {
-      if (uploadedFields.has(upload.fieldId)) {
-        ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey, 'uploadedFiles', index, 'fieldId'], message: 'uploaded field ids must be unique' })
+      const selection = execution.formValues[upload.fieldId]
+      const multiple = Array.isArray(selection)
+      const identity = JSON.stringify([upload.fieldId, multiple ? upload.referenceId : null])
+      if (uploadedFields.has(identity) || (multiple && !selection.includes(upload.referenceId))) {
+        ctx.addIssue({ code: 'custom', path: ['remoteExecutions', mapKey, 'uploadedFiles', index, 'fieldId'], message: 'uploaded files must be unique within the confirmed field selection' })
       }
-      uploadedFields.add(upload.fieldId)
+      uploadedFields.add(identity)
       const reference = execution.materialSnapshots.find((item) => item.referenceId === upload.referenceId)
       const derived = execution.unifiedClaims?.mapping.document
       const validDerived = derived && upload.fieldId === derived.fieldId
@@ -959,9 +965,25 @@ export const workbenchTaskSchema = workbenchTaskV3Schema.safeExtend({
   generation: generationDraftSchema.nullable(),
   runs: z.record(identifierSchema, z.discriminatedUnion('mode', [localRunSnapshotSchema, oasisRemoteRunSnapshotSchema, unifiedRunSnapshotSchema, dshLocalRunSnapshotSchema, oasisApiRunSnapshotSchema])),
 }).superRefine(enforceGenerationDraft).superRefine((task,ctx)=>{
-  if(task.v340 ? task.workflowId!==task.v340.nodeId||task.workflowVersion!=='V3.4.0'||task.workType!=='cn-invention-patent'
-    ||task.generation!==null||task.professionalDraft!==null||task.activeRunId!==null||task.runOrder.length||task.inputRefs.length
-    ||task.remoteExecutionOrder.length||Object.keys(task.formValues).length : V340_NODE_IDS.includes(task.workflowId)&&task.workflowVersion==='V3.4.0')ctx.addIssue({code:'custom',message:'V340 task identity/evidence mismatch'})
+  if (!task.v340 && task.workflowId !== PATENT_DRAWING_DESCRIPTION_TOOL_ID) {
+    if (V340_NODE_IDS.includes(task.workflowId) && task.workflowVersion === 'V3.4.0') {
+      ctx.addIssue({ code: 'custom', message: 'V340 task identity/evidence mismatch' })
+    }
+    return
+  }
+  const service = professionalServiceForTask(task)
+  const matches = snapshot => service && snapshot.apiEndpoint === service.endpoint && snapshot.apiId === service.detailId
+  const invalidIdentity = task.v340
+    ? task.workflowId !== task.v340.nodeId || task.workflowVersion !== 'V3.4.0' || task.workType !== 'cn-invention-patent'
+    : !service
+  if (invalidIdentity
+    || task.generation !== null || Object.keys(task.formValues).length
+    || (task.professionalDraft && !matches({ apiEndpoint: task.professionalDraft.selectedApiEndpoint, apiId: task.professionalDraft.selectedApiId }))
+    || (!service && (task.activeRunId !== null || task.inputRefs.length))
+    || Object.values(task.runs).some(run => run.mode !== 'oasis-legacy' || !matches(run.providerSnapshot))
+    || Object.values(task.remoteExecutions).some(execution => execution.unifiedClaims || !matches(execution.serviceSnapshot))) {
+    ctx.addIssue({ code: 'custom', message: 'Professional task identity or evidence mismatch' })
+  }
 })
 
 const panelModeSchema = z.enum(['hidden', 'normal', 'expanded'])

@@ -50,12 +50,13 @@ export function RunPreview({
   operation,
   validation,
   syncStatus,
+  remoteOnly = false,
   onGenerate,
   onActivateRun,
   onReviewNote,
   onReview,
 }) {
-  const disabledReason = generationDisabledReason({ syncStatus, validation, operation })
+  const disabledReason = remoteOnly ? null : generationDisabledReason({ syncStatus, validation, operation })
   const run = page.activeRunId === null ? null : page.runs[page.activeRunId]
   const remoteRun = run?.mode === 'oasis-legacy'
   const blocked = run?.result.contentStatus === 'blocked'
@@ -66,8 +67,8 @@ export function RunPreview({
         createElement('p', { style: { margin: '5px 0 0', fontSize: 12, color: 'var(--dsw-alias-text-secondary, #66706b)' } },
           remoteRun
             ? `${run.providerSnapshot?.environmentKind === 'production' ? '线上' : '非生产'}专业服务结果；远程内容和文件必须经过人工审核。`
-            : '本地确定性演练；结果必须经过人工审核。')),
-      createElement('button', {
+            : remoteOnly ? '在专业服务中提交并查看运行结果。' : '本地确定性演练；结果必须经过人工审核。')),
+      !remoteOnly && createElement('button', {
         type: 'button', disabled: disabledReason !== null, onClick: onGenerate,
         title: disabledReason ?? '基于已保存表单和已确认材料生成',
         'aria-describedby': disabledReason ? `oasis-generate-reason-${page.pageId}` : undefined,
@@ -106,7 +107,9 @@ export function RunPreview({
             run.result.fileUrls.length > 0
               ? createElement('div', null,
                   createElement('strong', { style: { fontSize: 13 } }, '远程文件（未下载、未验证）'),
-                  createElement('ul', null, ...run.result.fileUrls.map((url, index) => createElement('li', { key: index, style: { overflowWrap: 'anywhere' } }, url))))
+                  createElement('ul', null, ...run.result.fileUrls.map((url, index) =>
+                    createElement('li', { key: index, style: { overflowWrap: 'anywhere' } },
+                      remoteOnly ? createElement('a', { href: url, target: '_blank', rel: 'noopener noreferrer' }, url) : url))))
               : null,
             createElement('p', { style: { margin: 0, fontSize: 12, color: 'var(--dsw-alias-text-secondary, #66706b)' } },
               '远程文件列表仅为服务响应记录；插件尚未下载、校验或写回这些二进制文件。'))

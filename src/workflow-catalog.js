@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { PATENT_DRAWING_DESCRIPTION_TOOL_ID, v340ProfessionalMaterialPolicy } from './v340-professional-services.js'
 import { CLAIMS_FIELDS, CLAIMS_V2_FIELDS, CLAIMS_TEMPLATE_ID } from './generation-contract.js'
 
 import {
@@ -6,6 +7,17 @@ import {
 } from './workbench-contract.js'
 
 const WORKFLOW_DEFINITIONS = [
+  {
+    workflowId: PATENT_DRAWING_DESCRIPTION_TOOL_ID,
+    workflowVersion: '1',
+    workType: 'cn-invention-patent',
+    title: '专利附图说明生成',
+    description: '使用绿洲专业 API，根据专利附图生成说明。',
+    executionMode: 'professional-api',
+    materialPolicy: v340ProfessionalMaterialPolicy,
+    outputSections: ['drawing-description'],
+    form: { fields: [] },
+  },
   {
     workflowId: CLAIMS_TEMPLATE_ID, workflowVersion: '2', workType: 'cn-invention-patent',
     title: '权利要求书生成', description: '可审阅的文字草稿。', executionMode: 'unified-text',
@@ -161,9 +173,11 @@ for (const workflow of catalog.workflows) {
   formSchemasByKey.set(key, buildFormSchema(workflow))
 }
 
-export function getWorkflowCatalog(workType) {
-  if (workType === undefined) return catalog
-  const workflows = catalog.workflows.filter((workflow) => workflow.workType === workType)
+export function getWorkflowCatalog(workType, { includeProfessionalTools = false } = {}) {
+  if (workType === undefined && includeProfessionalTools) return catalog
+  const workflows = catalog.workflows.filter(workflow =>
+    (workType === undefined || workflow.workType === workType)
+    && (includeProfessionalTools || workflow.executionMode !== 'professional-api'))
   return deepFreeze({ schemaVersion: 1, workflows })
 }
 

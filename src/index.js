@@ -81,7 +81,11 @@ export async function applyM06NextOffline(ctx, config) {
   return applyWorkbench(ctx, config, false, false, false, true)
 }
 
-async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false, recoveryEntry = false, nextOffline = false) {
+export async function applyM06NextProfessional(ctx, config) {
+  return applyWorkbench(ctx, config, true, true, false, false, true)
+}
+
+async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false, recoveryEntry = false, nextOffline = false, nextProfessional = false) {
   const recoveryScope=recoveryEntry?await loadNativeBusinessRecoveryScope():null
   if(!recoveryEntry&&process.env.OASIS_NATIVE_BUSINESS_RECOVERY!==undefined)throw Error('Recovery mode requires its dedicated trusted entry')
   const nativeZeroGeneration=process.env.OASIS_NATIVE_ZERO_GENERATION==='1'
@@ -149,10 +153,13 @@ async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false
     settings: ctx.settings,
     settingsNamespace,
     workspaceRegistry: ctx.workspaceRegistry,
+    nextProfessional,
     executionIdFactory: randomUUID,
     runIdFactory: randomUUID,
     async getRuntime() {
-      if (fixtureEnabled || nativeOffline || controlledM06) return { enabled: false, environmentKind: 'non-production', apiBaseOrigin: null, credentialConfigured: false, client: null }
+      if (fixtureEnabled || nativeOffline || nativeZeroGeneration || (controlledM06 && !nextProfessional)) {
+        return { enabled: false, environmentKind: 'non-production', apiBaseOrigin: null, credentialConfigured: false, client: null }
+      }
       let credentialConfigured = true
       let resolveToken, accountIdentity
       try {
@@ -190,7 +197,7 @@ async function applyWorkbench(ctx, config, controlledM06, websiteAccount = false
     disposeRpc = registerWorkbenchRoutes(
       ctx.connection,
       createWorkbenchRpcHandler(service, professionalService, accountService, importService, {
-        m06Candidate013: controlledM06, nativeZeroGeneration, nativeBusinessRecovery, nextOffline,
+        m06Candidate013: controlledM06, nativeZeroGeneration, nativeBusinessRecovery, nextOffline, nextProfessional,
         getLocalSkillSuite, settingsNamespace, installedSkillPreference,
       }),
       {m06Candidate013:controlledM06,nativeBusinessRecovery, nextOffline,managedSkillSuite:Boolean(installedSkillPreference)},

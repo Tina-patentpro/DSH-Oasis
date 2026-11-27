@@ -1,3 +1,4 @@
+import { v340ProfessionalMaterialPolicy, v340ProfessionalService } from './v340-professional-services.js'
 import { createHash, randomUUID } from 'node:crypto'
 
 import { WORKBENCH_LIMITS } from './workbench-contract.js'
@@ -52,7 +53,7 @@ function workflowForTask(task) {
 }
 
 function materialPolicyForTask(task) {
-  return workflowForTask(task).materialPolicy
+  return v340ProfessionalService(task.v340?.nodeId) ? v340ProfessionalMaterialPolicy : workflowForTask(task).materialPolicy
 }
 
 function referenceIndex(task, referenceId) {
@@ -189,8 +190,8 @@ export function createWorkbenchService({
     replaceState(workspaceId, expectedRevision, state) {
       return repository.replaceEditable(workspaceId, expectedRevision, state)
     },
-    getWorkflowCatalog(workType) {
-      return { ...getWorkflowCatalog(workType), unifiedFixtureEnabled: unifiedFixtureEnabled === true,
+    getWorkflowCatalog(workType, options) {
+      return { ...getWorkflowCatalog(workType, options), unifiedFixtureEnabled: unifiedFixtureEnabled === true,
         localGenerationEnabled: local.localGenerationEnabled, localGenerationKind: local.localGenerationKind }
     },
     getV340Catalog() {

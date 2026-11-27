@@ -1,5 +1,6 @@
 import { normalizeOasisFileUrl, normalizeOasisOrigin, normalizeOasisDownloadOrigin } from './oasis-origin-policy.js'
 import { oasisRunningWaterPageSchema } from './workbench-contract.js'
+import { matchesV340ProfessionalDetail, v340ProfessionalService } from './v340-professional-services.js'
 
 const ENDPOINTS = [
   { method: 'GET', path: '/api/user/detail', purpose: 'user-detail-and-balance', classification: 'legacy' },
@@ -153,24 +154,41 @@ function normalizeSchemaField(value, direction) {
   const label = nonEmptyString(field.cn_name, `${direction} schema field.cn_name`)
   const description = typeof field.content === 'string' ? field.content : ''
   const controls = direction === 'input'
-    ? { paragraph: 'long-text', string: 'short-text', file: 'single-file' }
-    : { paragraph: 'text-output', string: 'text-output', file: 'file-output' }
-  const control = controls[type]
-  if (!control) fail('UNSUPPORTED_SCHEMA_FIELD', `Unsupported ${direction} field type: ${type}`, { fieldId, type })
-  return { fieldId, label, description, type, control }
+    ? { paragraph: 'long-text', string: 'short-text', text: 'short-text', file: 'single-file', file_list: 'multi-file' }
+    : { paragraph: 'text-output', string: 'text-output', text: 'text-output', file: 'file-output', file_list: 'file-output' }
+  if (!Object.hasOwn(controls, type)) {
+    fail('UNSUPPORTED_SCHEMA_FIELD', `Unsupported ${direction} field type: ${type}`, { fieldId, type })
+  }
+  if (['__proto__', 'constructor', 'prototype'].includes(fieldId)) {
+    fail('INVALID_RESPONSE', 'Service field has a reserved identifier')
+  }
+  return { fieldId, label, description, type, control: controls[type],
+    ...(field.required === true ? { required: true } : {}) }
 }
 
 export function normalizeApiDetail(response) {
   const data = record(unwrapData(response, 'API detail response'), 'API detail data')
   assertNoForbiddenCredentialFields(data)
-  if (data.api_type !== 'Workflow') {
-    fail('UNSUPPORTED_API_TYPE', 'Only Workflow API details are supported')
+  if (data.is_async !== 0 && data.is_async !== 1) {
+    fail('INVALID_RESPONSE', 'Service must declare its execution mode')
   }
-  if (data.is_async !== 0) {
-    fail('ASYNC_NOT_SUPPORTED', 'Only explicitly synchronous Workflow APIs are supported')
+  const executionMode = data.is_async === 1 ? 'async' : 'sync'
+  // The background-research Pro service shares the backend's async create and polling endpoints.
+  const approvedResearchService = matchesV340ProfessionalDetail(v340ProfessionalService('Flow-1-1'), {
+    id: data.id, name: data.name, apiType: data.api_type, executionMode,
+  })
+  if (data.api_type !== 'Workflow' && !approvedResearchService) {
+    fail('UNSUPPORTED_API_TYPE', 'This service must be a Workflow or the supported research Pro service')
   }
   if (!Array.isArray(data.input_schema) || !Array.isArray(data.output_schema)) {
     fail('INVALID_RESPONSE', 'Workflow input_schema and output_schema must be arrays')
+  }
+  const normalizeFields = (fields, direction) => {
+    const normalized = fields.map(field => normalizeSchemaField(field, direction))
+    if (new Set(normalized.map(field => field.fieldId)).size !== normalized.length) {
+      fail('INVALID_RESPONSE', 'Service fields must have unique identifiers')
+    }
+    return normalized
   }
   return {
     id: integer(data.id, 'API detail id'),
@@ -178,9 +196,9 @@ export function normalizeApiDetail(response) {
     apiType: data.api_type,
     price: nonNegativeFiniteNumber(data.price, 'API detail price'),
     modelName: typeof data.model_name === 'string' ? data.model_name : '',
-    executionMode: 'sync',
-    inputFields: data.input_schema.map((field) => normalizeSchemaField(field, 'input')),
-    outputFields: data.output_schema.map((field) => normalizeSchemaField(field, 'output')),
+    executionMode,
+    inputFields: normalizeFields(data.input_schema, 'input'),
+    outputFields: normalizeFields(data.output_schema, 'output'),
     raw: structuredClone(data),
   }
 }
@@ -215,22 +233,36 @@ export function buildWorkflowCreateBody({ id, key, inputs, apiProcess, folderId 
   return body
 }
 
+const ASYNC_ACKNOWLEDGEMENT = '###异步任务，请等待通知'
+
 export function normalizeWorkflowCreateResult(response) {
-  if (typeof response === 'string') {
-    const answerText = nonEmptyString(response, 'workflow-create response')
-    return { answerText, fileUrls: [], raw: response }
+  const value = typeof response === 'string' ? response : unwrapData(response, 'workflow-create response')
+  if (typeof value === 'string') {
+    if (!value.trim() || value.trim() === ASYNC_ACKNOWLEDGEMENT) {
+      fail('UNRESOLVED_RESPONSE', 'Workflow response contains no usable result')
+    }
+    return { answerText: value, fileUrls: [], raw: value }
   }
-  const data = record(unwrapData(response, 'workflow-create response'), 'workflow-create data')
+  const data = record(value, 'workflow-create data')
   assertNoForbiddenCredentialFields(data)
   const enhancedKeys = ['structured_result', 'structured_result_error'].filter(key => Object.hasOwn(data, key))
   if (enhancedKeys.length > 1) fail('INVALID_RESPONSE', 'Workflow response contains conflicting enhanced fragments')
   const enhancedFragment = enhancedKeys.length
     ? { [enhancedKeys[0]]: structuredClone(data[enhancedKeys[0]]) } : undefined
-  const answerText = typeof data.answer_text === 'string' ? data.answer_text : ''
-  let fileUrls
-  if (typeof data.file_url === 'string') fileUrls = data.file_url.length > 0 ? [data.file_url] : []
-  else if (Array.isArray(data.file_url)) fileUrls = data.file_url.filter((value) => typeof value === 'string' && value.length > 0)
-  else fileUrls = []
+  const answer = [data.answer_text, data.output].find(value =>
+    typeof value === 'string' && value.trim() && value.trim() !== ASYNC_ACKNOWLEDGEMENT)
+  const answerText = answer ?? ''
+  const files = typeof data.file_url === 'string'
+    ? data.file_url.split(/,\s*(?=https?:\/\/)/i)
+    : Array.isArray(data.file_url) ? data.file_url : []
+  const fileOutput = Array.isArray(data.file_output) ? data.file_output : []
+  const fileUrls = [...new Set([...files, ...fileOutput.map(file =>
+    typeof file === 'string' ? file : file?.download_url ?? file?.downloadUrl ?? file?.remote_url ?? file?.url)]
+    .filter(value => typeof value === 'string' && value.trim()).map(value => value.trim()))]
+  const status = typeof data.status === 'string' ? data.status.toLowerCase() : ''
+  if (['queued', 'pending', 'running', 'processing'].includes(status)) {
+    fail('UNRESOLVED_RESPONSE', 'Workflow result is still pending')
+  }
   if (answerText.trim().length === 0 && fileUrls.length === 0 && enhancedFragment === undefined) {
     fail('UNRESOLVED_RESPONSE', 'Workflow response contains no usable result')
   }
@@ -253,7 +285,7 @@ export function normalizeWorkflowProgress(response, taskKey) {
   assertNoForbiddenCredentialFields(data)
   const key = matchingTaskKey(data.key, taskKey, 'workflow-progress key')
   const rawStatus = typeof data.status === 'string' ? data.status.toLocaleLowerCase('en-US') : ''
-  if (['failed', 'error', 'cancelled', 'canceled'].includes(rawStatus) || typeof data.error_message === 'string') {
+  if (['failed', 'error', 'cancelled', 'canceled'].includes(rawStatus) || typeof data.error_message === 'string' && data.error_message.trim()) {
     fail('REMOTE_EXECUTION_FAILED', 'Oasis workflow execution failed')
   }
   const rawProgress = typeof data.progress_percent === 'number' && Number.isFinite(data.progress_percent)
@@ -261,10 +293,17 @@ export function normalizeWorkflowProgress(response, taskKey) {
     : 0
   const progressPercent = Math.max(0, Math.min(100, rawProgress))
   const completed = data.is_completed === true
-    || ['completed', 'succeeded', 'success'].includes(rawStatus)
+    || ['completed', 'succeeded', 'success', 'done', 'finished'].includes(rawStatus)
     || progressPercent >= 100
   if (!completed) return { key, status: 'running', progressPercent, result: null }
-  const normalized = normalizeWorkflowCreateResult(data)
+  let normalized
+  try {
+    normalized = normalizeWorkflowCreateResult(data)
+  } catch (error) {
+    if (error?.code !== 'UNRESOLVED_RESPONSE') throw error
+    // The backend reports progress separately from the persisted result.
+    return { key, status: 'running', progressPercent, result: null }
+  }
   return {
     key,
     status: 'completed',
@@ -369,8 +408,8 @@ export function createOasisApiClient({
     } catch {
       fail('INVALID_RESPONSE', 'Oasis response was not JSON', { status: response.status })
     }
-    if (!response.ok || (Object.hasOwn(payload, 'code') && ![0, 200].includes(payload.code))) {
-      fail('REMOTE_ERROR', 'Oasis API request failed', { status: response.status, code: payload.code })
+    if (!response.ok || (payload !== null && Object.hasOwn(payload, 'code') && ![0, 200].includes(payload.code))) {
+      fail('REMOTE_ERROR', 'Oasis API request failed', { status: response.status, code: payload?.code })
     }
     if (method === 'POST' && path === '/api/apicategories/apidetail') {
       payload = stripLegacyEmptyDetailCredentials(payload)
@@ -449,7 +488,8 @@ export function createOasisApiClient({
         }
       } catch (error) {
         if (!(error instanceof OasisApiContractError) || error.code !== 'UNRESOLVED_RESPONSE') throw error
-        const data = record(unwrapData(payload, 'workflow-create response'), 'workflow-create data')
+        const value = typeof payload === 'string' ? payload : unwrapData(payload, 'workflow-create response')
+        const data = typeof value === 'string' ? {} : record(value, 'workflow-create data')
         const key = matchingTaskKey(data.key, body.key, 'workflow-create receipt key')
         return {
           resolved: false,

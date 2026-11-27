@@ -1,3 +1,4 @@
+import { matchesV340ProfessionalCatalog, matchesV340ProfessionalDetail, PATENT_DRAWING_DESCRIPTION_TOOL_ID, professionalServiceForTask, v340ProfessionalMaterialPolicy, v340ProfessionalService, v340ProfessionalServiceForEndpoint } from './v340-professional-services.js'
 import { createHash, randomUUID } from 'node:crypto'
 import { createWorkspaceOperationGuard } from './workspace-operation-guard.js'
 import { OASIS_SETTINGS_NAMESPACE, normalizeOasisRuntimeConfig } from './oasis-runtime-config.js'
@@ -145,7 +146,34 @@ function claimsDetail(detail, environmentKind) {
   return detailWithoutRaw(detail)
 }
 
+function isProfessionalFileField(field) {
+  return field.control === 'single-file' || field.control === 'multi-file'
+}
+
+function professionalFileSelection(field, value) {
+  if (value === undefined || value === '' || (Array.isArray(value) && value.length === 0)) {
+    if (field.required) throw remoteError('INVALID_REMOTE_FORM', 'A required file field is empty')
+    return []
+  }
+  const ids = field.control === 'multi-file' ? value : [value]
+  if (!Array.isArray(ids) || ids.length > WORKBENCH_LIMITS.maxInputRefsPerTask
+    || ids.some(id => typeof id !== 'string' || id.length === 0) || new Set(ids).size !== ids.length) {
+    throw remoteError('INVALID_REMOTE_FORM', 'Select confirmed project files for the service field')
+  }
+  return ids
+}
+
+function professionalScalar(field, value) {
+  if ((value === undefined || value === '' || (typeof value === 'string' && !value.trim())) && field.required) {
+    throw remoteError('INVALID_REMOTE_FORM', 'A required service field is empty')
+  }
+  if (value === undefined) return ''
+  if (typeof value !== 'string') throw remoteError('INVALID_REMOTE_FORM', 'Service field requires text')
+  return value
+}
+
 function workflowPolicy(task) {
+  if (v340ProfessionalService(task.v340?.nodeId)) return v340ProfessionalMaterialPolicy
   if (task.workflowId === null || task.workflowVersion === null) {
     throw remoteError('WORKFLOW_NOT_SELECTED', 'A local workflow policy must be selected before remote execution')
   }
@@ -185,6 +213,7 @@ export function createOasisRemoteService({
   settings,
   settingsNamespace = OASIS_SETTINGS_NAMESPACE,
   workspaceRegistry,
+  nextProfessional = false,
   fast39Delivery,
   workspaceOperations = createWorkspaceOperationGuard(),
   clock = () => new Date().toISOString(),
@@ -350,6 +379,31 @@ export function createOasisRemoteService({
     if (safeBalance(user.balance) < detail.price) throw remoteError('INSUFFICIENT_BALANCE', 'Balance is below the confirmed reference price')
   }
 
+  async function recheckProfessionalDestination(execution, active, detail, service) {
+    const snapshot = execution.serviceSnapshot
+    const [services, folder, user] = await Promise.all([
+      active.client.getCategoryCatalog(),
+      active.client.getFolderDetail(execution.folderSnapshot.folderId),
+      active.client.getUserDetail(),
+    ])
+    if (await accountIdFromUser(user, active) !== execution.accountId) {
+      throw remoteError('REMOTE_ACCOUNT_MISMATCH', 'Account changed before create')
+    }
+    const matches = services.filter(item => matchesV340ProfessionalCatalog(service, item))
+    if (!matches.length || matches.some(item => item.apiProcess !== snapshot.apiProcess)
+      || !matchesV340ProfessionalDetail(service, detail)) {
+      throw remoteError('REMOTE_SERVICE_MISMATCH', 'Service identity changed before create')
+    }
+    if (detail.schemaHash !== snapshot.schemaHash || detail.price !== execution.priceSnapshot.price) {
+      throw remoteError('REMOTE_SCHEMA_CHANGED', 'Schema or reference price changed before create')
+    }
+    safeFolder(folder, execution.folderSnapshot.folderId,
+      active.environmentKind === 'production' ? execution.accountId : undefined)
+    if (safeBalance(user.balance) < detail.price) {
+      throw remoteError('INSUFFICIENT_BALANCE', 'Balance is below the confirmed reference price')
+    }
+  }
+
   async function bindingWorkspace(workspaceId, expectedPath) {
     const workspace = workspaceRegistry?.get(workspaceId)
     if (!workspace) throw remoteError('UNKNOWN_WORKSPACE', 'Workspace is not registered')
@@ -387,12 +441,27 @@ export function createOasisRemoteService({
     return value
   }
 
+  function assertProfessionalNode(task) {
+    const service = professionalServiceForTask(task)
+    if ((nextProfessional || task.v340 || task.workflowId === PATENT_DRAWING_DESCRIPTION_TOOL_ID) && (!nextProfessional || !service)) {
+      throw remoteError('REMOTE_DISABLED', '当前节点未开放专业 API。')
+    }
+    return service
+  }
+
   async function getServiceDetail(apiEndpoint) {
     if (typeof apiEndpoint !== 'string' || apiEndpoint.length === 0) {
       throw remoteError('INVALID_REMOTE_SERVICE', 'A professional service endpoint is required')
     }
+    const service = v340ProfessionalServiceForEndpoint(apiEndpoint)
+    if (nextProfessional && !service) {
+      throw remoteError('REMOTE_DISABLED', '当前 DSH 版本未接入此专业服务。')
+    }
     const active = await runtime()
     const detail = detailWithoutRaw(await active.client.getApiDetail(apiEndpoint))
+    if (nextProfessional && !matchesV340ProfessionalDetail(service, detail)) {
+      throw remoteError('REMOTE_SERVICE_MISMATCH', '后台服务定义与当前节点不一致。')
+    }
     if (detail.name !== apiEndpoint) {
       throw remoteError('REMOTE_SERVICE_MISMATCH', 'Oasis service detail does not match the selected endpoint')
     }
@@ -423,22 +492,31 @@ export function createOasisRemoteService({
   }
 
   function selectedMaterialSnapshots(task, detail, formValues) {
-    const selected = []
+    const selected = new Map()
+    let fileCount = 0
     for (const field of detail.inputFields) {
       const value = formValues[field.fieldId]
-      if (field.control === 'single-file') {
-        if (value === undefined || value === '') continue
-        if (typeof value !== 'string') throw remoteError('INVALID_REMOTE_FORM', `File field ${field.fieldId} must select one material`)
-        const reference = task.inputRefs.find((item) => item.referenceId === value)
+      if (!isProfessionalFileField(field)) {
+        professionalScalar(field, value)
+        continue
+      }
+      const ids = professionalFileSelection(field, value)
+      fileCount += ids.length
+      for (const id of ids) {
+        const reference = task.inputRefs.find(item => item.referenceId === id)
         if (!reference || reference.kind !== 'project-file') {
-          throw remoteError('REMOTE_MATERIAL_NOT_FOUND', `File field ${field.fieldId} does not reference a confirmed material`)
+          throw remoteError('REMOTE_MATERIAL_NOT_FOUND', 'Service file is not a confirmed project material')
         }
-        if (!selected.some((item) => item.referenceId === reference.referenceId)) selected.push(reference)
-      } else if (typeof value !== 'string') {
-        throw remoteError('INVALID_REMOTE_FORM', `Text field ${field.fieldId} must be a string`)
+        if (field.fieldId === 'drawings_images' && !reference.mediaType.startsWith('image/')) {
+          throw remoteError('INVALID_REMOTE_FORM', 'The image field requires a confirmed image file')
+        }
+        selected.set(id, reference)
       }
     }
-    return selected
+    if (fileCount > WORKBENCH_LIMITS.maxInputRefsPerTask) {
+      throw remoteError('INVALID_REMOTE_FORM', 'Too many files selected for one service request')
+    }
+    return [...selected.values()]
   }
 
   function createInputs(execution, detail) {
@@ -448,19 +526,23 @@ export function createOasisRemoteService({
       return buildClaimsApiDocumentInputs({ inputSchemaVersion: s.inputSchemaVersion, values: s.values }, receipt.url,
         s.allowedUploadOrigins, s.binding.environmentKind)
     }
-    const inputs = {}
+    const inputs = Object.create(null)
     for (const field of detail.inputFields) {
       const value = execution.formValues[field.fieldId]
-      if (field.control === 'single-file') {
-        if (value === undefined || value === '') continue
-        const upload = execution.uploadedFiles.find((item) => item.fieldId === field.fieldId && item.referenceId === value)
-        if (!upload) throw remoteError('REMOTE_UPLOAD_MISSING', `File field ${field.fieldId} has not been uploaded`)
-        inputs[field.fieldId] = { type: 'document', transfer_method: 'remote_url', url: upload.url }
-      } else if (value !== undefined) {
-        inputs[field.fieldId] = value
+      if (!isProfessionalFileField(field)) {
+        const scalar = professionalScalar(field, value)
+        if (scalar !== undefined) inputs[field.fieldId] = scalar
+        continue
       }
+      const files = professionalFileSelection(field, value).map(referenceId => {
+        const upload = execution.uploadedFiles.find(item => item.fieldId === field.fieldId && item.referenceId === referenceId)
+        const material = execution.materialSnapshots.find(item => item.referenceId === referenceId)
+        if (!upload || !material) throw remoteError('REMOTE_UPLOAD_MISSING', 'A selected file has no upload receipt')
+        return { type: material.mediaType.startsWith('image/') ? 'image' : 'document', transfer_method: 'remote_url', url: upload.url }
+      })
+      if (files.length) inputs[field.fieldId] = field.control === 'multi-file' ? files : files[0]
     }
-    return inputs
+    return { ...inputs }
   }
 
   function receiptsMatchInputs(execution, detail) {
@@ -471,8 +553,8 @@ export function createOasisRemoteService({
     }
     // Repository integrity already checks duplicate fields and material reference/hash identity.
     return execution.uploadedFiles.every(upload => detail.inputFields.some(field => (
-      field.control === 'single-file' && field.fieldId === upload.fieldId
-      && execution.formValues[field.fieldId] === upload.referenceId
+      isProfessionalFileField(field) && field.fieldId === upload.fieldId
+      && professionalFileSelection(field, execution.formValues[field.fieldId]).includes(upload.referenceId)
     )))
   }
 
@@ -600,11 +682,16 @@ export function createOasisRemoteService({
               safeError: { code: 'WAIT_STOPPED', message: 'Local result waiting was stopped' },
             })
           }
-          const safe = safeApiError(error, 'POLL_FAILED', 'Oasis result query failed')
-          return setExecution(workspaceId, taskId, executionId, {
-            status: safe.code === 'AUTH_REQUIRED' ? 'auth-required' : 'wait-stopped',
-            safeError: safe,
-          })
+          if (execution.serviceSnapshot.executionMode === 'async' && error?.details?.status === 404) {
+            // Progress may not have been published yet for this accepted key.
+            progress = { status: 'running', result: null }
+          } else {
+            const safe = safeApiError(error, 'POLL_FAILED', 'Oasis result query failed')
+            return setExecution(workspaceId, taskId, executionId, {
+              status: safe.code === 'AUTH_REQUIRED' ? 'auth-required' : 'wait-stopped',
+              safeError: safe,
+            })
+          }
         }
         if (progress.status === 'completed' && progress.result !== null) {
           return complete(workspaceId, taskId, executionId, progress.result, 'query')
@@ -938,7 +1025,8 @@ export function createOasisRemoteService({
         remoteEnabled: true,
         credentialConfigured: true,
         balance: safeBalance(user.balance),
-        services: structuredClone(services),
+        services: structuredClone(nextProfessional ? services.filter(entry =>
+          matchesV340ProfessionalCatalog(v340ProfessionalServiceForEndpoint(entry.apiEndpoint), entry)) : services),
         folders: folderPage.items.map((item) => safeFolder(item)),
       }
     },
@@ -1010,11 +1098,17 @@ export function createOasisRemoteService({
         return { committed: false, reason: 'revision-conflict', current: before }
       }
       const task = requireTask(before, taskId)
+      const nodeService = assertProfessionalNode(task)
       const draft = task.professionalDraft
       if (!draft) throw remoteError('PROFESSIONAL_DRAFT_REQUIRED', 'A professional service draft is required')
       if (typeof requestKey !== 'string' || requestKey.length === 0) {
         throw remoteError('REMOTE_REQUEST_KEY_REQUIRED', 'A remote request key is required')
       }
+      if (nodeService && ((task.v340 && task.v340.draft.source !== 'oasis-api') || draft.folderId <= 0
+        || draft.selectedApiEndpoint !== nodeService.endpoint || draft.selectedApiId !== nodeService.detailId)) {
+        throw remoteError('REMOTE_SERVICE_MISMATCH', '请在当前节点选定专业 API 和所属绿洲项目。')
+      }
+      if (nodeService) await bindingWorkspace(workspaceId)
       const active = await runtime()
       const [services, detail, folderValue, user] = await Promise.all([
         active.client.getCategoryCatalog(),
@@ -1022,19 +1116,26 @@ export function createOasisRemoteService({
         active.client.getFolderDetail(draft.folderId),
         active.client.getUserDetail(),
       ])
-      const selected = services.find((item) => (
-        item.apiId === draft.selectedApiId && item.apiEndpoint === draft.selectedApiEndpoint
-      ))
-      if (!selected || detail.id !== selected.apiId || detail.name !== selected.apiEndpoint) {
+      const matches = services.filter(item => nodeService ? matchesV340ProfessionalCatalog(nodeService, item)
+        : item.apiEndpoint === draft.selectedApiEndpoint && item.apiId === draft.selectedApiId)
+      const selected = matches[0]
+      if (!selected || detail.id !== draft.selectedApiId || detail.name !== selected.apiEndpoint
+        || (nodeService && !matchesV340ProfessionalDetail(nodeService, detail))
+        || matches.some(item => item.apiProcess !== selected.apiProcess)) {
         throw remoteError('REMOTE_SERVICE_MISMATCH', 'Selected Oasis service is no longer available')
       }
       if (detail.schemaHash !== draft.schemaHash) {
         throw remoteError('REMOTE_SCHEMA_CHANGED', 'Oasis service schema changed and requires reconfirmation')
       }
-      const folder = safeFolder(folderValue, draft.folderId)
       const accountId = await accountIdFromUser(user, active)
+      const folder = safeFolder(folderValue, draft.folderId,
+        nodeService && active.environmentKind === 'production' ? accountId : undefined)
       const balance = safeBalance(user.balance)
       if (balance < detail.price) throw remoteError('INSUFFICIENT_BALANCE', 'Oasis balance is below the reference price')
+      if (nodeService && !Object.values(draft.formValues).some(value =>
+        typeof value === 'string' ? value.trim() : Array.isArray(value) ? value.length : typeof value === 'number')) {
+        throw remoteError('INVALID_REMOTE_FORM', '请先填写本次专业服务的输入材料。')
+      }
       const selectedReferences = selectedMaterialSnapshots(task, detail, draft.formValues)
       const materialSnapshots = await materialManager.recheckAll(
         workspaceId,
@@ -1045,7 +1146,7 @@ export function createOasisRemoteService({
         ...(active.environmentKind === 'production' ? { environmentKind: 'production' } : {}),
         accountId,
         apiBaseOrigin: active.apiBaseOrigin,
-        apiId: selected.apiId,
+        apiId: detail.id,
         apiEndpoint: selected.apiEndpoint,
         apiProcess: selected.apiProcess,
         folderId: folder.id,
@@ -1064,6 +1165,10 @@ export function createOasisRemoteService({
             throw remoteError('IDEMPOTENCY_CONFLICT', 'Remote request key is bound to another input snapshot')
           }
           return current
+        }
+        if (nodeService && Object.values(current.tasks).some(item => hasPendingUnifiedRun(item)
+          || Object.values(item.remoteExecutions).some(isOasisRemoteExecutionUnresolved))) {
+          throw remoteError('REMOTE_EXECUTION_UNRESOLVED', '当前项目存在未决运行，请先核对原请求。')
         }
         if (currentTask.remoteExecutionOrder.length >= WORKBENCH_LIMITS.maxRemoteExecutionsPerTask) {
           throw remoteError('REMOTE_EXECUTION_LIMIT_REACHED', 'Remote execution limit has been reached')
@@ -1084,10 +1189,11 @@ export function createOasisRemoteService({
           formValues: structuredClone(draft.formValues),
           apiBaseOrigin: active.apiBaseOrigin,
           serviceSnapshot: {
-            apiId: selected.apiId,
+            apiId: detail.id,
             apiEndpoint: selected.apiEndpoint,
             apiProcess: selected.apiProcess,
             schemaHash: detail.schemaHash,
+            ...(detail.executionMode === 'async' ? { executionMode: 'async' } : {}),
           },
           folderSnapshot: { folderId: folder.id, folderName: folder.name },
           priceSnapshot: { price: detail.price, balance },
@@ -1110,7 +1216,9 @@ export function createOasisRemoteService({
       const existing = continuationJobs.get(key)
       if (existing) return existing
       const operation = (async () => {
-        let execution = requireExecution(requireTask(repository.get(workspaceId), taskId), executionId)
+        const initialTask = requireTask(repository.get(workspaceId), taskId)
+        const nodeService = assertProfessionalNode(initialTask)
+        let execution = requireExecution(initialTask, executionId)
         if (['completed', 'failed'].includes(execution.status)) {
           return { committed: true, current: repository.get(workspaceId) }
         }
@@ -1130,6 +1238,9 @@ export function createOasisRemoteService({
           // Keep the latch across reload/continue after ownership checks. A later
           // legacy body cannot discharge missing C4 validation or create again.
           return { committed: true, current: repository.get(workspaceId) }
+        }
+        if (nodeService && execution.submittedAt !== null) {
+          return poll(workspaceId, taskId, executionId, active.client)
         }
         const detail = claimsDetail(await active.client.getApiDetail(execution.serviceSnapshot.apiEndpoint), execution.unifiedClaims ? execution.environmentKind : undefined)
         if (detail.schemaHash !== execution.serviceSnapshot.schemaHash || detail.id !== execution.serviceSnapshot.apiId) {
@@ -1152,13 +1263,20 @@ export function createOasisRemoteService({
             })
           }
           const task = requireTask(repository.get(workspaceId), taskId)
+          if (nodeService) {
+            await bindingWorkspace(workspaceId)
+            await recheckProfessionalDestination(execution, active, detail, nodeService)
+          }
           const policy = workflowPolicy(task)
-          for (const field of detail.inputFields.filter((item) => item.control === 'single-file')) {
-            const derived = execution.unifiedClaims?.mapping.document
-            const referenceId = derived ? `derived-txt:${derived.sha256}` : execution.formValues[field.fieldId]
-            if (referenceId === undefined || referenceId === '') continue
+          const derived = execution.unifiedClaims?.mapping.document
+          const selections = detail.inputFields.filter(isProfessionalFileField).flatMap(field => {
+            const ids = derived ? [`derived-txt:${derived.sha256}`]
+              : professionalFileSelection(field, execution.formValues[field.fieldId])
+            return ids.map(referenceId => ({ fieldId: field.fieldId, referenceId }))
+          })
+          for (const { fieldId, referenceId } of selections) {
             execution = requireExecution(requireTask(repository.get(workspaceId), taskId), executionId)
-            if (execution.uploadedFiles.some((item) => item.fieldId === field.fieldId && item.referenceId === referenceId)) continue
+            if (execution.uploadedFiles.some((item) => item.fieldId === fieldId && item.referenceId === referenceId)) continue
             const reference = execution.materialSnapshots.find((item) => item.referenceId === referenceId)
             const upload = derived ? prepareClaimsApiDocument({ inputSchemaVersion: execution.unifiedClaims.inputSchemaVersion, values: execution.unifiedClaims.values })
               : await materialManager.readForUpload(workspaceId, reference, policy)
@@ -1176,7 +1294,7 @@ export function createOasisRemoteService({
             await mutateLatest(workspaceId, taskId, (current) => {
               const next = structuredClone(current)
               next.tasks[taskId].remoteExecutions[executionId].uploadedFiles.push({
-                fieldId: field.fieldId,
+                fieldId,
                 referenceId,
                 url,
                 sha256: upload.sha256,
@@ -1193,6 +1311,9 @@ export function createOasisRemoteService({
           if (execution.unifiedClaims) {
             await recheckClaimsDestination(execution, active)
             await assertClaimsAdmission(workspaceId, taskId, execution, admission)
+          } else if (nodeService && selections.length) {
+            const latestDetail = detailWithoutRaw(await active.client.getApiDetail(execution.serviceSnapshot.apiEndpoint))
+            await recheckProfessionalDestination(execution, active, latestDetail, nodeService)
           }
           await setExecution(workspaceId, taskId, executionId, {
             status: 'submitting', safeError: null, submittedAt: clock(),

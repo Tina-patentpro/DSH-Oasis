@@ -28,7 +28,7 @@ export function V340InputFields({node,draft,disabled=false,onChange,idPrefix='pr
     })
 }
 
-export function V340GenerationPage({page,state,node,operation={},actions={},markdownRenderer,savedFileUnavailableReason='安全文件预览不可用'}){
+export function V340GenerationPage({page,state,node,operation={},actions={},markdownRenderer,professionalView=null,hasUnresolved=false,savedFileUnavailableReason='安全文件预览不可用'}){
  const recovery=!!state.v340Catalog?.nativeBusinessRecovery
  const offline=state.v340Catalog?.nextOffline===true&&page.v340.nodeId==='Flow-2-6'
  const safePreview = offline || state.v340Catalog?.managedSkillSuite === true
@@ -89,6 +89,14 @@ export function V340GenerationPage({page,state,node,operation={},actions={},mark
  const external=capability?.skillId===PATENT_DISCLOSURE_CLAIMS_ID
  const pendingPreview=operation.v340CandidatePreview
  const candidatePreview=pendingPreview?.businessSkillId===capability?.skillId?pendingPreview:null
+ if (professionalView && draft.source === 'oasis-api') {
+  return h('section', {'aria-label':'节点专业 API',style:{padding:16,minWidth:0}},
+   h('header',{style:{display:'flex',flexWrap:'wrap',gap:12,justifyContent:'space-between',marginBottom:14}},
+    h('strong',null,page.title),
+    h(GenerationSourceSwitch,{value:draft.source,disabled:disabled||working||hasUnresolved,
+     onChange:source=>{void action(()=>actions.saveDraft?.(page.pageId,{...draft,source}))}})),
+   professionalView)
+ }
  return h('section',{'aria-label':'共同输入与结果','className':'oasis-v340',style:{container:'oasis-v340 / inline-size',minWidth:0,padding:16}},
   h('style',null,`.oasis-v340 *{box-sizing:border-box}.oasis-v340 .v340-panes{display:grid;grid-template-columns:minmax(0,1fr);gap:16}.oasis-v340 .v340-pane[data-visible=false]{display:none}.oasis-v340 input,.oasis-v340 textarea,.oasis-v340 select{max-width:100%;width:100%;border:1px solid #dce4df;border-radius:7px;padding:9px;color:inherit;background:var(--dsw-alias-bg-base,#fff)}.oasis-v340 button:disabled{opacity:.55;cursor:not-allowed}.oasis-v340 input:disabled,.oasis-v340 textarea:disabled,.oasis-v340 select:disabled{opacity:.65;cursor:not-allowed}@container oasis-v340 (min-width:680px){.oasis-v340 .v340-panes{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.oasis-v340 .v340-pane[data-visible=false]{display:block}.oasis-v340 .v340-tabs{display:none}}`),
   h('header',{style:{display:'flex',flexWrap:'wrap',gap:12,justifyContent:'space-between',alignItems:'center',marginBottom:14}},

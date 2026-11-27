@@ -176,13 +176,14 @@ async function writebackResult(operation) {
   }
 }
 
-export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null, {m06Candidate013=false,nativeZeroGeneration=false,nativeBusinessRecovery=null,getLocalSkillSuite=()=>undefined,settingsNamespace,installedSkillPreference,nextOffline=false}={}) {
+export function createWorkbenchRpcHandler(service, professionalService = null, accountService = null, importService = null, {m06Candidate013=false,nativeZeroGeneration=false,nativeBusinessRecovery=null,getLocalSkillSuite=()=>undefined,settingsNamespace,installedSkillPreference,nextOffline=false,nextProfessional=false}={}) {
   if(nativeBusinessRecovery){
     if(!m06Candidate013||nativeZeroGeneration)throw new TypeError('Native recovery requires an exclusive controlled composition')
     return nativeBusinessRecovery.wrap(createWorkbenchRpcHandler(service,professionalService,accountService,importService,{m06Candidate013:true,getLocalSkillSuite,settingsNamespace}))
   }
   if(nativeZeroGeneration&&!m06Candidate013)throw new TypeError('Native zero-generation requires the controlled M06 entry')
   const readonlyEndpoints=new Set(['state/get','workflow/catalog','workflow/v340/catalog','workflow/v340/prepare'])
+  const legacyClaimsApiEndpoints = new Set(['task/prepare-api', 'task/check-api', 'task/preview-api', 'task/start-api'])
   function withLocalSkill(action, supportsPatentDisclosure = false) {
     const message = localSkillUnavailableReason(getLocalSkillSuite(), supportsPatentDisclosure)
     if (message) return { ok: false, error: { code: LOCAL_SKILL_SUITE_UNAVAILABLE, message, details: {} } }
@@ -190,6 +191,9 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
   }
   return async function handleWorkbenchRpc(endpoint, payload) {
     if(nativeZeroGeneration&&!readonlyEndpoints.has(endpoint))return {ok:false,error:{code:'NATIVE_ZERO_GENERATION',message:'本次仅检查界面与输入，不允许生成、联网或修改业务记录。',details:{}}}
+    if (nextProfessional && legacyClaimsApiEndpoints.has(endpoint)) {
+      return { ok: false, error: { code: 'REMOTE_DISABLED', message: '请从对应专利节点选择专业 API。', details: {} } }
+    }
     if (installedSkillPreference && (endpoint === 'skill-suite/get' || endpoint === 'skill-suite/set')) {
       const parsed = parsePayload(endpoint === 'skill-suite/get' ? z.object({}).strict() : localSkillPreferenceSchema, payload)
       if (!parsed.success) return parsed
@@ -246,7 +250,8 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
       const namespace = typeof settingsNamespace === 'string' && settingsNamespace.length <= 128
         && OASIS_PLUGIN_NAMESPACE_PATTERN.test(settingsNamespace) ? { settingsNamespace } : {}
       return { ok: true, value: { ...catalog, ...namespace, ...(nextOffline ? { nextOffline: true } : {}), ...(nativeZeroGeneration ? { nativeZeroGeneration: true } : {}),
-        ...(installedSkillPreference ? { managedSkillSuite: true } : {}) } }
+        ...(installedSkillPreference ? { managedSkillSuite: true } : {}),
+        ...(nextProfessional && !nativeZeroGeneration ? { nodeProfessionalApi: true } : {}) } }
     }
     if(m06Candidate013===true&&['workflow/v340/candidate/prepare','workflow/v340/candidate/run'].includes(endpoint)){
       const action=endpoint.slice('workflow/v340/'.length),parsed=v340Commands[action].safeParse(payload)
@@ -284,7 +289,9 @@ export function createWorkbenchRpcHandler(service, professionalService = null, a
     if (endpoint === 'workflow/catalog') {
       const parsed = parsePayload(workflowCatalogPayloadSchema, payload)
       if (!parsed.success) return parsed
-      return { ok: true, value: { ...service.getWorkflowCatalog(parsed.data.workType),
+      return { ok: true, value: { ...service.getWorkflowCatalog(parsed.data.workType, {
+        includeProfessionalTools: nextProfessional && !nativeZeroGeneration,
+      }),
         ...(m06Candidate013===true ? {apiExecutionAvailable:false} : !nextOffline && professionalService?.previewClaims ? { apiExecutionAvailable: true } : {}) } }
     }
 

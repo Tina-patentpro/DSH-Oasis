@@ -17,6 +17,7 @@ export const v340CatalogResponseSchema=z.object({businessVersion:z.literal('V3.4
   nativeBusinessRecovery:z.object({schemaVersion:z.literal(1),policy:z.literal('m06-native-business-recovery-v1')}).strict().optional(),
   settingsNamespace: z.string().max(128).regex(OASIS_PLUGIN_NAMESPACE_PATTERN).optional(),
   managedSkillSuite: z.literal(true).optional(),
+  nodeProfessionalApi: z.literal(true).optional(),
   capability:z.string(),dispatchEnabled:z.literal(false),nodes:z.array(z.object({nodeId:z.enum(V340_NODE_IDS),title:z.string(),upstreamNodeId:z.enum(V340_NODE_IDS).nullable(),filenamePrefix:z.string(),
     inputs:z.array(z.object({id:z.string(),channel:z.string(),importance:z.string(),boundary:z.string(),handling:z.string()}).strict()),
     sources:z.object({'local-skill':z.object({enabled:z.literal(false),reason:z.string()}).strict(),'oasis-api':z.object({enabled:z.literal(false),reason:z.string()}).strict()}).strict(),

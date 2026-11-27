@@ -24,6 +24,7 @@ export function MaterialReferences({
   workflow,
   operation,
   disabled,
+  forProfessionalApi = false,
   onMaterialDraft,
   onAdd,
   onRefresh,
@@ -34,7 +35,7 @@ export function MaterialReferences({
   return createElement('section', { 'aria-labelledby': `oasis-material-title-${page.pageId}` },
     createElement('h4', { id: `oasis-material-title-${page.pageId}`, style: { margin: '0 0 5px', fontSize: 15 } }, '项目材料'),
     createElement('p', { style: { margin: '0 0 12px', color: 'var(--dsw-alias-text-secondary, #66706b)', fontSize: 12 } },
-      `仅登记元数据与哈希；文件在本机流式读取以计算哈希，正文不提取、不持久化且不用于生成。支持 ${workflow.materialPolicy.acceptedExtensions.join('、')}。`),
+      `${forProfessionalApi ? '先登记文件，再在对应服务字段中选用。提交前会请你确认发送。' : '仅登记元数据与哈希；文件在本机流式读取以计算哈希，正文不提取、不持久化且不用于生成。'}支持 ${workflow.materialPolicy.acceptedExtensions.join('、')}。`),
     createElement('div', { style: { display: 'grid', gap: 8, marginBottom: 12 } },
       createElement('label', { htmlFor: `oasis-material-path-${page.pageId}`, style: { fontSize: 13, fontWeight: 650 } }, 'Workspace 内相对路径'),
       createElement('input', {
